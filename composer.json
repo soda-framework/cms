@@ -9,9 +9,15 @@
       "email": "noodlewitt@gmail.com"
     }
   ],
+  "repositories": [
+    {
+            "type": "vcs",
+            "url": "https://github.com/sodacms/sodacms.git"
+    }
+  ],
   "require": {
     "php": ">=5.5.9",
-    "franzose/closure-table": "4.*",
+    "sodacms/closure-table": "4.*",
     "league/flysystem-aws-s3-v3": "^1.0"
   },
   "autoload": {

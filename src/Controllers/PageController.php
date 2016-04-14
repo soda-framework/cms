@@ -42,6 +42,7 @@ class PageController extends PageTemplateController
         } elseif ($request->input('id')) {
             $page = $this->model->where('id', $request->input('id'))->first();
         }
+
         $tree = $this->htmlTree();
         $pages = $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
 //      dd($pages);

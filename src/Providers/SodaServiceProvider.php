@@ -84,8 +84,9 @@ class SodaServiceProvider extends ServiceProvider {
 		App::register(\Franzose\ClosureTable\ClosureTableServiceProvider::class);
 		App::register(\Franzose\ClosureTable\ClosureTableServiceProvider::class);
 		//$this->app->bind('Soda', Soda::class);
+
 		App::bind('soda', function() {
-			return new Soda(); //freaking cool-ass facades!
+			return new Soda\Soda(); //freaking cool-ass facades!
 		});
 
 
