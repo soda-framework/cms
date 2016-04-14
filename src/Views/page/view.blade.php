@@ -4,9 +4,9 @@
 
 	<title>View Page</title>
 	<!-- JavaScripts -->
-	<script src="{{ elixir('soda/soda/js/content.js') }}"></script>
+	<script src="/soda/soda/js/content.js"></script>
 	<!-- Styles -->
-	<link href="{{ elixir('soda/soda/css/content.css') }}" rel="stylesheet">
+	<link href="/soda/soda/css/content.css" rel="stylesheet">
 
 @endsection
 

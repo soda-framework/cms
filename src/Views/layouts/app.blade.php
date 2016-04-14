@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- JavaScripts -->
-    <script src="{{ elixir('soda/soda/js/application.js') }}"></script>
+    <script src="/soda/soda/js/application.js"></script>
     <!-- Styles -->
-    <link href="{{ elixir('soda/soda/css/application.css') }}" rel="stylesheet">
+    <link href="/soda/soda/css/application.css" rel="stylesheet">
     @yield('main-header')
 </head>
 <body>
