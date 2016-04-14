@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "sodacms/closure-table": "4.*",
+    "sodacms/closure-table": "dev-master",
     "league/flysystem-aws-s3-v3": "^1.0"
   },
   "autoload": {
