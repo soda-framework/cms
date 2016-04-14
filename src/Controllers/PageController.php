@@ -90,6 +90,7 @@ class PageController extends PageTemplateController
      */
     public static function page($slug)
     {
+
         if (starts_with('/', $slug)) {
             $page = Page::where('slug', $slug)->first(); //TODO: might not really be page::
         } else {

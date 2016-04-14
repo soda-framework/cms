@@ -3,7 +3,7 @@ namespace Soda\Providers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
-use Soda\Soda;
+use Soda;
 
 class SodaServiceProvider extends ServiceProvider {
 

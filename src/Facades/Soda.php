@@ -19,4 +19,8 @@ class Soda extends Facade
 	{
 		return 'soda';
 	}
+
+	public function handle(){
+
+	}
 }

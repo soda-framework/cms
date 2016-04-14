@@ -32,7 +32,6 @@ class Page {
 	 * @return string
 	 */
 	public static function constructView($page, $params){
-
 		if($page->action_type == 'controller'){
 			//TODO.
 			return false;
