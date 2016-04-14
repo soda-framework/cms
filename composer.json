@@ -14,5 +14,19 @@
     "franzose/closure-table": "dev-master",
     "league/flysystem-aws-s3-v3": "^1.0"
     "soda/defaulttheme": "dev-master"
-  }
+  },
+  "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/controllers",
+            "src/models",
+            "src/components",
+            "src/seeds",
+            "src/middleware",
+            "src/console"
+        ],
+        "psr-4": {
+            "Soda\\Soda\\": ""
+        }
+    }
 }
