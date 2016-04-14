@@ -12,12 +12,12 @@
   "repositories": [
     {
             "type": "vcs",
-            "url": "https://github.com/sodacms/sodacms.git"
+            "url": "https://github.com/sodacms/ClosureTable.git"
     }
   ],
   "require": {
     "php": ">=5.5.9",
-    "sodacms/closure-table": "dev-master",
+    "sodacms/closure-table": "4.*",
     "league/flysystem-aws-s3-v3": "^1.0"
   },
   "autoload": {
