@@ -42,7 +42,7 @@ class SodaServiceProvider extends ServiceProvider {
 
 		// Publishing public assets
 		$this->publishes([
-			__DIR__ . '/../assets' => public_path(config('soda.hint_path')),
+			__DIR__ . '/../Assets' => public_path(config('soda.hint_path').'/soda'),
 		], 'public');
 		// Publishing migrations
 		$this->publishes([
