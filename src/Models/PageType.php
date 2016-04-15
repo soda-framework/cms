@@ -9,12 +9,12 @@ use \Soda\Models\Scopes\FromApplicationScope;
 use \Soda\Models\Scopes\LiveScope;
 
 class PageType extends Model {
-	protected $table = 'block_types';
+	protected $table = 'page_types';
 	protected $fillable = ['name', 'description'];
 
 
-	public $title = 'block_type';
-	public $plural_title = 'block_types';
+	public $title = 'page_type';
+	public $plural_title = 'page_type';
 
 	public $view_view = 'soda::standard.view';
 	public $view_fields = [
@@ -47,8 +47,9 @@ class PageType extends Model {
 		static::addGlobalScope(new LiveScope);
 	}
 
-	public function fields() {
-		return $this->hasMany(Field::class);
+	public function fields()
+	{
+		return $this->morphToMany(Field::class, 'fieldable');
 	}
 
 	public function block() {

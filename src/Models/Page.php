@@ -42,7 +42,7 @@ class Page extends Entity implements PagesInterface
 
     public function type()
     {
-        return $this->belongsTo(PageType::class);
+        return $this->belongsTo(PageType::class, 'page_type_id');
     }
 
     public function blocks()

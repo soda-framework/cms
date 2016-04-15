@@ -39,7 +39,9 @@
 				<p>Customise page details</p>
 				@include("soda::inputs.text",['field_name'=>'name', 'field_value'=>$page->name, 'field_label'=>'Name', 'field_info'=>'The name of this page'])
 				@include("soda::inputs.text",['field_name'=>'slug', 'field_value'=>$page->slug, 'field_label'=>'Slug', 'field_info'=>'The url of this page'])
-
+				@foreach($page->type->fields as $field)
+						@include("soda::inputs.".$field->field_type,['field_name'=>$field->field_name, 'field_value'=>$page_table->{$field->field_name}, 'field_label'=>$field->name])
+				@endforeach
 				@include("soda::inputs.dropdown",['field_name'=>'status', 'field_value'=>$page->status_id, 'field_options'=>Soda\Models\Status::lists('name','id'), 'field_label'=>'Status', 'field_info'=>'The status of this page'])
 			</div>
 			<div class="tab-pane" id="blockview" role="tabpanel">

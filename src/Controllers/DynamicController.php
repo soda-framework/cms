@@ -17,7 +17,7 @@ class DynamicController extends Controller
     {
         $this->type = BlockType::with('fields')->where('identifier',\Route::current()->getParameter('type'))->first();
         $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier,
-        $this->type->fields->lists('field_name')->toArray());
+            $this->type->fields->lists('field_name')->toArray());
     }
 
     public function index()

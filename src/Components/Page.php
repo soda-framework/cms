@@ -31,7 +31,7 @@ class Page {
 	 * renders the hint path and view of given page (or pageable item)
 	 * @return string
 	 */
-	public static function constructView($page, $params){
+	public static function constructView($page, $params = []){
 		if($page->action_type == 'controller'){
 			//TODO.
 			return false;

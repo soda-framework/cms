@@ -39,7 +39,7 @@ class Soda {
 		//maybe this should be somewhere else?
 
 		if(!@$this->blocks[$identifier]){
-			$this->blocks[$identifier] = Block::where('identifier', $identifier)->first();
+			$this->blocks[$identifier] = Block::with('type')->where('identifier', $identifier)->first();
 		}
 
 		return $this->blocks[$identifier];
@@ -63,7 +63,7 @@ class Soda {
 			if(get_class($model) == 'Soda\Models\ModelBuilder'){
 				//we need to get the db name and attach to the field..
 				$type = BlockType::where('identifier',$type)->first();
-				$link = route('soda.dyn.inline.edit', ['type'=>$type->id, 'model'=>$model->id,'field'=>$element]);
+				$link = route('soda.dyn.inline.edit', ['type'=>$type->identifier, 'model'=>$model->id,'field'=>$element]);
 			}
 			//TODO: figure out which type of field we need to use here..
 			return view('soda::inputs.inline.text', ['link'=>$link, 'element'=>$element, 'model'=>$model, 'unique'=>$unique, 'field_value' => $field_value]);

@@ -58,11 +58,15 @@ class PageController extends PageTemplateController
     public function view($id)
     {
         if ($id) {
-            $page = $this->model->with('blocks.type.fields')->findOrFail($id);
+            $page = $this->model->with('blocks.type.fields', 'type.fields')->findOrFail($id);
         } else {
-            $page = $this->model->with('blocks.type.fields')->getRoots()->first();
+            $page = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
-        return view('soda::page.view', ['page' => $page]);
+
+        $page_table = Soda::dynamicModel('soda_' . $page->type->identifier,
+            $page->type->fields->lists('field_name')->toArray())->where('page_id',$page->id)->first();
+
+        return view('soda::page.view', ['page' => $page, 'page_table'=>$page_table]);
     }
 
     public function edit($parent_id = null, $id = null)
