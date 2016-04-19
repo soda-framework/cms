@@ -41,10 +41,10 @@
 			</li>
 			<!-- OPTUS LINKS! TODO Make these hook into the NavigationWasRendered() event -->
             <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/news"><span class="fa fa-cog"></span> News Module</a>
+				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/news"><span class="fa fa-newspaper-o"></span> Pulse</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/scraper"><span class="fa fa-cog"></span> News Scraper</a>
+				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/scraper"><span class="fa fa-sitemap"></span> News Scraper</a>
 			</li>
 			@foreach( event(new Soda\Events\NavigationWasRendered()) as $item)
 				{!! $item !!}
