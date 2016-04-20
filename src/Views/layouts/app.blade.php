@@ -7,6 +7,8 @@
 
     <!-- JavaScripts -->
     <script src="/soda/soda/js/application.js"></script>
+    <script src="/js/tinymce.min.js"></script> <!-- temporary for that project, eventually need to have this work better -jacob -->
+
     <!-- Styles -->
     <link href="/soda/soda/css/application.css" rel="stylesheet">
     @yield('main-header')
