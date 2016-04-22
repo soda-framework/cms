@@ -52,7 +52,9 @@
             <li class="nav-item">
 				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch/import"><span class="fa fa-sitemap"></span> Watch Importer (iHR)</a>
 			</li>
-
+            <li class="nav-item">
+				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/listen"><span class="fa fa-music"></span> Listen </a>
+			</li>
 			@foreach( event(new Soda\Events\NavigationWasRendered()) as $item)
 				{!! $item !!}
 			@endforeach
