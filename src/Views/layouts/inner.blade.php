@@ -50,7 +50,7 @@
 				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch"><span class="fa fa-file-video-o"></span> Watch</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch/import"><span class="fa fa-sitemap"></span> Pulse Site Scraper</a>
+				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch/import"><span class="fa fa-sitemap"></span> Watch Importer (iHR)</a>
 			</li>
 
 			@foreach( event(new Soda\Events\NavigationWasRendered()) as $item)
