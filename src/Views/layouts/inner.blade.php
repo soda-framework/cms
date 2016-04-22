@@ -44,8 +44,15 @@
 				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/news"><span class="fa fa-newspaper-o"></span> Pulse</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/scraper"><span class="fa fa-sitemap"></span> News Scraper</a>
+				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/news/scraper"><span class="fa fa-sitemap"></span> Pulse Importer</a>
 			</li>
+            <li class="nav-item">
+				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch"><span class="fa fa-file-video-o"></span> Watch</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch/import"><span class="fa fa-sitemap"></span> Pulse Site Scraper</a>
+			</li>
+
 			@foreach( event(new Soda\Events\NavigationWasRendered()) as $item)
 				{!! $item !!}
 			@endforeach
