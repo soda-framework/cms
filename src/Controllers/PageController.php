@@ -101,6 +101,8 @@ class PageController extends PageTemplateController
         } else {
             $page = Page::where('slug', '/' . $slug)->first();
         }
+        
+        if(!$page) abort(404);
 
         return (\Soda\Components\Page::constructView($page, ['page' => $page]));
     }
