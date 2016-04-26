@@ -39,22 +39,6 @@
 			<li class="nav-item">
 				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="#"><span class="fa fa-cog"></span> Application Settings</a>
 			</li>
-			<!-- OPTUS LINKS! TODO Make these hook into the NavigationWasRendered() event -->
-            <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/pulse"><span class="fa fa-newspaper-o"></span> Pulse</a>
-			</li>
-            <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/scraper"><span class="fa fa-sitemap"></span> Pulse Importer</a>
-			</li>
-            <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch"><span class="fa fa-file-video-o"></span> Watch</a>
-			</li>
-            <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/watch/import"><span class="fa fa-sitemap"></span> Watch Importer (iHR)</a>
-			</li>
-            <li class="nav-item">
-				<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="/cms/listen"><span class="fa fa-music"></span> Listen </a>
-			</li>
 			@foreach( event(new Soda\Events\NavigationWasRendered()) as $item)
 				{!! $item !!}
 			@endforeach
