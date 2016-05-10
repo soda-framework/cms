@@ -11,7 +11,7 @@
 @endsection
 
 @section('main-content')
-	<div class="col-sm-2 sidebar" >
+	<div class="col-sm-2 sidebar">
 		<ul class="nav nav-pills nav-stacked">
 			<li class="nav-item">
 				<a class="nav-link {{Request::is('cms/pages*')?'active':''}}"  href="{{route('soda.pages')}}"><span class="fa fa-file-o"></span> Pages</a>
@@ -48,6 +48,8 @@
 		</ul>
 	</div>
 	<div class="col-sm-offset-2 col-sm-10 main-content">
-		@yield('content')
+		<div class="main-content-inner">
+			@yield('content')
+		</div>
 	</div>
 @endsection
