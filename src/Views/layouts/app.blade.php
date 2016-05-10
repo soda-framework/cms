@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     @include("soda::partials.head")
-    @yield("head")
     @yield('main-header')
 </head>
 <body>
