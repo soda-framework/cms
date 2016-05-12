@@ -7,7 +7,7 @@
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-fixed-top navbar-dark bg-inverse top-nav">
-            <a class="navbar-brand" href="{{route('home')}}">Soda CMS</a>
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="/soda/soda/img/sodacms_logowhite.png" style="max-height: 54px;margin: -0.75rem 0 -0.75rem -0.5rem;padding: 0;" /></a>
             <ul class="nav navbar-nav">
 
                 <li class="nav-item active">
