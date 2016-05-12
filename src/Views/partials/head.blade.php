@@ -9,6 +9,7 @@
 @stop
 
 @section('head.meta')
+    <link rel="shortcut icon" type="image/ico" href="/soda/soda/img/favicon.ico">
 @stop
 
 @section('head.css')
