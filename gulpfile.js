@@ -15,9 +15,9 @@ elixir(function(mix) {
     mix.sass(['scss/tree.scss'], 'public/css/tree.css');
 
     // Move assets to public location.
-    mix.copy('components', 'public/components');
-    mix.copy('img', 'public/img');
-    mix.copy('fonts', 'public/fonts');
+    mix.copy('resources/components', 'public/components');
+    mix.copy('resources/img', 'public/img');
+    mix.copy('resources/fonts', 'public/fonts');
 
     // JS FILE CONCAT
     // Main js on all (or most) pages
