@@ -11,7 +11,7 @@
             <ul class="nav navbar-nav">
 
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('home') }}">Home</a>
+                    <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/" target="_blank">View Site</a>
