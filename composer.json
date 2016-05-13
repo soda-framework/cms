@@ -16,7 +16,10 @@
   },
   "autoload": {
         "psr-4": {
-            "Soda\\": "src/"
-        }
+          "Soda\\": "src/"
+        },
+        "classmap": [
+          "database"
+        ]
     }
 }

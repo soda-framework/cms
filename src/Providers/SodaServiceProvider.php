@@ -1,97 +1,81 @@
 <?php
 namespace Soda\Providers;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Soda;
+use Soda\Models\Application;
 
 class SodaServiceProvider extends ServiceProvider {
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot() {
 
+        $this->buildApp();
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = FALSE;
+        // Loading routes
+        //if (!$this->app->routesAreCached()) {
+        //	//require __DIR__ . '/../routes.php';
+        //}
 
-	/**
-	 * Perform post-registration booting of services.
-	 *
-	 * @return void
-	 */
-	public function boot() {
+        // Publishing configs
+        $this->publishes([__DIR__.'/../../config' => config_path()]);
 
-		$this->buildApp();
+        // Publishing views
+        $this->loadViewsFrom(__DIR__.'/../../views', config('soda.hint_path'));
 
-		// Loading routes
-		//if (!$this->app->routesAreCached()) {
-		//	//require __DIR__ . '/../routes.php';
-		//}
-		// Publishing configs
+        // Loading translations
+        // $this->loadTranslationsFrom(__DIR__ . '/../translations', config('soda.hint_path'));
 
-		$this->publishes([
-			__DIR__ . '/../Config/soda.php' => config_path('soda.php'),
-		]);
-		// Publishing views
-		$this->loadViewsFrom(__DIR__ . '/../Views', config('soda.hint_path'));
+        // Publishing public assets
+        $this->publishes([__DIR__.'/../../public' => public_path('soda/soda')], 'public');
 
-		// Loading translations
-		$this->loadTranslationsFrom(__DIR__ . '/../translations', config('soda.hint_path'));
+        // Publishing migrations
+        $this->publishes([__DIR__.'/../../database' => database_path()], 'database');
+    }
 
-		// Publishing public assets
-		$this->publishes([
-			__DIR__ . '/../Assets' => public_path(config('soda.hint_path').''),
-		], 'public');
-		// Publishing migrations
-		$this->publishes([
-			__DIR__ . '/../migrations' => database_path('/migrations'),
-		], 'migrations');
-		// Publishing seeds
-		$this->publishes([
-			__DIR__ . '/../seeds' => database_path('/seeds'),
-		], 'migrations');
-	}
+    /**
+     * builds common interfaces for stuff.
+     * TODO: move this somewhere sensible?
+     */
+    public function buildApp() {
+        $this->app->singleton('application', function ($app) {
+            return Application::find(1);
+            //return('bonk');
+            //return new FooBar($app['SomethingElse']);
+        });
 
-	/**
-	 * builds common interfaces for stuff.
-	 * TODO: move this somewhere sensible?
-	 */
-	public function buildApp() {
-		$this->app->singleton('application', function ($app) {
-			$application = \Soda\Models\Application::find(1);
-			return $application;
-			//return('bonk');
-			//return new FooBar($app['SomethingElse']);
-		});
+        //TODO: we should prbs be defining a 'soda' singleton that has
+        //access to stuff like application etc that we can call from anywhere..
+    }
 
-		//TODO: we should prbs be defining a 'soda' singleton that has
-		//access to stuff like application etc that we can call from anywhere..
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register() {
+        $this->app->register('Soda\Providers\UploaderProvider');
+        $this->app->register('Soda\Providers\RouteServiceProvider');
+        $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');
+        $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');
 
+        //$this->app->bind('Soda', Soda::class);
+        $this->app->bind('soda', function () {
+            return new Soda\Soda(); //freaking cool-ass facades!
+        });
 
-	}
-
-	/**
-	 * Register bindings in the container.
-	 *
-	 * @return void
-	 */
-	public function register() {
-
-		App::register(\Soda\Providers\UploaderProvider::class);
-		App::register(\Soda\Providers\RouteServiceProvider::class);
-		App::register(\Franzose\ClosureTable\ClosureTableServiceProvider::class);
-		App::register(\Franzose\ClosureTable\ClosureTableServiceProvider::class);
-		//$this->app->bind('Soda', Soda::class);
-
-		App::bind('soda', function() {
-			return new Soda\Soda(); //freaking cool-ass facades!
-		});
-
-
-		//$this->app->singleton('Soda', function(){
-		//	return new Soda();
-		//});
-	}
+        //$this->app->singleton('Soda', function(){
+        //	return new Soda();
+        //});
+    }
 }
