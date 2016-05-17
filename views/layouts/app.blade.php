@@ -16,6 +16,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/" target="_blank">View Site</a>
                 </li>
+                @foreach( event(new Soda\Events\TopNavWasRendered()) as $item)
+                    {!! $item !!}
+                @endforeach
                 {{--
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
@@ -39,6 +42,9 @@
 
         <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenu1">
             {{--<a class='dropdown-item' href="{{ route('logout') }}"><i class="fa fa-btn fa-users"></i> My Settings</a>--}}
+            @foreach( event(new Soda\Events\TopNavDropdownWasRendered()) as $item)
+                {!! $item !!}
+            @endforeach
             <a class='dropdown-item' href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a>
         </div>
     </div>
