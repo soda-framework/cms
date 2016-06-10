@@ -633,7 +633,7 @@
 								e.type = "click";
 								$(e.currentTarget).trigger(e);
 								break;
-							case 37: // right
+							case 37: // left
 								e.preventDefault();
 								if(this.is_open(e.currentTarget)) {
 									this.close_node(e.currentTarget);
@@ -648,7 +648,7 @@
 								o = this.get_prev_dom(e.currentTarget);
 								if(o && o.length) { o.children('.jstree-anchor').focus(); }
 								break;
-							case 39: // left
+							case 39: // right
 								e.preventDefault();
 								if(this.is_closed(e.currentTarget)) {
 									this.open_node(e.currentTarget, function (o) { this.get_node(o, true).children('.jstree-anchor').focus(); });
@@ -1232,7 +1232,9 @@
 						dom.addClass('jstree-leaf');
 					}
 					else {
-						dom.addClass(obj.state.opened ? 'jstree-open' : 'jstree-closed');
+						if (obj.id !== '#') {
+							dom.addClass(obj.state.opened ? 'jstree-open' : 'jstree-closed');
+						}
 					}
 				}
 				dom.removeClass("jstree-loading").attr('aria-busy',false);
@@ -2568,7 +2570,9 @@
 							.children(".jstree-children").stop(true, true)
 								.slideDown(animation, function () {
 									this.style.display = "";
-									t.trigger("after_open", { "node" : obj });
+									if (t.element) {
+										t.trigger("after_open", { "node" : obj });
+									}
 								});
 					}
 				}
@@ -2680,7 +2684,9 @@
 						.children(".jstree-children").stop(true, true).slideUp(animation, function () {
 							this.style.display = "";
 							d.children('.jstree-children').remove();
-							t.trigger("after_close", { "node" : obj });
+							if (t.element) {
+								t.trigger("after_close", { "node" : obj });
+							}
 						});
 				}
 			}
@@ -3496,7 +3502,7 @@
 				 * @param {Array} nodes - an array of the IDs of the nodes that were reloaded
 				 */
 				this.trigger('refresh_node', { 'node' : obj, 'nodes' : nodes });
-			}, this));
+			}, this), false, true);
 		},
 		/**
 		 * set (change) the ID of a node

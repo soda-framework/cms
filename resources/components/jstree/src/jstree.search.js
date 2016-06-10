@@ -97,13 +97,17 @@
 			this.element
 				.on("search.jstree", $.proxy(function (e, data) {
 						if(this._data.search.som && data.res.length) {
-							var m = this._model.data, i, j, p = [];
+							var m = this._model.data, i, j, p = [], k, l;
 							for(i = 0, j = data.res.length; i < j; i++) {
 								if(m[data.res[i]] && !m[data.res[i]].state.hidden) {
 									p.push(data.res[i]);
 									p = p.concat(m[data.res[i]].parents);
 									if(this._data.search.smc) {
-										p = p.concat(m[data.res[i]].children_d);
+										for (k = 0, l = m[data.res[i]].children_d.length; k < l; k++) {
+											if (m[m[data.res[i]].children_d[k]] && !m[m[data.res[i]].children_d[k]].state.hidden) {
+												p.push(m[data.res[i]].children_d[k]);
+											}
+										}
 									}
 								}
 							}
@@ -194,7 +198,7 @@
 			f = new $.vakata.search(str, true, { caseSensitive : s.case_sensitive, fuzzy : s.fuzzy });
 			$.each(m[inside ? inside : $.jstree.root].children_d, function (ii, i) {
 				var v = m[i];
-				if(v.text && (!s.search_leaves_only || (v.state.loaded && v.children.length === 0)) && ( (s.search_callback && s.search_callback.call(this, str, v)) || (!s.search_callback && f.search(v.text).isMatch) ) ) {
+				if(v.text && !v.state.hidden && (!s.search_leaves_only || (v.state.loaded && v.children.length === 0)) && ( (s.search_callback && s.search_callback.call(this, str, v)) || (!s.search_callback && f.search(v.text).isMatch) ) ) {
 					r.push(i);
 					p = p.concat(v.parents);
 				}

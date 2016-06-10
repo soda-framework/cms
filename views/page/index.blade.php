@@ -5,9 +5,9 @@
     <title>Pages</title>
     {{--note: non of these have anything in them anymore--}}
     <!-- JavaScripts -->
-    <script src="/soda/soda/js/content.js"></script>
+    <script src="/sodacms/sodacms/js/content.js"></script>
     <!-- Styles -->
-    <link href="/soda/soda/css/content.css" rel="stylesheet">
+    <link href="/sodacms/sodacms/css/content.css" rel="stylesheet">
 
 @endsection
 

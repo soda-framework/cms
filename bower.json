@@ -5,12 +5,13 @@
     "Simon Davies <noodlewitt@gmail.com>"
   ],
   "license": "MIT",
-  "private": true,
   "dependencies": {
     "bootstrap": "~4",
     "jstree": "~3",
     "font-awesome": "^4.5.0",
-    "bootstrap-sass": "~3"
+    "bootstrap-sass": "~3",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
+    "tinymce": "^4.3.12"
   },
   "devDependencies": {
     "jquery-sortable": "~0.9.13",

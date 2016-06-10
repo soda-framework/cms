@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Soda;
 use Soda\Models\Application;
@@ -37,10 +38,21 @@ class SodaServiceProvider extends ServiceProvider {
         // $this->loadTranslationsFrom(__DIR__ . '/../translations', config('soda.hint_path'));
 
         // Publishing public assets
-        $this->publishes([__DIR__.'/../../public' => public_path('soda/soda')], 'public');
+        $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'public');
 
         // Publishing migrations
         $this->publishes([__DIR__.'/../../database' => database_path()], 'database');
+
+
+        Blade::extend(function($value, $compiler)
+        {
+            $value = preg_replace('/(?<=\s)@switch\((.*)\)(\s*)@case\((.*)\)(?=\s)/', '<?php switch($1):$2case $3: ?>', $value);
+            $value = preg_replace('/(?<=\s)@endswitch(?=\s)/', '<?php endswitch; ?>', $value);
+            $value = preg_replace('/(?<=\s)@case\((.*)\)(?=\s)/', '<?php case $1: ?>', $value);
+            $value = preg_replace('/(?<=\s)@default(?=\s)/', '<?php default: ?>', $value);
+            $value = preg_replace('/(?<=\s)@break(?=\s)/', '<?php break; ?>', $value);
+            return $value;
+        });
     }
 
     /**

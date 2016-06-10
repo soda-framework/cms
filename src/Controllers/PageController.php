@@ -44,8 +44,10 @@ class PageController extends PageTemplateController
         }
 
         $tree = $this->htmlTree();
+
         $pages = $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
-//      dd($pages);
+
+
 //
 //		if ($id) {
 //			$page = Page::findOrFail($id);
@@ -63,13 +65,19 @@ class PageController extends PageTemplateController
             $page = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
 
-        $page_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-            $page->type->fields->lists('field_name')->toArray())->where('page_id',$page->id)->first();
+        if(@$page->type->identifier){
+            $page_table = Soda::dynamicModel('soda_' . $page->type->identifier,
+                $page->type->fields->lists('field_name')->toArray())->first();
+        }
+        else{
+            $page_table = NULL;
+        }
+
 
         return view('soda::page.view', ['page' => $page, 'page_table'=>$page_table]);
     }
 
-    public function edit($parent_id = null, $id = null)
+    public function edit(Request $request,  $id = null)
     {
         if ($id) {
             $page = $this->model->findOrFail($id);
@@ -77,8 +85,19 @@ class PageController extends PageTemplateController
             $page = new Page();
         }
 
-        $page->fill(Request::input());
+        $page->fill($request->all());
         $page->save();
+
+
+        //we also need to save the settings - careful here..
+        $page->load('type.fields');
+
+        $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier, $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
+
+        $settings = $request->input('settings');
+        $dyn_table->forceFill($settings);
+        $dyn_table->save();
+        //$dyn_table->fill()
 
         return redirect()->route($this->routeHint . 'view', ['id' => $request->id])->with('success', 'page updated');
     }
@@ -137,7 +156,9 @@ class PageController extends PageTemplateController
         $page->name = $request->input('name');
         $page->slug = $parent->generateSlug($request->input('slug'));
         $page->status_id = 1;
-        $page->view = 'soda::default.donk'; //TODO: allow for inheriting these properties.
+        $page->action_type = 'view';
+        $page->package = 'soda';
+        $page->action = 'default.view'; //TODO: allow for inheriting these properties.
         $page->application_id = Soda::getApplication()->id;
 
         $parent->addChild($page);

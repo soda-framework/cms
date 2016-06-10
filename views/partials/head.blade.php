@@ -14,12 +14,12 @@
 
 @section('head.css')
     <!-- Styles -->
-    <link href="/soda/soda/css/application.css" rel="stylesheet">
+    <link href="/sodacms/sodacms/css/application.css" rel="stylesheet">
 @stop
 
 @section('head.js')
     <!-- JavaScripts -->
-    <script src="/soda/soda/js/application.js"></script>
+    <script src="/sodacms/sodacms/js/application.js"></script>
 @stop
 
 @section('head.extra')

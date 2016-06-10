@@ -64,7 +64,7 @@ class PageTemplateController extends Controller
         return view('soda::page.view', ['page' => $page]);
     }
 
-    public function edit($parent_id = null, $id = null)
+    public function edit(Request $request, $id = null)
     {
         if ($id) {
             $page = $this->model->findOrFail($id);

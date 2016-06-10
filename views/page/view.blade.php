@@ -15,11 +15,11 @@
 	<h1>{{$page->name}}</h1>
 	<p>{{$page->description}}</p>
 	<ul class="nav nav-tabs" >
-		<li class="nav-item" aria-controls="Normal View">
-			<a class="nav-link active" role="tab" data-toggle="tab" href="#normalview">Normal</a>
+		<li class="nav-item" aria-controls="{{$page->name}}">
+			<a class="nav-link active" role="tab" data-toggle="tab" href="#normalview">{{$page->name}}</a>
 		</li>
-		<li class="nav-item" aria-controls="Block View">
-			<a class="nav-link" role="tab" data-toggle="tab" href="#blockview">Blocks</a>
+		<li class="nav-item" aria-controls="Page View">
+			<a class="nav-link" role="tab" data-toggle="tab" href="#pageview">Page</a>
 		</li>
 		<li class="nav-item" aria-controls="Live View">
 			<a class="nav-link" role="tab" data-toggle="tab" href="#liveview">Live View</a>
@@ -36,20 +36,22 @@
 		{!! csrf_field() !!}
 		<div class="tab-content">
 			<div class="tab-pane active" id="normalview" role="tabpanel">
+				@if(@$page->type->fields)
+					@foreach($page->type->fields as $field)
+							@include("soda::inputs.".$field->field_type,['field_name'=>'settings['.$field->field_name.']', 'field_value'=>$page_table->{$field->field_name}, 'field_label'=>$field->name])
+					@endforeach
+				@endif
+				@foreach($page->blocks as $block)
+					{{--loads a block into place.. --}}
+					@include($block->type->edit_action_type,['unique'=>uniqid(), 'render'=>'card', 'name'=>$block->type->name, 'fields'=>$block->type->fields, 'type'=>$block->type, 'models'=>Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->paginate()])
+				@endforeach
+			</div>
+			<div class="tab-pane" id="pageview" role="tabpanel">
 				<p>Customise page details</p>
 				@include("soda::inputs.text",['field_name'=>'name', 'field_value'=>$page->name, 'field_label'=>'Name', 'field_info'=>'The name of this page'])
 				@include("soda::inputs.text",['field_name'=>'slug', 'field_value'=>$page->slug, 'field_label'=>'Slug', 'field_info'=>'The url of this page'])
-				@foreach($page->type->fields as $field)
-						@include("soda::inputs.".$field->field_type,['field_name'=>$field->field_name, 'field_value'=>$page_table->{$field->field_name}, 'field_label'=>$field->name])
-				@endforeach
+				@include("soda::inputs.text",['field_name'=>'description', 'field_value'=>$page->description, 'field_label'=>'Description', 'field_info'=>'The description of this page'])
 				@include("soda::inputs.dropdown",['field_name'=>'status', 'field_value'=>$page->status_id, 'field_options'=>Soda\Models\Status::lists('name','id'), 'field_label'=>'Status', 'field_info'=>'The status of this page'])
-			</div>
-			<div class="tab-pane" id="blockview" role="tabpanel">
-				<p>Customise page block details</p>
-				@foreach($page->blocks as $block)
-					{{--loads a block into place.. --}}
-					@include($block->type->edit_action_type,['render'=>'card', 'name'=>$block->type->name, 'fields'=>$block->type->fields, 'type'=>$block->type, 'models'=>Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->paginate()])
-				@endforeach
 			</div>
 			<div class="tab-pane" id="liveview" role="tabpanel">
 				<p>Use this tab to customise information on the page in a live view</p>

@@ -82,7 +82,11 @@ Route::group(['middleware'=>'web'], function(){
 
 
 			Route::post('/upload',['as'=>'soda.upload', 'uses'=>'UploadController@upload']);
-			Route::get('/upload/delete',['as'=>'soda.upload.delete', 'uses'=>'UploadController@delete']);
+			Route::post('/upload/delete',['as'=>'soda.upload.delete', 'uses'=>'UploadController@delete']);
+
+			//Pulls in upload urls where we can parse them with something.
+			Route::get('/upload/retrieve',['as'=>'soda.upload.retrieve', 'uses'=>'UploadController@retrieveUpload']);
+
 			//
 			//Route::get('/users', function(Soda\Models\User $user){
 			//	return $user;

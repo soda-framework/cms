@@ -98,6 +98,7 @@ Trait TreeableTrait
      * @return string
      */
     public function move($id, $parent_id, $position){
+
         $item = $this->model->find($id);
 
         if($parent_id == 'root'){
@@ -106,6 +107,7 @@ Trait TreeableTrait
         else{
             $parent = $this->model->find($parent_id);
         }
+
 
         //re-handle slugging - TODO: should we make this optional?
         $item->slug = $parent->generateSlug($item->name);
@@ -117,7 +119,8 @@ Trait TreeableTrait
             return 'true';
         }
 
-        $item->moveTo($position, $parent_id);
+        $item->moveTo($position, $parent->id);
+
         return 'true'; //todo - should return json?
     }
 

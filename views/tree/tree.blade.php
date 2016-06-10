@@ -13,7 +13,7 @@
 	</div>
 
 	<ul>
-		@if(isset($tree->children))
+		@if($tree->hasChildren())
 			@foreach($tree->children as $child)
 				@include('soda::tree.tree', ['tree'=>$child])
 			@endforeach

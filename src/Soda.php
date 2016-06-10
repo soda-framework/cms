@@ -83,4 +83,29 @@ class Soda {
 	public function menuActive($route, $output = 'active'){
 		if (Route::currentRouteName() == $route) return $output;
 	}
+
+
+	/**
+	 * truncate to x amount of words.
+	 * @param $string
+	 * @param $wordsreturned
+	 * @return mixed|string
+	 */
+	public function truncate_words($string, $wordsreturned)
+	{
+		$retval = $string;
+		$string = preg_replace('/(?<=\S,)(?=\S)/', ' ', $string);
+		$string = str_replace("\n", " ", $string);
+		$array = explode(" ", $string);
+		if (count($array)<=$wordsreturned)
+		{
+			$retval = $string;
+		}
+		else
+		{
+			array_splice($array, $wordsreturned);
+			$retval = implode(" ", $array)." ...";
+		}
+		return $retval;
+	}
 }

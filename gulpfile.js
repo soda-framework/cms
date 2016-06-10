@@ -9,15 +9,16 @@ elixir(function(mix) {
 
     // SASS FILE COMPILATION
     // Main scss file
-    mix.sass(['scss/application.scss'], 'public/css/application.css');
+    mix.sass(['sass/application.scss'], 'public/css/application.css');
 
     // For tree
-    mix.sass(['scss/tree.scss'], 'public/css/tree.css');
+    mix.sass(['sass/tree.scss'], 'public/css/tree.css');
 
     // Move assets to public location.
     mix.copy('resources/components', 'public/components');
     mix.copy('resources/img', 'public/img');
     mix.copy('resources/fonts', 'public/fonts');
+    mix.copy('resources/css', 'public/css');
 
     // JS FILE CONCAT
     // Main js on all (or most) pages
@@ -28,9 +29,14 @@ elixir(function(mix) {
         'components/bootstrap/js/dist/tab.js',
         'components/bootstrap/js/dist/dropdown.js',
         'components/bootstrap/js/dist/modal.js',
-        'components/bootstrap/js/dist/collapse.js',
-        'components/bootstrap-fileinput/js/fileinput.js',
+        'components/bootstrap/js/dist/collapse.js',             //TODO: move this to a file on it's own?
+        'components/bootstrap-fileinput/js/fileinput.js',       //TODO: move this to a file on it's own?
         'components/jquery-sortable/source/js/jquery-sortable.js', //TODO: move this to a file on it's own?
+
+        'components/tinymce/tinymce.min.js', //TODO: move this to a file on it's own?
+
+        'components/moment/min/moment.min.js',      //TODO: for datetimepicker only - move this somewhere else?
+        'components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
     ], 'public/js/application.js')
 
     // For content page(s)
