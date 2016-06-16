@@ -75,6 +75,18 @@ class DynamicController extends Controller
     }
 
     /**
+     * delete
+     * @param Request $request
+     * @param null $type
+     * @param null $id
+     */
+    public function delete(Request $request, $type = null, $id = null){
+        $this->model = $this->model->findOrFail($id);
+        $this->model->delete();
+        return \Redirect::back()->with('message', 'Success, item deleted'); //TODO: this should use nicer refirect?
+    }
+
+    /**
      * edits a specific field and value!
      * @param $type
      * @param $id
@@ -82,9 +94,11 @@ class DynamicController extends Controller
      */
     public function inlineEdit($type, $id, $field)
     {
+
         $this->model = $this->model->findOrFail($id);
         $this->model->{$field} = \Request::get($field);
         $this->model->save();
+
         //TODO: respnse?
     }
 }
