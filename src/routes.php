@@ -56,7 +56,7 @@ Route::group(['middleware'=>'web'], function(){
 			Route::get('/dyn/{type}/view/{id?}', ['as'=>'soda.dyn.view', 'uses'=>'DynamicController@view']);
 			Route::post('/dyn/{type}/view/{id?}', ['as'=>'soda.dyn.edit', 'uses'=>'DynamicController@edit']);
 			Route::post('/dyn/{type}/inline/{id}/{field}', ['as'=>'soda.dyn.inline.edit', 'uses'=>'DynamicController@inlineEdit']);
-			Route::post('/dyn/{type}/delete/{id?}', ['as'=>'soda.dyn.delete', 'uses'=>'DynamicController@delete']);
+			Route::get('/dyn/{type}/delete/{id?}', ['as'=>'soda.dyn.delete', 'uses'=>'DynamicController@delete']);
 			//update the data on this block type
 			//Route::get('/dyn/{type}/update/{id?}', ['as'=>'soda.dyn.update', 'uses'=>'DynamicController@update']);
 
