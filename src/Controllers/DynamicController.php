@@ -58,7 +58,7 @@ class DynamicController extends Controller
                     $this->model->{$field->field_name} = Carbon::createFromFormat('m/d/Y g:i A',
                         $request->input($field->field_name));
                 } else {
-                    $this->model->{$field->field_name} = $request->input($field->field_name);
+                    $this->model->{$field->field_name} = NULL;
                     //else if it's not set (or blank) do we want to run some special stuff here?
                     //could and should this be moved to outside the above if statement (could cause problems with blank fields ..like checkboxes etc)
                 }
