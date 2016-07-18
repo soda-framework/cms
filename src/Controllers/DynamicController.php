@@ -17,7 +17,7 @@ class DynamicController extends Controller
 
     public function __construct(ModelBuilder $modelBuilder)
     {
-        $this->type = BlockType::with('fields')->where('identifier',\Route::current()->getParameter('type'))->first();
+        $this->type = BlockType::with('fields')->where('identifier', \Route::current()->getParameter('type'))->first();
         $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier,
             $this->type->fields->lists('field_name')->toArray());
     }
@@ -48,18 +48,24 @@ class DynamicController extends Controller
         //dd($this->type->fields);
 
         //TODO: this shiz should be in model??
-        foreach($this->type->fields as $field){
+        foreach ($this->type->fields as $field) {
             //we have some default mutators for sensible stuff:
-            if($field->field_type == 'datetime'){
+
+            if ($field->field_type == 'datetime') {
                 //TODO: parse format through from field params?
                 //TODO: timezone parse through from field params
-                $this->model->{$field->field_name} = Carbon::createFromFormat('m/d/Y g:i A', $request->input($field->field_name));
-
-            }
-            else{
+                if ($request->input($field->field_name)) {
+                    $this->model->{$field->field_name} = Carbon::createFromFormat('m/d/Y g:i A',
+                        $request->input($field->field_name));
+                } else {
+                    //else if it's not set (or blank) do we want to run some special stuff here?
+                    //could and should this be moved to outside the above if statement (could cause problems with blank fields ..like checkboxes etc)
+                }
+            } else {
                 //default, just chuck in the values.
                 $this->model->{$field->field_name} = $request->input($field->field_name);
             }
+
         }
 
         //dd($request->except(['_token']));
@@ -80,7 +86,8 @@ class DynamicController extends Controller
      * @param null $type
      * @param null $id
      */
-    public function delete(Request $request, $type = null, $id = null){
+    public function delete(Request $request, $type = null, $id = null)
+    {
         $this->model = $this->model->findOrFail($id);
         $this->model->delete();
         return \Redirect::back()->with('message', 'Success, item deleted'); //TODO: this should use nicer refirect?
