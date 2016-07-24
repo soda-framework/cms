@@ -4,7 +4,7 @@
 		<i class="fa fa-bars handle"></i>
 		<i class="fa fa-minus minify"></i>
 		<a class='item-title' href="{{route('soda.pages.view', ['id'=>$tree->id])}}">{{$tree->name}}</a>
-		<div class="btn-group pull-xs-right" role="group" aria-label="Basic example">
+		<div class="btn-group pull-right" role="group" aria-label="Basic example">
 			<a class='btn btn-success btn-sm' href="{{route('soda.pages.create', ['id'=>$tree->id])}}"><span class="fa fa-plus"></span></a>
 			<a class='btn btn-info btn-sm' href="{{$tree->slug}}"><span class="fa fa-external-link"></span></a>
 			<a class='btn btn-danger btn-sm' href="{{route('soda.pages.delete', ['id'=>$tree->id])}}"><span class="fa fa-remove"></span></a>

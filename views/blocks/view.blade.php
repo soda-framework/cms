@@ -5,13 +5,7 @@
 @endsection
 
 @section('content')
-	<h1>
-		@if(!@$model->id)
-			Create {{ucfirst($type->name)}}
-		@else
-			Update {{ucfirst($type->name)}}
-		@endif
-	</h1>
+	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-file-o', 'title'=>(@$model->id?'Update ':'Create ').ucfirst($type->name)])
 
 	<form method="POST" action='{{route('soda.dyn.edit',['type'=>$type->id, 'id'=>@$model->id])}}' class="form--wrapper">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />

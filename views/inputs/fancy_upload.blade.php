@@ -14,17 +14,17 @@
 <script type="application/javascript">
 
 	$("#field_{{@$nice_name}}").fileinput({
-		'uploadUrl':'{{route('soda.upload')}}',
-		'deleteUrl':'{{route('soda.upload.delete')}}',
-		'allowedFileTypes':['image','audio'],
-
+		uploadUrl:'{{route('soda.upload')}}',
+		deleteUrl:'{{route('soda.upload.delete')}}',
+		allowedFileTypes:['image','audio'],
+		theme:'fa',
 		uploadAsync: true,
 		minFileCount: 1,
 		maxFileCount: 1,
 		overwriteInitial: true,
 		initialPreview:[
 			@if($field_value)
-			"<img src='{{$field_value}}' width='120' /><input type='hidden' value='{{@$field_value}}' name='{{@$field_name}}' />"
+			'{{$field_value}}',
 			@endif
 		],
 		initialPreviewConfig:[
@@ -45,6 +45,15 @@
 		},
 		deleteExtraData: {
 			_token:"{{csrf_token()}}"
+		},
+		previewFileIcon: '<i class="fa fa-file"></i>',
+		previewFileIconSettings: {
+			'docx': '<i class="fa fa-file-word-o text-primary"></i>',
+			'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
+			'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+			'jpg': '<i class="fa fa-file-photo-o text-warning"></i>',
+			'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+			'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
 		}
 	});
 </script>
