@@ -78,7 +78,7 @@ class User extends Authenticatable{
 	 */
 	public function role()
 	{
-		return $this->hasMany('Soda\Role');
+		return $this->belongsTo(Role::class);
 	}
 
 }

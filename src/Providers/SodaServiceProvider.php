@@ -76,9 +76,10 @@ class SodaServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
+        $this->app->register('Soda\Providers\AuthServiceProvider');
         $this->app->register('Soda\Providers\UploaderProvider');
         $this->app->register('Soda\Providers\RouteServiceProvider');
-        $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');
+
         $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');
 
         //$this->app->bind('Soda', Soda::class);

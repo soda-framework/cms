@@ -5,6 +5,7 @@
     @yield('main-header')
 </head>
 <body>
+
     <div class="container-fluid">
         <nav class="navbar navbar-fixed-top navbar-dark bg-inverse top-nav">
             <a class="navbar-brand" href="{{ route('home') }}"><img src="/sodacms/sodacms/img/sodacms_logowhite.png" style="max-height: 54px;margin: -0.75rem 0 -0.75rem -0.5rem;padding: 0;" /></a>
@@ -16,6 +17,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/" target="_blank">View Site</a>
                 </li>
+
                 @foreach( event(new Soda\Events\TopNavWasRendered()) as $item)
                     {!! $item !!}
                 @endforeach
@@ -24,7 +26,8 @@
                     <a class="nav-link" href="#">Contact</a>
                 </li>
                 --}}
-                @if (Auth::guest())
+
+                @if (Auth::guard('soda')->guest())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/login') }}">Login</a>
                     </li>
@@ -35,10 +38,11 @@
                     --}}
                 @endif
 </ul>
-@if(Auth::check())
+
+@if(Auth::guard('soda')->check())
 <div class="pull-xs-right">
     <div class="dropdown">
-        <a href='#' class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }}</a>
+        <a href='#' class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::guard('soda')->user()->username }}</a>
 
         <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenu1">
             {{--<a class='dropdown-item' href="{{ route('logout') }}"><i class="fa fa-btn fa-users"></i> My Settings</a>--}}

@@ -24,7 +24,7 @@ class Role extends Model
 	 */
 	public function user()
 	{
-		return $this->hasMany('Soda\User');
+		return $this->hasMany(User::class);
 	}
 
 }

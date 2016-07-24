@@ -32,6 +32,7 @@ class AuthController extends Controller
 	protected $redirectTo = '/cms';
 	protected $redirectAfterLogout = '/cms';
 	protected $loginPath = '/cms/auth/login';
+	protected $guard = 'soda';
 
 	/**
 	 * Create a new authentication controller instance.

@@ -1,6 +1,7 @@
 @extends(config('soda.hint_path').'::layouts.app')
 
 @section('main-content')
+
     <div class="main-content row">
         <div class="col-xs-6 col-xs-offset-3">
 
@@ -71,4 +72,5 @@
             </div>
         </div>
     </div>
+
 @endsection

@@ -16,7 +16,7 @@ Route::group(['middleware'=>'web'], function(){
 		Route::post('auth/register', ['as'=>'register-attempt', 'uses'=>'Auth\AuthController@postRegister']);
 
 // Dashboard and user routes...
-		Route::group(['middleware' => 'soda'], function () {
+		Route::group(['middleware' => 'soda.auth:soda'], function () {
 			Route::get('/', ['as'=>'home', 'uses'=>'HomeController@getIndex']);
 
 			//test routes..

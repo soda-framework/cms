@@ -5,6 +5,7 @@ namespace Soda\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+
 class Authenticate
 {
 	/**
@@ -17,6 +18,7 @@ class Authenticate
 	 */
 	public function handle($request, Closure $next, $guard = null)
 	{
+		config()->set('auth.defaults.guard', $guard); //test me!
 		if (Auth::guard($guard)->guest()) {
 			if ($request->ajax()) {
 				return response('Unauthorized.', 401);
