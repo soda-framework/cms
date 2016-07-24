@@ -20,12 +20,32 @@ class SodaServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+        //TODO: I don't know if this is ok to do or not - just hoping for the best here really
+
+        config()->set('auth.providers.soda', [
+            'driver' => 'eloquent',
+            'model' => \Soda\Models\User::class
+        ]);
+        config()->set('auth.guards.soda', [
+            'driver' => 'session',
+            'provider' => 'soda',
+        ]);
+
+        config()->set('auth.passwords.soda', [
+            'provider' => 'soda',
+            'email' => 'auth.emails.password',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ]);
+
+        //config()->set('auth.defaults.guard', 'soda');
+
 
         $this->buildApp();
 
         // Loading routes
         //if (!$this->app->routesAreCached()) {
-        //	//require __DIR__ . '/../routes.php';
+        //  //require __DIR__ . '/../routes.php';
         //}
 
         // Publishing configs
@@ -88,7 +108,7 @@ class SodaServiceProvider extends ServiceProvider {
         });
 
         //$this->app->singleton('Soda', function(){
-        //	return new Soda();
+        //  return new Soda();
         //});
     }
 }
