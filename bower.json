@@ -1,20 +1,18 @@
 {
   "name": "Soda CMS",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "authors": [
     "Simon Davies <noodlewitt@gmail.com>"
   ],
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "~4",
     "jstree": "~3",
     "font-awesome": "^4.5.0",
     "bootstrap-sass": "~3",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
-    "tinymce": "^4.3.12"
-  },
-  "devDependencies": {
+    "tinymce": "^4.3.12",
+    "bootstrap-sweetalert": "~0.4.5",
     "jquery-sortable": "~0.9.13",
-    "bootstrap-fileinput": "^4.3.1"
+    "bootstrap-fileinput": "4.3.*"
   }
 }

@@ -1,5 +1,6 @@
 ul.tree-view {
-  list-style: none; }
+  list-style: none;
+  margin-left: 0; }
   ul.tree-view ul {
     list-style: none; }
   ul.tree-view .tree-item {
