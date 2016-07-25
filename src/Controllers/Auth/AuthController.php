@@ -8,6 +8,7 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -29,9 +30,10 @@ class AuthController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/cms';
+	protected $redirectPath = '/cms';
 	protected $redirectAfterLogout = '/cms';
 	protected $loginPath = '/cms/auth/login';
+
 	protected $guard = 'soda';
 
 	/**
@@ -84,5 +86,11 @@ class AuthController extends Controller
 	public function getRegister()
 	{
 		return view('soda::auth.register');
+	}
+
+	public function postLogin(Request $request)
+	{
+		config()->set('auth.defaults.guard', $this->guard);
+		return $this->login($request);
 	}
 }

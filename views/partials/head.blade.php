@@ -14,7 +14,7 @@
 
 @section('head.css')
     <!-- Styles -->
-    <link href="/sodacms/sodacms/css/application.css" rel="stylesheet">
+    <link href="/sodacms/sodacms/css/application.min.css" rel="stylesheet">
 @stop
 
 @section('head.js')

@@ -32,7 +32,17 @@ class HomeController extends Controller {
 			abort(403);
 
 		}
-		return view('soda::home.home');
+		$dashboard = event(new \Soda\Events\DashboardWasRendered());
+		if(!empty($dashboard)){
+			return $dashboard[0];
+		}
+		else{
+			return view('soda::home.dashboard');
+		}
+		//dd(event(new \Soda\Events\DashboardWasRendered()));
+		//return event(new Soda\Events\DashboardWasRendered());
+
+
 
 	}
 

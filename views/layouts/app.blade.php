@@ -16,7 +16,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="" style="    max-height: 100%;" href="{{ route('home') }}"><img src="/sodacms/sodacms/img/sodacms_logowhite.png" /></a>
+                    <a class="soda-logo"  href="{{ route('home') }}"><img src="/sodacms/sodacms/img/sodacms_logowhite.png" /></a>
                 </div>
 
 
@@ -52,7 +52,7 @@
                     @if(Auth::check())
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href='#' class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }}</a>
+                                <a href='#' class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-btn fa-user"></i> {{ Auth::user()->username }}</a>
                                 <ul class="dropdown-menu">
                                     @foreach( event(new Soda\Events\TopNavDropdownWasRendered()) as $item)
                                         {!! $item !!}

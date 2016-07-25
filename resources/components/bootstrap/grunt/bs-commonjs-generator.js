@@ -16,7 +16,8 @@ module.exports = function generateCommonJSModule(grunt, srcFiles, destFilepath) 
   var destDir = path.dirname(destFilepath);
 
   function srcPathToDestRequire(srcFilepath) {
-    return 'require(\'' + srcFilepath.replace(/\\/g, '/') + '\')';
+    var requirePath = path.relative(destDir, srcFilepath).replace(/\\/g, '/');
+    return 'require(\'' + requirePath + '\')';
   }
 
   var moduleOutputJs = COMMONJS_BANNER + srcFiles.map(srcPathToDestRequire).join('\n');

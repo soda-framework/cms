@@ -13,7 +13,7 @@
 @section('main-content')
 	<div class="row">
 		<div class="col-sm-2 sidebar">
-			<ul class="nav nav-pills nav-stacked">
+			<ul class="nav nav-sidebar">
 				@if(config("soda.menu.pages", true))
 					<li class="nav-item">
 						<a class="nav-link {{Request::is('cms/pages*')?'active':''}}"  href="{{route('soda.pages')}}"><span class="fa fa-file-o"></span> Pages</a>

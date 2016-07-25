@@ -50,4 +50,11 @@ class Page extends Entity implements PagesInterface
         return $this->belongsToMany(Block::class, 'page_blocks');
     }
 
+    public static function hasFieldsOrBlocks($page){
+        if((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())){
+            return true;
+        }
+        return false;
+    }
+
 }

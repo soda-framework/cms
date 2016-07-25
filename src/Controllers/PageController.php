@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Soda\Models\Page;
 use Soda\Models\Template;
+use Soda\Models\PageType;
 use Soda\Facades\Soda;
 
 
@@ -43,6 +44,8 @@ class PageController extends PageTemplateController
             $page = $this->model->where('id', $request->input('id'))->first();
         }
 
+        $page_types = PageType::get();
+
         $tree = $this->htmlTree();
 
         $pages = $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
@@ -54,7 +57,7 @@ class PageController extends PageTemplateController
 //		} else {
 //			$page = Page::getRoots()->first();
 //		}
-        return view('soda::page.index', ['pages' => $pages, 'tree' => $tree]);
+        return view('soda::page.index', ['pages' => $pages, 'tree' => $tree,'page_types'=>$page_types]);
     }
 
     public function view($id)
@@ -84,7 +87,6 @@ class PageController extends PageTemplateController
         } else {
             $page = new Page();
         }
-
         $page->fill($request->all());
         $page->save();
 
@@ -120,8 +122,11 @@ class PageController extends PageTemplateController
         } else {
             $page = Page::where('slug', '/' . $slug)->first();
         }
-        
+
         if(!$page) abort(404);
+        //TODO: if this is a controller method how should we handle this? maybe in a routes method..
+        //Route::get($slug, ['as'=>'register', 'uses'=>$controller]);
+        //this might not work though.. more thought needed.
 
         return (\Soda\Components\Page::constructView($page, ['page' => $page]));
     }

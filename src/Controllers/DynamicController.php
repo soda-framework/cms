@@ -40,6 +40,7 @@ class DynamicController extends Controller
 
     public function edit(Request $request, $type = null, $id = null)
     {
+
         if ($id) {
             $this->model = $this->model->findOrFail($id);
         }

@@ -16,15 +16,16 @@
 	$("#field_{{@$nice_name}}").fileinput({
 		uploadUrl:'{{route('soda.upload')}}',
 		deleteUrl:'{{route('soda.upload.delete')}}',
-		allowedFileTypes:['image','audio'],
+		allowedFileTypes:['image','audio'], //TODO: this should come from validation array.
 		theme:'fa',
 		uploadAsync: true,
 		minFileCount: 1,
 		maxFileCount: 1,
 		overwriteInitial: true,
 		initialPreview:[
+			{{--TODO: should be able to just specify file types then add the input fields onupload.. haven't been able to make it work yet though - this will allow for automatic detection of images/audio/video by the plugin. --}}
 			@if($field_value)
-			'{{$field_value}}',
+			'<img src="{{$field_value}}" width="120"><input type="hidden" value="{{$field_value}}" name="{{$field_name}}" />',
 			@endif
 		],
 		initialPreviewConfig:[
@@ -36,8 +37,8 @@
 				}
 		@endif
 		],
-		allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
-		initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+		allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],	//TODO: this should come from validation array.
+		initialPreviewAsData: false, // identify if you are sending preview data only and not the raw markup
 		autoReplace : true,
 		uploadExtraData: {
 			_token:"{{csrf_token()}}",
@@ -46,6 +47,7 @@
 		deleteExtraData: {
 			_token:"{{csrf_token()}}"
 		},
+		//we want to use font awesome instead of glyphicons.
 		previewFileIcon: '<i class="fa fa-file"></i>',
 		previewFileIconSettings: {
 			'docx': '<i class="fa fa-file-word-o text-primary"></i>',
