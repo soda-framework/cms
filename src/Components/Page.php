@@ -32,15 +32,18 @@ class Page {
 	 * @return string
 	 */
 	public static function constructView($page, $params = []){
-		if($page->action_type == 'controller'){
-			//TODO.
-			return false;
-		}
-		else{
-			//$page->action
-			//just assume its a view.
-			$view = $page->package.'::'.$page->action;
-			return view($view, $params);
+
+		switch ($page->action_type) {
+			case('controller'):
+				return \App::call($page->action);//app('Soda\Controllers\DevController')->index();
+				break;
+			case('view'):
+				$view = $page->package.'::'.$page->action;
+				return view($view, $params);
+				break;
+			default:
+				dd('invalid action type.');
+				break;
 		}
 	}
 }

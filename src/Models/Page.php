@@ -14,7 +14,7 @@ class Page extends Entity implements PagesInterface
     use SluggableTrait;
 
     protected $table = 'pages';
-    public $fillable = ['name', 'slug', 'action_type', 'action', 'package', 'application_id', 'status_id', 'position'];
+    public $fillable = ['name', 'description', 'slug', 'action_type', 'action', 'package', 'application_id', 'status_id', 'position', 'page_type_id', 'edit_action', 'edit_action_type'];
 
     /**
      * The table associated with the model.

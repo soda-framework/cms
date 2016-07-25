@@ -11,10 +11,10 @@
 @endsection
 
 @section('content')
+	<p>{{$page->description}}</p>
 
 	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-file-o', 'title'=>$page->name?$page->name:'New '. $page->type->name." Page"])
 
-	<p>{{$page->description}}</p>
 	<ul class="nav nav-tabs" role="tablist">
 		@if(Soda\Models\Page::hasFieldsOrBlocks($page))
 			<li role='presentation' class="active" aria-controls="{{$page->name}}">
@@ -33,6 +33,7 @@
 			<a role="tab" data-toggle="tab" href="#advancedview">Advanced</a>
 		</li>
 	</ul>
+
 	@if($page->id)
 		<form class="" method="POST" action="{{route($routeHint.'edit',['id'=>@$page->id])}}">{{-- << TODO --}}
 	@else

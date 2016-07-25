@@ -19,7 +19,8 @@
           "Soda\\": "src/"
         },
         "classmap": [
-          "database"
+          "database",
+          "database/seeds"
         ]
     }
 }
