@@ -6,6 +6,23 @@ Soda cms package
 composer require sodacms/sodacms:1.1.*
 ```
 
+## add package to providers
+in /config/app.php
+```
+'providers' => [
+    //Existing providers
+    Soda\Providers\SodaServiceProvider::class,
+]
+
+##add alias
+in /config/app.php
+```
+'aliases' => [
+    //Existing aliases
+    'Soda' => \Soda\Facades\Soda::class,
+]
+```
+
 ## set database
 In your .env file:
 ```
