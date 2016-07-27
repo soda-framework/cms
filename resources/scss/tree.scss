@@ -1,6 +1,12 @@
+@import "variables";
+
+// Core variables and mixins
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
 ul.tree-view{
     list-style: none;
-    margin-left:0;
+    padding-left:0;
     li{
 
     }
@@ -10,7 +16,7 @@ ul.tree-view{
 
     .tree-item{
         padding:3px 3px 3px 10px;
-        border:1px solid grey;
+        background:$gray-lighter;
         margin: 3px 0;
         border-radius:3px;
 

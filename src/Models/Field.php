@@ -11,38 +11,21 @@ namespace Soda\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Field extends Model {
-	protected $fillable = ['name', 'field_name'];
+	protected $fillable = ['name', 'field_name', 'field_type', 'field_params', 'value', 'name', 'field_name', 'description'];
 	protected $table = 'fields';
 
-	public $title = 'field';
-	public $plural_title = 'fields';
-
-	public $view_view = 'soda::standard.view';
-	public $view_fields = [
-		'name'        => [
-			'label' => 'name',
-			'type'  => 'text',
-			'name'  => 'name',
-		],
-		'field_type'  => [
-			'label' => 'field type',
-			'type'  => 'text',
-			'name'  => 'field_type',
-		],
-		'description' => [
-			'label' => 'description',
-			'type'  => 'textarea',
-			'name'  => 'description',
-		],
-	];
-
-	public $index_view = 'soda::standard.index';
-	public $index_fields = [
-		'name' => [
-			'label' => 'name',
-			'type'  => 'text',
-			'name'  => 'name',
-		],
+	public static $field_types = [
+		'checkbox'=>'checkbox',
+		'datetime'=>'datetime',
+		'dropdown'=>'dropdown',
+		'fancy_upload'=>'fancy_upload',
+		'lat_lon'=>'lat_lon',
+		'password'=>'password',
+		'static'=>'static',
+		'text'=>'text',
+		'textarea'=>'textarea',
+		'tinymce'=>'tinymce',
+		'upload'=>'upload'
 	];
 
 	public function block_types(){
@@ -51,5 +34,10 @@ class Field extends Model {
 
 	public function page_types(){
 		return $this->morphedByMany(PageType::class, 'fieldable');
+	}
+
+	public static function getFieldTypes(){
+		//TODO: we should put an event in here so you can add more field types.
+		return self::$field_types;
 	}
 }

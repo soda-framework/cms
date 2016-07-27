@@ -20,6 +20,7 @@ class CreateBlocksTable extends Migration {
 			$table->timestamps();
 			$table->integer('block_type_id')->nullable();
 			$table->text('description', 65535)->nullable();
+			$table->integer('application_user_id')->nullable();
 		});
 	}
 

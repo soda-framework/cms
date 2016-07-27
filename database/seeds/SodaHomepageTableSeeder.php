@@ -24,8 +24,8 @@ class SodaHomepageTableSeeder extends Seeder
                 'text' => '<p>this is the homepage</p>',
                 'image' => 'https://static.pexels.com/photos/81413/tree-field-horizon-countryside-81413.jpeg',
                 'page_id' => 3,
-                'updated_at' => '2016-06-07 06:33:18',
                 'created_at' => NULL,
+                'updated_at' => '2016-06-07 06:33:18',
             ),
         ));
         

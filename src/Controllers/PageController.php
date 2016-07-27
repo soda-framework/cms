@@ -70,7 +70,7 @@ class PageController extends PageTemplateController
 
         if (@$page->type->identifier) {
             $page_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-                $page->type->fields->lists('field_name')->toArray())->first();
+                $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
         } else {
             $page_table = null;
         }
@@ -144,7 +144,9 @@ class PageController extends PageTemplateController
         $page->parent_id = $parent->id;
         $page->page_type_id = $request->input('page_type_id');
 
-        return view('soda::page.view', ['page' => $page]);
+
+
+        return view('soda::page.view', compact('page'));
     }
 
     /**

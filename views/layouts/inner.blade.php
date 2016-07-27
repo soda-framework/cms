@@ -34,7 +34,7 @@
 
 				@if(config("soda.menu.block-types", true))
 					<li class="nav-item">
-						<a class="nav-link {{Request::is('cms/block-types*')?'active':''}}" href="{{route('soda.block_type')}}"><span class="fa fa-edit"></span> Block Types</a>
+						<a class="nav-link {{Request::is('cms/block-types*')?'active':''}}" href="{{route('soda.block_type')}}"><span class="fa fa-pencil-square"></span> Block Types</a>
 					</li>
 				@endif
 

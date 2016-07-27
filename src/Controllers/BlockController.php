@@ -9,13 +9,13 @@ class BlockController extends Controller
 
     use    Traits\CrudableTrait;
 
-    public $type = 'block';
-    public $index_view = 'soda::crudable.index';
-    public $view_view = 'soda::crudable.view';
+    public $hint = 'block';
 
     public function __construct(Block $block) {
         //$this->middleware('auth');
         $this->model = $block;
     }
+
+
 
 }

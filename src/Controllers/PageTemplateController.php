@@ -19,11 +19,7 @@ class PageTemplateController extends Controller
      */
     public function __construct(Template $page)
     {
-
-        //$this->middleware('auth');
         $this->model = $page;
-        $this->routeHint = 'soda.templates.';
-        view()->share('routeHint', $this->routeHint);
     }
 
 

@@ -60,10 +60,6 @@ class SodaServiceProvider extends ServiceProvider {
         // Publishing public assets
         $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'public');
 
-        // Publishing migrations
-        $this->publishes([__DIR__.'/../../database' => database_path()], 'database');
-
-
         Blade::extend(function($value, $compiler)
         {
             $value = preg_replace('/(?<=\s)@switch\((.*)\)(\s*)@case\((.*)\)(?=\s)/', '<?php switch($1):$2case $3: ?>', $value);
@@ -96,11 +92,13 @@ class SodaServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
-        $this->app->register('Soda\Providers\AuthServiceProvider');
-        $this->app->register('Soda\Providers\UploaderProvider');
-        $this->app->register('Soda\Providers\RouteServiceProvider');
+        $this->app->register(AuthServiceProvider::class);
+        $this->app->register(UploaderProvider::class);
+        $this->app->register(RouteServiceProvider::class);
 
-        $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');
+        $this->app->register(\Franzose\ClosureTable\ClosureTableServiceProvider::class);
+        $this->app->register(\Zofe\Rapyd\RapydServiceProvider::class);
+
 
         //$this->app->bind('Soda', Soda::class);
         $this->app->bind('soda', function () {

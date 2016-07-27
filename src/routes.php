@@ -44,11 +44,13 @@ Route::group(['middleware'=>'web'], function(){
 			Route::get('/fields', ['as'=>'soda.field', 'uses'=>'FieldController@index']);
 			Route::get('/fields/view/{id?}', ['as'=>'soda.field.view', 'uses'=>'FieldController@view']);
 			Route::post('/fields/view/{id?}', ['as'=>'soda.field.edit', 'uses'=>'FieldController@edit']);
+			Route::get('/fields/view/', ['as'=>'soda.field.create', 'uses'=>'FieldController@edit']);
 			Route::get('/fields/delete/{id?}', ['as'=>'soda.field.delete', 'uses'=>'FieldController@delete']);
 
 			Route::get('/blocks', ['as'=>'soda.block', 'uses'=>'BlockController@index']);
 			Route::get('/blocks/view/{id?}', ['as'=>'soda.block.view', 'uses'=>'BlockController@view']);
 			Route::get('/blocks/delete/{id?}', ['as'=>'soda.block.delete', 'uses'=>'BlockController@delete']);
+			Route::get('/blocks/view/', ['as'=>'soda.block.create', 'uses'=>'BlockController@edit']);
 			Route::post('/blocks/view/{id?}', ['as'=>'soda.block.edit', 'uses'=>'BlockController@edit']);
 
 			//routes for crud on the dynamically added tables
@@ -72,7 +74,9 @@ Route::group(['middleware'=>'web'], function(){
 
 			Route::get('/users', ['as'=>'soda.user', 'uses'=>'UserController@index']);
 			Route::get('/users/view/{id?}', ['as'=>'soda.user.view', 'uses'=>'UserController@view']);
+			Route::get('/users/view/', ['as'=>'soda.user.create', 'uses'=>'UserController@view']);
 			Route::post('/users/view/{id?}', ['as'=>'soda.user.edit', 'uses'=>'UserController@edit']);
+			Route::get('/users/delete/{id?}', ['as'=>'soda.user.delete', 'uses'=>'UserController@delete']);
 
 
 

@@ -21,7 +21,7 @@ class FieldsTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'field_type' => 'text',
-                'field_params' => NULL,
+                'field_params' => '',
                 'value' => 'title',
                 'name' => 'title',
                 'field_name' => 'title',
@@ -29,21 +29,21 @@ class FieldsTableSeeder extends Seeder
                 'description' => 'The title of the home page',
                 'application_id' => 1,
                 'created_at' => NULL,
-                'updated_at' => NULL,
+                'updated_at' => '2016-07-26 17:10:52',
             ),
             1 => 
             array (
                 'id' => 2,
                 'field_type' => 'fancy_upload',
-                'field_params' => NULL,
+                'field_params' => '',
                 'value' => 'image',
-                'name' => 'image',
+                'name' => 'about',
                 'field_name' => 'image',
                 'application_user_id' => 1,
-                'description' => 'An image for the home page',
+                'description' => '',
                 'application_id' => 1,
                 'created_at' => NULL,
-                'updated_at' => NULL,
+                'updated_at' => '2016-07-27 09:22:43',
             ),
             2 => 
             array (

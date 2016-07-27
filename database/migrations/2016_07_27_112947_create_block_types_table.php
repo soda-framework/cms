@@ -27,6 +27,7 @@ class CreateBlockTypesTable extends Migration {
 			$table->integer('status_id')->nullable();
 			$table->string('edit_action')->nullable();
 			$table->string('edit_action_type')->nullable();
+			$table->integer('application_user_id')->nullable();
 		});
 	}
 

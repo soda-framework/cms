@@ -16,7 +16,7 @@
 	{!! $tree !!}
 
 	<a href="#" class="btn btn-primary btn-lg" data-toggle="modal" data-ts="btn" data-target="#page_type_modal">
-		Create Page
+		<span class="fa fa-plus"></span> Create Page
 	</a>
 
 	<div class="modal fade" id="page_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

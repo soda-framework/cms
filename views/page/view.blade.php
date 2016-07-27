@@ -45,7 +45,7 @@
 				<div class="tab-pane active" id="normalview" role="tabpanel">
 					@if(@$page->type->fields)
 						@foreach($page->type->fields as $field)
-								@include("soda::inputs.".$field->field_type,['field_name'=>'settings['.$field->field_name.']', 'field_value'=>$page_table->{$field->field_name}, 'field_label'=>$field->name])
+								@include("soda::inputs.".$field->field_type,['field_name'=>'settings['.$field->field_name.']', 'field_value'=>(@$page_table?@$page_table->{$field->field_name}:$field->value), 'field_label'=>$field->name])
 						@endforeach
 					@endif
 					@foreach($page->blocks as $block)

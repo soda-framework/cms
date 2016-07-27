@@ -26,31 +26,31 @@ class PagesClosureTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'closure_id' => 783,
-                'ancestor' => 1,
-                'descendant' => 2,
-                'depth' => 1,
-            ),
-            2 => 
-            array (
                 'closure_id' => 784,
                 'ancestor' => 2,
                 'descendant' => 2,
                 'depth' => 0,
             ),
-            3 => 
+            2 => 
             array (
                 'closure_id' => 786,
                 'ancestor' => 1,
                 'descendant' => 3,
                 'depth' => 1,
             ),
-            4 => 
+            3 => 
             array (
                 'closure_id' => 787,
                 'ancestor' => 3,
                 'descendant' => 3,
                 'depth' => 0,
+            ),
+            4 => 
+            array (
+                'closure_id' => 791,
+                'ancestor' => 1,
+                'descendant' => 2,
+                'depth' => 1,
             ),
         ));
         

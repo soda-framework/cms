@@ -19,15 +19,15 @@ class StatusesTableSeeder extends Seeder
         \DB::table('statuses')->insert(array (
             0 => 
             array (
-                'id' => 0,
-                'name' => 'draft',
+                'id' => 1,
+                'name' => 'live',
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
             1 => 
             array (
-                'id' => 1,
-                'name' => 'live',
+                'id' => 5,
+                'name' => 'draft',
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),

@@ -107,16 +107,15 @@ Trait TreeableTrait
         else{
             $parent = $this->model->find($parent_id);
         }
-
+        
 
         //re-handle slugging - TODO: should we make this optional?
-        $item->slug = $parent->generateSlug($item->name);
+        //$item->slug = $parent->generateSlug($item->name);
 
-        if($item->parent_id == $parent_id){
+        if($item->parent_id == $parent->id){
             //we just want to re-order, not move the element.
             $item->position = $position;
             $item->save();
-            return 'true';
         }
 
         $item->moveTo($position, $parent->id);
