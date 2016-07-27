@@ -58,7 +58,7 @@ class SodaServiceProvider extends ServiceProvider {
         // $this->loadTranslationsFrom(__DIR__ . '/../translations', config('soda.hint_path'));
 
         // Publishing public assets
-        $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'public');
+        $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'soda');
 
         Blade::extend(function($value, $compiler)
         {
