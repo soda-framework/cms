@@ -12,7 +12,8 @@
   "require": {
     "php": ">=5.5.9",
     "sodacms/closure-table": "10.0",
-    "league/flysystem-aws-s3-v3": "^1.0"
+    "league/flysystem-aws-s3-v3": "^1.0",
+    "zofe/rapyd":"2.2.*"
   },
   "autoload": {
         "psr-4": {

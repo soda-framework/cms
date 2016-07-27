@@ -23,6 +23,12 @@ in /config/app.php
 ]
 ```
 
+##vendor publish
+```
+php artisan vendor:publish
+```
+
+
 ## set database
 In your .env file:
 ```
