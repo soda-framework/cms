@@ -18,6 +18,7 @@ class CreateBlocksTable extends Migration {
 			$table->string('name', 45)->nullable();
 			$table->string('identifier')->nullable();
 			$table->timestamps();
+			$table->integer('application_id')->nullable();
 			$table->integer('block_type_id')->nullable();
 			$table->text('description', 65535)->nullable();
 			$table->integer('application_user_id')->nullable();

@@ -1,5 +1,5 @@
 /*!
- * bootstrap-fileinput v4.3.2
+ * bootstrap-fileinput v4.3.3
  * http://plugins.krajee.com/file-input
  *
  * Author: Kartik Visweswaran
@@ -10,6 +10,7 @@
  */
 (function (factory) {
     "use strict";
+    //noinspection JSUnresolvedVariable
     if (typeof define === 'function' && define.amd) { // jshint ignore:line
         // AMD. Register as an anonymous module.
         define(['jquery'], factory); // jshint ignore:line
@@ -29,7 +30,7 @@
     $.fn.fileinputLocales = {};
     $.fn.fileinputThemes = {};
 
-    var NAMESPACE, MODAL_ID, STYLE_SETTING, OBJECT_PARAMS, DEFAULT_PREVIEW, objUrl, compare, isIE, isEdge, handler,
+    var NAMESPACE, MODAL_ID, STYLE_SETTING, OBJECT_PARAMS, DEFAULT_PREVIEW, objUrl, compare, isIE, handler,
         previewCache, getNum, hasFileAPISupport, hasDragDropSupport, hasFileUploadSupport, addCss, tMain1, tMain2,
         tPreview, tFileIcon, tClose, tCaption, tBtnDefault, tBtnLink, tBtnBrowse, tModalMain, tModal, tProgress, tSize,
         tFooter, tActions, tActionDelete, tActionUpload, tActionZoom, tActionDrag, tTagBef, tTagBef1, tTagBef2, tTagAft,
@@ -69,9 +70,6 @@
         document.body.appendChild(div);
         div.parentNode.removeChild(div);
         return status;
-    };
-    isEdge = function () {
-        return new RegExp('Edge\/[0-9]+', 'i').test(navigator.userAgent);
     };
     handler = function ($el, event, callback, skipNS) {
         var ev = skipNS ? event : event.split(' ').join(NAMESPACE + ' ') + NAMESPACE;
@@ -284,8 +282,7 @@
         /** @namespace div.draggable */
         /** @namespace div.ondragstart */
         /** @namespace div.ondrop */
-        return !isIE(9) && !isEdge() && // Fix for MS Edge drag & drop support bug
-            (div.draggable !== undefined || (div.ondragstart !== undefined && div.ondrop !== undefined));
+        return !isIE(9) && (div.draggable !== undefined || (div.ondragstart !== undefined && div.ondrop !== undefined));
     };
     hasFileUploadSupport = function () {
         return hasFileAPISupport() && window.FormData;
@@ -626,9 +623,6 @@
                         break;
                 }
             });
-            if (isEmpty(self.allowedPreviewTypes)) {
-                self.allowedPreviewTypes = defaultPreviewTypes;
-            }
             self.fileInputCleared = false;
             self.fileBatchCompleted = true;
             if (!self.isPreviewable) {
@@ -1570,7 +1564,7 @@
         },
         _getMsgSelected: function (n) {
             var self = this, strFiles = n === 1 ? self.fileSingle : self.filePlural;
-            return self.msgSelected.replace('{n}', n).replace('{files}', strFiles);
+            return n > 0 ? self.msgSelected.replace('{n}', n).replace('{files}', strFiles) : self.msgNoFilesSelected;
         },
         _getThumbs: function (css) {
             css = css || '';
@@ -1870,7 +1864,7 @@
             };
             fnSuccess = function (data, textStatus, jqXHR) {
                 /** @namespace data.errorkeys */
-                var outData = self._getOutData(jqXHR, data), $thumbs = self._getThumbs(), key = 0,
+                var outData = self._getOutData(jqXHR, data), $thumbs = self._getThumbs(':not(.file-preview-error)'), key = 0,
                     keys = isEmpty(data) || isEmpty(data.errorkeys) ? [] : data.errorkeys;
                 if (isEmpty(data) || isEmpty(data.error)) {
                     self._raise('filebatchuploadsuccess', [outData]);
@@ -2226,6 +2220,7 @@
                     return;
                 }
                 if (!canPreview && fileSize > maxPreviewSize) {
+                    self.addToStack(file);
                     $container.addClass('file-thumb-loading');
                     self._previewDefault(file, previewId);
                     self._initFileActions();
@@ -2401,7 +2396,7 @@
         },
         _setPreviewError: function ($thumb, i, val) {
             var self = this;
-            if (i) {
+            if (i !== undefined) {
                 self.updateStack(i, val);
             }
             if (self.removeFromPreviewOnError) {
@@ -2640,13 +2635,13 @@
                     '0') + '</div>';
         },
         _renderFileFooter: function (caption, size, width, isError) {
-            var self = this, config = self.fileActionSettings, footer, rem = config.showRemove, drg = config.showDrag,
+            var self = this, config = self.fileActionSettings, rem = config.showRemove, drg = config.showDrag,
                 upl = config.showUpload, zoom = config.showZoom, out, template = self._getLayoutTemplate('footer'),
                 indicator = isError ? config.indicatorError : config.indicatorNew,
                 title = isError ? config.indicatorErrorTitle : config.indicatorNewTitle;
             size = self._getSize(size);
             if (self.isUploadable) {
-                out = template.replace(/\{actions}/g, self._renderFileActions(rem, upl, zoom, drg, false, false, false))
+                out = template.replace(/\{actions}/g, self._renderFileActions(upl, rem, zoom, drg, false, false, false))
                     .replace(/\{caption}/g, caption).replace(/\{size}/g, size).replace(/\{width}/g, width)
                     .replace(/\{progress}/g, self._renderThumbProgress()).replace(/\{indicator}/g, indicator)
                     .replace(/\{indicatorTitle}/g, title);
@@ -3140,7 +3135,7 @@
             borderless: 'btn btn-default',
             close: 'btn btn-default'
         },
-        allowedPreviewTypes: null,
+        allowedPreviewTypes: defaultPreviewTypes,
         allowedPreviewMimeTypes: null,
         allowedFileTypes: null,
         allowedFileExtensions: null,
@@ -3216,6 +3211,7 @@
         uploadLabel: 'Upload',
         uploadTitle: 'Upload selected files',
         msgNo: 'No',
+        msgNoFilesSelected: 'No files selected',
         msgCancelled: 'Cancelled',
         msgZoomModalHeading: 'Detailed Preview',
         msgSizeTooLarge: 'File "{name}" (<b>{size} KB</b>) exceeds maximum allowed upload size of <b>{maxSize} KB</b>.',

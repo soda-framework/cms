@@ -16,7 +16,7 @@
 			<ul class="nav nav-sidebar">
 				@if(config("soda.menu.pages", true))
 					<li class="nav-item">
-						<a class="nav-link {{Request::is('cms/pages*')?'active':''}}"  href="{{route('soda.pages')}}"><span class="fa fa-file-o"></span> Pages</a>
+						<a class="nav-link {{Request::is('cms/pages*')?'active':''}}"  href="{{route('soda.page')}}"><span class="fa fa-file-o"></span> Pages</a>
 					</li>
 				@endif
 
@@ -59,6 +59,12 @@
 				@if(config("soda.menu.application-settings", true))
 					<li class="nav-item">
 						<a class="nav-link {{Request::is('cms/settings*')?'active':''}}" href="#"><span class="fa fa-cog"></span> Application Settings</a>
+					</li>
+				@endif
+
+				@if(config("soda.menu.navigation", true))
+					<li class="nav-item">
+						<a class="nav-link {{Request::is('cms/navigation*')?'active':''}}" href="{{route('soda.navigation')}}"><span class="fa fa-compass"></span> Navigation</a>
 					</li>
 				@endif
 

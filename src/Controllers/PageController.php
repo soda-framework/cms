@@ -9,11 +9,11 @@ use Soda\Models\PageType;
 use Soda\Facades\Soda;
 
 
-class PageController extends PageTemplateController
+class PageController extends Controller
 {
 
     use    Traits\TreeableTrait;
-
+    public $hint = 'page';
     /**
      * Create a new controller instance.
      *
@@ -23,8 +23,7 @@ class PageController extends PageTemplateController
     {
         //$this->middleware('auth');
         $this->model = $page;
-        $this->routeHint = 'soda.pages.';
-        view()->share('routeHint', $this->routeHint);
+        $this->tree = $page;
     }
 
 
@@ -33,7 +32,7 @@ class PageController extends PageTemplateController
      *
      * @return Response
      */
-    public function getIndex()
+    public function getIndex(Request $request)
     {
 
         if (!isset($id) || !$id || $id == '#') {
@@ -46,37 +45,31 @@ class PageController extends PageTemplateController
 
         $page_types = PageType::get();
 
-        $tree = $this->htmlTree();
+        $tree = $this->htmlTree($request, $page->id, $this->hint);
+
 
         $pages = $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
 
-
-//
-//		if ($id) {
-//			$page = Page::findOrFail($id);
-//		} else {
-//			$page = Page::getRoots()->first();
-//		}
-        return view('soda::page.index', ['pages' => $pages, 'tree' => $tree, 'page_types' => $page_types]);
+        return view('soda::page.index', ['hint'=>$this->hint, 'pages' => $pages, 'tree' => $tree, 'page_types' => $page_types]);
     }
 
     public function view($id)
     {
         if ($id) {
-            $page = $this->model->with('blocks.type.fields', 'type.fields')->findOrFail($id);
+            $model = $this->model->with('blocks.type.fields', 'type.fields')->findOrFail($id);
         } else {
-            $page = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
+            $model = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
 
         if (@$page->type->identifier) {
             $page_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-                $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
+                $model->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
         } else {
             $page_table = null;
         }
 
 
-        return view('soda::page.view', ['page' => $page, 'page_table' => $page_table]);
+        return view('soda::page.view', ['hint'=>$this->hint, 'model' => $model, 'page_table' => $page_table]);
     }
 
     public function edit(Request $request, $id = null)
@@ -101,7 +94,7 @@ class PageController extends PageTemplateController
         $dyn_table->save();
         //$dyn_table->fill()
 
-        return redirect()->route($this->routeHint . 'view', ['id' => $request->id])->with('success', 'page updated');
+        return redirect()->route('soda.'.$this->hint . '.view', ['id' => $request->id])->with('success', 'page updated');
     }
 
     public function getMakeRoot($id)
@@ -133,20 +126,17 @@ class PageController extends PageTemplateController
 
     public function createForm(Request $request, $parent_id = null)
     {
+
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
         } else {
             $parent = $this->model->getRoots()->first();
         }
 
+        $this->model->parent_id = $parent->id;
+        $this->model->page_type_id = $request->input('page_type_id');
 
-        $page = $this->model;
-        $page->parent_id = $parent->id;
-        $page->page_type_id = $request->input('page_type_id');
-
-
-
-        return view('soda::page.view', compact('page'));
+        return view('soda::page.view', ['model'=>$this->model, 'hint'=>$this->hint]);
     }
 
     /**

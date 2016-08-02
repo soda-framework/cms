@@ -85,10 +85,10 @@ module.exports = {
             'public/components/bootstrap-fileinput/js/fileinput.js',       //TODO: move this to a file on it's own?
             'public/components/bootstrap-fileinput/themes/fa/fa.js',       //TODO: move this to a file on it's own?
             'public/components/jquery-sortable/source/js/jquery-sortable.js', //TODO: move this to a file on it's own?
-
             'public/components/tinymce/tinymce.min.js', //TODO: move this to a file on it's own?
-
             'public/components/moment/min/moment.min.js',      //TODO: for datetimepicker only - move this somewhere else?
+            'public/components/select2/dist/js/select2.full.min.js', //TODO: for select2 only - move this somewhere else?
+
             'public/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
         ]
         //

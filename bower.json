@@ -13,6 +13,7 @@
     "tinymce": "^4.3.12",
     "bootstrap-sweetalert": "~0.4.5",
     "jquery-sortable": "~0.9.13",
-    "bootstrap-fileinput": "4.3.*"
+    "bootstrap-fileinput": "4.3.*",
+    "select2": "^4.0.3"
   }
 }

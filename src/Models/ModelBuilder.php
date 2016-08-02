@@ -2,6 +2,9 @@
 namespace Soda\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Soda;
 
 /**
  * Class ModelBuilder
@@ -10,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class ModelBuilder extends Model
 {
 
-    protected static $_table;
+    public $table;
 
     public $index_fields = [];
 
@@ -19,14 +22,15 @@ class ModelBuilder extends Model
     //$user_model->roles = new BelongsToMany($role_model->newQuery(), $user_model, $pivot_table, $foreignKey, $otherKey);
 
 
+
     public function __construct($parms = null)
     {
         parent::__construct();
         if ($parms) {
             //this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
             $this->fillable = $parms;
-        }
 
+        }
     }
 
     public static function fromTable($table, $parms = [])
@@ -39,17 +43,73 @@ class ModelBuilder extends Model
             $ret = new static($parms);
             $ret->setTable($table);
         }
-//		dd($ret, \Request::input());
+
         return $ret;
     }
 
     public function setTable($table)
     {
-        static::$_table = $table;
+        $this->table = $table;
+
     }
 
     public function getTable()
     {
-        return static::$_table;
+        return $this->table;
     }
+
+
+
+    /**
+     * Get a new query builder that doesn't have any global scopes.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public function newQueryWithoutScopes()
+    {
+
+        $builder = $this->newEloquentBuilder(
+            $this->newBaseQueryBuilder()
+        );
+
+
+        // Once we have the query builders, we will set the model instances so the
+        // builder can easily access any information it may need from the model
+        // while it is constructing and executing various queries against it.
+        $new = $builder->setModel($this)->with($this->with);
+
+        $new->table = $this->getTable();
+
+        return $new;
+    }
+
+
+
+    public function newQuery()
+    {
+        $builder = $this->newQueryWithoutScopes();
+
+        foreach ($this->getGlobalScopes() as $identifier => $scope) {
+            $builder->withGlobalScope($identifier, $scope);
+        }
+
+        return $builder;
+    }
+
+
+
+    public function hasMany($related, $foreignKey = null, $localKey = null)
+    {
+
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
+
+        $instance = Soda::dynamicModel($related, []);
+
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return new HasMany($instance->newQuery(), $this, $instance->getTable().'.'.$foreignKey, $localKey);
+    }
+
+
 }

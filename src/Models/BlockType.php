@@ -14,38 +14,10 @@ class BlockType extends Model
     protected $fillable = ['name', 'description'];
 
 
-    public $title = 'block_type';
-    public $plural_title = 'block_types';
-
-    public $view_view = 'soda::standard.view';
-    public $view_fields = [
-        'name'        => [
-            'label' => 'name',
-            'type'  => 'text',
-            'name'  => 'name',
-        ],
-        'description' => [
-            'label' => 'description',
-            'type'  => 'textarea',
-            'name'  => 'description',
-        ],
-    ];
-
-    public $index_view = 'soda::standard.index';
-    public $index_fields = [
-        'name' => [
-            'label' => 'name',
-            'type'  => 'text',
-            'name'  => 'name',
-        ],
-    ];
-
-
     public static function boot()
     {
         parent::boot();
         static::addGlobalScope(new FromApplicationScope);
-        static::addGlobalScope(new LiveScope);
     }
 
     public function fields()

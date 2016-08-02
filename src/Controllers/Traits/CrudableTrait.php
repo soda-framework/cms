@@ -10,6 +10,7 @@ Trait CrudableTrait
 
 
     public function index(){
+
         $filter = \DataFilter::source($this->model);
         $filter->add('name','name', 'text');;
         $filter->submit('Search');
@@ -59,9 +60,10 @@ Trait CrudableTrait
 
 
 
-    public function delete()
+    public function delete($id)
     {
-        //TODO:
+        $this->model->where('id', $id)->delete();
+        return redirect()->route('soda.'.$this->hint)->with('success', 'updated');
     }
 
 }

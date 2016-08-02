@@ -58,7 +58,9 @@ class SodaServiceProvider extends ServiceProvider {
         // $this->loadTranslationsFrom(__DIR__ . '/../translations', config('soda.hint_path'));
 
         // Publishing public assets
-        $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'soda');
+        $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'public');
+
+
 
         Blade::extend(function($value, $compiler)
         {
@@ -69,6 +71,15 @@ class SodaServiceProvider extends ServiceProvider {
             $value = preg_replace('/(?<=\s)@break(?=\s)/', '<?php break; ?>', $value);
             return $value;
         });
+
+        Blade::directive('attributes', function ($attributes = null) {
+            return '<?php if(@$attributes){
+                    foreach($attributes as $key=>$attribute){
+                            echo " $key=\\"$attribute\\" ";
+                    }
+                }?>';
+        });
+
     }
 
     /**
@@ -76,11 +87,11 @@ class SodaServiceProvider extends ServiceProvider {
      * TODO: move this somewhere sensible?
      */
     public function buildApp() {
-        $this->app->singleton('application', function ($app) {
-            return Application::find(1);
-            //return('bonk');
-            //return new FooBar($app['SomethingElse']);
-        });
+        //$this->app->singleton('application', function ($app) {
+        //    return Application::find(1);
+        //    //return('bonk');
+        //    //return new FooBar($app['SomethingElse']);
+        //});
 
         //TODO: we should prbs be defining a 'soda' singleton that has
         //access to stuff like application etc that we can call from anywhere..
@@ -92,21 +103,48 @@ class SodaServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
-        $this->app->register(AuthServiceProvider::class);
-        $this->app->register(UploaderProvider::class);
-        $this->app->register(RouteServiceProvider::class);
+        $this->registerDependencies([
+            AuthServiceProvider::class,
+            UploaderProvider::class,
+            RouteServiceProvider::class,
+            \Franzose\ClosureTable\ClosureTableServiceProvider::class,
+            \Zofe\Rapyd\RapydServiceProvider::class,
+            \Creativeorange\Gravatar\GravatarServiceProvider::class
+        ]);
 
-        $this->app->register(\Franzose\ClosureTable\ClosureTableServiceProvider::class);
-        $this->app->register(\Zofe\Rapyd\RapydServiceProvider::class);
 
+        $this->registerFacades([
+            'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        ]);
 
-        //$this->app->bind('Soda', Soda::class);
-        $this->app->bind('soda', function () {
-            return new Soda\Soda(); //freaking cool-ass facades!
-        });
-
-        //$this->app->singleton('Soda', function(){
-        //  return new Soda();
+        ////$this->app->bind('Soda', Soda::class);
+        //$this->app->bind('soda', function () {
+        //    return new Soda\Soda();
         //});
+
+        $this->app->singleton('soda', function(){
+            return new Soda\Soda();
+        });
+    }
+
+    /**
+     * Register dependies conditionally (e.g. dev dependencies)
+     *
+     * @param array $services
+     */
+    public function registerDependencies(array $services) {
+        foreach ($services as $service) {
+            $this->app->register($service);
+        }
+    }
+
+
+    /**
+     * @param array $facades
+     */
+    public function registerFacades(array $facades) {
+        foreach ($facades as $facade => $class) {
+            AliasLoader::getInstance()->alias($facade, $class);
+        }
     }
 }

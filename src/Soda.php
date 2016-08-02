@@ -12,6 +12,7 @@ use Soda\Models\ApplicationUrl;
 use Soda\Models\Block;
 use Soda\Models\BlockType;
 use Soda\Models\ModelBuilder;
+use Soda\Models\NavigationItem;
 use Soda\Models\Page;
 use \Route;
 
@@ -45,13 +46,32 @@ class Soda {
 		return $this->blocks[$identifier];
 	}
 
-	public function dynamicModel($table, $fields){
+	public function dynamicModel($table){
+
 		//TODO - we sometimes might want to use a static model in here instead of a create from table.. could we use this for realationships maybe?
-		return ModelBuilder::fromTable($table, $fields);
+		$model = ModelBuilder::fromTable($table, []);
+
+		//dd($model);
+		return $model;
 	}
 
 	/**
-	 * renders an editable field
+	 * renders a menu tree
+	 * @param $name
+	 * @param string $view
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function menu($name, $view = 'soda::tree.menu'){
+		$nav = NavigationItem::where('name',$name)->first();
+		if($nav){
+			$tree = $nav->grabTree($nav->id);
+			return view($view, ['tree' => $tree, 'hint'=>'page']);
+		}
+	}
+
+
+	/**
+	 * EXPERAMENTAL renders an editable field
 	 * @param $model
 	 * @param $element
 	 * @param $type

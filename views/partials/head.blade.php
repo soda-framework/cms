@@ -19,7 +19,7 @@
 
 @section('head.js')
     <!-- JavaScripts -->
-    <script src="/sodacms/sodacms/js/application.js"></script>
+    <script src="/sodacms/sodacms/js/scripts.min.js"></script>
 @stop
 
 @section('head.extra')

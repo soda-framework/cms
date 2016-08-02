@@ -7,7 +7,9 @@
 	<div class="text">
 		{!! Soda::dynamicModel('soda_homepage',[])->first()->text !!}
 	</div>
+	{!! Soda::menu('Main Menu') !!}
 
+	{!! Soda::menu('Social') !!}
 	{{--@include('soda::blocks.banners',['block'=>Soda::getBlock('banners')])--}}
 	{{--@include('soda::blocks.polling',['block'=>Soda::getBlock('polling')]) --}}
 @stop

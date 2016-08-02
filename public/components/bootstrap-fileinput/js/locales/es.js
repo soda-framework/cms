@@ -22,6 +22,7 @@
         uploadLabel: 'Subir archivo',
         uploadTitle: 'Subir archivos seleccionados',
         msgNo: 'No',
+        msgNoFilesSelected: '',
         msgCancelled: 'Cancelado',
         msgZoomModalHeading: 'Vista previa detallada',
         msgSizeTooLarge: 'Archivo "{name}" (<b>{size} KB</b>) excede el tamaño máximo permitido de <b>{maxSize} KB</b>.',
@@ -47,7 +48,7 @@
         msgImageResizeError: 'No se pudo obtener las dimensiones de imagen para cambiar el tamaño.',
         msgImageResizeException: 'Error al cambiar el tamaño de la imagen.<pre>{errors}</pre>',
         dropZoneTitle: 'Arrastre y suelte aquí los archivos &hellip;',
-        dropZoneClickTitle: '<br>(or click to select {files})',
+        dropZoneClickTitle: '<br>(o haga click para seleccionar {files})',
         fileActionSettings: {
             removeTitle: 'Eliminar archivo',
             uploadTitle: 'Subir archivo',

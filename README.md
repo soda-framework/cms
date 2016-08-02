@@ -25,7 +25,7 @@ in /config/app.php
 
 ##vendor publish
 ```
-php artisan vendor:publish --tag=soda
+php artisan vendor:publish
 ```
 
 
