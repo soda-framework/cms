@@ -1,5 +1,6 @@
 <?php
 	$nice_name = preg_replace("/[^A-Za-z0-9 ]/", '', $field_name);
+    //dd($field_parameters);
 ?>
 <fieldset class="form-group field_{{@$field_name}} {{@$nice_name}} {{@$field_class}} text-field">
 	<label for="field_{{@$field_name}}">{{@$field_label?$field_label:$nice_name}}</label>
@@ -11,19 +12,19 @@
 
 <script type="application/javascript">
 
-	$("#field_{{@$nice_name}}").fileinput({
+	$("#field_{{$nice_name}}").fileinput({
 		uploadUrl:'{{route('soda.upload')}}',
 		deleteUrl:'{{route('soda.upload.delete')}}',
 		allowedFileTypes:['image','audio'], //TODO: this should come from validation array.
 		theme:'fa',
 		uploadAsync: true,
-		minFileCount: 1,
-		maxFileCount: 1,
-		overwriteInitial: true,
+		minFileCount: {{(isset($field_parameters['minFileCount']))? $field_parameters['minFileCount'] : 1 }},
+		maxFileCount: {{(isset($field_parameters['maxFileCount']))? $field_parameters['maxFileCount'] : 1 }},
+		overwriteInitial: {{ isset($field_parameters['overwriteInitial']) ? $field_parameters['overwriteInitial'] : (isset($field_parameters['maxFileCount']) && $field_parameters['maxFileCount'] > 1 ? 'false' : 'true') }},
 		initialPreview:[
 			{{--TODO: should be able to just specify file types then add the input fields onupload.. haven't been able to make it work yet though - this will allow for automatic detection of images/audio/video by the plugin. --}}
 			@if($field_value)
-			'<img src="{{$field_value}}" width="120"><input type="hidden" value="{{$field_value}}" name="{{$field_name}}" />',
+		    	'<img src="{{$field_value}}" width="120"><input type="hidden" value="{{$field_value}}" name="{{$field_name}}" />',
 			@endif
 		],
 		initialPreviewConfig:[
@@ -57,6 +58,3 @@
 		}
 	});
 </script>
-
-
-

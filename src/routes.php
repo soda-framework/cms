@@ -100,6 +100,8 @@ Route::group(['middleware'=>'web'], function(){
 			//Pulls in upload urls where we can parse them with something.
 			Route::get('/upload/retrieve',['as'=>'soda.upload.retrieve', 'uses'=>'UploadController@retrieveUpload']);
 
+//            /Route::post('/media/upload')
+
 			//
 			//Route::get('/users', function(Soda\Models\User $user){
 			//	return $user;

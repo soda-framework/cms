@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 class Field extends Model {
 	protected $fillable = ['name', 'field_name', 'field_type', 'field_params', 'value', 'name', 'field_name', 'description'];
 	protected $table = 'fields';
+    protected $casts = [
+        'field_params'  => 'array',
+    ];
 
 	public static $field_types = [
 		'checkbox'=>'checkbox',
@@ -37,6 +40,8 @@ class Field extends Model {
 	public function page_types(){
 		return $this->morphedByMany(PageType::class, 'fieldable');
 	}
+
+	/**/
 
 	public static function getFieldTypes(){
 		//TODO: we should put an event in here so you can add more field types.

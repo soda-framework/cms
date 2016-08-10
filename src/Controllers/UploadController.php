@@ -94,7 +94,7 @@ class UploadController extends Controller
                     }
                 }
                 else{
-                    dd('file not valid??');
+                    dd('file not valid??');  //TODO: REMOVE DD, HANDLE ERRORS BETTER
                 }
             }
             //return with a json object containing our shiz.. there might be a nicer way of extracting this functionality elswhere?
