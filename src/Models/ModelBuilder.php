@@ -14,6 +14,7 @@ class ModelBuilder extends Model
 {
 
     public $table;
+    protected static $_table;
 
     public $index_fields = [];
 
@@ -25,12 +26,14 @@ class ModelBuilder extends Model
 
     public function __construct($parms = null)
     {
-        parent::__construct();
         if ($parms) {
             //this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
             $this->fillable = $parms;
-
         }
+
+        $this->table = static::$_table;
+
+        parent::__construct();
     }
 
     public static function fromTable($table, $parms = [])
@@ -49,6 +52,7 @@ class ModelBuilder extends Model
 
     public function setTable($table)
     {
+        static::$_table = $table;
         $this->table = $table;
 
     }
