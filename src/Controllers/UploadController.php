@@ -1,16 +1,19 @@
 <?php namespace Soda\Controllers;
 
 use App\Http\Controllers\Controller;
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Storage;
-use Soda\Models\Upload;
+use Soda\Models\Media;
 
 class UploadController extends Controller
 {
 
+    private $url_prefix = '';
+
     public function __construct()
     {
         //$this->middleware('auth');
+        $this->url_prefix = trim(config('soda.upload_folder'), '/');
     }
 
     public function postTest(Request $request)
@@ -58,6 +61,7 @@ class UploadController extends Controller
     // pass a file object from request
     public function upload(Request $request)
     {
+        dd($request);
         if ($request->hasFile('file')) {
             $files = $request->file('file');
             $return = [];
@@ -65,7 +69,7 @@ class UploadController extends Controller
                 if ($file->isValid()) {
                     $unique = uniqid();
                     $path_info = pathinfo($file->getClientOriginalName());
-                    $final_path = trim(config('soda.upload_folder'), '/') .'/'. $path_info['filename']. '__' . $unique;
+                    $final_path = $this->url_prefix .'/'. $path_info['filename']. '__' . $unique;
                     if($path_info['extension']){
                         $final_path .= '.'.$path_info['extension'];
                     }
@@ -75,8 +79,7 @@ class UploadController extends Controller
                     );
                     if($uploaded){
                         $url = config('soda.upload_domain').'/'.$final_path;
-                        //upload succesful - we want to tery and see if there's a specific url we can load these from?
-
+                        //upload succesful - we want to try and see if there's a specific url we can load these from?
                         //we want to add this to the uploads db.
                         $upload = new Upload;
                         $upload->file_url = $url;
@@ -84,7 +87,6 @@ class UploadController extends Controller
                         $upload->save();
                         $return = new \stdClass();
                         $return->error = NULL;
-                        //TODO: move this into nicer place - not html in the controller dude.
                         $return->initialPreview = ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"];
                         $preview = new \stdClass();
                         $preview->caption = $url;

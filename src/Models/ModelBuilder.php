@@ -23,13 +23,15 @@ class ModelBuilder extends Model
 
 
 
-    public function __construct($parms = null)
+    public function __construct($parms = null, $table = null)
     {
         parent::__construct();
         if ($parms) {
             //this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
             $this->fillable = $parms;
-
+        }
+        if($table){
+            $this->table = $table;
         }
     }
 
@@ -40,8 +42,8 @@ class ModelBuilder extends Model
         if (class_exists($table)) {
             $ret = new $table($parms);
         } else {
-            $ret = new static($parms);
-            $ret->setTable($table);
+            $ret = new static($parms, $table);
+            //$ret->setTable($table);
         }
 
         return $ret;
