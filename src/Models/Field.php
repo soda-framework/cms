@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: sidavies
@@ -19,6 +20,7 @@ class Field extends Model {
 		'datetime'=>'datetime',
 		'dropdown'=>'dropdown',
 		'fancy_upload'=>'fancy_upload',
+        'media_upload'=>'media_upload',
 		'lat_lon'=>'lat_lon',
 		'password'=>'password',
 		'static'=>'static',

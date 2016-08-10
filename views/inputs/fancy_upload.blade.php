@@ -1,6 +1,4 @@
 <?php
-	//TODO: multiple file upload, file types validation, additional options.
-
 	$nice_name = preg_replace("/[^A-Za-z0-9 ]/", '', $field_name);
 ?>
 <fieldset class="form-group field_{{@$field_name}} {{@$nice_name}} {{@$field_class}} text-field">

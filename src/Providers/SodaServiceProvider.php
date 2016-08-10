@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Providers;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Soda;
