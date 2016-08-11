@@ -13,7 +13,8 @@ use Soda;
 class ModelBuilder extends Model
 {
 
-    protected $table;
+    public $table;
+    protected static $_table;
 
     protected static $lastTable;
     public $index_fields = [];
@@ -30,7 +31,8 @@ class ModelBuilder extends Model
             //this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
             $this->fillable = $parms;
         }
-        $this->table = static::$lastTable;
+
+        $this->table = static::$_table;
 
         parent::__construct();
     }
@@ -51,6 +53,7 @@ class ModelBuilder extends Model
 
     public function setTable($table)
     {
+        static::$_table = $table;
         $this->table = $table;
         static::$lastTable = $table;
 
