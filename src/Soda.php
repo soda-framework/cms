@@ -47,11 +47,8 @@ class Soda {
 	}
 
 	public function dynamicModel($table){
-
 		//TODO - we sometimes might want to use a static model in here instead of a create from table.. could we use this for realationships maybe?
 		$model = ModelBuilder::fromTable($table, []);
-
-		//dd($model);
 		return $model;
 	}
 

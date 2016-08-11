@@ -61,7 +61,6 @@ class UploadController extends Controller
     // pass a file object from request
     public function upload(Request $request)
     {
-        dd($request);
         if ($request->hasFile('file')) {
             $files = $request->file('file');
             $return = [];

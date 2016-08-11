@@ -13,8 +13,9 @@ use Soda;
 class ModelBuilder extends Model
 {
 
-    public $table;
+    protected $table;
 
+    protected static $lastTable;
     public $index_fields = [];
 
     //TODO:
@@ -23,16 +24,15 @@ class ModelBuilder extends Model
 
 
 
-    public function __construct($parms = null, $table = null)
+    public function __construct($parms = null)
     {
-        parent::__construct();
         if ($parms) {
             //this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
             $this->fillable = $parms;
         }
-        if($table){
-            $this->table = $table;
-        }
+        $this->table = static::$lastTable;
+
+        parent::__construct();
     }
 
     public static function fromTable($table, $parms = [])
@@ -42,8 +42,8 @@ class ModelBuilder extends Model
         if (class_exists($table)) {
             $ret = new $table($parms);
         } else {
-            $ret = new static($parms, $table);
-            //$ret->setTable($table);
+            $ret = new static($parms);
+            $ret->setTable($table);
         }
 
         return $ret;
@@ -52,6 +52,7 @@ class ModelBuilder extends Model
     public function setTable($table)
     {
         $this->table = $table;
+        static::$lastTable = $table;
 
     }
 
