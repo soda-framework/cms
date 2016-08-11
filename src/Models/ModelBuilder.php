@@ -4,6 +4,7 @@ namespace Soda\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Soda\Models\Media;
 use Soda;
 
 /**
@@ -62,6 +63,13 @@ class ModelBuilder extends Model
     public function getTable()
     {
         return $this->table;
+    }
+
+
+    //Not sure if this is the right place to do this
+    public function getMedia($field, $variant = 'original', $callback = null){
+        return Media::where('related_table', $this->getTable())->where('related_id', $this->id)
+            ->where('related_field', $field)->get();
     }
 
 

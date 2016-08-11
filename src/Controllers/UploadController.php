@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
 use Soda\Models\Media;
+use Soda\Models\Upload;
 
 class UploadController extends Controller
 {
@@ -19,7 +20,7 @@ class UploadController extends Controller
     public function postTest(Request $request)
     {
         $unique = uniqid();     //we need unique identifier for each item to try
-                                // and prevent duplicate issues
+        // and prevent duplicate issues
         if ($request->hasFile('file')) {
 
             $file = $request->file('file');
@@ -47,11 +48,12 @@ class UploadController extends Controller
     /**
      * retrieves uploads for encoding into json.
      */
-    public function retrieveUpload(Request $request){
+    public function retrieveUpload(Request $request)
+    {
         $files = $request->get('files');
-        $uploads = Upload::where(function($q) use ($files){
-            foreach($files as $file){
-                $q->orWhere('original_file_url',$file);
+        $uploads = Upload::where(function ($q) use ($files) {
+            foreach ($files as $file) {
+                $q->orWhere('original_file_url', $file);
             }
         })->get();
 
@@ -64,20 +66,20 @@ class UploadController extends Controller
         if ($request->hasFile('file')) {
             $files = $request->file('file');
             $return = [];
-            foreach($files as $file){
+            foreach ($files as $file) {
                 if ($file->isValid()) {
                     $unique = uniqid();
                     $path_info = pathinfo($file->getClientOriginalName());
-                    $final_path = $this->url_prefix .'/'. $path_info['filename']. '__' . $unique;
-                    if($path_info['extension']){
-                        $final_path .= '.'.$path_info['extension'];
+                    $final_path = $this->url_prefix . '/' . $path_info['filename'] . '__' . $unique;
+                    if ($path_info['extension']) {
+                        $final_path .= '.' . $path_info['extension'];
                     }
                     $uploaded = Storage::disk(config('soda.uploader'))->put(
                         $final_path,
                         file_get_contents($file->getRealPath()), 'public'
                     );
-                    if($uploaded){
-                        $url = config('soda.upload_domain').'/'.$final_path;
+                    if ($uploaded) {
+                        $url = config('soda.upload_domain') . '/' . $final_path;
                         //upload succesful - we want to try and see if there's a specific url we can load these from?
                         //we want to add this to the uploads db.
                         $upload = new Upload;
@@ -86,15 +88,25 @@ class UploadController extends Controller
                         $upload->save();
                         $return = new \stdClass();
                         $return->error = NULL;
-                        $return->initialPreview = ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"];
+                        $return->initialPreview = ["<img src='$url' width='120' /><input type='hidden' value='$url' name='" . $request->input('field_name') . "' />"];
                         $preview = new \stdClass();
                         $preview->caption = $url;
                         $preview->width = '120px';
-                        $return->append = false;
+                        $return->append = true;
                         $return->initialPreviewConfig = [$preview];
+                        if ($request->has('related_id')) {
+                            $media = Media::create([
+                                'related_id' => $request->input('related_id'),
+                                'related_table' => $request->input('related_table'),
+                                'related_field' => $request->input('related_field'),
+                                'position' => $request->input('file_id'),
+                                'media' => $url,
+                                'media_type' => 'image'
+                            ]);
+                            $media->save();
+                        }
                     }
-                }
-                else{
+                } else {
                     dd('file not valid??');  //TODO: REMOVE DD, HANDLE ERRORS BETTER
                 }
             }
@@ -109,8 +121,9 @@ class UploadController extends Controller
         //CALL uploading scripts..
     }
 
-    public function delete()
+    public function delete(Request $request)
     {
+        dd($request);
         return response()->json();
     }
 

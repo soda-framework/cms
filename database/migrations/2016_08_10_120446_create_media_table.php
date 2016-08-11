@@ -21,6 +21,7 @@ class CreateMediaTable extends Migration
             $table->integer('position');
             $table->text('media');      //This is a JSON column however leaving it as text for older MYSQL versions
             $table->enum('media_type', ['image', 'video', 'other']);
+            $table->timestamps();
         });
     }
 

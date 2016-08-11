@@ -40,11 +40,13 @@
 		initialPreviewAsData: false, // identify if you are sending preview data only and not the raw markup
 		autoReplace : true,
 		uploadExtraData: {
-			_token:"{{csrf_token()}}"
-        {{--field_name:"{{$field_name}}",			//we pass over the name field so we can chuck it in from the reply nicely.
-            related_type:"{{$related_type}}",
-            related_id: "{{$related_id}}",
-            related_field: "{{$related_field}}" --}}
+			_token:"{{csrf_token()}}",
+            @if(isset($related))
+                @foreach($related as $key=>$value)
+                    {{$key}}: "{{$value}}",
+                @endforeach
+            @endif
+            related_field: "{{$field_name}}"
 		},
 		deleteExtraData: {
 			_token:"{{csrf_token()}}"
