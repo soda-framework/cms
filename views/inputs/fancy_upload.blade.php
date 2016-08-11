@@ -27,16 +27,27 @@
                         '<img src="{{$image->media}}" width="120"><input type="hidden" value="{{$field_value}}" name="{{$field_name}}" />',
                     @endforeach
             @endif
-		],
-		initialPreviewConfig:[
-		@if($field_value)
-				{
-				caption: "{{$field_value}}",
-				width: "120px",
-				key: 1
-				}
-		@endif
-		],
+        ],
+        initialPreviewConfig: [
+            @if($model->getMedia($field_name)->count() > 0)
+                @foreach($model->getMedia($field_name) as $image)
+                    {
+                        caption: "",
+                        width: "120px",
+                        url:'{{ route('soda.upload.delete') }}',
+                        key: {{ $image->id }},
+                        extra: {
+                            '_token': "{{ csrf_token() }}",
+                            @if(isset($related))
+                                @foreach($related as $key=>$value)
+                                    {{$key}}: "{{$value}}",
+                                @endforeach
+                            @endif
+                        }
+                    },
+                @endforeach
+            @endif
+        ],
 		allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],	//TODO: this should come from validation array.
 		initialPreviewAsData: false, // identify if you are sending preview data only and not the raw markup
 		autoReplace : true,

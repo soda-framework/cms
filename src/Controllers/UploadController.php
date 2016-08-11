@@ -93,7 +93,7 @@ class UploadController extends Controller
                         $preview->caption = $url;
                         $preview->width = '120px';
                         $return->append = true;
-                        $return->initialPreviewConfig = [$preview];
+
                         if ($request->has('related_id')) {
                             $media = Media::create([
                                 'related_id' => $request->input('related_id'),
@@ -104,7 +104,14 @@ class UploadController extends Controller
                                 'media_type' => 'image'
                             ]);
                             $media->save();
+                            $config = new \stdClass();
+                            $config->_token = csrf_token();
+                            $config->key = $media->id;
+                            $config->related_table = $media->related_table;
+                            $config->related_id = $media->related_id;
+                            $preview->extra = [$config];
                         }
+                        $return->initialPreviewConfig = [$preview];
                     }
                 } else {
                     dd('file not valid??');  //TODO: REMOVE DD, HANDLE ERRORS BETTER
@@ -123,8 +130,14 @@ class UploadController extends Controller
 
     public function delete(Request $request)
     {
-        dd($request);
-        return response()->json();
+       if($request->has('key')){
+           $image = Media::find($request->input('key'));
+           if($image){
+               $image->delete();
+               return json_encode(true);
+           }
+       }
+       return json_encode(['error' => 'Unable to delete image, please refresh and try again']);
     }
 
 }
