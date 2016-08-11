@@ -25,12 +25,12 @@ if (isset($model)) {
     <form method="POST" action='{{route('soda.dyn.edit',['type'=>@$type->identifier, 'id'=>@$model->id])}}'
           class="form-wrapper">
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-        {{--TODO: swap for @each?? --}}
+        {{--TODO: swap for @each??, dont include model to view? Must be a better way to do what i want to do --}}
         @foreach($type->fields as $field)
             @include("soda::inputs.".$field->field_type,['field_name'=>$field->field_name,
                 'field_value'=>$model->{$field->field_name}, 'field_label'=>$field->name,
                 'field_info'=>$field->description, 'field_parameters' => $field->field_params,
-                'related'=>$related
+                'related'=>$related, 'model'=>$model
             ])
         @endforeach
         <button type="submit" class="btn btn-primary">Save</button>
