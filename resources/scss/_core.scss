@@ -1,0 +1,20 @@
+body{ //so the main top menu can squish in.
+  padding-top: $navbar-height;
+}
+
+textarea {
+  min-height: 500px;
+}
+
+.home-intro {
+  margin-top: $grid-gutter-width / 2;
+  background-color: transparent;
+}
+
+.page-header {
+  margin-top: 0;
+}
+
+.sortable-handle {
+  text-align: center;
+}

@@ -6,7 +6,6 @@
 </head>
 <body class="{{@$body_class}}">
     <div class="soda-wrapper container-fluid">
-        @include(config('soda.hint_path').'::partials.nav')
         @yield('main-content')
     </div>
     @yield("footer.js")
