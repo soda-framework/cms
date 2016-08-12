@@ -4,7 +4,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage;
 use Soda\Models\Media;
-use Soda\Models\Upload;
 
 class UploadController extends Controller
 {
@@ -80,12 +79,6 @@ class UploadController extends Controller
                     );
                     if ($uploaded) {
                         $url = config('soda.upload_domain') . '/' . $final_path;
-                        //upload succesful - we want to try and see if there's a specific url we can load these from?
-                        //we want to add this to the uploads db.
-                        $upload = new Upload;
-                        $upload->file_url = $url;
-                        //TODO: other meta junk in here.. caption, x,y,etc etc.
-                        $upload->save();
                         $return = new \stdClass();
                         $return->error = NULL;
                         $return->initialPreview = ["<img src='$url' width='120' /><input type='hidden' value='$url' name='" . $request->input('field_name') . "' />"];
