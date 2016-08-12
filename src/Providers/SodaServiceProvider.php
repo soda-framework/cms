@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Providers;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Soda;
@@ -20,16 +21,37 @@ class SodaServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+        //TODO: I don't know if this is ok to do or not - just hoping for the best here really
+
+        config()->set('auth.providers.soda', [
+            'driver' => 'eloquent',
+            'model' => \Soda\Models\User::class
+        ]);
+        config()->set('auth.guards.soda', [
+            'driver' => 'session',
+            'provider' => 'soda',
+        ]);
+
+        config()->set('auth.passwords.soda', [
+            'provider' => 'soda',
+            'email' => 'auth.emails.password',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ]);
+
+        //config()->set('auth.defaults.guard', 'soda');
+
 
         $this->buildApp();
 
         // Loading routes
         //if (!$this->app->routesAreCached()) {
-        //	//require __DIR__ . '/../routes.php';
+        //  //require __DIR__ . '/../routes.php';
         //}
 
         // Publishing configs
         $this->publishes([__DIR__.'/../../config' => config_path()]);
+        $this->publishes([__DIR__.'/../../database' => database_path()]);
 
         // Publishing views
         $this->loadViewsFrom(__DIR__.'/../../views', config('soda.hint_path'));
@@ -40,8 +62,6 @@ class SodaServiceProvider extends ServiceProvider {
         // Publishing public assets
         $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'public');
 
-        // Publishing migrations
-        $this->publishes([__DIR__.'/../../database' => database_path()], 'database');
 
 
         Blade::extend(function($value, $compiler)
@@ -53,6 +73,15 @@ class SodaServiceProvider extends ServiceProvider {
             $value = preg_replace('/(?<=\s)@break(?=\s)/', '<?php break; ?>', $value);
             return $value;
         });
+
+        Blade::directive('attributes', function ($attributes = null) {
+            return '<?php if(@$attributes){
+                    foreach($attributes as $key=>$attribute){
+                            echo " $key=\\"$attribute\\" ";
+                    }
+                }?>';
+        });
+
     }
 
     /**
@@ -60,11 +89,11 @@ class SodaServiceProvider extends ServiceProvider {
      * TODO: move this somewhere sensible?
      */
     public function buildApp() {
-        $this->app->singleton('application', function ($app) {
-            return Application::find(1);
-            //return('bonk');
-            //return new FooBar($app['SomethingElse']);
-        });
+        //$this->app->singleton('application', function ($app) {
+        //    return Application::find(1);
+        //    //return('bonk');
+        //    //return new FooBar($app['SomethingElse']);
+        //});
 
         //TODO: we should prbs be defining a 'soda' singleton that has
         //access to stuff like application etc that we can call from anywhere..
@@ -76,18 +105,48 @@ class SodaServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
-        $this->app->register('Soda\Providers\UploaderProvider');
-        $this->app->register('Soda\Providers\RouteServiceProvider');
-        $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');
-        $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');
+        $this->registerDependencies([
+            AuthServiceProvider::class,
+            UploaderProvider::class,
+            RouteServiceProvider::class,
+            \Franzose\ClosureTable\ClosureTableServiceProvider::class,
+            \Zofe\Rapyd\RapydServiceProvider::class,
+            \Creativeorange\Gravatar\GravatarServiceProvider::class
+        ]);
 
-        //$this->app->bind('Soda', Soda::class);
-        $this->app->bind('soda', function () {
-            return new Soda\Soda(); //freaking cool-ass facades!
-        });
 
-        //$this->app->singleton('Soda', function(){
-        //	return new Soda();
+        $this->registerFacades([
+            'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        ]);
+
+        ////$this->app->bind('Soda', Soda::class);
+        //$this->app->bind('soda', function () {
+        //    return new Soda\Soda();
         //});
+
+        $this->app->singleton('soda', function(){
+            return new Soda\Soda();
+        });
+    }
+
+    /**
+     * Register dependies conditionally (e.g. dev dependencies)
+     *
+     * @param array $services
+     */
+    public function registerDependencies(array $services) {
+        foreach ($services as $service) {
+            $this->app->register($service);
+        }
+    }
+
+
+    /**
+     * @param array $facades
+     */
+    public function registerFacades(array $facades) {
+        foreach ($facades as $facade => $class) {
+            AliasLoader::getInstance()->alias($facade, $class);
+        }
     }
 }

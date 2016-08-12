@@ -11,23 +11,8 @@ namespace Soda\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Block extends Model{
-	protected $fillable = ['name', 'description'];
+	protected $fillable = ['name', 'description', 'identifier', 'block_type_id'];
 	protected $table = 'blocks';
-
-	public $title = 'block';
-
-	public $view_fields = [
-		'name'=>[
-			'label'=>'name',
-			'type'=>'text',
-			'name'=>'name'
-		],
-		'description'=>[
-			'label'=>'description',
-			'type'=>'textarea',
-			'name'=>'description'
-		]
-	];
 
 	public function type() {
 		return $this->belongsTo(BlockType::class, 'block_type_id');

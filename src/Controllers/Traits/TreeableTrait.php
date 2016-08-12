@@ -1,32 +1,26 @@
 <?php namespace Soda\Controllers\Traits;
 
 use Illuminate\Http\Request;
+use Soda\Models\NavigationItem;
 
 Trait TreeableTrait
 {
 
-    //get tree from given model.
-    private function grabTree($id = false)
+    /*
+     * render tree item
+     */
+    public function htmlTree(Request $request, $id = false, $hint)
     {
+        //
         if (!isset($id) || !$id || $id == '#') {
-            $treeModel = $this->model->getRoots()->first();    //todo: from application.
+            $treeModel = $this->tree->grabTree();
         } elseif ($id) {
-            $treeModel = $this->model->where('id', $id)->first();
+            $treeModel = $this->tree->grabTree($id);
         } elseif ($request->input('id')) {
-            $treeModel = $this->model->where('id', $request->input('id'))->first();
+            $treeModel = $this->tree->grabTree($request->input('id'));
         }
 
-        $tree_obj = [];// = $this->assignModelValues($page);
-
-        //we need to get elements for each element in the tree.
-        //TODO: see https://github.com/franzose/ClosureTable/issues/164
-        return $treeModel->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
-    }
-
-
-    public function htmlTree($id = false)
-    {
-        return view('soda::tree.base', ['tree' => $this->grabTree()]);
+        return view('soda::tree.base', ['tree' => $this->tree->grabTree($id), 'hint'=>$hint]);
     }
 
     /**
@@ -97,26 +91,35 @@ Trait TreeableTrait
      * @param $position
      * @return string
      */
-    public function move($id, $parent_id, $position){
+    public function move(Request $request, $parent_id = null, $id = null, $position= null){
+        if(!$parent_id){
+            $parent_id = $request->get('parent_id');
+        }
+        if(!$id){
+            $id = $request->get('id');
+        }
+        if(!$position){
+            $position = $request->get('position');
+        }
 
-        $item = $this->model->find($id);
+        $item = $this->tree->find($id);
+
 
         if($parent_id == 'root'){
-            $parent = $this->model->getRoots()->first();    //TODO: from application.
+            $parent = $this->tree->getRoots()->first();    //TODO: from application.
         }
         else{
-            $parent = $this->model->find($parent_id);
+            $parent = $this->tree->find($parent_id);
         }
-
+        
 
         //re-handle slugging - TODO: should we make this optional?
-        $item->slug = $parent->generateSlug($item->name);
+        //$item->slug = $parent->generateSlug($item->name);
 
-        if($item->parent_id == $parent_id){
+        if($item->parent_id == $parent->id){
             //we just want to re-order, not move the element.
             $item->position = $position;
             $item->save();
-            return 'true';
         }
 
         $item->moveTo($position, $parent->id);
@@ -124,10 +127,10 @@ Trait TreeableTrait
         return 'true'; //todo - should return json?
     }
 
-    public function delete($id){
-        $item = $this->model->find($id);
+    public function deleteTree($id){
+        $item = $this->tree->find($id);
         $item->deleteSubtree(true);
-        return 'true';
+        return redirect()->route('soda.' . $this->hint)->with('success', 'page updated');
     }
 
     /**
@@ -187,5 +190,28 @@ Trait TreeableTrait
             return ($branch);
         }
         return false;
+    }
+
+
+    /**
+     * show the relevant create item form.
+     * @param Request $request
+     * @param null $parent_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function createForm(Request $request, $parent_id = null)
+    {
+        if ($parent_id) {
+            $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
+
+        } else {
+            $parent = $this->model->getRoots()->first();
+        }
+
+        $this->model->parent_id = $parent->id;
+        $this->model->page_type_id = $request->input('page_type_id');
+
+
+        return view('soda::'.$this->hint.'.view',['model'=>$this->model, 'hint'=>$this->hint, 'tree'=>false]);
     }
 }

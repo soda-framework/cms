@@ -18,8 +18,7 @@ class DynamicController extends Controller
     public function __construct(ModelBuilder $modelBuilder)
     {
         $this->type = BlockType::with('fields')->where('identifier', \Route::current()->getParameter('type'))->first();
-        $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier,
-            $this->type->fields->lists('field_name')->toArray());
+        $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier, $this->type->fields->lists('field_name')->toArray());
     }
 
     public function index()
@@ -40,6 +39,7 @@ class DynamicController extends Controller
 
     public function edit(Request $request, $type = null, $id = null)
     {
+
         if ($id) {
             $this->model = $this->model->findOrFail($id);
         }

@@ -6,44 +6,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable{
 
-
-	public $title = 'user';
-	public $plural_title = 'users';
-
-	public $view_view = 'soda::standard.view';
-	public $view_fields = [
-		'username'=>[
-			'label'=>'username',
-			'type'=>'text',
-			'name'=>'username'
-		],
-		'email'=>[
-			'label'=>'email',
-			'type'=>'text',
-			'name'=>'email'
-		],
-		'password'=>[
-			'label'=>'password',
-			'type'=>'password',
-			'name'=>'password'
-		]
-	];
-
-	public $index_view = 'soda::standard.index';
-	public $index_fields = [
-		'username'=>[
-			'label'=>'username',
-			'type'=>'text',
-			'name'=>'username'
-		],
-		'email'=>[
-			'label'=>'email',
-			'type'=>'text',
-			'name'=>'email'
-		]
-	];
-
-
 	protected $table = 'users';
 
 	/**
@@ -52,7 +14,7 @@ class User extends Authenticatable{
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'email', 'password',
+		'name', 'email', 'password', 'role_id',
 	];
 
 	/**
@@ -78,7 +40,7 @@ class User extends Authenticatable{
 	 */
 	public function role()
 	{
-		return $this->hasMany('Soda\Role');
+		return $this->belongsTo(Role::class);
 	}
 
 }

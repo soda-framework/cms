@@ -18,7 +18,7 @@
 		{{--TODO: swap for @each?? --}}
 
 		@foreach($fields as $field)
-			@include("soda::inputs.".$field['type'],['field_name'=>$field['name'], 'field_value'=>$model->{$field['name']}, 'field_label'=>$field['name']])
+			@include("soda::inputs.".$field['type'],['field_name'=>$field['name'], 'field_value'=>$model->{$field['name']}, 'field_label'=>$field['name'], 'field_parameters'=> $field['field_params'] ])
 		@endforeach
 		<button type="submit" class="btn btn-primary">Save</button>
 	</form>

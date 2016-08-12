@@ -1,0 +1,137 @@
+@import "variables";
+
+//BOOTSTRAP MODULES
+
+// Reset and dependencies
+
+//@import "../components/bootstrap-sass/assets/stylesheets/bootstrap";
+// Core variables and mixins
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+// Reset and dependencies
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/print";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+
+// Core CSS
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/type";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+
+// Components
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/navs";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/pager";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/labels";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/badges";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/media";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/list-group";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/panels";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/wells";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/close";
+
+// Components w/ JavaScript
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+
+// Utility classes
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+
+@import "../components/bootstrap-fileinput/css/fileinput.css";
+
+//@import "../components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css";
+
+@import "../components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css";
+
+
+@import "../components/select2/src/scss/core";
+
+
+//FA
+@import "../components/font-awesome/scss/font-awesome";
+
+
+//main-styles
+
+@import "inputs";
+
+.full-height{
+    height:100%;
+}
+.vertical-center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+body{ //so the main top menu can squish in.
+    padding-top: 70px;
+}
+
+.soda-logo{
+    img{
+        max-height: 52px;   //so we don't stretch out the nav bar.
+    }
+}
+
+
+.home-intro{
+    margin-top:$grid-gutter-width/2;
+}
+
+.page-header{
+    margin-top:0;
+}
+
+.sidebar{
+    background:$gray-lighter;
+    padding-top:$grid-gutter-width;
+    position: fixed;
+    z-index:1000;
+    top:55px;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+
+    /*sidebar items*/
+    .nav-sidebar {
+        margin-bottom: 20px;
+    }
+    .nav-sidebar > li > a {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+    .nav-sidebar > .active > a,
+    .nav-sidebar > .active > a:hover,
+    .nav-sidebar > .active > a:focus {
+        color: #fff;
+        background-color: $brand-primary;
+    }
+}
+
+.bootstrap-tagsinput{
+    display: block !important;
+}
+
+
+
+

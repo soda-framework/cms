@@ -1,5 +1,5 @@
 {{-- base tree item --}}
-<link href="/soda/soda/css/tree.css" rel="stylesheet"> {{--should this be in head? --}}
+<link href="/sodacms/sodacms/css/tree.min.css" rel="stylesheet"> {{--should this be in head? --}}
 
 <ul class="tree-view">
 
@@ -29,8 +29,12 @@
 			if(typeof parent_id === 'undefined'){
 				parent_id = 'root';
 			}
-			$.get('/cms/pages/move/'+id+'/'+parent_id+'/'+position,function(){
-				//complete.
+			$.get($item.data('move'), {
+						id:id,
+						position:position,
+						parent_id:parent_id
+					},function(){
+				//move complete.
 			});
 			console.log(_super);
 			container.el.removeClass("active");
@@ -43,6 +47,7 @@
 
 	$("ul.tree-view .minify").click(function(e){
 		e.preventDefault();
+		$(this).toggleClass('fa-minus').toggleClass('fa-plus');
 		$('ul', $(this).closest('li')).toggle();
 	});
 </script>

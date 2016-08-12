@@ -19,11 +19,7 @@ class PageTemplateController extends Controller
      */
     public function __construct(Template $page)
     {
-
-        //$this->middleware('auth');
         $this->model = $page;
-        $this->routeHint = 'soda.templates.';
-        view()->share('routeHint', $this->routeHint);
     }
 
 
@@ -99,7 +95,7 @@ class PageTemplateController extends Controller
         return (\Soda\Components\Page::constructView($page, ['page' => $page]));
     }
 
-    public function createForm($parent_id = null)
+    public function createForm(Request $request, $parent_id = null)
     {
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);

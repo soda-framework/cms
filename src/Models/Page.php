@@ -7,14 +7,16 @@ use Soda\Models\Scopes\LiveScope;
 use Soda\Models\Scopes\PositionScope;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Models\Traits\SluggableTrait;
+use Soda\Models\Traits\TreeableTrait;
 
 class Page extends Entity implements PagesInterface
 {
     use SoftDeletes;
     use SluggableTrait;
+    use TreeableTrait;
 
     protected $table = 'pages';
-    public $fillable = ['name', 'slug', 'action_type', 'action', 'package', 'application_id', 'status_id', 'position'];
+    public $fillable = ['name', 'description', 'slug', 'action_type', 'action', 'package', 'application_id', 'status_id', 'position', 'page_type_id', 'edit_action', 'edit_action_type'];
 
     /**
      * The table associated with the model.
@@ -38,7 +40,7 @@ class Page extends Entity implements PagesInterface
      *
      * @var pagesClosure
      */
-    protected $closure = 'Soda\Models\PageClosure';
+    protected $closure = PageClosure::class;
 
     public function type()
     {
@@ -48,6 +50,13 @@ class Page extends Entity implements PagesInterface
     public function blocks()
     {
         return $this->belongsToMany(Block::class, 'page_blocks');
+    }
+
+    public static function hasFieldsOrBlocks($page){
+        if((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())){
+            return true;
+        }
+        return false;
     }
 
 }

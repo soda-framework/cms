@@ -6,13 +6,8 @@ use Redirect;
 
 class FieldController extends Controller {
 
-	use    Traits\CrudableTrait;
-
-
 	use Traits\CrudableTrait;
-	public $type = 'fields';
-	public $index_view = 'soda::crudable.index';
-	public $view_view = 'soda::crudable.view';
+	public $hint = 'field';
 
 	public function __construct(Field $field) {
 		//$this->middleware('auth');

@@ -1,14 +1,16 @@
-@extends(config('soda.hint_path').'::layouts.app')
+@extends(config('soda.hint_path').'::layouts.app', ['body_class'=>'full-height', 'html_class'=>'full-height'])
 
 @section('main-content')
     <div class="main-content row">
-        <div class="col-xs-6 col-xs-offset-3">
+        <div class="col-xs-6 col-xs-offset-3 vertical-center">
 
             <div class="main-content-inner">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="panel panel-default login-box">
-                            <h1 class="panel-heading">Login</h1>
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Login</h3>
+                            </div>
                             <div class="panel-body">
                                 <form class="form-horizontal" role="form" method="POST"
                                       action="{{ route('login-attempt') }}">

@@ -30,8 +30,6 @@
 						<a href="{{route('soda.'.$models[0]->title.'.view',['id'=>$model->id])}}" class="btn btn-success btn-sm"><span class="fa fa-pencil"></span></a>
 						<a href="{{route('soda.'.$models[0]->title.'.delete',['id'=>$model->id])}}" class="btn btn-danger btn-sm"><span class="fa fa-remove"></span></a>
 					@endif
-
-
 				</td>
 			</tr>
 		@endforeach

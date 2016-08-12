@@ -4,7 +4,7 @@
   "keywords": [
     "css",
     "js",
-    "sass",
+    "less",
     "mobile-first",
     "responsive",
     "front-end",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "moduleType": "globals",
   "main": [
-    "scss/bootstrap.scss",
+    "less/bootstrap.less",
     "dist/js/bootstrap.js"
   ],
   "ignore": [

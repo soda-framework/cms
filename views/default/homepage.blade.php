@@ -1,8 +1,15 @@
 @extends('soda::default.layout')
 
 @section('content')
-	This might be the 1st design.
-	@include('soda::blocks.banners',['block'=>Soda::getBlock('banners')])
+	<h1>{{Soda::dynamicModel('soda_homepage',[])->first()->title}}</h1>
 
-	@include('soda::blocks.polling',['block'=>Soda::getBlock('polling')])
+	<img width=100 src="{{Soda::dynamicModel('soda_homepage',[])->where('page_id',$page->id)->first()->image}}" />
+	<div class="text">
+		{!! Soda::dynamicModel('soda_homepage',[])->first()->text !!}
+	</div>
+	{!! Soda::menu('Main Menu') !!}
+
+	{!! Soda::menu('Social') !!}
+	{{--@include('soda::blocks.banners',['block'=>Soda::getBlock('banners')])--}}
+	{{--@include('soda::blocks.polling',['block'=>Soda::getBlock('polling')]) --}}
 @stop
