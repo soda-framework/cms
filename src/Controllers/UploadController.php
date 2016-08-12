@@ -105,7 +105,6 @@ class UploadController extends Controller
                             ]);
                             $media->save();
                             $config = new \stdClass();
-                            $config->_token = csrf_token();
                             $config->key = $media->id;
                             $config->related_table = $media->related_table;
                             $config->related_id = $media->related_id;
