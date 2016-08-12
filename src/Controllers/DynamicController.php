@@ -11,8 +11,6 @@ use App\Http\Controllers\Controller;
 
 class DynamicController extends Controller
 {
-
-
     public $model = null;
 
     public function __construct(ModelBuilder $modelBuilder)
@@ -25,11 +23,13 @@ class DynamicController extends Controller
     public function index()
     {
         $this->model = $this->model->all();
+
         return view($this->index_view, ['models' => $this->model]);
     }
 
     public function view($type = null, $id = null)
     {
+        dd($this->model);
         if ($id) {
             $model = $this->model->findOrFail($id);
         } else {

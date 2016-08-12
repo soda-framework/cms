@@ -10,6 +10,7 @@
 
 @section('head.meta')
     <link rel="shortcut icon" type="image/ico" href="/soda/soda/img/favicon.ico">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @stop
 
 @section('head.css')
@@ -20,6 +21,17 @@
 @section('head.js')
     <!-- JavaScripts -->
     <script src="/sodacms/sodacms/js/scripts.min.js"></script>
+    <script>
+        $(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.soda-wrapper, .main-content').css('min-height', $(window).height());
+        });
+    </script>
 @stop
 
 @section('head.extra')

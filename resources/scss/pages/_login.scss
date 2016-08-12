@@ -1,0 +1,99 @@
+.login-screen {
+  background-color: $content-background;
+  padding-top: 0;
+}
+
+.login-box-wrapper {
+  width: 560px;
+  margin: 0 auto;
+  margin-top: 120px;
+}
+
+.login-box {
+  position: relative;
+  padding: 40px 160px;
+  background-color: $login-box;
+  color: $login-box-text;
+  a {
+    color: $login-box-link;
+    &:hover {
+      color: $login-box-link-hover;
+    }
+  }
+
+  .soda-logo-wrap {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .soda-logo {
+    display: inline-block;
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      max-height: 70px;
+      width: auto;
+    }
+  }
+
+  .input-group-addon {
+    background-color: $theme-2;
+    border-color: $theme-2;
+    color: $white;
+    padding: 10px 15px;
+    + .form-control {
+      float: none;
+    }
+  }
+
+  .form-control {
+    border: none;
+    padding: 10px;
+    height: 42px;
+    &, &:hover, &:active, &:focus {
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    &::-webkit-input-placeholder {
+      color: $slate-7;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      color: $slate-7;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: $slate-7;
+    }
+    &:-ms-input-placeholder {
+      color: $slate-7;
+    }
+  }
+
+  &:before, &:after {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+    top: 80%;
+    max-width: 300px;
+    background: #777;
+    box-shadow: 0 15px 10px #777;
+    transform: rotate(-3deg);
+  }
+  &:after {
+    transform: rotate(3deg);
+    right: 10px;
+    left: auto;
+  }
+}
+
+.btn-login {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  &:hover, &:active {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: $slate-6;
+  }
+}

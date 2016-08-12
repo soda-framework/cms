@@ -3,14 +3,16 @@
 @section('header')
 
 	<title>User</title>
-	{{--note: non of these have anything in them anymore--}}
-			<!-- JavaScripts -->
+	{{-- note: non of these have anything in them anymore
+
+	<!-- JavaScripts -->
 	<script src="/sodacms/sodacms/js/content.js"></script>
 	<!-- Styles -->
 	<link href="/sodacms/sodacms/css/content.css" rel="stylesheet">
+	--}}
 
 @endsection
- --clea
+
 @section('content')
 	@include(config('soda.hint_path').'::partials.heading',['icon'=>$model->id?'fa fa-user':'fa fa-user-plus', 'title'=>$model->name?'Field: '.$model->name:'New User'])
 	<form method="POST" action='{{route('soda.field.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">

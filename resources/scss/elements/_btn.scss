@@ -1,0 +1,6 @@
+.btn {
+  &.btn-success, &.btn-danger, &.btn-default, &.btn-info, &.btn-warning {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    //border-radius: $border-radius-base;
+  }
+}

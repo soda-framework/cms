@@ -12,7 +12,6 @@
 			Update {{ucfirst($model->name)}}
 		@endif
 	</h1>
-
 	<form method="POST" action='{{route('soda.dyn.edit',['type'=>@$type->identifier, 'id'=>@$model->id])}}' class="form-wrapper">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		{{--TODO: swap for @each?? --}}
