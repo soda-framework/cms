@@ -28,7 +28,7 @@ class DynamicController extends Controller
 
     public function view($type = null, $id = null)
     {
-        dd($this->model);
+        //dd($this->model);
         if ($id) {
             $model = $this->model->findOrFail($id);
         } else {
