@@ -1,30 +1,37 @@
 <?php
 	$nice_name = preg_replace("/[^A-Za-z0-9 ]/", '', $field_name);
+    $related = [];
+    if ($model) {
+        $related = [
+            'related_table' => $model->getTable(),
+            'related_id'    => $model->id,
+        ];
+    }
 ?>
-<fieldset class="form-group field_{{@$field_name}} {{@$nice_name}} {{@$field_class}} text-field">
-	<label for="field_{{@$field_name}}">{{@$field_label?$field_label:$nice_name}}</label>
-	<input id="field_{{@$nice_name}}" type="file" name='file[]' value="{{$field_value}}" class="form-control field_{{@$nice_name}} {{@$nice_name}}" multiple />
+<fieldset class="form-group field_{{ $field_name }} {{ $nice_name }} {{ $field_class }} text-field">
+	<label for="field_{{ $field_name }}">{{ $field_label ? $field_label : $nice_name }}</label>
+	<input id="field_{{ $nice_name }}" type="file" name='file[]' value="{{ $field_value }}" class="form-control field_{{ $nice_name }} {{ $nice_name }}" multiple />
 	@if(@$field_info)
-		<small class="text-muted">{{$field_info}}</small>
+		<small class="text-muted">{{ $field_info }}</small>
 	@endif
 </fieldset>
 
 <script type="application/javascript">
 
-	$("#field_{{$nice_name}}").fileinput({
+	$("#field_{{ $nice_name }}").fileinput({
 		uploadUrl:'{{route('soda.upload')}}',
 		deleteUrl:'{{route('soda.upload.delete')}}',
 		allowedFileTypes:['image','audio'], //TODO: this should come from validation array.
 		theme:'fa',
 		uploadAsync: true,
-		minFileCount: {{(isset($field_parameters['minFileCount']))? $field_parameters['minFileCount'] : 1 }},
-		maxFileCount: {{(isset($field_parameters['maxFileCount']))? $field_parameters['maxFileCount'] : 1 }},
+		minFileCount: {{ isset($field_parameters['minFileCount']) ? $field_parameters['minFileCount'] : 1 }},
+		maxFileCount: {{ isset($field_parameters['maxFileCount']) ? $field_parameters['maxFileCount'] : 1 }},
 		overwriteInitial: {{ isset($field_parameters['overwriteInitial']) ? $field_parameters['overwriteInitial'] : (isset($field_parameters['maxFileCount']) && $field_parameters['maxFileCount'] > 1 ? 'false' : 'true') }},
 		initialPreview:[
 			{{--TODO: should be able to just specify file types then add the input fields onupload.. haven't been able to make it work yet though - this will allow for automatic detection of images/audio/video by the plugin. --}}
             @if($model->getMedia($field_name)->count() > 0)
                     @foreach($model->getMedia($field_name) as $image)
-                        '<img src="{{$image->media}}" width="120"><input type="hidden" value="{{$field_value}}" name="{{$field_name}}" />',
+                        '<img src="{{ $image->media }}" width="120"><input type="hidden" value="{{ $field_value }}" name="{{ $field_name }}" />',
                     @endforeach
             @endif
         ],
@@ -39,8 +46,8 @@
                         extra: {
                             '_token': "{{ csrf_token() }}",
                             @if(isset($related))
-                                @foreach($related as $key=>$value)
-                                    {{$key}}: "{{$value}}",
+                                @foreach($related as $key => $value)
+                                    {{ $key }}: "{{ $value }}",
                                 @endforeach
                             @endif
                         }
@@ -55,13 +62,13 @@
 			_token:"{{csrf_token()}}",
             @if(isset($related))
                 @foreach($related as $key=>$value)
-                    {{$key}}: "{{$value}}",
+                    {{ $key }}: "{{ $value }}",
                 @endforeach
             @endif
-            related_field: "{{$field_name}}"
+            related_field: "{{ $field_name }}"
 		},
 		deleteExtraData: {
-			_token:"{{csrf_token()}}"
+			_token:"{{ csrf_token() }}"
 		},
 		//we want to use font awesome instead of glyphicons.
 		previewFileIcon: '<i class="fa fa-file"></i>',

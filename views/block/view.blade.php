@@ -15,9 +15,24 @@
 	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-square', 'title'=>$model->name?'Block: '.$model->name:'New Field'])
 	<form method="POST" action='{{route('soda.block.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-		@include('soda::inputs.text',['field_name'=>'name', 'field_value'=>$model->name , 'field_label'=>'Block Name'])
-		@include('soda::inputs.textarea',['field_name'=>'description', 'field_value'=>$model->description , 'field_label'=>'Block Description'])
-		@include('soda::inputs.text',['field_name'=>'identifier', 'field_value'=>$model->identifier , 'field_label'=>'Block Identifier'])
+
+		{!! Soda::field([
+            'name'        => 'Block Name',
+            'field_type'  => 'text',
+            'field_name'  => 'name',
+        ])->setModel($model) !!}
+
+		{!! Soda::field([
+            'name'        => 'Block Description',
+            'field_type'  => 'textarea',
+            'field_name'  => 'description',
+        ])->setModel($model) !!}
+
+		{!! Soda::field([
+            'name'        => 'Block Identifier',
+            'field_type'  => 'text',
+            'field_name'  => 'identifier',
+        ])->setModel($model) !!}
 
 		@if($model->name)
 			<button class="btn btn-primary"><span class="fa fa-pencil"></span> Update</button>

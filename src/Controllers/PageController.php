@@ -60,9 +60,9 @@ class PageController extends Controller
         } else {
             $model = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
-        if (@$page->type->identifier) {
-            $page_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-                $model->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
+        if (@$model->type->identifier) {
+            $page_table = Soda::dynamicModel('soda_' . $model->type->identifier,
+                $model->type->fields->lists('field_name')->toArray())->where('page_id', $model->id)->first();
         } else {
             $page_table = null;
         }
