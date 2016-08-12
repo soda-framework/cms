@@ -1,26 +1,24 @@
 <?php namespace Soda\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Soda\Models\Page;
-use Soda\Models\Template;
-use Soda\Models\PageType;
+use Illuminate\Http\Request;
+use Soda\Components\Page as PageComponent;
 use Soda\Facades\Soda;
+use Soda\Models\Page;
+use Soda\Models\PageType;
 
 
-class PageController extends Controller
-{
+class PageController extends Controller {
 
     use    Traits\TreeableTrait;
     public $hint = 'page';
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Page $page)
-    {
+    public function __construct(Page $page) {
         //$this->middleware('auth');
         $this->model = $page;
         $this->tree = $page;
@@ -32,8 +30,7 @@ class PageController extends Controller
      *
      * @return Response
      */
-    public function getIndex(Request $request)
-    {
+    public function getIndex(Request $request) {
 
         if (!isset($id) || !$id || $id == '#') {
             $page = $this->model->getRoots()->first();    //todo: from application.
@@ -50,11 +47,15 @@ class PageController extends Controller
 
         $pages = $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
 
-        return view('soda::page.index', ['hint'=>$this->hint, 'pages' => $pages, 'tree' => $tree, 'page_types' => $page_types]);
+        return view('soda::page.index', [
+            'hint'       => $this->hint,
+            'pages'      => $pages,
+            'tree'       => $tree,
+            'page_types' => $page_types,
+        ]);
     }
 
-    public function view($id)
-    {
+    public function view($id) {
         if ($id) {
             $model = $this->model->with('blocks.type.fields', 'type.fields')->findOrFail($id);
         } else {
@@ -68,11 +69,10 @@ class PageController extends Controller
         }
 
 
-        return view('soda::page.view', ['hint'=>$this->hint, 'model' => $model, 'page_table' => $page_table]);
+        return view('soda::page.view', ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
     }
 
-    public function edit(Request $request, $id = null)
-    {
+    public function edit(Request $request, $id = null) {
         if ($id) {
             $page = $this->model->findOrFail($id);
         } else {
@@ -85,29 +85,33 @@ class PageController extends Controller
         //we also need to save the settings - careful here..
         $page->load('type.fields');
 
-        $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-            $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
+        if($request->has('settings')) {
 
-        $settings = $request->input('settings');
-        $dyn_table->forceFill($settings);
-        $dyn_table->save();
+            $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
+                $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
+
+            $dyn_table->forceFill($request->input('settings'));
+
+            $dyn_table->save();
+        }
+
         //$dyn_table->fill()
 
-        return redirect()->route('soda.'.$this->hint . '.view', ['id' => $request->id])->with('success', 'page updated');
+        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $request->id])->with('success', 'page updated');
     }
 
-    public function getMakeRoot($id)
-    {
+    public function getMakeRoot($id) {
         $this->model->find($id)->makeRoot(0);
     }
 
     /**
      * Main page view method.
+     *
      * @param $slug
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function page($slug)
-    {
+    public static function page($slug) {
 
         if (starts_with('/', $slug)) {
             $page = Page::where('slug', $slug)->first(); //TODO: might not really be page::
@@ -120,11 +124,10 @@ class PageController extends Controller
             abort(404);
         }
 
-        return (\Soda\Components\Page::constructView($page, ['page' => $page]));
+        return (PageComponent::constructView($page, ['page' => $page]));
     }
 
-    public function createForm(Request $request, $parent_id = null)
-    {
+    public function createForm(Request $request, $parent_id = null) {
 
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
@@ -134,16 +137,19 @@ class PageController extends Controller
 
         $this->model->parent_id = $parent->id;
         $this->model->page_type_id = $request->input('page_type_id');
+        $this->model->load('type.fields');
 
-        return view('soda::page.view', ['model'=>$this->model, 'hint'=>$this->hint]);
+        return view('soda::page.view', ['model' => $this->model, 'hint' => $this->hint]);
     }
 
     /**
      * create page save functions
+     *
      * @param null $parent_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(Request $request, $parent_id = null)
-    {
+    public function create(Request $request, $parent_id = null) {
         $page = $this->model;
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
@@ -151,18 +157,35 @@ class PageController extends Controller
             $parent = $this->model->getRoots()->first();
         }
 
-        $page->name = $request->input('name');
-        $page->slug = $parent->generateSlug($request->input('slug'));
-        $page->status_id = 1;
-        $page->action_type = 'view';
-        $page->package = 'soda';
-        $page->action = 'default.view'; //TODO: allow for inheriting these properties.
-        $page->application_id = Soda::getApplication()->id;
+        //todo validation
+
+        $page->fill([
+            'name'           => $request->input('name'),
+            'slug'           => $parent->generateSlug($request->input('slug')),
+            'status_id'      => $request->has('status') ? $request->input('status') : 1,
+            'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
+            'package'        => $request->has('package') ? $request->input('package') : 'soda',
+            'action'         => $request->has('action') ? $request->input('action') : 'default.view',
+            'application_id' => Soda::getApplication()->id,
+            'page_type_id'   => $request->input('page_type_id'),
+        ]);
 
         $parent->addChild($page);
 
         $page->save();
-        dd('saved.');
+
+        $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
+            $page->type->fields->lists('field_name')->toArray())->newInstance();
+
+        $dyn_table->page_id = $page->id;
+
+        if($request->has('settings')){
+            $dyn_table->forceFill($request->input('settings'));
+        }
+
+        $dyn_table->save();
+
+        return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
     }
 
 }

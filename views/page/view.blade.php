@@ -14,12 +14,12 @@
 
     <p>{{$model->description}}</p>
 
-    @include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-file-o', 'title'=>$model->name?$model->name:'New '. $model->type->name." Page"])
+    @include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-file-o', 'title'=> $model->name ? $model->name : 'New ' . $model->type->name . " Page"])
 
     <ul class="nav nav-tabs" role="tablist">
         @if(Soda\Models\Page::hasFieldsOrBlocks($model))
-            <li role='presentation' class="active" aria-controls="{{$model->name}}">
-                <a role="tab" data-toggle="tab" href="#normalview">{{$model->name}}</a>
+            <li role='presentation' class="active" aria-controls="{{ $model->type->name }}">
+                <a role="tab" data-toggle="tab" href="#normalview">{{ $model->type->name }}</a>
             </li>
             <li role='presentation' aria-controls="Page View">
         @else
@@ -41,12 +41,13 @@
                 <form class="" method="POST" action="{{route('soda.'.$hint.'.create',['id'=>@$model->parent_id])}}">{{-- << TODO --}}
                     @endif
                     {!! csrf_field() !!}
+                    <input type="hidden" name="page_type_id" value="{{ $model->type->id }}" />
                     <div class="tab-content">
                         @if(Soda\Models\Page::hasFieldsOrBlocks($model))
                             <div class="tab-pane active" id="normalview" role="tabpanel">
                                 @if(@$model->type->fields)
                                     @foreach($model->type->fields as $field)
-                                        {!! Soda::field($field)->setModel($page_table)->setPrefix('settings') !!}
+                                        {!! Soda::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
                                     @endforeach
                                 @endif
                                 @foreach($model->blocks as $block)
@@ -91,9 +92,13 @@
                                     </div>
 
                                     <div class="tab-pane" id="liveview" role="tabpanel">
-                                        <p>Use this tab to customise information on the page in a live view</p>
-                                        <p>{{ $model->slug }}</p>
-                                        <iframe width="100%" height=400 src="{{ $model->slug }}?soda_edit=true"></iframe>
+                                        @if($model->slug)
+                                            <p>Use this tab to customise information on the page in a live view</p>
+                                            <p>{{ $model->slug }}</p>
+                                            <iframe width="100%" height=400 src="{{ $model->slug }}?soda_edit=true"></iframe>
+                                        @else
+                                            <p>You must set a slug to enabled this feature.</p>
+                                        @endif
                                     </div>
 
                                     <div class="tab-pane" id="advancedview" role="tabpanel">

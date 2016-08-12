@@ -2,8 +2,8 @@
 namespace Soda\Components;
 
 use Route;
-use Soda\Forms\FormBuilder;
-use Soda\Forms\FormField;
+use Soda\Components\Forms\FormBuilder;
+use Soda\Components\Forms\FormField;
 use Soda\Models\ApplicationUrl;
 use Soda\Models\Block;
 use Soda\Models\BlockType;

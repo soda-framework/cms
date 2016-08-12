@@ -1,5 +1,5 @@
 <?php
-namespace Soda\Forms;
+namespace Soda\Components\Forms;
 
 use Request;
 use Soda\Models\BlockType;

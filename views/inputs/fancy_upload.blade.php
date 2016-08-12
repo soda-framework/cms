@@ -1,5 +1,6 @@
 <?php
 	$nice_name = preg_replace("/[^A-Za-z0-9 ]/", '', $field_name);
+	$has_media = $model && $model->getMedia($field_name)->count() > 0 ? true : false;
     $related = [];
     if ($model) {
         $related = [
@@ -29,14 +30,14 @@
 		overwriteInitial: {{ isset($field_parameters['overwriteInitial']) ? $field_parameters['overwriteInitial'] : (isset($field_parameters['maxFileCount']) && $field_parameters['maxFileCount'] > 1 ? 'false' : 'true') }},
 		initialPreview:[
 			{{--TODO: should be able to just specify file types then add the input fields onupload.. haven't been able to make it work yet though - this will allow for automatic detection of images/audio/video by the plugin. --}}
-            @if($model->getMedia($field_name)->count() > 0)
+            @if($has_media)
                     @foreach($model->getMedia($field_name) as $image)
                         '<img src="{{ $image->media }}" width="120"><input type="hidden" value="{{ $field_value }}" name="{{ $field_name }}" />',
                     @endforeach
             @endif
         ],
         initialPreviewConfig: [
-            @if($model->getMedia($field_name)->count() > 0)
+            @if($has_media)
                 @foreach($model->getMedia($field_name) as $image)
                     {
                         caption: "",

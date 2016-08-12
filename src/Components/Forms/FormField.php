@@ -1,5 +1,5 @@
 <?php
-namespace Soda\Forms;
+namespace Soda\Components\Forms;
 
 use Exception;
 use Soda\Models\Field;
@@ -46,7 +46,7 @@ class FormField {
     }
 
     public function render() {
-        try {
+        //try {
             return view($this->theme . "." . $this->field->field_type, [
                 'prefixed_field_name' => $this->applyPrefix($this->field->field_name),
                 'field_label'         => $this->field->name,
@@ -58,9 +58,9 @@ class FormField {
                 'field'               => $this->field,
                 'model'               => $this->model,
             ])->render();
-        } catch (Exception $e) {
-            dd($e->getMessage(), $this, $this->field->field_params);
-        }
+        //} catch (Exception $e) {
+            //dd($e->getMessage(), $this, $this->field->field_params);
+        //}
     }
 
     protected function applyPrefix($field_name) {
@@ -82,7 +82,7 @@ class FormField {
             return $this->field->field_value;
         }
 
-        return old($this->field->field_name);
+        return old($this->applyPrefix($this->field->field_name));
     }
 
     public function __toString() {

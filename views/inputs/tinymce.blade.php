@@ -4,7 +4,7 @@ $nice_name = preg_replace("/[^A-Za-z0-9 ]/", '', $field_name);
 ?>
 <fieldset class="form-group field_{{@$field_name}} {{@$field_name}} {{@$field_class}} text-field">
 	<label for="field_{{@$field_name}}">{{@$field_label?$field_label:$field_name}}</label>
-	<textarea name="{{@$field_name}}" id="field_{{@$nicename}}"
+	<textarea name="{{@$prefixed_field_name}}" id="field_{{@$nicename}}"
 			  class="form-control field_{{@$field_name}} {{@$field_name}} {{$nice_name}}" >{{ @$field_value }}</textarea>
 	@if(@$field_info)
 		<small class="text-muted">{{$field_info}}</small>

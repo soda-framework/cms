@@ -1,4 +1,5 @@
 <?php
+
 Route::group(['middleware'=>'web'], function(){
 	Route::group(['prefix' => config('soda.cms_path')], function () {
 //	Route::auth();

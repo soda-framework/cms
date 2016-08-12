@@ -1,7 +1,8 @@
 <?php
 namespace Soda\Providers;
 
-use Illuminate\Support\Facades\Blade;
+use Blade;
+use Storage;
 use Soda\Components\Soda;
 use Soda\Models\Application;
 use Soda\Models\User;
@@ -44,7 +45,6 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
     public function register() {
         $this->registerDependencies([
             AuthServiceProvider::class,
-            UploaderProvider::class,
             RouteServiceProvider::class,
             \Franzose\ClosureTable\ClosureTableServiceProvider::class,
             \Zofe\Rapyd\RapydServiceProvider::class,
@@ -74,6 +74,12 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
             'email' => 'auth.emails.password',
             'table' => 'password_resets',
             'expire' => 60,
+        ]);
+
+        $this->app->config->set('filesystems.disks.soda.public', [
+            'driver'     => 'local',
+            'root'       => public_path('uploads'),
+            'visibility' => 'public',
         ]);
 
         //$this->app->config->set('auth.defaults.guard', 'soda');
