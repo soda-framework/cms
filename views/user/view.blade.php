@@ -17,10 +17,24 @@
 	@include(config('soda.hint_path').'::partials.heading',['icon'=>$model->id?'fa fa-user':'fa fa-user-plus', 'title'=>$model->name?'Field: '.$model->name:'New User'])
 	<form method="POST" action='{{route('soda.field.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-		@include('soda::inputs.text',['field_name'=>'username','field_value'=>$model->username, 'field_label'=>'Username'])
-		@include('soda::inputs.text',['field_name'=>'email','field_value'=>$model->email, 'field_label'=>'Email'])
+		{!! Soda::field([
+            "name"        => "Username",
+            'field_type'  => 'text',
+            "field_name"  => 'username',
+        ])->setModel($model) !!}
 
-		@include('soda::inputs.dropdown',['field_name'=>'role_id','field_value'=>$model->role_id, 'field_label'=>'Role', 'field_options'=>array_merge(['' => 'Select Role'],\Soda\Models\Role::lists('name','id')->toArray())])
+		{!! Soda::field([
+            "name"        => "Email",
+            'field_type'  => 'text',
+            "field_name"  => 'email',
+        ])->setModel($model) !!}
+
+		{!! Soda::field([
+            "name"         => "Role",
+            'field_type'   => 'dropdown',
+            "field_name"   => 'role_id',
+            "field_params" => ["options" => array_merge(['' => 'Select Role'], Soda\Models\Role::lists('name','id')->toArray())]
+        ])->setModel($model) !!}
 
 		@if($model->id)
 			<button class="btn btn-primary"><span class="fa fa-pencil"></span> Update</button>

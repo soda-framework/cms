@@ -2,46 +2,46 @@
 
 namespace Soda\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Soda\Components\Uploader\Uploader as Uploader;
+use Illuminate\Foundation\AliasLoader;
 use Soda\Components\Uploader\S3 as S3;
+use Soda\Components\Uploader\Uploader as Uploader;
+use Soda\Facades\UploaderFacade;
 
-class UploaderProvider extends ServiceProvider
-{
+class UploaderProvider extends AbstractSodaServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
-    protected $defer = FALSE;
+    protected $defer = false;
 
     /**
      * Bootstrap the application events.
      */
-    public function boot()
-    {
+    public function boot() {
     }
 
-    public function register()
-    {
-        \Illuminate\Foundation\AliasLoader::getInstance()->alias('Uploader', '\Soda\Facades\UploaderFacade');
+    public function register() {
+
+        $this->registerFacades([
+            'Uploader' => UploaderFacade::class,
+        ]);
+
         // if there's no config set, assume S3
-        $upload_destination = isset(config('soda')['upload_destination']) ? config('soda')['upload_destination'] : NULL;
-        if($upload_destination == 's3')
-        {
-            $this->app->singleton('s3', function ()
-            {
-                return new S3();
-            });
-        }
-        elseif(is_null($upload_destination) || $upload_destination == 'default')
-        {
-            // should check for upload_destination == default here at some point
-            $this->app->singleton('uploader', function ()
-            {
-                return new Uploader();
-            });
+        $upload_destination = $this->app->config->get('soda.upload_destination');
+        switch ($upload_destination) {
+            case 's3':
+                $this->app->singleton('s3', function () {
+                    return new S3;
+                });
+                break;
+            case 'default':
+            default:
+                $this->app->singleton('uploader', function () {
+                    return new Uploader;
+                });
+            break;
         }
 
     }
@@ -51,7 +51,6 @@ class UploaderProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
-    {
+    public function provides() {
     }
 }

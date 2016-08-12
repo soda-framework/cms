@@ -32,13 +32,13 @@
 						<td><audio src="{{ $model->{$field->field_name} }}" alt="" width="120"/></td>
 						@break
 						@default
-						<td>{{ Soda::truncate_words(strip_tags($model->{$field->field_name}), 10) }}</td>
+						<td>{{ truncate_words(strip_tags($model->{$field->field_name}), 10) }}</td>
 						@break
 						@endswitch
 					@elseif($field->field_type == 'datetime')
 						<td>{{ $model->{$field->field_name} }}</td>
 					@else
-						<td>{{ Soda::truncate_words(strip_tags($model->{$field->field_name}), 10) }}</td>
+						<td>{{ truncate_words(strip_tags($model->{$field->field_name}), 10) }}</td>
 					@endif
 				@endforeach
 				<td>

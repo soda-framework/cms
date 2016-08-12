@@ -15,11 +15,11 @@
 
 	<form method="POST" action='{{route('soda.block.edit',['id'=>@$model->id])}}' class="form-wrapper">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-		{{--TODO: swap for @each?? --}}
 
 		@foreach($fields as $field)
-			@include("soda::inputs.".$field['type'],['field_name'=>$field['name'], 'field_value'=>$model->{$field['name']}, 'field_label'=>$field['name'], 'field_parameters'=> $field['field_params'] ])
+			{!! Soda::field($field)->model($model) !!}
 		@endforeach
+
 		<button type="submit" class="btn btn-primary">Save</button>
 	</form>
 @endsection
