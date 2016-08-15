@@ -16,7 +16,6 @@
 		<small class="text-muted">{{ $field_info }}</small>
 	@endif
 </fieldset>
-
 <script type="application/javascript">
 
 	$("#field_{{ $nice_name }}").fileinput({
@@ -25,10 +24,13 @@
 		allowedFileTypes:['image','audio'], //TODO: this should come from validation array.
 		theme:'fa',
 		uploadAsync: true,
-		minFileCount: {{ isset($field_parameters['minFileCount']) ? $field_parameters['minFileCount'] : 1 }},
-		maxFileCount: {{ isset($field_parameters['maxFileCount']) ? $field_parameters['maxFileCount'] : 1 }},
-		overwriteInitial: {{ isset($field_parameters['overwriteInitial']) ? $field_parameters['overwriteInitial'] : (isset($field_parameters['maxFileCount']) && $field_parameters['maxFileCount'] > 1 ? 'false' : 'true') }},
-		initialPreview:[
+		minFileCount: {{ isset($field_params['minFileCount']) ? $field_params['minFileCount'] : 1 }},
+		maxFileCount: {{ isset($field_params['maxFileCount']) ? $field_params['maxFileCount'] : 1 }},
+		overwriteInitial: {{ isset($field_params['overwriteInitial']) ? $field_params['overwriteInitial'] : (isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? 'false' : 'true') }},
+        allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],	//TODO: this should come from validation array.
+        initialPreviewAsData: false, // identify if you are sending preview data only and not the raw markup
+        autoReplace : {{ isset($field_params['autoReplace']) ? $field_params['autoReplace'] : (isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? 'false' : 'true') }},
+        initialPreview:[
 			{{--TODO: should be able to just specify file types then add the input fields onupload.. haven't been able to make it work yet though - this will allow for automatic detection of images/audio/video by the plugin. --}}
             @if($has_media)
                     @foreach($model->getMedia($field_name) as $image)
@@ -56,9 +58,6 @@
                 @endforeach
             @endif
         ],
-		allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],	//TODO: this should come from validation array.
-		initialPreviewAsData: false, // identify if you are sending preview data only and not the raw markup
-		autoReplace : true,
 		uploadExtraData: {
 			_token:"{{csrf_token()}}",
             @if(isset($related))

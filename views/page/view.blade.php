@@ -18,6 +18,7 @@
 
     <ul class="nav nav-tabs" role="tablist">
         @if(Soda\Models\Page::hasFieldsOrBlocks($model))
+
             <li role='presentation' class="active" aria-controls="{{ $model->type->name }}">
                 <a role="tab" data-toggle="tab" href="#normalview">{{ $model->type->name }}</a>
             </li>
