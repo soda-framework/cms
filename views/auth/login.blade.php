@@ -12,10 +12,10 @@
             <form class="form-horizontal" role="form" method="POST" action="{{ route('login-attempt') }}">
                 {!! csrf_field() !!}
 
-                <div class="form-group row">
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} row">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter your email address...">
+                        <label class="input-group-addon" for="email"><i class="fa fa-user"></i></label>
+                        <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}" placeholder="Enter your email address...">
                     </div>
 
                     @if ($errors->has('email'))
@@ -27,8 +27,8 @@
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} row">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-unlock-alt"></i></span>
-                        <input type="password" class="form-control" name="password" placeholder="Enter your password...">
+                        <label class="input-group-addon" for="password"><i class="fa fa-unlock-alt"></i></label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password...">
                     </div>
 
                     @if ($errors->has('password'))
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <button type="submit" class="btn btn-login btn-block">
+                    <button type="submit" class="btn btn-login btn-block btn-4">
                         Login
                     </button>
                 </div>

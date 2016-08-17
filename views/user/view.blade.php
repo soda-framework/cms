@@ -3,13 +3,6 @@
 @section('header')
 
 	<title>User</title>
-	{{-- note: non of these have anything in them anymore
-
-	<!-- JavaScripts -->
-	<script src="/sodacms/sodacms/js/content.js"></script>
-	<!-- Styles -->
-	<link href="/sodacms/sodacms/css/content.css" rel="stylesheet">
-	--}}
 
 @endsection
 

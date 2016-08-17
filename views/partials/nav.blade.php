@@ -37,7 +37,9 @@
             @if(Auth::check())
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-user"></i> {{ Auth::user()->username }}</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-btn fa-user"></i> {{ Auth::user()->username }}
+                    </a>
                     <ul class="dropdown-menu">
                         @foreach( event(new Soda\Events\TopNavDropdownWasRendered()) as $item)
                             {!! $item !!}

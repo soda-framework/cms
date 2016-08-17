@@ -13,8 +13,9 @@ $fa-font-path: "/sodacms/sodacms/components/font-awesome/fonts" !default;
 /* CONTENT
    ============================= */
 
-$content-background: $slate-8;
+$content-background: $slate-9;
 $content-inner-background: $white;
+$content-inner-border: $slate-7;
 $content-inner-text: rgb(51, 51, 51);
 
 /* LOGIN
@@ -23,7 +24,7 @@ $content-inner-text: rgb(51, 51, 51);
 $login-box: $slate-1;
 $login-box-text: $slate-6;
 $login-box-link: $slate-6;
-$login-box-link-hover: $slate-7;
+$login-box-link-hover: $slate-8;
 
 /* NAVBAR
    ============================= */
@@ -48,7 +49,7 @@ $sidebar-background: $slate-4;
 $sidebar-link: transparent;
 $sidebar-link-text: $slate-6;
 $sidebar-link-hover: $slate-5;
-$sidebar-link-hover-text: $slate-7;
+$sidebar-link-hover-text: $slate-8;
 $sidebar-link-active: $slate-2;
 $sidebar-link-active-text: $white;
 $sidebar-link-active-sub: $slate-2;
@@ -56,6 +57,6 @@ $sidebar-link-active-sub-text: $white;
 $sidebar-group-link: $slate-3;
 $sidebar-group-link-text: $slate-6;
 $sidebar-group-link-hover: $slate-4;
-$sidebar-group-link-hover-text: $slate-7;
+$sidebar-group-link-hover-text: $slate-8;
 $sidebar-group-link-active: $slate-3;
 $sidebar-group-link-active-text: $white;

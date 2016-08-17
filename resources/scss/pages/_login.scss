@@ -11,7 +11,7 @@
 
 .login-box {
   position: relative;
-  padding: 40px 160px;
+  padding: 40px 140px;
   background-color: $login-box;
   color: $login-box-text;
   a {
@@ -50,22 +50,25 @@
     border: none;
     padding: 10px;
     height: 42px;
+    background-color: rgba(0, 0, 0, 0.3);
+    outline: none !important;
+    color: $slate-8;
     &, &:hover, &:active, &:focus {
       outline: none !important;
       border: none !important;
       box-shadow: none !important;
     }
     &::-webkit-input-placeholder {
-      color: $slate-7;
+      color: $slate-5;
     }
     &:-moz-placeholder { /* Firefox 18- */
-      color: $slate-7;
+      color: $slate-5;
     }
     &::-moz-placeholder { /* Firefox 19+ */
-      color: $slate-7;
+      color: $slate-5;
     }
     &:-ms-input-placeholder {
-      color: $slate-7;
+      color: $slate-5;
     }
   }
 
@@ -91,9 +94,13 @@
 
 .btn-login {
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $theme-2;
+  color: $white;
+  outline: none !important;
+  transition: all 0.25s ease-in;
   &:hover, &:active {
-    background-color: rgba(0, 0, 0, 0.75);
-    color: $slate-6;
+    background-color: lighten($theme-2, 5%);
+    color: $white;
+    box-shadow: 0 0px 15px rgba(11, 214, 133, 0.4);
   }
 }

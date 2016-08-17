@@ -4,7 +4,8 @@
 
 .main-content-inner {
   padding: 30px;
-  margin: 30px 40px;
+  margin: 30px 15px;
   background-color: $content-inner-background;
   color: $content-inner-text;
+  border: 1px solid $content-inner-border;
 }

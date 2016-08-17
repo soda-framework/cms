@@ -58,7 +58,8 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
         $this->app->singleton('soda', Soda::class);
 
         $this->commands([
-            \Soda\Console\InstallTheme::class
+            \Soda\Console\InstallTheme::class,
+            \Soda\Console\Update::class
         ]);
     }
 
