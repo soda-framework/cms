@@ -27,4 +27,18 @@ abstract class AbstractSodaServiceProvider extends ServiceProvider {
             AliasLoader::getInstance()->alias($facade, $class);
         }
     }
+
+    /**
+     * Merge the given configuration with the existing configuration, recursively.
+     *
+     * @param  string  $path
+     * @param  string  $key
+     * @return void
+     */
+    protected function mergeConfigRecursivelyFrom($path, $key)
+    {
+        $config = $this->app['config']->get($key, []);
+
+        $this->app['config']->set($key, array_merge_recursive(require $path, $config));
+    }
 }

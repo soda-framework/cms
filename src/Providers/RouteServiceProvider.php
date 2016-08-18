@@ -25,6 +25,7 @@ class RouteServiceProvider extends ServiceProvider {
      */
     public function boot(Router $router) {
         $router->middleware('soda.auth', Authenticate::class);
+
         parent::boot($router);
     }
 
