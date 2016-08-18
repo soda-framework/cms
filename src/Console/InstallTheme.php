@@ -31,7 +31,7 @@ class InstallTheme extends Command {
     }
 
     protected function configureSimple() {
-        $theme_name = $this->anticipate('Please enter your theme name (using CamelCase)', ['SodaSite']);
+        $theme_name = ucfirst($this->anticipate('Please enter your theme name (using CamelCase)', ['SodaSite']));
 
         $folder = snake_case($theme_name);
         $this->attributes->put('folder', $folder);
@@ -146,7 +146,7 @@ class InstallTheme extends Command {
         $composer_file = file_get_contents($file_path);
         $composer_json = json_decode($composer_file, true);
 
-        file_put_contents($file_path, json_encode(array_merge_recursive($composer_json, $config), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        file_put_contents($file_path, json_encode(array_replace_recursive($composer_json, $config), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         return $this;
     }

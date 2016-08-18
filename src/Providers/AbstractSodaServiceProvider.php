@@ -39,6 +39,6 @@ abstract class AbstractSodaServiceProvider extends ServiceProvider {
     {
         $config = $this->app['config']->get($key, []);
 
-        $this->app['config']->set($key, array_merge_recursive(require $path, $config));
+        $this->app['config']->set($key, array_replace_recursive(require $path, $config));
     }
 }

@@ -40,7 +40,7 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
      * @return void
      */
     public function register() {
-        $this->mergeConfigFrom(__DIR__.'/../../config/soda.php', 'soda');
+        $this->mergeConfigRecursivelyFrom(__DIR__.'/../../config/soda.php', 'soda');
 
         $this->registerDependencies([
             AuthServiceProvider::class,
