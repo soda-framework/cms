@@ -41,15 +41,6 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-## add middleware
-To `/app/Http/Kernel.php`
-```
-$routeMiddleware = [
-    //Existing middleware
-    'soda.auth'=>\Soda\Middleware\Authenticate::class
-]
-```
-
 ## Run Migration
 This should add in all the database elements.
 ```

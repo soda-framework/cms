@@ -47,6 +47,7 @@
             'field_name'  => 'description',
         ])->setModel($model) !!}
 
+		{{-- TODO: https://github.com/josdejong/jsoneditor --}}
 		{!! Soda::field([
             'name'        => 'Field Parameters',
             'field_type'  => 'code',

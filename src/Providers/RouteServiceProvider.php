@@ -2,11 +2,11 @@
 
 namespace Soda\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
+use Soda\Middleware\Authenticate;
 
-class RouteServiceProvider extends ServiceProvider
-{
+class RouteServiceProvider extends ServiceProvider {
     /**
      * This namespace is applied to the controller routes in your routes file.
      *
@@ -20,10 +20,11 @@ class RouteServiceProvider extends ServiceProvider
      * Define your route model bindings, pattern filters, etc.
      *
      * @param  \Illuminate\Routing\Router $router
+     *
      * @return void
      */
-    public function boot(Router $router)
-    {
+    public function boot(Router $router) {
+        $router->middleware('soda.auth', Authenticate::class);
         parent::boot($router);
     }
 
@@ -31,12 +32,12 @@ class RouteServiceProvider extends ServiceProvider
      * Define the routes for the application.
      *
      * @param  \Illuminate\Routing\Router $router
+     *
      * @return void
      */
-    public function map(Router $router)
-    {
+    public function map(Router $router) {
         $router->group(['namespace' => $this->namespace], function ($router) {
-            require (__DIR__.'/../routes.php');
+            require(__DIR__ . '/../routes.php');
         });
     }
 }
