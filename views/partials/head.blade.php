@@ -20,18 +20,10 @@
 
 @section('head.js')
     <!-- JavaScripts -->
-    <script src="/sodacms/sodacms/js/scripts.min.js"></script>
-    <script>
-        $(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $('.soda-wrapper, .main-content').css('min-height', $(window).height());
-        });
-    </script>
+    <script src="/sodacms/sodacms/js/core.min.js"></script>
+    {{-- TODO: move to only pages featuring forms --}}
+    <script src="/sodacms/sodacms/js/forms.min.js"></script>
+    <script src="/sodacms/sodacms/js/application.min.js"></script>
 @stop
 
 @section('head.extra')

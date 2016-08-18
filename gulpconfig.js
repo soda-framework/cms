@@ -53,7 +53,7 @@ module.exports = {
             folder:         'public'
         },
         {
-            folder:         '../../../public/sodacms/sodacms',
+            folder:         '../soda_test/src/public/sodacms/sodacms',
             css: {
                 clean:      true,
             },
@@ -71,34 +71,26 @@ module.exports = {
 
     //list all bower components, separated into arrays of packages to be concatenated
     components: {
-        scripts: [
+        core: [
             //'resources/components/modernizr.js',
-            'public/components/jquery/dist/jquery.js',
+            'resources/components/jquery/dist/jquery.js',
             //'components/bootstrap-sass/assets/javascripts/bootstrap/util.js',
-            'public/components/bootstrap-sass/assets/javascripts/bootstrap/button.js',
-            'public/components/bootstrap-sass/assets/javascripts/bootstrap/tab.js',
-            'public/components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-            'public/components/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-            'public/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
-            'public/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
-
-            'public/components/bootstrap-fileinput/js/fileinput.js',       //TODO: move this to a file on it's own?
-            'public/components/bootstrap-fileinput/themes/fa/fa.js',       //TODO: move this to a file on it's own?
-            'public/components/jquery-sortable/source/js/jquery-sortable.js', //TODO: move this to a file on it's own?
-            'public/components/tinymce/tinymce.min.js', //TODO: move this to a file on it's own?
-            'public/components/moment/min/moment.min.js',      //TODO: for datetimepicker only - move this somewhere else?
-            'public/components/select2/dist/js/select2.full.min.js', //TODO: for select2 only - move this somewhere else?
-
-            'public/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/button.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/tab.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
+        ],
+        forms: [
+            'resources/components/bootstrap-fileinput/js/fileinput.js',
+            'resources/components/bootstrap-fileinput/themes/fa/fa.js',
+            'resources/components/jquery-sortable/source/js/jquery-sortable.js',
+            'resources/components/moment/min/moment.min.js',
+            'resources/components/select2/dist/js/select2.full.min.js',
+            'resources/components/jsoneditor/dist/jsoneditor.min.js',
+            'resources/components/tinymce/tinymce.min.js',
+            'resources/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
         ]
-        //
-        //app : [
-        //    'resources/js/application.js'
-        //]
-
-        //cms: [
-            //'resources/components/tinymce/tinymce.js',
-            //'resources/components/jquery-ui/jquery-ui.js',
-        //],
     }
 };

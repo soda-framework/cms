@@ -50,7 +50,7 @@
 		{{-- TODO: https://github.com/josdejong/jsoneditor --}}
 		{!! Soda::field([
             'name'        => 'Field Parameters',
-            'field_type'  => 'code',
+            'field_type'  => 'json',
             'field_name'  => 'field_params',
         ])->setModel($model) !!}
         

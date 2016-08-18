@@ -119,12 +119,13 @@ gulp.task('publish:svg', function () {
 });
 
 gulp.task('publish:components', function () {
-    checkCleanFolder('components');
-    var tasks = [];
+    var stream = require('merge-stream')();
+
+    //checkCleanFolder('components')
 
     //run per package group
     objMap(config.components, function (pkg, pkg_name) {
-        var stream = gulp.src(pkg)
+        var substream = gulp.src(pkg)
             .pipe($.plumber(logError))
             .pipe($.if(getSetting(config.assets, defaults.assets, 'components.show_size'), $.size({
                 showFiles: false,
@@ -149,11 +150,11 @@ gulp.task('publish:components', function () {
         stream.pipe($.notify({message: 'Components published!', onLast: true}));
 
         //push onto task array
-        tasks.push(stream);
+        stream.add(substream);
     });
 
     //execute task array
-    return $.merge(tasks);
+    return stream;
 });
 
 gulp.task('publish:all', function () {
