@@ -9,7 +9,7 @@ use RecursiveIteratorIterator;
 
 class InstallTheme extends Command {
 
-    protected $signature = 'soda:theme {--a|advanced : Use advanced options to set up your theme}';
+    protected $signature = 'soda:theme {--a|advanced : Use advanced options to set up your theme} {--e|extra : Include extra classes to build more complex theme functionality}';
     protected $description = 'Install an example Soda CMS Theme';
     protected $except = [];
     protected $attributes;
@@ -17,6 +17,7 @@ class InstallTheme extends Command {
 
     public function handle() {
         $this->attributes = new Collection;
+        $is_extra = $this->option('extra') ? true : false;
 
         if ($this->option('advanced')) {
             $this->configureAdvanced();
@@ -24,7 +25,7 @@ class InstallTheme extends Command {
             $this->configureSimple();
         }
 
-        $this->installTheme();
+        $this->installTheme($is_extra);
 
         $this->informCompletion();
     }
@@ -73,7 +74,9 @@ class InstallTheme extends Command {
         $this->attributes->put('view_hint', $view_hint);
     }
 
-    protected function installTheme() {
+    protected function installTheme($extra = false) {
+        $theme_base = __DIR__ . '/../../themes/' . ($extra ? 'advanced' : 'simple');
+
         $base_folder = $this->attributes->get('folder');
         $folder = './themes/' . $base_folder;
         $namespace = $this->attributes->get('namespace');
@@ -83,27 +86,32 @@ class InstallTheme extends Command {
         $view_hint = $this->attributes->get('view_hint');
 
         mkdir($folder, 0755, true);
-        $this->xcopy(__DIR__ . '/../../soda_theme', $folder);
+        $this->xcopy(__DIR__ . '/../../themes/shared', $folder);
+        $this->xcopy($theme_base, $folder);
 
         // We need to go through and find and replace everything in here with a different package name:
         rename($folder . '/src/Providers/SodaThemeServiceProvider.php', $folder . '/src/Providers/' . $namespace . 'ServiceProvider.php');
-        rename($folder . '/src/Components/SodaHelperClass.php', $folder . '/src/Components/' . $helper_class . '.php');
-        rename($folder . '/src/Facades/SodaHelperClassFacade.php', $folder . '/src/Facades/' . $helper_class . 'Facade.php');
+        if ($extra) {
+            rename($folder . '/src/Components/SodaHelperClass.php', $folder . '/src/Components/' . $helper_class . '.php');
+            rename($folder . '/src/Facades/SodaHelperClassFacade.php', $folder . '/src/Facades/' . $helper_class . 'Facade.php');
+        }
         $this->info('Classes renamed.');
 
-        $this->findAndReplace('SodaTheme', $namespace, $folder);
-        $this->findAndReplace('SodaHelperClass', $helper_class, $folder);
-        $this->findAndReplace('soda_helper_class', $helper_class_facade_name, $folder);
+        $this->findAndReplace('SodaTheme', $namespace, $folder . '/src');
         $this->findAndReplace('soda-theme', $package_name, $folder);
         $this->findAndReplace('soda_theme_hint', $view_hint, $folder);
+        if ($extra) {
+            $this->findAndReplace('SodaHelperClass', $helper_class, $folder . '/src');
+            $this->findAndReplace('soda_helper_class', $helper_class_facade_name, $folder . '/src');
+        }
         $this->info('Theme references set.');
 
         $this->appendToComposerFile([
             "autoload" => [
                 "psr-4" => [
                     "Themes\\{$namespace}\\" => "themes/$base_folder/src/",
-                ]
-            ]
+                ],
+            ],
         ]);
         $this->info('Composer config updated.');
 
@@ -123,11 +131,13 @@ class InstallTheme extends Command {
 
     protected function anticipateThemeClass($string) {
         $class = ucfirst(camel_case($string));
+
         return preg_replace('/Theme$/', '', $class) . 'Theme';
     }
 
     protected function anticipatePackageName($string) {
         $package = snake_case($string);
+
         return str_replace('_', '-', $package);
     }
 
