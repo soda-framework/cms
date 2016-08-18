@@ -24,7 +24,7 @@ class InstallTheme extends Command {
             $this->configureSimple();
         }
 
-        $this->createTheme();
+        $this->installTheme();
 
         $this->informCompletion();
     }
@@ -73,8 +73,9 @@ class InstallTheme extends Command {
         $this->attributes->put('view_hint', $view_hint);
     }
 
-    protected function createTheme() {
-        $folder = './themes/' . $this->attributes->get('folder');
+    protected function installTheme() {
+        $base_folder = $this->attributes->get('folder');
+        $folder = './themes/' . $base_folder;
         $namespace = $this->attributes->get('namespace');
         $helper_class = $this->attributes->get('helper_class');
         $helper_class_facade_name = $this->attributes->get('helper_class_facade_name');
@@ -96,18 +97,28 @@ class InstallTheme extends Command {
         $this->findAndReplace('soda-theme', $package_name, $folder);
         $this->findAndReplace('soda_theme_hint', $view_hint, $folder);
         $this->info('Theme references set.');
+
+        $this->appendToComposerFile([
+            "autoload" => [
+                "psr-4" => [
+                    "Themes\\{$namespace}\\" => "themes/$base_folder/src/",
+                ]
+            ]
+        ]);
+        $this->info('Composer config updated.');
+
+        $this->call('optimize');
     }
 
     protected function informCompletion() {
         $namespace = $this->attributes->get('namespace');
-        $folder = $this->attributes->get('folder');
 
         $this->info("Initial theme setup complete.");
         $this->info("Please follow the steps below to complete theme setup:");
-        $this->comment("1. Add to your composer.json psr-4 autoload: \"Themes\\\\{$namespace}\\\\\": \"themes/$folder/src/\"");
-        $this->comment("2. Run composer dump-autoload");
-        $this->comment("3. Add Themes/{$namespace}/Providers/{$namespace}ServiceProvider::class to your providers array");
-        $this->comment("4. Run php artisan vendor:publish");
+        $this->comment("1. Add Themes/{$namespace}/Providers/{$namespace}ServiceProvider::class to your providers array");
+        $this->comment("2. Run php artisan vendor:publish");
+
+        return $this;
     }
 
     protected function anticipateThemeClass($string) {
@@ -118,6 +129,16 @@ class InstallTheme extends Command {
     protected function anticipatePackageName($string) {
         $package = snake_case($string);
         return str_replace('_', '-', $package);
+    }
+
+    protected function appendToComposerFile($config) {
+        $file_path = base_path('composer.json');
+        $composer_file = file_get_contents($file_path);
+        $composer_json = json_decode($composer_file, true);
+
+        file_put_contents($file_path, json_encode(array_merge_recursive($composer_json, $config), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        return $this;
     }
 
     protected function findAndReplace($needle, $replace, $haystack = "./") {
@@ -135,8 +156,9 @@ class InstallTheme extends Command {
             } else {
                 $this->info('Ignored:' . $path->getPathname());
             }
-
         }
+
+        return $this;
     }
 
     /**

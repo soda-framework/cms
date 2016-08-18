@@ -112,19 +112,7 @@ class PageController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public static function page($slug) {
-
-        if (starts_with('/', $slug)) {
-            $page = Page::where('slug', $slug)->first(); //TODO: might not really be page::
-        } else {
-            $page = Page::where('slug', '/' . $slug)->first();
-        }
-
-
-        if (!$page) {
-            abort(404);
-        }
-
-        return (PageComponent::constructView($page, ['page' => $page]));
+        return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
     }
 
     public function createForm(Request $request, $parent_id = null) {

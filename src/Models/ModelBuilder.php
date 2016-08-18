@@ -3,20 +3,16 @@ namespace Soda\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Builder as QueryBuilder;
-use Soda\Models\Media;
 use Soda;
 
 /**
  * Class ModelBuilder
+ *
  * @package Soda\Models
  */
-class ModelBuilder extends Model
-{
+class ModelBuilder extends Model {
 
     public $table;
-    protected static $_table;
-
     protected static $lastTable;
     public $index_fields = [];
 
@@ -25,53 +21,43 @@ class ModelBuilder extends Model
     //$user_model->roles = new BelongsToMany($role_model->newQuery(), $user_model, $pivot_table, $foreignKey, $otherKey);
 
 
-
-    public function __construct($parms = null)
-    {
-        if ($parms) {
-            //this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
-            $this->fillable = $parms;
+    public function __construct($params = []) {
+        if ($params) {
+            $this->fillable = $params;//this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
         }
 
-        $this->table = static::$_table;
+        $this->table = static::$lastTable;
 
         parent::__construct();
     }
 
-    public static function fromTable($table, $parms = [])
-    {
-
-        $ret = null;
+    public static function fromTable($table, $params = []) {
         if (class_exists($table)) {
-            $ret = new $table($parms);
-        } else {
-            $ret = new static($parms);
-            $ret->setTable($table);
+            return new $table($params);
         }
 
-        return $ret;
+        $model = new static($params);
+
+        return $model->setTable($table);
     }
 
-    public function setTable($table)
-    {
-        static::$_table = $table;
+    public function setTable($table) {
         $this->table = $table;
         static::$lastTable = $table;
 
+        return $this;
     }
 
-    public function getTable()
-    {
+    public function getTable() {
         return $this->table;
     }
 
 
     //Not sure if this is the right place to do this
-    public function getMedia($field, $variant = 'original', $callback = null){
+    public function getMedia($field, $variant = 'original', $callback = null) {
         return Media::where('related_table', $this->getTable())->where('related_id', $this->id)
             ->where('related_field', $field)->get();
     }
-
 
 
     /**
@@ -79,13 +65,11 @@ class ModelBuilder extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
-    public function newQueryWithoutScopes()
-    {
+    public function newQueryWithoutScopes() {
 
         $builder = $this->newEloquentBuilder(
             $this->newBaseQueryBuilder()
         );
-
 
         // Once we have the query builders, we will set the model instances so the
         // builder can easily access any information it may need from the model
@@ -98,9 +82,7 @@ class ModelBuilder extends Model
     }
 
 
-
-    public function newQuery()
-    {
+    public function newQuery() {
         $builder = $this->newQueryWithoutScopes();
 
         foreach ($this->getGlobalScopes() as $identifier => $scope) {
@@ -111,18 +93,16 @@ class ModelBuilder extends Model
     }
 
 
+    public function hasMany($related, $foreignKey = null, $localKey = null) {
 
-    public function hasMany($related, $foreignKey = null, $localKey = null)
-    {
-
-        $foreignKey = $foreignKey ?: $this->getForeignKey();
+        $foreignKey = $foreignKey ? : $this->getForeignKey();
 
         $instance = Soda::dynamicModel($related, []);
 
 
-        $localKey = $localKey ?: $this->getKeyName();
+        $localKey = $localKey ? : $this->getKeyName();
 
-        return new HasMany($instance->newQuery(), $this, $instance->getTable().'.'.$foreignKey, $localKey);
+        return new HasMany($instance->newQuery(), $this, $instance->getTable() . '.' . $foreignKey, $localKey);
     }
 
 

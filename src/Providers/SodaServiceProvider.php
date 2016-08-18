@@ -22,17 +22,14 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
      */
     public function boot() {
         require (__DIR__.'/../helpers.php');
+
         $this->configure();
 
         // Publishing configs
         $this->publishes([__DIR__.'/../../config' => config_path()]);
         $this->publishes([__DIR__.'/../../database' => database_path()]);
-
-        // Publishing views
-        $this->loadViewsFrom(__DIR__.'/../../views', config('soda.hint_path'));
-
-        // Publishing public assets
         $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'soda.public');
+        $this->loadViewsFrom(__DIR__.'/../../views', config('soda.hint_path'));
 
         $this->extendBlade();
     }
@@ -43,6 +40,8 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
      * @return void
      */
     public function register() {
+        $this->mergeConfigFrom(__DIR__.'/../../config/soda.php', 'soda');
+
         $this->registerDependencies([
             AuthServiceProvider::class,
             RouteServiceProvider::class,
@@ -86,8 +85,6 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
             'root'       => public_path('uploads'),
             'visibility' => 'public',
         ]);
-
-        //$this->app->config->set('auth.defaults.guard', 'soda');
     }
 
     protected function extendBlade() {

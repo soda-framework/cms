@@ -1,7 +1,7 @@
 # sodacms
 Soda cms package
 
-##composer require
+## composer require
 ```
 composer require sodacms/sodacms:1.1.*
 ```
@@ -13,8 +13,9 @@ in /config/app.php
     //Existing providers
     Soda\Providers\SodaServiceProvider::class,
 ]
+```
 
-##add alias
+## add alias
 in /config/app.php
 ```
 'aliases' => [
@@ -23,7 +24,7 @@ in /config/app.php
 ]
 ```
 
-##vendor publish
+## vendor publish
 ```
 php artisan vendor:publish
 ```
