@@ -23,9 +23,6 @@ class Field extends Model {
         'description',
     ];
     protected $table = 'fields';
-    protected $casts = [
-        'field_params' => 'array',
-    ];
 
     public function block_types() {
         return $this->morphedByMany(BlockType::class, 'fieldable');
@@ -39,5 +36,17 @@ class Field extends Model {
 
     public static function getFieldTypes() {
         return Soda::getFormBuilder()->getFieldTypes();
+    }
+
+    public function setFieldParamsAttribute($value) {
+        if(is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        $this->attributes['field_params'] = $value;
+    }
+
+    public function getFieldParamsAttribute($value) {
+        return json_decode($value, true);
     }
 }

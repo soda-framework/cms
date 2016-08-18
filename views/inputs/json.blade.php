@@ -1,7 +1,14 @@
+<?php
+$json = json_encode($field_value);
+?>
+
 <fieldset class="form-group field_{{ $field_name }} {{ $field_name }} {{ $field_class }} text-field" >
-	<label for="field_{{ $field_name }}">{{ $field_label ? $field_label : $field_name }}</label>
+	<label for="field_{{ $field_name }}">{{ $field_label }}</label>
 	<div id="json_{{ $field_name }}" style="width: 100%; height: 400px;"></div>
-	<input name="{{ $prefixed_field_name }}" id="field_{{ $field_name }}" type="hidden" value="{{ json_decode($field_value) ? $field_value : '{}' }}">
+	<input name="{{ $prefixed_field_name }}" id="field_{{ $field_name }}" type="hidden" value="{{ $json && $json != "null" ? $json : '{}' }}">
+	@if($field_info)
+		<small class="text-muted">{{ $field_info }}</small>
+	@endif
 </fieldset>
 
 <script>

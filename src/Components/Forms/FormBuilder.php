@@ -54,4 +54,11 @@ class FormBuilder {
             return $field_value;
         }
     }
+
+    public function buildJsParams($params, $default = []) {
+        $params = is_array($params) ? array_replace_recursive($default, $params) : $default;
+        $json_params = json_encode($params, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+        return trim($json_params, '{}');
+    }
 }

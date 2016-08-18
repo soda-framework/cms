@@ -114,6 +114,3 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::any('/{slug?}', 'PageController@page')->where('slug', '(.*)')->name('soda.page.match');
 });
-
-
-

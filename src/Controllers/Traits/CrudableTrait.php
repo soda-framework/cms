@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use \Auth;
+use Soda;
 
 Trait CrudableTrait
 {
@@ -49,8 +50,9 @@ Trait CrudableTrait
             $this->model = $this->model->findOrFail($id);
         }
 
+
         $this->model->fill($request->input());
-        $this->model->application_id = \Soda::getApplication()->id;
+        $this->model->application_id = Soda::getApplication()->id;
         $this->model->application_user_id = Auth::user()->id;
         $this->model->save();
 

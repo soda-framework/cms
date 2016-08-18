@@ -1,7 +1,7 @@
 {{-- TODO: need options in here --}}
 {{-- TODO: date formats --}}
 <fieldset class="form-group field_{{ $field_name }} {{ $field_name }} {{ $field_class }} text-field">
-	<label for="field_{{ $field_name }}">{{ $field_label ? $field_label : $field_name}}</label>
+	<label for="field_{{ $field_name }}">{{ $field_label }}</label>
 	<input name="{{ $prefixed_field_name }}" id="field_{{ $field_name }}" type="text"
 		   class="form-control field_{{ $field_name }} {{ $field_name }}" value="{{ $field_value ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $field_value)->format('m/d/Y g:i A') : '' }}"/>
 	@if($field_info)

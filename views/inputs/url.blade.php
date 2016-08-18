@@ -1,16 +1,16 @@
 {{-- TODO: this should eventually suggest links as you type based off slug db --}}
-<fieldset class="form-group field_{{@$field_name}} {{@$field_name}} {{@$field_class}} text-field">
-	<label for="field_{{@$field_name}}">{{@$field_label?$field_label:$field_name}}</label>
+<fieldset class="form-group field_{{ $field_name }} {{ $field_name }} {{ $field_class }} text-field">
+	<label for="field_{{ $field_name }}">{{ $field_label }}</label>
 
 	<select class="js-data-example-ajax">
 		<option value="3620194" selected="selected">select2/select2</option>
 	</select>
 
-	<input name="{{@$prefixed_field_name}}" id="field_{{@$field_name}}" type="text"
-		   class="form-control field_{{@$field_name}} {{@$field_name}} js-example-basic-single"
-		   value="{{ @$field_value }}"/>
-	@if(@$field_info)
-		<small class="text-muted">{{$field_info}}</small>
+	<input name="{{ $prefixed_field_name }}" id="field_{{ $field_name }}" type="text"
+		   class="form-control field_{{ $field_name }} {{ $field_name }} js-example-basic-single"
+		   value="{{ $field_value }}"/>
+	@if($field_info)
+		<small class="text-muted">{{ $field_info }}</small>
 	@endif
 </fieldset>
 
