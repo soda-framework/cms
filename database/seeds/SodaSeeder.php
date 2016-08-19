@@ -25,14 +25,8 @@ class SodaSeeder extends Seeder
         $this->call('PageTypesTableSeeder');
         $this->call('PagesTableSeeder');
         $this->call('PagesClosureTableSeeder');
-        $this->call('PasswordResetsTableSeeder');
         $this->call('PermissionsTableSeeder');
-        $this->call('PluginsTableSeeder');
         $this->call('RolesTableSeeder');
-        $this->call('SodaAboutTableSeeder');
-        $this->call('SodaHomepageTableSeeder');
-        $this->call('StatusesTableSeeder');
-        $this->call('UploadsTableSeeder');
         $this->call('UsersTableSeeder');
     }
 }

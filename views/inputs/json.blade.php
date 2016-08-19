@@ -23,4 +23,11 @@ $json = json_encode($field_value);
 	json_field.closest('form').on('submit', function(e) {
 		json_field.val(editor.getText());
 	})
+
+	$("#json_{{ $field_name }}").on("keydown", ".jsoneditor-field, .jsoneditor-value", function() {
+		if(event.keyCode == 13 || event.keyCode == 9) { // enter or tab
+			event.preventDefault();
+			return false;
+		}
+	})
 </script>

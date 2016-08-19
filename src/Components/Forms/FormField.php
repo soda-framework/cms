@@ -17,7 +17,7 @@ class FormField {
         } elseif (is_array($field)) {
             $this->field = new Field($field);
         } else {
-            Throw new \Exception("Field must be instance of " . Field::class . " or array.");
+            Throw new Exception("Field must be instance of " . Field::class . " or array.");
         }
     }
 
@@ -78,7 +78,7 @@ class FormField {
             if ($value) {
                 return $this->model->$field_name;
             }
-        } elseif($this->field->field_value && !old($this->field->field_name)) {
+        } elseif ($this->field->field_value && !old($this->field->field_name)) {
             return $this->field->field_value;
         }
 
