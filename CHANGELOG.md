@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Removed `creativeorange/gravatar` package - will approach this manually
 
-## [0.1.0]
+## [0.1.0] 2016-08-19
 ### Added
 - Added JSON field editor
 

@@ -2,7 +2,10 @@
   "name": "Soda CMS",
   "version": "0.0.2",
   "authors": [
-    "Simon Davies <noodlewitt@gmail.com>"
+    "Simon Davies <noodlewitt@gmail.com>",
+    "Ryan Brereton-Canham <ryzaar@hotmail.com>",
+    "Jarrad Littleford <jplittleford@gmail.com>",
+    "Jacob Mackenzie"
   ],
   "license": "MIT",
   "dependencies": {
