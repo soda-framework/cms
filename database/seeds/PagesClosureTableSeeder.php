@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ApplicationPluginsTableSeeder extends Seeder
+class PagesClosureTableSeeder extends Seeder
 {
 
     /**
@@ -12,11 +12,8 @@ class ApplicationPluginsTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('pages_closure')->delete();
         
-
-        \DB::table('application_plugins')->delete();
-        
-        
-        
+        DB::table('pages_closure')->insert([]);
     }
 }
