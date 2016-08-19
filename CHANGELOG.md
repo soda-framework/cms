@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added JSON field editor
+
+### Changed
+- Removed and organised Soda Seeds
+- Removed forgotten password link (until functionality is patched)
+- Cleaned routes files
 
 ## [0.0.5] - 2016-08-16
 ### Added
