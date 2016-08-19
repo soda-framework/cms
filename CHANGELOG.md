@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.1.0]
 ### Added
 - Added JSON field editor
 
@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Removed and organised Soda Seeds
 - Removed forgotten password link (until functionality is patched)
 - Cleaned routes files
+- Namespaces refactored to include `Cms`
+- Removed old references to Tree/Template models/controllers/routes
 
 ## [0.0.5] - 2016-08-16
 ### Added
