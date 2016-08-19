@@ -2,12 +2,12 @@
 namespace Soda\Cms\Providers;
 
 use Blade;
-use Creativeorange\Gravatar\Facades\Gravatar;
-use Creativeorange\Gravatar\GravatarServiceProvider;
 use Franzose\ClosureTable\ClosureTableServiceProvider;
 use Soda\Cms\Components\Soda;
-use Soda\Cms\Console\InstallTheme;
+use Soda\Cms\Console\Assets;
+use Soda\Cms\Console\Theme;
 use Soda\Cms\Console\Update;
+use Soda\Cms\Facades\SodaFacade;
 use Soda\Cms\Models\User;
 use Storage;
 use Zofe\Rapyd\RapydServiceProvider;
@@ -52,18 +52,18 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
             RouteServiceProvider::class,
             ClosureTableServiceProvider::class,
             RapydServiceProvider::class,
-            GravatarServiceProvider::class,
         ]);
 
         $this->registerFacades([
-            'Gravatar' => Gravatar::class,
+            'Soda' => Soda::class,
         ]);
 
-        $this->app->singleton('soda', Soda::class);
+        $this->app->singleton('soda', SodaFacade::class);
 
         $this->commands([
-            InstallTheme::class,
+            Theme::class,
             Update::class,
+            Assets::class,
         ]);
     }
 

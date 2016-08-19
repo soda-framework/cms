@@ -1,13 +1,12 @@
-# sodacms
-Soda cms package
+# Soda CMS
+A sweet PHP CMS solution built on Laravel!
 
-## composer require
+## Require via Composer
 ```
 composer require sodacms/sodacms:1.1.*
 ```
 
-## add package to providers
-in /config/app.php
+## Add package to providers in `/config/app.php`
 ```
 'providers' => [
     //Existing providers
@@ -15,39 +14,19 @@ in /config/app.php
 ]
 ```
 
-## add alias
-in /config/app.php
-```
-'aliases' => [
-    //Existing aliases
-    'Soda' => \Soda\Facades\Soda::class,
-]
-```
-
-## vendor publish
+## Vendor publish
 ```
 php artisan vendor:publish
 ```
 
-
-## set database
-In your .env file:
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=tst
-DB_USERNAME=root
-DB_PASSWORD=root
-```
-
 ## Run Migration
-This should add in all the database elements.
+This will add in all the database elements required.
 ```
 php artisan migrate --path /vendor/sodacms/sodacms/database/migrations
 ```
 
 ## Run Seeder
+To give you a head start at building your first website with Soda CMS!
 ```
 php artisan db:seed --class=SodaSeeder
 ```

@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class InstallTheme extends Command {
+class Theme extends Command {
 
     protected $signature = 'soda:theme {--a|advanced : Use advanced options to set up your theme} {--e|extra : Include extra classes to build more complex theme functionality}';
     protected $description = 'Install an example Soda CMS Theme';
