@@ -26,7 +26,7 @@
             "name"         => "Role",
             'field_type'   => 'dropdown',
             "field_name"   => 'role_id',
-            "field_params" => ["options" => array_merge(['' => 'Select Role'], Soda\Models\Role::lists('name','id')->toArray())]
+            "field_params" => ["options" => array_merge(['' => 'Select Role'], Soda\Cms\Models\Role::lists('name','id')->toArray())]
         ])->setModel($model) !!}
 
 		@if($model->id)

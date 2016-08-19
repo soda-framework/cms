@@ -1,8 +1,8 @@
 <?php
-namespace Soda\Components\Forms;
+namespace Soda\Cms\Components\Forms;
 
 use Request;
-use Soda\Models\BlockType;
+use Soda\Cms\Models\BlockType;
 
 class FormBuilder {
     protected $field_types = [
@@ -32,7 +32,7 @@ class FormBuilder {
         $field_value = $model->{$element};
         if (Request::get('soda_edit')) {
             $unique = uniqid();
-            if (get_class($model) == 'Soda\Models\ModelBuilder') {
+            if (get_class($model) == 'Soda\Cms\Models\ModelBuilder') {
                 //we need to get the db name and attach to the field..
                 $type = BlockType::where('identifier', $type)->first();
                 $link = route('soda.dyn.inline.edit', [

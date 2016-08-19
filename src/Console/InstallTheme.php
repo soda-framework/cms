@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Console;
+namespace Soda\Cms\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;

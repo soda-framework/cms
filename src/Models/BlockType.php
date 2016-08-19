@@ -1,11 +1,11 @@
 <?php
 
-namespace Soda\Models;
+namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Soda\Models\Scopes\FromApplicationScope;
+use Soda\Cms\Models\Scopes\FromApplicationScope;
 
 class BlockType extends Model {
     protected $table = 'block_types';
@@ -88,7 +88,6 @@ class BlockType extends Model {
         }
 
         return true;
-
     }
 
     public static function removeFieldFromType() {

@@ -1,16 +1,15 @@
 <?php
-namespace Soda\Models;
+namespace Soda\Cms\Models;
 
-use Franzose\ClosureTable\Models\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
-use Soda\Models\Scopes\FromApplicationScope;
-use Soda\Models\Scopes\LiveScope;
-use Soda\Models\Scopes\PositionScope;
-use Soda\Models\Traits\SluggableTrait;
-use Soda\Models\Traits\TreeableTrait;
+use Soda\Cms\Models\Scopes\FromApplicationScope;
+use Soda\Cms\Models\Scopes\LiveScope;
+use Soda\Cms\Models\Scopes\PositionScope;
+use Soda\Cms\Models\Traits\SluggableTrait;
+use Soda\Cms\Models\Traits\TreeableTrait;
 
-class Page extends Entity implements PagesInterface {
+class Page extends AbstractSodaClosureEntity {
     use SoftDeletes, SluggableTrait, TreeableTrait;
 
     protected $table = 'pages';
@@ -35,7 +34,6 @@ class Page extends Entity implements PagesInterface {
      *
      * @var string
      */
-
 
     public static function boot() {
         parent::boot();

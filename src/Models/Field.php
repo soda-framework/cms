@@ -1,13 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: sidavies
- * Date: 6/02/2016
- * Time: 5:37 PM
- */
-
-namespace Soda\Models;
+namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,7 +32,7 @@ class Field extends Model {
     }
 
     public function setFieldParamsAttribute($value) {
-        if(is_array($value)) {
+        if (is_array($value)) {
             $value = json_encode($value);
         }
 

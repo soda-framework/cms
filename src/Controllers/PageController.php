@@ -1,16 +1,14 @@
-<?php namespace Soda\Controllers;
+<?php namespace Soda\Cms\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Soda\Components\Page as PageComponent;
-use Soda\Facades\Soda;
-use Soda\Models\Page;
-use Soda\Models\PageType;
-
+use Soda\Cms\Controllers\Traits\TreeableTrait;
+use Soda\Cms\Facades\Soda;
+use Soda\Cms\Models\Page;
+use Soda\Cms\Models\PageType;
 
 class PageController extends Controller {
-
-    use    Traits\TreeableTrait;
+    use TreeableTrait;
     public $hint = 'page';
 
     /**
@@ -44,7 +42,6 @@ class PageController extends Controller {
 
         $tree = $this->htmlTree($request, $page->id, $this->hint);
 
-
         $pages = $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
 
         return view('soda::page.index', [
@@ -68,7 +65,6 @@ class PageController extends Controller {
             $page_table = null;
         }
 
-
         return view('soda::page.view', ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
     }
 
@@ -81,11 +77,10 @@ class PageController extends Controller {
         $page->fill($request->all());
         $page->save();
 
-
         //we also need to save the settings - careful here..
         $page->load('type.fields');
 
-        if($request->has('settings')) {
+        if ($request->has('settings')) {
 
             $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
                 $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
@@ -167,7 +162,7 @@ class PageController extends Controller {
 
         $dyn_table->page_id = $page->id;
 
-        if($request->has('settings')){
+        if ($request->has('settings')) {
             $dyn_table->forceFill($request->input('settings'));
         }
 

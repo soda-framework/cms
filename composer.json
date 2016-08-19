@@ -1,28 +1,41 @@
 {
-  "name": "sodacms/sodacms",
+  "name": "soda-framework/cms",
   "license": "MIT",
-  "description": "Soda CMS package",
-  "keywords": ["CMS","soda","laravel"],
+  "description": "Soda Framework: CMS",
+  "keywords": [
+    "CMS",
+    "Soda",
+    "Framework",
+    "Laravel"
+  ],
   "authors": [
     {
       "name": "Simon Davies",
       "email": "noodlewitt@gmail.com"
+    },
+    {
+      "name": "Ryan Brereton-Canham",
+      "email": "ryzaar@hotmail.com"
+    },
+    {
+      "name": "Jacob Littleford",
+      "email": "jplittleford@gmail.com"
     }
   ],
   "require": {
     "php": ">=5.5.9",
-    "sodacms/closure-table": "10.0",
+    "franzose/closure-table": "^4.1",
     "league/flysystem-aws-s3-v3": "^1.0",
     "creativeorange/gravatar": "~1.0",
-    "zofe/rapyd":"2.2.*"
+    "zofe/rapyd": "2.2.*"
   },
   "autoload": {
-        "psr-4": {
-          "Soda\\": "src/"
-        },
-        "classmap": [
-          "database",
-          "database/seeds"
-        ]
-    }
+    "psr-4": {
+      "Soda\\Cms\\": "src/"
+    },
+    "classmap": [
+      "database",
+      "database/seeds"
+    ]
+  }
 }

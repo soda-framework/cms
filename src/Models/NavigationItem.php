@@ -1,14 +1,11 @@
 <?php
-namespace Soda\Models;
+namespace Soda\Cms\Models;
 
-
-use Franzose\ClosureTable\Models\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda\Models\Traits\TreeableTrait;
+use Soda\Cms\Models\Traits\TreeableTrait;
 
-class NavigationItem extends Entity implements NavigationItemInterface
-{
-    use SoftDeletes;
+class NavigationItem extends AbstractSodaClosureEntity {
+    use SoftDeletes, TreeableTrait;
     /**
      * The table associated with the model.
      *
@@ -16,11 +13,9 @@ class NavigationItem extends Entity implements NavigationItemInterface
      */
     protected $table = 'navigation_items';
     protected $fillable = ['name', 'description', 'text', 'class', 'html', 'url'];
-    use TreeableTrait;
     protected $closure = NavigationItemClosure::class;
 
-    public function navigation()
-    {
+    public function navigation() {
         return $this->belongsTo(Navigation::class, 'page_type_id');
     }
 

@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sidavies
- * Date: 6/02/2016
- * Time: 5:37 PM
- */
 
-namespace Soda\Models;
+namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

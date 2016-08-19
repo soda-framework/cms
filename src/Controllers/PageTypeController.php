@@ -1,22 +1,15 @@
-<?php namespace Soda\Controllers;
+<?php namespace Soda\Cms\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Soda\Models\PageType;
+use Soda\Cms\Models\PageType;
+use Soda\Cms\Controllers\Traits\CrudableTrait;
 
-
-class PageTypeController extends Controller
-{
-
-    use Traits\CrudableTrait;
+class PageTypeController extends Controller {
+    use CrudableTrait;
     public $hint = 'page_type';
 
-    public function __construct(PageType $type)
-    {
+    public function __construct(PageType $type) {
         //$this->middleware('auth');
         $this->model = $type;
     }
-
-
-
 }

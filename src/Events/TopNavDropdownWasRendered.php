@@ -1,5 +1,5 @@
 <?php
-namespace Soda\Events;
+namespace Soda\Cms\Events;
 
 
 class TopNavDropdownWasRendered {

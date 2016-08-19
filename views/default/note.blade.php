@@ -1,17 +1,17 @@
 <?php
 //create new treeable item(s)
-php artisan closuretable:make --entity=navigation --namespace=Soda\Models --models-path=soda/soda/src/Models
+php artisan closuretable:make --entity=navigation --namespace=Soda\Cms\Models --models-path=soda/soda/src/Models
 
 
 //Soda::getBlock('banners'))
 //This is the page that renders the actual homepage (front end).
 
 //$model = Soda::dynamicModel('soda_banners')->paginate();
-$block = \Soda\Models\Block::find(4);
+$block = \Soda\Cms\Models\Block::find(4);
 $block_type = $block->type()->first();
 
 
-//$type = \Soda\Models\Type::find(2);
+//$type = \Soda\Cms\Models\Type::find(2);
 //$flds = $type->fields()->get();
 
 
@@ -29,7 +29,7 @@ $block_type = $block->type()->first();
 //);
 ////we can probs use ->fill or something for this so it's not so shit.
 //foreach($data as $d){
-//	$field = new Soda\Models\Field();
+//	$field = new Soda\Cms\Models\Field();
 //	$field->fill($d);
 //	$field->save();
 //	$fields[] = $field;

@@ -2,7 +2,7 @@
 
 namespace Themes\SodaTheme\Listeners;
 
-use Soda\Events\DashboardWasRendered;
+use Soda\Cms\Events\DashboardWasRendered;
 
 class Dashboard {
 

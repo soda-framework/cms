@@ -1,22 +1,18 @@
-<?php namespace Soda\Controllers;
+<?php namespace Soda\Cms\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Soda\Models\BlockType;
+use Soda\Cms\Models\BlockType;
+use Soda\Cms\Controllers\Traits\CrudableTrait;
 
+class BlockTypeController extends Controller {
 
-class BlockTypeController extends Controller
-{
-
-    use Traits\CrudableTrait;
+    use CrudableTrait;
     public $hint = 'block_type';
 
-    public function __construct(BlockType $type)
-    {
+    public function __construct(BlockType $type) {
         //$this->middleware('auth');
         $this->model = $type;
     }
-
 
 
 }

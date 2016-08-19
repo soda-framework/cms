@@ -1,9 +1,9 @@
 <?php
 
-namespace Soda\Providers;
+namespace Soda\Cms\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 
 abstract class AbstractSodaServiceProvider extends ServiceProvider {
 
@@ -31,12 +31,12 @@ abstract class AbstractSodaServiceProvider extends ServiceProvider {
     /**
      * Merge the given configuration with the existing configuration, recursively.
      *
-     * @param  string  $path
-     * @param  string  $key
+     * @param  string $path
+     * @param  string $key
+     *
      * @return void
      */
-    protected function mergeConfigRecursivelyFrom($path, $key)
-    {
+    protected function mergeConfigRecursivelyFrom($path, $key) {
         $config = $this->app['config']->get($key, []);
 
         $this->app['config']->set($key, array_replace_recursive(require $path, $config));

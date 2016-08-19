@@ -1,17 +1,11 @@
-<?php namespace Soda\Controllers;
+<?php namespace Soda\Cms\Controllers;
 
 use App\Http\Controllers\Controller;
 use Auth;
 use Gate;
-use Soda\Events\DashboardWasRendered;
+use Soda\Cms\Events\DashboardWasRendered;
 
 class HomeController extends Controller {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-//		$this->middleware('soda');
-    }
 
     /**
      * Show the application dashboard.

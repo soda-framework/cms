@@ -1,8 +1,8 @@
-<?php namespace Soda\Controllers;
+<?php namespace Soda\Cms\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Soda\Models\Media;
+use Soda\Cms\Models\Media;
 use Storage;
 use Uploader;
 use URL;
@@ -71,7 +71,6 @@ class UploadController extends Controller {
 
             //return with a json object containing our shiz.. there might be a nicer way of extracting this functionality elswhere?
             return response()->json($return);
-
         } else {
             // TODO Should do some exception catching here
             dd('something went wrong, no file');

@@ -1,6 +1,6 @@
 <?php
 //this stuff isn't used yet - will eventually be for seeding and testing data.
-$factory->define(Soda\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(Soda\Cms\Models\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,

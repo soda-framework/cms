@@ -30,18 +30,6 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/makeroot/{id?}', 'PageController@getMakeRoot')->name('page-makeroot');
             });
 
-            /*
-            Route::group(['prefix' => 'templates'], function() {
-                Route::get('/', ['as'=>'soda.templates', 'uses'=>'TemplateController@getIndex']);
-                Route::get('/view/{id?}', ['as'=>'soda.templates.view', 'uses'=>'TemplateController@view']);
-                Route::post('/edit/{id?}', ['as'=>'soda.templates.edit', 'uses'=>'TemplateController@edit']);
-                Route::get('/delete/{id?}', ['as'=>'soda.templates.delete', 'uses'=>'TemplateController@delete']);
-                Route::get('/move/{id}/{parent_id}/{position}', ['as'=>'soda.templates.move', 'uses'=>'TemplateController@move']);
-                Route::get('/create/{id?}', ['as'=>'soda.templates.create', 'uses'=>'TemplateController@createForm']);
-                Route::post('/create/{parent_id?}', ['as'=>'soda.templates.create', 'uses'=>'TemplateController@create']);
-            });
-             */
-
             Route::group(['prefix' => 'fields'], function() {
                 Route::get('/', 'FieldController@index')->name('soda.field');
                 Route::get('view', 'FieldController@edit')->name('soda.field.create');
@@ -104,11 +92,6 @@ Route::group(['middleware' => 'web'], function () {
                 Route::post('/', 'UploadController@upload')->name('soda.upload');
                 Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
             });
-
-            /*
-            Route::get('/tree.json', ['as'=>'soda.tree.json', 'uses'=>'TreeController@jsonTree']);
-            Route::get('/tree', ['as'=>'soda.tree', 'uses'=>'TreeController@htmlTree']);
-             */
         });
     });
 

@@ -17,7 +17,7 @@
     @include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-file-o', 'title'=> $model->name ? $model->name : 'New ' . $model->type->name . " Page"])
 
     <ul class="nav nav-tabs" role="tablist">
-        @if(Soda\Models\Page::hasFieldsOrBlocks($model))
+        @if(Soda\Cms\Models\Page::hasFieldsOrBlocks($model))
 
             <li role='presentation' class="active" aria-controls="{{ $model->type->name }}">
                 <a role="tab" data-toggle="tab" href="#normalview">{{ $model->type->name }}</a>
@@ -44,7 +44,7 @@
                     {!! csrf_field() !!}
                     <input type="hidden" name="page_type_id" value="{{ $model->type->id }}" />
                     <div class="tab-content">
-                        @if(Soda\Models\Page::hasFieldsOrBlocks($model))
+                        @if(Soda\Cms\Models\Page::hasFieldsOrBlocks($model))
                             <div class="tab-pane active" id="normalview" role="tabpanel">
                                 @if(@$model->type->fields)
                                     @foreach($model->type->fields as $field)
@@ -88,7 +88,7 @@
                                             'field_type'   => 'dropdown',
                                             'field_name'   => 'status',
                                             'field_value'  => $model->status_id,
-                                            'field_params' => ['options' => Soda\Models\Status::lists('name','id')],
+                                            'field_params' => ['options' => Soda\Cms\Models\Status::lists('name','id')],
                                         ])->setModel($model) !!}
                                     </div>
 

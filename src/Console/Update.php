@@ -1,11 +1,9 @@
 <?php
 
-namespace Soda\Console;
+namespace Soda\Cms\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 
 class Update extends Command {
 
@@ -50,7 +48,8 @@ class Update extends Command {
     protected function updateStyles() {
         $this->info('Updating Soda styles and assets...');
         $this->callSilent('vendor:publish', [
-            '--force' => 1, '--tag' => 'soda.public'
+            '--force' => 1,
+            '--tag'   => 'soda.public',
         ]);
         $this->info('Soda styles and assets updated successfully.');
     }

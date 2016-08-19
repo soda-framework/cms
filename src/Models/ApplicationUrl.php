@@ -1,15 +1,15 @@
 <?php
 
-namespace Soda\Models;
+namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationUrl extends Model {
 
-	protected $table = 'application_urls';
+    protected $table = 'application_urls';
 
 
-	public function application(){
-		return $this->belongsTo(Application::class);
-	}
+    public function application() {
+        return $this->belongsTo(Application::class);
+    }
 }

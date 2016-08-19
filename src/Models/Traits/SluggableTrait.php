@@ -1,19 +1,19 @@
 <?php
 
-namespace Soda\Models\Traits;
+namespace Soda\Cms\Models\Traits;
 
 use Illuminate\Support\Str;
 
-trait SluggableTrait
-{
+trait SluggableTrait {
 
     /**
      * takes a parent tree item and generates a slug based off it.
+     *
      * @param $item
+     *
      * @return string
      */
-    public function generateSlug($title)
-    {
+    public function generateSlug($title) {
         $slug = $this->slug . '/' . Str::slug($title);
         //make sure it doesn't already exist
         if (self::where('slug', "$slug")->first()) {
@@ -24,8 +24,10 @@ trait SluggableTrait
                 $num = str_replace("$slug-", "", $highest->slug);
                 $num++;
             }
+
             return ("$slug-$num");
         }
+
         return ($slug);
     }
 }

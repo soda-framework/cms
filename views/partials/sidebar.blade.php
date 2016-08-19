@@ -71,7 +71,7 @@
             </li>
         @endif
 
-        @foreach( event(new Soda\Events\NavigationWasRendered()) as $item)
+        @foreach( event(new Soda\Cms\Events\NavigationWasRendered()) as $item)
             {!! $item !!}
         @endforeach
     </ul>

@@ -7,10 +7,10 @@ use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 class EventsServiceProvider extends ServiceProvider
 {
     public $listen = [
-        'Soda\Events\NavigationWasRendered' => [
+        'Soda\Cms\Events\NavigationWasRendered' => [
             'Themes\SodaTheme\Listeners\MenuNavItems',
         ],
-        'Soda\Events\DashboardWasRendered' => [
+        'Soda\Cms\Events\DashboardWasRendered' => [
             'Themes\SodaTheme\Listeners\Dashboard',
         ],
     ];

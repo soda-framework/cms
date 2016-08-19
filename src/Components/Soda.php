@@ -1,16 +1,16 @@
 <?php
-namespace Soda\Components;
+namespace Soda\Cms\Components;
 
-use Route;
-use Soda\Components\Forms\FormBuilder;
-use Soda\Components\Pages\PageBuilder;
-use Soda\Models\Application;
-use Soda\Models\ApplicationUrl;
-use Soda\Models\Block;
-use Soda\Models\ModelBuilder;
-use Soda\Models\NavigationItem;
-use Soda\Models\Page;
 use Exception;
+use Route;
+use Soda\Cms\Components\Forms\FormBuilder;
+use Soda\Cms\Components\Pages\PageBuilder;
+use Soda\Cms\Models\Application;
+use Soda\Cms\Models\ApplicationUrl;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\ModelBuilder;
+use Soda\Cms\Models\NavigationItem;
+use Soda\Cms\Models\Page;
 
 class Soda {
     protected $application = null;

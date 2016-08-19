@@ -20,7 +20,7 @@
                 <li class="">
                     <a class="" href="/" target="_blank">View Site</a>
                 </li>
-                @foreach( event(new Soda\Events\TopNavWasRendered()) as $item)
+                @foreach( event(new Soda\Cms\Events\TopNavWasRendered()) as $item)
                     {!! $item !!}
                 @endforeach
                 @if (Auth::guest())
@@ -41,7 +41,7 @@
                         <i class="fa fa-btn fa-user"></i> {{ Auth::user()->username }}
                     </a>
                     <ul class="dropdown-menu">
-                        @foreach( event(new Soda\Events\TopNavDropdownWasRendered()) as $item)
+                        @foreach( event(new Soda\Cms\Events\TopNavDropdownWasRendered()) as $item)
                             {!! $item !!}
                         @endforeach
                         <li><a class='dropdown-item' href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a></li>

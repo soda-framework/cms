@@ -1,7 +1,7 @@
-<?php namespace Soda\Controllers\Traits;
+<?php namespace Soda\Cms\Controllers\Traits;
 
 use Illuminate\Http\Request;
-use Soda\Models\NavigationItem;
+use Soda\Cms\Models\NavigationItem;
 
 Trait TreeableTrait
 {

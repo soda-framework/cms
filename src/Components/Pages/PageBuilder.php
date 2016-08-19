@@ -1,11 +1,10 @@
 <?php
 
-namespace Soda\Components\Pages;
+namespace Soda\Cms\Components\Pages;
 
 use Exception;
 use Soda;
-use App;
-use Soda\Models\Page;
+use Soda\Cms\Models\Page;
 
 class PageBuilder {
     public function loadPageBySlug($slug) {
@@ -34,7 +33,9 @@ class PageBuilder {
      * @throws \Exception
      */
     public function render($page = null, $params = []) {
-        if(!$page) $page = Soda::getCurrentPage($page);
+        if (!$page) {
+            $page = Soda::getCurrentPage($page);
+        }
 
         switch ($page->action_type) {
             case('controller'):
@@ -54,7 +55,6 @@ class PageBuilder {
             if (!$page->edit_action) {
                 return view('soda::page.view', ['page' => $page]);
             } else {
-
             }
         }
     }

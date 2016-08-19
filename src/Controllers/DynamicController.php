@@ -1,44 +1,38 @@
-<?php namespace Soda\Controllers;
+<?php namespace Soda\Cms\Controllers;
 
-//maybe this should be renamed to be block/page specific?
-
-use Carbon\Carbon;
-use Redirect;
-use Soda\Models\BlockType;
-use Soda\Models\ModelBuilder;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Redirect;
+use Soda\Cms\Models\BlockType;
+use Soda\Cms\Models\ModelBuilder;
 
-class DynamicController extends Controller
-{
+class DynamicController extends Controller {
     public $model = null;
 
-    public function __construct(ModelBuilder $modelBuilder)
-    {
+    public function __construct(ModelBuilder $modelBuilder) {
         $this->type = BlockType::with('fields')->where('identifier', \Route::current()->getParameter('type'))->first();
         $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier, $this->type->fields->lists('field_name')->toArray());
     }
 
-    public function index()
-    {
+    public function index() {
         $this->model = $this->model->all();
 
         return view($this->index_view, ['models' => $this->model]);
     }
 
-    public function view($type = null, $id = null)
-    {
+    public function view($type = null, $id = null) {
         //dd($this->model);
         if ($id) {
             $model = $this->model->findOrFail($id);
         } else {
             $model = $this->model;
         }
+
         return view('soda::standard.view', ['type' => $this->type, 'model' => $model]);
     }
 
-    public function edit(Request $request, $type = null, $id = null)
-    {
+    public function edit(Request $request, $type = null, $id = null) {
 
         if ($id) {
             $this->model = $this->model->findOrFail($id);
@@ -65,7 +59,6 @@ class DynamicController extends Controller
                 //default, just chuck in the values.
                 $this->model->{$field->field_name} = $request->input($field->field_name);
             }
-
         }
 
         //dd($request->except(['_token']));
@@ -82,30 +75,30 @@ class DynamicController extends Controller
 
     /**
      * delete
+     *
      * @param Request $request
      * @param null $type
      * @param null $id
      */
-    public function delete(Request $request, $type = null, $id = null)
-    {
+    public function delete(Request $request, $type = null, $id = null) {
         $this->model = $this->model->findOrFail($id);
         $this->model->delete();
+
         return \Redirect::back()->with('message', 'Success, item deleted'); //TODO: this should use nicer refirect?
     }
 
     /**
      * edits a specific field and value!
+     *
      * @param $type
      * @param $id
      * @param $field
      */
-    public function inlineEdit($type, $id, $field)
-    {
+    public function inlineEdit($type, $id, $field) {
 
         $this->model = $this->model->findOrFail($id);
         $this->model->{$field} = \Request::get($field);
         $this->model->save();
-
         //TODO: respnse?
     }
 }

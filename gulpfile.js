@@ -1,4 +1,9 @@
+/*
+TODO: https://github.com/terinjokes/gulp-uglify/blob/master/docs/why-use-pump/README.md#why-use-pump
+*/
+
 var gulp = require('gulp');
+
 var del = require('del');
 var chalk = require('chalk');
 var config = require('./gulpconfig.js');

@@ -2,7 +2,7 @@
 
 namespace Themes\SodaTheme\Listeners;
 
-use Soda\Events\NavigationWasRendered;
+use Soda\Cms\Events\NavigationWasRendered;
 
 class MenuNavItems {
 

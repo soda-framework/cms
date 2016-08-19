@@ -1,10 +1,10 @@
 <?php
 
-namespace Soda\Providers;
+namespace Soda\Cms\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
-use Soda\Middleware\Authenticate;
+use Soda\Cms\Middleware\Authenticate;
 
 class RouteServiceProvider extends ServiceProvider {
     /**
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider {
      *
      * @var string
      */
-    protected $namespace = 'Soda\Controllers';
+    protected $namespace = 'Soda\Cms\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

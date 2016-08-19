@@ -1,5 +1,5 @@
 <?php
-namespace Soda\Models;
+namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -8,7 +8,7 @@ use Soda;
 /**
  * Class ModelBuilder
  *
- * @package Soda\Models
+ * @package Soda\Cms\Models
  */
 class ModelBuilder extends Model {
 
@@ -19,7 +19,6 @@ class ModelBuilder extends Model {
     //TODO:
     //something like this for dynamic relationship.
     //$user_model->roles = new BelongsToMany($role_model->newQuery(), $user_model, $pivot_table, $foreignKey, $otherKey);
-
 
     public function __construct($params = []) {
         if ($params) {
@@ -98,7 +97,6 @@ class ModelBuilder extends Model {
         $foreignKey = $foreignKey ? : $this->getForeignKey();
 
         $instance = Soda::dynamicModel($related, []);
-
 
         $localKey = $localKey ? : $this->getKeyName();
 

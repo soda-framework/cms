@@ -1,8 +1,8 @@
 <?php
-namespace Soda\Components\Forms;
+namespace Soda\Cms\Components\Forms;
 
 use Exception;
-use Soda\Models\Field;
+use Soda\Cms\Models\Field;
 
 class FormField {
     protected $field;
