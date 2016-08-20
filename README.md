@@ -21,7 +21,7 @@ php artisan vendor:publish
 ## Run Migration
 This will add in all the database elements required.
 ```
-php artisan migrate --path /vendor/sodacms/sodacms/database/migrations
+php artisan migrate --path /vendor/soda-framework/cms/database/migrations
 ```
 
 ## Run Seeder
