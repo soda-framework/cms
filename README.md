@@ -3,13 +3,12 @@ A sweet PHP CMS solution built on Laravel!
 
 ## Require via Composer
 ```
-composer require sodacms/sodacms:1.1.*
+composer require sodacms/sodacms
 ```
 
 ## Add package to providers in `/config/app.php`
 ```
 'providers' => [
-    //Existing providers
     Soda\Providers\SodaServiceProvider::class,
 ]
 ```

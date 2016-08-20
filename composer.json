@@ -30,7 +30,7 @@
     "franzose/closure-table": "^4.1",
     "league/flysystem-aws-s3-v3": "^1.0",
     "zofe/rapyd": "2.2.*",
-    "zizaco/entrust": "5.2.x-dev"
+    "zizaco/entrust": "1.7.*"
   },
   "autoload": {
     "psr-4": {
