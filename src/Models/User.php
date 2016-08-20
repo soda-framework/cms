@@ -11,7 +11,6 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 class User extends Authenticatable {
     use OptionallyInApplicationTrait, EntrustUserTrait;
     protected $table = 'users';
-    protected $with = ['roles', 'roles.perms'];
 
     /**
      * The attributes that are mass assignable.

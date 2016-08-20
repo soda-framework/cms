@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Permission denied page, utilising Entrust package
 
+### Changed
+- Optimized roles/permission database retrieval
+
 ## [0.1.2] 2016-08-20
 ### Fixed
 - Use Zizaco Entrust 1.7.*, rather than dev package requirement
