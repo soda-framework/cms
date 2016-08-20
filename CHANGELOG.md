@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.1.1] 2016-08-20
+### Added
+- Zizaco roles/permissions management package
+- New traits for restricting models to applications, draft mode, etc
+
+### Changed
+- Database migrations and seeds updated
+- Model/database tables and columns cleaned up
+
 ### Removed
 - Removed `creativeorange/gravatar` package - will approach this manually
 
