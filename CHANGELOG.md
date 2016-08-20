@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.2] 2016-08-20
+### Fixed
+- Use Zizaco Entrust 1.7.*, rather than dev package requirement
+
 ## [0.1.1] 2016-08-20
 ### Added
 - Zizaco roles/permissions management package

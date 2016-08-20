@@ -3,7 +3,7 @@ A sweet PHP CMS solution built on Laravel!
 
 ## Require via Composer
 ```
-composer require sodacms/sodacms
+composer require soda-framework/cms
 ```
 
 ## Add package to providers in `/config/app.php`
