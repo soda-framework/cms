@@ -56,6 +56,7 @@
 @import "core";
 
 @import "blocks/content";
+@import "blocks/dialog-box";
 @import "blocks/navbar";
 @import "blocks/sidebar";
 
@@ -65,4 +66,4 @@
 @import "elements/table";
 @import "elements/tree";
 
-@import "pages/login";
+@import "pages/auth";

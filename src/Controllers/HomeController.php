@@ -14,11 +14,10 @@ class HomeController extends Controller {
      */
     public function getIndex() {
         if (!Auth::user()->can('access-cms')) {
-            dd('nope');
-            abort(403);
+            return response()->view("soda::auth.no-permission", [], 401);
         }
 
-        $dashboard = event(new DashboardWasRendered());
+        $dashboard = event(new DashboardWasRendered);
 
         if (!empty($dashboard)) {
             return $dashboard[0];

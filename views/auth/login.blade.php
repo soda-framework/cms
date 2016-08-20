@@ -1,8 +1,8 @@
 @extends(config('soda.hint_path').'::layouts.bare', ['body_class'=>'full-height login-screen', 'html_class'=>'full-height'])
 
 @section('main-content')
-    <div class="login-box-wrapper">
-        <div class="login-box">
+    <div class="dialog-box-wrapper">
+        <div class="dialog-box">
             <div class="soda-logo-wrap">
                 <div class="soda-logo">
                     <img src="/sodacms/sodacms/img/sodacms_droplime.png"/><br />
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <button type="submit" class="btn btn-login btn-block btn-4">
+                    <button type="submit" class="btn btn-dialog btn-block">
                         Login
                     </button>
                 </div>
