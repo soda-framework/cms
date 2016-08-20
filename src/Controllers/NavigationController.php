@@ -92,7 +92,6 @@ class NavigationController extends Controller {
         //we create a new menu block
         $this->model->fill($request->input());
         $this->model->application_id = \Soda::getApplication()->id;
-        $this->model->application_user_id = Auth::user()->id;
         if (@$parent && !$this->model->id) {
             //create a new item and move it into a parent.
             //we need to move this item into the parent.

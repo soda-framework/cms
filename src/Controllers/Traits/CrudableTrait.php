@@ -1,6 +1,8 @@
 <?php namespace Soda\Cms\Controllers\Traits;
 
 use Auth;
+use DataFilter;
+use DataGrid;
 use Illuminate\Http\Request;
 use Soda;
 
@@ -11,13 +13,13 @@ Trait CrudableTrait {
 
     public function index() {
 
-        $filter = \DataFilter::source($this->model);
+        $filter = DataFilter::source($this->model);
         $filter->add('name', 'name', 'text');;
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
 
-        $grid = \DataGrid::source($filter);  //same source types of DataSet
+        $grid = DataGrid::source($filter);  //same source types of DataSet
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
@@ -52,7 +54,6 @@ Trait CrudableTrait {
 
         $this->model->fill($request->input());
         $this->model->application_id = Soda::getApplication()->id;
-        $this->model->application_user_id = Auth::user()->id;
         $this->model->save();
 
         return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',

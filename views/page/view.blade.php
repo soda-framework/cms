@@ -87,7 +87,7 @@
                                             'description'  => 'The status of this page',
                                             'field_type'   => 'dropdown',
                                             'field_name'   => 'status',
-                                            'field_value'  => $model->status_id,
+                                            'field_value'  => $model->status,
                                             'field_params' => ['options' => Soda\Cms\Models\Status::lists('name','id')],
                                         ])->setModel($model) !!}
                                     </div>

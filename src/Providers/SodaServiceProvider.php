@@ -11,6 +11,8 @@ use Soda\Cms\Facades\SodaFacade;
 use Soda\Cms\Models\User;
 use Storage;
 use Zofe\Rapyd\RapydServiceProvider;
+use Zizaco\Entrust\EntrustServiceProvider;
+use Zizaco\Entrust\EntrustFacade;
 
 class SodaServiceProvider extends AbstractSodaServiceProvider {
     /**
@@ -32,7 +34,7 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
 
         // Publishing configs
         $this->publishes([__DIR__ . '/../../config' => config_path()]);
-        $this->publishes([__DIR__ . '/../../database' => database_path()]);
+        $this->publishes([__DIR__ . '/../../database/migrations' => database_path('migrations')]);
         $this->publishes([__DIR__ . '/../../public' => public_path('sodacms/sodacms')], 'soda.public');
         $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.hint_path'));
 
@@ -52,13 +54,15 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
             RouteServiceProvider::class,
             ClosureTableServiceProvider::class,
             RapydServiceProvider::class,
+            EntrustServiceProvider::class,
         ]);
 
         $this->registerFacades([
-            'Soda' => Soda::class,
+            'Soda'    => SodaFacade::class,
+            'Entrust' => EntrustFacade::class,
         ]);
 
-        $this->app->singleton('soda', SodaFacade::class);
+        $this->app->singleton('soda', Soda::class);
 
         $this->commands([
             Theme::class,
@@ -68,6 +72,9 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
     }
 
     protected function configure() {
+        $this->app->config->set('entrust.role', 'Soda\Cms\Models\Role');
+        $this->app->config->set('entrust.permission', 'Soda\Cms\Models\Permission');
+
         $this->app->config->set('auth.providers.soda', [
             'driver' => 'eloquent',
             'model'  => User::class,

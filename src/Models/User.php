@@ -3,9 +3,11 @@
 namespace Soda\Cms\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable {
-
+    use OptionallyInApplicationTrait, EntrustUserTrait;
     protected $table = 'users';
 
     /**
@@ -17,7 +19,6 @@ class User extends Authenticatable {
         'name',
         'email',
         'password',
-        'role_id',
     ];
 
     /**
@@ -29,12 +30,5 @@ class User extends Authenticatable {
         'password',
         'remember_token',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function role() {
-        return $this->belongsTo(Role::class);
-    }
 
 }

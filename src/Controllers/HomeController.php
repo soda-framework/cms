@@ -13,7 +13,7 @@ class HomeController extends Controller {
      * @return Response
      */
     public function getIndex() {
-        if (Gate::denies('soda.dashboard')) {
+        if (!Auth::user()->can('access-cms')) {
             dd('nope');
             abort(403);
         }

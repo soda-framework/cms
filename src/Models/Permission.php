@@ -1,8 +1,8 @@
 <?php namespace Soda\Cms\Models;
 
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Zizaco\Entrust\EntrustRole;
+use Zizaco\Entrust\EntrustPermission;
 
-class Role extends EntrustRole {
+class Permission extends EntrustPermission {
     use OptionallyInApplicationTrait;
 }

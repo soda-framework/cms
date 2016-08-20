@@ -3,17 +3,18 @@
 namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class Field extends Model {
+    use OptionallyInApplicationTrait;
     protected $fillable = [
         'name',
+        'description',
         'field_name',
         'field_type',
         'field_params',
         'value',
-        'name',
-        'field_name',
-        'description',
+        'application_id',
     ];
     protected $table = 'fields';
 

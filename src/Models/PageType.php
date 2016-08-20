@@ -6,19 +6,25 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Soda\Cms\Models\Scopes\FromApplicationScope;
-use Soda\Cms\Models\Scopes\LiveScope;
+use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class PageType extends Model {
+    use OptionallyInApplicationTrait, DraftableTrait;
+
     protected $table = 'page_types';
-    protected $fillable = ['name', 'description'];
-
-
-    public static function boot() {
-        parent::boot();
-        static::addGlobalScope(new FromApplicationScope);
-        static::addGlobalScope(new LiveScope);
-    }
+    public $fillable = [
+        'name',
+        'description',
+        'application_id',
+        'status',
+        'position',
+        'package',
+        'action',
+        'action_type',
+        'edit_action',
+        'edit_action_type',
+    ];
 
     public function fields() {
         return $this->morphToMany(Field::class, 'fieldable');
@@ -34,15 +40,20 @@ class PageType extends Model {
      * Add a new (page) type TABLE
      */
     public function addType($fields) {
+        $table = 'soda_' . $this->identifier;
         try {
-            if (!Schema::hasTable('soda_' . $this->identifier)) {
-                Schema::create('soda_' . $this->identifier, function (Blueprint $table) use ($fields) {
+            if (!Schema::hasTable($table)) {
+                Schema::create($table, function (Blueprint $table) use ($fields) {
                     $table->increments('id'); //should this always be there?
+
                     //TODO: field decoder and runner in here..
                     foreach ($fields as $field) {
                         $table->string($field->field_name);
                     }
                     $table->timestamps();
+
+                    $table->foreign('page_id')->references('id')->on('pages')
+                        ->onUpdate('cascade')->onDelete('cascade');
                 });
             }
         } catch (Exception $e) {
@@ -58,17 +69,19 @@ class PageType extends Model {
      * adds a field to an existing type.
      */
     public function addFieldsToType($fields) {
+        $table = 'soda_' . $this->identifier;
         try {
             foreach ($fields as $field) {
-                if (Schema::hasColumn('soda_' . $this->identifier, $field->field_name)) {
+                $field_name = $field->field_name;
+                if (Schema::hasColumn($table, $field_name)) {
                     //we want to alter the existing table.
-                    Schema::table('soda_' . $this->identifier, function ($table) use ($field) {
-                        $table->string($field->field_name)->change();
+                    Schema::table($table, function ($table) use ($field_name) {
+                        $table->string($field_name)->change();
                     });
                 } else {
                     //we want to make a new column
-                    Schema::table('soda_' . $this->identifier, function ($table) use ($field) {
-                        $table->string($field->field_name);
+                    Schema::table($table, function ($table) use ($field_name) {
+                        $table->string($field_name);
                     });
                 }
             }
@@ -81,12 +94,14 @@ class PageType extends Model {
         return true;
     }
 
-    public static function removeFieldFromType() {
+    public function removeFieldFromType($field) {
+        $table = 'soda_' . $this->identifier;
+        $field_name = $field->field_name;
         try {
-            if (Schema::hasColumn('soda_flights', '')) {
+            if (Schema::hasColumn($table, $field_name)) {
                 //remove this column.
-                Schema::table('soda_flights', function ($table) {
-                    $table->dropColumn('airline');
+                Schema::table($table, function ($table) {
+                    $table->dropColumn($field_name);
                 });
             }
         } catch (Exception $e) {

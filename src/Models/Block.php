@@ -3,14 +3,18 @@
 namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class Block extends Model {
+    use OptionallyInApplicationTrait, DraftableTrait;
+
     protected $table = 'blocks';
     protected $fillable = [
         'name',
         'description',
         'identifier',
-        'application_user_id',
+        'status',
         'application_id',
         'block_type_id',
     ];

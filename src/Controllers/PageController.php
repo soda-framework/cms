@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Soda\Cms\Controllers\Traits\TreeableTrait;
-use Soda\Cms\Facades\Soda;
+use Soda;
 use Soda\Cms\Models\Page;
 use Soda\Cms\Models\PageType;
 
@@ -39,10 +39,9 @@ class PageController extends Controller {
         }
 
         $page_types = PageType::get();
+        $tree = $this->htmlTree($request, $page ? $page->id : null, $this->hint);
 
-        $tree = $this->htmlTree($request, $page->id, $this->hint);
-
-        $pages = $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree();
+        $pages = $page ? $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree() : [];
 
         return view('soda::page.index', [
             'hint'       => $this->hint,
@@ -145,7 +144,7 @@ class PageController extends Controller {
         $page->fill([
             'name'           => $request->input('name'),
             'slug'           => $parent->generateSlug($request->input('slug')),
-            'status_id'      => $request->has('status') ? $request->input('status') : 1,
+            'status'         => $request->has('status') ? $request->input('status') : 1,
             'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
             'package'        => $request->has('package') ? $request->input('package') : 'soda',
             'action'         => $request->has('action') ? $request->input('action') : 'default.view',

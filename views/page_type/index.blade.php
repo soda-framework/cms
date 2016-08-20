@@ -18,5 +18,5 @@
 	</p>
 	{!! $filter !!}
 	{!! $grid !!}
-	<a class='btn btn-primary' href="{{route('soda.field.create')}}"><span class="fa fa-plus"></span> Create</a>
+	<a class='btn btn-primary' href="{{route('soda.page_type.create')}}"><span class="fa fa-plus"></span> Create</a>
 @endsection

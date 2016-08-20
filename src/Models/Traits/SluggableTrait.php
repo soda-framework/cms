@@ -9,7 +9,7 @@ trait SluggableTrait {
     /**
      * takes a parent tree item and generates a slug based off it.
      *
-     * @param $item
+     * @param $title
      *
      * @return string
      */

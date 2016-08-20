@@ -29,14 +29,14 @@
     "php": ">=5.5.9",
     "franzose/closure-table": "^4.1",
     "league/flysystem-aws-s3-v3": "^1.0",
-    "zofe/rapyd": "2.2.*"
+    "zofe/rapyd": "2.2.*",
+    "zizaco/entrust": "5.2.x-dev"
   },
   "autoload": {
     "psr-4": {
       "Soda\\Cms\\": "src/"
     },
     "classmap": [
-      "database",
       "database/seeds"
     ]
   }

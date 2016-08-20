@@ -3,14 +3,14 @@ namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
-use Soda\Cms\Models\Scopes\FromApplicationScope;
-use Soda\Cms\Models\Scopes\LiveScope;
-use Soda\Cms\Models\Scopes\PositionScope;
+use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Models\Traits\PositionableTrait;
 use Soda\Cms\Models\Traits\SluggableTrait;
 use Soda\Cms\Models\Traits\TreeableTrait;
 
 class Page extends AbstractSodaClosureEntity {
-    use SoftDeletes, SluggableTrait, TreeableTrait;
+    use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait;
 
     protected $table = 'pages';
     protected $dynamicModel;
@@ -18,30 +18,17 @@ class Page extends AbstractSodaClosureEntity {
         'name',
         'description',
         'slug',
-        'action_type',
-        'action',
-        'package',
         'application_id',
-        'status_id',
+        'status',
         'position',
         'page_type_id',
+        'parent_id',
+        'package',
+        'action',
+        'action_type',
         'edit_action',
         'edit_action_type',
     ];
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-
-    public static function boot() {
-        parent::boot();
-        static::addGlobalScope(new FromApplicationScope);
-        static::addGlobalScope(new LiveScope);
-        static::addGlobalScope(new PositionScope);
-    }
-
 
     /**
      * ClosureTable model instance.
