@@ -5,9 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Permission denied page, utilising Entrust package
+- Additional form fields now registerable via Soda FormBuilder.
 
 ### Changed
 - Optimized roles/permission database retrieval
+- Extracted all CMS form fields to separate classes
 
 ## [0.1.2] 2016-08-20
 ### Fixed

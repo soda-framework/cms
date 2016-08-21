@@ -1,13 +1,16 @@
 <?php
 namespace Soda\Cms\Providers;
 
+use Soda;
 use Blade;
 use Franzose\ClosureTable\ClosureTableServiceProvider;
-use Soda\Cms\Components\Soda;
+use Soda\Cms\Components\Soda as SodaInstance;
 use Soda\Cms\Console\Assets;
 use Soda\Cms\Console\Theme;
 use Soda\Cms\Console\Update;
 use Soda\Cms\Facades\SodaFacade;
+use Soda\Cms\Models\Permission;
+use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
 use Storage;
 use Zofe\Rapyd\RapydServiceProvider;
@@ -62,18 +65,20 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
             'Entrust' => EntrustFacade::class,
         ]);
 
-        $this->app->singleton('soda', Soda::class);
+        $this->app->singleton('soda', SodaInstance::class);
 
         $this->commands([
             Theme::class,
             Update::class,
             Assets::class,
         ]);
+
+        Soda::getFormBuilder()->registerMany(config('soda.fields'));
     }
 
     protected function configure() {
-        $this->app->config->set('entrust.role', 'Soda\Cms\Models\Role');
-        $this->app->config->set('entrust.permission', 'Soda\Cms\Models\Permission');
+        $this->app->config->set('entrust.role', Role::class);
+        $this->app->config->set('entrust.permission', Permission::class);
 
         $this->app->config->set('auth.providers.soda', [
             'driver' => 'eloquent',

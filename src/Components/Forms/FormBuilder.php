@@ -5,21 +5,15 @@ use Exception;
 use Request;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Field;
+use Soda\Cms\Models\ModelBuilder;
 
 class FormBuilder {
     protected $field_types = [];
-    protected $registeredFields = [];
-
-    public function __construct() {
-        $fields = config('soda.fields');
-        if($fields) {
-            $this->registerMany($fields);
-        }
-    }
+    protected $registered_fields = [];
 
     public function register($name, $field_class = null){
         if(new $field_class instanceof FormFieldInterface) {
-            $this->registeredFields[$name] = $field_class;
+            $this->registered_fields[$name] = $field_class;
         }
     }
 
@@ -30,7 +24,7 @@ class FormBuilder {
     }
 
     public function getRegisteredFields() {
-        return $this->registeredFields;
+        return $this->registered_fields;
     }
 
     public function getFieldTypes() {
@@ -65,7 +59,7 @@ class FormBuilder {
         $field_value = $model->{$element};
         if (Request::get('soda_edit')) {
             $unique = uniqid();
-            if (get_class($model) == 'Soda\Cms\Models\ModelBuilder') {
+            if ($model instanceof ModelBuilder) {
                 //we need to get the db name and attach to the field..
                 $type = BlockType::where('identifier', $type)->first();
                 $link = route('soda.dyn.inline.edit', [
