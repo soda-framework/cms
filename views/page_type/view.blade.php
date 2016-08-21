@@ -1,19 +1,12 @@
 @extends(config('soda.hint_path').'::layouts.inner')
 
 @section('header')
-
 	<title>Page Types</title>
-	{{--note: non of these have anything in them anymore--}}
-			<!-- JavaScripts -->
-	<script src="/sodacms/sodacms/js/content.js"></script>
-	<!-- Styles -->
-	<link href="/sodacms/sodacms/css/content.css" rel="stylesheet">
-
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-edit', 'title'=>$model->name?'Page Type: '.$model->name:'New Page Type'])
-	<form method="POST" action='{{route('soda.'.$hint.'.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
+	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-edit', 'title'=> $model->name ? 'Page Type: ' . $model->name : 'New Page Type'])
+	<form method="POST" action='{{route('soda.'.$hint.'.edit',['id' => $model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
 		{!! Soda::field([
@@ -29,15 +22,16 @@
         ])->setModel($model) !!}
 
 		{!! Soda::field([
-            "name"        => "Field Action",
+            "name"        => "Page Type Action",
             'field_type'  => 'text',
             "field_name"  => 'action',
         ])->setModel($model) !!}
 
 		{!! Soda::field([
-            "name"        => "Field Action Type",
-            'field_type'  => 'text',
+            "name"        => "Page Type Action Type",
+            'field_type'  => 'dropdown',
             "field_name"  => 'action_type',
+            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes(), 'default' => 'view'],
         ])->setModel($model) !!}
 
 		{!! Soda::field([

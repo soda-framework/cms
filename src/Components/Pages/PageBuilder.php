@@ -7,6 +7,15 @@ use Soda;
 use Soda\Cms\Models\Page;
 
 class PageBuilder {
+    protected $action_types = [
+        'view'       => 'View',
+        'controller' => 'Controller'
+    ];
+
+    public function getActionTypes() {
+        return $this->action_types;
+    }
+
     public function loadPageBySlug($slug) {
         $page = Page::with('type')->where('slug', '/' . ltrim($slug, '/'))->first();
 

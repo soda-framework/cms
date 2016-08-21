@@ -5,6 +5,7 @@ namespace Soda\Cms\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use Soda\Cms\Middleware\Authenticate;
+use Soda\Cms\Middleware\Cms;
 use Zizaco\Entrust\Middleware\EntrustAbility;
 use Zizaco\Entrust\Middleware\EntrustPermission;
 use Zizaco\Entrust\Middleware\EntrustRole;
@@ -27,6 +28,7 @@ class RouteServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Router $router) {
+        $router->middleware('soda.main', Cms::class);
         $router->middleware('soda.auth', Authenticate::class);
         $router->middleware('role', EntrustRole::class);
         $router->middleware('permission', EntrustPermission::class);

@@ -9,10 +9,9 @@ class BlockController extends Controller {
 
     use CrudableTrait;
 
-    public $hint = 'block';
+    protected $hint = 'block';
 
     public function __construct(Block $block) {
-        //$this->middleware('auth');
         $this->model = $block;
     }
 

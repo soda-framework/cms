@@ -1,14 +1,7 @@
 @extends(config('soda.hint_path').'::layouts.inner')
 
 @section('header')
-
 	<title>Block Types</title>
-	{{--note: non of these have anything in them anymore--}}
-			<!-- JavaScripts -->
-	<script src="/sodacms/sodacms/js/content.js"></script>
-	<!-- Styles -->
-	<link href="/sodacms/sodacms/css/content.css" rel="stylesheet">
-
 @endsection
 
 @section('content')
@@ -36,8 +29,9 @@
 
 		{!! Soda::field([
             'name'        => 'Block Type Action Type',
-            'field_type'  => 'text',
+            'field_type'  => 'dropdown',
             'field_name'  => 'action_type',
+            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes(), 'default' => 'view'],
         ])->setModel($model) !!}
 
 		{!! Soda::field([

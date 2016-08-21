@@ -2,7 +2,7 @@
 	<label for="field_{{ $field_name }}">{{ $field_label }}</label>
 
 	<select name="{{ $prefixed_field_name }}" class="form-control" id="field_{{ $field_name}}">
-		@foreach($field_params['options'] as $key => $option)
+		@foreach($field_parameters['options'] as $key => $option)
 			<option value="{{ $key }}" {{ $field_value == $key ? "selected" : "" }}>{{ $option }}</option>
 		@endforeach
 	</select>

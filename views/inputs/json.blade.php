@@ -16,8 +16,9 @@ $json = json_encode($field_value);
 	var container = $("#json_{{ $field_name }}");
 	var json_field = $("#field_{{ $field_name }}");
 	var json = json_field.val();
-	var options = {};
-	var editor = new JSONEditor(container[0], options);
+	var editor = new JSONEditor(container[0], {
+		{!! Soda::getFormBuilder()->buildJsParams($field_parameters) !!}
+	});
 	editor.setText(json);
 
 	json_field.closest('form').on('submit', function(e) {

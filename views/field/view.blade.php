@@ -26,7 +26,7 @@
             'name'         => 'Field Type',
             'field_type'   => 'dropdown',
             'field_name'   => 'field_type',
-            'field_params' => ['options' => array_merge([''=>'Select Field Type'], Soda::getFormBuilder()->getFieldTypes())]
+            'field_params' => ['options' => Soda::getFormBuilder()->getFieldTypes()]
         ])->setModel($model) !!}
 
 		{!! Soda::field([
@@ -47,7 +47,6 @@
             'field_name'  => 'description',
         ])->setModel($model) !!}
 
-		{{-- TODO: https://github.com/josdejong/jsoneditor --}}
 		{!! Soda::field([
             'name'        => 'Field Parameters',
             'field_type'  => 'json',

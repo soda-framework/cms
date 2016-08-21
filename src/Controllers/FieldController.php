@@ -6,20 +6,10 @@ use Soda\Cms\Models\Field;
 use Soda\Cms\Controllers\Traits\CrudableTrait;
 
 class FieldController extends Controller {
-
     use CrudableTrait;
-    public $hint = 'field';
+    protected $hint = 'field';
 
     public function __construct(Field $field) {
-        //$this->middleware('auth');
         $this->model = $field;
-    }
-
-
-    public function addField() {
-        //create a new field
-        $field = new Field();
-        //..etc..
-        //$field->save();
     }
 }

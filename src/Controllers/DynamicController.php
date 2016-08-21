@@ -4,73 +4,43 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Redirect;
+use Route;
+use Soda;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\ModelBuilder;
 
 class DynamicController extends Controller {
-    public $model = null;
-
     public function __construct(ModelBuilder $modelBuilder) {
-        $this->type = BlockType::with('fields')->where('identifier', \Route::current()->getParameter('type'))->first();
-        $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier, $this->type->fields->lists('field_name')->toArray());
+        $type = Route::current()->getParameter('type');
+        $this->type = BlockType::with('fields')->where('identifier', $type)->first();
+        $this->model = Soda::dynamicModel('soda_' . $this->type->identifier, $this->type->fields->lists('field_name')->toArray());
     }
 
     public function index() {
-        $this->model = $this->model->all();
+        $models = $this->model->all();
 
-        return view($this->index_view, ['models' => $this->model]);
+        return view($this->index_view, compact('models'));
     }
 
     public function view($type = null, $id = null) {
-        //dd($this->model);
-        if ($id) {
-            $model = $this->model->findOrFail($id);
-        } else {
-            $model = $this->model;
-        }
+        $model = $id ? $this->model->findOrFail($id) : $this->model;
 
         return view('soda::standard.view', ['type' => $this->type, 'model' => $model]);
     }
 
     public function edit(Request $request, $type = null, $id = null) {
+        $model = $id ? $this->model->findOrFail($id) : $this->model;
 
-        if ($id) {
-            $this->model = $this->model->findOrFail($id);
-        }
-
-        //we pull out the fields being saved..
-        //dd($this->type->fields);
-
-        //TODO: this shiz should be in model??
         foreach ($this->type->fields as $field) {
-            //we have some default mutators for sensible stuff:
-
-            if ($field->field_type == 'datetime') {
-                //TODO: parse format through from field params?
-                //TODO: timezone parse through from field params
-                if ($request->input($field->field_name)) {
-                    $this->model->{$field->field_name} = Carbon::createFromFormat('m/d/Y g:i A',
-                        $request->input($field->field_name));
-                } else {
-                    //else if it's not set (or blank) do we want to run some special stuff here?
-                    //could and should this be moved to outside the above if statement (could cause problems with blank fields ..like checkboxes etc)
-                }
-            } else {
-                //default, just chuck in the values.
-                $this->model->{$field->field_name} = $request->input($field->field_name);
-            }
+            $model->parseField($field, $request);
         }
 
-        //dd($request->except(['_token']));
-        //TODO: investigate this forceFill more - why can I not set this during runtime?
+        $model->save();
 
-        //TODO: we should be serialsing any arrays that appear in here or at least figuring out how to save them properly
-        //$this->model->forceFill($request->except(['_token', 'file']));
-
-        $this->model->save();
-
-        return redirect()->route('soda.dyn.view',
-            ['type' => $this->type->identifier, 'id' => $this->model->id])->with('success', 'updated!');
+        return redirect()->route('soda.dyn.view', [
+            'type' => $this->type->identifier,
+            'id' => $model->id
+        ])->with('success', 'updated!');
     }
 
     /**

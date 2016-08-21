@@ -130,7 +130,7 @@ class Theme extends Command {
     }
 
     protected function anticipateThemeClass($string) {
-        $class = ucfirst(camel_case($string));
+        $class = studly_case($string);
 
         return preg_replace('/Theme$/', '', $class) . 'Theme';
     }

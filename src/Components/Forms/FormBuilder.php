@@ -1,31 +1,64 @@
 <?php
 namespace Soda\Cms\Components\Forms;
 
+use Exception;
 use Request;
 use Soda\Cms\Models\BlockType;
+use Soda\Cms\Models\Field;
 
 class FormBuilder {
-    protected $field_types = [
-        'checkbox'     => 'checkbox',
-        'datetime'     => 'datetime',
-        'dropdown'     => 'dropdown',
-        'fancy_upload' => 'fancy_upload',
-        'media_upload' => 'media_upload',
-        'lat_lon'      => 'lat_lon',
-        'password'     => 'password',
-        'static'       => 'static',
-        'text'         => 'text',
-        'textarea'     => 'textarea',
-        'tinymce'      => 'tinymce',
-        'upload'       => 'upload',
-    ];
+    protected $field_types = [];
+    protected $registeredFields = [];
 
-    public function newField($field) {
-        return new FormField($field);
+    public function __construct() {
+        $fields = config('soda.fields');
+        if($fields) {
+            $this->registerMany($fields);
+        }
+    }
+
+    public function register($name, $field_class = null){
+        if(new $field_class instanceof FormFieldInterface) {
+            $this->registeredFields[$name] = $field_class;
+        }
+    }
+
+    public function registerMany($formFields) {
+        foreach($formFields as $field_name => $field_class) {
+            $this->register($field_name, $field_class);
+        }
+    }
+
+    public function getRegisteredFields() {
+        return $this->registeredFields;
     }
 
     public function getFieldTypes() {
-        return $this->field_types;
+        return array_map(function($value) {
+            $class_name = class_basename($value);
+            return ucfirst(strtolower(preg_replace('/\B([A-Z])/', ' $1', $class_name)));
+        }, $this->getRegisteredFields());
+    }
+
+    public function newField($field) {
+        if (is_array($field)) {
+            $field = new Field($field);
+        }
+
+        if (!$field instanceOf Field) {
+            Throw new Exception("Field must be instance of " . Field::class . " or array.");
+        }
+
+        $field_types = $this->getRegisteredFields();
+
+        if (!isset($field_types[$field->field_type])) {
+            Throw new Exception("Field " . $field->field_type ." is not registered.");
+        }
+
+        $class = $field_types[$field->field_type];
+        $field_class = new $class();
+
+        return $field_class->setField($field);
     }
 
     public function editable($model, $element, $type) {
@@ -55,10 +88,11 @@ class FormBuilder {
         }
     }
 
-    public function buildJsParams($params, $default = []) {
-        $params = is_array($params) ? array_replace_recursive($default, $params) : $default;
-        $json_params = json_encode($params, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    public function buildJsParams($parameters) {
+        if(!$parameters) return '';
 
-        return trim($json_params, '{}');
+        $json_parameters = json_encode($parameters, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+        return trim($json_parameters, '{}');
     }
 }

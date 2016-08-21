@@ -9,7 +9,6 @@ class PageTypeController extends Controller {
     public $hint = 'page_type';
 
     public function __construct(PageType $type) {
-        //$this->middleware('auth');
         $this->model = $type;
     }
 }

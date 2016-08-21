@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Soda;
 
 Trait CrudableTrait {
-
-    public $model;
+    protected $model;
+    protected $saveOnCreate = false;
 
 
     public function index() {
 
         $filter = DataFilter::source($this->model);
-        $filter->add('name', 'name', 'text');;
+        $filter->add('name', 'name', 'text');
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
@@ -42,6 +42,7 @@ Trait CrudableTrait {
         } else {
             $model = $this->model->find($id);
         }
+
         $hint = $this->hint;
 
         return view('soda::' . $this->hint . '.view', compact('model', 'hint'));

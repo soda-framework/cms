@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-    Route::group(['prefix' => config('soda.cms_path')], function () {
+    Route::group(['prefix' => config('soda.cms_path'), 'middleware' => 'soda.main'], function () {
         Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
             // Authentication routes
             Route::get('login', 'AuthController@getLogin')->name('login');
