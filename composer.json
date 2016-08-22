@@ -27,6 +27,7 @@
   ],
   "require": {
     "php": ">=5.5.9",
+    "doctrine/dbal": "~2.3",
     "franzose/closure-table": "^4.1",
     "league/flysystem-aws-s3-v3": "^1.0",
     "zofe/rapyd": "2.2.*",
