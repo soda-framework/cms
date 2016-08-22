@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Console;
 
+use Dotenv\Dotenv;
 use Illuminate\Console\Command;
 
 class Setup extends Command {
@@ -49,6 +50,9 @@ class Setup extends Command {
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);
             file_put_contents($environment_file_path, $contents);
         }
+
+
+        (new Dotenv($this->app->environmentPath(), $this->app->environmentFile()))->load();
     }
 
     protected function migrate() {
