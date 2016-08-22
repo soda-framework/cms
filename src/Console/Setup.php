@@ -30,8 +30,9 @@ class Setup extends Command {
         if (file_exists($environment_file_path)) {
             $contents = file_get_contents($environment_file_path);
             if (!$this->option('no-database')) {
+                $base_name = str_slug(basename(base_path()));
                 $db_host = $this->anticipate('Database host: ', ['localhost']);
-                $db_name = $this->anticipate('Database table name: ', ['soda_app']);
+                $db_name = $this->anticipate('Database table name: ', [$base_name]);
                 $db_user = $this->anticipate('Database user: ', ['root']);
                 $db_pass = $this->anticipate('Database password: ', ['root']);
 
