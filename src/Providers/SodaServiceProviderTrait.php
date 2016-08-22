@@ -3,12 +3,11 @@
 namespace Soda\Cms\Providers;
 
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
 
-abstract class AbstractSodaServiceProvider extends ServiceProvider {
+trait SodaServiceProviderTrait {
 
     /**
-     * Register dependies conditionally (e.g. dev dependencies)
+     * Register dependencies
      *
      * @param array $services
      */
@@ -18,8 +17,9 @@ abstract class AbstractSodaServiceProvider extends ServiceProvider {
         }
     }
 
-
     /**
+     * Register facades
+     *
      * @param array $facades
      */
     protected function registerFacades(array $facades) {

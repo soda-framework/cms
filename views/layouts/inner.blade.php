@@ -1,15 +1,5 @@
 @extends(config('soda.hint_path').'::layouts.app')
 
-@section('main-title')
-	@parent
-	@yield('main-title')
-@endsection
-
-@section('main-header')
-	@parent
-	@yield('main-header')
-@endsection
-
 @section('main-content')
 	<div class="row">
 		@include(config('soda.hint_path'). "::partials.sidebar")

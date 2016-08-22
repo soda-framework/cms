@@ -27,10 +27,6 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
     }
 
     public function register() {
-        $this->registerDependencies([
-            'Themes\SodaExample\Providers\EventsServiceProvider',
-        ]);
-
         $this->publishes([__DIR__ . '/../../public' => public_path('soda-example')], 'public');
         $this->publishes([__DIR__ . '/../../config' => config_path()]);
     }
@@ -46,26 +42,5 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
         $router->group(['namespace' => $this->namespace, 'middleware' => 'web'], function ($router) {
             require_once __DIR__ . '/../routes.php';
         });
-    }
-
-    /**
-     * Register dependies conditionally (e.g. dev dependencies)
-     *
-     * @param array $services
-     */
-    public function registerDependencies(array $services) {
-        foreach ($services as $service) {
-            $this->app->register($service);
-        }
-    }
-
-    /**
-     * @param array $facades
-     */
-    public function registerFacades(array $facades) {
-        foreach ($facades as $facade => $class) {
-            AliasLoader::getInstance()->alias($facade, $class);
-
-        }
     }
 }

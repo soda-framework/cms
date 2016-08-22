@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Cms\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use Soda;
 use Blade;
 use Franzose\ClosureTable\ClosureTableServiceProvider;
@@ -20,7 +21,8 @@ use Zofe\Rapyd\RapydServiceProvider;
 use Zizaco\Entrust\EntrustServiceProvider;
 use Zizaco\Entrust\EntrustFacade;
 
-class SodaServiceProvider extends AbstractSodaServiceProvider {
+class SodaServiceProvider extends ServiceProvider {
+    use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
      *
