@@ -34,10 +34,10 @@ class Setup extends Command {
                 if($base_name == 'src') {
                     $base_name = str_slug(basename(base_path('../')));
                 }
-                $db_host = $this->anticipate('Database host: ', ['localhost']);
-                $db_name = $this->anticipate('Database table name: ', [$base_name]);
-                $db_user = $this->anticipate('Database user: ', ['root']);
-                $db_pass = $this->anticipate('Database password: ', ['root']);
+                $db_host = $this->anticipate('Database host', ['localhost'], 'localhost');
+                $db_name = $this->anticipate('Database table name', [$base_name], $base_name);
+                $db_user = $this->anticipate('Database user', ['root'], 'root');
+                $db_pass = $this->anticipate('Database password', ['root'], false);
 
                 $contents = str_replace('DB_HOST=127.0.0.1', 'DB_HOST='.$db_host, $contents);
                 $contents = str_replace('DB_DATABASE=homestead', 'DB_DATABASE='.$db_name, $contents);
