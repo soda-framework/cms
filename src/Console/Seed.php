@@ -6,13 +6,13 @@ use Illuminate\Console\Command;
 
 class Seed extends Command {
 
-    protected $signature = 'soda:seed {--class=SodaSeeder}';
+    protected $signature = 'soda:seed {--class=SodaSeeder : The class name of the root seeder}';
     protected $description = 'Seed the Soda Database';
     protected $except = [];
 
     public function handle() {
         $this->call('db:seed', [
-            '--class' => $this->argument('class')
+            '--class' => $this->argument('option')
         ]);
     }
 }
