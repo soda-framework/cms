@@ -88,7 +88,7 @@ class Theme extends Command {
         $this->xcopy($theme_base, $folder);
 
         // We need to go through and find and replace everything in here with a different package name:
-        rename($folder . '/src/Providers/SodaThemeServiceProvider.php', $folder . '/src/Providers/' . $namespace . 'ServiceProvider.php');
+        rename($folder . '/src/Providers/SodaThemeServiceProvider.php', $folder . '/src/Providers/' . $namespace . 'ThemeServiceProvider.php');
         if ($extra) {
             rename($folder . '/src/Components/SodaHelperClass.php', $folder . '/src/Components/' . $helper_class . '.php');
             rename($folder . '/src/Facades/SodaHelperClassFacade.php', $folder . '/src/Facades/' . $helper_class . 'Facade.php');
@@ -115,7 +115,7 @@ class Theme extends Command {
         $this->call('optimize');
         $this->info('Composer config updated.');
 
-        $this->addServiceProvider("Themes\\$namespace\\Providers\\$namespace\\ServiceProvider::class");
+        $this->addServiceProvider("Themes\\$namespace\\Providers\\${namespace}ThemeServiceProvider::class");
         $this->info('Service provider added.');
 
         $this->call('vendor:publish');
@@ -125,9 +125,7 @@ class Theme extends Command {
     }
 
     protected function anticipateThemeClass($string) {
-        $class = studly_case($string);
-
-        return preg_replace('/Theme$/', '', $class) . 'Theme';
+        return studly_case($string);
     }
 
     protected function anticipatePackageName($string) {
