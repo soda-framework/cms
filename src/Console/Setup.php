@@ -56,6 +56,7 @@ class Setup extends Command {
 
     protected function migrate() {
         $this->call('session:table');
+        shell_exec('php artisan optimize');
         shell_exec('php artisan migrate');
     }
 
