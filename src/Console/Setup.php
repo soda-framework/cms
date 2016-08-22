@@ -33,7 +33,7 @@ class Setup extends Command {
             if (!$this->option('no-database')) {
                 $base_name = str_slug(basename(base_path()));
                 if($base_name == 'src') {
-                    $base_name = str_slug(basename(base_path('../')));
+                    $base_name = str_slug(basename(dirname(base_path())), '-');
                 }
                 $db_host = $this->ask('Database host', 'localhost');
                 $db_name = $this->ask('Database table name', $base_name);
