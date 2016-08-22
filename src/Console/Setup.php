@@ -52,7 +52,7 @@ class Setup extends Command {
         }
 
 
-        (new Dotenv($this->app->environmentPath(), $this->app->environmentFile()))->overload();
+        (new Dotenv($this->laravel->environmentPath(), $this->laravel->environmentFile()))->overload();
     }
 
     protected function migrate() {
