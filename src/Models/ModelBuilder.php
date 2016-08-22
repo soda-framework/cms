@@ -32,6 +32,10 @@ class ModelBuilder extends Model {
         parent::__construct();
     }
 
+    public function media() {
+        return $this->hasMany(Media::class, 'related_id')->where('related_table', $this->getTable());
+    }
+
     public static function fromTable($table, $params = []) {
         if (class_exists($table)) {
             return new $table($params);
@@ -73,11 +77,12 @@ class ModelBuilder extends Model {
         return $this;
     }
 
+    public function getMedia($field) {
+        if(!$this->media) {
+            $this->load('media');
+        }
 
-    //Not sure if this is the right place to do this
-    public function getMedia($field, $variant = 'original', $callback = null) {
-        return Media::where('related_table', $this->getTable())->where('related_id', $this->id)
-            ->where('related_field', $field)->get();
+        return $this->media->where('related_field', $field);
     }
 
 
