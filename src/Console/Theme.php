@@ -26,8 +26,6 @@ class Theme extends Command {
         }
 
         $this->installTheme($is_extra);
-
-        $this->informCompletion();
     }
 
     protected function configureSimple() {
@@ -113,20 +111,17 @@ class Theme extends Command {
                 ],
             ],
         ]);
-        $this->info('Composer config updated.');
 
         $this->call('optimize');
-    }
+        $this->info('Composer config updated.');
 
-    protected function informCompletion() {
-        $namespace = $this->attributes->get('namespace');
+        $this->addServiceProvider("Themes\\$namespace\\Providers\\$namespace\\ServiceProvider::class");
+        $this->info('Service provider added.');
 
-        $this->info("Initial theme setup complete.");
-        $this->info("Please follow the steps below to complete theme setup:");
-        $this->comment("1. Add Themes/{$namespace}/Providers/{$namespace}ServiceProvider::class to your providers array");
-        $this->comment("2. Run php artisan vendor:publish");
+        $this->call('vendor:publish');
+        $this->info('Theme assets published.');
 
-        return $this;
+        $this->info('Done!');
     }
 
     protected function anticipateThemeClass($string) {
@@ -149,6 +144,21 @@ class Theme extends Command {
         file_put_contents($file_path, json_encode(array_replace_recursive($composer_json, $config), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         return $this;
+    }
+
+    protected function addServiceProvider($serviceProvider) {
+        $application_config = config_path('app.php');
+
+        if (file_exists($application_config)) {
+            $contents = file_get_contents($application_config);
+
+            $old_provider = "Soda\\Cms\\Providers\\SodaServiceProvider::class,";
+            $provider_replacement = "$old_provider\n        $serviceProvider,";
+
+            $contents = str_replace($old_provider, $provider_replacement, $contents);
+
+            file_put_contents($application_config, $contents);
+        }
     }
 
     protected function findAndReplace($needle, $replace, $haystack = "./") {
