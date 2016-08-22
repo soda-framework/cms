@@ -4,7 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.1.3] - 2016-98-22
+## [0.1.4] - 2016-08-22
+### Added
+- Added Soda commands to handle seeding and migrations
+
+## [0.1.3] - 2016-08-22
 ### Added
 - Permission denied page, utilising Entrust package
 - Additional form fields now registerable via Soda FormBuilder.

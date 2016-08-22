@@ -12,16 +12,24 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('username')->default('');
-			$table->string('email')->unique();
-			$table->string('password', 60);
-			$table->string('remember_token', 100)->nullable();
-			$table->integer('application_id')->unsigned()->nullable();
-			$table->timestamps();
-		});
+        if (Schema::hasTable('users')) {
+            Schema::create('table', function(Blueprint $table) {
+                if (Schema::hasColumn('users', 'name')) {
+                    $table->renameColumn('name', 'username');
+                }
+                $table->integer('application_id')->unsigned()->nullable()->after('remember_token');
+            });
+        } else {
+            Schema::create('users', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('username')->default('');
+                $table->string('email')->unique();
+                $table->string('password', 60);
+                $table->rememberToken();
+                $table->integer('application_id')->unsigned()->nullable();
+                $table->timestamps();
+            });
+        }
 	}
 
 
@@ -32,7 +40,12 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+        Schema::create('table', function(Blueprint $table) {
+            if (Schema::hasColumn('users', 'username')) {
+                $table->renameColumn('username', 'name');
+            }
+            $table->dropColumn('application_id');
+        });
 	}
 
 }

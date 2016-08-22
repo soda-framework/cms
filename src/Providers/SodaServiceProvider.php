@@ -6,6 +6,8 @@ use Blade;
 use Franzose\ClosureTable\ClosureTableServiceProvider;
 use Soda\Cms\Components\Soda as SodaInstance;
 use Soda\Cms\Console\Assets;
+use Soda\Cms\Console\Migrate;
+use Soda\Cms\Console\Seed;
 use Soda\Cms\Console\Setup;
 use Soda\Cms\Console\Theme;
 use Soda\Cms\Console\Update;
@@ -73,6 +75,8 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
             Update::class,
             Assets::class,
             Setup::class,
+            Migrate::class,
+            Seed::class,
         ]);
 
         Soda::getFormBuilder()->registerMany(config('soda.fields'));

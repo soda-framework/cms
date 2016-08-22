@@ -56,12 +56,11 @@ class Setup extends Command {
 
     protected function migrate() {
         $this->call('session:table');
-        // Shell exec so our config is reloaded.
-        shell_exec('php artisan migrate --path=/vendor/soda-framework/cms/database/migrations');
+        shell_exec('php artisan migrate');
     }
 
     protected function seed() {
         // Shell exec so our config is reloaded.
-        shell_exec('php artisan db:seed --class=SodaSeeder');
+        shell_exec('php artisan soda:seed');
     }
 }
