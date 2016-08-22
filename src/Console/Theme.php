@@ -31,7 +31,7 @@ class Theme extends Command {
     }
 
     protected function configureSimple() {
-        $theme_name = ucfirst($this->anticipate('Please enter your theme name (using CamelCase)', ['SodaSite']));
+        $theme_name = ucfirst($this->ask('Please enter your theme name (using CamelCase)', 'SodaSite'));
 
         $folder = snake_case($theme_name);
         $this->attributes->put('folder', $folder);
@@ -53,24 +53,24 @@ class Theme extends Command {
     }
 
     protected function configureAdvanced() {
-        $folder = $this->anticipate('Enter a theme folder name', ['soda_theme']);
+        $folder = $this->ask('Enter a theme folder name', 'soda_theme');
         $this->attributes->put('folder', $folder);
         $class_guess = $this->anticipateThemeClass($folder);
         $package_guess = $this->anticipatePackageName($folder);
 
-        $namespace = $this->anticipate('Enter a namespace', [$class_guess]);
+        $namespace = $this->ask('Enter a namespace', $class_guess);
         $this->attributes->put('namespace', $namespace);
 
-        $helper_class = $this->anticipate('Enter a helper class name', [$namespace . 'Helper']);
+        $helper_class = $this->ask('Enter a helper class name', $namespace . 'Helper');
         $this->attributes->put('helper_class', $helper_class);
 
-        $helper_class_facade_name = $this->anticipate('Enter a helper class facade name', [snake_case($helper_class)]);
+        $helper_class_facade_name = $this->ask('Enter a helper class facade name', snake_case($helper_class));
         $this->attributes->put('helper_class_facade_name', $helper_class_facade_name);
 
-        $package_name = $this->anticipate('Enter a package name (gulp and npm)', [$package_guess]);
+        $package_name = $this->ask('Enter a package name (gulp and npm)', $package_guess);
         $this->attributes->put('package_name', $package_name);
 
-        $view_hint = $this->anticipate('Enter a HintPath (views and routes)', [strtolower($folder)]);
+        $view_hint = $this->ask('Enter a HintPath (views and routes)', strtolower($folder));
         $this->attributes->put('view_hint', $view_hint);
     }
 
