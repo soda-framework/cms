@@ -17,11 +17,11 @@ class Theme extends Command {
 
     public function handle() {
         $this->attributes = new Collection;
-        $is_extra = $this->option('extra') ? true : false;
+        $advanced = $this->option('advanced') ? true : false;
 
         $this->configureTheme();
 
-        $this->installTheme($is_extra);
+        $this->installTheme($advanced);
     }
 
     protected function configureTheme() {
@@ -34,8 +34,8 @@ class Theme extends Command {
         $this->attributes->put('namespace', $namespace);
     }
 
-    protected function installTheme($extra = false) {
-        $theme_base = __DIR__ . '/../../themes/' . ($extra ? 'advanced' : 'simple');
+    protected function installTheme($advanced = false) {
+        $theme_base = __DIR__ . '/../../themes/' . ($advanced ? 'advanced' : 'simple');
 
         $base_folder = $this->attributes->get('folder');
         $folder = './themes/' . $base_folder;
@@ -47,7 +47,7 @@ class Theme extends Command {
 
         // We need to go through and find and replace everything in here with a different package name:
         rename($folder . '/src/Providers/SodaExampleThemeServiceProvider.php', $folder . '/src/Providers/' . $namespace . 'ThemeServiceProvider.php');
-        if ($extra) {
+        if ($advanced) {
             rename($folder . '/src/Components/SodaExampleInstance.php', $folder . '/src/Components/' . $namespace . 'Instance.php');
             rename($folder . '/src/Facades/SodaExampleFacade.php', $folder . '/src/Facades/' . $namespace . 'Facade.php');
         }
