@@ -12,7 +12,7 @@ class Seed extends Command {
 
     public function handle() {
         $this->call('db:seed', [
-            '--class' => $this->argument('option')
+            '--class' => $this->option('class')
         ]);
     }
 }
