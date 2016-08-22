@@ -13,7 +13,7 @@ class AlterUsersTable extends Migration {
 	public function up()
 	{
         if (Schema::hasTable('users')) {
-            Schema::create('table', function(Blueprint $table) {
+            Schema::table('users', function(Blueprint $table) {
                 if (Schema::hasColumn('users', 'name')) {
                     $table->renameColumn('name', 'username');
                 }
@@ -40,7 +40,7 @@ class AlterUsersTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::create('table', function(Blueprint $table) {
+        Schema::table('users', function(Blueprint $table) {
             $table->renameColumn('username', 'name');
             $table->dropColumn('application_id');
         });
