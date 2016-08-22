@@ -58,21 +58,9 @@ class ModelBuilder extends Model {
     }
 
     public function parseField(Field $field, Request $request) {
-        $field_name = $field->field_name;
+        $field = Soda::getFormBuilder()->newField($field);
 
-        if ($field->field_type == 'datetime') {
-            //TODO: Parse format through from field params?
-            //TODO: Timezone parse through from field params
-            if ($request->input($field_name)) {
-                $this->{$field_name} = Carbon::createFromFormat('m/d/Y g:i A', $request->input($field_name));
-            } else {
-                //else if it's not set (or blank) do we want to run some special stuff here?
-                //could and should this be moved to outside the above if statement (could cause problems with blank fields ..like checkboxes etc)
-            }
-        } else {
-            //default, just chuck in the values.
-            $this->{$field_name} = $request->input($field->field_name);
-        }
+        $this->{$field_name} = $field->saveValue($request);
 
         return $this;
     }

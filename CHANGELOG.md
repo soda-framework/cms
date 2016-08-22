@@ -3,19 +3,22 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.1.3] - 2016-98-22
 ### Added
 - Permission denied page, utilising Entrust package
 - Additional form fields now registerable via Soda FormBuilder.
+- Soda setup command, for use with future Soda installer
 
 ### Changed
 - Optimized roles/permission database retrieval
 - Extracted all CMS form fields to separate classes
 
-## [0.1.2] 2016-08-20
+## [0.1.2] - 2016-08-20
 ### Fixed
 - Use Zizaco Entrust 1.7.*, rather than dev package requirement
 
-## [0.1.1] 2016-08-20
+## [0.1.1] - 2016-08-20
 ### Added
 - Zizaco roles/permissions management package
 - New traits for restricting models to applications, draft mode, etc
@@ -27,7 +30,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Removed `creativeorange/gravatar` package - will approach this manually
 
-## [0.1.0] 2016-08-19
+## [0.1.0] - 2016-08-19
 ### Added
 - Added JSON field editor
 
