@@ -31,6 +31,9 @@ class Setup extends Command {
             $contents = file_get_contents($environment_file_path);
             if (!$this->option('no-database')) {
                 $base_name = str_slug(basename(base_path()));
+                if($base_name = 'src') {
+                    $base_name = str_slug(basename(base_path('../')));
+                }
                 $db_host = $this->anticipate('Database host: ', ['localhost']);
                 $db_name = $this->anticipate('Database table name: ', [$base_name]);
                 $db_user = $this->anticipate('Database user: ', ['root']);
