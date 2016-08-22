@@ -4,14 +4,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.1.5] - 2016-08-22
-### Fixed
-- Reload classmap before migrating
-
-## [0.1.4] - 2016-08-22
-### Added
-- Added Soda commands to handle seeding and migrations
-
 ## [0.1.3] - 2016-08-22
 ### Added
 - Permission denied page, utilising Entrust package

@@ -41,9 +41,7 @@ class CreateUsersTable extends Migration {
 	public function down()
 	{
         Schema::create('table', function(Blueprint $table) {
-            if (Schema::hasColumn('users', 'username')) {
-                $table->renameColumn('username', 'name');
-            }
+            $table->renameColumn('username', 'name');
             $table->dropColumn('application_id');
         });
 	}
