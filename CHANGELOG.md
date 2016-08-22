@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Miscellaneous theme and setup command fixes
 
 ## [0.1.3] - 2016-08-22
 ### Added
