@@ -27,7 +27,7 @@ class Update extends Command {
 
     protected function updateCms() {
         $this->info('Updating Soda CMS via Composer...');
-        shell_exec('composer update sodacms/sodacms');
+        shell_exec('composer update soda-framework/cms');
         $this->info('Soda CMS update complete.');
 
         $this->call('soda:assets');
@@ -35,7 +35,7 @@ class Update extends Command {
 
     protected function updateModules() {
         $this->info('Updating Soda modules via Composer...');
-        shell_exec('composer update sodacms/*');
+        shell_exec('composer update soda-framework/*');
         $this->info('Soda module update complete.');
     }
 }

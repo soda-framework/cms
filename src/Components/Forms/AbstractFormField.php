@@ -100,6 +100,12 @@ abstract class AbstractFormField implements FormFieldInterface {
         return old($this->getPrefixedFieldName());
     }
 
+    public function saveValue(Request $request) {
+        $value = $request->input($this->getPrefixedFieldName());
+
+        return $value;
+    }
+
     public function getFieldParameters() {
         return $this->field->field_params;
     }
@@ -113,12 +119,6 @@ abstract class AbstractFormField implements FormFieldInterface {
         $default_params = $this->getDefaultParameters();
 
         return is_array($parameters) ? array_replace_recursive($default_params, $parameters) : $default_params;
-    }
-
-    public function saveValue(Request $request) {
-        $value = $request->input($this->getPrefixedFieldName());
-
-        return $value;
     }
 
     protected function getView() {
