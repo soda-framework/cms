@@ -52,7 +52,7 @@ class Setup extends Command {
         }
 
 
-        (new Dotenv($this->app->environmentPath(), $this->app->environmentFile()))->load();
+        (new Dotenv($this->app->environmentPath(), $this->app->environmentFile()))->overload();
     }
 
     protected function migrate() {
