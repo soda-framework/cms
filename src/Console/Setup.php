@@ -51,20 +51,17 @@ class Setup extends Command {
             file_put_contents($environment_file_path, $contents);
         }
 
-
         (new Dotenv($this->laravel->environmentPath(), $this->laravel->environmentFile()))->overload();
     }
 
     protected function migrate() {
         $this->call('session:table');
-        $this->call('migrate', [
-            '--path' => '/vendor/soda-framework/cms/database/migrations',
-        ]);
+        // Shell exec so our config is reloaded.
+        shell_exec('php artisan migrate --path=/vendor/soda-framework/cms/database/migrations');
     }
 
     protected function seed() {
-        $this->call('db:seed', [
-            '--class' => 'SodaSeeder',
-        ]);
+        // Shell exec so our config is reloaded.
+        shell_exec('php artisan db:seed --class=SodaSeeder');
     }
 }
