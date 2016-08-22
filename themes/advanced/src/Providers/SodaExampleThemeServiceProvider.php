@@ -1,13 +1,13 @@
 <?php
-namespace Themes\SodaTheme\Providers;
+namespace Themes\SodaExample\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Routing\Router;
-use Themes\SodaTheme\Components\SodaHelperClass;
+use Themes\SodaExample\Components\SodaExampleInstance;
 use View;
 
-class SodaThemeServiceProvider extends RouteServiceProvider {
+class SodaExampleThemeServiceProvider extends RouteServiceProvider {
 
     /**
      * The event listener mappings for the application.
@@ -17,29 +17,29 @@ class SodaThemeServiceProvider extends RouteServiceProvider {
 
     protected $defer = false;
 
-    protected $namespace = 'Themes\SodaTheme\Controllers';
+    protected $namespace = 'Themes\SodaExample\Controllers';
 
     public function boot(Router $router) {
         parent::boot($router);
 
-        $this->loadViewsFrom(__DIR__ . '/../../views', 'soda_theme_hint');
+        $this->loadViewsFrom(__DIR__ . '/../../views', 'soda-example');
     }
 
     public function register() {
-        $this->app->singleton('soda_helper_class', function ($app) {
-            return new SodaHelperClass($app);
+        $this->app->singleton('soda-example', function ($app) {
+            return new SodaExampleInstance($app);
         });
 
         $this->registerDependencies([
-            'Themes\SodaTheme\Providers\EventsServiceProvider',
-            'Themes\SodaTheme\Providers\AuthServiceProvider',
+            'Themes\SodaExample\Providers\EventsServiceProvider',
+            'Themes\SodaExample\Providers\AuthServiceProvider',
         ]);
 
         $this->registerFacades([
-            'SodaHelperClass' => 'Themes\SodaTheme\Facades\SodaHelperClassFacade',
+            'SodaExample' => 'Themes\SodaExample\Facades\SodaExampleFacade',
         ]);
 
-        $this->publishes([__DIR__ . '/../../public' => public_path('soda_theme_hint')], 'public');
+        $this->publishes([__DIR__ . '/../../public' => public_path('soda-example')], 'public');
         $this->publishes([__DIR__ . '/../../config' => config_path()]);
     }
 

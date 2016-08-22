@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaTheme\Guards;
+namespace Themes\SodaExample\Guards;
 
 use Illuminate\Auth\SessionGuard;
 

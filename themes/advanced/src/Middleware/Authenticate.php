@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaTheme\Middleware;
+namespace Themes\SodaExample\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaTheme\Requests;
+namespace Themes\SodaExample\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

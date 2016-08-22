@@ -7,8 +7,8 @@
 	<meta name="robots" content="index,follow" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" user-scalable="no">
 
-	<script src="/soda_theme/js/application.min.js"></script>
-	<link href="/soda_theme/css/app.min.css" rel="stylesheet" type="text/css">
+	<script src="/soda-example/js/application.min.js"></script>
+	<link href="/soda-example/css/app.min.css" rel="stylesheet" type="text/css">
 
 	@section ('head')
 		<title> Soda Theme </title>

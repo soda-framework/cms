@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaTheme\Models;
+namespace Themes\SodaExample\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -15,8 +15,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $table = 'users';
     protected $fillable = [
-        'firstname',
-        'lastname',
+        'username',
         'email',
+        'application_id',
     ];
 }

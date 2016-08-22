@@ -1,9 +1,9 @@
-<?php namespace Themes\SodaTheme\Providers;
+<?php namespace Themes\SodaExample\Providers;
 
 use Auth;
 use Illuminate\Support\ServiceProvider;
-use Themes\SodaTheme\Guards\UsernameGuard;
-use Themes\SodaTheme\UserProviders\UsernameUserProvider;
+use Themes\SodaExample\Guards\UsernameGuard;
+use Themes\SodaExample\UserProviders\UsernameUserProvider;
 
 class AuthServiceProvider extends ServiceProvider {
 

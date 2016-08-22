@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaTheme\Controllers\Auth;
+namespace Themes\SodaExample\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -23,7 +23,7 @@ class AuthController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function loginForm() {
-        return view('soda_theme_hint::login', compact('request'));
+        return view('soda-example::login', compact('request'));
     }
 
     /**
@@ -38,7 +38,7 @@ class AuthController extends Controller {
     public function login(Request $request) {
         $credentials = $request->except(['_token']);
         if (Auth::attempt($credentials)) {
-            return redirect()->route('soda_theme_hint.restricted', compact('request'));
+            return redirect()->route('soda-example.restricted', compact('request'));
         } else {
             //create the user.
             $user = new User();
@@ -47,7 +47,7 @@ class AuthController extends Controller {
 
             Auth::loginUsingId($user->id);
 
-            return redirect()->route('soda_theme_hint.restricted', compact('request'));
+            return redirect()->route('soda-example.restricted', compact('request'));
         }
     }
 

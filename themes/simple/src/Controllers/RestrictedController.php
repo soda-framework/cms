@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaTheme\Controllers;
+namespace Themes\SodaExample\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class HomeController extends Controller {
     }
 
     public function index(Request $request) {
-        return view('soda_theme_hint::logged_in', compact('request'));
+        return view('soda-example::logged_in', compact('request'));
     }
 
 }

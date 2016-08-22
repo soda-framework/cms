@@ -1,5 +1,5 @@
 <?php
-namespace Themes\SodaTheme\Providers;
+namespace Themes\SodaExample\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
@@ -8,10 +8,10 @@ class EventsServiceProvider extends ServiceProvider
 {
     public $listen = [
         'Soda\Cms\Events\NavigationWasRendered' => [
-            'Themes\SodaTheme\Listeners\MenuNavItems',
+            'Themes\SodaExample\Listeners\MenuNavItems',
         ],
         'Soda\Cms\Events\DashboardWasRendered' => [
-            'Themes\SodaTheme\Listeners\Dashboard',
+            'Themes\SodaExample\Listeners\Dashboard',
         ],
     ];
 

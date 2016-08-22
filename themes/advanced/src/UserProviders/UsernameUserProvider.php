@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaTheme\UserProviders;
+namespace Themes\SodaExample\UserProviders;
 
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Auth\UserProvider;
