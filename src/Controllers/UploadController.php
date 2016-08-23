@@ -11,7 +11,7 @@ class UploadController extends Controller {
     // pass a file object from request
     public function upload(Request $request) {
         $driver = config('soda.upload.driver');
-        $url_prefix = trim(config('soda.uploder.folder'), '/');
+        $url_prefix = trim(config('soda.upload.folder'), '/');
 
         if ($request->hasFile('file')) {
             $files = $request->file('file');
