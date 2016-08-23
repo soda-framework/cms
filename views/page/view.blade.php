@@ -79,8 +79,8 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
                     'description'  => 'The status of this page',
                     'field_type'   => 'dropdown',
                     'field_name'   => 'status',
-                    'field_value'  => $model->status,
-                    'field_params' => ['options' => Soda\Cms\Models\Status::lists('name','id')],
+                    'field_value'  => Soda\Cms\Components\Status::LIVE,
+                    'field_params' => ['options' => Soda\Cms\Components\Status::all()],
                 ])->setModel($model) !!}
             </div>
 

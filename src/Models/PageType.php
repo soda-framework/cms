@@ -15,6 +15,7 @@ class PageType extends Model {
     protected $table = 'page_types';
     public $fillable = [
         'name',
+        'identifier',
         'description',
         'application_id',
         'status',

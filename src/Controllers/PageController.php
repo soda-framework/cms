@@ -117,7 +117,7 @@ class PageController extends Controller {
             $parent = $this->model->getRoots()->first();
         }
 
-        $this->model->parent_id = $parent->id;
+        $this->model->parent_id = $parent ? $parent->id : null;
         $this->model->page_type_id = $request->input('page_type_id');
         $this->model->load('type.fields');
 
@@ -143,7 +143,7 @@ class PageController extends Controller {
 
         $page->fill([
             'name'           => $request->input('name'),
-            'slug'           => $parent->generateSlug($request->input('slug')),
+            'slug'           => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
             'status'         => $request->has('status') ? $request->input('status') : 1,
             'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
             'package'        => $request->has('package') ? $request->input('package') : 'soda',
@@ -152,9 +152,11 @@ class PageController extends Controller {
             'page_type_id'   => $request->input('page_type_id'),
         ]);
 
-        $parent->addChild($page);
-
         $page->save();
+
+        if($parent) {
+            $parent->addChild($page);
+        }
 
         $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
             $page->type->fields->lists('field_name')->toArray())->newInstance();

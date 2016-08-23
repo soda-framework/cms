@@ -10,9 +10,18 @@
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
 		{!! Soda::field([
-            "name"        => "Page Type Name",
+            "name"        => 'Page Type Name',
             'field_type'  => 'text',
             "field_name"  => 'name',
+        ])->setModel($model) !!}
+
+		{!! Soda::field([
+            'name'         => 'Status',
+            'description'  => 'The status of this page type',
+            'field_type'   => 'dropdown',
+            'field_name'   => 'status',
+            'field_value'  => Soda\Cms\Components\Status::LIVE,
+            'field_params' => ['options' => Soda\Cms\Components\Status::all()],
         ])->setModel($model) !!}
 
 		{!! Soda::field([

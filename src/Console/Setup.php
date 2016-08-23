@@ -7,13 +7,18 @@ use Illuminate\Console\Command;
 
 class Setup extends Command {
 
-    protected $signature = 'soda:setup {--s|no-seed : Skip database seeding} {--m|no-migrate : Skip database migration} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
+    protected $signature = 'soda:setup {--s|no-seed : Skip database seeding} {--m|no-migrate : Skip database migration} {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
     protected $description = 'Initial setup command for the Soda Framework';
     protected $except = [];
 
     public function handle() {
         if (!$this->option('no-env')) {
             $this->updateEnv();
+        }
+
+
+        if (!$this->option('no-filesystem')) {
+            $this->updateConfig();
         }
 
         if (!$this->option('no-migrate')) {
@@ -50,8 +55,19 @@ class Setup extends Command {
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);
             file_put_contents($environment_file_path, $contents);
         }
+    }
 
-        (new Dotenv($this->laravel->environmentPath(), $this->laravel->environmentFile()))->overload();
+    protected function updateConfig() {
+        $config_path = config_path('filesystems.php');
+
+        if (file_exists($config_path)) {
+            $contents = file_get_contents($config_path);
+            $contents = str_replace("'key' => 'your-key'", "'key' => env('AWS_ACCESS_KEY_ID')", $contents);
+            $contents = str_replace("'secret' => 'your-secret'", "'secret' => env('AWS_SECRET_ACCESS_KEY')", $contents);
+            $contents = str_replace("'region' => 'your-region'", "'region' => env('AWS_REGION')", $contents);
+            $contents = str_replace("'bucket' => 'your-bucket'", "'bucket' => env('AWS_S3_BUCKET')", $contents);
+            file_put_contents($config_path, $contents);
+        }
     }
 
     protected function migrate() {
