@@ -10,6 +10,7 @@ abstract class AbstractFormField implements FormFieldInterface {
     protected $prefix;
     protected $class;
     protected $model = null;
+    protected $layout = "soda::inputs.layouts.inline";
     protected $theme = "soda::inputs";
 
     public function setField($field) {
@@ -28,6 +29,16 @@ abstract class AbstractFormField implements FormFieldInterface {
 
     public function setPrefix($prefix) {
         $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    public function getLayout() {
+        return $this->layout;
+    }
+
+    public function setLayout($layout) {
+        $this->layout = $layout;
 
         return $this;
     }
@@ -131,6 +142,8 @@ abstract class AbstractFormField implements FormFieldInterface {
 
     protected function getDefaultViewParameters() {
         return [
+            'layout'              => $this->getLayout(),
+            'field_view'          => $this->getThemedView(),
             'prefixed_field_name' => $this->getPrefixedFieldName(),
             'field_label'         => $this->getFieldLabel(),
             'field_name'          => $this->getFieldName(),
@@ -150,7 +163,7 @@ abstract class AbstractFormField implements FormFieldInterface {
     }
 
     public function render() {
-        $view = view($this->getThemedView(), $this->parseViewParameters())->render();
+        $view = view($this->getLayout(), $this->parseViewParameters())->render();
 
         if(env('APP_DEBUG')) {
             try {

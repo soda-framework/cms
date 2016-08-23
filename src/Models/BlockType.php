@@ -26,6 +26,10 @@ class BlockType extends Model {
         'edit_action_type',
     ];
 
+    public static function boot() {
+
+    }
+
     public function fields() {
         return $this->morphToMany(Field::class, 'fieldable');
     }

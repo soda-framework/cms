@@ -9,6 +9,9 @@ interface FormFieldInterface {
     public function getPrefix();
     public function setPrefix($prefix);
 
+    public function getLayout();
+    public function setLayout($layout);
+
     public function getTheme();
     public function setTheme($theme);
 

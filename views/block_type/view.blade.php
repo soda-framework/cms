@@ -13,6 +13,15 @@
             'name'        => 'Block Type Name',
             'field_type'  => 'text',
             'field_name'  => 'name',
+        ])->setModel($model)->render() !!}
+
+		{!! Soda::field([
+            'name'         => 'Status',
+            'description'  => 'The status of this page type',
+            'field_type'   => 'dropdown',
+            'field_name'   => 'status',
+            'field_value'  => Soda\Cms\Components\Status::LIVE,
+            'field_params' => ['options' => Soda\Cms\Components\Status::all()],
         ])->setModel($model) !!}
 
 		{!! Soda::field([

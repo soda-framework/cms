@@ -7,17 +7,6 @@ return [
         'folder' => null,
         'driver' => 'soda.public',
     ],
-    'menu'      => [
-        'applications'         => false,
-        'application-settings' => false,
-        'pages'                => true,
-        'page-types'           => true,
-        'blocks'               => true,
-        'block-types'          => true,
-        'fields'               => true,
-        'users'                => true,
-        'navigation'           => false,
-    ],
     'fields' => [
         'checkbox'     => Soda\Cms\Components\Forms\Fields\Checkbox::class,
         'code'         => Soda\Cms\Components\Forms\Fields\Code::class,
