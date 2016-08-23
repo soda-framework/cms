@@ -63,7 +63,7 @@ Trait CrudableTrait {
 
 
     public function delete($id) {
-        $this->model->where('id', $id)->delete();
+        $this->model->find($id)->delete();
 
         return redirect()->route('soda.' . $this->hint)->with('success', 'updated');
     }

@@ -15,7 +15,7 @@ class AddForeignKeysToPagesTable extends Migration {
 		Schema::table('pages', function(Blueprint $table)
 		{
 			$table->foreign('application_id', 'FK_pages_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('CASCADE');
-			$table->foreign('page_type_id', 'FK_pages_page_types')->references('id')->on('page_types')->onUpdate('CASCADE')->onDelete('CASCADE');
+			$table->foreign('page_type_id', 'FK_pages_page_types')->references('id')->on('page_types')->onUpdate('CASCADE')->onDelete('SET NULL');
 			$table->foreign('parent_id', 'FK_pages_pages')->references('id')->on('pages')->onUpdate('CASCADE')->onDelete('SET NULL');
 		});
 	}

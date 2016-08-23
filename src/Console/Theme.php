@@ -105,7 +105,7 @@ class Theme extends Command {
             $contents = file_get_contents($application_config);
 
             $old_provider = "Soda\\Cms\\Providers\\SodaServiceProvider::class,";
-            $provider_replacement = "$old_provider\n        $serviceProvider,";
+            $provider_replacement = "        $serviceProvider,\n$old_provider";
 
             $contents = str_replace($old_provider, $provider_replacement, $contents);
 
