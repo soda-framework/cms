@@ -58,9 +58,7 @@ class Page extends AbstractSodaClosureEntity {
     }
 
     public function setSlugAttribute($value) {
-        $this->attributes['slug'] = '/' . str_slug(trim($value, '/'));
-
-        return $this->attributes['slug'];
+        $this->attributes['slug'] = $this->fixSlug($value);
     }
 
     public function setIdentifierAttribute($value) {

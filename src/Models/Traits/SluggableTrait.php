@@ -14,20 +14,31 @@ trait SluggableTrait {
      * @return string
      */
     public function generateSlug($title) {
-        $slug = $this->slug . '/' . Str::slug($title);
+        $slug = $this->fixSlug($this->slug ) . $this->fixSlug($title);
         //make sure it doesn't already exist
-        if (self::where('slug', "$slug")->first()) {
+        if (static::where('slug', "$slug")->first()) {
             //it exists already.. we have to find the highest slug and increment by 1.
-            $highest = self::where('slug', 'like', "$slug-%")->orderBy('slug', 'desc')->first();
+            $highest = static::where('slug', 'like', "$slug-%")->orderBy('slug', 'desc')->first();
             $num = 1;
             if ($highest) {
                 $num = str_replace("$slug-", "", $highest->slug);
                 $num++;
             }
 
-            return ("$slug-$num");
+            return $slug . '-' . $num;
         }
 
-        return ($slug);
+        return $slug;
+    }
+
+    public function fixSlug($slug) {
+        $parts = explode('/', $slug);
+        $slug = '';
+
+        foreach($parts as $part) {
+            if($part) $slug .= '/' . str_slug($part);
+        }
+
+        return $slug;
     }
 }
