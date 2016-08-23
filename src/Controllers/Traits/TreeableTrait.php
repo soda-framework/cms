@@ -9,18 +9,9 @@ Trait TreeableTrait
     /*
      * render tree item
      */
-    public function htmlTree(Request $request, $id = false, $hint)
+    public function htmlTree($tree, $hint)
     {
-        //
-        if (!isset($id) || !$id || $id == '#') {
-            $treeModel = $this->tree->grabTree();
-        } elseif ($id) {
-            $treeModel = $this->tree->grabTree($id);
-        } elseif ($request->input('id')) {
-            $treeModel = $this->tree->grabTree($request->input('id'));
-        }
-
-        return view('soda::tree.base', ['tree' => $this->tree->grabTree($id), 'hint'=>$hint]);
+        return view('soda::tree.base', compact('tree', 'hint'));
     }
 
     /**

@@ -42,16 +42,13 @@
 		</div>
 	</div>
 	<script>
-		$('#page_type_modal').on('show.bs.modal', function (event) {
-			var trigger = $(event.relatedTarget) // Button that triggered the modal
-			var action = trigger.attr('href');
-
-			$(this).find('form').attr('action', action);
-		});
-
 		$('[data-tree-add]').on('click', function(e){
 			e.preventDefault();
-			$('#page_type_modal').modal('show');
+			var modal = $('#page_type_modal');
+			var action = $(this).attr('href');
+
+			$('form', modal).attr('action', action);
+			modal.modal('show');
 		});
 	</script>
 @endsection

@@ -38,6 +38,7 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
         @if($model->type)
         <input type="hidden" name="page_type_id" value="{{ $model->type->id }}" />
         @endif
+        <input type="hidden" name="parent_id" value="{{ $model->parent_id }}" />
         <div class="tab-content">
             @if($has_fields_or_blocks)
                 <div class="tab-pane active" id="normalview" role="tabpanel">

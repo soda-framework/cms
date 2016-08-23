@@ -29,20 +29,17 @@ class PageController extends Controller {
      * @return Response
      */
     public function getIndex(Request $request) {
-
-        if (!isset($id) || !$id || $id == '#') {
+        if ($request->input('id')) {
+            $page = $this->model->find($request->input('id'));
+        } else {
             $page = $this->model->getRoots()->first();    //todo: from application.
             if(!$page) $page = Page::createRoot();
-        } elseif ($id) {
-            $page = $this->model->where('id', $id)->first();
-        } elseif ($request->input('id')) {
-            $page = $this->model->where('id', $request->input('id'))->first();
         }
 
         $page_types = PageType::get();
-        $tree = $this->htmlTree($request, $page ? $page->id : null, $this->hint);
 
         $pages = $page ? $page->collectDescendants()->orderBy('position')->get()->toTree() : [];
+        $tree = $this->htmlTree($pages, $this->hint);
 
         return view('soda::page.index', [
             'hint'       => $this->hint,
@@ -111,7 +108,7 @@ class PageController extends Controller {
     }
 
     public function create(Request $request, $parent_id = null) {
-        $parent = $parent_id ? $this->model->withoutGlobalScopes(['live'])->find($parent_id) : $this->model->getRoots()->first();
+        $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
 
         $this->model->parent_id = $parent ? $parent->id : null;
         $this->model->page_type_id = $request->input('page_type_id');
@@ -130,10 +127,11 @@ class PageController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save(Request $request, $parent_id = null) {
+    public function save(Request $request) {
         $page = $this->model;
+        $parent_id = $request->input('parent_id');
 
-        $parent = $parent_id ? $this->model->withoutGlobalScopes(['live'])->find($parent_id) : $this->model->getRoots()->first();
+        $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
 
         //todo validation
 

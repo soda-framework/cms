@@ -13,8 +13,8 @@
 	</div>
 
 	<ul>
-		@if (@$tree->subnodes && $tree->subnodes !== null && $tree->subnodes->count() > 0)
-			@foreach($tree->subnodes as $child)
+		@if ($tree->relationLoaded('children') && $tree->children->count() > 0)
+			@foreach($tree->children as $child)
 				@include('soda::tree.tree', ['tree'=>$child])
 			@endforeach
 		@endif
