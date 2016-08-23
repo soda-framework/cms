@@ -27,7 +27,7 @@ trait DynamicCreatorTrait {
                 Schema::create($table, function (Blueprint $table) use ($type) {
                     $reference_column = $type->getDynamicType() . '_id';
                     $reference_table = $type->getDynamicType() . 's';
-                    $reference_index = 'FK_' . $reference_column . '_' . $reference_table;
+                    $reference_index = 'FK_' . $type->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
 
                     $table->increments('id');
                     $table->integer($reference_column)->unsigned()->nullable()->index($reference_index);
@@ -45,7 +45,12 @@ trait DynamicCreatorTrait {
             $table = $type->getDynamicTableName();
 
             if (Schema::hasTable($table)) {
+                $reference_column = $type->getDynamicType() . '_id';
+                $reference_table = $type->getDynamicType() . 's';
+                $reference_index = 'FK_' . $type->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
+
                 Schema::rename($table, $table . '_deleted_' . Carbon::now()->timestamp);
+                $table->dropForeign($reference_index);
             }
         });
     }
