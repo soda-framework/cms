@@ -3,8 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.2.0] - 2016-08-23
+### Changed
+- Cleanup + additions to prebuilt themes
+
 ### Fixed
 - Miscellaneous theme and setup command fixes
+- Miscellaneous fixes for Blocks, BlockTypes, Pages and PageTypes
 
 ## [0.1.3] - 2016-08-22
 ### Added
