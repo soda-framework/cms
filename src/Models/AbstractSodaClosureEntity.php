@@ -10,8 +10,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return \Franzose\ClosureTable\Extensions\QueryBuilder
      */
-    public function collectDescendants() {
-        return $this->joinClosureBy('descendant');
+    public function collectDescendants($withSelf = false) {
+        return $this->joinClosureBy('descendant', $withSelf);
     }
 
     /**

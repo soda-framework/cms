@@ -41,7 +41,7 @@ class PageController extends Controller {
         $page_types = PageType::get();
         $tree = $this->htmlTree($request, $page ? $page->id : null, $this->hint);
 
-        $pages = $page ? $page->collectDescendants()->withoutGlobalScopes(['live'])->orderBy('position')->get()->toTree() : [];
+        $pages = $page ? $page->collectDescendants(true)->orderBy('position')->get()->toTree() : [];
 
         return view('soda::page.index', [
             'hint'       => $this->hint,

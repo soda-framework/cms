@@ -32,6 +32,10 @@ class Field extends Model {
         return Soda::getFormBuilder()->getFieldTypes();
     }
 
+    public function setFieldNameAttribute($value) {
+        $this->attributes['field_name'] = str_slug($value, '_');
+    }
+
     public function setFieldParamsAttribute($value) {
         if (is_array($value)) {
             $value = json_encode($value);

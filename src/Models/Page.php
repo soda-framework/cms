@@ -4,16 +4,16 @@ namespace Soda\Cms\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
 use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 use Soda\Cms\Models\Traits\PositionableTrait;
 use Soda\Cms\Models\Traits\SluggableTrait;
 use Soda\Cms\Models\Traits\TreeableTrait;
 
 class Page extends AbstractSodaClosureEntity {
-    use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait;
+    use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait, HasDynamicModelTrait;
 
     protected $table = 'pages';
-    protected $dynamicModel;
     public $fillable = [
         'name',
         'description',
@@ -45,28 +45,14 @@ class Page extends AbstractSodaClosureEntity {
         return $this->belongsToMany(Block::class, 'page_blocks');
     }
 
-    public function model() {
-        if (!$this->dynamicModel) {
-            $this->loadDynamicModel();
-        }
+    public function setSlugAttribute($value) {
+        $this->attributes['slug'] = '/' . str_slug(trim($value, '/'));
 
-        return $this->dynamicModel;
+        return $this->attributes['slug'];
     }
 
-    public function setModel(ModelBuilder $model) {
-        $this->dynamicModel = $model;
-
-        return $this;
-    }
-
-    protected function loadDynamicModel() {
-        $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where('page_id', $this->id)->first();
-
-        if (!$model) {
-            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
-        }
-
-        return $this->setModel($model);
+    public function setIdentifierAttribute($value) {
+        $this->attributes['identifier'] = str_slug($value);
     }
 
     public static function hasFieldsOrBlocks($page) {

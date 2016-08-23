@@ -20,7 +20,7 @@
             'description'  => 'The status of this page type',
             'field_type'   => 'dropdown',
             'field_name'   => 'status',
-            'field_value'  => Soda\Cms\Components\Status::LIVE,
+            'value'        => Soda\Cms\Components\Status::LIVE,
             'field_params' => ['options' => Soda\Cms\Components\Status::all()],
         ])->setModel($model) !!}
 
@@ -40,7 +40,23 @@
             'name'        => 'Block Type Action Type',
             'field_type'  => 'dropdown',
             'field_name'  => 'action_type',
-            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes(), 'default' => 'view'],
+            'value'       => 'view',
+            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+        ])->setModel($model) !!}
+
+		{!! Soda::field([
+            'name'        => 'Block Type Edit Action',
+            'field_type'  => 'text',
+            'field_name'  => 'edit_action',
+            'value'       => 'soda::block.page_block_index',
+        ])->setModel($model) !!}
+
+		{!! Soda::field([
+            'name'        => 'Block Type Edit Action Type',
+            'field_type'  => 'dropdown',
+            'field_name'  => 'edit_action_type',
+            'value'       => 'view',
+            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
         ])->setModel($model) !!}
 
 		{!! Soda::field([

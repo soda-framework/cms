@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-square', 'title'=>$model->name?'Block: '.$model->name:'New Field'])
+	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-square', 'title'=>$model->name?'Block: '.$model->name:'New Block'])
 	<form method="POST" action='{{route('soda.block.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
@@ -20,6 +20,15 @@
             'name'        => 'Block Name',
             'field_type'  => 'text',
             'field_name'  => 'name',
+        ])->setModel($model) !!}
+
+		{!! Soda::field([
+            'name'         => 'Status',
+            'description'  => 'The status of this block',
+            'field_type'   => 'dropdown',
+            'field_name'   => 'status',
+            'value'        => Soda\Cms\Components\Status::LIVE,
+            'field_params' => ['options' => Soda\Cms\Components\Status::all()],
         ])->setModel($model) !!}
 
 		{!! Soda::field([

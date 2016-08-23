@@ -101,11 +101,13 @@ abstract class AbstractFormField implements FormFieldInterface {
         if ($this->model) {
             $value = isset($this->model->$field_name) ? $this->model->$field_name : null;
 
-            if ($value) {
+            if ($value !== null) {
                 return $this->model->$field_name;
             }
-        } elseif ($this->field->field_value && !old($this->field->field_name)) {
-            return $this->field->field_value;
+        }
+
+        if (old($this->getPrefixedFieldName()) === null) {
+            return $this->field->value;
         }
 
         return old($this->getPrefixedFieldName());

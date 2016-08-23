@@ -2,10 +2,7 @@
 
 namespace Soda\Cms\Models;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
@@ -33,5 +30,9 @@ class BlockType extends Model {
 
     public function block() {
         return $this->hasMany(Block::class, 'block_type_id');
+    }
+
+    public function setIdentifierAttribute($value) {
+        $this->attributes['identifier'] = str_slug($value);
     }
 }

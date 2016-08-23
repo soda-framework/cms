@@ -47,7 +47,14 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
                     @endif
                     @foreach($model->blocks as $block)
                         {{--loads a block into place.. --}}
-                        @include($block->type->edit_action_type,['unique'=>uniqid(), 'render'=>'card', 'name'=>$block->type->name, 'fields'=>$block->type->fields, 'type'=>$block->type, 'models'=>Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->paginate()])
+                        @if($block->type->edit_action_type == 'view')
+                            @include($block->type->edit_action, [
+                                'unique' => uniqid(),
+                                'render' => 'card',
+                                'block'  => $block,
+                                'models' => Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->paginate()
+                            ])
+                        @endif
                     @endforeach
                 </div>
             @endif
@@ -68,19 +75,19 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
                 ])->setModel($model) !!}
 
                 {!! Soda::field([
-                    'name'        => 'Description',
-                    'description' => 'The description of this page',
-                    'field_type'  => 'text',
-                    'field_name'  => 'description',
-                ])->setModel($model) !!}
-
-                {!! Soda::field([
                     'name'         => 'Status',
                     'description'  => 'The status of this page',
                     'field_type'   => 'dropdown',
                     'field_name'   => 'status',
-                    'field_value'  => Soda\Cms\Components\Status::LIVE,
+                    'value'        => Soda\Cms\Components\Status::LIVE,
                     'field_params' => ['options' => Soda\Cms\Components\Status::all()],
+                ])->setModel($model) !!}
+
+                {!! Soda::field([
+                    'name'        => 'Description',
+                    'description' => 'The description of this page',
+                    'field_type'  => 'text',
+                    'field_name'  => 'description',
                 ])->setModel($model) !!}
             </div>
 

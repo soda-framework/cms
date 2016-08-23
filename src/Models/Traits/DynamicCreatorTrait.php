@@ -3,6 +3,7 @@
 namespace Soda\Cms\Models\Traits;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -24,9 +25,13 @@ trait DynamicCreatorTrait {
 
             if (!Schema::hasTable($table)) {
                 Schema::create($table, function (Blueprint $table) use ($type) {
+                    $reference_column = $type->getDynamicType() . '_id';
+                    $reference_table = $type->getDynamicType() . 's';
+                    $reference_index = 'FK_' . $reference_column . '_' . $reference_table;
+
                     $table->increments('id');
-                    $table->integer($type->getDynamicType() . '_id')->unsigned();
-                    $table->foreign($type->getDynamicType() . '_id')->references('id')->on('blocks')->onUpdate('cascade')->onDelete('cascade');
+                    $table->integer($reference_column)->unsigned()->nullable()->index($reference_index);
+                    $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
                     $table->timestamps();
                 });
             } else {

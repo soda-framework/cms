@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use Redirect;
 use Route;
 use Soda;
-use Soda\Cms\Models\BlockType;
+use Soda\Cms\Models\Block;
 use Soda\Cms\Models\ModelBuilder;
 
 class DynamicController extends Controller {
+    protected $block;
+    protected $model;
+
     public function __construct(ModelBuilder $modelBuilder) {
         $type = Route::current()->getParameter('type');
-        $this->type = BlockType::with('fields')->where('identifier', $type)->first();
-        $this->model = Soda::dynamicModel('soda_' . $this->type->identifier, $this->type->fields->lists('field_name')->toArray());
+        $this->block = Block::with('type', 'type.fields')->where('identifier', $type)->first();
+        $this->model = Soda::dynamicModel('soda_' . $this->block->type->identifier, $this->block->type->fields->lists('field_name')->toArray());
     }
 
     public function index() {
@@ -25,20 +28,22 @@ class DynamicController extends Controller {
     public function view($type = null, $id = null) {
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
-        return view('soda::standard.view', ['type' => $this->type, 'model' => $model]);
+        return view('soda::standard.view', ['type' => $this->block->type, 'model' => $model]);
     }
 
     public function edit(Request $request, $type = null, $id = null) {
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
-        foreach ($this->type->fields as $field) {
+        foreach ($this->block->type->fields as $field) {
             $model->parseField($field, $request);
         }
+
+        $model->block_id = $this->block->id;
 
         $model->save();
 
         return redirect()->route('soda.dyn.view', [
-            'type' => $this->type->identifier,
+            'type' => $this->block->type->identifier,
             'id' => $model->id
         ])->with('success', 'updated!');
     }
@@ -54,7 +59,7 @@ class DynamicController extends Controller {
         $this->model = $this->model->findOrFail($id);
         $this->model->delete();
 
-        return \Redirect::back()->with('message', 'Success, item deleted'); //TODO: this should use nicer refirect?
+        return redirect()->back()->with('message', 'Success, item deleted'); //TODO: this should use nicer refirect?
     }
 
     /**

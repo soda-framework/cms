@@ -35,4 +35,8 @@ class PageType extends Model {
     public function block() {
         return $this->hasMany(Block::class, 'block_type_id');
     }
+
+    public function setIdentifierAttribute($value) {
+        $this->attributes['identifier'] = str_slug($value);
+    }
 }
