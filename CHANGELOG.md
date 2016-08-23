@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Upload folder config is now retrieved correctly
+- Page roots are now used correctly
+- Foreign keys for page/block types are now unique
 
 ## [0.2.0] - 2016-08-23
 ### Changed

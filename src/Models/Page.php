@@ -3,6 +3,7 @@ namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
+use Soda\Cms\Components\Status;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
@@ -36,6 +37,17 @@ class Page extends AbstractSodaClosureEntity {
      * @var pagesClosure
      */
     protected $closure = PageClosure::class;
+
+    public static function createRoot() {
+        return static::create([
+            'name'           => 'root',
+            'parent_id'      => null,
+            'application_id' => Soda::getApplication()->id,
+            'position'       => 0,
+            'real_depth'     => 0,
+            'status'         => Status::LIVE,
+        ]);
+    }
 
     public function type() {
         return $this->belongsTo(PageType::class, 'page_type_id');

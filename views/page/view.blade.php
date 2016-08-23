@@ -13,12 +13,11 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
 
     @include(config('soda.hint_path').'::partials.heading', [
         'icon'  => 'fa fa-file-o',
-        'title' => $model->name ? $model->name : 'New ' . $model->type->name . " Page"
+        'title' => $model->name ? $model->name : 'New ' . ($model->type ? $model->type->name . " Page" : "Page"),
     ])
 
     <ul class="nav nav-tabs" role="tablist">
         @if($has_fields_or_blocks)
-
             <li role='presentation' class="active" aria-controls="{{ $model->type->name }}">
                 <a role="tab" data-toggle="tab" href="#normalview">{{ $model->type->name }}</a>
             </li>
@@ -36,11 +35,13 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
 
     <form method="POST" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}">{{-- << TODO --}}
         {!! csrf_field() !!}
+        @if($model->type)
         <input type="hidden" name="page_type_id" value="{{ $model->type->id }}" />
+        @endif
         <div class="tab-content">
             @if($has_fields_or_blocks)
                 <div class="tab-pane active" id="normalview" role="tabpanel">
-                    @if(@$model->type->fields)
+                    @if($model->type && $model->type->fields)
                         @foreach($model->type->fields as $field)
                             {!! Soda::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
                         @endforeach

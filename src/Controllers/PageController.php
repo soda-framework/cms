@@ -32,6 +32,7 @@ class PageController extends Controller {
 
         if (!isset($id) || !$id || $id == '#') {
             $page = $this->model->getRoots()->first();    //todo: from application.
+            if(!$page) $page = Page::createRoot();
         } elseif ($id) {
             $page = $this->model->where('id', $id)->first();
         } elseif ($request->input('id')) {
@@ -109,17 +110,15 @@ class PageController extends Controller {
         return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
     }
 
-    public function createForm(Request $request, $parent_id = null) {
-
-        if ($parent_id) {
-            $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
-        } else {
-            $parent = $this->model->getRoots()->first();
-        }
+    public function create(Request $request, $parent_id = null) {
+        $parent = $parent_id ? $this->model->withoutGlobalScopes(['live'])->find($parent_id) : $this->model->getRoots()->first();
 
         $this->model->parent_id = $parent ? $parent->id : null;
         $this->model->page_type_id = $request->input('page_type_id');
-        $this->model->load('type.fields');
+
+        if($this->model->page_type_id) {
+            $this->model->load('type.fields');
+        }
 
         return view('soda::page.view', ['model' => $this->model, 'hint' => $this->hint]);
     }
@@ -131,13 +130,10 @@ class PageController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(Request $request, $parent_id = null) {
+    public function save(Request $request, $parent_id = null) {
         $page = $this->model;
-        if ($parent_id) {
-            $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
-        } else {
-            $parent = $this->model->getRoots()->first();
-        }
+
+        $parent = $parent_id ? $this->model->withoutGlobalScopes(['live'])->find($parent_id) : $this->model->getRoots()->first();
 
         //todo validation
 
@@ -158,16 +154,18 @@ class PageController extends Controller {
             $parent->addChild($page);
         }
 
-        $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-            $page->type->fields->lists('field_name')->toArray())->newInstance();
+        if($page->type) {
+            $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
+                $page->type->fields->lists('field_name')->toArray())->newInstance();
 
-        $dyn_table->page_id = $page->id;
+            $dyn_table->page_id = $page->id;
 
-        if ($request->has('settings')) {
-            $dyn_table->forceFill($request->input('settings'));
+            if ($request->has('settings')) {
+                $dyn_table->forceFill($request->input('settings'));
+            }
+
+            $dyn_table->save();
         }
-
-        $dyn_table->save();
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
     }

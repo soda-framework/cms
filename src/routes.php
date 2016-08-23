@@ -23,8 +23,8 @@ Route::group(['middleware' => 'web'], function () {
                 Route::post('view/{id?}', 'PageController@edit')->name('soda.page.edit');
                 Route::get('delete/{id?}', 'PageController@deleteTree')->name('soda.page.delete');
                 Route::get('move/{parent_id?}/{id?}/{position?}', 'PageController@move')->name('soda.page.move');
-                Route::get('create/{id?}', 'PageController@createForm')->name('soda.page.create');
-                Route::post('create/{parent_id?}', 'PageController@create')->name('soda.page.create');
+                Route::get('create/{id?}', 'PageController@create')->name('soda.page.create');
+                Route::post('create/{parent_id?}', 'PageController@save')->name('soda.page.save');
 
                 //test routes..
                 Route::get('/makeroot/{id?}', 'PageController@getMakeRoot')->name('page-makeroot');
