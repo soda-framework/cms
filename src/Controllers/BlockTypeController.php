@@ -1,8 +1,10 @@
 <?php namespace Soda\Cms\Controllers;
 
+use Soda;
 use App\Http\Controllers\Controller;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Controllers\Traits\CrudableTrait;
+use Illuminate\Http\Request;
 
 class BlockTypeController extends Controller {
 
@@ -20,7 +22,9 @@ class BlockTypeController extends Controller {
 
         $this->model->fill($request->except('fields'));
         $this->model->application_id = Soda::getApplication()->id;
-        $this->model->fields()->sync($request->input('fields'));
+        if($fields = $request->input('fields')) {
+            $this->model->fields()->sync($fields);
+        }
         $this->model->save();
 
         return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
