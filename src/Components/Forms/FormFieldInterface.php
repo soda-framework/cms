@@ -1,6 +1,8 @@
 <?php
 namespace Soda\Cms\Components\Forms;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 
 interface FormFieldInterface {
@@ -28,11 +30,15 @@ interface FormFieldInterface {
     public function getFieldDescription();
 
     public function getFieldValue();
-    public function saveValue(Request $request);
+    public function getSaveValue(Request $request);
 
     public function getFieldParameters();
     public function getDefaultParameters();
     public function parseFieldParameters();
+
+    public function addToModel(Blueprint $table);
+    public function removeFromModel(Blueprint $table);
+    public function saveToModel(Model $model, Request $request);
 
     public function render();
 

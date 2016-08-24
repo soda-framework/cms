@@ -17,7 +17,7 @@
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
 		@foreach($fields as $field)
-			{!! Soda::field($field)->model($model) !!}
+			{!! SodaForm::field($field)->model($model) !!}
 		@endforeach
 
 		<button type="submit" class="btn btn-primary">Save</button>

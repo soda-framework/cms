@@ -17,30 +17,26 @@
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<input type="hidden" name="block_type_id" value="{{ $model->block_type_id }}" />
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Block Name',
-            'field_type'  => 'text',
             'field_name'  => 'name',
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::dropdown([
             'name'         => 'Status',
             'description'  => 'The status of this block',
-            'field_type'   => 'dropdown',
             'field_name'   => 'status',
             'value'        => Soda\Cms\Components\Status::LIVE,
             'field_params' => ['options' => Soda\Cms\Components\Status::all()],
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::textarea([
             'name'        => 'Block Description',
-            'field_type'  => 'textarea',
             'field_name'  => 'description',
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Block Identifier',
-            'field_type'  => 'text',
             'field_name'  => 'identifier',
         ])->setModel($model) !!}
 

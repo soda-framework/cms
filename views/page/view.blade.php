@@ -44,7 +44,7 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
                 <div class="tab-pane active" id="normalview" role="tabpanel">
                     @if($model->type && $model->type->fields)
                         @foreach($model->type->fields as $field)
-                            {!! Soda::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
+                            {!! SodaForm::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
                         @endforeach
                     @endif
                     @foreach($model->blocks as $block)
@@ -62,33 +62,29 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
             @endif
             <div class="tab-pane {{ $has_fields_or_blocks ? '' : 'active' }}" id="pageview" role="tabpanel">
                 <p>Customise page details</p>
-                {!! Soda::field([
+                {!! SodaForm::text([
                     "name"        => "Name",
                     "description" => "The name of this page",
-                    'field_type'  => 'text',
                     "field_name"  => 'name',
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::text([
                     'name'        => 'Slug',
                     'description' => 'The url of this page',
-                    'field_type'  => 'text',
                     'field_name'  => 'slug',
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::dropdown([
                     'name'         => 'Status',
                     'description'  => 'The status of this page',
-                    'field_type'   => 'dropdown',
                     'field_name'   => 'status',
                     'value'        => Soda\Cms\Components\Status::LIVE,
                     'field_params' => ['options' => Soda\Cms\Components\Status::all()],
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::text([
                     'name'        => 'Description',
                     'description' => 'The description of this page',
-                    'field_type'  => 'text',
                     'field_name'  => 'description',
                 ])->setModel($model) !!}
             </div>
@@ -106,39 +102,33 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
             <div class="tab-pane" id="advancedview" role="tabpanel">
                 <p>Advanced page details</p>
 
-                {!! Soda::field([
+                {!! SodaForm::text([
                     'name'        => 'Package Name',
-                    'field_type'  => 'text',
                     'field_name'  => 'package',
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::text([
                     'name'        => 'Action',
-                    'field_type'  => 'text',
                     'field_name'  => 'action',
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::text([
                     'name'        => 'Action Type',
-                    'field_type'  => 'text',
                     'field_name'  => 'action_type',
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::text([
                     'name'        => 'Edit Action',
-                    'field_type'  => 'text',
                     'field_name'  => 'edit_action',
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::text([
                     'name'        => 'Edit Action Type',
-                    'field_type'  => 'text',
                     'field_name'  => 'edit_action_type',
                 ])->setModel($model) !!}
 
-                {!! Soda::field([
+                {!! SodaForm::textarea([
                     'name'        => 'Description',
-                    'field_type'  => 'textarea',
                     'field_name'  => 'description',
                 ])->setModel($model) !!}
             </div>

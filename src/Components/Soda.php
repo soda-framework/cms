@@ -91,13 +91,26 @@ class Soda {
     }
 
     /**
-     * Load a dynamic model
+     * @deprecated Load a dynamic model
      *
      * @param $table
      *
      * @return mixed
      */
     public function dynamicModel($table) {
+        return ModelBuilder::fromTable($table, []);
+    }
+
+    /**
+     * Load a dynamic model
+     *
+     * @param $table
+     * @param bool $autoprefix
+     *
+     * @return mixed
+     */
+    public function model($table, $autoprefix = true) {
+        if($autoprefix) $table = 'soda_' . $table;
         return ModelBuilder::fromTable($table, []);
     }
 
@@ -154,6 +167,6 @@ class Soda {
      * @return mixed
      */
     public function field($field) {
-        return $this->getFormBuilder()->newField($field);
+        return $this->getFormBuilder()->field($field);
     }
 }

@@ -16,45 +16,39 @@
 	<form method="POST" action='{{route('soda.'.$hint.'.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Field Label',
-            'field_type'  => 'text',
             'field_name'  => 'name',
             'description' => 'Label of the field, visible when entering forms'
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::dropdown([
             'name'         => 'Field Type',
-            'field_type'   => 'dropdown',
             'field_name'   => 'field_type',
             'field_params' => ['options' => Soda::getFormBuilder()->getFieldTypes()],
             'description'  => 'Type of field to be used'
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'         => 'Field Default Value',
-            'field_type'   => 'text',
             'field_name'   => 'value',
             'description'  => 'Default value for field'
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Field Name',
-            'field_type'  => 'text',
             'field_name'  => 'field_name',
             'description' => 'Name of the field, used when accessing models'
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::textarea([
             'name'        => 'Field Description',
-            'field_type'  => 'textarea',
             'field_name'  => 'description',
             'description'  => 'Informative text to guide users when inputting this field'
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::json([
             'name'        => 'Field Parameters',
-            'field_type'  => 'json',
             'field_name'  => 'field_params',
             'description'  => 'Parameters for the field'
         ])->setModel($model) !!}

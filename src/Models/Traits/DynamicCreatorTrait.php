@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use SodaForm;
 
 trait DynamicCreatorTrait {
     public function getDynamicType() {
@@ -68,8 +69,8 @@ trait DynamicCreatorTrait {
         $field_name = $field->field_name;
 
         if (!Schema::hasColumn($table, $field_name)) {
-            Schema::table($table, function ($table) use ($field_name) {
-                $table->string($field_name);
+            Schema::table($table, function ($table) use ($field) {
+                SodaForm::field($field)->addToModel($table);
             });
         }
 
@@ -81,8 +82,8 @@ trait DynamicCreatorTrait {
         $field_name = $field->field_name;
 
         if (Schema::hasColumn($table, $field_name)) {
-            Schema::table($table, function ($table) use ($field_name) {
-                $table->dropColumn($field_name);
+            Schema::table($table, function ($table) use ($field) {
+                SodaForm::field($field)->removeFromModel($table);
             });
         }
 

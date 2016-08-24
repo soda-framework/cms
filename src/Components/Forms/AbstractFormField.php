@@ -2,6 +2,8 @@
 namespace Soda\Cms\Components\Forms;
 
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Soda\Cms\Models\Field;
 
@@ -249,10 +251,24 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return array|string
      */
-    public function saveValue(Request $request) {
+    public function getSaveValue(Request $request) {
         $value = $request->input($this->getPrefixedFieldName());
 
         return $value;
+    }
+
+    /**
+     * Determines how the field is saved to a model
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return $this
+     */
+    public function saveToModel(Model $model, Request $request) {
+        $model->{$this->getFieldName()} = $this->getSaveValue($request);
+
+        return $this;
     }
 
     /**
@@ -320,6 +336,32 @@ abstract class AbstractFormField implements FormFieldInterface {
      */
     protected function parseViewParameters() {
         return array_merge($this->getDefaultViewParameters(), $this->getViewParameters());
+    }
+
+    /**
+     * Adds a column for this field to a DynamicModel
+     *
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     *
+     * @return $this
+     */
+    public function addToModel(Blueprint $table) {
+        $table->string($this->getFieldName());
+
+        return $this;
+    }
+
+    /**
+     * Removes column for this field from our DynamicModel
+     *
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     *
+     * @return $this
+     */
+    public function removeFromModel(Blueprint $table) {
+        $table->dropColumn($this->getFieldName());
+
+        return $this;
     }
 
     /**

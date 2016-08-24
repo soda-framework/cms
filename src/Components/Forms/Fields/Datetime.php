@@ -31,7 +31,7 @@ class Datetime extends AbstractFormField {
         return $value ? Carbon::createFromFormat($parameters['output-format'], $value)->format($parameters['input-format']) : '';
     }
 
-    public function saveValue(Request $request) {
+    public function getSaveValue(Request $request) {
         $value = parent::saveValue($request);
         $parameters = $this->parseFieldParameters();
 

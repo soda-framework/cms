@@ -18,7 +18,7 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
         {{--TODO: swap for @each??, dont include model to view? Must be a better way to do what i want to do --}}
         @foreach($type->fields as $field)
-            {!! Soda::field($field)->setModel($model) !!}
+            {!! SodaForm::field($field)->setModel($model) !!}
         @endforeach
         <button type="submit" class="btn btn-primary">Save</button>
     </form>

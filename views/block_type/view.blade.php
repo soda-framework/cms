@@ -9,65 +9,56 @@
 	<form method="POST" action='{{ route('soda.'.$hint.'.edit',['id'=>@$model->id]) }}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Block Type Name',
-            'field_type'  => 'text',
             'field_name'  => 'name',
         ])->setModel($model)->render() !!}
 
-		{!! Soda::field([
+		{!! SodaForm::dropdown([
             'name'         => 'Status',
             'description'  => 'The status of this page type',
-            'field_type'   => 'dropdown',
             'field_name'   => 'status',
             'value'        => Soda\Cms\Components\Status::LIVE,
             'field_params' => ['options' => Soda\Cms\Components\Status::all()],
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::textarea([
             'name'        => 'Block Type Description',
-            'field_type'  => 'textarea',
             'field_name'  => 'description',
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Block Type Action',
-            'field_type'  => 'text',
             'field_name'  => 'action',
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::dropdown([
             'name'        => 'Block Type Action Type',
-            'field_type'  => 'dropdown',
             'field_name'  => 'action_type',
             'value'       => 'view',
             'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Block Type Edit Action',
-            'field_type'  => 'text',
             'field_name'  => 'edit_action',
             'value'       => 'soda::block.page_block_index',
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::dropdown([
             'name'        => 'Block Type Edit Action Type',
-            'field_type'  => 'dropdown',
             'field_name'  => 'edit_action_type',
             'value'       => 'view',
             'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Package',
-            'field_type'  => 'text',
             'field_name'  => 'package',
         ])->setModel($model) !!}
 
-		{!! Soda::field([
+		{!! SodaForm::text([
             'name'        => 'Identifier',
-            'field_type'  => 'text',
             'field_name'  => 'identifier',
         ])->setModel($model) !!}
 

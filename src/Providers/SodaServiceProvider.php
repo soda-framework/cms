@@ -5,6 +5,10 @@ use Illuminate\Support\ServiceProvider;
 use Soda;
 use Blade;
 use Franzose\ClosureTable\ClosureTableServiceProvider;
+use Soda\Cms\Components\Forms\FormBuilder;
+use Soda\Cms\Components\Forms\FormFieldRegistrar;
+use Soda\Cms\Components\Menu\MenuBuilder;
+use Soda\Cms\Components\Pages\PageBuilder;
 use Soda\Cms\Components\Soda as SodaInstance;
 use Soda\Cms\Console\Assets;
 use Soda\Cms\Console\Migrate;
@@ -13,6 +17,8 @@ use Soda\Cms\Console\Setup;
 use Soda\Cms\Console\Theme;
 use Soda\Cms\Console\Update;
 use Soda\Cms\Facades\SodaFacade;
+use Soda\Cms\Facades\SodaFormFacade;
+use Soda\Cms\Facades\SodaMenuFacade;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
@@ -66,11 +72,27 @@ class SodaServiceProvider extends ServiceProvider {
         ]);
 
         $this->registerFacades([
-            'Soda'    => SodaFacade::class,
-            'Entrust' => EntrustFacade::class,
+            'Soda'     => SodaFacade::class,
+            'SodaMenu' => SodaMenuFacade::class,
+            'SodaForm' => SodaFormFacade::class,
+            'Entrust'  => EntrustFacade::class,
         ]);
 
-        $this->app->singleton('soda', SodaInstance::class);
+        $this->app->bind('soda', function($app) {
+            return new SodaInstance($app['soda.form'], $app['soda.page'], $app['soda.menu']);
+        });
+
+        $this->app->bind('soda.form.registrar', function($app) {
+            return new FormFieldRegistrar($app['config']->get('soda.fields'));
+        });
+
+        $this->app->bind('soda.form', function($app) {
+            return new FormBuilder($app['soda.form.registrar']);
+        });
+
+        $this->app->bind('soda.menu', MenuBuilder::class);
+
+        $this->app->bind('soda.page', PageBuilder::class);
 
         $this->commands([
             Theme::class,
@@ -80,8 +102,6 @@ class SodaServiceProvider extends ServiceProvider {
             Migrate::class,
             Seed::class,
         ]);
-
-        Soda::getFormBuilder()->registerMany(config('soda.fields'));
     }
 
     protected function configure() {

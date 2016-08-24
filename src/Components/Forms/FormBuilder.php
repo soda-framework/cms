@@ -8,38 +8,14 @@ use Soda\Cms\Models\Field;
 use Soda\Cms\Models\ModelBuilder;
 
 class FormBuilder {
-    protected $registered_fields = [];
+    protected $registrar;
 
-    /**
-     * Registers a new CMS form field
-     *
-     * @param $name
-     * @param null $field_class
-     */
-    public function register($name, $field_class = null){
-        if(new $field_class instanceof FormFieldInterface) {
-            $this->registered_fields[$name] = $field_class;
-        }
+    public function __construct(FormFieldRegistrar $registrar) {
+        $this->registrar = $registrar;
     }
 
-    /**
-     * Registers an array of new CMS form fields
-     *
-     * @param $formFields
-     */
-    public function registerMany($formFields) {
-        foreach($formFields as $field_name => $field_class) {
-            $this->register($field_name, $field_class);
-        }
-    }
-
-    /**
-     * Returns a list of form fields that have been registered
-     *
-     * @return array
-     */
-    public function getRegisteredFields() {
-        return $this->registered_fields;
+    public function getRegistrar() {
+        return $this->registrar;
     }
 
     /**
@@ -52,7 +28,7 @@ class FormBuilder {
         return array_map(function($value) {
             $class_name = class_basename($value);
             return ucfirst(strtolower(preg_replace('/\B([A-Z])/', ' $1', $class_name)));
-        }, $this->getRegisteredFields());
+        }, $this->getRegistrar()->getRegisteredFields());
     }
 
     /**
@@ -63,7 +39,7 @@ class FormBuilder {
      * @return mixed
      * @throws \Exception
      */
-    public function newField($field) {
+    public function field($field) {
         if (is_array($field)) {
             $field = new Field($field);
         }
@@ -72,16 +48,7 @@ class FormBuilder {
             Throw new Exception("Field must be instance of " . Field::class . " or array.");
         }
 
-        $field_types = $this->getRegisteredFields();
-
-        if (!isset($field_types[$field->field_type])) {
-            Throw new Exception("Field " . $field->field_type ." is not registered.");
-        }
-
-        $class = $field_types[$field->field_type];
-        $field_class = new $class();
-
-        return $field_class->setField($field);
+        return $this->getRegistrar()->resolve($field);
     }
 
     /**
@@ -134,5 +101,16 @@ class FormBuilder {
         $json_parameters = json_encode($parameters, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         return trim($json_parameters, '{}');
+    }
+
+    public function __call($name, $arguments) {
+        if($this->getRegistrar()->isRegistered($name)) {
+            $field = new Field($arguments[0]);
+            $field->field_type = $name;
+
+            return $this->getRegistrar()->resolve($field);
+        } else {
+            throw new Exception("Field " . $name ." is not registered.");
+        }
     }
 }
