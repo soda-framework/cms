@@ -44,31 +44,31 @@ class Theme extends Command {
     protected function installTheme($advanced = false) {
         $theme_base = __DIR__ . '/../../themes/' . ($advanced ? 'advanced' : 'simple');
 
-        $base_folder = $this->attributes->get('folder');
-        $folder = './themes/' . $base_folder;
+        $folder = $this->attributes->get('folder');
         $namespace = $this->attributes->get('namespace');
+        $path = base_path('themes/' . $folder);
 
-        mkdir($folder, 0755, true);
-        $this->xcopy(__DIR__ . '/../../themes/shared', $folder);
-        $this->xcopy($theme_base, $folder);
+        mkdir($path, 0755, true);
+        $this->xcopy(__DIR__ . '/../../themes/shared', $path);
+        $this->xcopy($theme_base, $path);
 
         // We need to go through and find and replace everything in here with a different package name:
-        rename($folder . '/src/Providers/SodaExampleThemeServiceProvider.php', $folder . '/src/Providers/' . $namespace . 'ThemeServiceProvider.php');
+        rename($path . '/src/Providers/SodaExampleThemeServiceProvider.php', $path . '/src/Providers/' . $namespace . 'ThemeServiceProvider.php');
         if ($advanced) {
-            rename($folder . '/src/Components/SodaExampleInstance.php', $folder . '/src/Components/' . $namespace . 'Instance.php');
-            rename($folder . '/src/Facades/SodaExampleFacade.php', $folder . '/src/Facades/' . $namespace . 'Facade.php');
+            rename($path . '/src/Components/SodaExampleInstance.php', $path . '/src/Components/' . $namespace . 'Instance.php');
+            rename($path . '/src/Facades/SodaExampleFacade.php', $path . '/src/Facades/' . $namespace . 'Facade.php');
         }
         $this->info('Classes renamed.');
 
-        $this->findAndReplace('SodaExample', $namespace, $folder . '/src');
-        $this->findAndReplace('soda-example', $folder, $folder);
+        $this->findAndReplace('SodaExample', $namespace, $path . '/src');
+        $this->findAndReplace('soda-example', $folder, $path);
 
         $this->info('Theme references set.');
 
         $this->appendToComposerFile([
             "autoload" => [
                 "psr-4" => [
-                    "Themes\\{$namespace}\\" => "themes/$base_folder/src/",
+                    "Themes\\{$namespace}\\" => "themes/$folder/src/",
                 ],
             ],
         ]);
@@ -125,7 +125,7 @@ class Theme extends Command {
             $contents = file_get_contents($application_config);
 
             $old_provider = "Soda\\Cms\\Providers\\SodaServiceProvider::class,";
-            $provider_replacement = "        $serviceProvider,\n$old_provider";
+            $provider_replacement = "$serviceProvider,\n        $old_provider";
 
             $contents = str_replace($old_provider, $provider_replacement, $contents);
 
