@@ -12,9 +12,10 @@
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-square', 'title'=>$model->name?'Block: '.$model->name:'New Block'])
+	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-square', 'title'=> $model->name ? 'Block: ' . $model->name : 'New Block'])
 	<form method="POST" action='{{route('soda.block.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+		<input type="hidden" name="block_type_id" value="{{ $model->block_type_id }}" />
 
 		{!! Soda::field([
             'name'        => 'Block Name',

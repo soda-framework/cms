@@ -66,34 +66,27 @@ class PageController extends Controller {
     }
 
     public function edit(Request $request, $id = null) {
-        if ($id) {
-            $page = $this->model->findOrFail($id);
-        } else {
-            $page = new Page();
+        if($id) {
+            $this->model = $this->model->findOrFail($id);
         }
-        $page->fill($request->all());
-        $page->save();
+
+        $this->model->fill($request->all());
+        $this->model->save();
 
         //we also need to save the settings - careful here..
-        $page->load('type.fields');
+        $this->model->load('type.fields');
 
         if ($request->has('settings')) {
 
-            $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-                $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
+            $dyn_table = Soda::dynamicModel('soda_' . $this->model->type->identifier,
+                $this->model->type->fields->lists('field_name')->toArray())->where('page_id', $this->model->id)->first();
 
             $dyn_table->forceFill($request->input('settings'));
 
             $dyn_table->save();
         }
 
-        //$dyn_table->fill()
-
         return redirect()->route('soda.' . $this->hint . '.view', ['id' => $request->id])->with('success', 'page updated');
-    }
-
-    public function getMakeRoot($id) {
-        $this->model->find($id)->makeRoot(0);
     }
 
     /**

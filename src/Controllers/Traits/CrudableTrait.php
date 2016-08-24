@@ -11,14 +11,17 @@ Trait CrudableTrait {
     protected $saveOnCreate = false;
 
 
-    public function index() {
-
+    protected function buildFilter() {
         $filter = DataFilter::source($this->model);
         $filter->add('name', 'name', 'text');
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
 
+        return $filter;
+    }
+
+    protected function buildGrid($filter) {
         $grid = DataGrid::source($filter);  //same source types of DataSet
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
@@ -29,23 +32,35 @@ Trait CrudableTrait {
             return $edit;
         });
         $grid->orderBy('id', 'desc'); //default orderby
-        $grid->paginate(10)->getGrid('soda::partials.grid');
-        $hint = $this->hint;
 
-        return view('soda::' . $this->hint . '.index', compact('filter', 'grid', 'hint'));
+        return $grid;
     }
 
+    public function index() {
+        $filter = $this->buildFilter();
+        $grid = $this->buildGrid($filter);
+        $grid->paginate(10)->getGrid($this->getGridView());
 
-    public function view($id = null) {
-        if (!$id) {
-            $model = $this->model;
-        } else {
-            $model = $this->model->find($id);
+        return view($this->getView('index'), [
+            'filter' => $filter,
+            'grid'   => $grid,
+            'hint'   => $this->hint
+        ]);
+    }
+
+    public function view(Request $request, $id = null) {
+        if($id) {
+            $this->model = $this->model->findOrFail($id);
         }
 
-        $hint = $this->hint;
+        if($request->input('block_type_id')) {
+            $this->model->block_type_id = $request->input('block_type_id');
+        }
 
-        return view('soda::' . $this->hint . '.view', compact('model', 'hint'));
+        return view($this->getView('view'), [
+            'model' => $this->model,
+            'hint'  => $this->hint
+        ]);
     }
 
     public function edit(Request $request, $id = null) {
@@ -57,15 +72,28 @@ Trait CrudableTrait {
         $this->model->application_id = Soda::getApplication()->id;
         $this->model->save();
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
-            'updated');
+        return redirect()->route($this->getRouteTo('view'), [
+            'id' => $this->model->id
+        ])->with('success', 'updated');
     }
 
 
     public function delete($id) {
         $this->model->find($id)->delete();
 
-        return redirect()->route('soda.' . $this->hint)->with('success', 'updated');
+        return redirect()->route($this->getRouteTo())->with('success', 'updated');
+    }
+
+    protected function getView($view = null) {
+        return 'soda::' . $this->hint . ($view ? '.' . $view : '');
+    }
+
+    protected function getRouteTo($route = null) {
+        return 'soda.' . $this->hint . ($route ? '.' . $route : '');
+    }
+
+    protected function getGridView() {
+        return 'soda::partials.grid';
     }
 
 }

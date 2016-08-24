@@ -32,7 +32,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'fields'], function() {
                 Route::get('/', 'FieldController@index')->name('soda.field');
-                Route::get('view', 'FieldController@edit')->name('soda.field.create');
+                Route::get('view', 'FieldController@view')->name('soda.field.create');
                 Route::get('view/{id?}', 'FieldController@view')->name('soda.field.view');
                 Route::post('view/{id?}', 'FieldController@edit')->name('soda.field.edit');
                 Route::get('delete/{id?}', 'FieldController@delete')->name('soda.field.delete');
@@ -40,7 +40,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'blocks'], function(){
                 Route::get('/', 'BlockController@index')->name('soda.block');
-                Route::get('view', 'BlockController@edit')->name('soda.block.create');
+                Route::get('view', 'BlockController@view')->name('soda.block.create');
                 Route::get('view/{id?}', 'BlockController@view')->name('soda.block.view');
                 Route::post('view/{id?}', 'BlockController@edit')->name('soda.block.edit');
                 Route::get('delete/{id?}', 'BlockController@delete')->name('soda.block.delete');
