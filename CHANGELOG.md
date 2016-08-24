@@ -3,10 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.2.1] - 2016-08-24
+### Changed
+- Slug generation improvements
+
 ### Fixed
 - Upload folder config is now retrieved correctly
 - Page roots are now used correctly
+- Fixes to page tree view
 - Foreign keys for page/block types are now unique
+- Blocks are now added by their type
 
 ## [0.2.0] - 2016-08-23
 ### Changed
