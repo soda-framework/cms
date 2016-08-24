@@ -14,7 +14,6 @@ class Theme extends Command {
     protected $except = [];
     protected $attributes;
 
-
     public function handle() {
         $this->attributes = new Collection;
         $advanced = $this->option('advanced') ? true : false;
@@ -24,6 +23,9 @@ class Theme extends Command {
         $this->installTheme($advanced);
     }
 
+    /**
+     * Determine a suitable folder name and namespace from the user's input
+     */
     protected function configureTheme() {
         $theme_name = ucfirst($this->ask('Please enter your theme name (using CamelCase)', 'SodaSite'));
 
@@ -34,6 +36,11 @@ class Theme extends Command {
         $this->attributes->put('namespace', $namespace);
     }
 
+    /**
+     * Move and rename theme files based on user input
+     *
+     * @param bool $advanced
+     */
     protected function installTheme($advanced = false) {
         $theme_base = __DIR__ . '/../../themes/' . ($advanced ? 'advanced' : 'simple');
 
@@ -78,16 +85,24 @@ class Theme extends Command {
         $this->info('Done!');
     }
 
+    /**
+     * Guess a suitable classname based on the string provided
+     *
+     * @param $string
+     *
+     * @return string
+     */
     protected function anticipateThemeClass($string) {
         return studly_case($string);
     }
 
-    protected function anticipatePackageName($string) {
-        $package = snake_case($string);
-
-        return str_replace('_', '-', $package);
-    }
-
+    /**
+     * Merge config into the compser.json file
+     *
+     * @param $config
+     *
+     * @return $this
+     */
     protected function appendToComposerFile($config) {
         $file_path = base_path('composer.json');
         $composer_file = file_get_contents($file_path);
@@ -98,6 +113,11 @@ class Theme extends Command {
         return $this;
     }
 
+    /**
+     * Add a service provider to config/app.php
+     *
+     * @param $serviceProvider
+     */
     protected function addServiceProvider($serviceProvider) {
         $application_config = config_path('app.php');
 
@@ -113,6 +133,15 @@ class Theme extends Command {
         }
     }
 
+    /**
+     * Find and replace two strings recursively from within a path
+     *
+     * @param $needle
+     * @param $replace
+     * @param string $haystack
+     *
+     * @return $this
+     */
     protected function findAndReplace($needle, $replace, $haystack = "./") {
         $d = new RecursiveDirectoryIterator($haystack);
         foreach (new RecursiveIteratorIterator($d, 1) as $path) {

@@ -5,6 +5,8 @@ namespace Soda\Cms\Components\Forms\Fields;
 use Soda\Cms\Components\Forms\AbstractFormField;
 
 class FancyUpload extends AbstractFormField {
+    protected $view = "soda::inputs.fancy_upload";
+
     public function getDefaultParameters() {
         $field_name = $this->getFieldName();
         $field_params = $this->getFieldParameters();

@@ -4,12 +4,12 @@ namespace Soda\Cms\Components;
 use Exception;
 use Route;
 use Soda\Cms\Components\Forms\FormBuilder;
+use Soda\Cms\Components\Menu\MenuBuilder;
 use Soda\Cms\Components\Pages\PageBuilder;
 use Soda\Cms\Models\Application;
 use Soda\Cms\Models\ApplicationUrl;
 use Soda\Cms\Models\Block;
 use Soda\Cms\Models\ModelBuilder;
-use Soda\Cms\Models\NavigationItem;
 use Soda\Cms\Models\Page;
 
 class Soda {
@@ -17,13 +17,20 @@ class Soda {
     protected $blocks = [];
     protected $formBuilder;
     protected $pageBuilder;
+    protected $menuBuilder;
     protected $currentPage;
 
-    public function __construct(FormBuilder $formBuilder, PageBuilder $pageBuilder) {
+    public function __construct(FormBuilder $formBuilder, PageBuilder $pageBuilder, MenuBuilder $menuBuilder) {
         $this->formBuilder = $formBuilder;
         $this->pageBuilder = $pageBuilder;
+        $this->menuBuilder = $menuBuilder;
     }
 
+    /**
+     * Returns the current application loaded at the current URL
+     *
+     * @return null
+     */
     public function getApplication() {
         if (!$this->application) {
             $this->loadApplication();
@@ -32,12 +39,25 @@ class Soda {
         return $this->application;
     }
 
+    /**
+     * Sets the application
+     *
+     * @param \Soda\Cms\Models\Application $application
+     *
+     * @return $this
+     */
     public function setApplication(Application $application) {
         $this->application = $application;
 
         return $this;
     }
 
+    /**
+     * Determines the application by our current URL and sets it
+     *
+     * @return \Soda\Cms\Components\Soda
+     * @throws \Exception
+     */
     protected function loadApplication() {
         $domain = $_SERVER['HTTP_HOST'];
         $applicationUrl = ApplicationUrl::whereDomain($domain)->first();
@@ -55,6 +75,13 @@ class Soda {
         Throw new Exception('No application found at URL');
     }
 
+    /**
+     * Get a block by its identifier
+     *
+     * @param $identifier
+     *
+     * @return mixed
+     */
     public function getBlock($identifier) {
         if (!isset($this->blocks[$identifier])) {
             $this->blocks[$identifier] = Block::with('type')->where('identifier', $identifier)->first();
@@ -63,76 +90,70 @@ class Soda {
         return $this->blocks[$identifier];
     }
 
+    /**
+     * Load a dynamic model
+     *
+     * @param $table
+     *
+     * @return mixed
+     */
     public function dynamicModel($table) {
         return ModelBuilder::fromTable($table, []);
     }
 
+    /**
+     * Set the current page that we're visiting
+     *
+     * @param \Soda\Cms\Models\Page $page
+     */
     public function setCurrentPage(Page $page) {
         $this->currentPage = $page;
     }
 
+    /**
+     * Get the current page that we're visiting
+     *
+     * @return mixed
+     */
     public function getCurrentPage() {
         return $this->currentPage;
     }
 
+    /**
+     * Return instance of PageBuilder
+     *
+     * @return \Soda\Cms\Components\Pages\PageBuilder
+     */
     public function getPageBuilder() {
         return $this->pageBuilder;
     }
 
     /**
-     * renders a menu tree
+     * Return instance of MenuBuilder
      *
-     * @param $name
-     * @param string $view
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Soda\Cms\Components\Pages\MenuBuilder
      */
-    public function menu($name, $view = 'soda::tree.menu') {
-        $nav = NavigationItem::where('name', $name)->first();
-        if ($nav) {
-            $tree = $nav->grabTree($nav->id);
-
-            return view($view, ['tree' => $tree, 'hint' => 'page']);
-        }
+    public function getMenuBuilder() {
+        return $this->menuBuilder;
     }
 
     /**
-     * returns active if given route matches current route.
-     * TODO: move to menu class somewhere?
+     * Return instance of FormBuilder
      *
-     * @param $route
-     * @param string $output
-     *
-     * @return string
+     * @return \Soda\Cms\Components\Pages\FormBuilder
      */
-    public function menuActive($route, $output = 'active') {
-        if (Route::currentRouteName() == $route) {
-            return $output;
-        }
-    }
-
     public function getFormBuilder() {
         return $this->formBuilder;
     }
 
-    public function getFieldTypes() {
-        return $this->field_types;
-    }
-
-    public function field($field) {
-        return $this->formBuilder->newField($field);
-    }
-
     /**
-     * EXPERAMENTAL renders an editable field
+     * Build a FormField from array or Field model
      *
-     * @param $model
-     * @param $element
-     * @param $type
+     * @param $field
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return mixed
      */
-    public function editable($model, $element, $type) {
-        return $this->formBuilder->editable($model, $element, $type);
+    public function field($field) {
+        return $this->getFormBuilder()->newField($field);
     }
 }

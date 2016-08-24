@@ -12,8 +12,8 @@ interface FormFieldInterface {
     public function getLayout();
     public function setLayout($layout);
 
-    public function getTheme();
-    public function setTheme($theme);
+    public function getView();
+    public function setView($view);
 
     public function getModel();
     public function setModel($model);

@@ -5,6 +5,8 @@ namespace Soda\Cms\Components\Forms\Fields;
 use Soda\Cms\Components\Forms\AbstractFormField;
 
 class Tinymce extends AbstractFormField {
+    protected $view = "soda::inputs.tinymce";
+
     public function getDefaultParameters() {
         return [
             'selector'     => '#field_' . $this->getFieldName(),

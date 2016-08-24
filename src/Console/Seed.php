@@ -10,6 +10,9 @@ class Seed extends Command {
     protected $description = 'Seed the Soda Database';
     protected $except = [];
 
+    /**
+     * Runs seeds for Soda CMS, defaulting to 'SodaSeeder'
+     */
     public function handle() {
         $this->call('db:seed', [
             '--class' => $this->option('class')

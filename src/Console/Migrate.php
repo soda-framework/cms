@@ -10,8 +10,11 @@ class Migrate extends Command {
     protected $description = 'Migrate the Soda Database';
     protected $except = [];
 
+    /**
+     * Runs all database migrations for Soda
+     */
     public function handle() {
-        $this->call('db:seed', [
+        $this->call('migrate', [
             '--path' => '/vendor/soda-framework/cms/database/migrations'
         ]);
     }

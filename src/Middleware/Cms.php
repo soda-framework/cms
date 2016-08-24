@@ -3,12 +3,16 @@
 namespace Soda\Cms\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 use Soda\Cms\Models\Block;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Page;
 use Soda\Cms\Models\PageType;
 
+/*
+ *
+ * This middleware disables all drafting in the CMS, so drafted entries remain visible
+ *
+ */
 class Cms {
     /**
      * Handle an incoming request.

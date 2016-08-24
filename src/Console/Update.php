@@ -14,7 +14,6 @@ class Update extends Command {
         if ($this->option('all')) {
             $this->updateCms();
             $this->updateModules();
-            $this->updateStyles();
         } else {
             if ($this->option('cms')) {
                 $this->updateCms();
@@ -25,6 +24,9 @@ class Update extends Command {
         }
     }
 
+    /**
+     * Update CMS via composer
+     */
     protected function updateCms() {
         $this->info('Updating Soda CMS via Composer...');
         shell_exec('composer update soda-framework/cms');
@@ -33,6 +35,9 @@ class Update extends Command {
         $this->call('soda:assets');
     }
 
+    /**
+     * Update all Soda-vendored modules
+     */
     protected function updateModules() {
         $this->info('Updating Soda modules via Composer...');
         shell_exec('composer update soda-framework/*');

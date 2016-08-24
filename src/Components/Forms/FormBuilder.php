@@ -8,25 +8,46 @@ use Soda\Cms\Models\Field;
 use Soda\Cms\Models\ModelBuilder;
 
 class FormBuilder {
-    protected $field_types = [];
     protected $registered_fields = [];
 
+    /**
+     * Registers a new CMS form field
+     *
+     * @param $name
+     * @param null $field_class
+     */
     public function register($name, $field_class = null){
         if(new $field_class instanceof FormFieldInterface) {
             $this->registered_fields[$name] = $field_class;
         }
     }
 
+    /**
+     * Registers an array of new CMS form fields
+     *
+     * @param $formFields
+     */
     public function registerMany($formFields) {
         foreach($formFields as $field_name => $field_class) {
             $this->register($field_name, $field_class);
         }
     }
 
+    /**
+     * Returns a list of form fields that have been registered
+     *
+     * @return array
+     */
     public function getRegisteredFields() {
         return $this->registered_fields;
     }
 
+    /**
+     * Returns an array of registered fields, keyed by field slug,
+     * values in readable format
+     *
+     * @return array
+     */
     public function getFieldTypes() {
         return array_map(function($value) {
             $class_name = class_basename($value);
@@ -34,6 +55,14 @@ class FormBuilder {
         }, $this->getRegisteredFields());
     }
 
+    /**
+     * Instantiates a new FormField from our Field model or array
+     *
+     * @param $field
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function newField($field) {
         if (is_array($field)) {
             $field = new Field($field);
@@ -55,6 +84,16 @@ class FormBuilder {
         return $field_class->setField($field);
     }
 
+    /**
+     * Work In Progress
+     * Returns a view for an inline editable field
+     *
+     * @param $model
+     * @param $element
+     * @param $type
+     *
+     * @return \Illuminate\View\View
+     */
     public function editable($model, $element, $type) {
         $field_value = $model->{$element};
         if (Request::get('soda_edit')) {
@@ -82,6 +121,13 @@ class FormBuilder {
         }
     }
 
+    /**
+     * Formats a JSON string to be pasted into our Javascript
+     *
+     * @param $parameters
+     *
+     * @return string
+     */
     public function buildJsParams($parameters) {
         if(!$parameters) return '';
 

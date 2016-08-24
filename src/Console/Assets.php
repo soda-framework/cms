@@ -10,6 +10,9 @@ class Assets extends Command {
     protected $description = 'Update assets for the Soda Framework';
     protected $except = [];
 
+    /**
+     * Force publishes Soda CMS assets
+     */
     public function handle() {
         $this->info('Updating Soda styles and assets...');
         $this->callSilent('vendor:publish', [
