@@ -6,34 +6,34 @@
 
 @section('content')
 
-    <p>{{ $model->description }}</p>
-
     @include(config('soda.hint_path').'::partials.heading', [
         'icon'  => 'fa fa-file-o',
         'title' => $model->name ? $model->name : 'New ' . ($model->type ? $model->type->name . " Page" : "Page"),
     ])
 
+    <p class="text-muted">{{ $model->description }}</p><br />
+
     <ul class="nav nav-tabs" role="tablist">
         <li role='presentation' class="active" aria-controls="Page View">
-            <a role="tab" data-toggle="tab" href="#pageview">Page</a>
+            <a role="tab" data-toggle="tab" href="#tab_page">Page</a>
         </li>
         @if($model->type && count($model->type->fields))
-            <li role='presentation' aria-controls="{{ $model->type->name }}">
-                <a role="tab" data-toggle="tab" href="#normalview">{{ $model->type->name }}</a>
+            <li role='presentation' aria-controls="page_type_{{ $model->type->id }}">
+                <a role="tab" data-toggle="tab" href="#tab_page_type_{{ $model->type->id }}">{{ $model->type->name }}</a>
             </li>
         @endif
         @foreach($model->blocks as $block)
             @if($block->type->edit_action_type == 'view')
                 <li role='presentation' aria-controls="block_{{ $block->id }}">
-                    <a role="tab" data-toggle="tab" href="#block_{{ $block->id }}">{{ $block->name }}</a>
+                    <a role="tab" data-toggle="tab" href="#tab_block_{{ $block->id }}">{{ $block->name }}</a>
                 </li>
             @endif
         @endforeach
         <li role='presentation' aria-controls="Live View">
-            <a role="tab" data-toggle="tab" href="#liveview">Live View</a>
+            <a role="tab" data-toggle="tab" href="#tab_live">Live View</a>
         </li>
         <li role='presentation' aria-controls="Advanced View">
-            <a role="tab" data-toggle="tab" href="#advancedview">Advanced</a>
+            <a role="tab" data-toggle="tab" href="#tab_advanced">Advanced</a>
         </li>
     </ul>
 
@@ -44,7 +44,7 @@
         @endif
         <input type="hidden" name="parent_id" value="{{ $model->parent_id }}" />
         <div class="tab-content">
-            <div class="tab-pane active" id="pageview" role="tabpanel">
+            <div class="tab-pane active" id="tab_page" role="tabpanel">
                 <p>Customise page details</p>
                 {!! SodaForm::text([
                     "name"        => "Name",
@@ -71,20 +71,24 @@
                     'description' => 'The description of this page',
                     'field_name'  => 'description',
                 ])->setModel($model) !!}
+
+                <input class="btn btn-success" type="submit" value="Save" />
             </div>
 
             @if($model->type)
-                <div class="tab-pane" id="normalview" role="tabpanel">
+                <div class="tab-pane" id="tab_page_type_{{ $model->type->id }}" role="tabpanel">
                     @if($model->type && $model->type->fields)
                         @foreach($model->type->fields as $field)
                             {!! SodaForm::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
                         @endforeach
                     @endif
+
+                    <input class="btn btn-success" type="submit" value="Save" />
                 </div>
             @endif
             @foreach($model->blocks as $block)
                 @if($block->type->edit_action_type == 'view')
-                    <div class="tab-pane" id="block_{{ $block->id }}" role="tabpanel">
+                    <div class="tab-pane" id="tab_block_{{ $block->id }}" role="tabpanel">
                         @include($block->type->edit_action, [
                             'unique' => uniqid(),
                             'render' => 'card',
@@ -96,7 +100,7 @@
                 {{--loads a block into place.. --}}
             @endforeach
 
-            <div class="tab-pane" id="liveview" role="tabpanel">
+            <div class="tab-pane" id="tab_live" role="tabpanel">
                 @if($model->slug)
                     <p>Use this tab to customise information on the page in a live view</p>
                     <p>{{ $model->slug }}</p>
@@ -106,7 +110,7 @@
                 @endif
             </div>
 
-            <div class="tab-pane" id="advancedview" role="tabpanel">
+            <div class="tab-pane" id="tab_advanced" role="tabpanel">
                 <p>Advanced page details</p>
 
                 {!! SodaForm::text([
@@ -133,8 +137,9 @@
                     'name'        => 'Edit Action Type',
                     'field_name'  => 'edit_action_type',
                 ])->setModel($model) !!}
+
+                <input class="btn btn-success" type="submit" value="Save" />
             </div>
         </div>
-        <input class="btn btn-success" type="submit" value="save"/>
     </form>
 @stop
