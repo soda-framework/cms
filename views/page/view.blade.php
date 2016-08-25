@@ -1,6 +1,3 @@
-<?php
-$has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
-?>
 @extends(config('soda.hint_path').'::layouts.inner')
 
 @section('header')
@@ -69,7 +66,7 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
                     'field_params' => ['options' => Soda\Cms\Components\Status::all()],
                 ])->setModel($model) !!}
 
-                {!! SodaForm::text([
+                {!! SodaForm::textarea([
                     'name'        => 'Description',
                     'description' => 'The description of this page',
                     'field_name'  => 'description',
@@ -135,11 +132,6 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
                 {!! SodaForm::text([
                     'name'        => 'Edit Action Type',
                     'field_name'  => 'edit_action_type',
-                ])->setModel($model) !!}
-
-                {!! SodaForm::textarea([
-                    'name'        => 'Description',
-                    'field_name'  => 'description',
                 ])->setModel($model) !!}
             </div>
         </div>
