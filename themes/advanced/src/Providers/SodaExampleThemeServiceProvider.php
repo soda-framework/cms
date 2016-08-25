@@ -39,7 +39,7 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
             'SodaExample' => 'Themes\SodaExample\Facades\SodaExampleFacade',
         ]);
 
-        $this->publishes([__DIR__ . '/../../public' => public_path('soda-example')], 'public');
+        $this->publishes([__DIR__ . '/../../public' => public_path('themes/soda-example')], 'public');
         $this->publishes([__DIR__ . '/../../config' => config_path()]);
     }
 

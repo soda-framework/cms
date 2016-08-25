@@ -15,12 +15,12 @@
 
 @section('head.css')
     <!-- Styles -->
-    <link href="/soda-example/css/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/themes/soda-example/css/styles.min.css" rel="stylesheet" type="text/css">
 @stop
 
 @section('head.js')
     <!-- JavaScripts -->
-    <script src="/soda-example/js/application.min.js"></script>
+    <script src="/themes/soda-example/js/application.min.js"></script>
 @stop
 
 @section('head.extra')

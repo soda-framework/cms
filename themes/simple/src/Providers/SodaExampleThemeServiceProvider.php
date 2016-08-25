@@ -27,7 +27,7 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
     }
 
     public function register() {
-        $this->publishes([__DIR__ . '/../../public' => public_path('soda-example')], 'public');
+        $this->publishes([__DIR__ . '/../../public' => public_path('themes/soda-example')], 'public');
     }
 
     /**

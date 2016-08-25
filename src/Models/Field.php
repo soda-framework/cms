@@ -26,8 +26,6 @@ class Field extends Model {
         return $this->morphedByMany(PageType::class, 'fieldable');
     }
 
-    /**/
-
     public static function getFieldTypes() {
         return Soda::getFormBuilder()->getFieldTypes();
     }
