@@ -53,7 +53,7 @@ trait DynamicCreatorTrait {
                 Schema::table($table, function (Blueprint $table) use ($reference_index) {
                     $table->dropForeign($reference_index);
                 });
-                
+
                 Schema::rename($table, $table . '_deleted_' . Carbon::now()->timestamp);
             }
         });

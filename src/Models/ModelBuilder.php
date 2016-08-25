@@ -58,7 +58,7 @@ class ModelBuilder extends Model {
     }
 
     public function parseField(Field $field, Request $request) {
-        $field = Soda::getFormBuilder()->newField($field);
+        $field = SodaForm::field($field);
 
         $field->saveToModel($this, $request);
 
