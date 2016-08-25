@@ -50,8 +50,11 @@ trait DynamicCreatorTrait {
                 $reference_table = $type->getDynamicType() . 's';
                 $reference_index = 'FK_' . $type->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
 
+                Schema::table($table, function (Blueprint $table) use ($reference_index) {
+                    $table->dropForeign($reference_index);
+                });
+                
                 Schema::rename($table, $table . '_deleted_' . Carbon::now()->timestamp);
-                $table->dropForeign($reference_index);
             }
         });
     }
