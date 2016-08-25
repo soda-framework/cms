@@ -11,42 +11,42 @@ abstract class AbstractFormField implements FormFieldInterface {
     /**
      * The Field model that our FormField is built from.
      *
-     * @var array
+     * @var string
      */
     protected $field;
 
     /**
      * Prefix our form field name, to prevent collisions
      *
-     * @var array
+     * @var string
      */
     protected $prefix;
 
     /**
      * Apply a custom class to our form field HTML.
      *
-     * @var array
+     * @var string
      */
     protected $class;
 
     /**
      * The model used to prefill our form field.
      *
-     * @var array
+     * @var Illuminate\Database\Eloquent\Model
      */
     protected $model = null;
 
     /**
-     * The view used to lay out out FormField block.
+     * The view used to lay out our FormField block.
      *
-     * @var array
+     * @var string
      */
     protected $layout = "soda::inputs.layouts.inline";
 
     /**
      * The view used to display our form field
      *
-     * @var array
+     * @var string
      */
     protected $view;
 

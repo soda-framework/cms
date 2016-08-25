@@ -17,14 +17,21 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
     ])
 
     <ul class="nav nav-tabs" role="tablist">
-        @if($has_fields_or_blocks)
-            <li role='presentation' class="active" aria-controls="{{ $model->type->name }}">
+        <li role='presentation' class="active" aria-controls="Page View">
+            <a role="tab" data-toggle="tab" href="#pageview">Page</a>
+        </li>
+        @if($model->type && count($model->type->fields))
+            <li role='presentation' aria-controls="{{ $model->type->name }}">
                 <a role="tab" data-toggle="tab" href="#normalview">{{ $model->type->name }}</a>
             </li>
         @endif
-        <li role='presentation' {!! $has_fields_or_blocks ? '' : 'class="active"' !!} aria-controls="Page View">
-            <a role="tab" data-toggle="tab" href="#pageview">Page</a>
-        </li>
+        @foreach($model->blocks as $block)
+            @if($block->type->edit_action_type == 'view')
+                <li role='presentation' aria-controls="block_{{ $block->id }}">
+                    <a role="tab" data-toggle="tab" href="#block_{{ $block->id }}">{{ $block->name }}</a>
+                </li>
+            @endif
+        @endforeach
         <li role='presentation' aria-controls="Live View">
             <a role="tab" data-toggle="tab" href="#liveview">Live View</a>
         </li>
@@ -40,27 +47,7 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
         @endif
         <input type="hidden" name="parent_id" value="{{ $model->parent_id }}" />
         <div class="tab-content">
-            @if($has_fields_or_blocks)
-                <div class="tab-pane active" id="normalview" role="tabpanel">
-                    @if($model->type && $model->type->fields)
-                        @foreach($model->type->fields as $field)
-                            {!! SodaForm::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
-                        @endforeach
-                    @endif
-                    @foreach($model->blocks as $block)
-                        {{--loads a block into place.. --}}
-                        @if($block->type->edit_action_type == 'view')
-                            @include($block->type->edit_action, [
-                                'unique' => uniqid(),
-                                'render' => 'card',
-                                'block'  => $block,
-                                'models' => Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->paginate()
-                            ])
-                        @endif
-                    @endforeach
-                </div>
-            @endif
-            <div class="tab-pane {{ $has_fields_or_blocks ? '' : 'active' }}" id="pageview" role="tabpanel">
+            <div class="tab-pane active" id="pageview" role="tabpanel">
                 <p>Customise page details</p>
                 {!! SodaForm::text([
                     "name"        => "Name",
@@ -88,6 +75,29 @@ $has_fields_or_blocks = Soda\Cms\Models\Page::hasFieldsOrBlocks($model)
                     'field_name'  => 'description',
                 ])->setModel($model) !!}
             </div>
+
+            @if($model->type)
+                <div class="tab-pane" id="normalview" role="tabpanel">
+                    @if($model->type && $model->type->fields)
+                        @foreach($model->type->fields as $field)
+                            {!! SodaForm::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
+                        @endforeach
+                    @endif
+                </div>
+            @endif
+            @foreach($model->blocks as $block)
+                @if($block->type->edit_action_type == 'view')
+                    <div class="tab-pane" id="block_{{ $block->id }}" role="tabpanel">
+                        @include($block->type->edit_action, [
+                            'unique' => uniqid(),
+                            'render' => 'card',
+                            'block'  => $block,
+                            'models' => Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->paginate()
+                        ])
+                    </div>
+                @endif
+                {{--loads a block into place.. --}}
+            @endforeach
 
             <div class="tab-pane" id="liveview" role="tabpanel">
                 @if($model->slug)
