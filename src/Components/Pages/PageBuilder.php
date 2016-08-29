@@ -52,7 +52,7 @@ class PageBuilder {
      * @return array
      */
     public function getActionTypes() {
-        return array_map('ucfirst', array_combine($this->actions, array_keys($this->actions)));
+        return array_map('ucfirst', array_combine(array_keys($this->actions), array_keys($this->actions)));
     }
 
     /**
