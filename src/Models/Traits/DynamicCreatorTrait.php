@@ -31,7 +31,7 @@ trait DynamicCreatorTrait {
                     $reference_index = 'FK_' . $type->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
 
                     $table->increments('id');
-                    $table->integer($reference_column)->unsigned()->nullable()->index($reference_index);
+                    $table->integer($reference_column)->unsigned()->nullable();
                     $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
                     $table->timestamps();
                 });

@@ -1,40 +1,40 @@
 /*
 
-###################
-#                 #
-#  ASSET OPTIONS  #
-#                 #
-###################
+ ###################
+ #                 #
+ #  ASSET OPTIONS  #
+ #                 #
+ ###################
 
-TYPE -------- OPTION -------- DEFAULT ------ DESCRIPTION
-global ------ path ---------- undefined ---- pattern to match file in input folder
-css --------- outputs ------- compressed --- output style (compressed, expanded, etc)
-css --------- autoprefix ---- true --------- automatically adds vendor prefixes for unsupported css (e.g. -webkit, -moz)
-css --------- precision ----- 8 -------------number precision - useful if compiling bootstrap with its line-height var set to 1095702915325423 decimal places
-css --------- sourcemaps ---- true --------- publish sourcemap?
-css --------- min_suffix ---- true --------- add .min suffix to minifed files?
-css --------- show_size ----- true --------- show file size in console log (minified only)
-js ---------- sourcemaps ---- true --------- publish sourcemap?
-js ---------- min_suffix ---- true --------- add .min suffix to minifed files?
-js ---------- show_size ----- true --------- show file size in console log (original + minified)
-components -- sourcemaps ---- false -------- publish sourcemap?
-components -- min_suffix ---- true --------- add .min suffix to minifed files?
-components -- show_size ----- true --------- show file size in console log (original + minified)
+ TYPE -------- OPTION -------- DEFAULT ------ DESCRIPTION
+ global ------ path ---------- undefined ---- pattern to match file in input folder
+ css --------- outputs ------- compressed --- output style (compressed, expanded, etc)
+ css --------- autoprefix ---- true --------- automatically adds vendor prefixes for unsupported css (e.g. -webkit, -moz)
+ css --------- precision ----- 8 -------------number precision - useful if compiling bootstrap with its line-height var set to 1095702915325423 decimal places
+ css --------- sourcemaps ---- true --------- publish sourcemap?
+ css --------- min_suffix ---- true --------- add .min suffix to minifed files?
+ css --------- show_size ----- true --------- show file size in console log (minified only)
+ js ---------- sourcemaps ---- true --------- publish sourcemap?
+ js ---------- min_suffix ---- true --------- add .min suffix to minifed files?
+ js ---------- show_size ----- true --------- show file size in console log (original + minified)
+ components -- sourcemaps ---- false -------- publish sourcemap?
+ components -- min_suffix ---- true --------- add .min suffix to minifed files?
+ components -- show_size ----- true --------- show file size in console log (original + minified)
 
 
-###################
-#                 #
-# PUBLISH OPTIONS #
-#                 #
-###################
+ ###################
+ #                 #
+ # PUBLISH OPTIONS #
+ #                 #
+ ###################
 
-TYPE -------- OPTION -------- DEFAULT ------ DESCRIPTION
-global ------ path ---------- undefined ---- pattern to publish files of type
-css --------- clean --------- false -------- if true, path will be cleared before publish.
-js ---------- clean --------- false -------- if true, path will be cleared before publish.
-components -- clean --------- true --------- if true, path will be cleared before publish.
+ TYPE -------- OPTION -------- DEFAULT ------ DESCRIPTION
+ global ------ path ---------- undefined ---- pattern to publish files of type
+ css --------- clean --------- false -------- if true, path will be cleared before publish.
+ js ---------- clean --------- false -------- if true, path will be cleared before publish.
+ components -- clean --------- true --------- if true, path will be cleared before publish.
 
-*/
+ */
 
 module.exports = {
 
@@ -44,6 +44,9 @@ module.exports = {
         svg: {
             template:       'resources/scss/font/_font.tpl',
             formats:        ['ttf', 'eot', 'woff', 'woff2', 'svg']
+        },
+        font: {
+            path:           'fonts',
         }
     },
 
@@ -65,20 +68,17 @@ module.exports = {
             },
             components: {
                 clean:      true,
+            },
+            font: {
+                path:       'fonts',
             }
         }
     ],
 
     //list all bower components, separated into arrays of packages to be concatenated
     components: {
-
-        app : [
-            'resources/js/application.js'
+        scripts : [
+            'resources/components/jquery/dist/jquery.js'
         ]
-
-        //cms: [
-            //'resources/components/tinymce/tinymce.js',
-            //'resources/components/jquery-ui/jquery-ui.js',
-        //],
     }
 };

@@ -143,12 +143,13 @@ class SodaServiceProvider extends ServiceProvider {
             return $value;
         });
 
-        Blade::directive('attributes', function ($attributes = null) {
-            return '<?php if(@$attributes){
-                    foreach($attributes as $key=>$attribute){
-                            echo " $key=\\"$attribute\\" ";
-                    }
-                }?>';
+        Blade::directive('attributes', function ($expression = null) {
+            return '<?php if(isset' . $expression . ') {
+                                foreach(' . $expression . ' as $key => $attribute) {
+                                    echo " $key=\"$attribute\"";
+                                }
+                          }
+            ?>';
         });
     }
 }

@@ -20,6 +20,7 @@
 
 @section('head.js')
     <!-- JavaScripts -->
+    <script src="/themes/soda-example/js/scripts.min.js"></script>
     <script src="/themes/soda-example/js/application.min.js"></script>
 @stop
 
