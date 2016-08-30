@@ -93,7 +93,7 @@
                             'unique' => uniqid(),
                             'render' => 'card',
                             'block'  => $block,
-                            'models' => Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->where('block_id', $block->id)->toArray())->paginate()
+                            'models' => Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->where('block_id', $block->id)->paginate()
                         ])
                     </div>
                 @endif

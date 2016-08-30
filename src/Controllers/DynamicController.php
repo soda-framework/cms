@@ -28,7 +28,7 @@ class DynamicController extends Controller {
     public function view($type = null, $id = null) {
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
-        return view('soda::standard.view', ['type' => $this->block->type, 'model' => $model]);
+        return view('soda::standard.view', ['block' => $this->block, 'model' => $model]);
     }
 
     public function edit(Request $request, $type = null, $id = null) {
@@ -43,7 +43,7 @@ class DynamicController extends Controller {
         $model->save();
 
         return redirect()->route('soda.dyn.view', [
-            'type' => $this->block->type->identifier,
+            'type' => $this->block->identifier,
             'id' => $model->id
         ])->with('success', 'updated!');
     }
