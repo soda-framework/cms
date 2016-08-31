@@ -50,5 +50,7 @@
 		</tbody>
 	</table>
 
+	{!! $models->render() !!}
+
 	<a href="{{route('soda.page.block.view',['page_id' => $page->id, 'type' => $block->identifier])}}" class="btn btn-primary">create</a>
 @overwrite

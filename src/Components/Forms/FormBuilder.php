@@ -1,5 +1,4 @@
-<?php
-namespace Soda\Cms\Components\Forms;
+<?php namespace Soda\Cms\Components\Forms;
 
 use Exception;
 use Config;

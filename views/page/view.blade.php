@@ -94,7 +94,7 @@
                             'render' => 'card',
                             'block'  => $block,
                             'page'   => $model,
-                            'models' => $model->dynamicBlock($block)->paginate()
+                            'models' => $model->dynamicBlock($block)->paginate(null, ['*'], $block->identifier .'-page')
                         ])
                     </div>
                 @endif
