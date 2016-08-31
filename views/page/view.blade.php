@@ -144,3 +144,14 @@
         </div>
     </form>
 @stop
+
+@section('footer.js')
+    @parent
+    <script>
+        @foreach($model->blocks as $block)
+            @if(Request::has($block->identifier . '-page'))
+                $('a[href="#tab_block_{{ $block->id }}"]').tab('show');
+            @endif
+        @endforeach
+    </script>
+@stop
