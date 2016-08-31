@@ -4,6 +4,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2016-08-31
+### Added
+- Blocks now have the ability to be tied in with a particular page
+
+### Changed
+- Theme assets now published into 'themes' subdirectory
+- Page view layout improved
+- Config files separated
+
+### Fixed
+- MySQL foreign key index issue
+- Theme command fixed
+
 ## [0.2.1] - 2016-08-24
 ### Changed
 - Slug generation improvements

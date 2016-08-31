@@ -2,6 +2,7 @@
 namespace Soda\Cms\Components\Forms;
 
 use Exception;
+use Config;
 use Request;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Field;
@@ -112,5 +113,31 @@ class FormBuilder {
         } else {
             throw new Exception("Field " . $name ." is not registered.");
         }
+    }
+
+    /**
+     * Set the default path to input layouts
+     *
+     * @param $layout
+     *
+     * @return $this
+     */
+    public function setDefaultLayout($layout) {
+        Config::set('soda.cms.form.default-layout', $layout);
+
+        return $this;
+    }
+
+    /**
+     * Set the default path to input views
+     *
+     * @param $view_path
+     *
+     * @return $this
+     */
+    public function setDefaultViewPath($view_path) {
+        Config::set('soda.cms.form.default-view-path', $view_path);
+
+        return $this;
     }
 }

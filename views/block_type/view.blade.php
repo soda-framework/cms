@@ -1,11 +1,11 @@
-@extends(config('soda.hint_path').'::layouts.inner')
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('header')
 	<title>Block Types</title>
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-pencil-square', 'title'=>$model->name?'Block Type: '.$model->name:'New Block Type'])
+	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-pencil-square', 'title'=>$model->name?'Block Type: '.$model->name:'New Block Type'])
 	<form method="POST" action='{{ route('soda.'.$hint.'.edit',['id'=>@$model->id]) }}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

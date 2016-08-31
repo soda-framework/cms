@@ -1,11 +1,11 @@
-@extends(config('soda.hint_path').'::layouts.inner')
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('header')
 	<title>Pages</title>
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-file-o', 'title'=>'Pages'])
+	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-file-o', 'title'=>'Pages'])
 	{!! $tree !!}
 
 	<a data-tree-add href="{{route('soda.'.$hint.'.create')}}" class="btn btn-primary btn-lg">

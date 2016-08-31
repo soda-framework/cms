@@ -1,4 +1,4 @@
-@extends(config('soda.hint_path').'::layouts.app')
+@extends(soda_cms_view_path('layouts.app'))
 
 @section('main-content')
     <div class="container">

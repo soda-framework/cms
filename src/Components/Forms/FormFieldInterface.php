@@ -14,6 +14,9 @@ interface FormFieldInterface {
     public function getLayout();
     public function setLayout($layout);
 
+    public function getViewPath();
+    public function setViewPath($path);
+
     public function getView();
     public function setView($view);
 

@@ -1,4 +1,4 @@
-@extends(config('soda.hint_path').'::layouts.inner')
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('header')
 
@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>$model->id?'fa fa-user':'fa fa-user-plus', 'title'=>$model->name?'Field: '.$model->name:'New User'])
+	@include(soda_cms_view_path('partials.heading'),['icon'=>$model->id?'fa fa-user':'fa fa-user-plus', 'title'=>$model->name?'Field: '.$model->name:'New User'])
 	<form method="POST" action='{{route('soda.field.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		{!! SodaForm::text([

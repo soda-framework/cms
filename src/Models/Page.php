@@ -31,6 +31,8 @@ class Page extends AbstractSodaClosureEntity {
         'edit_action_type',
     ];
 
+    protected $dynamicBlocks = [];
+
     /**
      * ClosureTable model instance.
      *
@@ -55,6 +57,37 @@ class Page extends AbstractSodaClosureEntity {
 
     public function blocks() {
         return $this->belongsToMany(Block::class, 'page_blocks');
+    }
+
+    public function getDynamicBlock($block) {
+        if(!$this->dynamicBlockLoaded($block)) {
+            $this->loadDynamicBlock($block);
+        }
+
+        return $this->dynamicBlocks[$block->type->identifier];
+    }
+
+    public function dynamicBlock($block) {
+        $identifier = $block->type->identifier;
+        $fields = $block->type->fields;
+        $id = $block->id;
+
+        return Soda::dynamicModel('soda_' . $identifier, $fields->lists('field_name')->toArray())->where('block_id', $id)->where(function($q){
+            $q->where('is_shared', 1)->orWhere('page_id', $this->id);
+        });
+    }
+
+    public function loadDynamicBlock($block) {
+        $identifier = $block->type->identifier;
+        $this->dynamicBlocks[$identifier] = $this->dynamicBlock($block)->get();
+    }
+
+    public function dynamicBlockLoaded($identifier) {
+        if($identifier instanceOf Block) {
+            $identifier = $identifier->type->identifier;
+        }
+
+        return isset($this->dynamicBlocks[$identifier]);
     }
 
     public function setSlugAttribute($value) {

@@ -1,4 +1,4 @@
-@extends(config('soda.hint_path').'::layouts.inner')
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('header')
 
@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-users', 'title'=>'Users'])
+	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-users', 'title'=>'Users'])
 	<p>
 		Fields are added onto pages.
 	</p>

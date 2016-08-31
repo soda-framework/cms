@@ -1,4 +1,4 @@
-@extends(config('soda.hint_path').'::wrappers.'.$render)
+@extends(soda_cms_view_path('wrappers.'.$render))
 
 @section('wrapper-content')
 	<p>{{ $block->type->description}}</p>
@@ -42,13 +42,13 @@
 					@endif
 				@endforeach
 				<td>
-					<a href="{{route('soda.dyn.view',['id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-success btn-sm"><span class="fa fa-pencil"></span></a>
-					<a href="{{route('soda.dyn.delete',['id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-danger btn-sm"><span class="fa fa-remove"></span></a>
+					<a href="{{route('soda.page.block.view', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-success btn-sm"><span class="fa fa-pencil"></span></a>
+					<a href="{{route('soda.page.block.delete', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-danger btn-sm"><span class="fa fa-remove"></span></a>
 				</td>
 			</tr>
 		@endforeach
 		</tbody>
 	</table>
 
-	<a href="{{route('soda.dyn.view',['type'=>$block->identifier])}}" class="btn btn-primary">create</a>
+	<a href="{{route('soda.page.block.view',['page_id' => $page->id, 'type' => $block->identifier])}}" class="btn btn-primary">create</a>
 @overwrite

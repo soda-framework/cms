@@ -29,5 +29,8 @@
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.5",
     "merge-stream": "^1.0.0"
+  },
+  "devDependencies": {
+    "node-sass": "*"
   }
 }

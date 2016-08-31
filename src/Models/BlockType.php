@@ -35,4 +35,17 @@ class BlockType extends Model {
     public function setIdentifierAttribute($value) {
         $this->attributes['identifier'] = str_slug($value);
     }
+
+    protected function buildDynamicTable(Blueprint $table) {
+        $block_index = 'FK_' . $this->getDynamicTableName() . '_block_id_blocks';
+        $page_index = 'FK_' . $this->getDynamicTableName() . '_block_id_blocks';
+
+        $table->increments('id');
+        $table->integer('block_id')->unsigned()->nullable();
+        $table->integer('page_id')->unsigned()->nullable();
+        $table->integer('is_shared')->unsigned()->nullable();
+        $table->foreign('block_id', $block_index)->references('id')->on('blocks')->onUpdate('CASCADE')->onDelete('SET NULL');
+        $table->foreign('page_id', $page_index)->references('id')->on('pages')->onUpdate('CASCADE')->onDelete('SET NULL');
+        $table->timestamps();
+    }
 }

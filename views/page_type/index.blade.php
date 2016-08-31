@@ -1,18 +1,13 @@
-@extends(config('soda.hint_path').'::layouts.inner')
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('header')
 
 	<title>Page Types</title>
-	{{--note: non of these have anything in them anymore--}}
-			<!-- JavaScripts -->
-	<script src="/sodacms/sodacms/js/content.js"></script>
-	<!-- Styles -->
-	<link href="/sodacms/sodacms/css/content.css" rel="stylesheet">
 
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-edit', 'title'=>'Page Types'])
+	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-edit', 'title'=>'Page Types'])
 	<p>
 		Different Page Types have different field types applied to them
 	</p>

@@ -1,7 +1,7 @@
 @if($model->parent_id)
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-compass', 'title'=>$model->id?'Navigation Item: '.$model->id:'New Navigation Item'])
+	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-compass', 'title'=>$model->id?'Navigation Item: '.$model->id:'New Navigation Item'])
 @else
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-compass', 'title'=>$model->id?'Navigation Menu: '.$model->id:'New Navigation Menu'])
+	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-compass', 'title'=>$model->id?'Navigation Menu: '.$model->id:'New Navigation Menu'])
 @endif
 <form method="POST" action='{{route('soda.'.$hint.'.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}" />

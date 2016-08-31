@@ -22,6 +22,13 @@
   display: block !important;
 }
 
+.checkbox, .radio {
+  &, &-inline {
+    label {
+      font-weight: normal;
+    }
+  }
+}
 /*
   .form-group {
     margin-top: 20px;

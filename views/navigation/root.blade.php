@@ -1,4 +1,4 @@
-@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-compass', 'title'=>$model->id?'Navigation Menu: '.$model->name:'New Navigation Menu'])
+@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-compass', 'title'=>$model->id?'Navigation Menu: '.$model->name:'New Navigation Menu'])
 
 <form method="POST" action='{{route('soda.'.$hint.'.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 <input type="hidden" name="_token" value="{{ csrf_token() }}" />

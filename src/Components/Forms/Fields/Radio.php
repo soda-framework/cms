@@ -4,8 +4,8 @@ namespace Soda\Cms\Components\Forms\Fields;
 
 use Soda\Cms\Components\Forms\AbstractFormField;
 
-class Dropdown extends AbstractFormField {
-    protected $view = "dropdown";
+class Radio extends AbstractFormField {
+    protected $view = "radio";
 
     public function getDefaultParameters() {
         return [

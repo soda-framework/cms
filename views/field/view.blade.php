@@ -1,18 +1,13 @@
-@extends(config('soda.hint_path').'::layouts.inner')
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('header')
 
 	<title>Fields</title>
-	{{--note: non of these have anything in them anymore--}}
-			<!-- JavaScripts -->
-	<script src="/sodacms/sodacms/js/content.js"></script>
-	<!-- Styles -->
-	<link href="/sodacms/sodacms/css/content.css" rel="stylesheet">
 
 @endsection
 
 @section('content')
-	@include(config('soda.hint_path').'::partials.heading',['icon'=>'fa fa-pencil', 'title'=>$model->name?'Field: '.$model->name:'New Field'])
+	@include(soda_cms_view_path('partials.heading'), ['icon'=>'fa fa-pencil', 'title'=>$model->name?'Field: '.$model->name:'New Field'])
 	<form method="POST" action='{{route('soda.'.$hint.'.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

@@ -21,42 +21,57 @@ trait DynamicCreatorTrait {
 
     public static function bootDynamicCreatorTrait() {
         static::creating(function ($type) {
-            $table = $type->getDynamicTableName();
-            $fields = $type->fields;
-
-            if (!Schema::hasTable($table)) {
-                Schema::create($table, function (Blueprint $table) use ($type) {
-                    $reference_column = $type->getDynamicType() . '_id';
-                    $reference_table = $type->getDynamicType() . 's';
-                    $reference_index = 'FK_' . $type->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
-
-                    $table->increments('id');
-                    $table->integer($reference_column)->unsigned()->nullable();
-                    $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
-                    $table->timestamps();
-                });
-            } else {
-                Throw new Exception('Table ' . $table . ' already exists');
-            }
-
-            $type->addFields($fields);
+            $type->createTable()->addFields($type->fields);
         });
 
         static::deleting(function ($type) {
-            $table = $type->getDynamicTableName();
-
-            if (Schema::hasTable($table)) {
-                $reference_column = $type->getDynamicType() . '_id';
-                $reference_table = $type->getDynamicType() . 's';
-                $reference_index = 'FK_' . $type->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
-
-                Schema::table($table, function (Blueprint $table) use ($reference_index) {
-                    $table->dropForeign($reference_index);
-                });
-
-                Schema::rename($table, $table . '_deleted_' . Carbon::now()->timestamp);
-            }
+            $type->deleteTable();
         });
+    }
+
+    protected function createTable() {
+        $table = $this->getDynamicTableName();
+
+        if (!Schema::hasTable($table)) {
+            Schema::create($table, function (Blueprint $table) {
+                $this->buildDynamicTable($table);
+            });
+        } else {
+            Throw new Exception('Table ' . $table . ' already exists');
+        }
+
+        return $this;
+    }
+
+    protected function buildDynamicTable(Blueprint $table) {
+        $reference_column = $this->getDynamicType() . '_id';
+        $reference_table = $this->getDynamicType() . 's';
+        $reference_index = 'FK_' . $this->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
+
+        $table->increments('id');
+        $table->integer($reference_column)->unsigned()->nullable();
+        $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
+        $table->timestamps();
+    }
+
+    protected function deleteTable() {
+        $table = $this->getDynamicTableName();
+
+        if (Schema::hasTable($table)) {
+            $reference_column = $this->getDynamicType() . '_id';
+            $reference_table = $this->getDynamicType() . 's';
+            $reference_index = 'FK_' . $this->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
+
+            Schema::table($table, function (Blueprint $table) use ($reference_index) {
+                $table->dropForeign($reference_index);
+            });
+
+            Schema::rename($table, $table . '_deleted_' . Carbon::now()->timestamp);
+        } else {
+            Throw new Exception('Table ' . $table . ' does not exist');
+        }
+
+        return $this;
     }
 
     public function addFields($fields) {
@@ -73,7 +88,7 @@ trait DynamicCreatorTrait {
 
         if (!Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
-                SodaForm::field($field)->addToModel($table);
+                SodaForm::field($field)->addToModel($table)->after('id');
             });
         }
 

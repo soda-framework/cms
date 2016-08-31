@@ -1,4 +1,4 @@
-@extends(config('soda.hint_path').'::layouts.inner')
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('header')
     <title>View Page</title>
@@ -6,7 +6,7 @@
 
 @section('content')
 
-    @include(config('soda.hint_path').'::partials.heading', [
+    @include(soda_cms_view_path('partials.heading'), [
         'icon'  => 'fa fa-file-o',
         'title' => $model->name ? $model->name : 'New ' . ($model->type ? $model->type->name . " Page" : "Page"),
     ])
@@ -93,7 +93,8 @@
                             'unique' => uniqid(),
                             'render' => 'card',
                             'block'  => $block,
-                            'models' => Soda::dynamicModel('soda_'.$block->type->identifier, $block->type->fields->lists('field_name')->toArray())->where('block_id', $block->id)->paginate()
+                            'page'   => $model,
+                            'models' => $model->dynamicBlock($block)->paginate()
                         ])
                     </div>
                 @endif

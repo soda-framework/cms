@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Soda\Cms\Components\Forms\AbstractFormField;
 
 class Datetime extends AbstractFormField {
-    protected $view = "soda::inputs.datetime";
+    protected $view = "datetime";
 
     public function getDefaultParameters() {
         return [

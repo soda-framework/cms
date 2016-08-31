@@ -47,10 +47,10 @@ class SodaServiceProvider extends ServiceProvider {
         $this->configure();
 
         // Publishing configs
-        $this->publishes([__DIR__ . '/../../config' => config_path()]);
+        $this->publishes([__DIR__ . '/../../config' => config_path('soda')]);
         $this->publishes([__DIR__ . '/../../database/migrations' => database_path('migrations')]);
         $this->publishes([__DIR__ . '/../../public' => public_path('sodacms/sodacms')], 'soda.public');
-        $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.hint_path'));
+        $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.cms.hint'));
 
         $this->extendBlade();
     }
@@ -61,7 +61,9 @@ class SodaServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
-        $this->mergeConfigRecursivelyFrom(__DIR__ . '/../../config/soda.php', 'soda');
+        $this->mergeConfigRecursivelyFrom(__DIR__ . '/../../config/cms.php', 'soda.cms');
+        $this->mergeConfigRecursivelyFrom(__DIR__ . '/../../config/fields.php', 'soda.fields');
+        $this->mergeConfigRecursivelyFrom(__DIR__ . '/../../config/upload.php', 'soda.upload');
 
         $this->registerDependencies([
             AuthServiceProvider::class,

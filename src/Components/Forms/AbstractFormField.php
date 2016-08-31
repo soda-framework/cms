@@ -8,12 +8,27 @@ use Illuminate\Http\Request;
 use Soda\Cms\Models\Field;
 
 abstract class AbstractFormField implements FormFieldInterface {
+
     /**
-     * The Field model that our FormField is built from.
+     * The view used to lay out our form field
      *
      * @var string
      */
-    protected $field;
+    protected $layout;
+
+    /**
+     * The view path used to lay out our form field
+     *
+     * @var string
+     */
+    protected $view_path;
+
+    /**
+     * The view used to display our form field
+     *
+     * @var string
+     */
+    protected $view;
 
     /**
      * Prefix our form field name, to prevent collisions
@@ -36,19 +51,15 @@ abstract class AbstractFormField implements FormFieldInterface {
      */
     protected $model = null;
 
-    /**
-     * The view used to lay out our FormField block.
-     *
-     * @var string
-     */
-    protected $layout = "soda::inputs.layouts.inline";
+    public function __construct() {
+        $this->setLayout(config('soda.cms.form.default-layout'));
+        $this->setViewPath(config('soda.cms.form.default-view-path'));
 
-    /**
-     * The view used to display our form field
-     *
-     * @var string
-     */
-    protected $view;
+        $this->boot();
+    }
+
+    protected function boot() {
+    }
 
     /**
      * Set the Field model to build our FormField off of
@@ -90,8 +101,10 @@ abstract class AbstractFormField implements FormFieldInterface {
         return $this;
     }
 
+
+
     /**
-     * Get the layout view for the field
+     * Get the layout used to display the field
      *
      * @return string
      */
@@ -100,7 +113,7 @@ abstract class AbstractFormField implements FormFieldInterface {
     }
 
     /**
-     * Set the layout view for the field
+     * Set the layout used to display the field
      *
      * @param $layout
      *
@@ -130,6 +143,28 @@ abstract class AbstractFormField implements FormFieldInterface {
      */
     public function setView($view) {
         $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Get the view used to display the field
+     *
+     * @return string
+     */
+    public function getViewPath() {
+        return $this->view_path;
+    }
+
+    /**
+     * Set the view used to display the field
+     *
+     * @param $view_path
+     *
+     * @return $this
+     */
+    public function setViewPath($view_path) {
+        $this->view_path = $view_path;
 
         return $this;
     }
@@ -309,7 +344,7 @@ abstract class AbstractFormField implements FormFieldInterface {
     protected function getDefaultViewParameters() {
         return [
             'layout'              => $this->getLayout(),
-            'field_view'          => $this->getView(),
+            'field_view'          => $this->getViewPath() . '.' . $this->getView(),
             'prefixed_field_name' => $this->getPrefixedFieldName(),
             'field_label'         => $this->getFieldLabel(),
             'field_name'          => $this->getFieldName(),
@@ -346,9 +381,7 @@ abstract class AbstractFormField implements FormFieldInterface {
      * @return $this
      */
     public function addToModel(Blueprint $table) {
-        $table->string($this->getFieldName());
-
-        return $this;
+        return $table->string($this->getFieldName());
     }
 
     /**
