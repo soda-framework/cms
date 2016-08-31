@@ -1,14 +1,16 @@
 <?php
 
-namespace Soda\Cms\Models\Traits;
+namespace Soda\Cms\Models;
 
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Soda\Cms\Models\Observers\DynamicObserver;
+use Schema;
 use SodaForm;
 
-trait DynamicCreatorTrait {
+abstract class AbstractDynamicType extends Model {
     public function getDynamicType() {
         $table = $this->getTable();
 
@@ -20,16 +22,10 @@ trait DynamicCreatorTrait {
     }
 
     public static function bootDynamicCreatorTrait() {
-        static::creating(function ($type) {
-            $type->createTable()->addFields($type->fields);
-        });
-
-        static::deleting(function ($type) {
-            $type->deleteTable();
-        });
+        static::observe(DynamicObserver::class);
     }
 
-    protected function createTable() {
+    public function createTable() {
         $table = $this->getDynamicTableName();
 
         if (!Schema::hasTable($table)) {
@@ -54,7 +50,7 @@ trait DynamicCreatorTrait {
         $table->timestamps();
     }
 
-    protected function deleteTable() {
+    public function deleteTable() {
         $table = $this->getDynamicTableName();
 
         if (Schema::hasTable($table)) {
@@ -82,7 +78,7 @@ trait DynamicCreatorTrait {
         return $this;
     }
 
-    public function addField($field) {
+    public function addField(Field $field) {
         $table = $this->getDynamicTableName();
         $field_name = $field->field_name;
 
@@ -95,7 +91,7 @@ trait DynamicCreatorTrait {
         return $this;
     }
 
-    public function removeField($field) {
+    public function removeField(Field $field) {
         $table = $this->getDynamicTableName();
         $field_name = $field->field_name;
 

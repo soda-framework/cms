@@ -67,6 +67,12 @@ class Page extends AbstractSodaClosureEntity {
         return $this->dynamicBlocks[$block->type->identifier];
     }
 
+    public function dynamicBlockByIdentifier($identifier) {
+        $block = $this->blocks()->whereIdentifier($identifier)->first();
+
+        return $this->dynamicBlock($block);
+    }
+
     public function dynamicBlock($block) {
         $identifier = $block->type->identifier;
         $fields = $block->type->fields;

@@ -21,24 +21,6 @@ class Block extends Model {
         'is_shared',
     ];
 
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot() {
-        parent::boot();
-
-        static::saved(function ($block) {
-            if ($block->isDirty('is_shared')) {
-                if (!$block->type) {
-                    $block->load('type');
-                }
-                ModelBuilder::fromTable('soda_' . $block->type->identifier)->where($block->getRelatedField(), $block->id)->update(['is_shared' => $block->is_shared]);
-            }
-        });
-    }
-
     public function type() {
         return $this->belongsTo(BlockType::class, 'block_type_id');
     }

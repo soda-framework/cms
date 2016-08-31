@@ -2,13 +2,13 @@
 
 namespace Soda\Cms\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
-class BlockType extends Model {
-    use OptionallyInApplicationTrait, DraftableTrait, DynamicCreatorTrait;
+class BlockType extends AbstractDynamicType {
+    use OptionallyInApplicationTrait, DraftableTrait;
 
     protected $table = 'block_types';
     protected $fillable = [

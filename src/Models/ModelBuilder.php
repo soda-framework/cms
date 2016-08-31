@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Soda;
-use Symfony\Component\HttpFoundation\Tests\RequestContentProxy;
 
 /**
  * Class ModelBuilder
@@ -66,7 +65,7 @@ class ModelBuilder extends Model {
     }
 
     public function getMedia($field) {
-        if(!$this->media) {
+        if (!$this->media) {
             $this->load('media');
         }
 

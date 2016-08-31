@@ -19,6 +19,11 @@ use Soda\Cms\Console\Update;
 use Soda\Cms\Facades\SodaFacade;
 use Soda\Cms\Facades\SodaFormFacade;
 use Soda\Cms\Facades\SodaMenuFacade;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\BlockType;
+use Soda\Cms\Models\Observers\BlockObserver;
+use Soda\Cms\Models\Observers\DynamicObserver;
+use Soda\Cms\Models\PageType;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
@@ -45,6 +50,7 @@ class SodaServiceProvider extends ServiceProvider {
         require(__DIR__ . '/../helpers.php');
 
         $this->configure();
+        $this->bootObservers();
 
         // Publishing configs
         $this->publishes([__DIR__ . '/../../config' => config_path('soda')]);
@@ -104,6 +110,12 @@ class SodaServiceProvider extends ServiceProvider {
             Migrate::class,
             Seed::class,
         ]);
+    }
+
+    protected function bootObservers() {
+        Block::observe(BlockObserver::class);
+        BlockType::observe(DynamicObserver::class);
+        PageType::observe(DynamicObserver::class);
     }
 
     protected function configure() {

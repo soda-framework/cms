@@ -10,8 +10,8 @@ use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
-class PageType extends Model {
-    use OptionallyInApplicationTrait, DraftableTrait, DynamicCreatorTrait;
+class PageType extends AbstractDynamicType {
+    use OptionallyInApplicationTrait, DraftableTrait;
 
     protected $table = 'page_types';
     public $fillable = [
