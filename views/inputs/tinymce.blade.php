@@ -3,11 +3,10 @@
 @overwrite
 
 @section("field.js")
-    <script type="application/javascript">
+    <script>
         $(function () {
-            window.tinyMCEPreInit = {
-                base: "/soda/cms/components/tinymce",
-            }
+            tinyMCE.baseURL = "/soda/cms/components/tinymce";
+
             $('#field_{{ $field_name }}').tinymce({
                 {!! Soda::getFormBuilder()->buildJsParams($field_parameters) !!}
             });
