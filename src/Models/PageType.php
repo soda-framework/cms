@@ -37,6 +37,6 @@ class PageType extends AbstractDynamicType {
     }
 
     public function setIdentifierAttribute($value) {
-        $this->attributes['identifier'] = str_slug($value);
+        $this->attributes['identifier'] = str_slug($value, '_');
     }
 }
