@@ -47,6 +47,13 @@
             'field_name'  => 'field_params',
             'description'  => 'Parameters for the field'
         ])->setModel($model) !!}
+
+		{!! SodaForm::radio([
+            'name'        => 'Show in table',
+            'field_name'  => 'show_in_table',
+            'description' => 'Determines whether column for this field should be shown in CMS table-view',
+            'field_params' => ['options' => ['1' => 'Yes', '0' => 'No']],
+        ])->setModel($model) !!}
         
 		@if($model->name)
 			<button class="btn btn-primary"><span class="fa fa-pencil"></span> Update</button>

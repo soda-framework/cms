@@ -18,7 +18,9 @@ class DynamicController extends Controller {
         $type = Route::current()->getParameter('type');
         $page_id = Route::current()->getParameter('page_id');
         $this->page = $page_id ? Page::find($page_id) : new Page;
-        $this->block = Block::with('type', 'type.fields')->where('identifier', $type)->first();
+
+        $block = $page_id ? $this->page->blocks() : new Block;
+        $this->block = $block->with('type', 'type.fields')->where('identifier', $type)->first();
         $this->model = Soda::dynamicModel('soda_' . $this->block->type->identifier, $this->block->type->fields->lists('field_name')->toArray());
     }
 
@@ -30,12 +32,22 @@ class DynamicController extends Controller {
     }
 
     public function view($page_id, $type, $id = null) {
+        if(!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
+            // No permission
+            dd('Not allowed');
+        }
+
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
         return view('soda::standard.view', ['block' => $this->block, 'model' => $model, 'page' => $this->page]);
     }
 
     public function edit(Request $request, $page_id, $type, $id = null) {
+        if(!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
+            // No permission
+            dd('Not allowed');
+        }
+
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
         foreach ($this->block->type->fields as $field) {
@@ -68,6 +80,11 @@ class DynamicController extends Controller {
      * @param null $id
      */
     public function delete(Request $request, $page_id, $type, $id = null) {
+        if(isset($this->block->pivot) && !$this->block->pivot->can_delete) {
+            // No permission
+            dd('Not allowed');
+        }
+
         $this->model = $this->model->findOrFail($id);
         $this->model->delete();
 

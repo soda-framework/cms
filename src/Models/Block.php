@@ -28,4 +28,18 @@ class Block extends Model {
     public function setIdentifierAttribute($value) {
         $this->attributes['identifier'] = str_slug($value);
     }
+
+    protected function loadDynamicModel() {
+        if (!$this->type) {
+            $this->load('type');
+        }
+
+        $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where($this->getRelatedField(), $this->id)->get();
+
+        if (!$model) {
+            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
+        }
+
+        return $this->setModel($model);
+    }
 }

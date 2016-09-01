@@ -14,8 +14,8 @@
     <p class="text-muted">{{ $model->description }}</p><br />
 
     <ul class="nav nav-tabs" role="tablist">
-        <li role='presentation' class="active" aria-controls="Page View">
-            <a role="tab" data-toggle="tab" href="#tab_page">Page</a>
+        <li role='presentation' class="active" aria-controls="Settings View">
+            <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
         </li>
         @if($model->type && count($model->type->fields))
             <li role='presentation' aria-controls="page_type_{{ $model->type->id }}">
@@ -29,12 +29,18 @@
                 </li>
             @endif
         @endforeach
+
+        @permission("live-preview")
         <li role='presentation' aria-controls="Live View">
             <a role="tab" data-toggle="tab" href="#tab_live">Live View</a>
         </li>
+        @endpermission
+
+        @permission("advanced-pages")
         <li role='presentation' aria-controls="Advanced View">
             <a role="tab" data-toggle="tab" href="#tab_advanced">Advanced</a>
         </li>
+        @endpermission
     </ul>
 
     <form method="POST" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}">{{-- << TODO --}}
@@ -44,8 +50,10 @@
         @endif
         <input type="hidden" name="parent_id" value="{{ $model->parent_id }}" />
         <div class="tab-content">
-            <div class="tab-pane active" id="tab_page" role="tabpanel">
-                <p>Customise page details</p>
+            <div class="tab-pane active" id="tab_settings" role="tabpanel">
+                <h3>Settings</h3>
+                <p>Customise page settings</p>
+                <hr />
                 {!! SodaForm::text([
                     "name"        => "Name",
                     "description" => "The name of this page",
@@ -77,6 +85,9 @@
 
             @if($model->type)
                 <div class="tab-pane" id="tab_page_type_{{ $model->type->id }}" role="tabpanel">
+                    <h3>{{ $model->type->name }}</h3>
+                    <p>{{ $model->type->description }}</p>
+                    <hr />
                     @if($model->type && $model->type->fields)
                         @foreach($model->type->fields as $field)
                             {!! SodaForm::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
@@ -101,18 +112,25 @@
                 {{--loads a block into place.. --}}
             @endforeach
 
+            @permission("live-preview")
             <div class="tab-pane" id="tab_live" role="tabpanel">
+                <h3>Settings</h3>
+                <p>Use this tab to customise information on the page in a live view</p>
+                <hr />
                 @if($model->slug)
-                    <p>Use this tab to customise information on the page in a live view</p>
                     <p>{{ $model->slug }}</p>
                     <iframe width="100%" height=400 src="{{ $model->slug }}?soda_edit=true"></iframe>
                 @else
                     <p>You must set a slug to enabled this feature.</p>
                 @endif
             </div>
+            @endpermission
 
+            @permission("advanced-pages")
             <div class="tab-pane" id="tab_advanced" role="tabpanel">
-                <p>Advanced page details</p>
+                <h3>Settings</h3>
+                <p>Advanced page settings</p>
+                <hr />
 
                 {!! SodaForm::text([
                     'name'        => 'Package Name',
@@ -141,6 +159,7 @@
 
                 <input class="btn btn-success" type="submit" value="Save" />
             </div>
+            @endpermission
         </div>
     </form>
 @stop
@@ -149,7 +168,7 @@
     @parent
     <script>
         @foreach($model->blocks as $block)
-            @if(Request::has($block->identifier . '-page'))
+            @if((Request::has('tab') && Request::input('tab') == $block->identifier) || Request::has($block->identifier . '-page'))
                 $('a[href="#tab_block_{{ $block->id }}"]').tab('show');
             @endif
         @endforeach

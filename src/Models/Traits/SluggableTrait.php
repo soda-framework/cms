@@ -39,6 +39,6 @@ trait SluggableTrait {
             if($part) $slug .= '/' . str_slug($part);
         }
 
-        return $slug;
+        return '/' . ltrim($slug, '/');
     }
 }

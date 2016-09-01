@@ -14,7 +14,7 @@
 <script type="application/javascript">
 	$(function() {
 		setTimeout(function(){
-			tinymce.baseURL = "/sodacms/sodacms/components/tinymce";
+			tinymce.baseURL = "/soda/cms/components/tinymce";
 
 			tiny = tinymce.init({
 				selector: '#{{$unique}}.editable',

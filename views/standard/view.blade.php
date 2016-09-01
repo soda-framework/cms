@@ -11,7 +11,11 @@
         @else
             Update {{ucfirst($block->name)}}
         @endif
+        @if($page->id)
+            <a href="{{ route("soda.page.view", ['id' => $page->id]) }}?tab={{ $block->identifier }}" class="btn btn-warning pull-right">Back to page</a>
+        @endif
     </h1>
+    <br />
 
     <form method="POST" action='{{route('soda.page.block.edit', ['page_id' => $page->id, 'type' => $block->identifier, 'id' => $model->id])}}' class="form-wrapper">
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>

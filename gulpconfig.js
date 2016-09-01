@@ -53,7 +53,7 @@ module.exports = {
             folder:         'public'
         },
         {
-            folder:         '../soda_test/src/public/sodacms/sodacms',
+            folder:         '../soda_test/src/public/soda/cms',
             css: {
                 clean:      true,
             },
@@ -90,6 +90,7 @@ module.exports = {
             'resources/components/select2/dist/js/select2.full.min.js',
             'resources/components/jsoneditor/dist/jsoneditor.min.js',
             'resources/components/tinymce/tinymce.min.js',
+            'resources/components/tinymce/jquery.tinymce.min.js',
             'resources/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
         ]
     }

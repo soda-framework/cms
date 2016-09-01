@@ -5,8 +5,8 @@
         <div class="dialog-box">
             <div class="soda-logo-wrap">
                 <div class="soda-logo">
-                    <img src="/sodacms/sodacms/img/sodacms_droplime.png"/><br />
-                    <img src="/sodacms/sodacms/img/sodacms_logowhite.png"/>
+                    <img src="/soda/cms/img/sodacms_droplime.png"/><br />
+                    <img src="/soda/cms/img/sodacms_logowhite.png"/>
                 </div>
             </div>
             <form class="form-horizontal" role="form" method="POST" action="{{ route('login-attempt') }}">

@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Cms\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
 use Soda\Cms\Components\Status;
@@ -56,10 +57,10 @@ class Page extends AbstractSodaClosureEntity {
     }
 
     public function blocks() {
-        return $this->belongsToMany(Block::class, 'page_blocks');
+        return $this->belongsToMany(Block::class, 'page_blocks')->withPivot('can_create', 'can_delete');
     }
 
-    public function getDynamicBlock($block) {
+    public function getDynamicBlock(Block $block) {
         if(!$this->dynamicBlockLoaded($block)) {
             $this->loadDynamicBlock($block);
         }
@@ -70,10 +71,14 @@ class Page extends AbstractSodaClosureEntity {
     public function dynamicBlockByIdentifier($identifier) {
         $block = $this->blocks()->whereIdentifier($identifier)->first();
 
+        if(!$block) {
+            Throw new Exception('Block with identifier ' . $identifier . ' not found.');
+        }
+
         return $this->dynamicBlock($block);
     }
 
-    public function dynamicBlock($block) {
+    public function dynamicBlock(Block $block) {
         $identifier = $block->type->identifier;
         $fields = $block->type->fields;
         $id = $block->id;
@@ -83,7 +88,7 @@ class Page extends AbstractSodaClosureEntity {
         });
     }
 
-    public function loadDynamicBlock($block) {
+    public function loadDynamicBlock(Block $block) {
         $identifier = $block->type->identifier;
         $this->dynamicBlocks[$identifier] = $this->dynamicBlock($block)->get();
     }
@@ -110,6 +115,20 @@ class Page extends AbstractSodaClosureEntity {
         }
 
         return false;
+    }
+
+    protected function loadDynamicModel() {
+        if (!$this->type) {
+            $this->load('type');
+        }
+
+        $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
+
+        if (!$model) {
+            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
+        }
+
+        return $this->setModel($model);
     }
 
 }

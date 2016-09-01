@@ -63,7 +63,7 @@ class PageBuilder {
      * @return \Soda\Cms\Components\Pages\PageBuilder|void
      */
     public function loadPageBySlug($slug) {
-        $page = Page::with('type')->where('slug', '/' . ltrim($slug, '/'))->first();
+        $page = Page::with('type', 'blocks')->where('slug', '/' . ltrim($slug, '/'))->first();
 
         if ($page) {
             return $this->loadPage($page);

@@ -2,6 +2,8 @@
 
 namespace Soda\Cms\Models\Traits;
 
+use Soda\Cms\Models\ModelBuilder;
+
 trait HasDynamicModelTrait {
     protected $dynamicModel;
 
@@ -17,20 +19,6 @@ trait HasDynamicModelTrait {
         $this->dynamicModel = $model;
 
         return $this;
-    }
-
-    protected function loadDynamicModel() {
-        if (!$this->type) {
-            $this->load('type');
-        }
-
-        $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
-
-        if (!$model) {
-            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
-        }
-
-        return $this->setModel($model);
     }
 
     public function getRelatedField() {

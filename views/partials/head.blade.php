@@ -15,15 +15,15 @@
 
 @section('head.css')
     <!-- Styles -->
-    <link href="/sodacms/sodacms/css/application.min.css" rel="stylesheet">
+    <link href="/soda/cms/css/application.min.css" rel="stylesheet">
 @stop
 
 @section('head.js')
     <!-- JavaScripts -->
-    <script src="/sodacms/sodacms/js/core.min.js"></script>
+    <script src="/soda/cms/js/core.min.js"></script>
     {{-- TODO: move to only pages featuring forms --}}
-    <script src="/sodacms/sodacms/js/forms.min.js"></script>
-    <script src="/sodacms/sodacms/js/application.min.js"></script>
+    <script src="/soda/cms/js/forms.min.js"></script>
+    <script src="/soda/cms/js/application.min.js"></script>
 @stop
 
 @section('head.extra')

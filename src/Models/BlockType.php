@@ -33,12 +33,12 @@ class BlockType extends AbstractDynamicType {
     }
 
     public function setIdentifierAttribute($value) {
-        $this->attributes['identifier'] = str_slug($value);
+        $this->attributes['identifier'] = str_slug($value, '_');
     }
 
     protected function buildDynamicTable(Blueprint $table) {
         $block_index = 'FK_' . $this->getDynamicTableName() . '_block_id_blocks';
-        $page_index = 'FK_' . $this->getDynamicTableName() . '_block_id_blocks';
+        $page_index = 'FK_' . $this->getDynamicTableName() . '_page_id_pages';
 
         $table->increments('id');
         $table->integer('block_id')->unsigned()->nullable();

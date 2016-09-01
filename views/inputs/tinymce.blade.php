@@ -6,7 +6,7 @@
     <script type="application/javascript">
         $(function () {
             window.tinyMCEPreInit = {
-                base: "/sodacms/sodacms/components/tinymce",
+                base: "/soda/cms/components/tinymce",
             }
             $('#field_{{ $field_name }}').tinymce({
                 {!! Soda::getFormBuilder()->buildJsParams($field_parameters) !!}

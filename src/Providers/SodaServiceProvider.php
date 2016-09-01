@@ -55,7 +55,7 @@ class SodaServiceProvider extends ServiceProvider {
         // Publishing configs
         $this->publishes([__DIR__ . '/../../config' => config_path('soda')]);
         $this->publishes([__DIR__ . '/../../database/migrations' => database_path('migrations')]);
-        $this->publishes([__DIR__ . '/../../public' => public_path('sodacms/sodacms')], 'soda.public');
+        $this->publishes([__DIR__ . '/../../public' => public_path('soda/cms')], 'soda.public');
         $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.cms.hint'));
 
         $this->extendBlade();

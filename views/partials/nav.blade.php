@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="soda-logo"  href="{{ route('home') }}"><img src="/sodacms/sodacms/img/sodacms_logowhite.png" /></a>
+            <a class="soda-logo"  href="{{ route('home') }}"><img src="/soda/cms/img/sodacms_logowhite.png" /></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

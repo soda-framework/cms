@@ -20,7 +20,8 @@ class CreateBlocksTable extends Migration {
 			$table->string('identifier');
 			$table->integer('status')->unsigned();
 			$table->integer('application_id')->unsigned()->nullable()->index('FK_blocks_applications');
-			$table->integer('block_type_id')->unsigned()->nullable()->index('FK_blocks_block_types');
+            $table->integer('block_type_id')->unsigned()->nullable()->index('FK_blocks_block_types');
+            $table->integer('is_shared')->unsigned();
 			$table->timestamps();
 		});
 	}

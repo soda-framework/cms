@@ -1,5 +1,5 @@
 {{-- base tree item --}}
-<link href="/sodacms/sodacms/css/tree.min.css" rel="stylesheet"> {{--should this be in head? --}}
+<link href="/soda/cms/css/tree.min.css" rel="stylesheet"> {{--should this be in head? --}}
 
 <ul class="tree-view">
 

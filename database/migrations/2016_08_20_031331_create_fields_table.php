@@ -20,7 +20,8 @@ class CreateFieldsTable extends Migration {
 			$table->text('description', 65535)->nullable();
 			$table->string('field_type');
 			$table->text('value', 65535)->nullable();
-			$table->text('field_params', 65535)->nullable();
+            $table->text('field_params', 65535)->nullable();
+            $table->integer('show_in_table')->unsigned();
 			$table->integer('application_id')->unsigned()->nullable()->index('fk_fields_applications1_idx');
 			$table->timestamps();
 		});
