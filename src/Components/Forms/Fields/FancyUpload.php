@@ -10,12 +10,14 @@ class FancyUpload extends AbstractFormField {
     public function getDefaultParameters() {
         $field_name = $this->getFieldName();
         $field_params = $this->getFieldParameters();
-        $has_media = $this->model && $this->model->getMedia($field_name)->count() > 0 ? true : false;
+        $is_multi = isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? true : false;
+        $has_media = $this->model && (($is_multi && $this->model->getMedia($field_name)->count() > 0) || !$is_multi && $this->model && isset($this->model->$field_name) && $this->model->$field_name) ? true : false;
 
         $related = [];
         if ($this->model) {
             $related = [
                 'related_table' => $this->model->getTable(),
+                'related_field' => $field_name,
                 'related_id'    => $this->model->id,
             ];
         }
@@ -24,11 +26,8 @@ class FancyUpload extends AbstractFormField {
             'initialPreview'          => [],
             'initialPreviewConfig'    => [],
             'uploadExtraData'         => [
-                '_token'        => csrf_token(),
                 'related_field' => $field_name,
-            ],
-            'deleteExtraData'         => [
-                '_token' => csrf_token(),
+                'multi'         => $is_multi ? 'true' : 'false',
             ],
             'uploadUrl'               => route('soda.upload'),
             'deleteUrl'               => route('soda.upload.delete'),
@@ -45,8 +44,8 @@ class FancyUpload extends AbstractFormField {
             'uploadAsync'             => true,
             'minFileCount'            => 1,
             'maxFileCount'            => 1,
-            'overwriteInitial'        => isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? 'false' : 'true',
-            'autoReplace'             => isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? 'false' : 'true',
+            'overwriteInitial'        => $is_multi ? 'false' : 'true',
+            'autoReplace'             => $is_multi ? 'false' : 'true',
             'initialPreviewAsData'    => false, // identify if you are sending preview data only and not the raw markup
             'theme'                   => 'fa', //we want to use font awesome instead of glyphicons.
             'previewFileIcon'         => '<i class="fa fa-file"></i>',
@@ -60,7 +59,7 @@ class FancyUpload extends AbstractFormField {
             ],
         ];
 
-        if ($has_media) {
+        if ($is_multi && $has_media) {
             foreach ($this->model->getMedia($field_name) as $image) {
                 $initialPreview = '<img src="' . $image->media . '" width="120">';
                 $initialPreviewConfig = [
@@ -68,9 +67,7 @@ class FancyUpload extends AbstractFormField {
                     'width'   => '120px',
                     'url'     => route('soda.upload.delete'),
                     'key'     => $image->id,
-                    'extra'   => [
-                        '_token' => csrf_token()
-                    ]
+                    'extra'   => [],
                 ];
 
                 if ($related) {
@@ -80,6 +77,21 @@ class FancyUpload extends AbstractFormField {
                 $default_parameters['initialPreview'][] = $initialPreview;
                 $default_parameters['initialPreviewConfig'][] = $initialPreviewConfig;
             }
+        } elseif (!$is_multi && $has_media) {
+            $initialPreview = '<img src="' . $this->model->$field_name . '" width="120">';
+            $initialPreviewConfig = [
+                'caption' => '',
+                'width'   => '120px',
+                'url'     => route('soda.upload.delete'),
+                'extra'   => [],
+            ];
+
+            if ($related) {
+                $initialPreviewConfig['extra'] = array_replace_recursive($initialPreviewConfig['extra'], $related);
+            }
+
+            $default_parameters['initialPreview'][] = $initialPreview;
+            $default_parameters['initialPreviewConfig'][] = $initialPreviewConfig;
         }
 
         if ($related) {

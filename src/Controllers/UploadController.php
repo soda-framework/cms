@@ -1,6 +1,7 @@
 <?php namespace Soda\Cms\Controllers;
 
 use App\Http\Controllers\Controller;
+use DB;
 use Illuminate\Http\Request;
 use Soda\Cms\Models\Media;
 use Storage;
@@ -46,11 +47,15 @@ class UploadController extends Controller {
                             ],
                         ];
 
-                        if ($request->has('related_id')) {
+                        $table = $request->input('related_table');
+                        $field = $request->input('related_field');
+                        $id = $request->input('related_id');
+
+                        if ($request->input('multi') && $request->input('multi') == 'true') {
                             $media = Media::create([
-                                'related_id'    => $request->input('related_id'),
-                                'related_table' => $request->input('related_table'),
-                                'related_field' => $request->input('related_field'),
+                                'related_id'    => $id,
+                                'related_table' => $table,
+                                'related_field' => $field,
                                 'position'      => $request->input('file_id'),
                                 'media'         => $url,
                                 'media_type'    => 'image',
@@ -59,8 +64,20 @@ class UploadController extends Controller {
                             $return["initalPreviewConfig"]["key"] = $media->id;
                             $return["initalPreviewConfig"]["extra"] = [
                                 "key"           => $media->id,
-                                "related_table" => $media->related_table,
-                                "related_id"    => $media->related_id,
+                                "related_table" => $table,
+                                'related_field' => $field,
+                                "related_id"    => $id,
+                            ];
+                        } else {
+                            DB::table($table)->where('id', $id)->update([
+                                $field => $url
+                            ]);
+
+                            $return["initalPreviewConfig"]["key"] = null;
+                            $return["initalPreviewConfig"]["extra"] = [
+                                "related_table" => $table,
+                                'related_field' => $field,
+                                "related_id"    => $id,
                             ];
                         }
                     }
@@ -80,10 +97,22 @@ class UploadController extends Controller {
     }
 
     public function delete(Request $request) {
-        if ($request->has('key')) {
+        if ($request->has('key') && $request->input('key')) {
             $image = Media::find($request->input('key'));
             if ($image) {
                 $image->delete();
+
+                return json_encode(true);
+            }
+        } else {
+            $table = $request->input('related_table');
+            $field = $request->input('related_field');
+            $id = $request->input('related_id');
+
+            if($table && $field && $id) {
+                DB::table($table)->where('id', $id)->update([
+                    $field => ''
+                ]);
 
                 return json_encode(true);
             }
