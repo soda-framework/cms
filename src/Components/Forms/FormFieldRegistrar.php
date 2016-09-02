@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Cms\Components\Forms;
 
+use Exception;
 use Soda\Cms\Models\Field;
 
 class FormFieldRegistrar {

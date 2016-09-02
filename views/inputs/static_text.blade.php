@@ -1,3 +1,3 @@
 @section("field")
-    {{ $field_value }}
+    {{ $field_value }}<br />
 @overwrite

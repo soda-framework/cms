@@ -14,7 +14,9 @@
 @section("field.js")
 @overwrite
 
-@include($field_view)
+@if(isset($field_view) && $field_view)
+    @include($field_view)
+@endif
 
 <fieldset class="form-group row field_{{ $field_name }} {{ $field_class }}">
     @yield("field.label")
