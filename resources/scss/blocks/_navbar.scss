@@ -11,8 +11,12 @@
 
   .soda-logo {
     line-height: $navbar-height;
+    margin-right: 20px;
     img {
-      max-height: $navbar-height; //so we don't stretch out the nav bar.
+      max-height: 40px; //so we don't stretch out the nav bar.
+    }
+    &:hover {
+      text-decoration: none;
     }
   }
 }
