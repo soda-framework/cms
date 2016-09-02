@@ -69,7 +69,7 @@ class SodaServiceProvider extends ServiceProvider {
     public function register() {
         $this->mergeConfigFrom(__DIR__ . '/../../config/cms.php', 'soda.cms');
         $this->mergeConfigFrom(__DIR__ . '/../../config/fields.php', 'soda.fields');
-        //$this->mergeConfigFrom(__DIR__ . '/../../config/upload.php', 'soda.upload');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/upload.php', 'soda.upload');
 
         $this->registerDependencies([
             AuthServiceProvider::class,
