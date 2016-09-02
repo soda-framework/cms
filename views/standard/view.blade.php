@@ -5,7 +5,8 @@
         <li><a href="{{ route('soda.home') }}">Home</a></li>
         <li><a href="{{ route('soda.page') }}">Pages</a></li>
         <li><a href="{{ route('soda.page.view', ['id' => $page->id]) }}">{{ $page->name }}</a></li>
-        <li class="active">{{ $block->name }}</li>
+        <li><a href="{{ route("soda.page.view", ['id' => $page->id]) }}?tab={{ $block->identifier }}">{{ $block->name }}</a></li>
+        <li class="active">{{ $model->id ? 'Edit' : 'New' }}</li>
     </ol>
 @stop
 
