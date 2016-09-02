@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Breadcrumbs
+- Hidden form field
+
+## [0.3.1] - 2016-09-01
+### Changed
+- Single image uploads now added to column rather than media table
+
+### Fixed
+- Page type identifier now generated using underscores rathe than hyphens
+- TinyMCE plugin now loads correctly
+- Fixes to classes not imported in models
 
 ## [0.3.0] - 2016-08-31
 ### Added
