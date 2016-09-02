@@ -1,5 +1,13 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li><a href="{{ route('soda.home') }}">Home</a></li>
+        <li><a href="{{ route('soda.page') }}">Pages</a></li>
+        <li class="active">{{ $model->name ? $model->name : 'New ' . ($model->type ? $model->type->name . " Page" : "Page") }}</li>
+    </ol>
+@stop
+
 @section('header')
     <title>View Page</title>
 @endsection

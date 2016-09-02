@@ -1,5 +1,12 @@
 .main-content {
   background-color: $content-background;
+
+  .breadcrumb {
+    margin: 0 -15px;
+    padding: 15px 30px;
+    border-bottom: 1px solid $content-inner-border;
+    background-color: $content-inner-background;
+  }
 }
 
 .main-content-inner {

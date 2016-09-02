@@ -1,9 +1,15 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
+@section('breadcrumb')
+	<ol class="breadcrumb">
+		<li><a href="{{ route('soda.home') }}">Home</a></li>
+		<li><a href="{{ route('soda.user') }}">Users</a></li>
+		<li class="active">{{ $model->name ? $model->name : 'New User' }}</li>
+	</ol>
+@stop
+
 @section('header')
-
 	<title>User</title>
-
 @endsection
 
 @section('content')

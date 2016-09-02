@@ -1,5 +1,14 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li><a href="{{ route('soda.home') }}">Home</a></li>
+        <li><a href="{{ route('soda.page') }}">Pages</a></li>
+        <li><a href="{{ route('soda.page.view', ['id' => $page->id]) }}">{{ $page->name }}</a></li>
+        <li class="active">{{ $block->name }}</li>
+    </ol>
+@stop
+
 @section('header')
     <title>View {{ucfirst($block->name)}}</title>
 @endsection

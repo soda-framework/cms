@@ -1,13 +1,20 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
+@section('breadcrumb')
+	<ol class="breadcrumb">
+		<li><a href="{{ route('soda.home') }}">Home</a></li>
+		<li class="active">Blocks</li>
+	</ol>
+@stop
+
 @section('header')
 
-	<title>Fields</title>
+	<title>Blocks</title>
 
 @endsection
 
 @section('content')
-	@include(soda_cms_view_path('partials.heading'), ['icon'=>'fa fa-pencil', 'title'=>'Block'])
+	@include(soda_cms_view_path('partials.heading'), ['icon'=>'fa fa-pencil', 'title'=>'Blocks'])
 	<p>
 		Blocks are added onto pages
 	</p>

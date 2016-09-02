@@ -1,9 +1,15 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
+@section('breadcrumb')
+	<ol class="breadcrumb">
+		<li><a href="{{ route('soda.home') }}">Home</a></li>
+		<li><a href="{{ route('soda.field') }}">Fields</a></li>
+		<li class="active">{{ $model->name ? $model->name : 'New Field' }}</li>
+	</ol>
+@stop
+
 @section('header')
-
-	<title>Fields</title>
-
+	<title>Edit Field</title>
 @endsection
 
 @section('content')

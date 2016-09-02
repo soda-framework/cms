@@ -1,7 +1,15 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
+@section('breadcrumb')
+	<ol class="breadcrumb">
+		<li><a href="{{ route('soda.home') }}">Home</a></li>
+		<li><a href="{{ route('soda.block_type') }}">Block Types</a></li>
+		<li class="active">{{ $model->name ? $model->name : 'New Block Type' }}</li>
+	</ol>
+@stop
+
 @section('header')
-	<title>Block Types</title>
+	<title>Edit Block Type</title>
 @endsection
 
 @section('content')

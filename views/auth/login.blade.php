@@ -9,7 +9,7 @@
                     <img src="/soda/cms/img/sodacms_logowhite.png"/>
                 </div>
             </div>
-            <form class="form-horizontal" role="form" method="POST" action="{{ route('login-attempt') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ route('soda.login-attempt') }}">
                 {!! csrf_field() !!}
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} row">

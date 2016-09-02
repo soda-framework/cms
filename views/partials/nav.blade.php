@@ -8,14 +8,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="soda-logo"  href="{{ route('home') }}"><img src="/soda/cms/img/sodacms_logowhite.png" /></a>
+            <a class="soda-logo"  href="{{ route('soda.home') }}"><img src="/soda/cms/img/sodacms_logowhite.png" /></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a class="" href="{{ route('home') }}">Dashboard</a>
+                    <a class="" href="{{ route('soda.home') }}">Dashboard</a>
                 </li>
                 <li class="">
                     <a class="" href="/" target="_blank">View Site</a>
@@ -44,7 +44,7 @@
                         @foreach( event(new Soda\Cms\Events\TopNavDropdownWasRendered()) as $item)
                             {!! $item !!}
                         @endforeach
-                        <li><a class='dropdown-item' href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a></li>
+                        <li><a class='dropdown-item' href="{{ route('soda.logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
