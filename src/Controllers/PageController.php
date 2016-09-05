@@ -70,6 +70,8 @@ class PageController extends Controller {
             $this->model = $this->model->findOrFail($id);
         }
 
+        if(!$request->has('status')) $request->merge(['status' => 0]);
+
         $this->model->fill($request->all());
         $this->model->save();
 
@@ -131,7 +133,7 @@ class PageController extends Controller {
         $page->fill([
             'name'           => $request->input('name'),
             'slug'           => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
-            'status'         => $request->has('status') ? $request->input('status') : 1,
+            'status'         => $request->has('status') ? $request->input('status') : 0,
             'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
             'package'        => $request->has('package') ? $request->input('package') : 'soda',
             'action'         => $request->has('action') ? $request->input('action') : 'default.view',

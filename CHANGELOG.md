@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Breadcrumbs
 - Hidden form field
+- Toggle form field
+
+### Fixed
+- Dynamic SQL tables now update when BlockType/PageType identifier is updated
 
 ## [0.3.1] - 2016-09-01
 ### Changed

@@ -29,6 +29,7 @@
     }
   }
 }
+
 /*
   .form-group {
     margin-top: 20px;
@@ -36,3 +37,55 @@
     border-top: 1px solid #ECEEEF;
   }
 */
+
+.toggle-switch {
+  input[type="checkbox"] {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+    + label {
+      display: block;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      padding: 2px;
+      width: 50px;
+      height: 25px;
+      background-color: #dddddd;
+      border-radius: 25px;
+      &:before, &:after {
+        display: block;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        bottom: 1px;
+        content: "";
+      }
+      &:before {
+        right: 1px;
+        background-color: #f1f1f1;
+        border-radius: 25px;
+        transition: background 0.4s;
+      }
+
+      &:after {
+
+        width: 23px;
+        background-color: #fff;
+        border-radius: 100%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        transition: margin 0.4s;
+      }
+    }
+
+    &:checked {
+      + label:before {
+        background-color: $brand-success;
+      }
+      + label:after {
+        margin-left: 25px;
+      }
+    }
+  }
+}

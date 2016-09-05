@@ -74,12 +74,12 @@
                     'field_name'  => 'slug',
                 ])->setModel($model) !!}
 
-                {!! SodaForm::dropdown([
-                    'name'         => 'Status',
-                    'description'  => 'The status of this page',
+                {!! SodaForm::toggle([
+                    'name'         => 'Published',
+                    'description'  => 'Determines whether the page is accessible on the live website',
                     'field_name'   => 'status',
                     'value'        => Soda\Cms\Components\Status::LIVE,
-                    'field_params' => ['options' => Soda\Cms\Components\Status::all()],
+                    'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
                 ])->setModel($model) !!}
 
                 {!! SodaForm::textarea([

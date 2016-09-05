@@ -27,19 +27,17 @@
             'field_name'  => 'name',
         ])->setModel($model) !!}
 
-		{!! SodaForm::dropdown([
+		{!! SodaForm::toggle([
             'name'         => 'Status',
-            'description'  => 'The status of this block',
-            'field_name'   => 'status',
-            'value'        => Soda\Cms\Components\Status::LIVE,
-            'field_params' => ['options' => Soda\Cms\Components\Status::all()],
+			'description'  => 'Determines whether the block is visible on the live website',
+			'field_name'   => 'status',
+			'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
         ])->setModel($model) !!}
 
-		{!! SodaForm::radio([
+		{!! SodaForm::toggle([
             'name'         => 'Shared',
             'field_name'   => 'is_shared',
             'description'  => 'Whether or not the contents of this block should be shared across all pages. Changing this field affects current block contents.',
-            'field_params' => ['options' => ['1' => 'Yes', '0' => 'No']],
         ])->setModel($model) !!}
 
 		{!! SodaForm::textarea([

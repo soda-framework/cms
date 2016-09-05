@@ -22,12 +22,12 @@
             'field_name'  => 'name',
         ])->setModel($model)->render() !!}
 
-		{!! SodaForm::dropdown([
+		{!! SodaForm::toggle([
             'name'         => 'Status',
-            'description'  => 'The status of this page type',
-            'field_name'   => 'status',
-            'value'        => Soda\Cms\Components\Status::LIVE,
-            'field_params' => ['options' => Soda\Cms\Components\Status::all()],
+			'description'  => 'Determines whether blocks of this type are visible on the live website',
+			'field_name'   => 'status',
+			'value'        => Soda\Cms\Components\Status::LIVE,
+			'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
         ])->setModel($model) !!}
 
 		{!! SodaForm::textarea([
