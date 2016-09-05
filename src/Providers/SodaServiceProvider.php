@@ -23,6 +23,8 @@ use Soda\Cms\Models\Block;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Observers\BlockObserver;
 use Soda\Cms\Models\Observers\DynamicObserver;
+use Soda\Cms\Models\Observers\PageObserver;
+use Soda\Cms\Models\Page;
 use Soda\Cms\Models\PageType;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
@@ -114,6 +116,7 @@ class SodaServiceProvider extends ServiceProvider {
 
     protected function bootObservers() {
         Block::observe(BlockObserver::class);
+        Page::observe(PageObserver::class);
         BlockType::observe(DynamicObserver::class);
         PageType::observe(DynamicObserver::class);
     }

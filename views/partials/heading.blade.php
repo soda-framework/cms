@@ -1,3 +1,7 @@
-<div class="page-header row">
-	<h1 class="col-xs-12"><span class="{{$icon}}"></span>&nbsp;&nbsp;{{$title}}</h1>
+@section('content-heading')
+
+<div class="content-header clearfix">
+	<h1 class="col-xs-12"><i class="{{ $icon }}"></i> <span>{{ $title }}</span></h1>
 </div>
+
+@stop

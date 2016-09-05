@@ -53,7 +53,7 @@ module.exports = {
             folder:         'public'
         },
         {
-            folder:         '../soda_test/src/public/soda/cms',
+            folder:         '../test/src/public/soda/cms',
             css: {
                 clean:      true,
             },
