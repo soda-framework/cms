@@ -29,7 +29,7 @@ class PageType extends AbstractDynamicType {
     ];
 
     public function fields() {
-        return $this->morphToMany(Field::class, 'fieldable')->withPivot('position')->orderBy('pivot_position', 'desc');
+        return $this->morphToMany(Field::class, 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
     }
 
     public function block() {
