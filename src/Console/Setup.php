@@ -16,7 +16,6 @@ class Setup extends Command {
             $this->updateEnv();
         }
 
-
         if (!$this->option('no-filesystem')) {
             $this->updateConfig();
         }

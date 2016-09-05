@@ -69,6 +69,8 @@ Trait CrudableTrait {
         }
 
         if(!$request->has('status')) $request->merge(['status' => 0]);
+        if(!$request->has('show_in_table')) $request->merge(['show_in_table' => 0]);
+
         $this->model->fill($request->input());
         $this->model->application_id = Soda::getApplication()->id;
         $this->model->save();
