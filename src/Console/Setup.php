@@ -55,7 +55,7 @@ class Setup extends Command {
                 Config::set('database.connections.mysql.username', $db_user);
                 Config::set('database.connections.mysql.password', $db_pass);
 
-                DB::getConnection()->statement('CREATE DATABASE IF NOT EXISTS ' . $db_name);
+                DB::statement('CREATE DATABASE IF NOT EXISTS ' . $db_name);
             }
 
             $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
