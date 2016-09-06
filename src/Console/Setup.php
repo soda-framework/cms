@@ -5,6 +5,7 @@ namespace Soda\Cms\Console;
 use Config;
 use DB;
 use Illuminate\Console\Command;
+use Symfony\Component\Process\Process;
 
 class Setup extends Command {
 
@@ -79,12 +80,13 @@ class Setup extends Command {
 
     protected function migrate() {
         $this->call('session:table');
-        $this->call('php artisan optimize');
-        $this->call('php artisan soda:migrate');
+        $this->call('optimize');
+        $this->call('soda:migrate');
     }
 
     protected function seed() {
         // Shell exec so our config is reloaded.
-        shell_exec('php artisan soda:seed');
+        $process = new Process('php artisan soda:seed');
+        $process->run();
     }
 }
