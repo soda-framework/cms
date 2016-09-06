@@ -423,6 +423,12 @@ abstract class AbstractFormField implements FormFieldInterface {
      * @return string
      */
     public function __toString() {
-        return $this->render();
+        if(env('APP_DEBUG')) {
+            try {
+                return $this->render();
+            } catch (Exception $e) {
+                dd($e->getMessage(), $this);
+            }
+        }
     }
 }
