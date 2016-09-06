@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 
 class Setup extends Command {
 
-    protected $signature = 'soda:setup {--s|no-seed : Skip database seeding} {--m|no-migrate : Skip database migration} {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
+    protected $signature = 'soda:setup {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
     protected $description = 'Initial setup command for the Soda Framework';
     protected $except = [];
 
@@ -20,14 +20,6 @@ class Setup extends Command {
 
         if (!$this->option('no-filesystem')) {
             $this->updateConfig();
-        }
-
-        if (!$this->option('no-migrate')) {
-            $this->migrate();
-        }
-
-        if (!$this->option('no-seed')) {
-            $this->seed();
         }
     }
 
@@ -76,20 +68,5 @@ class Setup extends Command {
             $contents = str_replace("'bucket' => 'your-bucket'", "'bucket' => env('AWS_S3_BUCKET')", $contents);
             file_put_contents($config_path, $contents);
         }
-    }
-
-    protected function migrate() {
-        $this->call('session:table');
-        $this->call('optimize');
-        $this->call('soda:migrate');
-    }
-
-    protected function seed() {
-        // Shell exec so our config is reloaded.
-        $process = new Process('php artisan soda:seed');
-
-        $process->run(function ($type, $line) {
-            $this->getOutput()->write($line);
-        });
     }
 }
