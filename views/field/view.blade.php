@@ -8,12 +8,16 @@
 	</ol>
 @stop
 
-@section('header')
+@section('head.title')
 	<title>Edit Field</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-pencil',
+    'title'       => $model->name? ' Field: ' . $model->name : 'New Field',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'), ['icon'=>'fa fa-pencil', 'title'=>$model->name?'Field: '.$model->name:'New Field'])
 	<form method="POST" action='{{route('soda.'.$hint.'.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

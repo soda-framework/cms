@@ -7,15 +7,17 @@
 	</ol>
 @stop
 
-@section('header')
-	<title>Page Types</title>
+@section('head.title')
+	<title>Soda CMS | Page Types</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-edit',
+    'title'       => 'Page Types',
+    'description' => 'Different Page Types have different field types applied to them',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-edit', 'title'=>'Page Types'])
-	<p>
-		Different Page Types have different field types applied to them
-	</p>
 	{!! $filter !!}
 	{!! $grid !!}
 	<a class='btn btn-primary' href="{{route('soda.page_type.create')}}"><span class="fa fa-plus"></span> Create</a>

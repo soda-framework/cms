@@ -60,6 +60,12 @@ class Page extends AbstractSodaClosureEntity {
         return $this->belongsToMany(Block::class, 'page_blocks')->withPivot('can_create', 'can_delete');
     }
 
+    public function getBlock($identifier) {
+        return $this->blocks->filter(function($item) use ($identifier) {
+           return $item->identifier == $identifier;
+        })->first();
+    }
+
     public function getDynamicBlock(Block $block) {
         if(!$this->dynamicBlockLoaded($block)) {
             $this->loadDynamicBlock($block);

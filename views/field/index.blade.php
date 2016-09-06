@@ -7,15 +7,17 @@
 	</ol>
 @stop
 
-@section('header')
-	<title>Fields</title>
+@section('head.title')
+	<title>Soda CMS | Fields</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-pencil',
+    'title'       => 'Fields',
+    'description' => 'Fields are added onto pages.',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'), ['icon'=>'fa fa-pencil', 'title'=>'Fields'])
-	<p>
-		Fields are added onto pages.
-	</p>
 	{!! $filter !!}
 	{!! $grid !!}
 	<a class='btn btn-primary' href="{{route('soda.'.$hint.'.create')}}"><span class="fa fa-plus"></span> Create</a>

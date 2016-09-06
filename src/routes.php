@@ -1,5 +1,7 @@
 <?php
 
+dd(\Soda\Cms\Models\Page::with('blocks')->find(4)->getBlock('home-slider'));
+
 Route::group(['middleware' => 'web'], function () {
     Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.main'], function () {
         Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {

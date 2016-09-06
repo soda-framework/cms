@@ -8,12 +8,16 @@
 	</ol>
 @stop
 
-@section('header')
-	<title>User</title>
+@section('head.cms')
+	<title>Soda CMS | User</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-user-plus',
+    'title'       => $model->username ? ' User: ' . $model->username : 'New User',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'),['icon'=>$model->id?'fa fa-user':'fa fa-user-plus', 'title'=>$model->name?'Field: '.$model->name:'New User'])
 	<form method="POST" action='{{route('soda.field.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		{!! SodaForm::text([

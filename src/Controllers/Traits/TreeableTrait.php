@@ -11,7 +11,7 @@ Trait TreeableTrait
      */
     public function htmlTree($tree, $hint)
     {
-        return view('soda::tree.base', compact('tree', 'hint'));
+        return view('soda::partials.tree.base', compact('tree', 'hint'));
     }
 
     /**
@@ -122,65 +122,6 @@ Trait TreeableTrait
         $item = $this->tree->find($id);
         $item->deleteSubtree(true);
         return redirect()->route('soda.' . $this->hint)->with('success', 'page updated');
-    }
-
-    /**
-     * Renders a tree from a given node.. for use in jstree.
-     * @param  [type]  $tree  [description]
-     * @param  integer $depth current depth - used to see where to put children nodes.
-     * @return [type]         [description]
-     */
-    public function renderTree($tree, $depth = 0)
-    {
-        if (!$tree->hide_in_tree) {
-            $depth++;
-            $branch = new \stdClass();
-            $branch->id = $tree->id;
-
-
-            $branch->text = $tree->name;
-
-            $branch->a_attr = new \stdClass();
-            if ($tree->hide_in_tree === false && config('bootlegcms.cms_debug')) {
-                $branch->a_attr->class = 'text-danger';
-            } else {
-                $branch->a_attr->class = '';
-            }
-
-
-            if ($tree->edit_action) {
-                $branch->a_attr->href = action($tree->edit_action, [$tree->id]);
-            } else {
-                if ($this->content_mode == 'contents') {
-                    $branch->a_attr->href = action('\Bootleg\Cms\ContentsController@anyEdit', [$tree->id]);
-                } else {
-                    $branch->a_attr->href = action('\Bootleg\Cms\TemplateController@anyEdit', [$tree->id]);
-                }
-            }
-
-            $branch->children = [];
-            //$branch->children = ($tree->rgt - $tree->lft > 1);
-            // dd($tree->hide_children);
-            if (count($tree->children)) {
-                foreach ($tree->children as $child) {
-                    if (!$child->hide_in_tree) {
-                        $c = $this->renderTree($child, $depth);
-
-                        $branch->children[] = $c;
-                    } else {
-                        $branch->children = false;
-                    }
-
-                }
-            } else {
-                if ($depth <= config('bootlegcms.cms_tree_descendents')) {
-                    //we don't know if there's anymore children.. so assume there is
-                    $branch->children = true;
-                }
-            }
-            return ($branch);
-        }
-        return false;
     }
 
 

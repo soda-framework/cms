@@ -8,12 +8,16 @@
 </ol>
 @stop
 
-@section('header')
-	<title>Page Types</title>
+@section('head.cms')
+	<title>Soda CMS | Page Types</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-edit',
+    'title'       => $model->name ? 'Page Type: ' . $model->name : 'New Page Type',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'), ['icon'=>'fa fa-edit', 'title'=> $model->name ? 'Page Type: ' . $model->name : 'New Page Type'])
 	<form method="POST" action='{{route('soda.'.$hint.'.edit',['id' => $model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

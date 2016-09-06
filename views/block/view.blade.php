@@ -1,7 +1,5 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-
-
 @section('breadcrumb')
 	<ol class="breadcrumb">
 		<li><a href="{{ route('soda.home') }}">Home</a></li>
@@ -10,14 +8,16 @@
 	</ol>
 @stop
 
-@section('header')
-
-	<title>Edit Block</title>
-
+@section('head.title')
+	<title>Soda CMS | Edit Block</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-square',
+    'title'       => $model->name ? 'Block: ' . $model->name : 'New Block',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-square', 'title'=> $model->name ? 'Block: ' . $model->name : 'New Block'])
 	<form method="POST" action='{{route('soda.block.edit',['id'=>@$model->id])}}' class="form--wrapper" enctype="multipart/form-data">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<input type="hidden" name="block_type_id" value="{{ $model->block_type_id }}" />

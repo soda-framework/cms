@@ -15,7 +15,7 @@
 	<ul>
 		@if ($tree->relationLoaded('children') && $tree->children->count() > 0)
 			@foreach($tree->children as $child)
-				@include('soda::tree.tree', ['tree'=>$child])
+				@include('soda::partials.tree.tree', ['tree'=>$child])
 			@endforeach
 		@endif
 	</ul>

@@ -1,11 +1,14 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('header')
-	<title>List {{str_plural(ucfirst($models[0]->title))}}</title>
+@section('head.title')
+	<title>Soda CMS | List {{ str_plural(ucfirst($models[0]->title)) }}</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'title' => 'List ' . str_plural(ucfirst($models[0]->title)),
+])
+
 @section('content')
-	<h1>List {{str_plural(ucfirst($models[0]->title))}}</h1>
 	<table class="table">
 		<thead>
 		<tr>

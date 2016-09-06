@@ -7,17 +7,17 @@
 	</ol>
 @stop
 
-@section('header')
-
-	<title>Block Types</title>
-
+@section('head.title')
+	<title>Soda CMS | Block Types</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-square',
+    'title'       => 'Block Types',
+    'description' => 'Different Block Types have different field types applied to them',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-pencil-square', 'title'=>'Block Types'])
-	<p>
-		Different Block Types have different field types applied to them
-	</p>
 	{!! $filter !!}
 	{!! $grid !!}
 	<a class='btn btn-primary' href="{{route('soda.'.$hint.'.create')}}"><span class="fa fa-plus"></span> Create</a>

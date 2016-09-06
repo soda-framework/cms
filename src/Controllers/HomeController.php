@@ -14,7 +14,7 @@ class HomeController extends Controller {
      */
     public function getIndex() {
         if (!Auth::user()->can('access-cms')) {
-            return response()->view("soda::auth.no-permission", [], 401);
+            return response()->view("soda::errors.no-permission", [], 401);
         }
 
         $dashboard = event(new DashboardWasRendered);
@@ -22,7 +22,7 @@ class HomeController extends Controller {
         if (!empty($dashboard)) {
             return $dashboard[0];
         } else {
-            return view('soda::home.dashboard');
+            return view('soda::dashboard');
         }
     }
 

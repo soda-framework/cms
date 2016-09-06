@@ -7,12 +7,16 @@
 	</ol>
 @stop
 
-@section('header')
-	<title>Pages</title>
+@section('head.title')
+	<title>Soda CMS | Pages</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-file-o',
+    'title'       => 'Pages',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-file-o', 'title'=>'Pages'])
 	{!! $tree !!}
 
 	<a data-tree-add href="{{route('soda.'.$hint.'.create')}}" class="btn btn-primary btn-lg">

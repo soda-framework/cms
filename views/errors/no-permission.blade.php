@@ -1,5 +1,9 @@
 @extends(soda_cms_view_path('layouts.bare'), ['body_class'=>'full-height login-screen', 'html_class'=>'full-height'])
 
+@section('head.title')
+    <title>Soda CMS | Error</title>
+@endsection
+
 @section('main-content')
     <div class="dialog-box-wrapper">
         <div class="dialog-box">

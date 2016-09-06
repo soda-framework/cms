@@ -8,19 +8,17 @@
     </ol>
 @stop
 
-@section('header')
-    <title>View Page</title>
+@section('head.title')
+    <title>Soda CMS | View Page</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-file-o',
+    'title'       => $model->name? ' Page: ' . $model->name : 'New Page',
+    'description' => $model->description,
+])
+
 @section('content')
-
-    @include(soda_cms_view_path('partials.heading'), [
-        'icon'  => 'fa fa-file-o',
-        'title' => $model->name ? $model->name : 'New ' . ($model->type ? $model->type->name . " Page" : "Page"),
-    ])
-
-    <p class="text-muted">{{ $model->description }}</p><br />
-
     <ul class="nav nav-tabs" role="tablist">
         <li role='presentation' class="active" aria-controls="Settings View">
             <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>

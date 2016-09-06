@@ -7,17 +7,17 @@
 	</ol>
 @stop
 
-@section('header')
-
-	<title>Blocks</title>
-
+@section('head.title')
+	<title>Soda CMS | Blocks</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-pencil',
+    'title'       => 'Blocks',
+    'description' => 'Blocks are added onto pages',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'), ['icon'=>'fa fa-pencil', 'title'=>'Blocks'])
-	<p>
-		Blocks are added onto pages
-	</p>
 	{!! $filter !!}
 	{!! $grid !!}
 	<a class='btn btn-primary' data-toggle="modal" data-target="#block_type_modal"><span class="fa fa-plus"></span> Create</a>

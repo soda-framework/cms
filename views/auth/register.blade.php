@@ -1,5 +1,9 @@
 @extends(soda_cms_view_path('layouts.app'))
 
+@section('head.title')
+    <title>Soda CMS | Register</title>
+@endsection
+
 @section('main-content')
     <div class="container">
         <div class="row">

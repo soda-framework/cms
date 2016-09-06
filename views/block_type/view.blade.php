@@ -8,12 +8,16 @@
 	</ol>
 @stop
 
-@section('header')
-	<title>Edit Block Type</title>
+@section('head.title')
+	<title>Soda CMS | Edit Block Type</title>
 @endsection
 
+@include(soda_cms_view_path('partials.heading'), [
+    'icon'        => 'fa fa-square',
+    'title'       => $model->name ? 'Block Type: ' . $model->name : 'New Block Type',
+])
+
 @section('content')
-	@include(soda_cms_view_path('partials.heading'),['icon'=>'fa fa-pencil-square', 'title'=>$model->name?'Block Type: '.$model->name:'New Block Type'])
 	<form method="POST" action='{{ route('soda.'.$hint.'.edit',['id'=>@$model->id]) }}' class="form--wrapper" enctype="multipart/form-data">
 	    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

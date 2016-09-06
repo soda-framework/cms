@@ -1,10 +1,6 @@
-{{-- base tree item --}}
-<link href="/soda/cms/css/tree.min.css" rel="stylesheet"> {{--should this be in head? --}}
-
 <ul class="tree-view">
-
 	@foreach($tree as $tree_item)
-		@include('soda::tree.tree',['tree'=>$tree_item])
+		@include('soda::partials.tree.tree',['tree'=>$tree_item])
 	@endforeach
 </ul>
 
