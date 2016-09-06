@@ -31,11 +31,13 @@ class DynamicObserver
 
     public function saving(AbstractDynamicType $type)
     {
-        if ($type->isDirty('identifier')) {
+        if ($type->isDirty('identifier') && $type->id) {
             $old_table = 'soda_' . $type->getOriginal('identifier');
             $new_table = 'soda_' . $type->identifier;
 
-            Schema::rename($old_table, $new_table);
+            if(Schema::hasTable($old_table)) {
+                Schema::rename($old_table, $new_table);
+            }
         }
     }
 }
