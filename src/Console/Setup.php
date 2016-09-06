@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Console;
 
+use Config;
 use Dotenv\Dotenv;
 use Illuminate\Console\Command;
 
@@ -48,6 +49,11 @@ class Setup extends Command {
                 $contents = str_replace('DB_DATABASE=homestead', 'DB_DATABASE='.$db_name, $contents);
                 $contents = str_replace('DB_USERNAME=homestead', 'DB_USERNAME='.$db_user, $contents);
                 $contents = str_replace('DB_PASSWORD=secret', 'DB_PASSWORD='.$db_pass, $contents);
+
+                Config::set('database.connections.mysql.host', $db_host);
+                Config::set('database.connections.mysql.database', $db_name);
+                Config::set('database.connections.mysql.username', $db_user);
+                Config::set('database.connections.mysql.password', $db_pass);
             }
 
             $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
@@ -71,8 +77,8 @@ class Setup extends Command {
 
     protected function migrate() {
         $this->call('session:table');
-        shell_exec('php artisan optimize');
-        shell_exec('php artisan migrate');
+        $this->call('php artisan optimize');
+        $this->call('php artisan migrate');
     }
 
     protected function seed() {
