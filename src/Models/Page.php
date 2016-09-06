@@ -2,6 +2,7 @@
 namespace Soda\Cms\Models;
 
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
 use Soda\Cms\Components\Status;
@@ -32,7 +33,7 @@ class Page extends AbstractSodaClosureEntity {
         'edit_action_type',
     ];
 
-    protected $dynamicBlocks = [];
+    protected $pageAttributes;
 
     /**
      * ClosureTable model instance.
@@ -66,45 +67,24 @@ class Page extends AbstractSodaClosureEntity {
         })->first();
     }
 
-    public function getDynamicBlock(Block $block) {
-        if(!$this->dynamicBlockLoaded($block)) {
-            $this->loadDynamicBlock($block);
+    public function getBlockModel($identifier) {
+        $block = $identifier instanceof Block ?  $identifier :  $this->getBlock($identifier);
+
+        if($block) {
+            return $block->model($this->id);
         }
 
-        return $this->dynamicBlocks[$block->type->identifier];
+        return new Collection;
     }
 
-    public function dynamicBlockByIdentifier($identifier) {
-        $block = $this->blocks()->whereIdentifier($identifier)->first();
+    public function getBlockModelQuery($identifier) {
+        $block = $identifier instanceof Block ?  $identifier :  $this->getBlock($identifier);
 
-        if(!$block) {
-            Throw new Exception('Block with identifier ' . $identifier . ' not found.');
+        if($block) {
+            return $block->modelQuery($this->id);
         }
 
-        return $this->dynamicBlock($block);
-    }
-
-    public function dynamicBlock(Block $block) {
-        $identifier = $block->type->identifier;
-        $fields = $block->type->fields;
-        $id = $block->id;
-
-        return Soda::dynamicModel('soda_' . $identifier, $fields->lists('field_name')->toArray())->where('block_id', $id)->where(function($q){
-            $q->where('is_shared', 1)->orWhere('page_id', $this->id);
-        });
-    }
-
-    public function loadDynamicBlock(Block $block) {
-        $identifier = $block->type->identifier;
-        $this->dynamicBlocks[$identifier] = $this->dynamicBlock($block)->get();
-    }
-
-    public function dynamicBlockLoaded($identifier) {
-        if($identifier instanceOf Block) {
-            $identifier = $identifier->type->identifier;
-        }
-
-        return isset($this->dynamicBlocks[$identifier]);
+        throw new Exception('Page does not have block: \'' . $identifier . '\'.');
     }
 
     public function setSlugAttribute($value) {
@@ -123,7 +103,21 @@ class Page extends AbstractSodaClosureEntity {
         return false;
     }
 
-    protected function loadDynamicModel() {
+    public function pageAttributes() {
+        if (!$this->pageAttributes) {
+            $this->loadPageAttributes();
+        }
+
+        return $this->pageAttributes;
+    }
+
+    public function setPageAttributes($model) {
+        $this->pageAttributes = $model;
+
+        return $this;
+    }
+
+    protected function loadPageAttributes() {
         if (!$this->type) {
             $this->load('type');
         }
@@ -134,7 +128,10 @@ class Page extends AbstractSodaClosureEntity {
             $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
         }
 
-        return $this->setModel($model);
+        return $this->setPageAttributes($model);
     }
 
+    public function getRelatedField() {
+        return 'page_id';
+    }
 }
