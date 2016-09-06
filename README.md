@@ -1,32 +1,47 @@
 # Soda CMS
 A sweet PHP CMS solution built on Laravel!
 
-## Require via Composer
-```
-composer require soda-framework/cms
-```
+## Installation
+Install easily using the[Soda Installer](https://github.com/soda-framework/installer)or manually by following these steps:
 
-## Add package to providers in `/config/app.php`
+#### 1. Create new Laravel Project
+
+`composer create-project --prefer-dist laravel/laravel app-name "5.2.*"`
+
+or
+
+`laravel new app-name --5.2`
+
+#### 2. Require Soda Framework
+
+`cd app-name`
+
+`composer require soda-framework/cms`
+
+#### 3. Integrate into Laravel
+
+Add package to providers in `/config/app.php`
+
 ```
 'providers' => [
     Soda\Providers\SodaServiceProvider::class,
 ]
 ```
 
-## Vendor publish
-```
-php artisan vendor:publish
-```
+#### 4. Configure
 
-## Run Migration
-This will add in all the database elements required.
-```
-php artisan migrate --path /vendor/soda-framework/cms/database/migrations
-```
+`php artisan soda:setup`
 
-## Run Seeder
-To give you a head start at building your first website with Soda CMS!
-```
-php artisan db:seed --class=SodaSeeder
-```
+or, manually set up database in your `.env` file. Ensure `CACHE_DRIVER` is set to `array`, or a key-store system.
 
+#### 5. Migrate & Seed
+
+(optional) `php artisan session:table`
+
+`php artisan vendor:publish`
+
+`php artisan optimize`
+
+`php artisan soda:migrate`
+
+`php artisan soda:seed`
