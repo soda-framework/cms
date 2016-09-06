@@ -77,7 +77,7 @@ class Page extends AbstractSodaClosureEntity {
         return new Collection;
     }
 
-    public function getBlockModelQuery($identifier) {
+    public function blockModel($identifier) {
         $block = $identifier instanceof Block ?  $identifier :  $this->getBlock($identifier);
 
         if($block) {
