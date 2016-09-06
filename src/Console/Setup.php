@@ -3,7 +3,7 @@
 namespace Soda\Cms\Console;
 
 use Config;
-use Dotenv\Dotenv;
+use DB;
 use Illuminate\Console\Command;
 
 class Setup extends Command {
@@ -37,7 +37,7 @@ class Setup extends Command {
             $contents = file_get_contents($environment_file_path);
             if (!$this->option('no-database')) {
                 $base_name = str_slug(basename(base_path()));
-                if($base_name == 'src') {
+                if ($base_name == 'src') {
                     $base_name = str_slug(basename(dirname(base_path())), '-');
                 }
                 $db_host = $this->ask('Database host', 'localhost');
@@ -45,15 +45,17 @@ class Setup extends Command {
                 $db_user = $this->ask('Database user', 'root');
                 $db_pass = $this->ask('Database password', false);
 
-                $contents = str_replace('DB_HOST=127.0.0.1', 'DB_HOST='.$db_host, $contents);
-                $contents = str_replace('DB_DATABASE=homestead', 'DB_DATABASE='.$db_name, $contents);
-                $contents = str_replace('DB_USERNAME=homestead', 'DB_USERNAME='.$db_user, $contents);
-                $contents = str_replace('DB_PASSWORD=secret', 'DB_PASSWORD='.$db_pass, $contents);
+                $contents = str_replace('DB_HOST=127.0.0.1', 'DB_HOST=' . $db_host, $contents);
+                $contents = str_replace('DB_DATABASE=homestead', 'DB_DATABASE=' . $db_name, $contents);
+                $contents = str_replace('DB_USERNAME=homestead', 'DB_USERNAME=' . $db_user, $contents);
+                $contents = str_replace('DB_PASSWORD=secret', 'DB_PASSWORD=' . $db_pass, $contents);
 
                 Config::set('database.connections.mysql.host', $db_host);
                 Config::set('database.connections.mysql.database', $db_name);
                 Config::set('database.connections.mysql.username', $db_user);
                 Config::set('database.connections.mysql.password', $db_pass);
+
+                DB::getConnection()->statement('CREATE DATABASE IF NOT EXISTS ' . $db_name);
             }
 
             $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
