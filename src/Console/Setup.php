@@ -78,7 +78,7 @@ class Setup extends Command {
     protected function migrate() {
         $this->call('session:table');
         $this->call('php artisan optimize');
-        $this->call('php artisan migrate');
+        $this->call('php artisan soda:migrate');
     }
 
     protected function seed() {
