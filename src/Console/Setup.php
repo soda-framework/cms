@@ -87,6 +87,9 @@ class Setup extends Command {
     protected function seed() {
         // Shell exec so our config is reloaded.
         $process = new Process('php artisan soda:seed');
-        $process->run();
+
+        $process->run(function ($type, $line) {
+            $this->getOutput()->write($line);
+        });
     }
 }
