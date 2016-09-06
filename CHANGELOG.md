@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.3.2] - 2016-09-06
 ### Added
 - Breadcrumbs
 - Hidden form field
@@ -10,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Dynamic SQL tables now update when BlockType/PageType identifier is updated
+- Soda Setup command fixed
 
 ## [0.3.1] - 2016-09-01
 ### Changed
