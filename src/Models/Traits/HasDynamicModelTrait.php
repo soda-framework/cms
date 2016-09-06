@@ -2,8 +2,6 @@
 
 namespace Soda\Cms\Models\Traits;
 
-use Soda\Cms\Models\ModelBuilder;
-
 trait HasDynamicModelTrait {
     protected $dynamicModel;
 
@@ -15,7 +13,7 @@ trait HasDynamicModelTrait {
         return $this->dynamicModel;
     }
 
-    public function setModel(ModelBuilder $model) {
+    public function setModel($model) {
         $this->dynamicModel = $model;
 
         return $this;
