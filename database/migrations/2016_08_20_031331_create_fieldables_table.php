@@ -16,8 +16,9 @@ class CreateFieldablesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('field_id')->unsigned()->index('FK_fieldables_fields');
-			$table->integer('fieldable_id')->unsigned();
+            $table->integer('fieldable_id')->unsigned();
 			$table->string('fieldable_type');
+            $table->integer('position')->unsigned();
 		});
 	}
 
