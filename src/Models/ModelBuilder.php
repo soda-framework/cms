@@ -17,10 +17,6 @@ class ModelBuilder extends Model {
     protected static $lastTable;
     public $index_fields = [];
 
-    //TODO:
-    //something like this for dynamic relationship.
-    //$user_model->roles = new BelongsToMany($role_model->newQuery(), $user_model, $pivot_table, $foreignKey, $otherKey);
-
     public function __construct($params = []) {
         if ($params) {
             $this->fillable = $params;//this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
@@ -74,12 +70,32 @@ class ModelBuilder extends Model {
 
 
     /**
+     * Create a new instance of the given model.
+     *
+     * @param  array  $attributes
+     * @param  bool  $exists
+     * @return static
+     */
+    public function newInstance($attributes = [], $exists = false)
+    {
+        // This method just provides a convenient way for us to generate fresh model
+        // instances of this current model. It is particularly useful during the
+        // hydration of new objects via the Eloquent query builder instances.
+        $model = new static((array) $attributes);
+
+        $model->exists = $exists;
+        $model->setTable($this->table);
+
+        return $model;
+    }
+
+    /**
      * Get a new query builder that doesn't have any global scopes.
      *
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
-    public function newQueryWithoutScopes() {
-
+    public function newQueryWithoutScopes()
+    {
         $builder = $this->newEloquentBuilder(
             $this->newBaseQueryBuilder()
         );
@@ -87,24 +103,20 @@ class ModelBuilder extends Model {
         // Once we have the query builders, we will set the model instances so the
         // builder can easily access any information it may need from the model
         // while it is constructing and executing various queries against it.
-        $new = $builder->setModel($this)->with($this->with);
+        $builder->setModel($this)->with($this->with);
 
-        $new->table = $this->getTable();
-
-        return $new;
-    }
-
-
-    public function newQuery() {
-        $builder = $this->newQueryWithoutScopes();
-
-        foreach ($this->getGlobalScopes() as $identifier => $scope) {
-            $builder->withGlobalScope($identifier, $scope);
-        }
+        $builder->table = $this->getTable();
 
         return $builder;
     }
 
+
+
+    /**
+     * TODO:
+     * something like this for dynamic relationship.
+     * $user_model->roles = new BelongsToMany($role_model->newQuery(), $user_model, $pivot_table, $foreignKey, $otherKey);
+     *
 
     public function hasMany($related, $foreignKey = null, $localKey = null) {
 
@@ -116,6 +128,6 @@ class ModelBuilder extends Model {
 
         return new HasMany($instance->newQuery(), $this, $instance->getTable() . '.' . $foreignKey, $localKey);
     }
-
+    */
 
 }

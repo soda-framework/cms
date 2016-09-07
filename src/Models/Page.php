@@ -122,10 +122,14 @@ class Page extends AbstractSodaClosureEntity {
             $this->load('type');
         }
 
-        $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
+        if(!$this->type) {
+            $model = new ModelBuilder;
+        } else {
+            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
 
-        if (!$model) {
-            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
+            if (!$model) {
+                $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
+            }
         }
 
         return $this->setPageAttributes($model);
