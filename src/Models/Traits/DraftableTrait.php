@@ -12,12 +12,13 @@ trait DraftableTrait {
      * Automatically filters model to only show live items
      */
     public static function bootDraftableTrait() {
-
-        if(static::isDraftsEnabled()) {
-            static::addGlobalScope('published', function(Builder $builder){
+        static::addGlobalScope('published', function(Builder $builder){
+            if(static::isDraftsEnabled()) {
                 return $builder->where('status', '=', Status::LIVE);
-            });
-        }
+            }
+
+            return $builder;
+        });
     }
 
     protected static function isDraftsEnabled() {

@@ -16,7 +16,7 @@ class PageObserver
     {
         if($page->page_type_id !== null) {
             //if(!$page->type) $page->load('type');
-            ModelBuilder::fromTable('soda_' . $page->type->identifier)->create(['page_id' => $page->id]);
+            ModelBuilder::fromTable('soda_' . $page->type->identifier)->forceFill(['page_id' => $page->id])->save();
         }
     }
 }

@@ -34,7 +34,7 @@ class Setup extends Command {
                     $base_name = str_slug(basename(dirname(base_path())), '-');
                 }
                 $db_host = $this->ask('Database host', 'localhost');
-                $db_name = $this->ask('Database table name', $base_name);
+                $db_name = $this->ask('Database name', $base_name);
                 $db_user = $this->ask('Database user', 'root');
                 $db_pass = $this->ask('Database password', false);
 
@@ -48,7 +48,7 @@ class Setup extends Command {
                 Config::set('database.connections.mysql.username', $db_user);
                 Config::set('database.connections.mysql.password', $db_pass);
 
-                DB::statement('CREATE DATABASE IF NOT EXISTS ' . $db_name);
+                DB::statement('CREATE DATABASE IF NOT EXISTS `' . $db_name . '`');
             }
 
             $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
