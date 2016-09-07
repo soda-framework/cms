@@ -430,5 +430,7 @@ abstract class AbstractFormField implements FormFieldInterface {
                 dd($e->getMessage(), $this);
             }
         }
+
+        return $this->render();
     }
 }
