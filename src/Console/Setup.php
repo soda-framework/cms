@@ -39,18 +39,18 @@ class Setup extends Command {
                 $db_user = $this->ask('Database user', 'root');
                 $db_pass = $this->ask('Database password', false);
 
-                $contents = str_replace('DB_HOST=127.0.0.1', 'DB_HOST=' . $db_host, $contents);
-                $contents = str_replace('DB_DATABASE=homestead', 'DB_DATABASE=' . $db_name, $contents);
-                $contents = str_replace('DB_USERNAME=homestead', 'DB_USERNAME=' . $db_user, $contents);
-                $contents = str_replace('DB_PASSWORD=secret', 'DB_PASSWORD=' . $db_pass, $contents);
+                $contents = preg_replace ('/DB_HOST=(.*)/' , 'DB_HOST=' . $db_host, $contents);
+                $contents = preg_replace ('/DB_DATABASE=(.*)/' , 'DB_DATABASE=' . $db_name, $contents);
+                $contents = preg_replace ('/DB_USERNAME=(.*)/' , 'DB_USERNAME=' . $db_user, $contents);
+                $contents = preg_replace ('/DB_PASSWORD=(.*)/' , 'DB_PASSWORD=' . $db_pass, $contents);
 
                 Config::set('database.connections.mysql.host', $db_host);
                 Config::set('database.connections.mysql.database', $db_name);
                 Config::set('database.connections.mysql.username', $db_user);
                 Config::set('database.connections.mysql.password', $db_pass);
 
-                $connection = new PDO("mysql:user={$db_user} password={$db_pass}");
-                $connection->query("CREATE DATABASE IF NOT EXISTS `{$db_name}`");
+                $connection = new PDO("mysql:host={$db_host}", $db_user, $db_pass);
+                $connection->exec("CREATE DATABASE IF NOT EXISTS `{$db_name}`");
             }
 
             $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
