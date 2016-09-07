@@ -5,6 +5,7 @@ namespace Soda\Cms\Console;
 use Config;
 use DB;
 use Illuminate\Console\Command;
+use PDO;
 use Symfony\Component\Process\Process;
 
 class Setup extends Command {
@@ -48,7 +49,8 @@ class Setup extends Command {
                 Config::set('database.connections.mysql.username', $db_user);
                 Config::set('database.connections.mysql.password', $db_pass);
 
-                DB::statement('CREATE DATABASE IF NOT EXISTS `' . $db_name . '`');
+                $connection = new PDO("mysql:user={$db_user} password={$db_pass}");
+                $connection->query("CREATE DATABASE IF NOT EXISTS `{$db_name}`");
             }
 
             $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
