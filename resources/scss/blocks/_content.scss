@@ -1,5 +1,6 @@
 .main-content {
   background-color: $content-background;
+  padding: 0 10px;
 
   .breadcrumb {
     margin: 0 -15px;
@@ -9,16 +10,24 @@
   }
 }
 
-.main-content-inner {
+.main-content-inner, .main-content-sidebar {
   padding: 30px;
-  margin: 30px 15px;
   background-color: $content-inner-background;
   color: $content-inner-text;
   border: 1px solid $content-inner-border;
 }
 
+.main-content-inner {
+}
+
+.main-content-sidebar {
+  @media(max-width: $screen-sm-max) {
+    margin-bottom: 25px;
+  }
+}
+
 .content-header {
-  margin: 30px 15px 0;
+  margin: 20px 0;
   h1 {
     margin: 0;
     font-size: 24px;

@@ -1,4 +1,11 @@
-@extends(soda_cms_view_path('layouts.inner'))
+<?php
+$small_view = false;
+if((!$model->type || !count($model->type->fields)) && !count($model->blocks) && !Auth::user()->can('live-preview') && !Auth::user()->can('advanced-pages')) {
+    $small_view = true;
+}
+?>
+
+@extends(soda_cms_view_path($small_view ? 'layouts.inner' : 'layouts.inner-sidebar'))
 
 @section('breadcrumb')
     <ol class="breadcrumb">
@@ -18,11 +25,49 @@
     'description' => $model->description,
 ])
 
+@section('page.main')
+    <form method="POST" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}">
+        {!! csrf_field() !!}
+        @if($model->type)
+            <input type="hidden" name="page_type_id" value="{{ $model->type->id }}" />
+        @endif
+        <input type="hidden" name="parent_id" value="{{ $model->parent_id }}" />
+
+        {!! SodaForm::text([
+            "name"        => "Name",
+            "description" => "The name of this page",
+            "field_name"  => 'name',
+        ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
+
+        {!! SodaForm::text([
+            'name'        => 'Slug',
+            'description' => 'The url of this page',
+            'field_name'  => 'slug',
+        ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
+
+        {!! SodaForm::toggle([
+            'name'         => 'Published',
+            'field_name'   => 'status',
+            'value'        => Soda\Cms\Components\Status::LIVE,
+            'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
+        ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
+        <br />
+
+        <input class="btn btn-success" type="submit" value="Save" />
+    </form>
+@stop
+
+@section('content.sidebar')
+    @if(!$small_view)
+        @yield('page.main')
+    @endif
+@stop
+
 @section('content')
+    @if($small_view)
+        @yield('page.main')
+    @else
     <ul class="nav nav-tabs" role="tablist">
-        <li role='presentation' class="active" aria-controls="Settings View">
-            <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
-        </li>
         @if($model->type && count($model->type->fields))
             <li role='presentation' aria-controls="page_type_{{ $model->type->id }}">
                 <a role="tab" data-toggle="tab" href="#tab_page_type_{{ $model->type->id }}">{{ $model->type->name }}</a>
@@ -49,46 +94,13 @@
         @endpermission
     </ul>
 
-    <form method="POST" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}">{{-- << TODO --}}
+    <form method="POST" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}">
         {!! csrf_field() !!}
         @if($model->type)
         <input type="hidden" name="page_type_id" value="{{ $model->type->id }}" />
         @endif
         <input type="hidden" name="parent_id" value="{{ $model->parent_id }}" />
         <div class="tab-content">
-            <div class="tab-pane active" id="tab_settings" role="tabpanel">
-                <h3>Settings</h3>
-                <p>Customise page settings</p>
-                <hr />
-                {!! SodaForm::text([
-                    "name"        => "Name",
-                    "description" => "The name of this page",
-                    "field_name"  => 'name',
-                ])->setModel($model) !!}
-
-                {!! SodaForm::text([
-                    'name'        => 'Slug',
-                    'description' => 'The url of this page',
-                    'field_name'  => 'slug',
-                ])->setModel($model) !!}
-
-                {!! SodaForm::toggle([
-                    'name'         => 'Published',
-                    'description'  => 'Determines whether the page is accessible on the live website',
-                    'field_name'   => 'status',
-                    'value'        => Soda\Cms\Components\Status::LIVE,
-                    'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
-                ])->setModel($model) !!}
-
-                {!! SodaForm::textarea([
-                    'name'        => 'Description',
-                    'description' => 'The description of this page',
-                    'field_name'  => 'description',
-                ])->setModel($model) !!}
-
-                <input class="btn btn-success" type="submit" value="Save" />
-            </div>
-
             @if($model->type)
                 <div class="tab-pane" id="tab_page_type_{{ $model->type->id }}" role="tabpanel">
                     <h3>{{ $model->type->name }}</h3>
@@ -168,15 +180,21 @@
             @endpermission
         </div>
     </form>
+    @endif
 @stop
 
 @section('footer.js')
     @parent
     <script>
+        <?php $active_set = false; ?>
         @foreach($model->blocks as $block)
             @if((Request::has('tab') && Request::input('tab') == $block->identifier) || Request::has($block->identifier . '-page'))
+                <?php $active_set = true; ?>
                 $('a[href="#tab_block_{{ $block->id }}"]').tab('show');
             @endif
         @endforeach
+        @if(!$active_set)
+            $('.nav-tabs a[data-toggle="tab"]').first().tab('show');
+        @endif
     </script>
 @stop

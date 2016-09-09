@@ -1,5 +1,5 @@
 
-<div class="col-sm-2 sidebar">
+<div class="col-xs-2 sidebar">
     <ul class="nav nav-sidebar">
         @permission("view-pages")
             <li class="nav-item">

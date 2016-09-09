@@ -47,23 +47,23 @@
     height: 42px;
     background-color: rgba(0, 0, 0, 0.3);
     outline: none !important;
-    color: $slate-8;
+    color: $slate-080;
     &, &:hover, &:active, &:focus {
       outline: none !important;
       border: none !important;
       box-shadow: none !important;
     }
     &::-webkit-input-placeholder {
-      color: $slate-5;
+      color: $slate-050;
     }
     &:-moz-placeholder { /* Firefox 18- */
-      color: $slate-5;
+      color: $slate-050;
     }
     &::-moz-placeholder { /* Firefox 19+ */
-      color: $slate-5;
+      color: $slate-050;
     }
     &:-ms-input-placeholder {
-      color: $slate-5;
+      color: $slate-050;
     }
   }
 

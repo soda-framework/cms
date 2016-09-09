@@ -13,30 +13,30 @@ $fa-font-path: "/soda/cms/components/font-awesome/fonts" !default;
 /* CONTENT
    ============================= */
 
-$content-background: $slate-9;
+$content-background: $slate-090;
 $content-inner-background: $white;
-$content-inner-border: $slate-7;
+$content-inner-border: $slate-070;
 $content-inner-text: rgb(51, 51, 51);
 
 /* LOGIN
    ============================= */
 
-$login-box: $slate-1;
-$login-box-text: $slate-6;
-$login-box-link: $slate-6;
-$login-box-link-hover: $slate-8;
+$login-box: $slate-010;
+$login-box-text: $slate-060;
+$login-box-link: $slate-060;
+$login-box-link-hover: $slate-080;
 
 /* NAVBAR
    ============================= */
 
 $navbar-height: 60px;
-$navbar-background: $slate-1;
+$navbar-background: $slate-010;
 
-$navbar-inverse-color: $slate-6;
-$navbar-inverse-bg: $slate-1;
+$navbar-inverse-color: $slate-060;
+$navbar-inverse-bg: $slate-010;
 $navbar-inverse-border: transparent;
 
-$navbar-inverse-link-color: $slate-6;
+$navbar-inverse-link-color: $slate-060;
 $navbar-inverse-link-hover-color: $white;
 $navbar-inverse-link-hover-bg: transparent;
 $navbar-inverse-link-active-color: $navbar-inverse-link-hover-color;
@@ -45,18 +45,18 @@ $navbar-inverse-link-active-bg: rgba(0, 0, 0, 0.3);
 /* SIDEBAR
    ============================= */
 
-$sidebar-background: $slate-4;
+$sidebar-background: $slate-040;
 $sidebar-link: transparent;
-$sidebar-link-text: $slate-6;
-$sidebar-link-hover: $slate-5;
-$sidebar-link-hover-text: $slate-8;
-$sidebar-link-active: $slate-2;
+$sidebar-link-text: $slate-060;
+$sidebar-link-hover: $slate-050;
+$sidebar-link-hover-text: $slate-080;
+$sidebar-link-active: $slate-020;
 $sidebar-link-active-text: $white;
-$sidebar-link-active-sub: $slate-2;
+$sidebar-link-active-sub: $slate-020;
 $sidebar-link-active-sub-text: $white;
-$sidebar-group-link: $slate-3;
-$sidebar-group-link-text: $slate-6;
-$sidebar-group-link-hover: $slate-4;
-$sidebar-group-link-hover-text: $slate-8;
-$sidebar-group-link-active: $slate-3;
+$sidebar-group-link: $slate-030;
+$sidebar-group-link-text: $slate-060;
+$sidebar-group-link-hover: $slate-040;
+$sidebar-group-link-hover-text: $slate-080;
+$sidebar-group-link-active: $slate-030;
 $sidebar-group-link-active-text: $white;
