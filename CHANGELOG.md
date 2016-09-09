@@ -4,6 +4,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.4] - 2016-09-09
+### Added
+- Relationship field
+
+## [0.3.3] - 2016-09-08
+### Added
+- More Page/Block accessor methods
+
+### Fixed
+- Setup command now creates database correctly if it does not exists
+- Rows for dynamic tables are only created if a page has a type
+- Better handling of draft mode
+
 ## [0.3.2] - 2016-09-06
 ### Added
 - Breadcrumbs
