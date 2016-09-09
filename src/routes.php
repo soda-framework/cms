@@ -1,14 +1,5 @@
 <?php
 
-$field = SodaForm::relationship([
-    'name'         => 'Relationship',
-    'field_name'   => 'relationship',
-    'field_params' => ['model' => 'Soda\Cms\Models\User', 'key_column' => 'id', 'value_column' => 'username'],
-    'description'  => 'Relationship definition'
-]);
-
-dd($field->parseFieldParameters());
-
 Route::group(['middleware' => 'web'], function () {
     Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.main'], function () {
         Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
