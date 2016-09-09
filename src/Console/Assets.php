@@ -17,7 +17,7 @@ class Assets extends Command {
         $this->info('Updating Soda styles and assets...');
         $this->callSilent('vendor:publish', [
             '--force' => 1,
-            '--tag'   => 'soda.public',
+            '--tag'   => 'soda.assets',
         ]);
         $this->info('Soda styles and assets updated successfully.');
     }

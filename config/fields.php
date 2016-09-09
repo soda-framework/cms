@@ -12,6 +12,7 @@ return [
     'password'     => Soda\Cms\Components\Forms\Fields\Password::class,
     'static_text'  => Soda\Cms\Components\Forms\Fields\StaticText::class,
     'hidden'       => Soda\Cms\Components\Forms\Fields\Hidden::class,
+    'relationship' => Soda\Cms\Components\Forms\Fields\Relationship::class,
     'text'         => Soda\Cms\Components\Forms\Fields\Text::class,
     'textarea'     => Soda\Cms\Components\Forms\Fields\Textarea::class,
     'tinymce'      => Soda\Cms\Components\Forms\Fields\Tinymce::class,

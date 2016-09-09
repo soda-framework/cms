@@ -11,6 +11,7 @@ use Soda\Cms\Components\Menu\MenuBuilder;
 use Soda\Cms\Components\Pages\PageBuilder;
 use Soda\Cms\Components\Soda as SodaInstance;
 use Soda\Cms\Console\Assets;
+use Soda\Cms\Console\Config;
 use Soda\Cms\Console\Migrate;
 use Soda\Cms\Console\Seed;
 use Soda\Cms\Console\Setup;
@@ -55,9 +56,9 @@ class SodaServiceProvider extends ServiceProvider {
         $this->bootObservers();
 
         // Publishing configs
-        $this->publishes([__DIR__ . '/../../config' => config_path('soda')]);
-        //$this->publishes([__DIR__ . '/../../database/migrations' => database_path('migrations')]);
-        $this->publishes([__DIR__ . '/../../public' => public_path('soda/cms')], 'soda.public');
+        $this->publishes([__DIR__ . '/../../config' => config_path('soda')], 'soda.config');
+        //$this->publishes([__DIR__ . '/../../database/migrations' => database_path('migrations')], 'soda.migrations');
+        $this->publishes([__DIR__ . '/../../public' => public_path('soda/cms')], 'soda.assets');
         $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.cms.hint'));
 
         $this->extendBlade();
@@ -111,6 +112,7 @@ class SodaServiceProvider extends ServiceProvider {
             Setup::class,
             Migrate::class,
             Seed::class,
+            Config::class,
         ]);
     }
 
