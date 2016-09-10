@@ -4,6 +4,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.6] - 2016-09-10
+### Changed
+- Updated layout for Page Edit form
+- General styling improvements
+
+### Fixed
+- Corrected toggle functionality for checkbox/toggle fields
+
+## [0.3.5] - 2016-09-09
+### Fixed
+- Removed debug route
+
 ## [0.3.4] - 2016-09-09
 ### Added
 - Relationship field
