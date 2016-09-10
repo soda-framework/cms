@@ -20,7 +20,6 @@ class BlockTypeController extends Controller {
             $this->model = $this->model->findOrFail($id);
         }
 
-        if(!$request->has('status')) $request->merge(['status' => 0]);
         $this->model->fill($request->except('fields'));
 
         $this->model->application_id = Soda::getApplication()->id;

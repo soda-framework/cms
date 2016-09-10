@@ -70,8 +70,6 @@ class PageController extends Controller {
             $this->model = $this->model->findOrFail($id);
         }
 
-        if(!$request->has('status')) $request->merge(['status' => 0]);
-
         $this->model->fill($request->all());
         $this->model->save();
 

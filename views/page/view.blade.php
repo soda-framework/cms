@@ -49,7 +49,7 @@ if((!$model->type || !count($model->type->fields)) && !count($model->blocks) && 
             'name'         => 'Published',
             'field_name'   => 'status',
             'value'        => Soda\Cms\Components\Status::LIVE,
-            'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
+            'field_params' => ['checked-value' => Soda\Cms\Components\Status::LIVE, 'unchecked-value' => Soda\Cms\Components\Status::DRAFT],
         ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
         <br />
 

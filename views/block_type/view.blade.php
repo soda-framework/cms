@@ -31,7 +31,7 @@
 			'description'  => 'Determines whether blocks of this type are visible on the live website',
 			'field_name'   => 'status',
 			'value'        => Soda\Cms\Components\Status::LIVE,
-			'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
+			'field_params' => ['checked-value' => Soda\Cms\Components\Status::LIVE, 'unchecked-value' => Soda\Cms\Components\Status::DRAFT],
         ])->setModel($model) !!}
 
 		{!! SodaForm::textarea([
