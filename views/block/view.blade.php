@@ -31,7 +31,7 @@
             'name'         => 'Status',
 			'description'  => 'Determines whether the block is visible on the live website',
 			'field_name'   => 'status',
-			'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
+			'field_params' => ['checked-value' => Soda\Cms\Components\Status::LIVE, 'unchecked-value' => Soda\Cms\Components\Status::DRAFT],
         ])->setModel($model) !!}
 
 		{!! SodaForm::toggle([

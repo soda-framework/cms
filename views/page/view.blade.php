@@ -50,13 +50,13 @@ if((!$model->type || !count($model->type->fields)) && !count($model->blocks) && 
         'field_name'  => 'slug',
     ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
 
-    {!! SodaForm::toggle([
-        'name'         => 'Published',
-        'field_name'   => 'status',
-        'value'        => Soda\Cms\Components\Status::LIVE,
-        'field_params' => ['on-value' => Soda\Cms\Components\Status::LIVE, 'off-value' => Soda\Cms\Components\Status::DRAFT],
-    ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
-    <br />
+        {!! SodaForm::toggle([
+            'name'         => 'Published',
+            'field_name'   => 'status',
+            'value'        => Soda\Cms\Components\Status::LIVE,
+            'field_params' => ['checked-value' => Soda\Cms\Components\Status::LIVE, 'unchecked-value' => Soda\Cms\Components\Status::DRAFT],
+        ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
+        <br />
 
     <input class="btn btn-success" type="submit" value="Save" />
 @stop
