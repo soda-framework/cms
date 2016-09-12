@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Draft mode toggle
+- Sidebar menu re-organised
+- Made a start on object-oriented menu
 
 ## [0.3.6] - 2016-09-10
 ### Changed

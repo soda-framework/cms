@@ -1,39 +1,11 @@
 <?php
 namespace Soda\Cms\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Soda;
 use Blade;
-use Franzose\ClosureTable\ClosureTableServiceProvider;
-use Soda\Cms\Components\Forms\FormBuilder;
-use Soda\Cms\Components\Forms\FormFieldRegistrar;
-use Soda\Cms\Components\Menu\MenuBuilder;
-use Soda\Cms\Components\Pages\PageBuilder;
+use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Components\Soda as SodaInstance;
-use Soda\Cms\Console\Assets;
-use Soda\Cms\Console\Config;
-use Soda\Cms\Console\Migrate;
-use Soda\Cms\Console\Seed;
-use Soda\Cms\Console\Setup;
-use Soda\Cms\Console\Theme;
-use Soda\Cms\Console\Update;
 use Soda\Cms\Facades\SodaFacade;
-use Soda\Cms\Facades\SodaFormFacade;
-use Soda\Cms\Facades\SodaMenuFacade;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\BlockType;
-use Soda\Cms\Models\Observers\BlockObserver;
-use Soda\Cms\Models\Observers\DynamicObserver;
-use Soda\Cms\Models\Observers\PageObserver;
-use Soda\Cms\Models\Page;
-use Soda\Cms\Models\PageType;
-use Soda\Cms\Models\Permission;
-use Soda\Cms\Models\Role;
-use Soda\Cms\Models\User;
-use Storage;
 use Zofe\Rapyd\RapydServiceProvider;
-use Zizaco\Entrust\EntrustServiceProvider;
-use Zizaco\Entrust\EntrustFacade;
 
 class SodaServiceProvider extends ServiceProvider {
     use SodaServiceProviderTrait;
@@ -53,7 +25,6 @@ class SodaServiceProvider extends ServiceProvider {
         require(__DIR__ . '/../helpers.php');
 
         $this->configure();
-        $this->bootObservers();
 
         // Publishing configs
         $this->publishes([__DIR__ . '/../../config' => config_path('soda')], 'soda.config');
@@ -75,75 +46,25 @@ class SodaServiceProvider extends ServiceProvider {
         $this->mergeConfigFrom(__DIR__ . '/../../config/upload.php', 'soda.upload');
 
         $this->registerDependencies([
-            AuthServiceProvider::class,
+            FormServiceProvider::class,
+            CommandsServiceProvider::class,
+            EloquentServiceProvider::class,
             RouteServiceProvider::class,
-            ClosureTableServiceProvider::class,
+            PageServiceProvider::class,
+            MenuServiceProvider::class,
             RapydServiceProvider::class,
-            EntrustServiceProvider::class,
         ]);
 
         $this->registerFacades([
             'Soda'     => SodaFacade::class,
-            'SodaMenu' => SodaMenuFacade::class,
-            'SodaForm' => SodaFormFacade::class,
-            'Entrust'  => EntrustFacade::class,
         ]);
 
-        $this->app->bind('soda', function($app) {
+        $this->app->bind('soda', function ($app) {
             return new SodaInstance($app['soda.form'], $app['soda.page'], $app['soda.menu']);
         });
-
-        $this->app->bind('soda.form.registrar', function($app) {
-            return new FormFieldRegistrar($app['config']->get('soda.fields'));
-        });
-
-        $this->app->bind('soda.form', function($app) {
-            return new FormBuilder($app['soda.form.registrar']);
-        });
-
-        $this->app->bind('soda.menu', MenuBuilder::class);
-
-        $this->app->bind('soda.page', PageBuilder::class);
-
-        $this->commands([
-            Theme::class,
-            Update::class,
-            Assets::class,
-            Setup::class,
-            Migrate::class,
-            Seed::class,
-            Config::class,
-        ]);
-    }
-
-    protected function bootObservers() {
-        Block::observe(BlockObserver::class);
-        Page::observe(PageObserver::class);
-        BlockType::observe(DynamicObserver::class);
-        PageType::observe(DynamicObserver::class);
     }
 
     protected function configure() {
-        $this->app->config->set('entrust.role', Role::class);
-        $this->app->config->set('entrust.permission', Permission::class);
-
-        $this->app->config->set('auth.providers.soda', [
-            'driver' => 'eloquent',
-            'model'  => User::class,
-        ]);
-
-        $this->app->config->set('auth.guards.soda', [
-            'driver'   => 'session',
-            'provider' => 'soda',
-        ]);
-
-        $this->app->config->set('auth.passwords.soda', [
-            'provider' => 'soda',
-            'email'    => 'auth.emails.password',
-            'table'    => 'password_resets',
-            'expire'   => 60,
-        ]);
-
         $this->app->config->set('filesystems.disks.soda.public', [
             'driver'     => 'local',
             'root'       => public_path('uploads'),

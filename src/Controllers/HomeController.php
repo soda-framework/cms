@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Controller;
 use Auth;
+use Request;
 use Gate;
+use Session;
 use Soda\Cms\Events\DashboardWasRendered;
+use SodaMenu;
 
 class HomeController extends Controller {
 
@@ -24,6 +27,19 @@ class HomeController extends Controller {
         } else {
             return view('soda::dashboard');
         }
+    }
+
+    public function getToggleDraft() {
+        $draft_mode = Session::get("soda.draft_mode") == true ? false : true;
+
+        Session::set("soda.draft_mode", $draft_mode);
+
+        return redirect()->back()->with("info", ($draft_mode ? "Draft" : "Live") . " mode active. <a href=\"/\" target=\"_blank\">View site</a>");
+    }
+
+    public function getTest() {
+
+        dd(SodaMenu::render('sidebar'));
     }
 
 }

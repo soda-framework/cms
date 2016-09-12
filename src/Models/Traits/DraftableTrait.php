@@ -22,7 +22,7 @@ trait DraftableTrait {
     }
 
     protected static function isDraftsEnabled() {
-        return static::$drafts && Session::get("soda.draft_mode") !== true;
+        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
     }
 
     public static function enableDrafts() {

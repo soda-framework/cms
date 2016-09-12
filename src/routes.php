@@ -16,6 +16,9 @@ Route::group(['middleware' => 'web'], function () {
         // Dashboard and user routes...
         Route::group(['middleware' => 'soda.auth:soda'], function () {
             Route::get('/', 'HomeController@getIndex')->name('soda.home');
+            Route::get('test', 'HomeController@getTest')->name('soda.test');
+
+            Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft");
 
             Route::group(['prefix' => 'pages'], function() {
                 Route::get('/', 'PageController@getIndex')->name('soda.page');

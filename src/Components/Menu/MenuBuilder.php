@@ -2,39 +2,49 @@
 
 namespace Soda\Cms\Components\Menu;
 
-use Soda\Cms\Models\NavigationItem;
+use Knp\Menu\FactoryInterface;
+use Knp\Menu\Matcher\Matcher;
+use Knp\Menu\Renderer\ListRenderer;
+use Knp\Menu\Renderer\RendererInterface;
 use Soda;
 use Route;
 
 class MenuBuilder {
-    /**
-     * Renders a menu tree
-     *
-     * @param $name
-     * @param string $view
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function menu($name, $view = 'soda::tree.menu') {
-        $nav = NavigationItem::where('name', $name)->first();
-        if ($nav) {
-            $tree = $nav->grabTree($nav->id);
+    protected $registrar;
+    protected $factory;
 
-            return view($view, ['tree' => $tree, 'hint' => 'page']);
-        }
+    public function __construct(MenuRegistrar $registrar, FactoryInterface $factory) {
+        $this->registrar = $registrar;
+        $this->factory = $factory;
     }
 
     /**
-     * Returns active if given route matches current route.
+     * Gets a menu object by its name
      *
-     * @param $route
-     * @param string $output
+     * @param $name
      *
-     * @return string
+     * @return array|\Soda\Cms\Components\Menu\Menu
      */
-    public function matchesRoute($route, $output = 'active') {
-        if (Route::currentRouteName() == $route) {
-            return $output;
+    public function menu($name, $attributes = []) {
+        $menu = $this->registrar->resolve($name);
+
+        if(!$menu) {
+            $menu = $this->factory->createItem($name, $attributes);
+            $this->registrar->register($name, $menu);
         }
+
+        return $menu;
+    }
+
+    public function render($name, $attributes = []) {
+        $menu = $this->registrar->resolve($name);
+
+        $renderer = $menu->getRenderer();
+
+        if(!$renderer) {
+            $renderer = new ListRenderer(new Matcher);
+        }
+
+        return $renderer->render($menu, $attributes);
     }
 }
