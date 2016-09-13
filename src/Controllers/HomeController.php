@@ -39,7 +39,7 @@ class HomeController extends Controller {
 
     public function getTest() {
 
-        dd(SodaMenu::render('sidebar'));
+        return(SodaMenu::render('sidebar'));
     }
 
 }

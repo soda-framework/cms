@@ -8,11 +8,18 @@ class MenuRegistrar {
      * Registers a new CMS form field
      *
      * @param $name
-     * @param \Soda\Cms\Components\Menu\MenuItem $menu
+     * @param $callback
      *
+     * @return $this
      */
-    public function register($name, MenuItem $menu){
-        $this->registered_menus[$name] = $menu;
+    public function register($name, $callback){
+        if(!isset($this->registered_menus[$name])) {
+            $this->registered_menus[$name] = [];
+        }
+
+        $this->registered_menus[$name][] = $callback;
+
+        return $this;
     }
 
     /**
@@ -21,7 +28,25 @@ class MenuRegistrar {
      * @return array
      */
     public function resolve($name) {
-        return $this->isRegistered($name) ? $this->registered_menus[$name] : null;
+        return $this->isRegistered($name) ? $this->boot($name) : null;
+    }
+
+    protected function boot($name) {
+        $callables = $this->registered_menus[$name];
+
+        if($callables instanceof Menu) {
+            return $callables;
+        }
+
+        $menu = new Menu($name);
+
+        foreach($callables as $callable) {
+            $callable($menu);
+        }
+
+        $this->registered_menus[$name] = $menu;
+
+        return $menu;
     }
 
     /**

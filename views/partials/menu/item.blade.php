@@ -1,10 +1,17 @@
-@if(!isset($item['display']) || $item['display'])
-<li class="nav-item">
-    <a class="nav-link {{ $item['current'] ? 'active' : ''}}" href="{{ $item['uri'] }}">
-        @if(isset($item['icon']) && $item['icon'])
-            <i class="{{ $item['icon'] }}"></i>
+<?php
+
+$item_attributes = $item->getAttributes();
+$link_attributes = $item->getLinkAttributes();
+$icon_attributes = $item->getIconAttributes();
+$label_attributes = $item->getLabelAttributes();
+
+?>
+
+<li @attributes($item_attributes)>
+    <a @attributes($link_attributes)>
+        @if($item->getIcon())
+            <i @attributes($icon_attributes)></i>
         @endif
-        <span>{{ $item['label'] }}</span>
+        <span @attributes($label_attributes)>{{ $item->getLabel() }}</span>
     </a>
 </li>
-@endif

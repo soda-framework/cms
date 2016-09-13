@@ -87,7 +87,7 @@ $menu = [
 ?>
 
 <div class="col-xs-2 sidebar">
-    {!! SodaMenu::render('sidebar', ['currentClass' => 'active', 'branch_class' => 'nav-item-group', 'leaf_class' => 'nav-item']) !!}
+    {!! SodaMenu::render('sidebar') !!}
 </div>
 
 

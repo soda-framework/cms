@@ -2,20 +2,14 @@
 
 namespace Soda\Cms\Components\Menu;
 
-use Knp\Menu\FactoryInterface;
-use Knp\Menu\Matcher\Matcher;
-use Knp\Menu\Renderer\ListRenderer;
-use Knp\Menu\Renderer\RendererInterface;
-use Soda;
 use Route;
+use Soda;
 
 class MenuBuilder {
     protected $registrar;
-    protected $factory;
 
-    public function __construct(MenuRegistrar $registrar, FactoryInterface $factory) {
+    public function __construct(MenuRegistrar $registrar) {
         $this->registrar = $registrar;
-        $this->factory = $factory;
     }
 
     /**
@@ -25,26 +19,13 @@ class MenuBuilder {
      *
      * @return array|\Soda\Cms\Components\Menu\Menu
      */
-    public function menu($name, $attributes = []) {
-        $menu = $this->registrar->resolve($name);
-
-        if(!$menu) {
-            $menu = $this->factory->createItem($name, $attributes);
-            $this->registrar->register($name, $menu);
-        }
-
-        return $menu;
+    public function menu($name, $callback) {
+        $this->registrar->register($name, $callback);
     }
 
-    public function render($name, $attributes = []) {
+    public function render($name) {
         $menu = $this->registrar->resolve($name);
 
-        $renderer = $menu->getRenderer();
-
-        if(!$renderer) {
-            $renderer = new ListRenderer(new Matcher);
-        }
-
-        return $renderer->render($menu, $attributes);
+        return $menu->render();
     }
 }

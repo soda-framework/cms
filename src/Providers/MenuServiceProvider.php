@@ -3,12 +3,11 @@ namespace Soda\Cms\Providers;
 
 use Auth;
 use Illuminate\Support\ServiceProvider;
-use Knp\Menu\Matcher\Matcher;
 use Request;
 use Soda\Cms\Components\Menu\MenuBuilder;
 use Soda\Cms\Components\Menu\MenuFactory;
 use Soda\Cms\Components\Menu\MenuRegistrar;
-use Soda\Cms\Components\Menu\MenuRenderer;
+use Soda\Cms\Components\Menu\SidebarMenuRenderer;
 use Soda\Cms\Facades\SodaMenuFacade;
 use SodaMenu;
 
@@ -27,9 +26,7 @@ class MenuServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->app['events']->listen('Illuminate\Routing\Events\RouteMatched', function() {
-            $this->buildCmsSidebar();
-        });
+        $this->buildCmsSidebar();
     }
 
     /**
@@ -46,133 +43,107 @@ class MenuServiceProvider extends ServiceProvider {
             return new MenuRegistrar;
         });
 
-        $this->app->bind('soda.menu.factory', function ($app) {
-            return new MenuFactory;
-        });
-
         $this->app->bind('soda.menu', function ($app) {
-            return new MenuBuilder($app['soda.menu.registrar'], $app['soda.menu.factory']);
+            return new MenuBuilder($app['soda.menu.registrar']);
         });
     }
 
     protected function buildCmsSidebar() {
-        $menu = SodaMenu::menu('sidebar', [
-            'childrenAttributes' => [
+        SodaMenu::menu('sidebar', function($menu) {
+            $menu->setAttributes([
                 'class' => 'nav nav-sidebar',
-            ],
-        ]);
+            ]);
 
-        $menu->setRenderer(new MenuRenderer(new Matcher));
+            $menu->setRenderer(new SidebarMenuRenderer);
 
-        $menu->addChild('Dashboard', [
-            'uri'     => route('soda.home'),
-            'label'   => 'Dashboard',
-            'current' => Request::is('cms') || Request::is('cms/'),
-            'extras'  => [
+            $menu->addItem('Dashboard', [
+                'url'         => route('soda.home'),
                 'icon'        => 'fa fa-home',
+                'label'       => 'Dashboard',
+                'isCurrent'   => Request::is('cms') || Request::is('cms/'),
                 'permissions' => 'access-cms',
-            ],
-        ]);
+            ]);
 
-        $menu->addChild('Content', [
-            'label'   => 'Content',
-            'current' => Request::is('cms/pages*') || Request::is('cms/blocks*'),
-            'extras'  => [
-                'icon' => 'fa fa-file-o',
-            ],
-        ]);
+            $menu->addItem('Content', [
+                'label'     => 'Content',
+                'icon'      => 'fa fa-file-o',
+                'isCurrent' => Request::is('cms/pages*') || Request::is('cms/blocks*'),
+            ]);
 
-        $menu['Content']->addChild('Pages', [
-            'uri'     => route('soda.page'),
-            'label'   => 'Pages',
-            'current' => Request::is('cms/pages*'),
-            'extras'  => [
+            $menu['Content']->addChild('Pages', [
+                'url'         => route('soda.page'),
+                'label'       => 'Pages',
+                'isCurrent'   => Request::is('cms/pages*'),
                 'permissions' => 'view-pages',
-            ]
-        ]);
+            ]);
 
-        $menu['Content']->addChild('Blocks', [
-            'uri'     => route('soda.block'),
-            'label'   => 'Blocks',
-            'current' => Request::is('cms/blocks*'),
-            'extras'  => [
+            $menu['Content']->addChild('Blocks', [
+                'url'         => route('soda.block'),
+                'label'       => 'Blocks',
+                'isCurrent'   => Request::is('cms/blocks*'),
                 'permissions' => 'view-blocks',
-            ]
-        ]);
+            ]);
 
-        $menu->addChild('Content Types', [
-            'label'   => 'Content Types',
-            'current' => Request::is('cms/page-types*') || Request::is('cms/block-types*') || Request::is('cms/fields*'),
-            'extras'  => [
-                'icon' => 'fa fa-pencil-square-o',
-            ],
-        ]);
+            $menu->addItem('Content Types', [
+                'label'     => 'Content Types',
+                'icon'      => 'fa fa-pencil-square-o',
+                'isCurrent' => Request::is('cms/page-types*') || Request::is('cms/block-types*') || Request::is('cms/fields*'),
+            ]);
 
-        $menu['Content Types']->addChild('Page Types', [
-            'uri'     => route('soda.page_type'),
-            'label'   => 'Page Types',
-            'current' => Request::is('cms/page-types*'),
-            'extras'  => [
+            $menu['Content Types']->addChild('Page Types', [
+                'url'         => route('soda.page_type'),
+                'label'       => 'Page Types',
+                'isCurrent'   => Request::is('cms/page-types*'),
                 'permissions' => 'manage-page-types',
-            ]
-        ]);
+            ]);
 
-        $menu['Content Types']->addChild('Block Types', [
-            'uri'     => route('soda.block_type'),
-            'label'   => 'Block Types',
-            'current' => Request::is('cms/block-types*'),
-            'extras'  => [
+            $menu['Content Types']->addChild('Block Types', [
+                'url'         => route('soda.block_type'),
+                'label'       => 'Block Types',
+                'isCurrent'   => Request::is('cms/block-types*'),
                 'permissions' => 'manage-block-types',
-            ]
-        ]);
+            ]);
 
-        $menu['Content Types']->addChild('Fields', [
-            'uri'     => route('soda.field'),
-            'label'   => 'Fields',
-            'current' => Request::is('cms/fields*'),
-            'extras'  => [
+            $menu['Content Types']->addChild('Fields', [
+                'url'         => route('soda.field'),
+                'label'       => 'Fields',
+                'isCurrent'   => Request::is('cms/fields*'),
                 'permissions' => 'manage-fields',
-            ]
-        ]);
+            ]);
 
-        $menu->addChild('Users', [
-            'uri'     => route('soda.user'),
-            'label'   => 'Users',
-            'current' => Request::is('cms/users*'),
-            'extras'  => [
+            $menu->addItem('Users', [
+                'url'         => route('soda.user'),
+                'label'       => 'Users',
                 'icon'        => 'fa fa-users',
+                'isCurrent'   => Request::is('cms/users*'),
                 'permissions' => 'view-users',
-            ],
-        ]);
+            ]);
 
-        $menu->addChild('Applications', [
-            'uri'     => '#',
-            'label'   => 'Applications',
-            'current' => Request::is('cms/applications*'),
-            'extras'  => [
+            $menu->addItem('Applications', [
+                'url'         => '#',
+                'label'       => 'Applications',
                 'icon'        => 'fa fa-desktop',
+                'isCurrent'   => Request::is('cms/applications*'),
                 'permissions' => 'manage-applications',
-            ],
-        ]);
+            ]);
 
-        $menu->addChild('Application Settings', [
-            'uri'     => '#',
-            'label'   => 'Application Settings',
-            'current' => Request::is('cms/application-settings*'),
-            'extras'  => [
+            $menu->addItem('Application Settings', [
+                'url'         => '#',
+                'label'       => 'Application Settings',
                 'icon'        => 'fa fa-cog',
+                'isCurrent'   => Request::is('cms/application-settings*'),
                 'permissions' => 'manage-applications',
-            ],
-        ]);
+            ]);
 
-        $menu->addChild('Navigation', [
-            'uri'     => route('soda.navigation'),
-            'label'   => 'Navigation',
-            'current' => Request::is('cms/navigation*'),
-            'extras'  => [
+            $menu->addItem('Navigation', [
+                'url'         => route('soda.navigation'),
+                'label'       => 'Navigation',
                 'icon'        => 'fa fa-compass',
+                'isCurrent'   => Request::is('cms/navigation*'),
                 'permissions' => 'view-navigation',
-            ],
-        ]);
+            ]);
+
+            return $menu;
+        });
     }
 }
