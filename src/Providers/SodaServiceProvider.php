@@ -33,6 +33,10 @@ class SodaServiceProvider extends ServiceProvider {
         $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.cms.hint'));
 
         $this->extendBlade();
+
+        $this->registerDependencies([
+            RouteServiceProvider::class,
+        ]);
     }
 
     /**
@@ -49,7 +53,6 @@ class SodaServiceProvider extends ServiceProvider {
             FormServiceProvider::class,
             CommandsServiceProvider::class,
             EloquentServiceProvider::class,
-            RouteServiceProvider::class,
             PageServiceProvider::class,
             MenuServiceProvider::class,
             RapydServiceProvider::class,

@@ -96,7 +96,7 @@ class PageController extends Controller {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function page($slug) {
+    public static function page($slug = '/') {
         return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
     }
 
