@@ -2,7 +2,7 @@
     $menu_attributes = $menu->getAttributes();
 ?>
 
-<ul @attributes($menu_attributes)>
+<ul @attr($menu_attributes)>
     @foreach($menu->getItems() as $item)
     {!! $item->render() !!}
     @endforeach

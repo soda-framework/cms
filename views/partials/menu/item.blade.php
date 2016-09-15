@@ -7,11 +7,11 @@ $label_attributes = $item->getLabelAttributes();
 
 ?>
 
-<li @attributes($item_attributes)>
-    <a @attributes($link_attributes)>
+<li @attr($item_attributes)>
+    <a @attr($link_attributes)>
         @if($item->getIcon())
-            <i @attributes($icon_attributes)></i>
+            <i @attr($icon_attributes)></i>
         @endif
-        <span @attributes($label_attributes)>{{ $item->getLabel() }}</span>
+        <span @attr($label_attributes)>{{ $item->getLabel() }}</span>
     </a>
 </li>
