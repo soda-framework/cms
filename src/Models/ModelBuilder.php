@@ -19,12 +19,12 @@ class ModelBuilder extends Model {
 
     public function __construct($params = []) {
         if ($params) {
-            $this->fillable = $params;//this doesn't seem to do much here - I've had to use forceFill in the controller to make this work!
+            $this->fillable = array_keys($params);
         }
 
         $this->table = static::$lastTable;
 
-        parent::__construct();
+        parent::__construct($params);
     }
 
     public function media() {

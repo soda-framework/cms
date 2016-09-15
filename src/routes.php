@@ -97,5 +97,5 @@ Route::group(['middleware' => 'web'], function () {
         });
     });
 
-    Route::any('{slug?}', 'PageController@page')->where('slug', '((?!_)[A-Za-z0-9])+')->name('soda.page.match');
+    Route::any('{slug?}', 'PageController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
 });
