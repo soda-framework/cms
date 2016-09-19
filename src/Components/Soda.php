@@ -12,7 +12,8 @@ use Soda\Cms\Models\Block;
 use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
 
-class Soda {
+class Soda
+{
     protected $application = null;
     protected $blocks = [];
     protected $formBuilder;
@@ -20,7 +21,8 @@ class Soda {
     protected $menuBuilder;
     protected $currentPage;
 
-    public function __construct(FormBuilder $formBuilder, PageBuilder $pageBuilder, MenuBuilder $menuBuilder) {
+    public function __construct(FormBuilder $formBuilder, PageBuilder $pageBuilder, MenuBuilder $menuBuilder)
+    {
         $this->formBuilder = $formBuilder;
         $this->pageBuilder = $pageBuilder;
         $this->menuBuilder = $menuBuilder;
@@ -31,7 +33,8 @@ class Soda {
      *
      * @return null
      */
-    public function getApplication() {
+    public function getApplication()
+    {
         if (!$this->application) {
             $this->loadApplication();
         }
@@ -46,7 +49,8 @@ class Soda {
      *
      * @return $this
      */
-    public function setApplication(Application $application) {
+    public function setApplication(Application $application)
+    {
         $this->application = $application;
 
         return $this;
@@ -58,7 +62,8 @@ class Soda {
      * @return \Soda\Cms\Components\Soda
      * @throws \Exception
      */
-    protected function loadApplication() {
+    protected function loadApplication()
+    {
         $domain = $_SERVER['HTTP_HOST'];
         $applicationUrl = ApplicationUrl::whereDomain($domain)->first();
 
@@ -82,7 +87,8 @@ class Soda {
      *
      * @return mixed
      */
-    public function getBlock($identifier) {
+    public function getBlock($identifier)
+    {
         if (!isset($this->blocks[$identifier])) {
             $this->blocks[$identifier] = Block::with('type')->where('identifier', $identifier)->first();
         }
@@ -97,20 +103,23 @@ class Soda {
      *
      * @return mixed
      */
-    public function dynamicModel($table) {
+    public function dynamicModel($table)
+    {
         return ModelBuilder::fromTable($table, []);
     }
 
     /**
      * Load a dynamic model
      *
-     * @param $table
+     * @param      $table
      * @param bool $autoprefix
      *
      * @return mixed
      */
-    public function model($table, $autoprefix = true) {
-        if($autoprefix) $table = 'soda_' . $table;
+    public function model($table, $autoprefix = true)
+    {
+        if ($autoprefix) $table = 'soda_'.$table;
+
         return ModelBuilder::fromTable($table, []);
     }
 
@@ -119,7 +128,8 @@ class Soda {
      *
      * @param \Soda\Cms\Models\Page $page
      */
-    public function setCurrentPage(Page $page) {
+    public function setCurrentPage(Page $page)
+    {
         $this->currentPage = $page;
     }
 
@@ -128,7 +138,8 @@ class Soda {
      *
      * @return mixed
      */
-    public function getCurrentPage() {
+    public function getCurrentPage()
+    {
         return $this->currentPage;
     }
 
@@ -137,7 +148,8 @@ class Soda {
      *
      * @return \Soda\Cms\Components\Pages\PageBuilder
      */
-    public function getPageBuilder() {
+    public function getPageBuilder()
+    {
         return $this->pageBuilder;
     }
 
@@ -146,7 +158,8 @@ class Soda {
      *
      * @return \Soda\Cms\Components\Pages\MenuBuilder
      */
-    public function getMenuBuilder() {
+    public function getMenuBuilder()
+    {
         return $this->menuBuilder;
     }
 
@@ -155,7 +168,8 @@ class Soda {
      *
      * @return \Soda\Cms\Components\Pages\FormBuilder
      */
-    public function getFormBuilder() {
+    public function getFormBuilder()
+    {
         return $this->formBuilder;
     }
 
@@ -166,7 +180,8 @@ class Soda {
      *
      * @return mixed
      */
-    public function field($field) {
+    public function field($field)
+    {
         return $this->getFormBuilder()->field($field);
     }
 }

@@ -4,7 +4,8 @@ namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicationUrl extends Model {
+class ApplicationUrl extends Model
+{
     protected $table = 'application_urls';
 
     protected $fillable = [
@@ -12,7 +13,8 @@ class ApplicationUrl extends Model {
         'application_id',
     ];
 
-    public function application() {
+    public function application()
+    {
         return $this->belongsTo(Application::class);
     }
 }

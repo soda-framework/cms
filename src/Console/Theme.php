@@ -7,14 +7,16 @@ use Illuminate\Support\Collection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class Theme extends Command {
+class Theme extends Command
+{
 
     protected $signature = 'soda:theme {--a|advanced : Include extra classes to build more complex theme functionality}';
     protected $description = 'Install an example Soda CMS Theme';
     protected $except = [];
     protected $attributes;
 
-    public function handle() {
+    public function handle()
+    {
         $this->attributes = new Collection;
         $advanced = $this->option('advanced') ? true : false;
 
@@ -26,7 +28,8 @@ class Theme extends Command {
     /**
      * Determine a suitable folder name and namespace from the user's input
      */
-    protected function configureTheme() {
+    protected function configureTheme()
+    {
         $theme_name = ucfirst($this->ask('Please enter your theme name (using CamelCase)', 'SodaSite'));
 
         $folder = str_slug(snake_case($theme_name), '-');
@@ -41,26 +44,27 @@ class Theme extends Command {
      *
      * @param bool $advanced
      */
-    protected function installTheme($advanced = false) {
-        $theme_base = __DIR__ . '/../../themes/' . ($advanced ? 'advanced' : 'simple');
+    protected function installTheme($advanced = false)
+    {
+        $theme_base = __DIR__.'/../../themes/'.($advanced ? 'advanced' : 'simple');
 
         $folder = $this->attributes->get('folder');
         $namespace = $this->attributes->get('namespace');
-        $path = base_path('themes/' . $folder);
+        $path = base_path('themes/'.$folder);
 
         mkdir($path, 0755, true);
-        $this->xcopy(__DIR__ . '/../../themes/shared', $path);
+        $this->xcopy(__DIR__.'/../../themes/shared', $path);
         $this->xcopy($theme_base, $path);
 
         // We need to go through and find and replace everything in here with a different package name:
-        rename($path . '/src/Providers/SodaExampleThemeServiceProvider.php', $path . '/src/Providers/' . $namespace . 'ThemeServiceProvider.php');
+        rename($path.'/src/Providers/SodaExampleThemeServiceProvider.php', $path.'/src/Providers/'.$namespace.'ThemeServiceProvider.php');
         if ($advanced) {
-            rename($path . '/src/Components/SodaExampleInstance.php', $path . '/src/Components/' . $namespace . 'Instance.php');
-            rename($path . '/src/Facades/SodaExampleFacade.php', $path . '/src/Facades/' . $namespace . 'Facade.php');
+            rename($path.'/src/Components/SodaExampleInstance.php', $path.'/src/Components/'.$namespace.'Instance.php');
+            rename($path.'/src/Facades/SodaExampleFacade.php', $path.'/src/Facades/'.$namespace.'Facade.php');
         }
         $this->info('Classes renamed.');
 
-        $this->findAndReplace('SodaExample', $namespace, $path . '/src');
+        $this->findAndReplace('SodaExample', $namespace, $path.'/src');
         $this->findAndReplace('soda-example', $folder, $path);
 
         $this->info('Theme references set.');
@@ -92,7 +96,8 @@ class Theme extends Command {
      *
      * @return string
      */
-    protected function anticipateThemeClass($string) {
+    protected function anticipateThemeClass($string)
+    {
         return studly_case($string);
     }
 
@@ -103,7 +108,8 @@ class Theme extends Command {
      *
      * @return $this
      */
-    protected function appendToComposerFile($config) {
+    protected function appendToComposerFile($config)
+    {
         $file_path = base_path('composer.json');
         $composer_file = file_get_contents($file_path);
         $composer_json = json_decode($composer_file, true);
@@ -118,7 +124,8 @@ class Theme extends Command {
      *
      * @param $serviceProvider
      */
-    protected function addServiceProvider($serviceProvider) {
+    protected function addServiceProvider($serviceProvider)
+    {
         $application_config = config_path('app.php');
 
         if (file_exists($application_config)) {
@@ -136,13 +143,14 @@ class Theme extends Command {
     /**
      * Find and replace two strings recursively from within a path
      *
-     * @param $needle
-     * @param $replace
+     * @param        $needle
+     * @param        $replace
      * @param string $haystack
      *
      * @return $this
      */
-    protected function findAndReplace($needle, $replace, $haystack = "./") {
+    protected function findAndReplace($needle, $replace, $haystack = "./")
+    {
         $d = new RecursiveDirectoryIterator($haystack);
         foreach (new RecursiveIteratorIterator($d, 1) as $path) {
             if (!(in_array($path->getPathname(), $this->except))) {
@@ -151,11 +159,11 @@ class Theme extends Command {
                     $new_file = str_replace($needle, $replace, $orig_file);
                     if ($orig_file != $new_file) {
                         file_put_contents($path, $new_file);
-                        $this->info('Updated: ' . $path);
+                        $this->info('Updated: '.$path);
                     }
                 }
             } else {
-                $this->info('Ignored:' . $path->getPathname());
+                $this->info('Ignored:'.$path->getPathname());
             }
         }
 
@@ -171,11 +179,12 @@ class Theme extends Command {
      *
      * @param       string $source Source path
      * @param       string $dest Destination path
-     * @param       int $permissions New folder creation permissions
+     * @param       int    $permissions New folder creation permissions
      *
      * @return      bool     Returns true on success, false on failure
      */
-    public function xcopy($source, $dest, $permissions = 0755) {
+    public function xcopy($source, $dest, $permissions = 0755)
+    {
         // Check for symlinks
         if (is_link($source)) {
             return symlink(readlink($source), $dest);

@@ -6,7 +6,8 @@ use Soda\Cms\Components\Forms\FormBuilder;
 use Soda\Cms\Components\Forms\FormFieldRegistrar;
 use Soda\Cms\Facades\SodaFormFacade;
 
-class FormServiceProvider extends ServiceProvider {
+class FormServiceProvider extends ServiceProvider
+{
     use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
@@ -20,7 +21,8 @@ class FormServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
     }
 
     /**
@@ -28,7 +30,8 @@ class FormServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->registerFacades([
             'SodaForm' => SodaFormFacade::class,
         ]);

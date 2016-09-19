@@ -1,20 +1,23 @@
 <?php namespace Soda\Cms\Components\Forms;
 
-use Exception;
 use Config;
+use Exception;
 use Request;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Field;
 use Soda\Cms\Models\ModelBuilder;
 
-class FormBuilder {
+class FormBuilder
+{
     protected $registrar;
 
-    public function __construct(FormFieldRegistrar $registrar) {
+    public function __construct(FormFieldRegistrar $registrar)
+    {
         $this->registrar = $registrar;
     }
 
-    public function getRegistrar() {
+    public function getRegistrar()
+    {
         return $this->registrar;
     }
 
@@ -24,9 +27,11 @@ class FormBuilder {
      *
      * @return array
      */
-    public function getFieldTypes() {
-        return array_map(function($value) {
+    public function getFieldTypes()
+    {
+        return array_map(function ($value) {
             $class_name = class_basename($value);
+
             return ucfirst(strtolower(preg_replace('/\B([A-Z])/', ' $1', $class_name)));
         }, $this->getRegistrar()->getRegisteredFields());
     }
@@ -39,13 +44,14 @@ class FormBuilder {
      * @return mixed
      * @throws \Exception
      */
-    public function field($field) {
+    public function field($field)
+    {
         if (is_array($field)) {
             $field = new Field($field);
         }
 
         if (!$field instanceOf Field) {
-            Throw new Exception("Field must be instance of " . Field::class . " or array.");
+            Throw new Exception("Field must be instance of ".Field::class." or array.");
         }
 
         return $this->getRegistrar()->resolve($field);
@@ -61,7 +67,8 @@ class FormBuilder {
      *
      * @return \Illuminate\View\View
      */
-    public function editable($model, $element, $type) {
+    public function editable($model, $element, $type)
+    {
         $field_value = $model->{$element};
         if (Request::get('soda_edit')) {
             $unique = uniqid();
@@ -95,22 +102,24 @@ class FormBuilder {
      *
      * @return string
      */
-    public function buildJsParams($parameters) {
-        if(!$parameters) return '';
+    public function buildJsParams($parameters)
+    {
+        if (!$parameters) return '';
 
         $json_parameters = json_encode($parameters, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         return trim($json_parameters, '{}');
     }
 
-    public function __call($name, $arguments) {
-        if($this->getRegistrar()->isRegistered($name)) {
+    public function __call($name, $arguments)
+    {
+        if ($this->getRegistrar()->isRegistered($name)) {
             $field = new Field($arguments[0]);
             $field->field_type = $name;
 
             return $this->getRegistrar()->resolve($field);
         } else {
-            throw new Exception("Field " . $name ." is not registered.");
+            throw new Exception("Field ".$name." is not registered.");
         }
     }
 
@@ -121,7 +130,8 @@ class FormBuilder {
      *
      * @return $this
      */
-    public function setDefaultLayout($layout) {
+    public function setDefaultLayout($layout)
+    {
         Config::set('soda.cms.form.default-layout', $layout);
 
         return $this;
@@ -134,7 +144,8 @@ class FormBuilder {
      *
      * @return $this
      */
-    public function setDefaultViewPath($view_path) {
+    public function setDefaultViewPath($view_path)
+    {
         Config::set('soda.cms.form.default-view-path', $view_path);
 
         return $this;

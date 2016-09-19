@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Cms\Providers;
 
+use Franzose\ClosureTable\ClosureTableServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Models\Block;
 use Soda\Cms\Models\BlockType;
@@ -12,11 +13,11 @@ use Soda\Cms\Models\PageType;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
-use Franzose\ClosureTable\ClosureTableServiceProvider;
-use Zizaco\Entrust\EntrustServiceProvider;
 use Zizaco\Entrust\EntrustFacade;
+use Zizaco\Entrust\EntrustServiceProvider;
 
-class EloquentServiceProvider extends ServiceProvider {
+class EloquentServiceProvider extends ServiceProvider
+{
     use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
@@ -30,7 +31,8 @@ class EloquentServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
         $this->configure();
         $this->bootObservers();
     }
@@ -40,7 +42,8 @@ class EloquentServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
 
         $this->registerDependencies([
             ClosureTableServiceProvider::class,
@@ -48,18 +51,20 @@ class EloquentServiceProvider extends ServiceProvider {
         ]);
 
         $this->registerFacades([
-            'Entrust'  => EntrustFacade::class,
+            'Entrust' => EntrustFacade::class,
         ]);
     }
 
-    protected function bootObservers() {
+    protected function bootObservers()
+    {
         Block::observe(BlockObserver::class);
         Page::observe(PageObserver::class);
         BlockType::observe(DynamicObserver::class);
         PageType::observe(DynamicObserver::class);
     }
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->app->config->set('entrust.role', Role::class);
         $this->app->config->set('entrust.permission', Permission::class);
 

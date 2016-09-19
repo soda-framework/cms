@@ -4,8 +4,6 @@ namespace Soda\Cms\Models\Observers;
 
 use Schema;
 use Soda\Cms\Models\AbstractDynamicType;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\ModelBuilder;
 
 class DynamicObserver
 {
@@ -32,10 +30,10 @@ class DynamicObserver
     public function saving(AbstractDynamicType $type)
     {
         if ($type->isDirty('identifier') && $type->id) {
-            $old_table = 'soda_' . $type->getOriginal('identifier');
-            $new_table = 'soda_' . $type->identifier;
+            $old_table = 'soda_'.$type->getOriginal('identifier');
+            $new_table = 'soda_'.$type->identifier;
 
-            if(Schema::hasTable($old_table)) {
+            if (Schema::hasTable($old_table)) {
                 Schema::rename($old_table, $new_table);
             }
         }

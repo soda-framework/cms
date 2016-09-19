@@ -13,7 +13,8 @@ use Soda\Cms\Models\Traits\PositionableTrait;
 use Soda\Cms\Models\Traits\SluggableTrait;
 use Soda\Cms\Models\Traits\TreeableTrait;
 
-class Page extends AbstractSodaClosureEntity {
+class Page extends AbstractSodaClosureEntity
+{
     use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait, HasDynamicModelTrait;
 
     protected $table = 'pages';
@@ -42,7 +43,8 @@ class Page extends AbstractSodaClosureEntity {
      */
     protected $closure = PageClosure::class;
 
-    public static function createRoot() {
+    public static function createRoot()
+    {
         return static::create([
             'name'           => 'root',
             'parent_id'      => null,
@@ -53,49 +55,57 @@ class Page extends AbstractSodaClosureEntity {
         ]);
     }
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo(PageType::class, 'page_type_id');
     }
 
-    public function blocks() {
+    public function blocks()
+    {
         return $this->belongsToMany(Block::class, 'page_blocks')->withPivot('can_create', 'can_delete');
     }
 
-    public function getBlock($identifier) {
-        return $this->blocks->filter(function($item) use ($identifier) {
-           return $item->identifier == $identifier;
+    public function getBlock($identifier)
+    {
+        return $this->blocks->filter(function ($item) use ($identifier) {
+            return $item->identifier == $identifier;
         })->first();
     }
 
-    public function getBlockModel($identifier) {
-        $block = $identifier instanceof Block ?  $identifier :  $this->getBlock($identifier);
+    public function getBlockModel($identifier)
+    {
+        $block = $identifier instanceof Block ? $identifier : $this->getBlock($identifier);
 
-        if($block) {
+        if ($block) {
             return $block->model($this->id);
         }
 
         return new Collection;
     }
 
-    public function blockModel($identifier) {
-        $block = $identifier instanceof Block ?  $identifier :  $this->getBlock($identifier);
+    public function blockModel($identifier)
+    {
+        $block = $identifier instanceof Block ? $identifier : $this->getBlock($identifier);
 
-        if($block) {
+        if ($block) {
             return $block->modelQuery($this->id);
         }
 
-        throw new Exception('Page does not have block: \'' . $identifier . '\'.');
+        throw new Exception('Page does not have block: \''.$identifier.'\'.');
     }
 
-    public function setSlugAttribute($value) {
+    public function setSlugAttribute($value)
+    {
         $this->attributes['slug'] = $this->fixSlug($value);
     }
 
-    public function setIdentifierAttribute($value) {
+    public function setIdentifierAttribute($value)
+    {
         $this->attributes['identifier'] = str_slug($value);
     }
 
-    public static function hasFieldsOrBlocks($page) {
+    public static function hasFieldsOrBlocks($page)
+    {
         if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())) {
             return true;
         }
@@ -103,7 +113,8 @@ class Page extends AbstractSodaClosureEntity {
         return false;
     }
 
-    public function pageAttributes() {
+    public function pageAttributes()
+    {
         if (!$this->pageAttributes) {
             $this->loadPageAttributes();
         }
@@ -111,31 +122,34 @@ class Page extends AbstractSodaClosureEntity {
         return $this->pageAttributes;
     }
 
-    public function setPageAttributes($model) {
+    public function setPageAttributes($model)
+    {
         $this->pageAttributes = $model;
 
         return $this;
     }
 
-    protected function loadPageAttributes() {
+    protected function loadPageAttributes()
+    {
         if (!$this->type) {
             $this->load('type');
         }
 
-        if(!$this->type) {
+        if (!$this->type) {
             $model = new ModelBuilder;
         } else {
-            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
+            $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
 
             if (!$model) {
-                $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
+                $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->newInstance();
             }
         }
 
         return $this->setPageAttributes($model);
     }
 
-    public function getRelatedField() {
+    public function getRelatedField()
+    {
         return 'page_id';
     }
 }

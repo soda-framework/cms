@@ -5,10 +5,12 @@ namespace Soda\Cms\Components\Menu;
 use Route;
 use Soda;
 
-class MenuBuilder {
+class MenuBuilder
+{
     protected $registrar;
 
-    public function __construct(MenuRegistrar $registrar) {
+    public function __construct(MenuRegistrar $registrar)
+    {
         $this->registrar = $registrar;
     }
 
@@ -19,11 +21,13 @@ class MenuBuilder {
      *
      * @return array|\Soda\Cms\Components\Menu\Menu
      */
-    public function menu($name, $callback) {
+    public function menu($name, $callback)
+    {
         $this->registrar->register($name, $callback);
     }
 
-    public function render($name) {
+    public function render($name)
+    {
         $menu = $this->registrar->resolve($name);
 
         return $menu->render();

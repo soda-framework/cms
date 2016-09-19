@@ -8,18 +8,20 @@ use Soda\Cms\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Navigation;
 use Soda\Cms\Models\NavigationItem;
 
-class NavigationController extends Controller {
+class NavigationController extends Controller
+{
     use CrudableTrait, TreeableTrait;
     public $hint = 'navigation';
 
-
-    public function __construct(NavigationItem $navigation_item) {
+    public function __construct(NavigationItem $navigation_item)
+    {
         //$this->middleware('auth');
         $this->model = $navigation_item;
         $this->tree = $navigation_item;
     }
 
-    public function index() {
+    public function index()
+    {
 
         $filter = \DataFilter::source($this->model->collectRoots());
         $filter->add('name', 'name', 'text');;
@@ -31,10 +33,10 @@ class NavigationController extends Controller {
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='" . route('soda.' . $this->hint . '.edit',
-                    [$value]) . "' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='" . route('soda.' . $this->hint . '.delete',
-                    [$value]) . "' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+            $edit = "<a href='".route('soda.'.$this->hint.'.edit',
+                    [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
+            $edit .= "<a href='".route('soda.'.$this->hint.'.delete',
+                    [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
 
             return $edit;
         });
@@ -42,19 +44,21 @@ class NavigationController extends Controller {
         $grid->paginate(10)->getGrid('soda::partials.grid');
         $hint = $this->hint;
 
-        return view('soda::' . $this->hint . '.index', compact('filter', 'grid', 'hint'));
+        return view('soda::'.$this->hint.'.index', compact('filter', 'grid', 'hint'));
     }
 
-    public function deleteTree($id) {
+    public function deleteTree($id)
+    {
         $item = $this->tree->find($id);
         $root_id = $item->getAncestorsWhere('real_depth', '=', 0)->first()->id;
         $item->deleteSubtree(true);
 
         //we redirect back to the root menu
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $root_id])->with('success', 'deleted');
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $root_id])->with('success', 'deleted');
     }
 
-    public function view(Request $request, $id = null) {
+    public function view(Request $request, $id = null)
+    {
 
 //        $parent = NavigationItem::find($id);
 //
@@ -77,11 +81,11 @@ class NavigationController extends Controller {
             $tree = false;
         }
 
-        return view('soda::' . $this->hint . '.view', compact('model', 'hint', 'tree'));
+        return view('soda::'.$this->hint.'.view', compact('model', 'hint', 'tree'));
     }
 
-
-    public function edit(Request $request, $id = null) {
+    public function edit(Request $request, $id = null)
+    {
         if ($id) {
             $this->model = $this->model->findOrFail($id);
         }
@@ -101,12 +105,12 @@ class NavigationController extends Controller {
             $this->model->save();
         }
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
             'updated');
     }
 
-
-    public function createForm(Request $request, $parent_id = null) {
+    public function createForm(Request $request, $parent_id = null)
+    {
 
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
@@ -115,7 +119,7 @@ class NavigationController extends Controller {
             $this->model->parent_id = null;
         }
 
-        return view('soda::' . $this->hint . '.view', [
+        return view('soda::'.$this->hint.'.view', [
             'model' => $this->model,
             'hint'  => $this->hint,
             'tree'  => false,

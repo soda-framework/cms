@@ -6,26 +6,31 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Soda\Cms\Models\Observers\DynamicObserver;
 use Schema;
+use Soda\Cms\Models\Observers\DynamicObserver;
 use SodaForm;
 
-abstract class AbstractDynamicType extends Model {
-    public function getDynamicType() {
+abstract class AbstractDynamicType extends Model
+{
+    public function getDynamicType()
+    {
         $table = $this->getTable();
 
         return preg_replace('/_types$/', '', $table);
     }
 
-    public function getDynamicTableName() {
-        return 'soda_' . str_slug($this->identifier, '_');
+    public function getDynamicTableName()
+    {
+        return 'soda_'.str_slug($this->identifier, '_');
     }
 
-    public static function bootDynamicCreatorTrait() {
+    public static function bootDynamicCreatorTrait()
+    {
         static::observe(DynamicObserver::class);
     }
 
-    public function createTable() {
+    public function createTable()
+    {
         $table = $this->getDynamicTableName();
 
         if (!Schema::hasTable($table)) {
@@ -33,16 +38,17 @@ abstract class AbstractDynamicType extends Model {
                 $this->buildDynamicTable($table);
             });
         } else {
-            Throw new Exception('Table ' . $table . ' already exists');
+            Throw new Exception('Table '.$table.' already exists');
         }
 
         return $this;
     }
 
-    protected function buildDynamicTable(Blueprint $table) {
-        $reference_column = $this->getDynamicType() . '_id';
-        $reference_table = $this->getDynamicType() . 's';
-        $reference_index = 'FK_' . $this->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
+    protected function buildDynamicTable(Blueprint $table)
+    {
+        $reference_column = $this->getDynamicType().'_id';
+        $reference_table = $this->getDynamicType().'s';
+        $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
 
         $table->increments('id');
         $table->integer($reference_column)->unsigned()->nullable();
@@ -50,27 +56,29 @@ abstract class AbstractDynamicType extends Model {
         $table->timestamps();
     }
 
-    public function deleteTable() {
+    public function deleteTable()
+    {
         $table = $this->getDynamicTableName();
 
         if (Schema::hasTable($table)) {
-            $reference_column = $this->getDynamicType() . '_id';
-            $reference_table = $this->getDynamicType() . 's';
-            $reference_index = 'FK_' . $this->getDynamicTableName() . '_' . $reference_column . '_' . $reference_table;
+            $reference_column = $this->getDynamicType().'_id';
+            $reference_table = $this->getDynamicType().'s';
+            $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
 
             Schema::table($table, function (Blueprint $table) use ($reference_index) {
                 $table->dropForeign($reference_index);
             });
 
-            Schema::rename($table, $table . '_deleted_' . Carbon::now()->timestamp);
+            Schema::rename($table, $table.'_deleted_'.Carbon::now()->timestamp);
         } else {
-            Throw new Exception('Table ' . $table . ' does not exist');
+            Throw new Exception('Table '.$table.' does not exist');
         }
 
         return $this;
     }
 
-    public function addFields($fields) {
+    public function addFields($fields)
+    {
         foreach ($fields as $field) {
             $this->addField($field);
         }
@@ -78,7 +86,8 @@ abstract class AbstractDynamicType extends Model {
         return $this;
     }
 
-    public function addField(Field $field) {
+    public function addField(Field $field)
+    {
         $table = $this->getDynamicTableName();
         $field_name = $field->field_name;
 
@@ -91,7 +100,8 @@ abstract class AbstractDynamicType extends Model {
         return $this;
     }
 
-    public function removeField(Field $field) {
+    public function removeField(Field $field)
+    {
         $table = $this->getDynamicTableName();
         $field_name = $field->field_name;
 
@@ -104,7 +114,8 @@ abstract class AbstractDynamicType extends Model {
         return $this;
     }
 
-    public function syncFields() {
+    public function syncFields()
+    {
         // todo
     }
 }

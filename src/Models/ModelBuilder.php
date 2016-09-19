@@ -2,7 +2,6 @@
 namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Soda;
 
@@ -11,13 +10,15 @@ use Soda;
  *
  * @package Soda\Cms\Models
  */
-class ModelBuilder extends Model {
+class ModelBuilder extends Model
+{
 
     public $table;
     protected static $lastTable;
     public $index_fields = [];
 
-    public function __construct($params = []) {
+    public function __construct($params = [])
+    {
         if ($params) {
             $this->fillable = array_keys($params);
         }
@@ -27,11 +28,13 @@ class ModelBuilder extends Model {
         parent::__construct($params);
     }
 
-    public function media() {
+    public function media()
+    {
         return $this->hasMany(Media::class, 'related_id')->where('related_table', $this->getTable());
     }
 
-    public static function fromTable($table, $params = []) {
+    public static function fromTable($table, $params = [])
+    {
         if (class_exists($table)) {
             return new $table($params);
         }
@@ -41,18 +44,21 @@ class ModelBuilder extends Model {
         return $model->setTable($table);
     }
 
-    public function setTable($table) {
+    public function setTable($table)
+    {
         $this->table = $table;
         static::$lastTable = $table;
 
         return $this;
     }
 
-    public function getTable() {
+    public function getTable()
+    {
         return $this->table;
     }
 
-    public function parseField(Field $field, Request $request) {
+    public function parseField(Field $field, Request $request)
+    {
         $field = Soda::getFormBuilder()->field($field);
 
         $field->saveToModel($this, $request);
@@ -60,7 +66,8 @@ class ModelBuilder extends Model {
         return $this;
     }
 
-    public function getMedia($field) {
+    public function getMedia($field)
+    {
         if (!$this->media) {
             $this->load('media');
         }
@@ -68,12 +75,12 @@ class ModelBuilder extends Model {
         return $this->media->where('related_field', $field);
     }
 
-
     /**
      * Create a new instance of the given model.
      *
-     * @param  array  $attributes
+     * @param  array $attributes
      * @param  bool  $exists
+     *
      * @return static
      */
     public function newInstance($attributes = [], $exists = false)
@@ -81,7 +88,7 @@ class ModelBuilder extends Model {
         // This method just provides a convenient way for us to generate fresh model
         // instances of this current model. It is particularly useful during the
         // hydration of new objects via the Eloquent query builder instances.
-        $model = new static((array) $attributes);
+        $model = new static((array)$attributes);
 
         $model->exists = $exists;
         $model->setTable($this->table);
@@ -110,24 +117,22 @@ class ModelBuilder extends Model {
         return $builder;
     }
 
-
-
     /**
      * TODO:
      * something like this for dynamic relationship.
      * $user_model->roles = new BelongsToMany($role_model->newQuery(), $user_model, $pivot_table, $foreignKey, $otherKey);
      *
-
-    public function hasMany($related, $foreignKey = null, $localKey = null) {
-
-        $foreignKey = $foreignKey ? : $this->getForeignKey();
-
-        $instance = Soda::dynamicModel($related, []);
-
-        $localKey = $localKey ? : $this->getKeyName();
-
-        return new HasMany($instance->newQuery(), $this, $instance->getTable() . '.' . $foreignKey, $localKey);
-    }
-    */
+     *
+     * public function hasMany($related, $foreignKey = null, $localKey = null) {
+     *
+     * $foreignKey = $foreignKey ? : $this->getForeignKey();
+     *
+     * $instance = Soda::dynamicModel($related, []);
+     *
+     * $localKey = $localKey ? : $this->getKeyName();
+     *
+     * return new HasMany($instance->newQuery(), $this, $instance->getTable() . '.' . $foreignKey, $localKey);
+     * }
+     */
 
 }

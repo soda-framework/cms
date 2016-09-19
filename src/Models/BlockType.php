@@ -7,7 +7,8 @@ use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
-class BlockType extends AbstractDynamicType {
+class BlockType extends AbstractDynamicType
+{
     use OptionallyInApplicationTrait, DraftableTrait;
 
     protected $table = 'block_types';
@@ -24,21 +25,25 @@ class BlockType extends AbstractDynamicType {
         'edit_action_type',
     ];
 
-    public function fields() {
+    public function fields()
+    {
         return $this->morphToMany(Field::class, 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
     }
 
-    public function block() {
+    public function block()
+    {
         return $this->hasMany(Block::class, 'block_type_id');
     }
 
-    public function setIdentifierAttribute($value) {
+    public function setIdentifierAttribute($value)
+    {
         $this->attributes['identifier'] = str_slug($value, '_');
     }
 
-    protected function buildDynamicTable(Blueprint $table) {
-        $block_index = 'FK_' . $this->getDynamicTableName() . '_block_id_blocks';
-        $page_index = 'FK_' . $this->getDynamicTableName() . '_page_id_pages';
+    protected function buildDynamicTable(Blueprint $table)
+    {
+        $block_index = 'FK_'.$this->getDynamicTableName().'_block_id_blocks';
+        $page_index = 'FK_'.$this->getDynamicTableName().'_page_id_pages';
 
         $table->increments('id');
         $table->integer('block_id')->unsigned()->nullable();

@@ -10,14 +10,16 @@ use Themes\SodaExample\Models\User;
 use Themes\SodaExample\Requests\LoginFormRequest;
 use Validator;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     use AuthenticatesAndRegistersUsers;
     protected $guard = 'username';
 
     /**
      * Create a new authentication controller instance.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('guest', ['except' => ['logout']]);
     }
 
@@ -26,7 +28,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function loginForm() {
+    public function loginForm()
+    {
         return view('soda-example::login', compact('request'));
     }
 
@@ -39,7 +42,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(LoginFormRequest $request) {
+    public function login(LoginFormRequest $request)
+    {
         $credentials = $request->except(['_token']);
         if (Auth::guard('username')->attempt($credentials)) {
             return redirect()->route('soda-example.restricted', compact('request'));
@@ -62,7 +66,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function logout($redirect = false) {
+    public function logout($redirect = false)
+    {
         Auth::logout();
 
         return redirect()->to('/')->with('success', 'Logged out succesfully');

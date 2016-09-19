@@ -2,25 +2,141 @@
 
 namespace Soda\Cms\Components\Menu;
 
-
 use InvalidArgumentException;
 
-class Menu implements \ArrayAccess, \Countable, \IteratorAggregate {
+class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
+{
     protected $renderer;
     protected $active_class = 'active';
     protected $items = [];
     protected $attributes = [];
+
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    public function render()
+    {
+        return $this->renderer->renderRoot($this);
+    }
+
+    public function renderMenu($menu)
+    {
+        return $this->renderer->renderMenu($menu);
+    }
+
+    public function renderItem(MenuItem $item)
+    {
+        return $this->renderer->renderItem($item);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRenderer()
+    {
+        return $this->renderer;
+    }
+
+    /**
+     * @param mixed $renderer
+     *
+     * @return $this
+     */
+    public function setRenderer($renderer)
+    {
+        $this->renderer = $renderer;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveClass()
+    {
+        return $this->active_class;
+    }
+
+    /**
+     * @param mixed $active_class
+     *
+     * @return $this
+     */
+    public function setActiveClass($active_class)
+    {
+        $this->active_class = $active_class;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Implements Countable
+     */
+    public function count()
+    {
+        return count($this->items);
+    }
+
+    /**
+     * Implements IteratorAggregate
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->items);
+    }
+
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetExists($name)
+    {
+        return isset($this->items[$name]);
+    }
+
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetGet($name)
+    {
+        return $this->getItem($name);
+    }
 
     public function getItem($name)
     {
         return isset($this->items[$name]) ? $this->items[$name] : null;
     }
 
-    public function getItems() {
-        return $this->items;
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetSet($name, $value)
+    {
+        return $this->addItem($name)->setLabel($value);
     }
 
-    public function addItem($item, array $options = array())
+    public function addItem($item, array $options = [])
     {
         if (!$item instanceof MenuItem) {
             $item = new MenuItem($item, $options);
@@ -34,6 +150,14 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate {
         return $item;
     }
 
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetUnset($name)
+    {
+        $this->removeItem($name);
+    }
+
     public function removeItem($name)
     {
         $name = $name instanceof MenuItem ? $name->getName() : $name;
@@ -42,115 +166,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate {
             $this->items[$name]->setParent(null);
             unset($this->items[$name]);
         }
-        return $this;
-    }
-
-    public function render() {
-        return $this->renderer->renderRoot($this);
-    }
-
-    public function renderMenu($menu) {
-        return $this->renderer->renderMenu($menu);
-    }
-
-    public function renderItem(MenuItem $item) {
-        return $this->renderer->renderItem($item);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRenderer() {
-        return $this->renderer;
-    }
-
-    /**
-     * @param mixed $renderer
-     *
-     * @return $this
-     */
-    public function setRenderer($renderer) {
-        $this->renderer = $renderer;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActiveClass() {
-        return $this->active_class;
-    }
-
-    /**
-     * @param mixed $active_class
-     *
-     * @return $this
-     */
-    public function setActiveClass($active_class) {
-        $this->active_class = $active_class;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAttributes() {
-        return $this->attributes;
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return $this
-     */
-    public function setAttributes($attributes) {
-        $this->attributes = $attributes;
-
-        return $this;
-    }
-
-    /**
-     * Implements Countable
-     */
-    public function count()
-    {
-        return count($this->items);
-    }
-    /**
-     * Implements IteratorAggregate
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->items);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetExists($name)
-    {
-        return isset($this->items[$name]);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetGet($name)
-    {
-        return $this->getItem($name);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetSet($name, $value)
-    {
-        return $this->addItem($name)->setLabel($value);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetUnset($name)
-    {
-        $this->removeItem($name);
     }
 }

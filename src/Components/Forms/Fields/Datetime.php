@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Soda\Cms\Components\Forms\AbstractFormField;
 
-class Datetime extends AbstractFormField {
+class Datetime extends AbstractFormField
+{
     protected $view = "datetime";
 
-    public function getDefaultParameters() {
+    public function getDefaultParameters()
+    {
         return [
             'icons'         => [
                 'time'     => "fa fa-clock-o",
@@ -24,14 +26,16 @@ class Datetime extends AbstractFormField {
         ];
     }
 
-    public function getFieldValue() {
+    public function getFieldValue()
+    {
         $value = parent::getFieldValue();
         $parameters = $this->parseFieldParameters();
 
         return $value ? Carbon::createFromFormat($parameters['output-format'], $value)->format($parameters['input-format']) : '';
     }
 
-    public function getSaveValue(Request $request) {
+    public function getSaveValue(Request $request)
+    {
         $value = parent::saveValue($request);
         $parameters = $this->parseFieldParameters();
 

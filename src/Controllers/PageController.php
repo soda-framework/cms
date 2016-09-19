@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Soda\Cms\Controllers\Traits\TreeableTrait;
 use Soda;
+use Soda\Cms\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Page;
 use Soda\Cms\Models\PageType;
 
-class PageController extends Controller {
+class PageController extends Controller
+{
     use TreeableTrait;
     public $hint = 'page';
 
@@ -16,24 +17,25 @@ class PageController extends Controller {
      *
      * @return void
      */
-    public function __construct(Page $page) {
+    public function __construct(Page $page)
+    {
         //$this->middleware('auth');
         $this->model = $page;
         $this->tree = $page;
     }
-
 
     /**
      * Show the page.
      *
      * @return Response
      */
-    public function getIndex(Request $request) {
+    public function getIndex(Request $request)
+    {
         if ($request->input('id')) {
             $page = $this->model->find($request->input('id'));
         } else {
             $page = $this->model->getRoots()->first();    //todo: from application.
-            if(!$page) $page = Page::createRoot();
+            if (!$page) $page = Page::createRoot();
         }
 
         $page_types = PageType::get();
@@ -49,14 +51,15 @@ class PageController extends Controller {
         ]);
     }
 
-    public function view($id) {
+    public function view($id)
+    {
         if ($id) {
             $model = $this->model->with('blocks.type.fields', 'type.fields')->findOrFail($id);
         } else {
             $model = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
         if (@$model->type->identifier) {
-            $page_table = Soda::dynamicModel('soda_' . $model->type->identifier,
+            $page_table = Soda::dynamicModel('soda_'.$model->type->identifier,
                 $model->type->fields->lists('field_name')->toArray())->where('page_id', $model->id)->first();
         } else {
             $page_table = null;
@@ -65,8 +68,9 @@ class PageController extends Controller {
         return view('soda::page.view', ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
     }
 
-    public function edit(Request $request, $id = null) {
-        if($id) {
+    public function edit(Request $request, $id = null)
+    {
+        if ($id) {
             $this->model = $this->model->findOrFail($id);
         }
 
@@ -78,7 +82,7 @@ class PageController extends Controller {
 
         if ($request->has('settings')) {
 
-            $dyn_table = Soda::dynamicModel('soda_' . $this->model->type->identifier,
+            $dyn_table = Soda::dynamicModel('soda_'.$this->model->type->identifier,
                 $this->model->type->fields->lists('field_name')->toArray())->where('page_id', $this->model->id)->first();
 
             $dyn_table->forceFill($request->input('settings'));
@@ -86,7 +90,7 @@ class PageController extends Controller {
             $dyn_table->save();
         }
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $request->id])->with('success', 'page updated');
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
     }
 
     /**
@@ -96,17 +100,19 @@ class PageController extends Controller {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function page($slug = '/') {
+    public static function page($slug = '/')
+    {
         return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
     }
 
-    public function create(Request $request, $parent_id = null) {
+    public function create(Request $request, $parent_id = null)
+    {
         $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
 
         $this->model->parent_id = $parent ? $parent->id : null;
         $this->model->page_type_id = $request->input('page_type_id');
 
-        if($this->model->page_type_id) {
+        if ($this->model->page_type_id) {
             $this->model->load('type.fields');
         }
 
@@ -120,7 +126,8 @@ class PageController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save(Request $request) {
+    public function save(Request $request)
+    {
         $page = $this->model;
         $parent_id = $request->input('parent_id');
 
@@ -141,12 +148,12 @@ class PageController extends Controller {
 
         $page->save();
 
-        if($parent) {
+        if ($parent) {
             $parent->addChild($page);
         }
 
-        if($page->type) {
-            $dyn_table = Soda::dynamicModel('soda_' . $page->type->identifier,
+        if ($page->type) {
+            $dyn_table = Soda::dynamicModel('soda_'.$page->type->identifier,
                 $page->type->fields->lists('field_name')->toArray())->newInstance();
 
             $dyn_table->page_id = $page->id;

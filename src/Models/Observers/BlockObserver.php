@@ -18,7 +18,7 @@ class BlockObserver
             if (!$block->type) {
                 $block->load('type');
             }
-            ModelBuilder::fromTable('soda_' . $block->type->identifier)->where($block->getRelatedField(), $block->id)->update(['is_shared' => $block->is_shared]);
+            ModelBuilder::fromTable('soda_'.$block->type->identifier)->where($block->getRelatedField(), $block->id)->update(['is_shared' => $block->is_shared]);
         }
     }
 }

@@ -4,14 +4,16 @@ namespace Soda\Cms\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 
-trait SodaServiceProviderTrait {
+trait SodaServiceProviderTrait
+{
 
     /**
      * Register dependencies
      *
      * @param array $services
      */
-    protected function registerDependencies(array $services) {
+    protected function registerDependencies(array $services)
+    {
         foreach ($services as $service) {
             $this->app->register($service);
         }
@@ -22,7 +24,8 @@ trait SodaServiceProviderTrait {
      *
      * @param array $facades
      */
-    protected function registerFacades(array $facades) {
+    protected function registerFacades(array $facades)
+    {
         foreach ($facades as $facade => $class) {
             AliasLoader::getInstance()->alias($facade, $class);
         }
@@ -36,7 +39,8 @@ trait SodaServiceProviderTrait {
      *
      * @return void
      */
-    protected function mergeConfigRecursivelyFrom($path, $key) {
+    protected function mergeConfigRecursivelyFrom($path, $key)
+    {
         $config = $this->app['config']->get($key, []);
 
         $this->app['config']->set($key, array_replace_recursive(require $path, $config));

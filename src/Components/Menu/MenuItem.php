@@ -4,7 +4,8 @@ namespace Soda\Cms\Components\Menu;
 
 use Auth;
 
-class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
+class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
+{
     protected $name;
     protected $attributes;
 
@@ -27,42 +28,69 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     protected $menu;
     protected $parent;
 
-    public function __construct($name, $attributes = []) {
+    public function __construct($name, $attributes = [])
+    {
         $this->name = $name;
         $this->apply($attributes);
     }
 
-    public function setParent(MenuItem $item) {
+    public function apply($attributes = [])
+    {
+        foreach ($attributes as $attribute => $value) {
+            $func = 'set'.ucfirst($attribute);
+            if (method_exists($this, $func)) {
+                $this->$func($value);
+            }
+        }
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public function setParent(MenuItem $item)
+    {
         $this->parent = $item;
 
         return $this;
     }
 
-    public function getParent() {
-        return $this->parent;
-    }
-
-    public function hasParent() {
+    public function hasParent()
+    {
         return $this->parent !== null;
     }
 
-    public function setMenu(Menu $menu) {
-        $this->menu = $menu;
-
-        return $this;
+    /**
+     * Implements Countable
+     */
+    public function count()
+    {
+        return count($this->children);
     }
 
-    public function getMenu() {
-        return $this->menu;
+    /**
+     * Implements IteratorAggregate
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->children);
     }
 
-    public function apply($attributes = []) {
-        foreach($attributes as $attribute => $value) {
-            $func = 'set' . ucfirst($attribute);
-            if(method_exists($this, $func)) {
-                $this->$func($value);
-            }
-        }
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetExists($name)
+    {
+        return isset($this->children[$name]);
+    }
+
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetGet($name)
+    {
+        return $this->getChild($name);
     }
 
     public function getChild($name)
@@ -70,7 +98,15 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
         return isset($this->children[$name]) ? $this->children[$name] : null;
     }
 
-    public function addChild($item, array $options = array())
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetSet($name, $value)
+    {
+        return $this->addChild($name)->setLabel($value);
+    }
+
+    public function addChild($item, array $options = [])
     {
         if (!$item instanceof MenuItem) {
             $item = new MenuItem($item, $options);
@@ -85,64 +121,23 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
         return $item;
     }
 
-    public function removeChild($name)
+    public function getMenu()
     {
-        $name = $name instanceof MenuItem ? $name->getName() : $name;
-        if (isset($this->children[$name])) {
-            // unset the child and reset it so it looks independent
-            $this->children[$name]->setParent(null);
-            unset($this->children[$name]);
-        }
-        return $this;
+        return $this->menu;
     }
 
-    /**
-     * Implements Countable
-     */
-    public function count()
+    public function setMenu(Menu $menu)
     {
-        return count($this->children);
-    }
-    /**
-     * Implements IteratorAggregate
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->children);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetExists($name)
-    {
-        return isset($this->children[$name]);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetGet($name)
-    {
-        return $this->getChild($name);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetSet($name, $value)
-    {
-        return $this->addChild($name)->setLabel($value);
-    }
-    /**
-     * Implements ArrayAccess
-     */
-    public function offsetUnset($name)
-    {
-        $this->removeChild($name);
+        $this->menu = $menu;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -151,8 +146,29 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Implements ArrayAccess
+     */
+    public function offsetUnset($name)
+    {
+        $this->removeChild($name);
+    }
+
+    public function removeChild($name)
+    {
+        $name = $name instanceof MenuItem ? $name->getName() : $name;
+        if (isset($this->children[$name])) {
+            // unset the child and reset it so it looks independent
+            $this->children[$name]->setParent(null);
+            unset($this->children[$name]);
+        }
 
         return $this;
     }
@@ -160,7 +176,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return array
      */
-    public function getAttributes() {
+    public function getAttributes()
+    {
         return $this->attributes;
     }
 
@@ -169,8 +186,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setAttributes($attributes) {
-        if(!is_array($attributes)) {
+    public function setAttributes($attributes)
+    {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -185,7 +203,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setAttribute($attribute, $value) {
+    public function setAttribute($attribute, $value)
+    {
         $this->attributes[$attribute] = $value;
 
         return $this;
@@ -194,7 +213,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return mixed
      */
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label !== null ? $this->label : $this->name;
     }
 
@@ -203,7 +223,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setLabel($label) {
+    public function setLabel($label)
+    {
         $this->label = $label;
 
         return $this;
@@ -212,7 +233,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return array
      */
-    public function getLabelAttributes() {
+    public function getLabelAttributes()
+    {
         return $this->label_attributes;
     }
 
@@ -221,8 +243,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setLabelAttributes($attributes) {
-        if(!is_array($attributes)) {
+    public function setLabelAttributes($attributes)
+    {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -237,26 +260,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setLabeAttribute($attribute, $value) {
+    public function setLabeAttribute($attribute, $value)
+    {
         $this->label_attribute[$attribute] = $value;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUrl() {
-        return $this->url;
-    }
-
-    /**
-     * @param mixed $url
-     *
-     * @return $this
-     */
-    public function setUrl($url) {
-        $this->url = $url;
 
         return $this;
     }
@@ -264,7 +270,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return array
      */
-    public function getLinkAttributes() {
+    public function getLinkAttributes()
+    {
         return $this->link_attributes;
     }
 
@@ -273,8 +280,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setLinkAttributes($attributes) {
-        if(!is_array($attributes)) {
+    public function setLinkAttributes($attributes)
+    {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -289,7 +297,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setLinkAttribute($attribute, $value) {
+    public function setLinkAttribute($attribute, $value)
+    {
         $this->link_attributes[$attribute] = $value;
 
         return $this;
@@ -298,7 +307,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return mixed
      */
-    public function getIcon() {
+    public function getIcon()
+    {
         return $this->icon;
     }
 
@@ -307,7 +317,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setIcon($icon) {
+    public function setIcon($icon)
+    {
         $this->icon = $icon;
 
         return $this;
@@ -316,7 +327,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return array
      */
-    public function getIconAttributes() {
+    public function getIconAttributes()
+    {
         return $this->icon_attributes;
     }
 
@@ -325,8 +337,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setIconAttributes($attributes) {
-        if(!is_array($attributes)) {
+    public function setIconAttributes($attributes)
+    {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -341,49 +354,18 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setIconAttribute($attribute, $value) {
+    public function setIconAttribute($attribute, $value)
+    {
         $this->icon_attributes[$attribute] = $value;
 
         return $this;
     }
 
     /**
-     * @return bool
-     */
-    public function hasChildren() {
-        return count($this->getChildren());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getChildren() {
-        return $this->children;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVisibleChildren() {
-        $visible = [];
-
-        foreach($this->children as $child) {
-            if($child->isVisible() && $child->hasPermission()) {
-                $visible[] = $child;
-            }
-        }
-
-        return $visible;
-    }
-
-    public function hasVisibleChildren() {
-        return count($this->getVisibleChildren());
-    }
-
-    /**
      * @return array
      */
-    public function getChildrenAttributes() {
+    public function getChildrenAttributes()
+    {
         return $this->children_attributes;
     }
 
@@ -392,8 +374,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setChildrenAttributes($attributes) {
-        if(!is_array($attributes)) {
+    public function setChildrenAttributes($attributes)
+    {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -408,7 +391,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setChildrenAttribute($attribute, $value) {
+    public function setChildrenAttribute($attribute, $value)
+    {
         $this->children_attributes[$attribute] = $value;
 
         return $this;
@@ -417,7 +401,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return mixed
      */
-    public function isCurrent() {
+    public function isCurrent()
+    {
         return $this->isCurrent;
     }
 
@@ -426,7 +411,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setIsCurrent($current = true) {
+    public function setIsCurrent($current = true)
+    {
         $this->isCurrent = $current;
 
         return $this;
@@ -435,14 +421,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
     /**
      * @return mixed
      */
-    public function isHidden() {
-        return $this->isHidden;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function isVisible() {
+    public function isVisible()
+    {
         return !$this->isHidden;
     }
 
@@ -451,16 +431,46 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setIsHidden($hidden = true) {
+    public function setIsHidden($hidden = true)
+    {
         $this->isHidden = $hidden;
 
         return $this;
     }
 
+    public function render()
+    {
+        if (!$this->hasPermission() || $this->isHidden() || (!$this->getUrl() && !$this->hasVisibleChildren())) {
+            return '';
+        }
+
+        return $this->hasChildren() ? $this->getMenu()->renderMenu($this) : $this->getMenu()->renderItem($this);
+    }
+
+    public function hasPermission()
+    {
+        if (!count($permissions = $this->getPermissions())) {
+            return true;
+        }
+
+        if (!$user = Auth::user()) {
+            return false;
+        }
+
+        foreach ($permissions as $permission) {
+            if (!$user->can($permission)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @return mixed
      */
-    public function getPermissions() {
+    public function getPermissions()
+    {
         return $this->permissions;
     }
 
@@ -469,8 +479,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
      *
      * @return $this
      */
-    public function setPermissions($permissions) {
-        if(!is_array($permissions)) {
+    public function setPermissions($permissions)
+    {
+        if (!is_array($permissions)) {
             $permissions = [$permissions];
         }
 
@@ -479,29 +490,68 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate {
         return $this;
     }
 
-    public function hasPermission() {
-        if(!count($permissions = $this->getPermissions())) {
-            return true;
-        }
+    /**
+     * @return mixed
+     */
+    public function isHidden()
+    {
+        return $this->isHidden;
+    }
 
-        if(!$user = Auth::user()) {
-            return false;
-        }
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
-        foreach($permissions as $permission) {
-            if(!$user->can($permission)) {
-                return false;
+    /**
+     * @param mixed $url
+     *
+     * @return $this
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function hasVisibleChildren()
+    {
+        return count($this->getVisibleChildren());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVisibleChildren()
+    {
+        $visible = [];
+
+        foreach ($this->children as $child) {
+            if ($child->isVisible() && $child->hasPermission()) {
+                $visible[] = $child;
             }
         }
 
-        return true;
+        return $visible;
     }
 
-    public function render() {
-        if(!$this->hasPermission() || $this->isHidden() || (!$this->getUrl() && !$this->hasVisibleChildren())) {
-            return '';
-        }
+    /**
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return count($this->getChildren());
+    }
 
-        return $this->hasChildren() ? $this->getMenu()->renderMenu($this) : $this->getMenu()->renderItem($this);
+    /**
+     * @return mixed
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

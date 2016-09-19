@@ -6,15 +6,16 @@ use Config;
 use DB;
 use Illuminate\Console\Command;
 use PDO;
-use Symfony\Component\Process\Process;
 
-class Setup extends Command {
+class Setup extends Command
+{
 
     protected $signature = 'soda:setup {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
     protected $description = 'Initial setup command for the Soda Framework';
     protected $except = [];
 
-    public function handle() {
+    public function handle()
+    {
         if (!$this->option('no-env')) {
             $this->updateEnv();
         }
@@ -24,7 +25,8 @@ class Setup extends Command {
         }
     }
 
-    protected function updateEnv() {
+    protected function updateEnv()
+    {
         $environment_file_path = base_path('.env');
 
         if (file_exists($environment_file_path)) {
@@ -39,10 +41,10 @@ class Setup extends Command {
                 $db_user = $this->ask('Database user', 'root');
                 $db_pass = $this->ask('Database password', false);
 
-                $contents = preg_replace ('/DB_HOST=(.*)/' , 'DB_HOST=' . $db_host, $contents);
-                $contents = preg_replace ('/DB_DATABASE=(.*)/' , 'DB_DATABASE=' . $db_name, $contents);
-                $contents = preg_replace ('/DB_USERNAME=(.*)/' , 'DB_USERNAME=' . $db_user, $contents);
-                $contents = preg_replace ('/DB_PASSWORD=(.*)/' , 'DB_PASSWORD=' . $db_pass, $contents);
+                $contents = preg_replace('/DB_HOST=(.*)/', 'DB_HOST='.$db_host, $contents);
+                $contents = preg_replace('/DB_DATABASE=(.*)/', 'DB_DATABASE='.$db_name, $contents);
+                $contents = preg_replace('/DB_USERNAME=(.*)/', 'DB_USERNAME='.$db_user, $contents);
+                $contents = preg_replace('/DB_PASSWORD=(.*)/', 'DB_PASSWORD='.$db_pass, $contents);
 
                 Config::set('database.connections.mysql.host', $db_host);
                 Config::set('database.connections.mysql.database', $db_name);
@@ -59,7 +61,8 @@ class Setup extends Command {
         }
     }
 
-    protected function updateConfig() {
+    protected function updateConfig()
+    {
         $config_path = config_path('filesystems.php');
 
         if (file_exists($config_path)) {

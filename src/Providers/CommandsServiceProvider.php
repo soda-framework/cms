@@ -10,7 +10,8 @@ use Soda\Cms\Console\Setup;
 use Soda\Cms\Console\Theme;
 use Soda\Cms\Console\Update;
 
-class CommandsServiceProvider extends ServiceProvider {
+class CommandsServiceProvider extends ServiceProvider
+{
     use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
@@ -24,7 +25,8 @@ class CommandsServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
     }
 
     /**
@@ -32,7 +34,8 @@ class CommandsServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->commands([
             Theme::class,
             Update::class,

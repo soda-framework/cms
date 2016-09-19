@@ -1,8 +1,8 @@
 <?php
 namespace Themes\SodaExample\Providers;
 
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventsServiceProvider extends ServiceProvider
 {
@@ -10,7 +10,7 @@ class EventsServiceProvider extends ServiceProvider
         'Soda\Cms\Events\NavigationWasRendered' => [
             'Themes\SodaExample\Listeners\MenuNavItems',
         ],
-        'Soda\Cms\Events\DashboardWasRendered' => [
+        'Soda\Cms\Events\DashboardWasRendered'  => [
             'Themes\SodaExample\Listeners\Dashboard',
         ],
     ];
@@ -22,6 +22,5 @@ class EventsServiceProvider extends ServiceProvider
 
     public function register()
     {
-
     }
 }

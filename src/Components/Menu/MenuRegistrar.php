@@ -1,7 +1,8 @@
 <?php
 namespace Soda\Cms\Components\Menu;
 
-class MenuRegistrar {
+class MenuRegistrar
+{
     protected $registered_menus = [];
 
     /**
@@ -12,8 +13,9 @@ class MenuRegistrar {
      *
      * @return $this
      */
-    public function register($name, $callback){
-        if(!isset($this->registered_menus[$name])) {
+    public function register($name, $callback)
+    {
+        if (!isset($this->registered_menus[$name])) {
             $this->registered_menus[$name] = [];
         }
 
@@ -27,26 +29,9 @@ class MenuRegistrar {
      *
      * @return array
      */
-    public function resolve($name) {
+    public function resolve($name)
+    {
         return $this->isRegistered($name) ? $this->boot($name) : null;
-    }
-
-    protected function boot($name) {
-        $callables = $this->registered_menus[$name];
-
-        if($callables instanceof Menu) {
-            return $callables;
-        }
-
-        $menu = new Menu($name);
-
-        foreach($callables as $callable) {
-            $callable($menu);
-        }
-
-        $this->registered_menus[$name] = $menu;
-
-        return $menu;
     }
 
     /**
@@ -56,7 +41,27 @@ class MenuRegistrar {
      *
      * @return bool
      */
-    public function isRegistered($name) {
+    public function isRegistered($name)
+    {
         return isset($this->registered_menus[$name]);
+    }
+
+    protected function boot($name)
+    {
+        $callables = $this->registered_menus[$name];
+
+        if ($callables instanceof Menu) {
+            return $callables;
+        }
+
+        $menu = new Menu($name);
+
+        foreach ($callables as $callable) {
+            $callable($menu);
+        }
+
+        $this->registered_menus[$name] = $menu;
+
+        return $menu;
     }
 }

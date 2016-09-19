@@ -10,7 +10,8 @@ use Zizaco\Entrust\Middleware\EntrustAbility;
 use Zizaco\Entrust\Middleware\EntrustPermission;
 use Zizaco\Entrust\Middleware\EntrustRole;
 
-class RouteServiceProvider extends ServiceProvider {
+class RouteServiceProvider extends ServiceProvider
+{
     /**
      * This namespace is applied to the controller routes in your routes file.
      *
@@ -27,7 +28,8 @@ class RouteServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot(Router $router) {
+    public function boot(Router $router)
+    {
         $router->middleware('soda.main', Cms::class);
         $router->middleware('soda.auth', Authenticate::class);
         $router->middleware('role', EntrustRole::class);
@@ -44,9 +46,10 @@ class RouteServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function map(Router $router) {
+    public function map(Router $router)
+    {
         $router->group(['namespace' => $this->namespace], function ($router) {
-            require(__DIR__ . '/../routes.php');
+            require(__DIR__.'/../routes.php');
         });
     }
 }

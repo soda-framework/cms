@@ -1,13 +1,12 @@
 <?php
 namespace Themes\SodaExample\Providers;
 
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Routing\Router;
 use View;
 
-
-class SodaExampleThemeServiceProvider extends RouteServiceProvider {
+class SodaExampleThemeServiceProvider extends RouteServiceProvider
+{
 
     /**
      * The event listener mappings for the application.
@@ -19,15 +18,16 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
 
     protected $namespace = 'Themes\SodaExample\Controllers';
 
-
-    public function boot(Router $router) {
+    public function boot(Router $router)
+    {
         parent::boot($router);
 
-        $this->loadViewsFrom(__DIR__ . '/../../views', 'soda-example');
+        $this->loadViewsFrom(__DIR__.'/../../views', 'soda-example');
     }
 
-    public function register() {
-        $this->publishes([__DIR__ . '/../../public' => public_path('themes/soda-example')], 'public');
+    public function register()
+    {
+        $this->publishes([__DIR__.'/../../public' => public_path('themes/soda-example')], 'public');
     }
 
     /**
@@ -37,9 +37,10 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
      *
      * @return void
      */
-    public function map(Router $router) {
+    public function map(Router $router)
+    {
         $router->group(['namespace' => $this->namespace, 'middleware' => 'web'], function ($router) {
-            require_once __DIR__ . '/../routes.php';
+            require_once __DIR__.'/../routes.php';
         });
     }
 }

@@ -5,7 +5,8 @@ use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Components\Pages\PageBuilder;
 use Soda\Cms\Facades\SodaPageFacade;
 
-class PageServiceProvider extends ServiceProvider {
+class PageServiceProvider extends ServiceProvider
+{
     use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
@@ -19,7 +20,8 @@ class PageServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
     }
 
     /**
@@ -27,9 +29,10 @@ class PageServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->registerFacades([
-            'SodaPage'     => SodaPageFacade::class,
+            'SodaPage' => SodaPageFacade::class,
         ]);
         $this->app->bind('soda.page', PageBuilder::class);
     }

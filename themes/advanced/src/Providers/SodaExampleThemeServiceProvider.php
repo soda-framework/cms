@@ -7,7 +7,8 @@ use Illuminate\Routing\Router;
 use Themes\SodaExample\Components\SodaExampleInstance;
 use View;
 
-class SodaExampleThemeServiceProvider extends RouteServiceProvider {
+class SodaExampleThemeServiceProvider extends RouteServiceProvider
+{
 
     /**
      * The event listener mappings for the application.
@@ -19,13 +20,15 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
 
     protected $namespace = 'Themes\SodaExample\Controllers';
 
-    public function boot(Router $router) {
+    public function boot(Router $router)
+    {
         parent::boot($router);
 
-        $this->loadViewsFrom(__DIR__ . '/../../views', 'soda-example');
+        $this->loadViewsFrom(__DIR__.'/../../views', 'soda-example');
     }
 
-    public function register() {
+    public function register()
+    {
         $this->app->singleton('soda-example', function ($app) {
             return new SodaExampleInstance($app);
         });
@@ -39,8 +42,8 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
             'SodaExample' => 'Themes\SodaExample\Facades\SodaExampleFacade',
         ]);
 
-        $this->publishes([__DIR__ . '/../../public' => public_path('themes/soda-example')], 'public');
-        $this->publishes([__DIR__ . '/../../config' => config_path()]);
+        $this->publishes([__DIR__.'/../../public' => public_path('themes/soda-example')], 'public');
+        $this->publishes([__DIR__.'/../../config' => config_path()]);
     }
 
     /**
@@ -50,9 +53,10 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
      *
      * @return void
      */
-    public function map(Router $router) {
+    public function map(Router $router)
+    {
         $router->group(['namespace' => $this->namespace, 'middleware' => 'web'], function ($router) {
-            require_once __DIR__ . '/../routes.php';
+            require_once __DIR__.'/../routes.php';
         });
     }
 
@@ -61,7 +65,8 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
      *
      * @param array $services
      */
-    public function registerDependencies(array $services) {
+    public function registerDependencies(array $services)
+    {
         foreach ($services as $service) {
             $this->app->register($service);
         }
@@ -70,10 +75,10 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider {
     /**
      * @param array $facades
      */
-    public function registerFacades(array $facades) {
+    public function registerFacades(array $facades)
+    {
         foreach ($facades as $facade => $class) {
             AliasLoader::getInstance()->alias($facade, $class);
-
         }
     }
 }

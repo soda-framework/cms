@@ -8,9 +8,11 @@ use Storage;
 use Uploader;
 use URL;
 
-class UploadController extends Controller {
+class UploadController extends Controller
+{
     // pass a file object from request
-    public function upload(Request $request) {
+    public function upload(Request $request)
+    {
         $driver = config('soda.upload.driver');
         $url_prefix = trim(config('soda.upload.folder'), '/');
 
@@ -22,9 +24,9 @@ class UploadController extends Controller {
                     // Name the file and place in correct directory
                     $unique = uniqid();
                     $path_info = pathinfo($file->getClientOriginalName());
-                    $final_path = ltrim($url_prefix . '/', '/') . $path_info['filename'] . '__' . $unique;
+                    $final_path = ltrim($url_prefix.'/', '/').$path_info['filename'].'__'.$unique;
                     if ($path_info['extension']) {
-                        $final_path .= '.' . $path_info['extension'];
+                        $final_path .= '.'.$path_info['extension'];
                     }
 
                     // Upload the file
@@ -35,11 +37,11 @@ class UploadController extends Controller {
 
                     // Generate return information
                     if ($uploaded) {
-                        $url = $driver == 'soda.public' ? URL::to('uploads/' . $final_path) : Storage::disk($driver)->url(trim($final_path, '/'));
+                        $url = $driver == 'soda.public' ? URL::to('uploads/'.$final_path) : Storage::disk($driver)->url(trim($final_path, '/'));
 
                         $return = [
                             "error"                => null,
-                            "initialPreview"       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='" . $request->input('field_name') . "' />"],
+                            "initialPreview"       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"],
                             "initialPreviewConfig" => [
                                 "caption" => $url,
                                 "width"   => "120px",
@@ -70,7 +72,7 @@ class UploadController extends Controller {
                             ];
                         } else {
                             DB::table($table)->where('id', $id)->update([
-                                $field => $url
+                                $field => $url,
                             ]);
 
                             $return["initalPreviewConfig"]["key"] = null;
@@ -96,7 +98,8 @@ class UploadController extends Controller {
         //CALL uploading scripts..
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         if ($request->has('key') && $request->input('key')) {
             $image = Media::find($request->input('key'));
             if ($image) {
@@ -109,9 +112,9 @@ class UploadController extends Controller {
             $field = $request->input('related_field');
             $id = $request->input('related_id');
 
-            if($table && $field && $id) {
+            if ($table && $field && $id) {
                 DB::table($table)->where('id', $id)->update([
-                    $field => ''
+                    $field => '',
                 ]);
 
                 return json_encode(true);

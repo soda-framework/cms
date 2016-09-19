@@ -11,7 +11,8 @@ use Soda\Cms\Components\Menu\SidebarMenuRenderer;
 use Soda\Cms\Facades\SodaMenuFacade;
 use SodaMenu;
 
-class MenuServiceProvider extends ServiceProvider {
+class MenuServiceProvider extends ServiceProvider
+{
     use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
@@ -25,7 +26,8 @@ class MenuServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
         $this->buildCmsSidebar();
     }
 
@@ -34,7 +36,8 @@ class MenuServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->registerFacades([
             'SodaMenu' => SodaMenuFacade::class,
         ]);
@@ -48,8 +51,9 @@ class MenuServiceProvider extends ServiceProvider {
         });
     }
 
-    protected function buildCmsSidebar() {
-        SodaMenu::menu('sidebar', function($menu) {
+    protected function buildCmsSidebar()
+    {
+        SodaMenu::menu('sidebar', function ($menu) {
             $menu->setAttributes([
                 'class' => 'nav nav-sidebar',
             ]);
