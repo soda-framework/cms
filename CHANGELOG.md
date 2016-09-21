@@ -3,10 +3,21 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.3.8] - 2016-09-21
+### Changed
+- Code reformat
+- Dont allow image upload on items awaiting creation
+- Enforce Soda CMS auth gaurd
+
+## [0.3.7] - 2016-09-16
 ### Added
 - Draft mode toggle
 - Sidebar menu re-organised
-- Made a start on object-oriented menu
+- Object-oriented menu
+
+### Changed
+- Adjust route registration
 
 ## [0.3.6] - 2016-09-10
 ### Changed
