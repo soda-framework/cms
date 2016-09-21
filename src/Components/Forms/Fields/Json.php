@@ -14,6 +14,6 @@ class Json extends AbstractFormField
 
         $json = json_encode($value);
 
-        return ($json && $json != "null") ? $json : '{}';
+        return ($json && $json != "null" && $json != "[]") ? $json : '{}';
     }
 }

@@ -40,12 +40,12 @@ class UploadController extends Controller
                         $url = $driver == 'soda.public' ? URL::to('uploads/'.$final_path) : Storage::disk($driver)->url(trim($final_path, '/'));
 
                         $return = [
-                            "error"                => null,
-                            "initialPreview"       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"],
+                            "error"                => null, // todo: what is this
+                            "initialPreview"       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"], // todo: not always an image
                             "initialPreviewConfig" => [
                                 "caption" => $url,
                                 "width"   => "120px",
-                                "append"  => true,
+                                "append"  => true, // todo: check if this is necessary
                             ],
                         ];
 
@@ -60,7 +60,7 @@ class UploadController extends Controller
                                 'related_field' => $field,
                                 'position'      => $request->input('file_id'),
                                 'media'         => $url,
-                                'media_type'    => 'image',
+                                'media_type'    => 'image', // todo: autodetect
                             ]);
 
                             $return["initalPreviewConfig"]["key"] = $media->id;
@@ -84,18 +84,14 @@ class UploadController extends Controller
                         }
                     }
                 } else {
-                    dd('file not valid??');  //TODO: REMOVE DD, HANDLE ERRORS BETTER
+                    dd('file not valid??');  // todo: REMOVE DD, HANDLE ERRORS BETTER
                 }
             }
 
-            //return with a json object containing our shiz.. there might be a nicer way of extracting this functionality elswhere?
             return response()->json($return);
         } else {
-            // TODO Should do some exception catching here
-            dd('something went wrong, no file');
+            dd('something went wrong, no file'); // todo: Should do some exception catching here
         }
-        //incoming file
-        //CALL uploading scripts..
     }
 
     public function delete(Request $request)
@@ -121,7 +117,7 @@ class UploadController extends Controller
             }
         }
 
-        return json_encode(['error' => 'Unable to delete image, please refresh and try again']);
+        return json_encode(['error' => 'Unable to delete image, please refresh and try again']); // todo: not always an image
     }
 
 }

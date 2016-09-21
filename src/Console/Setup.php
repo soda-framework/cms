@@ -67,7 +67,7 @@ class Setup extends Command
 
         if (file_exists($config_path)) {
             $contents = file_get_contents($config_path);
-            $contents = str_replace("'key' => 'your-key'", "'key' => env('AWS_ACCESS_KEY_ID')", $contents);
+            $contents = str_replace("'key' => 'your-key'", "'key' =>    env('AWS_ACCESS_KEY_ID')", $contents);
             $contents = str_replace("'secret' => 'your-secret'", "'secret' => env('AWS_SECRET_ACCESS_KEY')", $contents);
             $contents = str_replace("'region' => 'your-region'", "'region' => env('AWS_REGION')", $contents);
             $contents = str_replace("'bucket' => 'your-bucket'", "'bucket' => env('AWS_S3_BUCKET')", $contents);

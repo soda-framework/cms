@@ -27,6 +27,8 @@ class Cms
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        config()->set('auth.defaults.guard', 'soda');
+
         //this is a work around for a laravel bug - the guard flicks back to the default when run through an auth Gate
         //so we need to temporarily set the guard to the incomming guard here instead.
         Block::disableDrafts();

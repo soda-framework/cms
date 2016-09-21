@@ -102,4 +102,21 @@ class FancyUpload extends AbstractFormField
 
         return $default_parameters;
     }
+
+    public function getView() {
+        if($this->model === null || $this->model->id === null) {
+            $static = new StaticText;
+            return $static->getView();
+        }
+
+        return parent::getView();
+    }
+
+    public function getFieldValue() {
+        if($this->model === null || $this->model->id === null) {
+            return 'Please save before uploading a file.';
+        }
+
+        return parent::getFieldValue();
+    }
 }
