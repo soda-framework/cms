@@ -5,6 +5,7 @@
 		@include(soda_cms_view_path('partials.sidebar'))
 		<div class="col-sm-offset-2 col-sm-10 main-content">
 			@yield('breadcrumb')
+			@section('main-content-outer')
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-12">
@@ -24,6 +25,7 @@
 					</div>
 				</div>
 			</div>
+			@show
 		</div>
 	</div>
 @endsection

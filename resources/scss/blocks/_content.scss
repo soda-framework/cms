@@ -10,14 +10,17 @@
   }
 }
 
-.main-content-inner, .main-content-sidebar {
-  padding: 30px;
+.main-content-inner, .main-content-sidebar, .dashboard-block {
   background-color: $content-inner-background;
   color: $content-inner-text;
   border: 1px solid $content-inner-border;
 }
 
-.main-content-inner {
+.main-content-inner, .main-content-sidebar {
+  padding: 30px;
+}
+
+.main-content-inner, .dashboard-block {
   .jumbotron {
     background-color: $content-inner-background;
   }
