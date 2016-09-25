@@ -26,12 +26,12 @@
             "field_name"  => 'name',
         ])->setModel($model) !!}
 
-		{!! SodaForm::dropdown([
+		{!! SodaForm::toggle([
             'name'         => 'Status',
-            'description'  => 'The status of this page type',
-            'field_name'   => 'status',
-            'value'        => Soda\Cms\Components\Status::LIVE,
-            'field_params' => ['options' => Soda\Cms\Components\Status::all()],
+			'description'  => 'Determines whether pages of this type are visible on the live website',
+			'field_name'   => 'status',
+			'value'        => Soda\Cms\Components\Status::LIVE,
+			'field_params' => ['checked-value' => Soda\Cms\Components\Status::LIVE, 'unchecked-value' => Soda\Cms\Components\Status::DRAFT],
         ])->setModel($model) !!}
 
 		{!! SodaForm::textarea([
@@ -40,20 +40,26 @@
         ])->setModel($model) !!}
 
 		{!! SodaForm::text([
-            "name"        => "Page Type Action",
-            "field_name"  => 'action',
+            'name'        => 'Package Prefix',
+            'field_name'  => 'package',
         ])->setModel($model) !!}
 
-		{!! SodaForm::dropdown([
-            "name"        => "Page Type Action Type",
-            "field_name"  => 'action_type',
-            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes(), 'default' => 'view'],
-        ])->setModel($model) !!}
-
-		{!! SodaForm::text([
-            "name"        => "Package",
-            "field_name"  => 'package',
-        ])->setModel($model) !!}
+		<div class="row">
+			<div class="col-sm-6 col-xs-12">
+				{!! SodaForm::dropdown([
+                    'name'        => 'Default Action',
+                    'field_name'  => 'action_type',
+                    'value'       => 'view',
+                    'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+			</div>
+			<div class="col-sm-6 col-xs-12">
+				{!! SodaForm::text([
+                    'name'        => null,
+                    'field_name'  => 'action',
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+			</div>
+		</div>
 
 		{!! SodaForm::text([
             "name"        => "Identifier",
