@@ -4,18 +4,20 @@ namespace Soda\Cms\Components\Forms\Fields;
 
 use Soda\Cms\Components\Forms\AbstractFormField;
 
-class Tinymce extends AbstractFormField {
+class Tinymce extends AbstractFormField
+{
     protected $view = "tinymce";
 
-    public function getDefaultParameters() {
+    public function getDefaultParameters()
+    {
         return [
-            'selector'     => '#field_' . $this->getFieldName(),
+            'selector'     => '#field_'.$this->getFieldName(),
             'height'       => 500,
             'plugins'      => [
                 'advlist autolink lists link image charmap print hr anchor pagebreak',
                 'searchreplace wordcount visualblocks visualchars code fullscreen',
                 'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools'
+                'emoticons template paste textcolor colorpicker textpattern imagetools',
             ],
             'toolbar1'     => 'insertfile undo redo | forecolor backcolor styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
             'image_advtab' => true,

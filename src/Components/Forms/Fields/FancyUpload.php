@@ -4,10 +4,12 @@ namespace Soda\Cms\Components\Forms\Fields;
 
 use Soda\Cms\Components\Forms\AbstractFormField;
 
-class FancyUpload extends AbstractFormField {
+class FancyUpload extends AbstractFormField
+{
     protected $view = "fancy_upload";
 
-    public function getDefaultParameters() {
+    public function getDefaultParameters()
+    {
         $field_name = $this->getFieldName();
         $field_params = $this->getFieldParameters();
         $is_multi = isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? true : false;
@@ -33,13 +35,13 @@ class FancyUpload extends AbstractFormField {
             'deleteUrl'               => route('soda.upload.delete'),
             'allowedFileTypes'        => [
                 'image',
-                'audio'
+                'audio',
             ],
             'allowedFileExtensions'   => [
                 'jpg',
                 'jpeg',
                 'gif',
-                'png'
+                'png',
             ],
             'uploadAsync'             => true,
             'minFileCount'            => 1,
@@ -61,7 +63,7 @@ class FancyUpload extends AbstractFormField {
 
         if ($is_multi && $has_media) {
             foreach ($this->model->getMedia($field_name) as $image) {
-                $initialPreview = '<img src="' . $image->media . '" width="120">';
+                $initialPreview = '<img src="'.$image->media.'" width="120">';
                 $initialPreviewConfig = [
                     'caption' => '',
                     'width'   => '120px',
@@ -78,7 +80,7 @@ class FancyUpload extends AbstractFormField {
                 $default_parameters['initialPreviewConfig'][] = $initialPreviewConfig;
             }
         } elseif (!$is_multi && $has_media) {
-            $initialPreview = '<img src="' . $this->model->$field_name . '" width="120">';
+            $initialPreview = '<img src="'.$this->model->$field_name.'" width="120">';
             $initialPreviewConfig = [
                 'caption' => '',
                 'width'   => '120px',
@@ -99,5 +101,22 @@ class FancyUpload extends AbstractFormField {
         }
 
         return $default_parameters;
+    }
+
+    public function getView() {
+        if($this->model === null || $this->model->id === null) {
+            $static = new StaticText;
+            return $static->getView();
+        }
+
+        return parent::getView();
+    }
+
+    public function getFieldValue() {
+        if($this->model === null || $this->model->id === null) {
+            return 'Please save before uploading a file.';
+        }
+
+        return parent::getFieldValue();
     }
 }

@@ -9,30 +9,34 @@ use Soda\Cms\Models\Block;
 use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
 
-class DynamicController extends Controller {
+class DynamicController extends Controller
+{
     protected $page;
     protected $block;
     protected $model;
 
-    public function __construct(ModelBuilder $modelBuilder) {
+    public function __construct(ModelBuilder $modelBuilder)
+    {
         $type = Route::current()->getParameter('type');
         $page_id = Route::current()->getParameter('page_id');
         $this->page = $page_id ? Page::find($page_id) : new Page;
 
         $block = $page_id ? $this->page->blocks() : new Block;
         $this->block = $block->with('type', 'type.fields')->where('identifier', $type)->first();
-        $this->model = Soda::dynamicModel('soda_' . $this->block->type->identifier, $this->block->type->fields->lists('field_name')->toArray());
+        $this->model = Soda::dynamicModel('soda_'.$this->block->type->identifier, $this->block->type->fields->lists('field_name')->toArray());
     }
 
-    public function index() {
+    public function index()
+    {
         $models = $this->model->all();
         $page = $this->page;
 
         return view($this->index_view, compact('models', 'page'));
     }
 
-    public function view($page_id, $type, $id = null) {
-        if(!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
+    public function view($page_id, $type, $id = null)
+    {
+        if (!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
             // No permission
             dd('Not allowed');
         }
@@ -42,8 +46,9 @@ class DynamicController extends Controller {
         return view('soda::standard.view', ['block' => $this->block, 'model' => $model, 'page' => $this->page]);
     }
 
-    public function edit(Request $request, $page_id, $type, $id = null) {
-        if(!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
+    public function edit(Request $request, $page_id, $type, $id = null)
+    {
+        if (!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
             // No permission
             dd('Not allowed');
         }
@@ -51,7 +56,7 @@ class DynamicController extends Controller {
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
         foreach ($this->block->type->fields as $field) {
-            if($request->has($field->field_name)) {
+            if ($request->has($field->field_name)) {
                 $model->parseField($field, $request);
             }
         }
@@ -78,11 +83,12 @@ class DynamicController extends Controller {
      * delete
      *
      * @param Request $request
-     * @param null $type
-     * @param null $id
+     * @param null    $type
+     * @param null    $id
      */
-    public function delete(Request $request, $page_id, $type, $id = null) {
-        if(isset($this->block->pivot) && !$this->block->pivot->can_delete) {
+    public function delete(Request $request, $page_id, $type, $id = null)
+    {
+        if (isset($this->block->pivot) && !$this->block->pivot->can_delete) {
             // No permission
             dd('Not allowed');
         }
@@ -100,7 +106,8 @@ class DynamicController extends Controller {
      * @param $id
      * @param $field
      */
-    public function inlineEdit($page_id, $type, $id, $field) {
+    public function inlineEdit($page_id, $type, $id, $field)
+    {
 
         $this->model = $this->model->findOrFail($id);
         $this->model->{$field} = \Request::get($field);

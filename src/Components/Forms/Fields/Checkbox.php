@@ -4,12 +4,14 @@ namespace Soda\Cms\Components\Forms\Fields;
 
 use Soda\Cms\Components\Forms\AbstractFormField;
 
-class Checkbox extends AbstractFormField {
+class Checkbox extends AbstractFormField
+{
     protected $view = "checkbox";
 
-    public function getDefaultParameters() {
+    public function getDefaultParameters()
+    {
         return [
-            'checked-value' => '',
+            'checked-value'   => '',
             'unchecked-value' => '',
         ];
     }

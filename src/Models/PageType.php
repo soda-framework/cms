@@ -2,15 +2,12 @@
 
 namespace Soda\Cms\Models;
 
-use Exception;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
-class PageType extends AbstractDynamicType {
+class PageType extends AbstractDynamicType
+{
     use OptionallyInApplicationTrait, DraftableTrait;
 
     protected $table = 'page_types';
@@ -28,15 +25,18 @@ class PageType extends AbstractDynamicType {
         'edit_action_type',
     ];
 
-    public function fields() {
+    public function fields()
+    {
         return $this->morphToMany(Field::class, 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
     }
 
-    public function block() {
+    public function block()
+    {
         return $this->hasMany(Block::class, 'block_type_id');
     }
 
-    public function setIdentifierAttribute($value) {
+    public function setIdentifierAttribute($value)
+    {
         $this->attributes['identifier'] = str_slug($value, '_');
     }
 }

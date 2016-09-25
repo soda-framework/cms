@@ -7,7 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Soda\Cms\Models\Field;
 
-abstract class AbstractFormField implements FormFieldInterface {
+abstract class AbstractFormField implements FormFieldInterface
+{
 
     /**
      * The view used to lay out our form field
@@ -51,14 +52,16 @@ abstract class AbstractFormField implements FormFieldInterface {
      */
     protected $model = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->setLayout(config('soda.cms.form.default-layout'));
         $this->setViewPath(config('soda.cms.form.default-view-path'));
 
         $this->boot();
     }
 
-    protected function boot() {
+    protected function boot()
+    {
     }
 
     /**
@@ -69,11 +72,12 @@ abstract class AbstractFormField implements FormFieldInterface {
      * @return $this
      * @throws \Exception
      */
-    public function setField($field) {
+    public function setField($field)
+    {
         if ($field instanceOf Field) {
             $this->field = $field;
         } else {
-            Throw new Exception("Field must be instance of " . Field::class . " or array.");
+            Throw new Exception("Field must be instance of ".Field::class." or array.");
         }
 
         return $this;
@@ -84,7 +88,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getPrefix() {
+    public function getPrefix()
+    {
         return $this->prefix;
     }
 
@@ -95,20 +100,20 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function setPrefix($prefix) {
+    public function setPrefix($prefix)
+    {
         $this->prefix = $prefix;
 
         return $this;
     }
-
-
 
     /**
      * Get the layout used to display the field
      *
      * @return string
      */
-    public function getLayout() {
+    public function getLayout()
+    {
         return $this->layout;
     }
 
@@ -119,7 +124,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function setLayout($layout) {
+    public function setLayout($layout)
+    {
         $this->layout = $layout;
 
         return $this;
@@ -130,7 +136,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getView() {
+    public function getView()
+    {
         return $this->view;
     }
 
@@ -141,7 +148,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function setView($view) {
+    public function setView($view)
+    {
         $this->view = $view;
 
         return $this;
@@ -152,7 +160,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getViewPath() {
+    public function getViewPath()
+    {
         return $this->view_path;
     }
 
@@ -163,7 +172,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function setViewPath($view_path) {
+    public function setViewPath($view_path)
+    {
         $this->view_path = $view_path;
 
         return $this;
@@ -174,7 +184,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getModel() {
+    public function getModel()
+    {
         return $this->model;
     }
 
@@ -185,7 +196,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function setModel($model) {
+    public function setModel($model)
+    {
         $this->model = $model;
 
         return $this;
@@ -196,7 +208,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getClass() {
+    public function getClass()
+    {
         return $this->class;
     }
 
@@ -207,7 +220,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function setClass($class) {
+    public function setClass($class)
+    {
         $this->class = $class;
 
         return $this;
@@ -218,7 +232,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getFieldLabel() {
+    public function getFieldLabel()
+    {
         return $this->field->name;
     }
 
@@ -227,7 +242,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getFieldName() {
+    public function getFieldName()
+    {
         return $this->field->field_name;
     }
 
@@ -236,11 +252,12 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getPrefixedFieldName() {
+    public function getPrefixedFieldName()
+    {
         $field_name = $this->field->field_name;
 
         if ($this->prefix) {
-            return $this->prefix . '[' . $field_name . ']';
+            return $this->prefix.'['.$field_name.']';
         }
 
         return $field_name;
@@ -251,7 +268,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getFieldDescription() {
+    public function getFieldDescription()
+    {
         return $this->field->description;
     }
 
@@ -261,7 +279,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getFieldValue() {
+    public function getFieldValue()
+    {
         $field_name = $this->field->field_name;
 
         if (old($this->getPrefixedFieldName()) === null) {
@@ -286,7 +305,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return array|string
      */
-    public function getSaveValue(Request $request) {
+    public function getSaveValue(Request $request)
+    {
         $value = $request->input($this->getPrefixedFieldName());
 
         return $value;
@@ -296,11 +316,12 @@ abstract class AbstractFormField implements FormFieldInterface {
      * Determines how the field is saved to a model
      *
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request            $request
      *
      * @return $this
      */
-    public function saveToModel(Model $model, Request $request) {
+    public function saveToModel(Model $model, Request $request)
+    {
         $model->{$this->getFieldName()} = $this->getSaveValue($request);
 
         return $this;
@@ -311,7 +332,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getFieldParameters() {
+    public function getFieldParameters()
+    {
         return $this->field->field_params;
     }
 
@@ -320,7 +342,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function getDefaultParameters() {
+    public function getDefaultParameters()
+    {
         return [];
     }
 
@@ -329,7 +352,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return array
      */
-    public function parseFieldParameters() {
+    public function parseFieldParameters()
+    {
         $parameters = $this->getFieldParameters();
         $default_params = $this->getDefaultParameters();
 
@@ -341,10 +365,11 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return array
      */
-    protected function getDefaultViewParameters() {
+    protected function getDefaultViewParameters()
+    {
         return [
             'layout'              => $this->getLayout(),
-            'field_view'          => $this->getViewPath() . '.' . $this->getView(),
+            'field_view'          => $this->getViewPath().'.'.$this->getView(),
             'prefixed_field_name' => $this->getPrefixedFieldName(),
             'field_label'         => $this->getFieldLabel(),
             'field_name'          => $this->getFieldName(),
@@ -360,7 +385,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    protected function getViewParameters() {
+    protected function getViewParameters()
+    {
         return [];
     }
 
@@ -369,7 +395,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return array
      */
-    protected function parseViewParameters() {
+    protected function parseViewParameters()
+    {
         return array_merge($this->getDefaultViewParameters(), $this->getViewParameters());
     }
 
@@ -380,7 +407,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function addToModel(Blueprint $table) {
+    public function addToModel(Blueprint $table)
+    {
         return $table->string($this->getFieldName());
     }
 
@@ -391,7 +419,8 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return $this
      */
-    public function removeFromModel(Blueprint $table) {
+    public function removeFromModel(Blueprint $table)
+    {
         $table->dropColumn($this->getFieldName());
 
         return $this;
@@ -402,11 +431,12 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function render() {
+    public function render()
+    {
         $view = view($this->getLayout(), $this->parseViewParameters());
 
         // Best way I can attempt error reporting when handling errors inside of view rendering
-        if(env('APP_DEBUG')) {
+        if (env('APP_DEBUG')) {
             try {
                 return $view->render();
             } catch (Exception $e) {
@@ -422,8 +452,9 @@ abstract class AbstractFormField implements FormFieldInterface {
      *
      * @return string
      */
-    public function __toString() {
-        if(env('APP_DEBUG')) {
+    public function __toString()
+    {
+        if (env('APP_DEBUG')) {
             try {
                 return $this->render();
             } catch (Exception $e) {

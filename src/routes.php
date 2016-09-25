@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => 'web'], function () {
     Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.main'], function () {
-        Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
+        Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
             // Authentication routes
             Route::get('login', 'AuthController@getLogin')->name('soda.login');
             Route::post('login', 'AuthController@postLogin')->name('soda.login-attempt');
@@ -16,8 +16,11 @@ Route::group(['middleware' => 'web'], function () {
         // Dashboard and user routes...
         Route::group(['middleware' => 'soda.auth:soda'], function () {
             Route::get('/', 'HomeController@getIndex')->name('soda.home');
+            Route::get('test', 'HomeController@getTest')->name('soda.test');
 
-            Route::group(['prefix' => 'pages'], function() {
+            Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft");
+
+            Route::group(['prefix' => 'pages'], function () {
                 Route::get('/', 'PageController@getIndex')->name('soda.page');
                 Route::get('view/{id?}', 'PageController@view')->name('soda.page.view');
                 Route::post('view/{id?}', 'PageController@edit')->name('soda.page.edit');
@@ -25,7 +28,6 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('move/{parent_id?}/{id?}/{position?}', 'PageController@move')->name('soda.page.move');
                 Route::get('create/{id?}', 'PageController@create')->name('soda.page.create');
                 Route::post('create/{parent_id?}', 'PageController@save')->name('soda.page.save');
-
 
                 Route::get('view/{page_id?}/{type}', 'DynamicController@index')->name('soda.page.block');
                 Route::get('view/{page_id?}/{type}/view/{id?}', 'DynamicController@view')->name('soda.page.block.view');
@@ -37,7 +39,7 @@ Route::group(['middleware' => 'web'], function () {
                 //Route::get('/makeroot/{id?}', 'PageController@getMakeRoot')->name('page-makeroot');
             });
 
-            Route::group(['prefix' => 'fields'], function() {
+            Route::group(['prefix' => 'fields'], function () {
                 Route::get('/', 'FieldController@index')->name('soda.field');
                 Route::get('view', 'FieldController@view')->name('soda.field.create');
                 Route::get('view/{id?}', 'FieldController@view')->name('soda.field.view');
@@ -45,7 +47,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('delete/{id?}', 'FieldController@delete')->name('soda.field.delete');
             });
 
-            Route::group(['prefix' => 'blocks'], function(){
+            Route::group(['prefix' => 'blocks'], function () {
                 Route::get('/', 'BlockController@index')->name('soda.block');
                 Route::get('view', 'BlockController@view')->name('soda.block.create');
                 Route::get('view/{id?}', 'BlockController@view')->name('soda.block.view');
@@ -53,7 +55,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('delete/{id?}', 'BlockController@delete')->name('soda.block.delete');
             });
 
-            Route::group(['prefix' => 'block-types'], function() {
+            Route::group(['prefix' => 'block-types'], function () {
                 Route::get('/', 'BlockTypeController@index')->name('soda.block_type');
                 Route::get('view', 'BlockTypeController@view')->name('soda.block_type.create');
                 Route::get('view/{id?}', 'BlockTypeController@view')->name('soda.block_type.view');
@@ -61,7 +63,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('delete/{id?}', 'BlockTypeController@delete')->name('soda.block_type.delete');
             });
 
-            Route::group(['prefix' => 'page-types'], function() {
+            Route::group(['prefix' => 'page-types'], function () {
                 Route::get('/', 'PageTypeController@index')->name('soda.page_type');
                 Route::get('view', 'PageTypeController@view')->name('soda.page_type.create');
                 Route::get('view/{id?}', 'PageTypeController@view')->name('soda.page_type.view');
@@ -69,7 +71,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('delete/{id?}', 'PageTypeController@delete')->name('soda.page_type.delete');
             });
 
-            Route::group(['prefix' => 'users'], function() {
+            Route::group(['prefix' => 'users'], function () {
                 Route::get('/', 'UserController@index')->name('soda.user');
                 Route::get('view', 'UserController@view')->name('soda.user.create');
                 Route::get('view/{id}', 'UserController@view')->name('soda.user.view');
@@ -77,7 +79,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('delete/{id?}', 'UserController@delete')->name('soda.user.delete');
             });
 
-            Route::group(['prefix' => 'navigation'], function() {
+            Route::group(['prefix' => 'navigation'], function () {
                 Route::get('/', 'NavigationController@index')->name('soda.navigation');
                 Route::get('view/{id}', 'NavigationController@view')->name('soda.navigation.view');
                 Route::post('view/{id?}', 'NavigationController@edit')->name('soda.navigation.edit');
@@ -87,12 +89,12 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('move/{parent_id?}/{id?}/{position?}', 'NavigationController@move')->name('soda.navigation.move');
             });
 
-            Route::group(['prefix' => 'upload'], function() {
+            Route::group(['prefix' => 'upload'], function () {
                 Route::post('/', 'UploadController@upload')->name('soda.upload');
                 Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
             });
         });
     });
 
-    Route::any('/{slug?}', 'PageController@page')->where('slug', '(.*)')->name('soda.page.match');
+    Route::any('{slug?}', 'PageController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
 });

@@ -4,14 +4,16 @@ use Illuminate\Database\Seeder;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
 
-class SodaPermissionSeeder extends Seeder {
+class SodaPermissionSeeder extends Seeder
+{
 
     /**
      * Auto generated seed file
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         $role_developer = Role::create([
             'name'         => 'developer',
             'display_name' => 'Developer',
@@ -132,12 +134,19 @@ class SodaPermissionSeeder extends Seeder {
             'description'  => 'Manage fields association with page/block content.',
         ]);
 
+        $permission_view_drafts = Permission::create([
+            'name'         => 'view-drafts',
+            'display_name' => 'View Drafts',
+            'description'  => 'View content in draft mode on the live site.',
+        ]);
+
         $role_developer->attachPermissions([
             $permission_manage_page_types,
             $permission_advanced_pages,
             $permission_manage_block_types,
             $permission_advanced_blocks,
             $permission_manage_fields,
+            $permission_view_drafts,
         ]);
 
         $role_admin->attachPermissions([

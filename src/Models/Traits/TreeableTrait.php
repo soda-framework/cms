@@ -2,11 +2,13 @@
 
 namespace Soda\Cms\Models\Traits;
 
-trait TreeableTrait {
+trait TreeableTrait
+{
     /*
      * get tree from given tree.
      */
-    public function grabTree($id = null) {
+    public function grabTree($id = null)
+    {
         $treeModel = isset($id) && $id && $id !== '#' ? $this->find($id) : $this->getRoots()->first();
 
         // we need to get elements for each element in the tree.

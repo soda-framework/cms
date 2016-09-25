@@ -17,11 +17,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a class="" href="{{ route('soda.home') }}">Dashboard</a>
-                </li>
-                <li class="">
-                    <a class="" href="/" target="_blank">View Site</a>
+                <li>
+                    <a href="/" target="_blank">View Site</a>
                 </li>
                 @foreach( event(new Soda\Cms\Events\TopNavWasRendered()) as $item)
                     {!! $item !!}
@@ -44,10 +41,24 @@
                         <i class="fa fa-btn fa-user"></i> {{ Auth::user()->username }}
                     </a>
                     <ul class="dropdown-menu">
+                        @permission('view-drafts')
+                        <li>
+                            <a class='dropdown-item' href="{{ route('soda.toggle-draft') }}">
+                                <i class="fa fa-btn fa-pencil"></i> {{ Session::get("soda.draft_mode") == true ? "Live" : "Draft" }}
+                                <span>Mode</span>
+                            </a>
+                        </li>
+                        @endpermission
+
                         @foreach( event(new Soda\Cms\Events\TopNavDropdownWasRendered()) as $item)
                             {!! $item !!}
                         @endforeach
-                        <li><a class='dropdown-item' href="{{ route('soda.logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a></li>
+                        <li>
+                            <a class='dropdown-item' href="{{ route('soda.logout') }}">
+                                <i class="fa fa-btn fa-sign-out"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

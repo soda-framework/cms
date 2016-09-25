@@ -9,7 +9,9 @@
   padding: 0;
   li.nav-item, li.nav-item-group {
     outline: 0;
-    a.nav-link {
+    > span.nav-link, > a.nav-link {
+      display: block;
+      position: relative;
       padding: 14px 24px;
       background: $sidebar-link;
       color: $sidebar-link-text;
@@ -33,52 +35,59 @@
         vertical-align: middle;
       }
 
-      &.active {
-        &, &:hover, &:focus, &:active {
-          background: $sidebar-link-active;
-          color: $sidebar-link-active-text;
-        }
-      }
-
-      &.active, &.sub-active {
-        font-weight: bold;
-      }
-
-      &.sub-active {
-        &, &:hover, &:focus, &:active {
-          background: $sidebar-link-active-sub;
-          color: $sidebar-link-active-sub-text;
-        }
-      }
-
       &:hover {
         background-color: $sidebar-link-hover;
         color: $sidebar-link-hover-text;
       }
     }
+
     + .nav-item {
       margin-top: 0;
     }
   }
+  li.nav-item {
+    &.active {
+      > a.nav-link, > span.nav-link {
+        font-weight: bold;
+        &, &:hover, &:focus, &:active {
+          background: $sidebar-link-active;
+          color: $sidebar-link-active-text;
+        }
+      }
+    }
+  }
+
   li.nav-item-group {
+    &.active {
+      > a.nav-link, > span.nav-link {
+        &, &:hover, &:focus, &:active {
+          background: $sidebar-link-active-sub;
+          color: $sidebar-link-active-sub-text;
+        }
+      }
+    }
+
     ul {
       padding: 8px 0;
       background-color: rgba(0,0,0,0.2);
       li.nav-item {
-        a.nav-link {
+        > span.nav-link, > a.nav-link {
+          display: block;
           padding: 6px 24px 6px 60px;
           background: $sidebar-group-link;
           color: $sidebar-group-link-text;
 
-          &.active {
-            background: $sidebar-group-link-active;
-            color: $sidebar-group-link-active-text;
-            font-weight: bold;
-          }
-
           &:hover {
             background-color: $sidebar-group-link-hover;
             color: $sidebar-group-link-hover-text;
+          }
+        }
+
+        &.active {
+          > span.nav-link, > a.nav-link {
+            background: $sidebar-group-link-active;
+            color: $sidebar-group-link-active-text;
+            font-weight: bold;
           }
         }
       }

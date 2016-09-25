@@ -1,10 +1,11 @@
 <?php
 namespace Soda\Cms\Events;
 
-
-class TopNavDropdownWasRendered {
-    public function __construct($input = NULL){
-        if($input){
+class TopNavDropdownWasRendered
+{
+    public function __construct($input = null)
+    {
+        if ($input) {
             $this->input = $input;
         }
     }

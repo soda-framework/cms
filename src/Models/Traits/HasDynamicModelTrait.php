@@ -2,5 +2,6 @@
 
 namespace Soda\Cms\Models\Traits;
 
-trait HasDynamicModelTrait {
+trait HasDynamicModelTrait
+{
 }

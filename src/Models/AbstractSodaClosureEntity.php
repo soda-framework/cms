@@ -4,13 +4,30 @@ namespace Soda\Cms\Models;
 
 use Franzose\ClosureTable\Models\Entity;
 
-abstract class AbstractSodaClosureEntity extends Entity {
+abstract class AbstractSodaClosureEntity extends Entity
+{
+    /**
+     * Retrieves query builder for root (with no ancestors) models.
+     *
+     * @return \Franzose\ClosureTable\Extensions\Collection
+     */
+    public static function collectRoots()
+    {
+        /**
+         * @var Entity $instance
+         */
+        $instance = new static;
+
+        return $instance->whereNull($instance->getParentIdColumn());
+    }
+
     /**
      * Retrieves query builder for all descendants of a model.
      *
      * @return \Franzose\ClosureTable\Extensions\QueryBuilder
      */
-    public function collectDescendants($withSelf = false) {
+    public function collectDescendants($withSelf = false)
+    {
         return $this->joinClosureBy('descendant', $withSelf);
     }
 
@@ -19,7 +36,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return Collection
      */
-    public function collectAncestors() {
+    public function collectAncestors()
+    {
         return $this->joinClosureBy('ancestor');
     }
 
@@ -28,7 +46,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return \Franzose\ClosureTable\Extensions\Collection
      */
-    public function collectChildren() {
+    public function collectChildren()
+    {
         if ($this->hasChildrenRelation()) {
             $result = $this->getRelation($this->getChildrenRelationIndex());
         } else {
@@ -46,7 +65,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return Collection
      */
-    public function collectChildrenRange($from, $to = null) {
+    public function collectChildrenRange($from, $to = null)
+    {
         return $this->children([$from, $to]);
     }
 
@@ -55,7 +75,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return \Franzose\ClosureTable\Extensions\Collection
      */
-    public function collectNeighbors() {
+    public function collectNeighbors()
+    {
         return $this->siblings(static::QUERY_NEIGHBORS);
     }
 
@@ -64,7 +85,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return \Franzose\ClosureTable\Extensions\Collection
      */
-    public function collectSiblings() {
+    public function collectSiblings()
+    {
         return $this->siblings(static::QUERY_ALL);
     }
 
@@ -73,7 +95,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return \Franzose\ClosureTable\Extensions\Collection
      */
-    public function collectPrevSiblings() {
+    public function collectPrevSiblings()
+    {
         return $this->siblings(static::QUERY_PREV_ALL);
     }
 
@@ -82,7 +105,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return \Franzose\ClosureTable\Extensions\Collection
      */
-    public function collectNextSiblings() {
+    public function collectNextSiblings()
+    {
         return $this->siblings(static::QUERY_NEXT_ALL);
     }
 
@@ -94,22 +118,8 @@ abstract class AbstractSodaClosureEntity extends Entity {
      *
      * @return Collection
      */
-    public function collectSiblingsRange($from, $to = null) {
+    public function collectSiblingsRange($from, $to = null)
+    {
         return $this->siblings([$from, $to]);
-    }
-
-
-    /**
-     * Retrieves query builder for root (with no ancestors) models.
-     *
-     * @return \Franzose\ClosureTable\Extensions\Collection
-     */
-    public static function collectRoots() {
-        /**
-         * @var Entity $instance
-         */
-        $instance = new static;
-
-        return $instance->whereNull($instance->getParentIdColumn());
     }
 }

@@ -4,7 +4,8 @@ namespace Soda\Cms\Console;
 
 use Illuminate\Console\Command;
 
-class Config extends Command {
+class Config extends Command
+{
 
     protected $signature = 'soda:config';
     protected $description = 'Update config for the Soda Framework';
@@ -13,7 +14,8 @@ class Config extends Command {
     /**
      * Force publishes Soda CMS assets
      */
-    public function handle() {
+    public function handle()
+    {
         $this->info('Updating Soda config...');
         $this->callSilent('vendor:publish', [
             '--force' => 1,

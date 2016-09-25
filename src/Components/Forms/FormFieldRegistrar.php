@@ -4,24 +4,14 @@ namespace Soda\Cms\Components\Forms;
 use Exception;
 use Soda\Cms\Models\Field;
 
-class FormFieldRegistrar {
+class FormFieldRegistrar
+{
     protected $registered_fields = [];
 
-    public function __construct($fields = []) {
-        if($fields) {
+    public function __construct($fields = [])
+    {
+        if ($fields) {
             $this->registerMany($fields);
-        }
-    }
-
-    /**
-     * Registers a new CMS form field
-     *
-     * @param $name
-     * @param null $field_class
-     */
-    public function register($name, $field_class = null){
-        if(new $field_class instanceof FormFieldInterface) {
-            $this->registered_fields[$name] = $field_class;
         }
     }
 
@@ -30,9 +20,23 @@ class FormFieldRegistrar {
      *
      * @param $formFields
      */
-    public function registerMany($formFields) {
-        foreach($formFields as $field_name => $field_class) {
+    public function registerMany($formFields)
+    {
+        foreach ($formFields as $field_name => $field_class) {
             $this->register($field_name, $field_class);
+        }
+    }
+
+    /**
+     * Registers a new CMS form field
+     *
+     * @param      $name
+     * @param null $field_class
+     */
+    public function register($name, $field_class = null)
+    {
+        if (new $field_class instanceof FormFieldInterface) {
+            $this->registered_fields[$name] = $field_class;
         }
     }
 
@@ -41,17 +45,15 @@ class FormFieldRegistrar {
      *
      * @return array
      */
-    public function getRegisteredFields() {
+    public function getRegisteredFields()
+    {
         return $this->registered_fields;
     }
 
-    public function getRegisteredFieldClass($field) {
-        return isset($this->registered_fields[$field]) ? $this->registered_fields[$field] : null;
-    }
-
-    public function resolve(Field $field) {
+    public function resolve(Field $field)
+    {
         if (!$this->isRegistered($field->field_type)) {
-            throw new Exception("Field " . $field->field_type ." is not registered.");
+            throw new Exception("Field ".$field->field_type." is not registered.");
         }
 
         $class = $this->getRegisteredFieldClass($field->field_type);
@@ -60,7 +62,13 @@ class FormFieldRegistrar {
         return $instance->setField($field);
     }
 
-    public function isRegistered($field_type) {
+    public function isRegistered($field_type)
+    {
         return $this->getRegisteredFieldClass($field_type) !== null;
+    }
+
+    public function getRegisteredFieldClass($field)
+    {
+        return isset($this->registered_fields[$field]) ? $this->registered_fields[$field] : null;
     }
 }

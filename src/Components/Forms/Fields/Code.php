@@ -4,6 +4,7 @@ namespace Soda\Cms\Components\Forms\Fields;
 
 use Soda\Cms\Components\Forms\AbstractFormField;
 
-class Code extends AbstractFormField {
+class Code extends AbstractFormField
+{
     protected $view = "code";
 }

@@ -4,24 +4,26 @@ namespace Soda\Cms\Components\Pages;
 
 use Exception;
 use Soda;
-use Soda\Cms\Components\Pages\Actions\ViewAction;
 use Soda\Cms\Components\Pages\Actions\ControllerAction;
+use Soda\Cms\Components\Pages\Actions\ViewAction;
 use Soda\Cms\Models\Page;
 
-class PageBuilder {
+class PageBuilder
+{
     protected $actions = [
         'view'       => ViewAction::class,
-        'controller' => ControllerAction::class
+        'controller' => ControllerAction::class,
     ];
 
     /**
      * Registers a new action
      *
-     * @param $name
+     * @param      $name
      * @param null $action
      */
-    public function registerAction($name, $action = null){
-        if(new $action instanceof ActionTypeInterface) {
+    public function registerAction($name, $action = null)
+    {
+        if (new $action instanceof ActionTypeInterface) {
             $this->actions[$name] = $action;
         }
     }
@@ -31,8 +33,9 @@ class PageBuilder {
      *
      * @param $actions
      */
-    public function registerActions($actions) {
-        foreach($actions as $name => $action) {
+    public function registerActions($actions)
+    {
+        foreach ($actions as $name => $action) {
             $this->register($name, $action);
         }
     }
@@ -42,7 +45,8 @@ class PageBuilder {
      *
      * @return array
      */
-    public function getRegisteredActions() {
+    public function getRegisteredActions()
+    {
         return $this->actions;
     }
 
@@ -51,7 +55,8 @@ class PageBuilder {
      *
      * @return array
      */
-    public function getActionTypes() {
+    public function getActionTypes()
+    {
         return array_map('ucfirst', array_combine(array_keys($this->actions), array_keys($this->actions)));
     }
 
@@ -62,8 +67,9 @@ class PageBuilder {
      *
      * @return \Soda\Cms\Components\Pages\PageBuilder|void
      */
-    public function loadPageBySlug($slug) {
-        $page = Page::with('type', 'blocks')->where('slug', '/' . ltrim($slug, '/'))->first();
+    public function loadPageBySlug($slug)
+    {
+        $page = Page::with('type', 'blocks')->where('slug', '/'.ltrim($slug, '/'))->first();
 
         if ($page) {
             return $this->loadPage($page);
@@ -79,7 +85,8 @@ class PageBuilder {
      *
      * @return $this
      */
-    public function loadPage(Page $page) {
+    public function loadPage(Page $page)
+    {
         Soda::setCurrentPage($page);
 
         return $this;
@@ -88,13 +95,14 @@ class PageBuilder {
     /**
      * Renders the hint path and view of given page (or pageable item)
      *
-     * @param $page
+     * @param       $page
      * @param array $parameters
      *
      * @return string
      * @throws \Exception
      */
-    public function render($page = null, $parameters = []) {
+    public function render($page = null, $parameters = [])
+    {
         if (!$page) {
             $page = Soda::getCurrentPage($page);
         }
@@ -105,16 +113,17 @@ class PageBuilder {
     /**
      * Handles a page action
      *
-     * @param $action_type
+     * @param                       $action_type
      * @param \Soda\Cms\Models\Page $page
-     * @param array $parameters
+     * @param array                 $parameters
      *
      * @return mixed
      * @throws \Exception
      */
-    public function handleAction($action_type, Page $page, $parameters = []) {
-        if(!isset($this->actions[$action_type])) {
-            Throw new Exception('Action \'' . $action_type . '\' is not registered');
+    public function handleAction($action_type, Page $page, $parameters = [])
+    {
+        if (!isset($this->actions[$action_type])) {
+            Throw new Exception('Action \''.$action_type.'\' is not registered');
         }
 
         $handler = new $this->actions[$action_type];
@@ -129,14 +138,16 @@ class PageBuilder {
      *
      * @return mixed
      */
-    public function handleEditAction($page) {
+    public function handleEditAction($page)
+    {
         return $this->handleAction($page->action_type);
     }
 
     /**
      * Handles not found errors
      */
-    protected function handleNotFound() {
+    protected function handleNotFound()
+    {
         abort(404, '404 Page not found');
     }
 }

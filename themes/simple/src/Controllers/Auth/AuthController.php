@@ -3,17 +3,19 @@
 namespace Themes\SodaExample\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
-use Auth;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     use AuthenticatesAndRegistersUsers;
 
     /**
      * Create a new authentication controller instance.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('guest', ['except' => ['logout']]);
     }
 
@@ -22,7 +24,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function loginForm() {
+    public function loginForm()
+    {
         return view('soda-example::login', compact('request'));
     }
 
@@ -35,7 +38,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $credentials = $request->except(['_token']);
         if (Auth::attempt($credentials)) {
             return redirect()->route('soda-example.restricted', compact('request'));
@@ -58,7 +62,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function logout($redirect = false) {
+    public function logout($redirect = false)
+    {
         Auth::logout();
 
         return redirect()->to('/')->with('success', 'Logged out succesfully');
