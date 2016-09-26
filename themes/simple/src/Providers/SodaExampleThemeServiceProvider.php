@@ -3,6 +3,8 @@ namespace Themes\SodaExample\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Routing\Router;
+use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
+use Themes\SodaExample\Handlers\ExceptionHandler;
 use View;
 
 class SodaExampleThemeServiceProvider extends RouteServiceProvider
@@ -15,6 +17,7 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider
      */
 
     protected $defer = false;
+    protected $handlesErrors = false;
 
     protected $namespace = 'Themes\SodaExample\Controllers';
 
@@ -28,6 +31,10 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider
     public function register()
     {
         $this->publishes([__DIR__.'/../../public' => public_path('themes/soda-example')], 'public');
+
+        if($this->handlesErrors) {
+            $this->app->singleton(BaseExceptionHandler::class, ExceptionHandler::class);
+        }
     }
 
     /**
