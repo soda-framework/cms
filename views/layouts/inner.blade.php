@@ -6,6 +6,7 @@
 		<div class="col-xs-offset-2 col-xs-10 main-content">
 			@yield('breadcrumb')
 			<div class="container-fluid">
+				@section('main-content-outer')
 				<div class="row">
 					<div class="col-xs-12">
 						@yield('content-heading')
@@ -18,6 +19,7 @@
 						</div>
 					</div>
 				</div>
+				@show
 			</div>
 		</div>
 	</div>

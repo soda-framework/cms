@@ -114,6 +114,11 @@ class PageController extends Controller
 
         if ($this->model->page_type_id) {
             $this->model->load('type.fields');
+            $this->model->action = $this->model->type->action;
+            $this->model->action_type = $this->model->type->action_type;
+            $this->model->edit_action = $this->model->type->edit_action;
+            $this->model->edit_action_type = $this->model->type->edit_action_type;
+
         }
 
         return view('soda::page.view', ['model' => $this->model, 'hint' => $this->hint]);

@@ -148,29 +148,43 @@ if((!$model->type || !count($model->type->fields)) && !count($model->blocks) && 
             <hr />
 
             {!! SodaForm::text([
-                'name'        => 'Package Name',
+                'name'        => 'Package Prefix',
                 'field_name'  => 'package',
             ])->setModel($model) !!}
 
-            {!! SodaForm::text([
-                'name'        => 'Action',
-                'field_name'  => 'action',
-            ])->setModel($model) !!}
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    {!! SodaForm::dropdown([
+                        'name'        => 'Action',
+                        'field_name'  => 'action_type',
+                        'value'       => 'view',
+                        'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+                    ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    {!! SodaForm::text([
+                        'name'        => null,
+                        'field_name'  => 'action',
+                    ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+                </div>
+            </div>
 
-            {!! SodaForm::text([
-                'name'        => 'Action Type',
-                'field_name'  => 'action_type',
-            ])->setModel($model) !!}
-
-            {!! SodaForm::text([
-                'name'        => 'Edit Action',
-                'field_name'  => 'edit_action',
-            ])->setModel($model) !!}
-
-            {!! SodaForm::text([
-                'name'        => 'Edit Action Type',
-                'field_name'  => 'edit_action_type',
-            ])->setModel($model) !!}
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    {!! SodaForm::dropdown([
+                        'name'        => 'Edit Action',
+                        'field_name'  => 'edit_action_type',
+                        'value'       => 'view',
+                        'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+                    ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    {!! SodaForm::text([
+                        'name'        => null,
+                        'field_name'  => 'edit_action',
+                    ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+                </div>
+            </div>
 
             <input class="btn btn-success" type="submit" value="Save" />
         </div>

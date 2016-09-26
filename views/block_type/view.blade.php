@@ -40,34 +40,44 @@
         ])->setModel($model) !!}
 
 		{!! SodaForm::text([
-            'name'        => 'Block Type Action',
-            'field_name'  => 'action',
-        ])->setModel($model) !!}
-
-		{!! SodaForm::dropdown([
-            'name'        => 'Block Type Action Type',
-            'field_name'  => 'action_type',
-            'value'       => 'view',
-            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
-        ])->setModel($model) !!}
-
-		{!! SodaForm::text([
-            'name'        => 'Block Type Edit Action',
-            'field_name'  => 'edit_action',
-            'value'       => 'soda::block.page_block_index',
-        ])->setModel($model) !!}
-
-		{!! SodaForm::dropdown([
-            'name'        => 'Block Type Edit Action Type',
-            'field_name'  => 'edit_action_type',
-            'value'       => 'view',
-            'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
-        ])->setModel($model) !!}
-
-		{!! SodaForm::text([
-            'name'        => 'Package',
+            'name'        => 'Package Prefix',
             'field_name'  => 'package',
         ])->setModel($model) !!}
+
+		<div class="row">
+			<div class="col-sm-6 col-xs-12">
+				{!! SodaForm::dropdown([
+                    'name'        => 'Default Action',
+                    'field_name'  => 'action_type',
+                    'value'       => 'view',
+                    'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+			</div>
+			<div class="col-sm-6 col-xs-12">
+				{!! SodaForm::text([
+                    'name'        => null,
+                    'field_name'  => 'action',
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6 col-xs-12">
+				{!! SodaForm::dropdown([
+                    'name'        => 'Default Edit Action',
+                    'field_name'  => 'edit_action_type',
+                    'value'       => 'view',
+                    'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+			</div>
+			<div class="col-sm-6 col-xs-12">
+				{!! SodaForm::text([
+                    'name'        => null,
+                    'field_name'  => 'edit_action',
+            		'value'       => 'soda::block.page_block_index',
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+			</div>
+		</div>
 
 		{!! SodaForm::text([
             'name'        => 'Identifier',

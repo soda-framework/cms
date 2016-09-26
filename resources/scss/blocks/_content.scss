@@ -10,14 +10,14 @@
   }
 }
 
-.main-content-inner, .main-content-sidebar {
+.main-content-inner, .main-content-sidebar, .dashboard-block {
   padding: 30px;
   background-color: $content-inner-background;
   color: $content-inner-text;
   border: 1px solid $content-inner-border;
 }
 
-.main-content-inner {
+.main-content-inner, .dashboard-block {
   .jumbotron {
     background-color: $content-inner-background;
   }
