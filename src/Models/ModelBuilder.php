@@ -12,10 +12,11 @@ use Soda;
  */
 class ModelBuilder extends Model
 {
-
     public $table;
     protected static $lastTable;
-    public $index_fields = [];
+    protected $fillable = [];
+    protected $guarded = [];
+    //public $index_fields = [];
 
     public function __construct($params = [])
     {
