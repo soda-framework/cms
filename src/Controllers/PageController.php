@@ -159,7 +159,7 @@ class PageController extends Controller
 
         if ($page->type) {
             if ($request->has('settings')) {
-                $dyn_table = Soda::model('soda_'.$page->type->identifier)->where('page_id', $page->id)->first();
+                $dyn_table = Soda::model($page->type->identifier)->where('page_id', $page->id)->first();
                 $dyn_table->fill($request->input('settings'));
                 $dyn_table->save();
             }
