@@ -158,16 +158,11 @@ class PageController extends Controller
         }
 
         if ($page->type) {
-            $dyn_table = Soda::dynamicModel('soda_'.$page->type->identifier,
-                $page->type->fields->lists('field_name')->toArray())->newInstance();
-
-            $dyn_table->page_id = $page->id;
-
             if ($request->has('settings')) {
-                $dyn_table->forceFill($request->input('settings'));
+                $dyn_table = Soda::model('soda_'.$page->type->identifier)->where('page_id', $page->id)->first();
+                $dyn_table->fill($request->input('settings'));
+                $dyn_table->save();
             }
-
-            $dyn_table->save();
         }
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');

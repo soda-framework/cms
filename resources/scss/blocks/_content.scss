@@ -29,7 +29,7 @@
   }
 }
 
-.content-header {
+.content-header, .dashboard-header {
   margin: 20px 0;
   h1 {
     margin: 0;
@@ -39,4 +39,8 @@
       vertical-align: middle;
     }
   }
+}
+
+.dashboard-header {
+  margin-top: 0;
 }
