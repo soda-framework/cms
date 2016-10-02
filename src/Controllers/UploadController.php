@@ -37,7 +37,7 @@ class UploadController extends Controller
 
                     // Generate return information
                     if ($uploaded) {
-                        $url = $driver == 'soda.public' ? URL::to('uploads/'.$final_path) : Storage::disk($driver)->url(trim($final_path, '/'));
+                        $url = $driver == 'soda.public' ? '/uploads/'.$final_path : Storage::disk($driver)->url(trim($final_path, '/'));
 
                         $return = [
                             "error"                => null, // todo: what is this
