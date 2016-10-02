@@ -20,7 +20,6 @@ class Page extends AbstractSodaClosureEntity
     protected $table = 'pages';
     public $fillable = [
         'name',
-        'description',
         'slug',
         'application_id',
         'status',
