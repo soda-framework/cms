@@ -103,20 +103,48 @@ class FancyUpload extends AbstractFormField
         return $default_parameters;
     }
 
-    public function getView() {
-        if($this->model === null || $this->model->id === null) {
+    public function getView()
+    {
+        if ($this->model === null || $this->model->id === null) {
             $static = new StaticText;
+
             return $static->getView();
         }
 
         return parent::getView();
     }
 
-    public function getFieldValue() {
-        if($this->model === null || $this->model->id === null) {
+    public function getFieldValue()
+    {
+        if ($this->model === null || $this->model->id === null) {
             return 'Please save before uploading a file.';
         }
 
         return parent::getFieldValue();
+    }
+
+    public function renderForTable()
+    {
+        $parameters = $this->parseFieldParameters();
+        $is_multi = isset($parameters['maxFileCount']) && $parameters['maxFileCount'] > 1 ? true : false;
+
+        if (!$is_multi) {
+            switch ($parameters['extension']) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'bmp':
+                case 'tiff':
+                    return '<img src="'.$this->getFieldName().'" alt="" width="120"/>';
+                case 'mp3':
+                case 'wav':
+                case 'm4a':
+                    return '<audio src="'.$this->getFieldName().'" alt="" width="120"/>';
+            }
+
+            return '<a href="'.$this->getFieldValue().'" target="_blank">View File</a>';
+        }
+
+        return 'Multiple files';
     }
 }

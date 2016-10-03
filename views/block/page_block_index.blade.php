@@ -18,31 +18,10 @@
 		@foreach($models as $model)
 			<tr>
 				@foreach($block->type->fields as $field)
-					{{--TODO: additional logic in here for different field types--}}
 					@if($field->show_in_table)
-						@if($field->field_type == 'fancy_upload')
-							@switch( @pathinfo($model->{$field->field_name})['extension'] )
-							@case( 'jpg' )
-							@case( 'png' )
-							@case( 'gif' )
-							@case( 'bmp' )
-							@case( 'tiff' )
-							<td><img src="{{ $model->{$field->field_name} }}" alt="" width="120"/></td>
-							@break
-							@case( 'mp3' )
-							@case( 'wav' )
-							@case( 'm4a' )
-							<td><audio src="{{ $model->{$field->field_name} }}" alt="" width="120"/></td>
-							@break
-							@default
-							<td>{{ truncate_words(strip_tags($model->{$field->field_name}), 10) }}</td>
-							@break
-							@endswitch
-						@elseif($field->field_type == 'datetime')
-							<td>{{ $model->{$field->field_name} }}</td>
-						@else
-							<td>{{ truncate_words(strip_tags($model->{$field->field_name}), 10) }}</td>
-						@endif
+                        <td>
+                            {!! SodaForm::field($field)->setModel($model)->renderForTable() !!}
+                        </td>
 					@endif
 				@endforeach
 				<td>

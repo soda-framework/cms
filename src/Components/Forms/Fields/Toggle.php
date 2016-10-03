@@ -13,4 +13,12 @@ class Toggle extends Checkbox
             'unchecked-value' => 0,
         ];
     }
+
+    public function renderForTable()
+    {
+        $parameters = $this->parseFieldParameters();
+        $value = $this->getFieldValue();
+
+        return $value == $parameters['checked-value'] ? 'Enabled' : 'Disabled';
+    }
 }

@@ -361,6 +361,15 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
+     * Renders the field for a cell in a table-view
+     *
+     * @return mixed|string
+     */
+    public function renderForTable() {
+        return truncate_words(strip_tags($this->getFieldValue()), 10);
+    }
+
+    /**
      * Get the default parameters to be sent to the field view
      *
      * @return array
