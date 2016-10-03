@@ -84,14 +84,14 @@ class UploadController extends Controller
                         }
                     }
                 } else {
-                    dd('file not valid??');  // todo: REMOVE DD, HANDLE ERRORS BETTER
+                    return response()->json(['error' => 'File not valid.']);
                 }
             }
 
             return response()->json($return);
-        } else {
-            dd('something went wrong, no file'); // todo: Should do some exception catching here
         }
+
+        return response()->json(['error' => 'No valid files to upload.']);
     }
 
     public function delete(Request $request)
