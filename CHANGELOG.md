@@ -4,6 +4,29 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.10] - 2016-10-04
+### Added
+- Ability to customise how fields render in table view
+
+### Changed
+- Proper error reporting for uploads
+
+### Fixed
+- Fillable fixed for dynamic models
+- Page dynamic model duplication glitch
+
+### Removed
+- Page descriptions
+
+## [0.3.9] - 2016-09-26
+### Changed
+- Layout improvements
+- Styling updated
+- Removed redundant code
+
+### Added
+- Custom error handling per theme
+
 ## [0.3.8] - 2016-09-21
 ### Changed
 - Code reformat
