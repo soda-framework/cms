@@ -64,54 +64,54 @@ class MenuServiceProvider extends ServiceProvider
                 'url'         => route('soda.home'),
                 'icon'        => 'fa fa-home',
                 'label'       => 'Dashboard',
-                'isCurrent'   => Request::is('cms') || Request::is('cms/'),
+                'isCurrent'   => soda_request_is() || soda_request_is('/'),
                 'permissions' => 'access-cms',
             ]);
 
             $menu->addItem('Content', [
                 'label'     => 'Content',
                 'icon'      => 'fa fa-file-o',
-                'isCurrent' => Request::is('cms/pages*') || Request::is('cms/blocks*'),
+                'isCurrent' => soda_request_is('pages*') || soda_request_is('blocks*'),
             ]);
 
             $menu['Content']->addChild('Pages', [
                 'url'         => route('soda.page'),
                 'label'       => 'Pages',
-                'isCurrent'   => Request::is('cms/pages*'),
+                'isCurrent'   => soda_request_is('pages*'),
                 'permissions' => 'view-pages',
             ]);
 
             $menu['Content']->addChild('Blocks', [
                 'url'         => route('soda.block'),
                 'label'       => 'Blocks',
-                'isCurrent'   => Request::is('cms/blocks*'),
+                'isCurrent'   => soda_request_is('blocks*'),
                 'permissions' => 'view-blocks',
             ]);
 
             $menu->addItem('Content Types', [
                 'label'     => 'Content Types',
                 'icon'      => 'fa fa-pencil-square-o',
-                'isCurrent' => Request::is('cms/page-types*') || Request::is('cms/block-types*') || Request::is('cms/fields*'),
+                'isCurrent' => soda_request_is('page-types*') || soda_request_is('block-types*') || soda_request_is('fields*'),
             ]);
 
             $menu['Content Types']->addChild('Page Types', [
                 'url'         => route('soda.page_type'),
                 'label'       => 'Page Types',
-                'isCurrent'   => Request::is('cms/page-types*'),
+                'isCurrent'   => soda_request_is('page-types*'),
                 'permissions' => 'manage-page-types',
             ]);
 
             $menu['Content Types']->addChild('Block Types', [
                 'url'         => route('soda.block_type'),
                 'label'       => 'Block Types',
-                'isCurrent'   => Request::is('cms/block-types*'),
+                'isCurrent'   => soda_request_is('block-types*'),
                 'permissions' => 'manage-block-types',
             ]);
 
             $menu['Content Types']->addChild('Fields', [
                 'url'         => route('soda.field'),
                 'label'       => 'Fields',
-                'isCurrent'   => Request::is('cms/fields*'),
+                'isCurrent'   => soda_request_is('fields*'),
                 'permissions' => 'manage-fields',
             ]);
 
@@ -119,7 +119,7 @@ class MenuServiceProvider extends ServiceProvider
                 'url'         => route('soda.user'),
                 'label'       => 'Users',
                 'icon'        => 'fa fa-users',
-                'isCurrent'   => Request::is('cms/users*'),
+                'isCurrent'   => soda_request_is('users*'),
                 'permissions' => 'view-users',
             ]);
 
@@ -127,7 +127,7 @@ class MenuServiceProvider extends ServiceProvider
                 'url'         => '#',
                 'label'       => 'Applications',
                 'icon'        => 'fa fa-desktop',
-                'isCurrent'   => Request::is('cms/applications*'),
+                'isCurrent'   => soda_request_is('applications*'),
                 'permissions' => 'manage-applications',
             ]);
 
@@ -135,7 +135,7 @@ class MenuServiceProvider extends ServiceProvider
                 'url'         => '#',
                 'label'       => 'Application Settings',
                 'icon'        => 'fa fa-cog',
-                'isCurrent'   => Request::is('cms/application-settings*'),
+                'isCurrent'   => soda_request_is('application-settings*'),
                 'permissions' => 'manage-applications',
             ]);
 
@@ -143,7 +143,7 @@ class MenuServiceProvider extends ServiceProvider
                 'url'         => route('soda.navigation'),
                 'label'       => 'Navigation',
                 'icon'        => 'fa fa-compass',
-                'isCurrent'   => Request::is('cms/navigation*'),
+                'isCurrent'   => soda_request_is('navigation*'),
                 'permissions' => 'view-navigation',
             ]);
 

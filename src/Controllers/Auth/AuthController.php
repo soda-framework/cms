@@ -30,19 +30,20 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectPath = '/cms';
-    protected $redirectAfterLogout = '/cms';
-    protected $loginPath = '/cms/auth/login';
+    protected $redirectPath;
+    protected $redirectAfterLogout;
+    protected $loginPath;
 
     protected $guard = 'soda';
 
     /**
      * Create a new authentication controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
+        $this->redirectPath = route('soda.home');
+        $this->redirectAfterLogout = route('soda.home');
+        $this->loginPath = route('soda.login');
     }
 
     /**
