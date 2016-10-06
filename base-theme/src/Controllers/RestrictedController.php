@@ -2,10 +2,9 @@
 
 namespace Themes\SodaExample\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RestrictedController extends Controller
+class RestrictedController extends BaseController
 {
 
     public function __construct()
@@ -15,7 +14,7 @@ class RestrictedController extends Controller
 
     public function index(Request $request)
     {
-        return view('soda-example::logged_in', compact('request'));
+        return view('soda-example::logged-in', compact('request'));
     }
 
 }

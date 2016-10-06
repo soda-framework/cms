@@ -2,10 +2,9 @@
 
 namespace Themes\SodaExample\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     public function index(Request $request)
     {

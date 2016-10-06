@@ -10,7 +10,7 @@ use RecursiveIteratorIterator;
 class Theme extends Command
 {
 
-    protected $signature = 'soda:theme {--a|advanced : Include extra classes to build more complex theme functionality}';
+    protected $signature = 'soda:theme {name?}';
     protected $description = 'Install an example Soda CMS Theme';
     protected $except = [];
     protected $attributes;
@@ -18,11 +18,9 @@ class Theme extends Command
     public function handle()
     {
         $this->attributes = new Collection;
-        $advanced = $this->option('advanced') ? true : false;
 
         $this->configureTheme();
-
-        $this->installTheme($advanced);
+        $this->installTheme();
     }
 
     /**
@@ -30,9 +28,10 @@ class Theme extends Command
      */
     protected function configureTheme()
     {
-        $theme_name = ucfirst($this->ask('Please enter your theme name (using CamelCase)', 'SodaSite'));
+        $themeName = $this->argument('name');
+        $themeName = $themeName ? $themeName : ucfirst($this->ask('Please enter your theme name (using CamelCase)', 'SodaSite'));
 
-        $folder = str_slug(snake_case($theme_name), '-');
+        $folder = str_slug(snake_case($themeName), '-');
         $this->attributes->put('folder', $folder);
 
         $namespace = $this->anticipateThemeClass($folder);
@@ -41,27 +40,20 @@ class Theme extends Command
 
     /**
      * Move and rename theme files based on user input
-     *
-     * @param bool $advanced
      */
-    protected function installTheme($advanced = false)
+    protected function installTheme()
     {
-        $theme_base = __DIR__.'/../../themes/'.($advanced ? 'advanced' : 'simple');
+        $theme_base = __DIR__.'/../../base-theme';
 
         $folder = $this->attributes->get('folder');
         $namespace = $this->attributes->get('namespace');
         $path = base_path('themes/'.$folder);
 
         mkdir($path, 0755, true);
-        $this->xcopy(__DIR__.'/../../themes/shared', $path);
         $this->xcopy($theme_base, $path);
 
         // We need to go through and find and replace everything in here with a different package name:
         rename($path.'/src/Providers/SodaExampleThemeServiceProvider.php', $path.'/src/Providers/'.$namespace.'ThemeServiceProvider.php');
-        if ($advanced) {
-            rename($path.'/src/Components/SodaExampleInstance.php', $path.'/src/Components/'.$namespace.'Instance.php');
-            rename($path.'/src/Facades/SodaExampleFacade.php', $path.'/src/Facades/'.$namespace.'Facade.php');
-        }
         $this->info('Classes renamed.');
 
         $this->findAndReplace('SodaExample', $namespace, $path.'/src');
@@ -132,7 +124,7 @@ class Theme extends Command
             $contents = file_get_contents($application_config);
 
             $old_provider = "Soda\\Cms\\Providers\\SodaServiceProvider::class,";
-            $provider_replacement = "$old_provider,\n        $serviceProvider";
+            $provider_replacement = "$old_provider\n        $serviceProvider,";
 
             $contents = str_replace($old_provider, $provider_replacement, $contents);
 
