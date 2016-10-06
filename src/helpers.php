@@ -17,7 +17,6 @@ if (!function_exists('soda_cms_view')) {
 if (!function_exists('truncate_words')) {
     function truncate_words($string, $wordsreturned)
     {
-        $retval = $string;
         $string = preg_replace('/(?<=\S,)(?=\S)/', ' ', $string);
         $string = str_replace("\n", " ", $string);
         $array = explode(" ", $string);
