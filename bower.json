@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "jquery": "^2.2.3",
     "bootstrap": "~4",
     "jstree": "~3",
     "font-awesome": "^4.5.0",
