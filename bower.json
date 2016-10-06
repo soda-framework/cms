@@ -10,10 +10,11 @@
     "bootstrap": "~4",
     "jstree": "~3",
     "font-awesome": "^4.5.0",
-    "bootstrap-sass": "~3"
-  },
-  "devDependencies": {
+    "bootstrap-sass": "~3",
     "jquery-sortable": "~0.9.13",
     "bootstrap-fileinput": "^4.3.1"
+  },
+  "resolutions": {
+    "bootstrap": "~4"
   }
 }
