@@ -53,8 +53,8 @@ if((!$model->type || !count($model->type->fields)) && !count($model->blocks) && 
         {!! SodaForm::toggle([
             'name'         => 'Published',
             'field_name'   => 'status',
-            'value'        => Soda\Cms\Components\Status::LIVE,
-            'field_params' => ['checked-value' => Soda\Cms\Components\Status::LIVE, 'unchecked-value' => Soda\Cms\Components\Status::DRAFT],
+            'value'        => Soda\Cms\Support\Constants::STATUS_LIVE,
+            'field_params' => ['checked-value' => Soda\Cms\Support\Constants::STATUS_LIVE, 'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
         ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
         <br />
 

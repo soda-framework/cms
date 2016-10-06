@@ -55,7 +55,6 @@ class Setup extends Command
                 $connection->exec("CREATE DATABASE IF NOT EXISTS `{$db_name}`");
             }
 
-            $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);
             file_put_contents($environment_file_path, $contents);
         }

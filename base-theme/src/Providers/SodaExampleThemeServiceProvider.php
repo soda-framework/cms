@@ -2,9 +2,9 @@
 namespace Themes\SodaExample\Providers;
 
 use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Traits\ServiceProvider;
+use Soda\Cms\Support\ThemeExceptionHandler;
 use Soda\Cms\Providers\SodaServiceProviderTrait;
-use Themes\SodaExample\Handlers\ExceptionHandler;
 
 class SodaExampleThemeServiceProvider extends ServiceProvider
 {
@@ -27,9 +27,11 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
     public function register()
     {
         $this->publishes([__DIR__ . '/../../public' => public_path('themes/soda-example')], 'public');
+        $this->mergeConfigFrom(__DIR__.'/../../config/auth.php', 'themes.soda-example.auth');
 
         $this->registerDependencies([
             RouteServiceProvider::class,
+            AuthServiceProvider::class,
         ]);
 
         if ($this->handlesErrors) {
@@ -38,7 +40,9 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
     }
 
     public function bindErrorHandler() {
-        $this->app->singleton(BaseExceptionHandler::class, ExceptionHandler::class);
+        $this->app->singleton(BaseExceptionHandler::class, function ($app) {
+            return (new ThemeExceptionHandler())->setTheme('soda-example');
+        });
 
         return $this;
     }

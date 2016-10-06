@@ -1,5 +1,5 @@
 <?php
-namespace Soda\Cms\Components;
+namespace Soda\Cms\Support;
 
 use Exception;
 use Route;
@@ -12,7 +12,7 @@ use Soda\Cms\Models\Block;
 use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
 
-class Soda
+class SodaInstance
 {
     protected $application = null;
     protected $blocks = [];

@@ -1,14 +1,10 @@
 <?php
-namespace Soda\Cms\Providers;
+namespace Themes\SodaExample\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Components\Pages\PageBuilder;
-use Soda\Cms\Support\Facades\SodaPageFacade;
-use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
-class PageServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
-    use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -23,6 +19,9 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->config->set('auth.providers.soda', $this->app->config->get('themes.soda-example.auth.provider'));
+        $this->app->config->set('auth.guards.soda', $this->app->config->get('themes.soda-example.auth.guard'));
+        $this->app->config->set('auth.passwords.soda', $this->app->config->get('themes.soda-example.auth.password'));
     }
 
     /**
@@ -32,9 +31,5 @@ class PageServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerFacades([
-            'SodaPage' => SodaPageFacade::class,
-        ]);
-        $this->app->bind('soda.page', PageBuilder::class);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Facades;
+namespace Soda\Cms\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
  * @see \Illuminate\Cache\CacheManager
  * @see \Illuminate\Cache\Repository
  */
-class SodaFacade extends Facade
+class SodaMenuFacade extends Facade
 {
     /**
      *
@@ -18,7 +18,7 @@ class SodaFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'soda';
+        return 'soda.menu';
     }
 
 }

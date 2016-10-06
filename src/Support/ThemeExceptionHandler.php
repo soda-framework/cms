@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\SodaExample\Handlers;
+namespace Soda\Cms\Support;
 
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -11,8 +11,10 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use URL;
 
-class ExceptionHandler extends Handler
+class ThemeExceptionHandler extends Handler
 {
+    protected $theme;
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -79,11 +81,13 @@ class ExceptionHandler extends Handler
     {
         $status = $e->getStatusCode();
 
-        if (view()->exists("soda-example::errors.{$status}")) {
-            return response()->view("soda-example::errors.{$status}", ['exception' => $e], $status, $e->getHeaders());
-        } else {
-            return response()->view("soda-example::errors.other", ['exception' => $e], $status, $e->getHeaders());
+        if (view()->exists($this->getViewPath("errors.{$status}"))) {
+            return response()->view($this->getViewPath("errors.{$status}"), ['exception' => $e], $status, $e->getHeaders());
+        } elseif (view()->exists($this->getViewPath("errors.other"))) {
+            return response()->view($this->getViewPath("errors.other"), ['exception' => $e], $status, $e->getHeaders());
         }
+
+        return $this->convertExceptionToResponse($e);
     }
 
     /**
@@ -95,15 +99,25 @@ class ExceptionHandler extends Handler
      */
     protected function renderTokenMismatchException(TokenMismatchException $e)
     {
-        if (view()->exists("soda-example::errors.token")) {
-            return response()->view("soda-example::errors.token", ['exception' => $e], '403');
-        } else {
-            return $this->convertExceptionToResponse($e);
+        if (view()->exists($this->getViewPath("errors.token"))) {
+            return response()->view($this->getViewPath("errors.token"), ['exception' => $e], '403');
         }
+
+        return $this->convertExceptionToResponse($e);
     }
 
     protected function isTokenMismatchException(Exception $e)
     {
         return $e instanceof TokenMismatchException;
+    }
+
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+    }
+
+    protected function getViewPath($view)
+    {
+        return ($this->theme ? $this->theme . '::' : '') . $view;
     }
 }

@@ -14,7 +14,7 @@ use Soda\Cms\Models\Page;
 use Soda\Cms\Models\PageType;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
-use Soda\Cms\Models\User;
+use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class EloquentServiceProvider extends ServiceProvider
 {

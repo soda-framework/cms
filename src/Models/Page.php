@@ -5,7 +5,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
-use Soda\Cms\Components\Status;
+use Soda\Cms\Support\Constants;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
@@ -50,7 +50,7 @@ class Page extends AbstractSodaClosureEntity
             'application_id' => Soda::getApplication()->id,
             'position'       => 0,
             'real_depth'     => 0,
-            'status'         => Status::LIVE,
+            'status'         => Constants::STATUS_LIVE,
         ]);
     }
 

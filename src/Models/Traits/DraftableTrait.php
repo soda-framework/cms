@@ -4,7 +4,7 @@ namespace Soda\Cms\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Session;
-use Soda\Cms\Components\Status;
+use Soda\Cms\Support\Constants;
 
 trait DraftableTrait
 {
@@ -17,7 +17,7 @@ trait DraftableTrait
     {
         static::addGlobalScope('published', function (Builder $builder) {
             if (static::isDraftsEnabled()) {
-                return $builder->where('status', '=', Status::LIVE);
+                return $builder->where('status', '=', Constants::STATUS_LIVE);
             }
 
             return $builder;

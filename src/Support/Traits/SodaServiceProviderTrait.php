@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Providers;
+namespace Soda\Cms\Support\Traits;
 
 use Illuminate\Foundation\AliasLoader;
 
