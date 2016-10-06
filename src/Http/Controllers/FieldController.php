@@ -1,11 +1,12 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Cms\Http\Controllers;
+
 use Redirect;
-use Soda\Cms\Controllers\Traits\CrudableTrait;
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 use Soda\Cms\Models\Field;
 
-class FieldController extends Controller
+class FieldController extends BaseController
 {
     use CrudableTrait;
     protected $hint = 'field';

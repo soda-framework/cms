@@ -1,11 +1,12 @@
 <?php
 
-namespace Soda\Cms\Controllers\Auth;
+namespace Soda\Cms\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Soda\Cms\Http\Controllers\BaseController;
 
-class PasswordController extends Controller
+class ResetPasswordController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -21,12 +22,32 @@ class PasswordController extends Controller
     use ResetsPasswords;
 
     /**
-     * Create a new password controller instance.
+     * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        return route('soda.home');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('soda');
     }
 }

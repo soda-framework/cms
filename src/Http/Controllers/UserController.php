@@ -1,10 +1,11 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Soda\Cms\Controllers\Traits\CrudableTrait;
+namespace Soda\Cms\Http\Controllers;
+
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 use Soda\Cms\Models\User;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
 
     use CrudableTrait;
@@ -29,8 +30,8 @@ class UserController extends Controller
         $grid->add('username', 'Username', true); //field name, label, sortable
         $grid->add('email', 'Email', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='".route('soda.'.$this->hint.'.edit', [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='".route('soda.'.$this->hint.'.delete', [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+            $edit = "<a href='" . route('soda.' . $this->hint . '.edit', [$value]) . "' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
+            $edit .= "<a href='" . route('soda.' . $this->hint . '.delete', [$value]) . "' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
 
             return $edit;
         });
@@ -38,7 +39,7 @@ class UserController extends Controller
         $grid->paginate(10)->getGrid('soda::partials.grid');
         $hint = $this->hint;
 
-        return view('soda::'.$this->hint.'.index', compact('filter', 'grid', 'hint'));
+        return view('soda::' . $this->hint . '.index', compact('filter', 'grid', 'hint'));
     }
 
 }

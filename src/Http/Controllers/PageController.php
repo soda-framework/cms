@@ -1,13 +1,14 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Cms\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Soda;
-use Soda\Cms\Controllers\Traits\TreeableTrait;
+use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Page;
 use Soda\Cms\Models\PageType;
 
-class PageController extends Controller
+class PageController extends BaseController
 {
     use TreeableTrait;
     public $hint = 'page';
@@ -22,6 +23,18 @@ class PageController extends Controller
         //$this->middleware('auth');
         $this->model = $page;
         $this->tree = $page;
+    }
+
+    /**
+     * Main page view method.
+     *
+     * @param $slug
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public static function page($slug = '/')
+    {
+        return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
     }
 
     /**
@@ -44,9 +57,9 @@ class PageController extends Controller
         $tree = $this->htmlTree($pages, $this->hint);
 
         return view('soda::page.index', [
-            'hint'       => $this->hint,
-            'pages'      => $pages,
-            'tree'       => $tree,
+            'hint' => $this->hint,
+            'pages' => $pages,
+            'tree' => $tree,
             'page_types' => $page_types,
         ]);
     }
@@ -59,8 +72,8 @@ class PageController extends Controller
             $model = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
         if (@$model->type->identifier) {
-            $page_table = Soda::dynamicModel('soda_'.$model->type->identifier,
-                $model->type->fields->lists('field_name')->toArray())->where('page_id', $model->id)->first();
+            $page_table = Soda::dynamicModel('soda_' . $model->type->identifier,
+                $model->type->fields->pluck('field_name')->toArray())->where('page_id', $model->id)->first();
         } else {
             $page_table = null;
         }
@@ -82,27 +95,15 @@ class PageController extends Controller
 
         if ($request->has('settings')) {
 
-            $dyn_table = Soda::dynamicModel('soda_'.$this->model->type->identifier,
-                $this->model->type->fields->lists('field_name')->toArray())->where('page_id', $this->model->id)->first();
+            $dyn_table = Soda::dynamicModel('soda_' . $this->model->type->identifier,
+                $this->model->type->fields->pluck('field_name')->toArray())->where('page_id', $this->model->id)->first();
 
             $dyn_table->forceFill($request->input('settings'));
 
             $dyn_table->save();
         }
 
-        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
-    }
-
-    /**
-     * Main page view method.
-     *
-     * @param $slug
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public static function page($slug = '/')
-    {
-        return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
+        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $request->id])->with('success', 'page updated');
     }
 
     public function create(Request $request, $parent_id = null)
@@ -141,14 +142,14 @@ class PageController extends Controller
         //todo validation
 
         $page->fill([
-            'name'           => $request->input('name'),
-            'slug'           => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
-            'status'         => $request->has('status') ? $request->input('status') : 0,
-            'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
-            'package'        => $request->has('package') ? $request->input('package') : 'soda',
-            'action'         => $request->has('action') ? $request->input('action') : 'default.view',
+            'name' => $request->input('name'),
+            'slug' => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
+            'status' => $request->has('status') ? $request->input('status') : 0,
+            'action_type' => $request->has('action_type') ? $request->input('action_type') : 'view',
+            'package' => $request->has('package') ? $request->input('package') : 'soda',
+            'action' => $request->has('action') ? $request->input('action') : 'default.view',
             'application_id' => Soda::getApplication()->id,
-            'page_type_id'   => $request->input('page_type_id'),
+            'page_type_id' => $request->input('page_type_id'),
         ]);
 
         $page->save();

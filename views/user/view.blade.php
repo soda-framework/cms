@@ -33,7 +33,7 @@
 		{!! SodaForm::dropdown([
             "name"         => "Role",
             "field_name"   => 'role_id',
-            "field_params" => ["options" => array_merge(['' => 'Select Role'], Soda\Cms\Models\Role::lists('name','id')->toArray())]
+            "field_params" => ["options" => array_merge(['' => 'Select Role'], Soda\Cms\Models\Role::pluck('name','id')->toArray())]
         ])->setModel($model) !!}
 
 		@if($model->id)

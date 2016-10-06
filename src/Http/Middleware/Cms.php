@@ -1,11 +1,20 @@
 <?php
 
-namespace Soda\Cms\Middleware;
+namespace Soda\Cms\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\BlockType;
+use Soda\Cms\Models\Page;
+use Soda\Cms\Models\PageType;
 
-class Authenticate
+/*
+ *
+ * This middleware disables all drafting in the CMS, so drafted entries remain visible
+ *
+ */
+
+class Cms
 {
     /**
      * Handle an incoming request.
@@ -18,16 +27,14 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        config()->set('auth.defaults.guard', 'soda');
+
         //this is a work around for a laravel bug - the guard flicks back to the default when run through an auth Gate
         //so we need to temporarily set the guard to the incomming guard here instead.
-        config()->set('auth.defaults.guard', $guard);
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->route('soda.login');
-            }
-        }
+        Block::disableDrafts();
+        BlockType::disableDrafts();
+        Page::disableDrafts();
+        PageType::disableDrafts();
 
         return $next($request);
     }

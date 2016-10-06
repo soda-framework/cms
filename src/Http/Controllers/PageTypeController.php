@@ -1,10 +1,11 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Soda\Cms\Controllers\Traits\CrudableTrait;
+namespace Soda\Cms\Http\Controllers;
+
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 use Soda\Cms\Models\PageType;
 
-class PageTypeController extends Controller
+class PageTypeController extends BaseController
 {
     use CrudableTrait;
     public $hint = 'page_type';

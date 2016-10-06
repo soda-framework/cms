@@ -1,4 +1,4 @@
-<?php namespace Soda\Cms\Controllers\Traits;
+<?php namespace Soda\Cms\Http\Controllers\Traits;
 
 use Auth;
 use DataFilter;
@@ -10,6 +10,19 @@ Trait CrudableTrait
 {
     protected $model;
     protected $saveOnCreate = false;
+
+    public function index()
+    {
+        $filter = $this->buildFilter();
+        $grid = $this->buildGrid($filter);
+        $grid->paginate(10)->getGrid($this->getGridView());
+
+        return view($this->getView('index'), [
+            'filter' => $filter,
+            'grid' => $grid,
+            'hint' => $this->hint,
+        ]);
+    }
 
     protected function buildFilter()
     {
@@ -28,8 +41,8 @@ Trait CrudableTrait
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='".route('soda.'.$this->hint.'.edit', [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='".route('soda.'.$this->hint.'.delete', [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+            $edit = "<a href='" . route('soda.' . $this->hint . '.edit', [$value]) . "' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
+            $edit .= "<a href='" . route('soda.' . $this->hint . '.delete', [$value]) . "' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
 
             return $edit;
         });
@@ -38,17 +51,14 @@ Trait CrudableTrait
         return $grid;
     }
 
-    public function index()
+    protected function getGridView()
     {
-        $filter = $this->buildFilter();
-        $grid = $this->buildGrid($filter);
-        $grid->paginate(10)->getGrid($this->getGridView());
+        return 'soda::partials.grid';
+    }
 
-        return view($this->getView('index'), [
-            'filter' => $filter,
-            'grid'   => $grid,
-            'hint'   => $this->hint,
-        ]);
+    protected function getView($view = null)
+    {
+        return 'soda::' . $this->hint . ($view ? '.' . $view : '');
     }
 
     public function view(Request $request, $id = null)
@@ -63,7 +73,7 @@ Trait CrudableTrait
 
         return view($this->getView('view'), [
             'model' => $this->model,
-            'hint'  => $this->hint,
+            'hint' => $this->hint,
         ]);
     }
 
@@ -82,26 +92,16 @@ Trait CrudableTrait
         ])->with('success', 'updated');
     }
 
+    protected function getRouteTo($route = null)
+    {
+        return 'soda.' . $this->hint . ($route ? '.' . $route : '');
+    }
+
     public function delete($id)
     {
         $this->model->find($id)->delete();
 
         return redirect()->route($this->getRouteTo())->with('success', 'updated');
-    }
-
-    protected function getView($view = null)
-    {
-        return 'soda::'.$this->hint.($view ? '.'.$view : '');
-    }
-
-    protected function getRouteTo($route = null)
-    {
-        return 'soda.'.$this->hint.($route ? '.'.$route : '');
-    }
-
-    protected function getGridView()
-    {
-        return 'soda::partials.grid';
     }
 
 }

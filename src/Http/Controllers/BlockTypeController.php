@@ -1,12 +1,13 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Cms\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Soda;
-use Soda\Cms\Controllers\Traits\CrudableTrait;
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 use Soda\Cms\Models\BlockType;
 
-class BlockTypeController extends Controller
+class BlockTypeController extends BaseController
 {
 
     use CrudableTrait;
@@ -31,7 +32,7 @@ class BlockTypeController extends Controller
         }
         $this->model->save();
 
-        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
+        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
             'updated');
     }
 

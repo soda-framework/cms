@@ -1,4 +1,4 @@
-<?php namespace Soda\Cms\Controllers\Traits;
+<?php namespace Soda\Cms\Http\Controllers\Traits;
 
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ Trait TreeableTrait
      * returns json object for use with stuff like jstree..
      *
      * @param Request $request
-     * @param bool    $id
+     * @param bool $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -128,14 +128,14 @@ Trait TreeableTrait
         $item = $this->tree->find($id);
         $item->deleteSubtree(true);
 
-        return redirect()->route('soda.'.$this->hint)->with('success', 'page updated');
+        return redirect()->route('soda.' . $this->hint)->with('success', 'page updated');
     }
 
     /**
      * show the relevant create item form.
      *
      * @param Request $request
-     * @param null    $parent_id
+     * @param null $parent_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -150,6 +150,6 @@ Trait TreeableTrait
         $this->model->parent_id = $parent->id;
         $this->model->page_type_id = $request->input('page_type_id');
 
-        return view('soda::'.$this->hint.'.view', ['model' => $this->model, 'hint' => $this->hint, 'tree' => false]);
+        return view('soda::' . $this->hint . '.view', ['model' => $this->model, 'hint' => $this->hint, 'tree' => false]);
     }
 }

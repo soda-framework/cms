@@ -1,6 +1,7 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Cms\Http\Controllers;
+
 use Auth;
 use Gate;
 use Request;
@@ -8,7 +9,7 @@ use Session;
 use Soda\Cms\Events\DashboardWasRendered;
 use SodaMenu;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
 
     /**
@@ -37,7 +38,7 @@ class HomeController extends Controller
 
         Session::set("soda.draft_mode", $draft_mode);
 
-        return redirect()->back()->with("info", ($draft_mode ? "Draft" : "Live")." mode active. <a href=\"/\" target=\"_blank\">View site</a>");
+        return redirect()->back()->with("info", ($draft_mode ? "Draft" : "Live") . " mode active. <a href=\"/\" target=\"_blank\">View site</a>");
     }
 
     public function getTest()

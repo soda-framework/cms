@@ -1,12 +1,13 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Cms\Http\Controllers;
+
 use Redirect;
-use Soda\Cms\Controllers\Traits\CrudableTrait;
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 use Soda\Cms\Models\Block;
 use Soda\Cms\Models\BlockType;
 
-class BlockController extends Controller
+class BlockController extends BaseController
 {
 
     use CrudableTrait;
@@ -27,9 +28,9 @@ class BlockController extends Controller
         $block_types = BlockType::get();
 
         return view($this->getView('index'), [
-            'filter'      => $filter,
-            'grid'        => $grid,
-            'hint'        => $this->hint,
+            'filter' => $filter,
+            'grid' => $grid,
+            'hint' => $this->hint,
             'block_types' => $block_types,
         ]);
     }

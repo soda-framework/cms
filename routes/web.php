@@ -4,13 +4,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.main'], function () {
         Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
             // Authentication routes
-            Route::get('login', 'AuthController@getLogin')->name('soda.login');
-            Route::post('login', 'AuthController@postLogin')->name('soda.login-attempt');
-            Route::get('logout', 'AuthController@getLogout')->name('soda.logout');
-
-            // Registration routes...
-            Route::get('register', 'AuthController@getRegister')->name('soda.register');
-            Route::post('register', 'AuthController@postRegister')->name('soda.register-attempt');
+            Route::get('login', 'LoginController@showLoginForm')->name('soda.login');
+            Route::post('login', 'LoginController@login')->name('soda.login-attempt');
+            Route::get('logout', 'LoginController@logout')->name('soda.logout');
         });
 
         // Dashboard and user routes...

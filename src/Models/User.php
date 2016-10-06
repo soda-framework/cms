@@ -4,13 +4,14 @@ namespace Soda\Cms\Models;
 
 use Cache;
 use Config;
+use Illuminate\Cache\TaggableStore;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
-    use OptionallyInApplicationTrait, EntrustUserTrait;
+    use OptionallyInApplicationTrait, LaratrustUserTrait;
     protected $table = 'users';
 
     /**
@@ -37,10 +38,14 @@ class User extends Authenticatable
     //Big block of caching functionality.
     public function cachedRoles()
     {
-        $userPrimaryKey = $this->primaryKey;
-        $cacheKey = 'entrust_roles_for_user_'.$this->$userPrimaryKey;
+        $cache = app('cache');
+        $cacheKey = 'laratrust_roles_for_user_'.$this->getKey();
 
-        return Cache::tags(Config::get('entrust.role_user_table'))->remember($cacheKey, Config::get('cache.ttl'), function () {
+        if($cache->getStore() instanceof TaggableStore) {
+            $cache = $cache->tags(Config::get('laratrust.role_user_table'));
+        }
+
+        return $cache->remember($cacheKey, Config::get('cache.ttl'), function () {
             if (!$this->roles) {
                 return $this->load('roles');
             }
@@ -49,4 +54,16 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * Flush the user's cache
+     * @return void
+     */
+    public function flushCache()
+    {
+        if(Cache::getStore() instanceof TaggableStore) {
+            Cache::tags(Config::get('laratrust.role_user_table'))->flush();
+        }
+
+        Cache::forget('laratrust_roles_for_user_' . $this->getKey());
+    }
 }

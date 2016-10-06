@@ -51,8 +51,10 @@ class SodaServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/cms.php', 'soda.cms');
         $this->mergeConfigFrom(__DIR__.'/../../config/fields.php', 'soda.fields');
         $this->mergeConfigFrom(__DIR__.'/../../config/upload.php', 'soda.upload');
+        $this->mergeConfigFrom(__DIR__.'/../../config/auth.php', 'soda.auth');
 
         $this->registerDependencies([
+            AuthServiceProvider::class,
             FormServiceProvider::class,
             CommandsServiceProvider::class,
             EloquentServiceProvider::class,
@@ -92,7 +94,7 @@ class SodaServiceProvider extends ServiceProvider
         });
 
         Blade::directive('attr', function ($expression = null) {
-            return '<?php if(isset'.$expression.') {
+            return '<?php if(isset('.$expression.')) {
                                 foreach('.$expression.' as $key => $attribute) {
                                     echo " $key=\"$attribute\"";
                                 }

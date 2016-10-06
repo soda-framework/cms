@@ -1,6 +1,7 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Cms\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Redirect;
 use Route;
@@ -9,7 +10,7 @@ use Soda\Cms\Models\Block;
 use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
 
-class DynamicController extends Controller
+class DynamicController extends BaseController
 {
     protected $page;
     protected $block;
@@ -23,7 +24,7 @@ class DynamicController extends Controller
 
         $block = $page_id ? $this->page->blocks() : new Block;
         $this->block = $block->with('type', 'type.fields')->where('identifier', $type)->first();
-        $this->model = Soda::dynamicModel('soda_'.$this->block->type->identifier, $this->block->type->fields->lists('field_name')->toArray());
+        $this->model = Soda::dynamicModel('soda_' . $this->block->type->identifier, $this->block->type->fields->pluck('field_name')->toArray());
     }
 
     public function index()
@@ -74,8 +75,8 @@ class DynamicController extends Controller
 
         return redirect()->route('soda.page.block.view', [
             'page_id' => $this->page->id,
-            'type'    => $this->block->identifier,
-            'id'      => $model->id,
+            'type' => $this->block->identifier,
+            'id' => $model->id,
         ])->with('success', 'updated!');
     }
 
@@ -83,8 +84,8 @@ class DynamicController extends Controller
      * delete
      *
      * @param Request $request
-     * @param null    $type
-     * @param null    $id
+     * @param null $type
+     * @param null $id
      */
     public function delete(Request $request, $page_id, $type, $id = null)
     {
