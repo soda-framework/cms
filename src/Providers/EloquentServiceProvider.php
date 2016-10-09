@@ -2,6 +2,7 @@
 namespace Soda\Cms\Providers;
 
 use Franzose\ClosureTable\ClosureTableServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustFacade;
 use Laratrust\LaratrustServiceProvider;
@@ -14,6 +15,7 @@ use Soda\Cms\Models\Page;
 use Soda\Cms\Models\PageType;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
+use Soda\Cms\Models\User;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class EloquentServiceProvider extends ServiceProvider
@@ -35,6 +37,12 @@ class EloquentServiceProvider extends ServiceProvider
     {
         $this->configure();
         $this->bootObservers();
+
+        Relation::morphMap([
+            'PageType' => PageType::class,
+            'BlockType' => BlockType::class,
+            'SodaUser' => User::class,
+        ]);
     }
 
     /**

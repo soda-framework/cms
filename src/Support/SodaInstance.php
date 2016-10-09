@@ -26,6 +26,10 @@ class SodaInstance
         $this->formBuilder = $formBuilder;
         $this->pageBuilder = $pageBuilder;
         $this->menuBuilder = $menuBuilder;
+
+        if (!app()->runningInConsole()) {
+            $this->loadApplication();
+        }
     }
 
     /**
@@ -35,10 +39,6 @@ class SodaInstance
      */
     public function getApplication()
     {
-        if (!$this->application) {
-            $this->loadApplication();
-        }
-
         return $this->application;
     }
 
@@ -64,7 +64,7 @@ class SodaInstance
      */
     protected function loadApplication()
     {
-        $domain = $_SERVER['HTTP_HOST'];
+        $domain = str_replace('www.', '', $_SERVER['HTTP_HOST']);
         $applicationUrl = ApplicationUrl::whereDomain($domain)->first();
 
         if ($applicationUrl) {

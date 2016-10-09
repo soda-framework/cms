@@ -25,15 +25,16 @@ class SodaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require(__DIR__.'/../helpers.php');
+        require(__DIR__.'/../Support/helpers.php');
 
         $this->configure();
 
         // Publishing configs
         $this->publishes([__DIR__.'/../../config' => config_path('soda')], 'soda.config');
-        //$this->publishes([__DIR__ . '/../../database/migrations' => database_path('migrations')], 'soda.migrations');
         $this->publishes([__DIR__.'/../../public' => public_path('soda/cms')], 'soda.assets');
+
         $this->loadViewsFrom(__DIR__.'/../../views', config('soda.cms.hint'));
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         $this->extendBlade();
 
