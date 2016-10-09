@@ -4,11 +4,11 @@ namespace Soda\Cms\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
+use Laratrust\Middleware\LaratrustAbility;
+use Laratrust\Middleware\LaratrustPermission;
+use Laratrust\Middleware\LaratrustRole;
 use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\Cms;
-use Laratrust\Middleware\LaratrustRole;
-use Laratrust\Middleware\LaratrustPermission;
-use Laratrust\Middleware\LaratrustAbility;
 
 class RouteServiceProvider extends ServiceProvider
 {

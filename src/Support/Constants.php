@@ -11,7 +11,7 @@ class Constants
     {
         return [
             static::STATUS_DRAFT => 'Draft',
-            static::STATUS_LIVE => 'Published',
+            static::STATUS_LIVE  => 'Published',
         ];
     }
 }

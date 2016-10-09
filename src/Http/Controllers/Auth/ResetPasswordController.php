@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers\Auth;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Auth;
 use Soda\Cms\Http\Controllers\BaseController;
 
 class ResetPasswordController extends BaseController

@@ -2,10 +2,10 @@
 
 namespace Soda\Cms\Http\Controllers\Auth;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Soda\Cms\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Soda\Cms\Http\Controllers\BaseController;
 
 class LoginController extends BaseController
 {
@@ -44,6 +44,7 @@ class LoginController extends BaseController
      * Log the user out of the application.
      *
      * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
@@ -58,16 +59,6 @@ class LoginController extends BaseController
     }
 
     /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard('soda');
-    }
-
-    /**
      * Get the post register / login redirect path.
      *
      * @return string
@@ -75,5 +66,15 @@ class LoginController extends BaseController
     public function redirectPath()
     {
         return route('soda.home');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('soda');
     }
 }

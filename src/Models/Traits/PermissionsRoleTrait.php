@@ -22,6 +22,7 @@ trait PermissionsRoleTrait
     {
         $flushCache = function ($role) {
             $role->flushCache();
+
             return true;
         };
 
@@ -46,7 +47,7 @@ trait PermissionsRoleTrait
     {
         $cache = app('cache');
 
-        if($cache->getStore() instanceof TaggableStore) {
+        if ($cache->getStore() instanceof TaggableStore) {
             $cache = $cache->tags(Config::get('laratrust.permission_role_table'));
         }
 
@@ -61,11 +62,12 @@ trait PermissionsRoleTrait
 
     /**
      * Flush the role's cache
+     *
      * @return void
      */
     public function flushCache()
     {
-        if(Cache::getStore() instanceof TaggableStore) {
+        if (Cache::getStore() instanceof TaggableStore) {
             Cache::tags(Config::get('laratrust.permission_role_table'))->flush();
         }
 
@@ -74,6 +76,6 @@ trait PermissionsRoleTrait
 
     public function getCacheKey()
     {
-        return 'laratrust_roles_for_' . $this->getTable() . '_' . $this->getKey();
+        return 'laratrust_roles_for_'.$this->getTable().'_'.$this->getKey();
     }
 }

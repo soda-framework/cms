@@ -34,10 +34,10 @@ class NavigationController extends BaseController
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='" . route('soda.' . $this->hint . '.edit',
-                    [$value]) . "' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='" . route('soda.' . $this->hint . '.delete',
-                    [$value]) . "' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+            $edit = "<a href='".route('soda.'.$this->hint.'.edit',
+                    [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
+            $edit .= "<a href='".route('soda.'.$this->hint.'.delete',
+                    [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
 
             return $edit;
         });
@@ -45,7 +45,7 @@ class NavigationController extends BaseController
         $grid->paginate(10)->getGrid('soda::partials.grid');
         $hint = $this->hint;
 
-        return view('soda::' . $this->hint . '.index', compact('filter', 'grid', 'hint'));
+        return view('soda::'.$this->hint.'.index', compact('filter', 'grid', 'hint'));
     }
 
     public function deleteTree($id)
@@ -55,7 +55,7 @@ class NavigationController extends BaseController
         $item->deleteSubtree(true);
 
         //we redirect back to the root menu
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $root_id])->with('success', 'deleted');
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $root_id])->with('success', 'deleted');
     }
 
     public function view(Request $request, $id = null)
@@ -82,7 +82,7 @@ class NavigationController extends BaseController
             $tree = false;
         }
 
-        return view('soda::' . $this->hint . '.view', compact('model', 'hint', 'tree'));
+        return view('soda::'.$this->hint.'.view', compact('model', 'hint', 'tree'));
     }
 
     public function edit(Request $request, $id = null)
@@ -106,7 +106,7 @@ class NavigationController extends BaseController
             $this->model->save();
         }
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
             'updated');
     }
 
@@ -120,10 +120,10 @@ class NavigationController extends BaseController
             $this->model->parent_id = null;
         }
 
-        return view('soda::' . $this->hint . '.view', [
+        return view('soda::'.$this->hint.'.view', [
             'model' => $this->model,
-            'hint' => $this->hint,
-            'tree' => false,
+            'hint'  => $this->hint,
+            'tree'  => false,
         ]);
     }
 

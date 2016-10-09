@@ -1,7 +1,7 @@
 <?php namespace Soda\Cms\Models;
 
-use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 use Laratrust\LaratrustPermission;
+use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class Permission extends LaratrustPermission
 {

@@ -5,19 +5,18 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
-use Soda\Cms\Support\Constants;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 use Soda\Cms\Models\Traits\PositionableTrait;
 use Soda\Cms\Models\Traits\SluggableTrait;
 use Soda\Cms\Models\Traits\TreeableTrait;
+use Soda\Cms\Support\Constants;
 
 class Page extends AbstractSodaClosureEntity
 {
     use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait, HasDynamicModelTrait;
 
-    protected $table = 'pages';
     public $fillable = [
         'name',
         'slug',
@@ -32,7 +31,7 @@ class Page extends AbstractSodaClosureEntity
         'edit_action',
         'edit_action_type',
     ];
-
+    protected $table = 'pages';
     protected $pageAttributes;
 
     /**
@@ -52,6 +51,15 @@ class Page extends AbstractSodaClosureEntity
             'real_depth'     => 0,
             'status'         => Constants::STATUS_LIVE,
         ]);
+    }
+
+    public static function hasFieldsOrBlocks($page)
+    {
+        if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())) {
+            return true;
+        }
+
+        return false;
     }
 
     public function type()
@@ -103,15 +111,6 @@ class Page extends AbstractSodaClosureEntity
         $this->attributes['identifier'] = str_slug($value);
     }
 
-    public static function hasFieldsOrBlocks($page)
-    {
-        if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function pageAttributes()
     {
         if (!$this->pageAttributes) {
@@ -126,6 +125,11 @@ class Page extends AbstractSodaClosureEntity
         $this->pageAttributes = $model;
 
         return $this;
+    }
+
+    public function getRelatedField()
+    {
+        return 'page_id';
     }
 
     protected function loadPageAttributes()
@@ -145,10 +149,5 @@ class Page extends AbstractSodaClosureEntity
         }
 
         return $this->setPageAttributes($model);
-    }
-
-    public function getRelatedField()
-    {
-        return 'page_id';
     }
 }

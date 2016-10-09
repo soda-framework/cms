@@ -9,8 +9,8 @@ use Soda\Cms\Components\Menu\MenuFactory;
 use Soda\Cms\Components\Menu\MenuRegistrar;
 use Soda\Cms\Components\Menu\SidebarMenuRenderer;
 use Soda\Cms\Support\Facades\SodaMenuFacade;
-use SodaMenu;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
+use SodaMenu;
 
 class MenuServiceProvider extends ServiceProvider
 {

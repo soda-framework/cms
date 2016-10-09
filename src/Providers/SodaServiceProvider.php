@@ -3,8 +3,8 @@ namespace Soda\Cms\Providers;
 
 use Blade;
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Support\SodaInstance;
 use Soda\Cms\Support\Facades\SodaFacade;
+use Soda\Cms\Support\SodaInstance;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 use Zofe\Rapyd\RapydServiceProvider;
 

@@ -22,6 +22,7 @@ trait PermissionsUserTrait
     {
         $flushCache = function ($user) {
             $user->flushCache();
+
             return true;
         };
 
@@ -76,6 +77,7 @@ trait PermissionsUserTrait
 
     /**
      * Flush the user's cache
+     *
      * @return void
      */
     public function flushCache()
@@ -89,6 +91,6 @@ trait PermissionsUserTrait
 
     public function getCacheKey()
     {
-        return 'laratrust_roles_for_' . $this->getTable() . '_' . $this->getKey();
+        return 'laratrust_roles_for_'.$this->getTable().'_'.$this->getKey();
     }
 }

@@ -57,30 +57,6 @@ class SodaInstance
     }
 
     /**
-     * Determines the application by our current URL and sets it
-     *
-     * @return \Soda\Cms\Components\Soda
-     * @throws \Exception
-     */
-    protected function loadApplication()
-    {
-        $domain = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-        $applicationUrl = ApplicationUrl::whereDomain($domain)->first();
-
-        if ($applicationUrl) {
-            $application = $applicationUrl->application()->first();
-
-            if ($application) {
-                return $this->setApplication($application);
-            }
-
-            Throw new Exception('Application URL is not associated with an application');
-        }
-
-        Throw new Exception('No application found at URL');
-    }
-
-    /**
      * Get a block by its identifier
      *
      * @param $identifier
@@ -124,16 +100,6 @@ class SodaInstance
     }
 
     /**
-     * Set the current page that we're visiting
-     *
-     * @param \Soda\Cms\Models\Page $page
-     */
-    public function setCurrentPage(Page $page)
-    {
-        $this->currentPage = $page;
-    }
-
-    /**
      * Get the current page that we're visiting
      *
      * @return mixed
@@ -141,6 +107,16 @@ class SodaInstance
     public function getCurrentPage()
     {
         return $this->currentPage;
+    }
+
+    /**
+     * Set the current page that we're visiting
+     *
+     * @param \Soda\Cms\Models\Page $page
+     */
+    public function setCurrentPage(Page $page)
+    {
+        $this->currentPage = $page;
     }
 
     /**
@@ -183,5 +159,29 @@ class SodaInstance
     public function field($field)
     {
         return $this->getFormBuilder()->field($field);
+    }
+
+    /**
+     * Determines the application by our current URL and sets it
+     *
+     * @return \Soda\Cms\Components\Soda
+     * @throws \Exception
+     */
+    protected function loadApplication()
+    {
+        $domain = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+        $applicationUrl = ApplicationUrl::whereDomain($domain)->first();
+
+        if ($applicationUrl) {
+            $application = $applicationUrl->application()->first();
+
+            if ($application) {
+                return $this->setApplication($application);
+            }
+
+            Throw new Exception('Application URL is not associated with an application');
+        }
+
+        Throw new Exception('No application found at URL');
     }
 }

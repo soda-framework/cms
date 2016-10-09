@@ -32,7 +32,7 @@ class BlockTypeController extends BaseController
         }
         $this->model->save();
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
             'updated');
     }
 

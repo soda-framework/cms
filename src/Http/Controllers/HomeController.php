@@ -38,7 +38,7 @@ class HomeController extends BaseController
 
         Session::set("soda.draft_mode", $draft_mode);
 
-        return redirect()->back()->with("info", ($draft_mode ? "Draft" : "Live") . " mode active. <a href=\"/\" target=\"_blank\">View site</a>");
+        return redirect()->back()->with("info", ($draft_mode ? "Draft" : "Live")." mode active. <a href=\"/\" target=\"_blank\">View site</a>");
     }
 
     public function getTest()

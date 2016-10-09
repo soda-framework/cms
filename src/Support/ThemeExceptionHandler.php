@@ -70,6 +70,11 @@ class ThemeExceptionHandler extends Handler
         return parent::render($request, $e);
     }
 
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+    }
+
     /**
      * Render the given HttpException.
      *
@@ -111,13 +116,8 @@ class ThemeExceptionHandler extends Handler
         return $e instanceof TokenMismatchException;
     }
 
-    public function setTheme($theme)
-    {
-        $this->theme = $theme;
-    }
-
     protected function getViewPath($view)
     {
-        return ($this->theme ? $this->theme . '::' : '') . $view;
+        return ($this->theme ? $this->theme.'::' : '').$view;
     }
 }

@@ -60,10 +60,6 @@ abstract class AbstractFormField implements FormFieldInterface
         $this->boot();
     }
 
-    protected function boot()
-    {
-    }
-
     /**
      * Set the Field model to build our FormField off of
      *
@@ -365,48 +361,9 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @return mixed|string
      */
-    public function renderForTable() {
+    public function renderForTable()
+    {
         return truncate_words(strip_tags($this->getFieldValue()), 10);
-    }
-
-    /**
-     * Get the default parameters to be sent to the field view
-     *
-     * @return array
-     */
-    protected function getDefaultViewParameters()
-    {
-        return [
-            'layout'              => $this->getLayout(),
-            'field_view'          => $this->getViewPath().'.'.$this->getView(),
-            'prefixed_field_name' => $this->getPrefixedFieldName(),
-            'field_label'         => $this->getFieldLabel(),
-            'field_name'          => $this->getFieldName(),
-            'field_value'         => $this->getFieldValue(),
-            'field_info'          => $this->getFieldDescription(),
-            'field_class'         => $this->getClass(),
-            'field_parameters'    => $this->parseFieldParameters(),
-        ];
-    }
-
-    /**
-     * Get additional view parameters to be sent to the field view
-     *
-     * @return string
-     */
-    protected function getViewParameters()
-    {
-        return [];
-    }
-
-    /**
-     * Merges default view parameters and additional view parameters
-     *
-     * @return array
-     */
-    protected function parseViewParameters()
-    {
-        return array_merge($this->getDefaultViewParameters(), $this->getViewParameters());
     }
 
     /**
@@ -472,5 +429,49 @@ abstract class AbstractFormField implements FormFieldInterface
         }
 
         return $this->render();
+    }
+
+    protected function boot()
+    {
+    }
+
+    /**
+     * Get the default parameters to be sent to the field view
+     *
+     * @return array
+     */
+    protected function getDefaultViewParameters()
+    {
+        return [
+            'layout'              => $this->getLayout(),
+            'field_view'          => $this->getViewPath().'.'.$this->getView(),
+            'prefixed_field_name' => $this->getPrefixedFieldName(),
+            'field_label'         => $this->getFieldLabel(),
+            'field_name'          => $this->getFieldName(),
+            'field_value'         => $this->getFieldValue(),
+            'field_info'          => $this->getFieldDescription(),
+            'field_class'         => $this->getClass(),
+            'field_parameters'    => $this->parseFieldParameters(),
+        ];
+    }
+
+    /**
+     * Get additional view parameters to be sent to the field view
+     *
+     * @return string
+     */
+    protected function getViewParameters()
+    {
+        return [];
+    }
+
+    /**
+     * Merges default view parameters and additional view parameters
+     *
+     * @return array
+     */
+    protected function parseViewParameters()
+    {
+        return array_merge($this->getDefaultViewParameters(), $this->getViewParameters());
     }
 }

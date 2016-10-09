@@ -19,9 +19,47 @@ Trait CrudableTrait
 
         return view($this->getView('index'), [
             'filter' => $filter,
-            'grid' => $grid,
-            'hint' => $this->hint,
+            'grid'   => $grid,
+            'hint'   => $this->hint,
         ]);
+    }
+
+    public function view(Request $request, $id = null)
+    {
+        if ($id) {
+            $this->model = $this->model->findOrFail($id);
+        }
+
+        if ($request->input('block_type_id')) {
+            $this->model->block_type_id = $request->input('block_type_id');
+        }
+
+        return view($this->getView('view'), [
+            'model' => $this->model,
+            'hint'  => $this->hint,
+        ]);
+    }
+
+    public function edit(Request $request, $id = null)
+    {
+        if ($id) {
+            $this->model = $this->model->findOrFail($id);
+        }
+
+        $this->model->fill($request->input());
+        $this->model->application_id = Soda::getApplication()->id;
+        $this->model->save();
+
+        return redirect()->route($this->getRouteTo('view'), [
+            'id' => $this->model->id,
+        ])->with('success', 'updated');
+    }
+
+    public function delete($id)
+    {
+        $this->model->find($id)->delete();
+
+        return redirect()->route($this->getRouteTo())->with('success', 'updated');
     }
 
     protected function buildFilter()
@@ -41,8 +79,8 @@ Trait CrudableTrait
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='" . route('soda.' . $this->hint . '.edit', [$value]) . "' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='" . route('soda.' . $this->hint . '.delete', [$value]) . "' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+            $edit = "<a href='".route('soda.'.$this->hint.'.edit', [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
+            $edit .= "<a href='".route('soda.'.$this->hint.'.delete', [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
 
             return $edit;
         });
@@ -58,50 +96,12 @@ Trait CrudableTrait
 
     protected function getView($view = null)
     {
-        return 'soda::' . $this->hint . ($view ? '.' . $view : '');
-    }
-
-    public function view(Request $request, $id = null)
-    {
-        if ($id) {
-            $this->model = $this->model->findOrFail($id);
-        }
-
-        if ($request->input('block_type_id')) {
-            $this->model->block_type_id = $request->input('block_type_id');
-        }
-
-        return view($this->getView('view'), [
-            'model' => $this->model,
-            'hint' => $this->hint,
-        ]);
-    }
-
-    public function edit(Request $request, $id = null)
-    {
-        if ($id) {
-            $this->model = $this->model->findOrFail($id);
-        }
-
-        $this->model->fill($request->input());
-        $this->model->application_id = Soda::getApplication()->id;
-        $this->model->save();
-
-        return redirect()->route($this->getRouteTo('view'), [
-            'id' => $this->model->id,
-        ])->with('success', 'updated');
+        return 'soda::'.$this->hint.($view ? '.'.$view : '');
     }
 
     protected function getRouteTo($route = null)
     {
-        return 'soda.' . $this->hint . ($route ? '.' . $route : '');
-    }
-
-    public function delete($id)
-    {
-        $this->model->find($id)->delete();
-
-        return redirect()->route($this->getRouteTo())->with('success', 'updated');
+        return 'soda.'.$this->hint.($route ? '.'.$route : '');
     }
 
 }

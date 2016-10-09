@@ -24,11 +24,6 @@ trait DraftableTrait
         });
     }
 
-    protected static function isDraftsEnabled()
-    {
-        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
-    }
-
     public static function enableDrafts()
     {
         static::$drafts = true;
@@ -37,5 +32,10 @@ trait DraftableTrait
     public static function disableDrafts()
     {
         static::$drafts = false;
+    }
+
+    protected static function isDraftsEnabled()
+    {
+        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
     }
 }

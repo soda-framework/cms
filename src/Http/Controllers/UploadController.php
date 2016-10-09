@@ -25,9 +25,9 @@ class UploadController extends BaseController
                     // Name the file and place in correct directory
                     $unique = uniqid();
                     $path_info = pathinfo($file->getClientOriginalName());
-                    $final_path = ltrim($url_prefix . '/', '/') . $path_info['filename'] . '__' . $unique;
+                    $final_path = ltrim($url_prefix.'/', '/').$path_info['filename'].'__'.$unique;
                     if ($path_info['extension']) {
-                        $final_path .= '.' . $path_info['extension'];
+                        $final_path .= '.'.$path_info['extension'];
                     }
 
                     // Upload the file
@@ -38,15 +38,15 @@ class UploadController extends BaseController
 
                     // Generate return information
                     if ($uploaded) {
-                        $url = $driver == 'soda.public' ? '/uploads/' . $final_path : Storage::disk($driver)->url(trim($final_path, '/'));
+                        $url = $driver == 'soda.public' ? '/uploads/'.$final_path : Storage::disk($driver)->url(trim($final_path, '/'));
 
                         $return = [
-                            "error" => null, // todo: what is this
-                            "initialPreview" => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='" . $request->input('field_name') . "' />"], // todo: not always an image
+                            "error"                => null, // todo: what is this
+                            "initialPreview"       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"], // todo: not always an image
                             "initialPreviewConfig" => [
                                 "caption" => $url,
-                                "width" => "120px",
-                                "append" => true, // todo: check if this is necessary
+                                "width"   => "120px",
+                                "append"  => true, // todo: check if this is necessary
                             ],
                         ];
 
@@ -56,20 +56,20 @@ class UploadController extends BaseController
 
                         if ($request->input('multi') && $request->input('multi') == 'true') {
                             $media = Media::create([
-                                'related_id' => $id,
+                                'related_id'    => $id,
                                 'related_table' => $table,
                                 'related_field' => $field,
-                                'position' => $request->input('file_id'),
-                                'media' => $url,
-                                'media_type' => 'image', // todo: autodetect
+                                'position'      => $request->input('file_id'),
+                                'media'         => $url,
+                                'media_type'    => 'image', // todo: autodetect
                             ]);
 
                             $return["initalPreviewConfig"]["key"] = $media->id;
                             $return["initalPreviewConfig"]["extra"] = [
-                                "key" => $media->id,
+                                "key"           => $media->id,
                                 "related_table" => $table,
                                 'related_field' => $field,
-                                "related_id" => $id,
+                                "related_id"    => $id,
                             ];
                         } else {
                             DB::table($table)->where('id', $id)->update([
@@ -80,7 +80,7 @@ class UploadController extends BaseController
                             $return["initalPreviewConfig"]["extra"] = [
                                 "related_table" => $table,
                                 'related_field' => $field,
-                                "related_id" => $id,
+                                "related_id"    => $id,
                             ];
                         }
                     }

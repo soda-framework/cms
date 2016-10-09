@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Http\Middleware;
 
-use Closure;
 use Auth;
+use Closure;
 
 class Authenticate
 {

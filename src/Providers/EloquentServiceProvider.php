@@ -39,9 +39,9 @@ class EloquentServiceProvider extends ServiceProvider
         $this->bootObservers();
 
         Relation::morphMap([
-            'PageType' => PageType::class,
+            'PageType'  => PageType::class,
             'BlockType' => BlockType::class,
-            'SodaUser' => User::class,
+            'SodaUser'  => User::class,
         ]);
     }
 
@@ -55,7 +55,7 @@ class EloquentServiceProvider extends ServiceProvider
 
         $this->registerDependencies([
             ClosureTableServiceProvider::class,
-            LaratrustServiceProvider::class
+            LaratrustServiceProvider::class,
         ]);
 
         $this->registerFacades([

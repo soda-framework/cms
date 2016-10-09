@@ -28,9 +28,9 @@ class BlockController extends BaseController
         $block_types = BlockType::get();
 
         return view($this->getView('index'), [
-            'filter' => $filter,
-            'grid' => $grid,
-            'hint' => $this->hint,
+            'filter'      => $filter,
+            'grid'        => $grid,
+            'hint'        => $this->hint,
             'block_types' => $block_types,
         ]);
     }

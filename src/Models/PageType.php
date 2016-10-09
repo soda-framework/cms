@@ -10,7 +10,6 @@ class PageType extends AbstractDynamicType
 {
     use OptionallyInApplicationTrait, DraftableTrait;
 
-    protected $table = 'page_types';
     public $fillable = [
         'name',
         'identifier',
@@ -24,6 +23,7 @@ class PageType extends AbstractDynamicType
         'edit_action',
         'edit_action_type',
     ];
+    protected $table = 'page_types';
 
     public function fields()
     {

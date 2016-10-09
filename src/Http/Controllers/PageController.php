@@ -57,9 +57,9 @@ class PageController extends BaseController
         $tree = $this->htmlTree($pages, $this->hint);
 
         return view('soda::page.index', [
-            'hint' => $this->hint,
-            'pages' => $pages,
-            'tree' => $tree,
+            'hint'       => $this->hint,
+            'pages'      => $pages,
+            'tree'       => $tree,
             'page_types' => $page_types,
         ]);
     }
@@ -72,7 +72,7 @@ class PageController extends BaseController
             $model = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
         if (@$model->type->identifier) {
-            $page_table = Soda::dynamicModel('soda_' . $model->type->identifier,
+            $page_table = Soda::dynamicModel('soda_'.$model->type->identifier,
                 $model->type->fields->pluck('field_name')->toArray())->where('page_id', $model->id)->first();
         } else {
             $page_table = null;
@@ -95,7 +95,7 @@ class PageController extends BaseController
 
         if ($request->has('settings')) {
 
-            $dyn_table = Soda::dynamicModel('soda_' . $this->model->type->identifier,
+            $dyn_table = Soda::dynamicModel('soda_'.$this->model->type->identifier,
                 $this->model->type->fields->pluck('field_name')->toArray())->where('page_id', $this->model->id)->first();
 
             $dyn_table->forceFill($request->input('settings'));
@@ -103,7 +103,7 @@ class PageController extends BaseController
             $dyn_table->save();
         }
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $request->id])->with('success', 'page updated');
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
     }
 
     public function create(Request $request, $parent_id = null)
@@ -119,7 +119,6 @@ class PageController extends BaseController
             $this->model->action_type = $this->model->type->action_type;
             $this->model->edit_action = $this->model->type->edit_action;
             $this->model->edit_action_type = $this->model->type->edit_action_type;
-
         }
 
         return view('soda::page.view', ['model' => $this->model, 'hint' => $this->hint]);
@@ -142,14 +141,14 @@ class PageController extends BaseController
         //todo validation
 
         $page->fill([
-            'name' => $request->input('name'),
-            'slug' => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
-            'status' => $request->has('status') ? $request->input('status') : 0,
-            'action_type' => $request->has('action_type') ? $request->input('action_type') : 'view',
-            'package' => $request->has('package') ? $request->input('package') : 'soda',
-            'action' => $request->has('action') ? $request->input('action') : 'default.view',
+            'name'           => $request->input('name'),
+            'slug'           => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
+            'status'         => $request->has('status') ? $request->input('status') : 0,
+            'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
+            'package'        => $request->has('package') ? $request->input('package') : 'soda',
+            'action'         => $request->has('action') ? $request->input('action') : 'default.view',
             'application_id' => Soda::getApplication()->id,
-            'page_type_id' => $request->input('page_type_id'),
+            'page_type_id'   => $request->input('page_type_id'),
         ]);
 
         $page->save();
