@@ -12,7 +12,6 @@ class Setup extends Command
 
     protected $signature = 'soda:setup {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
     protected $description = 'Initial setup command for the Soda Framework';
-    protected $except = [];
 
     public function handle()
     {

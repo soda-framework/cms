@@ -3,7 +3,6 @@
 namespace Soda\Cms\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -12,13 +11,11 @@ class Theme extends Command
 
     protected $signature = 'soda:theme {name?}';
     protected $description = 'Install an example Soda CMS Theme';
-    protected $except = [];
-    protected $attributes;
+    protected $folder;
+    protected $namespace;
 
     public function handle()
     {
-        $this->attributes = new Collection;
-
         $this->configureTheme();
         $this->installTheme();
     }
@@ -79,11 +76,10 @@ class Theme extends Command
         $themeName = $this->argument('name');
         $themeName = $themeName ? $themeName : ucfirst($this->ask('Please enter your theme name (using CamelCase)', 'SodaSite'));
 
-        $folder = str_slug(snake_case($themeName), '-');
-        $this->attributes->put('folder', $folder);
+        $this->folder = str_slug(snake_case($themeName), '-');
 
-        $namespace = $this->anticipateThemeClass($folder);
-        $this->attributes->put('namespace', $namespace);
+        $namespace = $this->anticipateThemeClass($this->folder);
+        $this->namespace = $namespace;
     }
 
     /**
@@ -93,26 +89,24 @@ class Theme extends Command
     {
         $theme_base = __DIR__.'/../../base-theme';
 
-        $folder = $this->attributes->get('folder');
-        $namespace = $this->attributes->get('namespace');
-        $path = base_path('themes/'.$folder);
+        $path = base_path('themes/'.$this->folder);
 
         mkdir($path, 0755, true);
         $this->xcopy($theme_base, $path);
 
         // We need to go through and find and replace everything in here with a different package name:
-        rename($path.'/src/Providers/SodaExampleThemeServiceProvider.php', $path.'/src/Providers/'.$namespace.'ThemeServiceProvider.php');
+        rename($path.'/src/Providers/SodaExampleThemeServiceProvider.php', $path.'/src/Providers/'.$this->namespace.'ThemeServiceProvider.php');
         $this->info('Classes renamed.');
 
-        $this->findAndReplace('SodaExample', $namespace, $path.'/src');
-        $this->findAndReplace('soda-example', $folder, $path);
+        $this->findAndReplace('SodaExample', $this->namespace, $path.'/src');
+        $this->findAndReplace('soda-example', $this->folder, $path);
 
         $this->info('Theme references set.');
 
         $this->appendToComposerFile([
             "autoload" => [
                 "psr-4" => [
-                    "Themes\\{$namespace}\\" => "themes/$folder/src/",
+                    "Themes\\{$this->namespace}\\" => "themes/{$this->folder}/src/",
                 ],
             ],
         ]);
@@ -120,7 +114,7 @@ class Theme extends Command
         $this->call('optimize');
         $this->info('Composer config updated.');
 
-        $this->addServiceProvider("Themes\\$namespace\\Providers\\${namespace}ThemeServiceProvider::class");
+        $this->addServiceProvider("Themes\\{$this->namespace}\\Providers\\{$this->namespace}ThemeServiceProvider::class");
         $this->info('Service provider added.');
 
         $this->call('vendor:publish');

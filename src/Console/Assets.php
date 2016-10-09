@@ -9,7 +9,6 @@ class Assets extends Command
 
     protected $signature = 'soda:assets';
     protected $description = 'Update assets for the Soda Framework';
-    protected $except = [];
 
     /**
      * Force publishes Soda CMS assets

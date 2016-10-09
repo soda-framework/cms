@@ -1,10 +1,12 @@
 <?php
 
+namespace Soda\Cms\Seeds;
+
 use Illuminate\Database\Seeder;
 use Soda\Cms\Models\Application;
 use Soda\Cms\Models\ApplicationUrl;
 
-class SodaApplicationSeeder extends Seeder
+class ApplicationSeeder extends Seeder
 {
 
     /**

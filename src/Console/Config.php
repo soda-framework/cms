@@ -9,7 +9,6 @@ class Config extends Command
 
     protected $signature = 'soda:config';
     protected $description = 'Update config for the Soda Framework';
-    protected $except = [];
 
     /**
      * Force publishes Soda CMS assets

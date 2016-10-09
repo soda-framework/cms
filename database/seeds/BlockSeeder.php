@@ -1,11 +1,13 @@
 <?php
 
+namespace Soda\Cms\Seeds;
+
 use Illuminate\Database\Seeder;
 use Soda\Cms\Support\Constants;
 use Soda\Cms\Models\Application;
 use Soda\Cms\Models\BlockType;
 
-class SodaBlockSeeder extends Seeder
+class BlockSeeder extends Seeder
 {
 
     /**

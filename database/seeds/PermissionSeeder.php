@@ -1,10 +1,12 @@
 <?php
 
+namespace Soda\Cms\Seeds;
+
 use Illuminate\Database\Seeder;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
 
-class SodaPermissionSeeder extends Seeder
+class PermissionSeeder extends Seeder
 {
 
     /**

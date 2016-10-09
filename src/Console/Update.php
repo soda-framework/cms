@@ -9,7 +9,6 @@ class Update extends Command
 
     protected $signature = 'soda:update {--a|all : Update everything} {--c|cms : Update cms} {--m|modules : Update modules}';
     protected $description = 'Update your version of the Soda Framework';
-    protected $except = [];
 
     public function handle()
     {
