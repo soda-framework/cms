@@ -81,13 +81,10 @@ class PageController extends Controller
         $this->model->load('type.fields');
 
         if ($request->has('settings')) {
-
-            $dyn_table = Soda::dynamicModel('soda_'.$this->model->type->identifier,
-                $this->model->type->fields->lists('field_name')->toArray())->where('page_id', $this->model->id)->first();
-
-            $dyn_table->forceFill($request->input('settings'));
-
-            $dyn_table->save();
+            Soda::model($this->model->type->identifier)
+                ->firstOrNew(['page_id' => $this->model->id])
+                ->fill($request->input('settings'))
+                ->save();
         }
 
         return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
@@ -118,7 +115,6 @@ class PageController extends Controller
             $this->model->action_type = $this->model->type->action_type;
             $this->model->edit_action = $this->model->type->edit_action;
             $this->model->edit_action_type = $this->model->type->edit_action_type;
-
         }
 
         return view('soda::page.view', ['model' => $this->model, 'hint' => $this->hint]);
