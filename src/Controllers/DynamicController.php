@@ -56,7 +56,7 @@ class DynamicController extends Controller
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
         foreach ($this->block->type->fields as $field) {
-            if ($request->has($field->field_name)) {
+            if ($request->input($field->field_name) !== null) {
                 $model->parseField($field, $request);
             }
         }
