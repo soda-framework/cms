@@ -126,23 +126,25 @@ class FancyUpload extends AbstractFormField
     public function renderForTable()
     {
         $parameters = $this->parseFieldParameters();
-        $is_multi = isset($parameters['maxFileCount']) && $parameters['maxFileCount'] > 1 ? true : false;
+        $isMulti = isset($parameters['maxFileCount']) && $parameters['maxFileCount'] > 1 ? true : false;
+        $fileName = $this->getFieldValue();
+        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        if (!$is_multi) {
-            switch ($parameters['extension']) {
+        if (!$isMulti) {
+            switch ($fileExtension) {
                 case 'jpg':
                 case 'png':
                 case 'gif':
                 case 'bmp':
                 case 'tiff':
-                    return '<img src="'.$this->getFieldName().'" alt="" width="120"/>';
+                    return '<img src="'.$fileName.'" alt="" width="120"/>';
                 case 'mp3':
                 case 'wav':
                 case 'm4a':
-                    return '<audio src="'.$this->getFieldName().'" alt="" width="120"/>';
+                    return '<audio src="'.$fileName.'" alt="" width="120"/>';
             }
 
-            return '<a href="'.$this->getFieldValue().'" target="_blank">View File</a>';
+            return '<a href="'.$fileName.'" target="_blank">View File</a>';
         }
 
         return 'Multiple files';
