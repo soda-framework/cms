@@ -7,12 +7,30 @@ ul.tree-view {
   ul {
     list-style: none;
   }
+  .handle, .minify, .item-status, .item-title {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .handle, .minify {
+    margin: 0 5px;
+    color: $slate-060;
+  }
+
+  .item-status {
+    margin-left: 5px;
+    margin-right: 2px;
+  }
+
+  .item-title {
+    margin-right: 5px;
+  }
 
   .tree-item {
-    padding: 3px 3px 3px 10px;
-    background: $gray-lighter;
-    margin: 2px 0;
-    border-bottom: 2px solid rgba(0,0,0,0.05);
+    padding: 10px 10px 10px 10px;
+    background: lighten($slate-090, 10%);
+    margin: 5px 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 
@@ -32,7 +50,7 @@ ul.tree-view {
 
   .placeholder {
     content: " ";
-    border: 2px dotted tomato;
+    border: 2px dotted $brand-info;
     height: 2em;
   }
   .active {
@@ -41,4 +59,24 @@ ul.tree-view {
   .handle {
     cursor: move;
   }
+}
+
+.sortable-handle {
+  text-align: center;
+}
+
+.active-circle, .inactive-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.active-circle {
+  background-color: $brand-success;
+}
+
+.inactive-circle {
+  background-color: $gray-light;
 }
