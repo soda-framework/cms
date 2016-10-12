@@ -60,7 +60,7 @@
             container.hide();
         }
 
-        container.slideToggle(function() {
+        container.slideToggle('fast', function() {
             if(!$(this).hasClass('sub-items-expanded')) {
                 $(this).children().hide();
             }

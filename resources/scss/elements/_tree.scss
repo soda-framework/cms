@@ -15,6 +15,7 @@ ul.tree-view {
   .handle, .minify {
     margin: 0 5px;
     color: $slate-060;
+    line-height: 35px;
   }
 
   .minify {
@@ -24,6 +25,7 @@ ul.tree-view {
       transition: transform .2s ease, opacity .2s ease;
     }
   }
+
   .has-sub-items {
     > .tree-item > .minify {
       cursor: pointer;
@@ -49,20 +51,12 @@ ul.tree-view {
   }
 
   .tree-item {
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     background: lighten($slate-090, 10%);
     margin: 0 0 5px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.05);
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-
-    a.item-title {
-      line-height: 30px;
-    }
-
-    .minify {
-
-    }
   }
 
   .dragged {
