@@ -23,6 +23,9 @@
                         <a data-tree-add href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
                     </li>
                     <li>
+                        <a href="{{ route('soda.'.$hint.'.view', ['id'=>$tree->id]) }}">Edit Page</a>
+                    </li>
+                    <li>
                         <a href="{{ $tree->slug }}" target="_blank" data-tree-link>View page</a>
                     </li>
                     <li class="divider"></li>
