@@ -1,5 +1,5 @@
 {{--renders tree in html --}}
-<li class="tree-row" data-id="{{ $tree->id }}" data-move="{{route('soda.'.$hint.'.move')}}" style="display:{{ isset($display) ? $display : 'block' }}">
+<li class="tree-row {{ $tree->hasChildrenRelation() && count($tree->children) > 0 ? 'has-sub-items' : '' }}" data-id="{{ $tree->id }}" data-move="{{route('soda.'.$hint.'.move')}}" style="display:{{ isset($display) ? $display : 'block' }}">
     <div class="tree-item clearfix">
         <span class="handle">
             <img src="/soda/cms/img/drag-dots.gif" />
@@ -10,17 +10,27 @@
         <a class="item-title" href="{{ route('soda.'.$hint.'.view', ['id'=>$tree->id]) }}">
             <span>{{ $tree->name }}</span>
         </a>
-        <i class="fa fa-chevron-right minify" style="display:{{ $tree->hasChildrenRelation() && count($tree->children) > 0 ? 'inline' : 'none' }}"></i>
-        <div class="btn-group pull-right" role="group" aria-label="Basic example">
-            <a data-tree-add class="btn btn-success btn-sm" href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">
-                <span class="fa fa-plus"></span>
-            </a>
-            <a data-tree-link class="btn btn-info btn-sm" href="{{ $tree->slug }}">
-                <span class="fa fa-external-link"></span>
-            </a>
-            <a data-tree-delete class="btn btn-danger btn-sm" href="{{ route('soda.'.$hint.'.delete', ['id' => $tree->id]) }}">
-               <span class="fa fa-remove"></span>
-            </a>
+        <span class="minify">
+            <i class="fa fa-chevron-right"></i>
+        </span>
+        <div class="option-buttons pull-right">
+            <div style="display:inline-block;position:relative;">
+                <a href="#" class="btn btn-info option-more" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a data-tree-add href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
+                    </li>
+                    <li>
+                        <a href="{{ $tree->slug }}" target="_blank" data-tree-link>View page</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="warning">
+                        <a data-tree-delete href="{{ route('soda.'.$hint.'.delete', ['id' => $tree->id]) }}">Delete</a>
+                    </li><!--v-if-->
+                </ul>
+            </div>
         </div>
     </div>
 

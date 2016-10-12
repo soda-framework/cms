@@ -39,8 +39,8 @@
 
             _super($item, container);
 
-            $('.tree-sub-items:has(li)').closest('.tree-row').children('.tree-item').find('.minify').fadeIn();
-            $('.tree-sub-items:not(:has(li))').closest('.tree-row').children('.tree-item').find('.minify').fadeOut();
+            $('.tree-sub-items:has(li)').closest('.tree-row').addClass('has-sub-items');
+            $('.tree-sub-items:not(:has(li))').closest('.tree-row').removeClass('has-sub-items');
         },
         serialize: function (parent, children, isContainer) {
             return isContainer ? children.join() : parent.text();
@@ -49,8 +49,9 @@
 
     $(".minify").on('click', function (e) {
         e.preventDefault();
-        var container = $(this).closest('.tree-row').children('.tree-sub-items');
-        $(this).toggleClass('fa-chevron-down fa-chevron-right');
+        var row = $(this).closest('.tree-row');
+        var container = row.children('.tree-sub-items');
+        row.toggleClass('row-expanded');
 
         container.toggleClass('sub-items-expanded');
 
