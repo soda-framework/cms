@@ -38,14 +38,15 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-btn fa-user"></i> {{ Auth::user()->username }}
+                        <i class="fa fa-btn fa-user"></i>
+                        <span>{{ Auth::user()->username }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         @permission('view-drafts')
                         <li>
                             <a class='dropdown-item' href="{{ route('soda.toggle-draft') }}">
-                                <i class="fa fa-btn fa-pencil"></i> {{ Session::get("soda.draft_mode") == true ? "Live" : "Draft" }}
-                                <span>Mode</span>
+                                <i class="fa fa-btn fa-pencil"></i>
+                                <span>{{ Session::get("soda.draft_mode") == true ? "Live" : "Draft" }} Mode</span>
                             </a>
                         </li>
                         @endpermission

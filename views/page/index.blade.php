@@ -20,7 +20,8 @@
 	{!! $tree !!}
 
 	<a data-tree-add href="{{route('soda.'.$hint.'.create')}}" class="btn btn-primary btn-lg">
-		<span class="fa fa-plus"></span> Create Page
+		<i class="fa fa-plus"></i>
+		<span>Create Page</span>
 	</a>
 
 	<div class="modal fade" id="page_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

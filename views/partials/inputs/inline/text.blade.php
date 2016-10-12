@@ -9,7 +9,9 @@
 </script>
 <span class="editable" id="{{$unique}}">{!! $field_value !!}</span>
 {{@$field_name}}
-<button class="hide btn btn-primary edit-{{$unique}}" data-edit_id="{{$unique}}" data-edit_link="{{$link}}"><span class="fa fa-check"></span></button>
+<button class="hide btn btn-primary edit-{{$unique}}" data-edit_id="{{$unique}}" data-edit_link="{{$link}}">
+    <i class="fa fa-check"></i>
+</button>
 
 <script type="application/javascript">
 	$(function() {

@@ -8,6 +8,7 @@ $border-radius-base: 3px;
 $border-radius-large: 0;
 $border-radius-small: 0;
 
+$font-family-sans-serif:  Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $fa-font-path: "/soda/cms/components/font-awesome/fonts" !default;
 
 /* CONTENT
@@ -66,3 +67,4 @@ $sidebar-group-link-active-text: $white;
    ============================= */
 
 $list-group-border: $content-inner-border;
+$btn-default-bg: $slate-100;

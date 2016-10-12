@@ -1,14 +1,14 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('breadcrumb')
-	<ol class="breadcrumb">
-		<li><a href="{{ route('soda.home') }}">Home</a></li>
-		<li class="active">Page Types</li>
-	</ol>
+    <ol class="breadcrumb">
+        <li><a href="{{ route('soda.home') }}">Home</a></li>
+        <li class="active">Page Types</li>
+    </ol>
 @stop
 
 @section('head.title')
-	<title>Soda CMS | Page Types</title>
+    <title>Soda CMS | Page Types</title>
 @endsection
 
 @include(soda_cms_view_path('partials.heading'), [
@@ -18,7 +18,10 @@
 ])
 
 @section('content')
-	{!! $filter !!}
-	{!! $grid !!}
-	<a class='btn btn-primary' href="{{route('soda.page_type.create')}}"><span class="fa fa-plus"></span> Create</a>
+    {!! $filter !!}
+    {!! $grid !!}
+    <a class='btn btn-primary' href="{{route('soda.page_type.create')}}">
+        <i class="fa fa-plus"></i>
+        <span>Create</span>
+    </a>
 @endsection

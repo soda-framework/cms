@@ -25,9 +25,9 @@
 					@endif
 				@endforeach
 				<td>
-					<a href="{{route('soda.page.block.view', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-success btn-sm"><span class="fa fa-pencil"></span></a>
+					<a href="{{route('soda.page.block.view', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a>
 					@if($block->pivot->can_delete)
-					<a href="{{route('soda.page.block.delete', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-danger btn-sm"><span class="fa fa-remove"></span></a>
+					<a href="{{route('soda.page.block.delete', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>
 					@endif
 				</td>
 			</tr>

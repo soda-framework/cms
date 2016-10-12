@@ -2,7 +2,14 @@
   border-radius: $border-radius-base;
   border: none;
   border-bottom: 3px solid rgba(0, 0, 0, 0.1) !important;
-  &.btn-success, &.btn-danger, &.btn-default, &.btn-info, &.btn-warning {
-    //border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn, .dropdown-toggle, .dropdown-item {
+  span, i {
+    display: inline-block;
+    //vertical-align: middle;
+    + span, + i {
+      margin-left: 5px;
+    }
   }
 }
