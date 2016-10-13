@@ -78,9 +78,9 @@ Trait CrudableTrait
         $grid = DataGrid::source($filter);  //same source types of DataSet
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
-        $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='".route('soda.'.$this->hint.'.edit', [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='".route('soda.'.$this->hint.'.delete', [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+        $grid->add('{{ $id }}', 'Options')->style('width:180px')->cell(function ($value) {
+            $edit = "<a href='".route('soda.'.$this->hint.'.edit', [$value])."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";
+            $edit .= "<a href='".route('soda.'.$this->hint.'.delete', [$value])."' class='btn btn-danger'><i class='fa fa-remove'></i> <span>Delete</span></a>";
 
             return $edit;
         });
