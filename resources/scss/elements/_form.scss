@@ -35,7 +35,20 @@
   label {
     color: $slate-040;
   }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
+
+.fieldset-group {
+  margin-bottom: 30px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 /*
   .form-group {
     margin-top: 20px;

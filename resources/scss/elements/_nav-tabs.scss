@@ -1,0 +1,41 @@
+.nav-tabs {
+  border: 0;
+  > li {
+    margin-right: 3px;
+   > a {
+     background-color: rgba(255, 255, 252, 0.15);
+     box-shadow: $standard-shadow;
+     transition: background-color .15s ease;
+     will-change: background-color;
+
+     &:hover {
+       background-color: rgba(255, 255, 252, 0.7);
+     }
+   }
+
+   &.active {
+    > a {
+      &, &:active, &:hover, &:focus {
+        border: 1px solid $content-inner-background;
+        background-color: $content-inner-background;
+      }
+
+      &:after {
+        content: ' ';
+        background-color: $content-inner-background;
+        display: block;
+        height: 3px;
+        position: absolute;
+        z-index: 5;
+        left: -1px;
+        right: -1px;
+        bottom: 0px;
+      }
+    }
+   }
+  }
+
+  + .content-block {
+    border-top-left-radius: 0;
+  }
+}

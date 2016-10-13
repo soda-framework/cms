@@ -52,9 +52,9 @@ ul.tree-view {
 
   .tree-item {
     padding: 10px;
-    background: lighten($slate-090, 10%);
+    background: $content-inner-background;
     margin: 0 0 5px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    box-shadow: $standard-shadow;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
   }

@@ -11,6 +11,10 @@
 	<title>Soda CMS | Blocks</title>
 @endsection
 
+@section('content-heading-button')
+	@include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#block_type_modal'])
+@stop
+
 @include(soda_cms_view_path('partials.heading'), [
     'icon'        => 'fa fa-pencil',
     'title'       => 'Blocks',
@@ -18,12 +22,13 @@
 ])
 
 @section('content')
-	{!! $filter !!}
-	{!! $grid !!}
-	<a class='btn btn-primary' data-toggle="modal" data-target="#block_type_modal">
-	    <i class="fa fa-plus"></i>
-	    <span>Create</span>
-    </a>
+	<div class="content-top">
+		{!! $filter !!}
+	</div>
+
+	<div class="content-block">
+		{!! $grid !!}
+	</div>
 
 	<div class="modal fade" id="block_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">

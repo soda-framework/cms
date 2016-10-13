@@ -44,6 +44,15 @@ $navbar-inverse-link-hover-bg: transparent;
 $navbar-inverse-link-active-color: $navbar-inverse-link-hover-color;
 $navbar-inverse-link-active-bg: rgba(0, 0, 0, 0.3);
 
+/* NAV TABS
+   ============================= */
+
+$nav-tabs-border-color:                     #ddd;
+$nav-tabs-link-hover-border-color:          transparent;
+
+$nav-tabs-active-link-hover-bg:             $white;
+$nav-tabs-active-link-hover-border-color:   #ddd;
+
 /* SIDEBAR
    ============================= */
 
@@ -67,4 +76,5 @@ $sidebar-group-link-active-text: $white;
    ============================= */
 
 $list-group-border: $content-inner-border;
+$standard-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 $btn-default-bg: $slate-100;

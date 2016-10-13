@@ -11,6 +11,10 @@
 	<title>Soda CMS | Pages</title>
 @endsection
 
+@section('content-heading-button')
+	@include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#page_type_modal'])
+@stop
+
 @include(soda_cms_view_path('partials.heading'), [
     'icon'        => 'fa fa-file-o',
     'title'       => 'Pages',
@@ -18,11 +22,6 @@
 
 @section('content')
 	{!! $tree !!}
-
-	<a data-tree-add href="{{route('soda.'.$hint.'.create')}}" class="btn btn-primary btn-lg">
-		<i class="fa fa-plus"></i>
-		<span>Create Page</span>
-	</a>
 
 	<div class="modal fade" id="page_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
