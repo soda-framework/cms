@@ -20,5 +20,8 @@
 @section('content')
 	{!! $filter !!}
 	{!! $grid !!}
-	<a class='btn btn-primary' href="{{route('soda.'.$hint.'.create')}}"><span class="fa fa-plus"></span> Create</a>
+	<a class='btn btn-primary' href="{{route('soda.'.$hint.'.create')}}">
+	    <i class="fa fa-plus"></i>
+	    <span>Create</span>
+    </a>
 @endsection

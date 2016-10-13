@@ -1,0 +1,56 @@
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  float: left;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 6px;
+  left: auto;
+  pointer-events: none;
+  right: 0;
+  margin-top: 5px;
+  min-width: 180px;
+  padding: 8px;
+  display: block;
+  transform-origin: 50% 90%;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: scale(.8);
+  transition: all .15s ease;
+  will-change: transform, opacity;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2), 0 2px 14px 0 rgba(0, 0, 0, .2);
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #fff;
+  background-clip: padding-box;
+  li {
+    a {
+      padding: 5px 10px;
+      border-radius: 4px;
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: 400;
+      color: #333;
+      white-space: nowrap;
+    }
+    > a:hover {
+      background: $brand-info;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    }
+    &.warning a:hover {
+      background: #e75650;
+      color: #fff;
+    }
+  }
+}
+
+.open .dropdown-menu {
+  transform: scale(1);
+  opacity: 1;
+  z-index: 9999;
+  pointer-events: auto;
+}

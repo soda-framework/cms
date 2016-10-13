@@ -18,7 +18,7 @@ class CreatePagesTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->integer('parent_id')->unsigned()->nullable()->index('pages_parent_id_foreign');
-            $table->string('position')->nullable()->default('');
+            $table->integer('position')->unsigned()->nullable()->default('0');
             $table->integer('real_depth')->unsigned();
             $table->integer('application_id')->unsigned()->nullable()->index('FK_pages_applications');
             $table->integer('page_type_id')->unsigned()->nullable()->index('FK_pages_page_types');

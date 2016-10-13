@@ -13,6 +13,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Absolute paths to '/cms' removed
 
+## [0.3.14] - 2016-10-12
+### Changed
+- Updated styling
+
+## [0.3.13] - 2016-10-12
+### Changed
+- Updated styling
+
+## [0.3.12] - 2016-10-11
+### Fixed
+- Allow updating dynamic fields with blank input
+
+## [0.3.11] - 2016-10-11
+### Fixed
+- Update image extension detection
+
 ## [0.3.10] - 2016-10-04
 ### Added
 - Ability to customise how fields render in table view

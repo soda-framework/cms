@@ -11,7 +11,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Register</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('register-attempt') }}">
+                        <form class="form-horizontal" role="form" method="POST"
+                              action="{{ route('register-attempt') }}">
                             {!! csrf_field() !!}
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }} row">
@@ -73,7 +74,8 @@
                             <div class="form-group row">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-btn fa-user"></i>Register
+                                        <i class="fa fa-btn fa-user"></i>
+                                        <span>Register</span>
                                     </button>
                                 </div>
                             </div>

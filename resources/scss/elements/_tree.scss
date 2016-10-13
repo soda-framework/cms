@@ -7,22 +7,56 @@ ul.tree-view {
   ul {
     list-style: none;
   }
+  .handle, .minify, .item-status, .item-title {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .handle, .minify {
+    margin: 0 5px;
+    color: $slate-060;
+    line-height: 35px;
+  }
+
+  .minify {
+    i {
+      opacity: 0;
+      will-change: transform, opacity;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+  }
+
+  .has-sub-items {
+    > .tree-item > .minify {
+      cursor: pointer;
+      > i {
+        opacity: 1;
+      }
+    }
+  }
+
+  .row-expanded {
+    > .tree-item > .minify > i {
+      transform: rotate(90deg);
+    }
+  }
+
+  .item-status {
+    margin-left: 5px;
+    margin-right: 2px;
+  }
+
+  .item-title {
+    margin-right: 5px;
+  }
 
   .tree-item {
-    padding: 3px 3px 3px 10px;
-    background: $gray-lighter;
-    margin: 2px 0;
-    border-bottom: 2px solid rgba(0,0,0,0.05);
+    padding: 10px;
+    background: lighten($slate-090, 10%);
+    margin: 0 0 5px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-
-    a.item-title {
-      line-height: 30px;
-    }
-
-    .minify {
-
-    }
   }
 
   .dragged {
@@ -32,7 +66,7 @@ ul.tree-view {
 
   .placeholder {
     content: " ";
-    border: 2px dotted tomato;
+    border: 2px dotted $brand-info;
     height: 2em;
   }
   .active {
@@ -41,4 +75,42 @@ ul.tree-view {
   .handle {
     cursor: move;
   }
+
+  .option-buttons {
+    .btn {
+      min-width: 35px;
+    }
+
+    .option-more {
+      i {
+        transition: transform .2s ease;
+      }
+    }
+
+    .open {
+      .option-more i {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+.sortable-handle {
+  text-align: center;
+}
+
+.active-circle, .inactive-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.active-circle {
+  background-color: $brand-success;
+}
+
+.inactive-circle {
+  background-color: $gray-light;
 }

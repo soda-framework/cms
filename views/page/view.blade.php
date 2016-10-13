@@ -36,7 +36,6 @@ if((!$model->type || !count($model->type->fields)) && !count($model->blocks) && 
         @parent
     </form>
 @stop
-
 @section('page.main')
     {!! SodaForm::text([
         "name"        => "Name",
@@ -44,10 +43,13 @@ if((!$model->type || !count($model->type->fields)) && !count($model->blocks) && 
         "field_name"  => 'name',
     ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
 
-    {!! SodaForm::text([
+    {!! SodaForm::slug([
         'name'        => 'Slug',
         'description' => 'The url of this page',
         'field_name'  => 'slug',
+        'field_params' => [
+            'prefix' => $model->getParent()->slug,
+        ],
     ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
 
         {!! SodaForm::toggle([

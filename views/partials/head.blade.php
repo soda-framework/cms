@@ -9,13 +9,14 @@
 @stop
 
 @section('head.meta')
-    <link rel="shortcut icon" type="image/ico" href="/soda/soda/img/favicon.ico">
+    <link rel="shortcut icon" type="image/ico" href="/soda/cms/img/favicon.ico">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @stop
 
 @section('head.css')
     <!-- Styles -->
     <link href="/soda/cms/css/application.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 @stop
 
 @section('head.js')

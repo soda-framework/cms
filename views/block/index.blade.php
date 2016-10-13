@@ -20,7 +20,10 @@
 @section('content')
 	{!! $filter !!}
 	{!! $grid !!}
-	<a class='btn btn-primary' data-toggle="modal" data-target="#block_type_modal"><span class="fa fa-plus"></span> Create</a>
+	<a class='btn btn-primary' data-toggle="modal" data-target="#block_type_modal">
+	    <i class="fa fa-plus"></i>
+	    <span>Create</span>
+    </a>
 
 	<div class="modal fade" id="block_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">

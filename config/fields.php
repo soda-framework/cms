@@ -17,6 +17,7 @@ return [
     'textarea'     => Soda\Cms\Components\Forms\Fields\Textarea::class,
     'tinymce'      => Soda\Cms\Components\Forms\Fields\Tinymce::class,
     'toggle'       => Soda\Cms\Components\Forms\Fields\Toggle::class,
+    'slug'         => Soda\Cms\Components\Forms\Fields\Slug::class,
     'upload'       => Soda\Cms\Components\Forms\Fields\Upload::class,
     'url'          => Soda\Cms\Components\Forms\Fields\Url::class,
 ];

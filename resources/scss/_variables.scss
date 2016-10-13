@@ -4,19 +4,20 @@
 $theme-1: $lime-1;
 $theme-2: $lime-2;
 
-$border-radius-base: 0;
+$border-radius-base: 3px;
 $border-radius-large: 0;
 $border-radius-small: 0;
 
+$font-family-sans-serif:  Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $fa-font-path: "/soda/cms/components/font-awesome/fonts" !default;
 
 /* CONTENT
    ============================= */
 
-$body-bg: $slate-090;
-$content-background: $slate-090;
+$body-bg: $slate-100;
+$content-background: $slate-100;
 $content-inner-background: $white;
-$content-inner-border: $slate-070;
+$content-inner-border: $slate-080;
 $content-inner-text: rgb(51, 51, 51);
 
 /* LOGIN
@@ -66,3 +67,4 @@ $sidebar-group-link-active-text: $white;
    ============================= */
 
 $list-group-border: $content-inner-border;
+$btn-default-bg: $slate-100;
