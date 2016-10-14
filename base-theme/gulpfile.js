@@ -6,6 +6,7 @@ $ = require('gulp-load-plugins')();
 
 gulp.task('publish:css', function () {
     checkCleanFolder('css');
+    var tasks = [];
     var stream = gulp.src(fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'css.path')) + getSetting(config.assets, defaults.assets, 'css.wildcard'))
         .pipe($.plumber(logError))
         .pipe($.if(getSetting(config.assets, defaults.assets, 'css.sourcemaps'), $.sourcemaps.init())) //initialize sourcemap
@@ -27,18 +28,19 @@ gulp.task('publish:css', function () {
         .pipe($.if(getSetting(config.assets, defaults.assets, 'css.sourcemaps'), $.sourcemaps.write('./'))); //generate sourcemap files
 
     config.publish.map(function (output) { //write for each output folder
-        stream.pipe(
-            gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'css.path'))
-        )
+        tasks.push(
+            stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'css.path')))
+            .pipe($.notify({message: 'CSS published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'css.path'), onLast: true}))
+        );
     });
 
-    stream.pipe($.notify({message: 'CSS Compiled!', onLast: true}));
-
-    return stream; //tell gulp that async stream task is complete
+    //execute task array
+    return $.merge(tasks);
 });
 
 gulp.task('publish:js', function () {
     checkCleanFolder('js');
+    var tasks = [];
     var stream = gulp.src(fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'js.path')) + getSetting(config.assets, defaults.assets, 'js.wildcard'))
         .pipe($.plumber(logError))
         .pipe($.if(getSetting(config.assets, defaults.assets, 'js.show_size'), $.size({
@@ -57,45 +59,46 @@ gulp.task('publish:js', function () {
         .pipe($.if(getSetting(config.assets, defaults.assets, 'js.sourcemaps'), $.sourcemaps.write('./'))); //generate sourcemap files
 
     config.publish.map(function (output) { //write for each output folder
-        stream.pipe(
-            gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'js.path'))
-        )
+        tasks.push(
+            stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'js.path')))
+            .pipe($.notify({message: 'JS published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'js.path'), onLast: true}))
+        );
     });
 
-    stream.pipe($.notify({message: 'JS Compiled!', onLast: true}));
-
-    return stream; //tell gulp that async stream task is complete
+    //execute task array
+    return $.merge(tasks);
 });
 
 gulp.task('publish:img', function () {
     checkCleanFolder('img');
-    var stream = gulp.src('./' + fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'img.path')) + getSetting(config.assets, defaults.assets, 'img.wildcard'));
-    //Used to have image optimization here - but holy hell it can crash a computer or ten.
+    var tasks = [];
 
     config.publish.map(function (output) { //write for each output folder
-        stream.pipe(
-            gulp.dest('./' + fixPath(output.folder) + getSetting(output, defaults.publish, 'img.path'))
-        )
+        tasks.push(
+            gulp.src('./' + fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'img.path')) + getSetting(config.assets, defaults.assets, 'img.wildcard'))
+            .pipe(gulp.dest('./' + fixPath(output.folder) + getSetting(output, defaults.publish, 'img.path')))
+            .pipe($.notify({message: 'Images published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'img.path'), onLast: true}))
+        );
     });
 
-    stream.pipe($.notify({message: 'Images published!', onLast: true}));
-
-    return stream; //tell gulp that async stream task is complete
+    //execute task array
+    return $.merge(tasks);
 });
 
 gulp.task('publish:font', function () {
     checkCleanFolder('font');
-    var stream = gulp.src(fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'font.path')) + getSetting(config.assets, defaults.assets, 'font.wildcard'));
+    var tasks = [];
 
     config.publish.map(function (output) { //write for each output folder
-        stream.pipe(
-            gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'font.path'))
-        )
+        tasks.push(
+            gulp.src(fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'font.path')) + getSetting(config.assets, defaults.assets, 'font.wildcard'))
+            .pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'font.path')))
+            .pipe($.notify({message: 'Fonts published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'font.path'), onLast: true}))
+        );
     });
 
-    stream.pipe($.notify({message: 'Fonts published!', onLast: true}));
-
-    return stream; //tell gulp that async stream task is complete
+    //execute task array
+    return $.merge(tasks);
 });
 
 gulp.task('publish:svg', function () {
@@ -144,12 +147,11 @@ gulp.task('publish:components', function () {
         //write for each output folder
         config.publish.map(function (output) {
             stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path')))
+            .pipe($.notify({message: 'Components  published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path'), onLast: true}));
+
+            //push onto task array
+            tasks.push(stream);
         });
-
-        stream.pipe($.notify({message: 'Components published!', onLast: true}));
-
-        //push onto task array
-        tasks.push(stream);
     });
 
     //execute task array

@@ -43,18 +43,19 @@
 }
 
 .content-top, .content-header {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .content-bottom, .content-header {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .content-header {
-  color: $slate-050;
   h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 32px;
+    line-height: 44px;
+    margin-top: -2px;
     i, span {
       display: inline-block;
       vertical-align: middle;

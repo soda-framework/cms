@@ -9,6 +9,8 @@
   padding: 40px 140px;
   background-color: $login-box;
   color: $login-box-text;
+  border-radius: 10px;
+  border-bottom: 5px solid rgba(0,0,0,0.5);
   a {
     color: $login-box-link;
     &:hover {
@@ -33,7 +35,8 @@
 
   .input-group-addon {
     background-color: $theme-2;
-    border-color: $theme-2;
+    border-color: rgba(0,0,0,0.1);
+    border-bottom-width: 3px;
     color: $white;
     padding: 10px 15px;
     + .form-control {
@@ -47,11 +50,17 @@
     height: 42px;
     background-color: rgba(0, 0, 0, 0.3);
     outline: none !important;
-    color: $slate-080;
+    color: $slate-060;
+    border-bottom: 3px solid rgba(0,0,0,0.2);
+    transition: background-color 0.25s ease, color 0.25s ease;
+    will-change: background-color, color;
     &, &:hover, &:active, &:focus {
       outline: none !important;
-      border: none !important;
       box-shadow: none !important;
+    }
+    &:focus {
+      background-color: rgba(0,0,0,0.5);
+      color: $slate-080;
     }
     &::-webkit-input-placeholder {
       color: $slate-050;

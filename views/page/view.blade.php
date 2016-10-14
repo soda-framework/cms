@@ -1,11 +1,11 @@
 <?php
-$small_view = false;
-if ((!$model->type || !count($model->type->fields)) && !count($model->blocks) && !Auth::user()->can('live-preview') && !Auth::user()->can('advanced-pages')) {
-    $small_view = true;
+$smallView = false;
+if (!$model->type || !count($model->type->fields)) {
+    $smallView = true;
 }
 ?>
 
-@extends(soda_cms_view_path($small_view ? 'layouts.inner' : 'layouts.inner-sidebar'))
+@extends(soda_cms_view_path('layouts.inner'))
 
 @section('breadcrumb')
     <ol class="breadcrumb">
@@ -29,100 +29,151 @@ if ((!$model->type || !count($model->type->fields)) && !count($model->blocks) &&
     'description' => $model->description,
 ])
 
+@section('tab.settings')
+    <div class="row">
+        @if(!$smallView)
+        <div class="col-md-9 col-xs-12">
+            <div class="content-block">
+                @if($model->type->description)
+                    <p>{{ $model->type->description }}</p>
+                    <hr/>
+                @endif
+                @if($model->type && $model->type->fields)
+                    @foreach($model->type->fields as $field)
+                        {!! SodaForm::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
+                    @endforeach
+                @endif
+            </div>
+        </div>
+        @endif
+        <div class="{{ $smallView ? 'col-md-12' : 'col-md-3 pull-right' }} col-xs-12">
+            <div class="content-block">
+                {!! SodaForm::text([
+                    "name"        => "Name",
+                    "description" => "The name of this page",
+                    "field_name"  => 'name',
+                ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
 
-@section('main-content')
+                {!! SodaForm::slug([
+                    'name'        => 'Slug',
+                    'description' => 'The url of this page',
+                    'field_name'  => 'slug',
+                    'field_params' => [
+                        'prefix' => $model->getParent()->slug,
+                    ],
+                ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
+
+                {!! SodaForm::toggle([
+                    'name'         => 'Published',
+                    'field_name'   => 'status',
+                    'value'        => Soda\Cms\Support\Constants::STATUS_LIVE,
+                    'field_params' => ['checked-value' => Soda\Cms\Support\Constants::STATUS_LIVE, 'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
+                ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('tab.live-preview')
+    <div class="content-block">
+        <p>Use this tab to customise information on the page in a live view</p>
+        <hr/>
+        @if($model->slug)
+            <p>{{ $model->slug }}</p>
+            <iframe width="100%" height=400 src="{{ $model->slug }}?soda_edit=true"></iframe>
+        @else
+            <p>You must set a slug to enabled this feature.</p>
+        @endif
+    </div>
+@stop
+
+@section('tab.advanced')
+    <div class="content-block">
+        <p>Advanced page settings</p>
+        <hr/>
+
+        {!! SodaForm::text([
+            'name'        => 'Package Prefix',
+            'field_name'  => 'package',
+        ])->setModel($model) !!}
+
+        <div class="row fieldset-group">
+            <div class="col-sm-6 col-xs-12">
+                {!! SodaForm::dropdown([
+                    'name'        => 'Action',
+                    'field_name'  => 'action_type',
+                    'value'       => 'view',
+                    'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                {!! SodaForm::text([
+                    'name'        => null,
+                    'field_name'  => 'action',
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+            </div>
+        </div>
+
+        <div class="row fieldset-group">
+            <div class="col-sm-6 col-xs-12">
+                {!! SodaForm::dropdown([
+                    'name'        => 'Edit Action',
+                    'field_name'  => 'edit_action_type',
+                    'value'       => 'view',
+                    'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                {!! SodaForm::text([
+                    'name'        => null,
+                    'field_name'  => 'edit_action',
+                ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('content')
+    <ul class="nav nav-tabs" role="tablist">
+        <li role='presentation' aria-controls="Page Settings">
+            <a role="tab" data-toggle="tab" href="#tab_page_settings">Settings</a>
+        </li>
+
+        @foreach($model->blocks as $block)
+            @if($block->type->edit_action_type == 'view')
+                <li role='presentation' aria-controls="block_{{ $block->id }}">
+                    <a role="tab" data-toggle="tab" href="#tab_block_{{ $block->id }}">{{ $block->name }}</a>
+                </li>
+            @endif
+        @endforeach
+
+        @permission("live-preview")
+        <li role='presentation' aria-controls="Live View">
+            <a role="tab" data-toggle="tab" href="#tab_live">Live View</a>
+        </li>
+        @endpermission
+
+        @permission("advanced-pages")
+        <li role='presentation' aria-controls="Advanced View">
+            <a role="tab" data-toggle="tab" href="#tab_advanced">Advanced</a>
+        </li>
+        @endpermission
+    </ul>
+
     <form method="POST" id="page-form" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}">
         {!! csrf_field() !!}
         @if($model->type)
             <input type="hidden" name="page_type_id" value="{{ $model->type->id }}"/>
         @endif
         <input type="hidden" name="parent_id" value="{{ $model->parent_id }}"/>
-        @parent
-    </form>
-@stop
-@section('page.main')
-    {!! SodaForm::text([
-        "name"        => "Name",
-        "description" => "The name of this page",
-        "field_name"  => 'name',
-    ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
-
-    {!! SodaForm::slug([
-        'name'        => 'Slug',
-        'description' => 'The url of this page',
-        'field_name'  => 'slug',
-        'field_params' => [
-            'prefix' => $model->getParent()->slug,
-        ],
-    ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
-
-    {!! SodaForm::toggle([
-        'name'         => 'Published',
-        'field_name'   => 'status',
-        'value'        => Soda\Cms\Support\Constants::STATUS_LIVE,
-        'field_params' => ['checked-value' => Soda\Cms\Support\Constants::STATUS_LIVE, 'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
-    ])->setLayout('soda::partials.inputs.layouts.stacked')->setModel($model) !!}
-@stop
-
-@section('content.sidebar')
-    @if(!$small_view)
-        <div class="content-block" style="margin-top:40px;">
-            @yield('page.main')
-        </div>
-    @endif
-@stop
-
-@section('content')
-    @if($small_view)
-        <div class="content-block">
-            @yield('page.main')
-        </div>
-    @else
-        <ul class="nav nav-tabs" role="tablist">
-            @if($model->type && count($model->type->fields))
-                <li role='presentation' aria-controls="page_type_{{ $model->type->id }}">
-                    <a role="tab" data-toggle="tab"
-                       href="#tab_page_type_{{ $model->type->id }}">{{ $model->type->name }}</a>
-                </li>
-            @endif
+        <div class="tab-content">
+            <div class="tab-pane" id="tab_page_settings" role="tabpanel">
+                @yield('tab.settings')
+            </div>
             @foreach($model->blocks as $block)
                 @if($block->type->edit_action_type == 'view')
-                    <li role='presentation' aria-controls="block_{{ $block->id }}">
-                        <a role="tab" data-toggle="tab" href="#tab_block_{{ $block->id }}">{{ $block->name }}</a>
-                    </li>
-                @endif
-            @endforeach
-
-            @permission("live-preview")
-            <li role='presentation' aria-controls="Live View">
-                <a role="tab" data-toggle="tab" href="#tab_live">Live View</a>
-            </li>
-            @endpermission
-
-            @permission("advanced-pages")
-            <li role='presentation' aria-controls="Advanced View">
-                <a role="tab" data-toggle="tab" href="#tab_advanced">Advanced</a>
-            </li>
-            @endpermission
-        </ul>
-        <div class="content-block">
-            <div class="tab-content">
-                @if($model->type)
-                    <div class="tab-pane" id="tab_page_type_{{ $model->type->id }}" role="tabpanel">
-                        @if($model->type->description)
-                            <p>{{ $model->type->description }}</p>
-                            <hr/>
-                        @endif
-                        @if($model->type && $model->type->fields)
-                            @foreach($model->type->fields as $field)
-                                {!! SodaForm::field($field)->setModel(@$page_table)->setPrefix('settings') !!}
-                            @endforeach
-                        @endif
-                    </div>
-                @endif
-                @foreach($model->blocks as $block)
-                    @if($block->type->edit_action_type == 'view')
-                        <div class="tab-pane" id="tab_block_{{ $block->id }}" role="tabpanel">
+                    <div class="tab-pane" id="tab_block_{{ $block->id }}" role="tabpanel">
+                        <div class="content-block">
                             @include($block->type->edit_action, [
                                 'unique' => uniqid(),
                                 'render' => 'card',
@@ -131,71 +182,23 @@ if ((!$model->type || !count($model->type->fields)) && !count($model->blocks) &&
                                 'models' => $model->blockModel($block)->paginate(null, ['*'], $block->identifier .'-page')
                             ])
                         </div>
-                    @endif
-                    {{--loads a block into place.. --}}
-                @endforeach
-
-                @permission("live-preview")
-                <div class="tab-pane" id="tab_live" role="tabpanel">
-                    <p>Use this tab to customise information on the page in a live view</p>
-                    <hr/>
-                    @if($model->slug)
-                        <p>{{ $model->slug }}</p>
-                        <iframe width="100%" height=400 src="{{ $model->slug }}?soda_edit=true"></iframe>
-                    @else
-                        <p>You must set a slug to enabled this feature.</p>
-                    @endif
-                </div>
-                @endpermission
-
-                @permission("advanced-pages")
-                <div class="tab-pane" id="tab_advanced" role="tabpanel">
-                    <p>Advanced page settings</p>
-                    <hr/>
-
-                    {!! SodaForm::text([
-                        'name'        => 'Package Prefix',
-                        'field_name'  => 'package',
-                    ])->setModel($model) !!}
-
-                    <div class="row fieldset-group">
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::dropdown([
-                                'name'        => 'Action',
-                                'field_name'  => 'action_type',
-                                'value'       => 'view',
-                                'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
-                            ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::text([
-                                'name'        => null,
-                                'field_name'  => 'action',
-                            ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
-                        </div>
                     </div>
+                @endif
+            @endforeach
 
-                    <div class="row fieldset-group">
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::dropdown([
-                                'name'        => 'Edit Action',
-                                'field_name'  => 'edit_action_type',
-                                'value'       => 'view',
-                                'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
-                            ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::text([
-                                'name'        => null,
-                                'field_name'  => 'edit_action',
-                            ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
-                        </div>
-                    </div>
-                </div>
-                @endpermission
+            @permission("live-preview")
+            <div class="tab-pane" id="tab_live" role="tabpanel">
+                @yield('tab.live-preview')
             </div>
+            @endpermission
+
+            @permission("advanced-pages")
+            <div class="tab-pane" id="tab_advanced" role="tabpanel">
+                @yield('tab.advanced')
+            </div>
+            @endpermission
         </div>
-    @endif
+    </form>
 
     <div class="content-bottom">
         @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-form'])

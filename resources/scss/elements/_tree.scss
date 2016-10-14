@@ -52,11 +52,17 @@ ul.tree-view {
 
   .tree-item {
     padding: 10px;
-    background: $content-inner-background;
+    background-color: $content-inner-background;
     margin: 0 0 5px;
     box-shadow: $standard-shadow;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    transition: background-color 0.25s ease-in;
+    will-change:background-color;
+
+    &:hover {
+      background-color: #f6f6f7;
+    }
   }
 
   .dragged {
