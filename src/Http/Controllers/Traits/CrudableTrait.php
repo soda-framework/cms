@@ -91,12 +91,12 @@ Trait CrudableTrait
 
     protected function getGridView()
     {
-        return 'soda::partials.grid';
+        return soda_cms_view_path('partials.grid');
     }
 
     protected function getView($view = null)
     {
-        return 'soda::'.$this->hint.($view ? '.'.$view : '');
+        return soda_cms_view_path($this->hint.($view ? '.'.$view : ''));
     }
 
     protected function getRouteTo($route = null)

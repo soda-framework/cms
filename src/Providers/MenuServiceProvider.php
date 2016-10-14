@@ -96,14 +96,14 @@ class MenuServiceProvider extends ServiceProvider
             ]);
 
             $menu['Content Types']->addChild('Page Types', [
-                'url'         => route('soda.page_type'),
+                'url'         => route('soda.page-type'),
                 'label'       => 'Page Types',
                 'isCurrent'   => soda_request_is('page-types*'),
                 'permissions' => 'manage-page-types',
             ]);
 
             $menu['Content Types']->addChild('Block Types', [
-                'url'         => route('soda.block_type'),
+                'url'         => route('soda.block-type'),
                 'label'       => 'Block Types',
                 'isCurrent'   => soda_request_is('block-types*'),
                 'permissions' => 'manage-block-types',

@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ route('soda.home') }}">Home</a></li>
-        <li><a href="{{ route('soda.page_type') }}">Page Types</a></li>
+        <li><a href="{{ route('soda.page-type') }}">Page Types</a></li>
         <li class="active">{{ $model->name ? $model->name : 'New Page Type' }}</li>
     </ol>
 @stop
@@ -56,13 +56,13 @@
                         'field_name'  => 'action_type',
                         'value'       => 'view',
                         'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
-                    ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+                    ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     {!! SodaForm::text([
                         'name'        => null,
                         'field_name'  => 'action',
-                    ])->setModel($model)->setLayout('soda::partials.inputs.layouts.inline-group') !!}
+                    ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
                 </div>
             </div>
 

@@ -11,7 +11,7 @@ class BlockTypeController extends BaseController
 {
 
     use CrudableTrait;
-    protected $hint = 'block_type';
+    protected $hint = 'block-type';
 
     public function __construct(BlockType $type)
     {

@@ -28,7 +28,7 @@ class BlockSeeder extends Seeder
             'identifier'       => 'slider',
             'status'           => Constants::STATUS_LIVE,
             'edit_action'      => 'view',
-            'edit_action_type' => 'soda::blocks.index',
+            'edit_action_type' => soda_cms_view_path('blocks.index'),
         ]);
     }
 }

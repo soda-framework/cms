@@ -25,11 +25,11 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('create/{id?}', 'PageController@create')->name('soda.page.create');
                 Route::post('create/{parent_id?}', 'PageController@save')->name('soda.page.save');
 
-                Route::get('view/{page_id?}/{type}', 'DynamicController@index')->name('soda.page.block');
-                Route::get('view/{page_id?}/{type}/view/{id?}', 'DynamicController@view')->name('soda.page.block.view');
-                Route::post('view/{page_id?}/{type}/view/{id?}', 'DynamicController@edit')->name('soda.page.block.edit');
-                Route::post('view/{page_id?}/{type}/inline/{id}/{field}', 'DynamicController@inlineEdit')->name('soda.page.block.inline.edit');
-                Route::get('view/{page_id?}/{type}/delete/{id?}', 'DynamicController@delete')->name('soda.page.block.delete');
+                Route::get('view/{page_id?}/{type}', 'PageBlockController@index')->name('soda.page.block');
+                Route::get('view/{page_id?}/{type}/view/{id?}', 'PageBlockController@view')->name('soda.page.block.view');
+                Route::post('view/{page_id?}/{type}/view/{id?}', 'PageBlockController@edit')->name('soda.page.block.edit');
+                Route::post('view/{page_id?}/{type}/inline/{id}/{field}', 'PageBlockController@inlineEdit')->name('soda.page.block.inline.edit');
+                Route::get('view/{page_id?}/{type}/delete/{id?}', 'PageBlockController@delete')->name('soda.page.block.delete');
 
                 //test routes..
                 //Route::get('/makeroot/{id?}', 'PageController@getMakeRoot')->name('page-makeroot');
@@ -52,19 +52,19 @@ Route::group(['middleware' => 'web'], function () {
             });
 
             Route::group(['prefix' => 'block-types'], function () {
-                Route::get('/', 'BlockTypeController@index')->name('soda.block_type');
-                Route::get('view', 'BlockTypeController@view')->name('soda.block_type.create');
-                Route::get('view/{id?}', 'BlockTypeController@view')->name('soda.block_type.view');
-                Route::post('view/{id?}', 'BlockTypeController@edit')->name('soda.block_type.edit');
-                Route::get('delete/{id?}', 'BlockTypeController@delete')->name('soda.block_type.delete');
+                Route::get('/', 'BlockTypeController@index')->name('soda.block-type');
+                Route::get('view', 'BlockTypeController@view')->name('soda.block-type.create');
+                Route::get('view/{id?}', 'BlockTypeController@view')->name('soda.block-type.view');
+                Route::post('view/{id?}', 'BlockTypeController@edit')->name('soda.block-type.edit');
+                Route::get('delete/{id?}', 'BlockTypeController@delete')->name('soda.block-type.delete');
             });
 
             Route::group(['prefix' => 'page-types'], function () {
-                Route::get('/', 'PageTypeController@index')->name('soda.page_type');
-                Route::get('view', 'PageTypeController@view')->name('soda.page_type.create');
-                Route::get('view/{id?}', 'PageTypeController@view')->name('soda.page_type.view');
-                Route::post('view/{id?}', 'PageTypeController@edit')->name('soda.page_type.edit');
-                Route::get('delete/{id?}', 'PageTypeController@delete')->name('soda.page_type.delete');
+                Route::get('/', 'PageTypeController@index')->name('soda.page-type');
+                Route::get('view', 'PageTypeController@view')->name('soda.page-type.create');
+                Route::get('view/{id?}', 'PageTypeController@view')->name('soda.page-type.view');
+                Route::post('view/{id?}', 'PageTypeController@edit')->name('soda.page-type.edit');
+                Route::get('delete/{id?}', 'PageTypeController@delete')->name('soda.page-type.delete');
             });
 
             Route::group(['prefix' => 'users'], function () {

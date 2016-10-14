@@ -37,7 +37,7 @@ class LoginController extends BaseController
      */
     public function showLoginForm()
     {
-        return view('soda::auth.login');
+        return soda_cms_view('auth.login');
     }
 
     /**

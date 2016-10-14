@@ -12,7 +12,7 @@
 @endsection
 
 @section('content-heading-button')
-    <a class='btn btn-success btn-lg' href="{{route('soda.page_type.create')}}">
+    <a class='btn btn-success btn-lg' href="{{route('soda.page-type.create')}}">
         <i class="fa fa-plus"></i>
         <span>Create</span>
     </a>

@@ -24,7 +24,7 @@ class CreateBlockTypesTable extends Migration
             $table->string('action');
             $table->string('action_type');
             $table->string('edit_action');
-            $table->string('edit_action_type');
+            $table->string('edit_action_type')->default(soda_cms_view_path('page-block.index'));
             $table->timestamps();
         });
     }

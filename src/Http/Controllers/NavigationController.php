@@ -42,10 +42,10 @@ class NavigationController extends BaseController
             return $edit;
         });
         $grid->orderBy('id', 'desc'); //default orderby
-        $grid->paginate(10)->getGrid('soda::partials.grid');
+        $grid->paginate(10)->getGrid(soda_cms_view_path('partials.grid'));
         $hint = $this->hint;
 
-        return view('soda::'.$this->hint.'.index', compact('filter', 'grid', 'hint'));
+        return soda_cms_view($this->hint.'.index', compact('filter', 'grid', 'hint'));
     }
 
     public function deleteTree($id)
@@ -82,7 +82,7 @@ class NavigationController extends BaseController
             $tree = false;
         }
 
-        return view('soda::'.$this->hint.'.view', compact('model', 'hint', 'tree'));
+        return soda_cms_view($this->hint.'.view', compact('model', 'hint', 'tree'));
     }
 
     public function edit(Request $request, $id = null)
@@ -120,7 +120,7 @@ class NavigationController extends BaseController
             $this->model->parent_id = null;
         }
 
-        return view('soda::'.$this->hint.'.view', [
+        return soda_cms_view($this->hint.'.view', [
             'model' => $this->model,
             'hint'  => $this->hint,
             'tree'  => false,

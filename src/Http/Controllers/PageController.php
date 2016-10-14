@@ -56,7 +56,7 @@ class PageController extends BaseController
         $pages = $page ? $page->collectDescendants()->orderBy('position')->get()->toTree() : [];
         $tree = $this->htmlTree($pages, $this->hint);
 
-        return view('soda::page.index', [
+        return soda_cms_view('page.index', [
             'hint'       => $this->hint,
             'pages'      => $pages,
             'tree'       => $tree,
@@ -78,7 +78,7 @@ class PageController extends BaseController
             $page_table = null;
         }
 
-        return view('soda::page.view', ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
+        return soda_cms_view('page.view', ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
     }
 
     public function edit(Request $request, $id = null)
@@ -121,7 +121,7 @@ class PageController extends BaseController
             $this->model->edit_action_type = $this->model->type->edit_action_type;
         }
 
-        return view('soda::page.view', ['model' => $this->model, 'hint' => $this->hint]);
+        return soda_cms_view('page.view', ['model' => $this->model, 'hint' => $this->hint]);
     }
 
     /**

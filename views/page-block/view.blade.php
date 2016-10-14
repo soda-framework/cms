@@ -14,16 +14,25 @@
     <title>Soda CMS | View {{ucfirst($block->name)}}</title>
 @endsection
 
+@section('content-heading-button')
+    @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#dynamic-block-form'])
+@stop
+
 @include(soda_cms_view_path('partials.heading'), [
     'title' => (!$block->id ? 'Create ' : 'Update ') . ucfirst($block->name),
 ])
 
 @section('content')
-    <form method="POST" action='{{route('soda.page.block.edit', ['page_id' => $page->id, 'type' => $block->identifier, 'id' => $model->id])}}' class="form-wrapper">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-        @foreach($block->type->fields as $field)
-            {!! SodaForm::field($field)->setModel($model) !!}
-        @endforeach
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+    <div class="content-block">
+        <form method="POST" id="dynamic-block-form" action='{{route('soda.page.block.edit', ['page_id' => $page->id, 'type' => $block->identifier, 'id' => $model->id])}}' class="form-wrapper">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+            @foreach($block->type->fields as $field)
+                {!! SodaForm::field($field)->setModel($model) !!}
+            @endforeach
+        </form>
+    </div>
+
+    <div class="content-bottom">
+        @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#dynamic-block-form'])
+    </div>
 @endsection

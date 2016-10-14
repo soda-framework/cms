@@ -40,7 +40,7 @@
     <ul class="tree-sub-items">
         @if ($tree->hasChildrenRelation() && count($tree->children) > 0)
             @foreach($tree->children as $child)
-                @include('soda::partials.tree.tree', ['tree' => $child, 'display' => 'none'])
+                @include(soda_cms_view_path('partials.tree.tree'), ['tree' => $child, 'display' => 'none'])
             @endforeach
         @endif
     </ul>

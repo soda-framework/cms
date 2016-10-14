@@ -83,7 +83,7 @@ class FormBuilder
             }
 
             //TODO: figure out which type of field we need to use here..
-            return view('soda::inputs.inline.text', [
+            return soda_cms_view('inputs.inline.text', [
                 'link'        => $link,
                 'element'     => $element,
                 'model'       => $model,

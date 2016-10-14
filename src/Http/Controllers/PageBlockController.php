@@ -10,7 +10,7 @@ use Soda\Cms\Models\Block;
 use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
 
-class DynamicController extends BaseController
+class PageBlockController extends BaseController
 {
     protected $page;
     protected $block;
@@ -24,7 +24,7 @@ class DynamicController extends BaseController
 
         $block = $page_id ? $this->page->blocks() : new Block;
         $this->block = $block->with('type', 'type.fields')->where('identifier', $type)->first();
-        $this->model = Soda::dynamicModel('soda_'.$this->block->type->identifier, $this->block->type->fields->pluck('field_name')->toArray());
+        $this->model = Soda::model($this->block->type->identifier, $this->block->type->fields->pluck('field_name')->toArray());
     }
 
     public function index()
@@ -44,7 +44,7 @@ class DynamicController extends BaseController
 
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
-        return view('soda::standard.view', ['block' => $this->block, 'model' => $model, 'page' => $this->page]);
+        return soda_cms_view('page-block.view', ['block' => $this->block, 'model' => $model, 'page' => $this->page]);
     }
 
     public function edit(Request $request, $page_id, $type, $id = null)

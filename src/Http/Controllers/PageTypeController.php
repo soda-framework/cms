@@ -8,7 +8,7 @@ use Soda\Cms\Models\PageType;
 class PageTypeController extends BaseController
 {
     use CrudableTrait;
-    public $hint = 'page_type';
+    public $hint = 'page-type';
 
     public function __construct(PageType $type)
     {

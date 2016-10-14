@@ -10,7 +10,7 @@ Trait TreeableTrait
      */
     public function htmlTree($tree, $hint)
     {
-        return view('soda::partials.tree.base', compact('tree', 'hint'));
+        return soda_cms_view('partials.tree.base', compact('tree', 'hint'));
     }
 
     /**
@@ -130,7 +130,7 @@ Trait TreeableTrait
         $this->model->parent_id = $parent->id;
         $this->model->page_type_id = $request->input('page_type_id');
 
-        return view('soda::'.$this->hint.'.view', ['model' => $this->model, 'hint' => $this->hint, 'tree' => false]);
+        return soda_cms_view($this->hint.'.view', ['model' => $this->model, 'hint' => $this->hint, 'tree' => false]);
     }
 
     /**
