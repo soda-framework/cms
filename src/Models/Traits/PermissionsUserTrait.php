@@ -60,19 +60,27 @@ trait PermissionsUserTrait
     //Big block of caching functionality.
     public function cachedRoles()
     {
-        $cache = app('cache');
+        if($ttl = config('soda.cache.permissions')) {
+            $cache = app('cache');
 
-        if ($cache->getStore() instanceof TaggableStore) {
-            $cache = $cache->tags(Config::get('laratrust.role_user_table'));
-        }
-
-        return $cache->remember($this->getCacheKey(), Config::get('cache.ttl'), function () {
-            if (!$this->roles) {
-                return $this->load('roles');
+            if ($cache->getStore() instanceof TaggableStore) {
+                $cache = $cache->tags(Config::get('laratrust.role_user_table'));
             }
 
-            return $this->roles;
-        });
+            return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
+                if (!$this->relationLoaded('roles')) {
+                    $this->load('roles');
+                }
+
+                return $this->roles;
+            });
+        }
+
+        if (!$this->relationLoaded('roles')) {
+            $this->load('roles');
+        }
+
+        return $this->roles;
     }
 
     /**
@@ -91,6 +99,6 @@ trait PermissionsUserTrait
 
     public function getCacheKey()
     {
-        return 'laratrust_roles_for_'.$this->getTable().'_'.$this->getKey();
+        return 'soda.'.\Soda::getApplication()->id.'.permissions.'.$this->getTable().'.'.$this->getKey();
     }
 }

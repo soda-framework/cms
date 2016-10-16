@@ -37,7 +37,7 @@ class Block extends Model
 
     public function modelQuery($page_id = null)
     {
-        if (!$this->type) {
+        if (!$this->relationLoaded('type')) {
             $this->load('type');
         }
 

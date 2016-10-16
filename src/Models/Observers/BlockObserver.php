@@ -15,7 +15,7 @@ class BlockObserver
     public function saved(Block $block)
     {
         if ($block->isDirty('is_shared')) {
-            if (!$block->type) {
+            if (!$block->relationLoaded('type')) {
                 $block->load('type');
             }
             ModelBuilder::fromTable('soda_'.$block->type->identifier)->where($block->getRelatedField(), $block->id)->update(['is_shared' => $block->is_shared]);
