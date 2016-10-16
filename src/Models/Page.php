@@ -114,7 +114,15 @@ class Page extends AbstractSodaClosureEntity
     public function pageAttributes()
     {
         if (!$this->pageAttributes) {
-            $this->loadPageAttributes();
+            if ($ttl = config('soda.cache.page-data')) {
+                $attributes = \Cache::remember(static::getDataCacheKey($this->id), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
+                    return $this->loadPageAttributes();
+                });
+            } else {
+                $attributes = $this->loadPageAttributes();
+            }
+
+            $this->setPageAttributes($attributes);
         }
 
         return $this->pageAttributes;
@@ -134,11 +142,11 @@ class Page extends AbstractSodaClosureEntity
 
     protected function loadPageAttributes()
     {
-        if (!$this->type) {
+        if (!$this->relationLoaded('type')) {
             $this->load('type');
         }
 
-        if (!$this->type) {
+        if (!$this->relationLoaded('type')) {
             $model = new ModelBuilder;
         } else {
             $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
@@ -148,6 +156,11 @@ class Page extends AbstractSodaClosureEntity
             }
         }
 
-        return $this->setPageAttributes($model);
+        return $model;
+    }
+
+    public static function getDataCacheKey($pageId)
+    {
+        return 'soda.'.\Soda::getApplication()->id.'.page.'.$pageId.'.data';
     }
 }

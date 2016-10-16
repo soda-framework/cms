@@ -2,7 +2,7 @@
 namespace Soda\Cms\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Components\Pages\PageBuilder;
+use Soda\Cms\Foundation\Pages\PageBuilder;
 use Soda\Cms\Support\Facades\SodaPageFacade;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 

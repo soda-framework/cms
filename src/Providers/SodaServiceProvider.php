@@ -4,7 +4,7 @@ namespace Soda\Cms\Providers;
 use Blade;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Support\Facades\SodaFacade;
-use Soda\Cms\Support\SodaInstance;
+use Soda\Cms\Foundation\SodaInstance;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 use Zofe\Rapyd\RapydServiceProvider;
 
@@ -25,7 +25,7 @@ class SodaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require(__DIR__.'/../Support/helpers.php');
+        require(__DIR__.'/../Foundation/helpers.php');
 
         $this->configure();
 
@@ -51,6 +51,7 @@ class SodaServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/cms.php', 'soda.cms');
+        $this->mergeConfigFrom(__DIR__.'/../../config/cache.php', 'soda.cache');
         $this->mergeConfigFrom(__DIR__.'/../../config/fields.php', 'soda.fields');
         $this->mergeConfigFrom(__DIR__.'/../../config/upload.php', 'soda.upload');
         $this->mergeConfigFrom(__DIR__.'/../../config/auth.php', 'soda.auth');
@@ -69,8 +70,8 @@ class SodaServiceProvider extends ServiceProvider
             'Soda' => SodaFacade::class,
         ]);
 
-        $this->app->bind('soda', function ($app) {
-            return new SodaInstance($app['soda.form'], $app['soda.page'], $app['soda.menu']);
+        $this->app->singleton('soda', function ($app) {
+            return new SodaInstance($app);
         });
     }
 

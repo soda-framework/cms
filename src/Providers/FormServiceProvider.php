@@ -2,8 +2,8 @@
 namespace Soda\Cms\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Components\Forms\FormBuilder;
-use Soda\Cms\Components\Forms\FormFieldRegistrar;
+use Soda\Cms\Foundation\Forms\FormBuilder;
+use Soda\Cms\Foundation\Forms\FormFieldRegistrar;
 use Soda\Cms\Support\Facades\SodaFormFacade;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 

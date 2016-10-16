@@ -8,6 +8,11 @@ use Soda\Cms\Models\Page;
 class PageObserver
 {
     /**
+     * TODO: when type/blocks are updated, invalidate cache:
+     * soda.{app-id}.page.slug-{slug}
+     */
+
+    /**
      * Listen to the Page saved event.
      *
      * @param \Soda\Cms\Models\Page $page
