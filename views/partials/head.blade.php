@@ -10,6 +10,7 @@
 
 @section('head.meta')
     <link rel="shortcut icon" type="image/ico" href="/soda/cms/img/favicon.ico">
+    <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @stop
 
@@ -22,7 +23,6 @@
 @section('head.js')
     <!-- JavaScripts -->
     <script src="/soda/cms/js/core.min.js"></script>
-    {{-- TODO: move to only pages featuring forms --}}
     <script src="/soda/cms/js/forms.min.js"></script>
     <script src="/soda/cms/js/application.min.js"></script>
 @stop
