@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Seeds;
 
+use Hash;
 use Illuminate\Database\Seeder;
 use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
