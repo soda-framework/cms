@@ -19,9 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->config->set('auth.providers.soda', $this->app->config->get('themes.soda-example.auth.provider'));
-        $this->app->config->set('auth.guards.soda', $this->app->config->get('themes.soda-example.auth.guard'));
-        $this->app->config->set('auth.passwords.soda', $this->app->config->get('themes.soda-example.auth.password'));
+        $this->app->config->set('auth.providers.soda-example', $this->app->config->get('themes.soda-example.auth.provider'));
+        $this->app->config->set('auth.guards.soda-example', $this->app->config->get('themes.soda-example.auth.guard'));
+        $this->app->config->set('auth.passwords.soda-example', $this->app->config->get('themes.soda-example.auth.password'));
     }
 
     /**

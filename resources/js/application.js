@@ -41,10 +41,10 @@ $(function () {
         $(target).val(link);
     });
 
-    $(['data-submits']).on('click', function() {
+    $('[data-submits]').on('click', function() {
         var form = $(this).data('submits');
         $(form).submit();
-    })
+    });
 });
 
 function slugify(text) {
