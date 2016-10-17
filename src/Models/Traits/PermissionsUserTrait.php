@@ -99,6 +99,6 @@ trait PermissionsUserTrait
 
     public function getCacheKey()
     {
-        return 'soda.'.\Soda::getApplication()->id.'.permissions.'.$this->getTable().'.'.$this->getKey();
+        return 'soda.permissions.'.$this->getTable().'.'.$this->getKey();
     }
 }

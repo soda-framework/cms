@@ -101,7 +101,7 @@ class SodaInstance
     {
         if ($autoprefix) $table = 'soda_'.$table;
 
-        return ModelBuilder::fromTable($table, []);
+        return ModelBuilder::fromTable($table);
     }
 
     /**
