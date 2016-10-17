@@ -9,7 +9,7 @@
     <span>Create</span>
 </a>
 @else
-<button class="btn btn-success btn-lg" {!! isset($submits) ? 'data-submits="#page-type-form"' : '' !!}>
+<button class="btn btn-success btn-lg" {!! isset($submits) ? 'data-submits="' . $submits . '"' : '' !!}>
     <i class="fa fa-plus"></i>
     <span>Create</span>
 </button>
