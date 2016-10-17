@@ -58,7 +58,7 @@ class Setup extends Command
             }
 
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);
-            file_put_contents($environment_file_path, $contents);
+            file_put_contents($envFilePath, $contents);
         }
     }
 
