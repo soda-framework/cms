@@ -21,10 +21,6 @@ class ModelBuilder extends Model
 
     public function __construct($params = [])
     {
-        if ($params) {
-            $this->fillable = array_keys($params);
-        }
-
         $this->table = static::$lastTable;
 
         parent::__construct($params);
