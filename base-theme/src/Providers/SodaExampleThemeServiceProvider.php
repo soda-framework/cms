@@ -2,9 +2,9 @@
 namespace Themes\SodaExample\Providers;
 
 use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
-use Illuminate\Support\Traits\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Support\ThemeExceptionHandler;
-use Soda\Cms\Providers\SodaServiceProviderTrait;
+use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class SodaExampleThemeServiceProvider extends ServiceProvider
 {
