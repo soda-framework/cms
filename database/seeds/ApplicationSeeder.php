@@ -16,12 +16,17 @@ class ApplicationSeeder extends Seeder
      */
     public function run()
     {
+        $baseName = str_slug(basename(base_path()), '-');
+        if ($baseName == 'src') {
+            $baseName = str_slug(basename(dirname(base_path())), '-');
+        }
+
         $application = Application::create([
-            'name' => 'Soda CMS',
+            'name' => ucwords(str_replace('-', '', $baseName)),
         ]);
 
         ApplicationUrl::create([
-            'domain'         => 'localhost:8000',
+            'domain'         => $baseName.'.dev',
             'application_id' => $application->id,
         ]);
     }

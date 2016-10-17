@@ -187,17 +187,13 @@ class Theme extends Command
     {
         $d = new RecursiveDirectoryIterator($haystack);
         foreach (new RecursiveIteratorIterator($d, 1) as $path) {
-            if (!(in_array($path->getPathname(), $this->except))) {
-                if (is_file($path)) {
-                    $orig_file = file_get_contents($path);
-                    $new_file = str_replace($needle, $replace, $orig_file);
-                    if ($orig_file != $new_file) {
-                        file_put_contents($path, $new_file);
-                        $this->info('Updated: '.$path);
-                    }
+            if (is_file($path)) {
+                $orig_file = file_get_contents($path);
+                $new_file = str_replace($needle, $replace, $orig_file);
+                if ($orig_file != $new_file) {
+                    file_put_contents($path, $new_file);
+                    $this->info('Updated: '.$path);
                 }
-            } else {
-                $this->info('Ignored:'.$path->getPathname());
             }
         }
 
