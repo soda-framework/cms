@@ -47,14 +47,17 @@ class Setup extends Command
                 $contents = preg_replace('/DB_USERNAME=(.*)/', 'DB_USERNAME='.$dbUser, $contents);
                 $contents = preg_replace('/DB_PASSWORD=(.*)/', 'DB_PASSWORD='.$dbPass, $contents);
 
+                file_put_contents($envFilePath, $contents);
+
                 Config::set('database.connections.mysql.host', $dbHost);
                 Config::set('database.connections.mysql.port', $dbPort);
-                Config::set('database.connections.mysql.database', $dbName);
+                Config::set('database.connections.mysql.database', null);
                 Config::set('database.connections.mysql.username', $dbUser);
                 Config::set('database.connections.mysql.password', $dbPass);
 
-                $connection = new PDO("mysql:host={$dbHost};port={$dbPort}", $dbUser, $dbPass);
-                $connection->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}`");
+                DB::purge('mysql');
+
+                DB::connection('mysql')->getPdo()->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}`");
             }
 
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);
