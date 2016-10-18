@@ -95,12 +95,10 @@ class PageController extends BaseController
 
         if ($request->has('settings')) {
 
-            $dyn_table = Soda::dynamicModel('soda_'.$this->model->type->identifier,
-                $this->model->type->fields->pluck('field_name')->toArray())->where('page_id', $this->model->id)->first();
-
-            $dyn_table->forceFill($request->input('settings'));
-
-            $dyn_table->save();
+            Soda::model($this->model->type->identifier)
+                ->firstOrNew(['page_id' => $this->model->id])
+                ->fill($request->input('settings'))
+                ->save();
         }
 
         return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
