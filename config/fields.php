@@ -7,6 +7,7 @@ return [
     'datetime'     => Soda\Cms\Foundation\Forms\Fields\Datetime::class,
     'dropdown'     => Soda\Cms\Foundation\Forms\Fields\Dropdown::class,
     'fancy_upload' => Soda\Cms\Foundation\Forms\Fields\FancyUpload::class,
+    'fancyupload' => Soda\Cms\Foundation\Forms\Fields\FancyUpload::class,       //TODO We need to decide on naming conventions
     'json'         => Soda\Cms\Foundation\Forms\Fields\Json::class,
     'lat_lon'      => Soda\Cms\Foundation\Forms\Fields\LatLon::class,
     'password'     => Soda\Cms\Foundation\Forms\Fields\Password::class,
