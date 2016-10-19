@@ -8,14 +8,13 @@ use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\DynamicBlockInterface;
 use Soda\Cms\Foundation\Blocks\Observers\BlockObserver;
-use Soda\Cms\Foundation\Support\Traits\HasDefaultAttributesTrait;
-use Soda\Cms\Foundation\Support\Traits\HasDynamicModelTrait;
-use Soda\Cms\Foundation\Support\Traits\IdentifiableTrait;
-use Soda\Cms\Foundation\Support\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Foundation\Support\Models\Traits\OptionallyBoundToApplication;
+use Soda\Cms\Foundation\Support\Models\Traits\HasDefaultAttributes;
+use Soda\Cms\Foundation\Support\Models\Traits\Identifiable;
 
 class Block extends Model implements BlockInterface
 {
-    use OptionallyInApplicationTrait, IdentifiableTrait, HasDefaultAttributesTrait;
+    use OptionallyBoundToApplication, Identifiable, HasDefaultAttributes;
 
     protected $table = 'blocks';
 

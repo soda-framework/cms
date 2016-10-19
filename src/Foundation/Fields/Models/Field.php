@@ -3,12 +3,12 @@
 namespace Soda\Cms\Foundation\Fields\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Soda\Cms\Foundation\Support\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Foundation\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Foundation\Fields\Interfaces\FieldInterface;
 
 class Field extends Model implements FieldInterface
 {
-    use OptionallyInApplicationTrait;
+    use OptionallyBoundToApplication;
     protected $fillable = [
         'name',
         'description',

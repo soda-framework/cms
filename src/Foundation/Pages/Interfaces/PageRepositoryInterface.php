@@ -1,16 +1,14 @@
 <?php
 namespace Soda\Cms\Foundation\Pages\Interfaces;
 
-use Illuminate\Http\Request;
+use Soda\Cms\Foundation\Support\Interfaces\BaseRepositoryInterface;
 
-interface PageRepositoryInterface
+interface PageRepositoryInterface extends BaseRepositoryInterface
 {
     public function findBySlug($slug);
-    public function getPageTypes();
-    public function getPageTree();
+    public function getTypes();
+    public function getTree();
     public function getRoot();
     public function createRoot();
     public function createStub($parentId = null, $pageTypeId = null);
-    public function save(Request $request, $id = null);
-    public function destroy($id);
 }

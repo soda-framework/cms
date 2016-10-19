@@ -12,7 +12,7 @@
 @endsection
 
 @section('content-heading-button')
-	@include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.'.$hint.'.create')])
+	@include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.block-types.create')])
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [

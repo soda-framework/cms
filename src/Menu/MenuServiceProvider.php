@@ -2,11 +2,9 @@
 namespace Soda\Cms\Menu;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Foundation\Support\Traits\SodaServiceProviderTrait;
 
 class MenuServiceProvider extends ServiceProvider
 {
-    use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
      *

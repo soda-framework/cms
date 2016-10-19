@@ -8,15 +8,15 @@ use Soda\Cms\Foundation\Fields\Interfaces\FieldInterface;
 use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
 use Soda\Cms\Foundation\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Foundation\Support\AbstractDynamicType;
-use Soda\Cms\Foundation\Support\Traits\BuildsDynamicModels;
-use Soda\Cms\Foundation\Support\Traits\DraftableTrait;
-use Soda\Cms\Foundation\Support\Traits\HasDefaultAttributesTrait;
-use Soda\Cms\Foundation\Support\Traits\IdentifiableTrait;
-use Soda\Cms\Foundation\Support\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Foundation\Support\Models\Traits\BuildsDynamicModels;
+use Soda\Cms\Foundation\Support\Models\Traits\Draftable;
+use Soda\Cms\Foundation\Support\Models\Traits\HasDefaultAttributes;
+use Soda\Cms\Foundation\Support\Models\Traits\Identifiable;
+use Soda\Cms\Foundation\Support\Models\Traits\OptionallyBoundToApplication;
 
 class PageType extends Model implements PageTypeInterface
 {
-    use OptionallyInApplicationTrait, DraftableTrait, IdentifiableTrait, BuildsDynamicModels, HasDefaultAttributesTrait;
+    use OptionallyBoundToApplication, Draftable, Identifiable, BuildsDynamicModels, HasDefaultAttributes;
 
     protected $table = 'page_types';
 

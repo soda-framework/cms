@@ -23,8 +23,8 @@ class PageController extends BaseController
     public function index()
     {
         return soda_cms_view('pages.index', [
-            'pages'      => $this->pages->getPageTree(),
-            'page_types' => $this->pages->getPageTypes(),
+            'pages'      => $this->pages->getTree(),
+            'page_types' => $this->pages->getTypes(),
         ]);
     }
 

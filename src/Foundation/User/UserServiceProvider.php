@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustFacade;
 use Laratrust\LaratrustServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Soda\Cms\Foundation\Support\Traits\SodaServiceProviderTrait;
+use Soda\Cms\Foundation\Support\Providers\Traits\RegistersFacadesAndDependencies;
 use Soda\Cms\Foundation\User\Interfaces\PermissionInterface;
 use Soda\Cms\Foundation\User\Interfaces\RoleInterface;
 use Soda\Cms\Foundation\User\Interfaces\UserInterface;
@@ -16,7 +16,7 @@ use Soda\Cms\Foundation\User\Models\User;
 
 class UserServiceProvider extends ServiceProvider
 {
-    use SodaServiceProviderTrait;
+    use RegistersFacadesAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *

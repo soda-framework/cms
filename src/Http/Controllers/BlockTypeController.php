@@ -2,30 +2,45 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\PageRepositoryInterface;
+use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeRepositoryInterface;
 
 class BlockTypeController extends BaseController
 {
+    protected $blockTypes;
+
+    public function __construct(BlockTypeRepositoryInterface $blockTypes)
+    {
+        $this->blockTypes = $blockTypes;
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        return soda_cms_view('block-types.index', $this->blockTypes->getFilteredGrid(10));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            $blockType = $this->blockTypes->newInstance($request);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
+        }
+
+        return soda_cms_view('block-types.view', compact('blockType'));
     }
 
     /**
@@ -37,19 +52,13 @@ class BlockTypeController extends BaseController
      */
     public function store(Request $request)
     {
-        //
-    }
+        try {
+            $blockType = $this->blockTypes->save($request);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('soda.block-types.edit', $blockType->id)->with('success', trans('soda::messages.created', ['object' => 'block type']));
     }
 
     /**
@@ -61,7 +70,13 @@ class BlockTypeController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $blockType = $this->blockTypes->findById($id);
+
+        if(!$blockType) {
+            return $this->handleError(trans('soda::errors.not-found', ['object' => 'block type']));
+        }
+
+        return soda_cms_view('block-types.view', compact('blockType'));
     }
 
     /**
@@ -74,7 +89,13 @@ class BlockTypeController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $blockType = $this->blockTypes->save($request, $id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.update', ['object' => 'block type']));
+        }
+
+        return redirect()->route('soda.block-types.edit', $blockType->id)->with('success', trans('soda::messages.updated', ['object' => 'block type']));
     }
 
     /**
@@ -86,6 +107,12 @@ class BlockTypeController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $blockTypeType = $this->blockTypeTypes->destroy($id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block type']));
+        }
+
+        return redirect()->route('soda.block-type.edit', $blockTypeType->id)->with('warning', trans('soda::messages.deleted', ['object' => 'block type']));
     }
 }

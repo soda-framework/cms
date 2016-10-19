@@ -15,11 +15,11 @@ use Soda\Cms\Foundation\Pages\Interfaces\CachedPageRepositoryInterface;
 use Soda\Cms\Foundation\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Foundation\Pages\Repositories\PageRepository;
 use Soda\Cms\Foundation\Pages\Models\DynamicPage;
-use Soda\Cms\Foundation\Support\Traits\SodaServiceProviderTrait;
+use Soda\Cms\Foundation\Support\Providers\Traits\RegistersFacadesAndDependencies;
 
 class PageServiceProvider extends ServiceProvider
 {
-    use SodaServiceProviderTrait;
+    use RegistersFacadesAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *

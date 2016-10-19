@@ -7,15 +7,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Soda\Cms\Forms\Fields\FormFieldInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
-use Soda\Cms\Foundation\Support\Traits\BuildsDynamicModels;
-use Soda\Cms\Foundation\Support\Traits\DynamicCreatorTrait;
-use Soda\Cms\Foundation\Support\Traits\HasDefaultAttributesTrait;
-use Soda\Cms\Foundation\Support\Traits\IdentifiableTrait;
-use Soda\Cms\Foundation\Support\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Foundation\Support\Models\Traits\BuildsDynamicModels;
+use Soda\Cms\Foundation\Support\Models\Traits\HasDefaultAttributes;
+use Soda\Cms\Foundation\Support\Models\Traits\Identifiable;
+use Soda\Cms\Foundation\Support\Models\Traits\OptionallyBoundToApplication;
 
 class BlockType extends Model implements BlockTypeInterface
 {
-    use OptionallyInApplicationTrait, IdentifiableTrait, BuildsDynamicModels, HasDefaultAttributesTrait;
+    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes;
 
     protected $table = 'block_types';
 

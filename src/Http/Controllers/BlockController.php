@@ -22,8 +22,8 @@ class BlockController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('blocks.index', array_merge($this->blocks->getFilteredBlockGrid(10), [
-            'blockTypes' => $this->blocks->getBlockTypes(),
+        return soda_cms_view('blocks.index', array_merge($this->blocks->getFilteredGrid(10), [
+            'blockTypes' => $this->blocks->getTypes(),
         ]));
     }
 

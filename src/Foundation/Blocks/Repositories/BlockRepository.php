@@ -1,15 +1,16 @@
 <?php
 namespace Soda\Cms\Foundation\Blocks\Repositories;
 
-use Illuminate\Http\Request;
 use Soda;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockRepositoryInterface;
-use Soda\Cms\Foundation\Support\Traits\HasDataGridTrait;
+use Soda\Cms\Foundation\Support\Repositories\AbstractRepository;
+use Soda\Cms\Foundation\Support\Repositories\Traits\BuildsDataGrids;
 
-class BlockRepository implements BlockRepositoryInterface
+class BlockRepository extends AbstractRepository implements BlockRepositoryInterface
 {
-    use HasDataGridTrait;
+    use BuildsDataGrids;
+
     protected $model;
 
     public function __construct(BlockInterface $model)
@@ -17,17 +18,12 @@ class BlockRepository implements BlockRepositoryInterface
         $this->model = $model;
     }
 
-    public function findById($id)
-    {
-        return $this->model->find($id);
-    }
-
-    public function getBlockTypes()
+    public function getTypes()
     {
         return $this->model->type()->getRelated()->get();
     }
 
-    public function getFilteredBlockGrid($perPage)
+    public function getFilteredGrid($perPage)
     {
         $filter = $this->buildFilter($this->model);
         $grid = $this->buildGrid($filter);
@@ -39,7 +35,7 @@ class BlockRepository implements BlockRepositoryInterface
 
     public function createStub($blockTypeId = null)
     {
-        $block = $this->model->newInstance([
+        $block = $this->newInstance([
             'block_type_id' => $blockTypeId,
         ]);
 
@@ -56,22 +52,6 @@ class BlockRepository implements BlockRepositoryInterface
                 $block->list_action_type = $block->type->list_action_type;
             }
         }
-
-        return $block;
-    }
-
-    public function save(Request $request, $id = null)
-    {
-        $block = $id ? $this->model->findOrFail($id) : $this->model->newInstance();
-        $block->fill($request->all())->save();
-
-        return $block;
-    }
-
-    public function destroy($id)
-    {
-        $block = $this->model->find($id);
-        $block->delete();
 
         return $block;
     }

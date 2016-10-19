@@ -40,7 +40,7 @@ module.exports = {
 
     //working directory for all sass files, bower components, etc
     assets: {
-        folder:             'resources',
+        folder:             'resources/assets',
         svg: {
             template:       'resources/scss/font/_font.tpl',
             formats:        ['ttf', 'eot', 'woff', 'woff2', 'svg']

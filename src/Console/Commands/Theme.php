@@ -95,7 +95,7 @@ class Theme extends Command
         $this->xcopy($theme_base, $path);
 
         // We need to go through and find and replace everything in here with a different package name:
-        rename($path.'/src/Providers/SodaExampleThemeServiceProvider.php', $path.'/src/Providers/'.$this->namespace.'ThemeServiceProvider.php');
+        rename($path.'/src/SodaExampleThemeServiceProvider.php', $path.'/src/'.$this->namespace.'ThemeServiceProvider.php');
         $this->info('Classes renamed.');
 
         $this->findAndReplace('SodaExample', $this->namespace, $path.'/src');
@@ -114,7 +114,7 @@ class Theme extends Command
         $this->call('optimize');
         $this->info('Composer config updated.');
 
-        $this->addServiceProvider("Themes\\{$this->namespace}\\Providers\\{$this->namespace}ThemeServiceProvider::class");
+        $this->addServiceProvider("Themes\\{$this->namespace}\\{$this->namespace}ThemeServiceProvider::class");
         $this->info('Service provider added.');
 
         $this->call('vendor:publish');
@@ -165,7 +165,7 @@ class Theme extends Command
         if (file_exists($application_config)) {
             $contents = file_get_contents($application_config);
 
-            $old_provider = "Soda\\Cms\\Providers\\SodaServiceProvider::class,";
+            $old_provider = "Soda\\Cms\\SodaServiceProvider::class,";
             $provider_replacement = "$old_provider\n        $serviceProvider,";
 
             $contents = str_replace($old_provider, $provider_replacement, $contents);

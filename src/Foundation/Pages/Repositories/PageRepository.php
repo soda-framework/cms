@@ -5,9 +5,10 @@ use Illuminate\Http\Request;
 use Soda;
 use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
 use Soda\Cms\Foundation\Pages\Interfaces\PageRepositoryInterface;
+use Soda\Cms\Foundation\Support\Repositories\AbstractRepository;
 use Soda\Cms\Support\Constants;
 
-class PageRepository implements PageRepositoryInterface
+class PageRepository extends AbstractRepository implements PageRepositoryInterface
 {
     protected $model;
 
@@ -16,22 +17,17 @@ class PageRepository implements PageRepositoryInterface
         $this->model = $model;
     }
 
-    public function findById($id)
-    {
-        return $this->model->find($id);
-    }
-
     public function findBySlug($slug)
     {
         return $this->model->where('slug', '/'.ltrim($slug, '/'))->first();
     }
 
-    public function getPageTypes()
+    public function getTypes()
     {
         return $this->model->type()->getRelated()->get();
     }
 
-    public function getPageTree()
+    public function getTree()
     {
         $page = $this->getRoot() ?: $this->createRoot();
 
@@ -47,7 +43,7 @@ class PageRepository implements PageRepositoryInterface
     {
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
-        $page = $this->model->newInstance([
+        $page = $this->newInstance([
             'parent_id'    => $parent ? $parentId : null,
             'page_type_id' => $pageTypeId,
         ]);
@@ -97,17 +93,9 @@ class PageRepository implements PageRepositoryInterface
         return $page;
     }
 
-    public function destroy($id)
-    {
-        $page = $this->model->find($id);
-        $page->delete();
-
-        return $page;
-    }
-
     protected function initializePage(Request $request)
     {
-        $page = $this->model->newInstance($request->except(['slug', 'application_id']));
+        $page = $this->newInstance($request->except(['slug', 'application_id']));
         $parent = $page->parent_id ? $this->model->findOrFail($page->parent_id) : $this->getRoot();
 
         $slug = $page->generateSlug($request->input('slug'));

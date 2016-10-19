@@ -12,16 +12,16 @@ use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
 use Soda\Cms\Foundation\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Foundation\Pages\Models\Observers\PageObserver;
 use Soda\Cms\Foundation\Support\Models\AbstractClosureEntityModel;
-use Soda\Cms\Foundation\Support\Traits\DraftableTrait;
-use Soda\Cms\Foundation\Support\Traits\HasDefaultAttributesTrait;
-use Soda\Cms\Foundation\Support\Traits\IdentifiableTrait;
-use Soda\Cms\Foundation\Support\Traits\OptionallyInApplicationTrait;
-use Soda\Cms\Foundation\Support\Traits\PositionableTrait;
-use Soda\Cms\Foundation\Support\Traits\SluggableTrait;
+use Soda\Cms\Foundation\Support\Models\Traits\OptionallyBoundToApplication;
+use Soda\Cms\Foundation\Support\Models\Traits\Draftable;
+use Soda\Cms\Foundation\Support\Models\Traits\HasDefaultAttributes;
+use Soda\Cms\Foundation\Support\Models\Traits\Identifiable;
+use Soda\Cms\Foundation\Support\Models\Traits\Sortable;
+use Soda\Cms\Foundation\Support\Models\Traits\Sluggable;
 
 class Page extends AbstractClosureEntityModel implements PageInterface
 {
-    use SoftDeletes, SluggableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait, IdentifiableTrait, HasDefaultAttributesTrait;
+    use SoftDeletes, Sluggable, OptionallyBoundToApplication, Sortable, Draftable, Identifiable, HasDefaultAttributes;
 
     protected $table = 'pages';
 

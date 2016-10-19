@@ -3,13 +3,13 @@
 namespace Soda\Cms\Foundation\User\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Soda\Cms\Foundation\Support\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Foundation\Support\Models\Traits\OptionallyBoundToApplication;
+use Soda\Cms\Foundation\Support\Models\Traits\UserHasRoles;
 use Soda\Cms\Foundation\User\Interfaces\UserInterface;
-use Soda\Cms\Foundation\User\Traits\UserRolesTrait;
 
 class User extends Authenticatable implements UserInterface
 {
-    use OptionallyInApplicationTrait, UserRolesTrait;
+    use OptionallyBoundToApplication, UserHasRoles;
     protected $table = 'users';
 
     /**

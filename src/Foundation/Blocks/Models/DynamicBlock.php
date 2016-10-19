@@ -4,11 +4,11 @@ namespace Soda\Cms\Foundation\Blocks\Models;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\DynamicBlockInterface;
 use Soda\Cms\Foundation\Support\Models\AbstractDynamicModel;
-use Soda\Cms\Foundation\Support\Traits\HasMediaTrait;
+use Soda\Cms\Foundation\Support\Models\Traits\HasMedia;
 
 class DynamicBlock extends AbstractDynamicModel implements DynamicBlockInterface
 {
-    use HasMediaTrait;
+    use HasMedia;
 
     public function getDynamicModelTablePrefix()
     {

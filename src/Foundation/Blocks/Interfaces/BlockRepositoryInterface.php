@@ -1,19 +1,12 @@
 <?php
 namespace Soda\Cms\Foundation\Blocks\Interfaces;
 
-use Illuminate\Http\Request;
+use Soda\Cms\Foundation\Support\Interfaces\BaseRepositoryInterface;
+use Soda\Cms\Foundation\Support\Interfaces\CanBuildDataGrid;
 
-interface BlockRepositoryInterface
+interface BlockRepositoryInterface extends CanBuildDataGrid, BaseRepositoryInterface
 {
-    public function findById($id);
-
-    public function getBlockTypes();
-
-    public function getFilteredBlockGrid($perPage);
-
+    public function getTypes();
+    public function getFilteredGrid($perPage);
     public function createStub($blockTypeId = null);
-
-    public function save(Request $request, $id = null);
-
-    public function destroy($id);
 }

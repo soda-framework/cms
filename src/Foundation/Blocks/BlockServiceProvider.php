@@ -5,6 +5,7 @@ namespace Soda\Cms\Foundation\Blocks;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockRepositoryInterface;
+use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeRepositoryInterface;
 use Soda\Cms\Foundation\Blocks\Models\DynamicBlock;
 use Soda\Cms\Foundation\Blocks\Models\Block;
 use Soda\Cms\Foundation\Blocks\Models\BlockType;
@@ -12,6 +13,7 @@ use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Foundation\Blocks\Interfaces\DynamicBlockInterface;
 use Soda\Cms\Foundation\Blocks\Repositories\BlockRepository;
+use Soda\Cms\Foundation\Blocks\Repositories\BlockTypeRepository;
 
 class BlocksServiceProvider extends ServiceProvider
 {
@@ -45,6 +47,7 @@ class BlocksServiceProvider extends ServiceProvider
         $this->app->bind(DynamicBlockInterface::class, DynamicBlock::class);
         $this->app->bind(BlockTypeInterface::class, BlockType::class);
         $this->app->bind(BlockRepositoryInterface::class, BlockRepository::class);
+        $this->app->bind(BlockTypeRepositoryInterface::class, BlockTypeRepository::class);
     }
 
     /**
@@ -59,6 +62,7 @@ class BlocksServiceProvider extends ServiceProvider
             DynamicBlockInterface::class,
             BlockIypeInterface::class,
             BlockRepositoryInterface::class,
+            BlockTypeRepositoryInterface::class,
         ];
     }
 }

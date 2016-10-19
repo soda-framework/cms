@@ -7,17 +7,15 @@ use Soda\Cms\Console\CommandsServiceProvider;
 use Soda\Cms\Forms\FormServiceProvider;
 use Soda\Cms\Foundation\Application\ApplicationServiceProvider;
 use Soda\Cms\Foundation\Blocks\BlocksServiceProvider;
-use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
-use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Foundation\Fields\FieldsServiceProvider;
 use Soda\Cms\Foundation\Pages\PageServiceProvider;
 use Soda\Cms\Foundation\SodaInstance;
 use Soda\Cms\Foundation\Support\Providers\AuthServiceProvider;
 use Soda\Cms\Foundation\Support\Providers\RouteServiceProvider;
-use Soda\Cms\Foundation\Support\Traits\SodaServiceProviderTrait;
+use Soda\Cms\Foundation\Support\Providers\Traits\RegistersFacadesAndDependencies;
 use Soda\Cms\Foundation\Users\UserServiceProvider;
-use Soda\Cms\Http\Matcher\RequestMatcherFacade;
-use Soda\Cms\Http\Matcher\RequestMatcherServiceProvider;
+use Soda\Cms\Http\RequestMatcher\RequestMatcherFacade;
+use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
 use Soda\Cms\Menu\MenuFacade;
 use Soda\Cms\Forms\FormFacade;
 use Soda\Cms\Menu\MenuServiceProvider;
@@ -26,7 +24,7 @@ use Zofe\Rapyd\RapydServiceProvider;
 
 class SodaServiceProvider extends ServiceProvider
 {
-    use SodaServiceProviderTrait;
+    use RegistersFacadesAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *
