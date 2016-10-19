@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateBlockTypesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -15,16 +14,14 @@ class CreateBlockTypesTable extends Migration
     {
         Schema::create('block_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name', 50);
             $table->text('description', 65535)->nullable();
+            $table->string('identifier', 50);
             $table->integer('application_id')->unsigned()->nullable()->index('fk_page_types_applications1_idx');
-            $table->string('identifier');
-            $table->integer('status')->unsigned()->nullable();
-            $table->string('package');
-            $table->string('action');
-            $table->string('action_type');
-            $table->string('edit_action');
-            $table->string('edit_action_type')->default(soda_cms_view_path('page-block.index'));
+            $table->string('list_action')->nullable();
+            $table->string('list_action_type')->nullable();
+            $table->string('edit_action')->nullable();
+            $table->string('edit_action_type')->nullable();
             $table->timestamps();
         });
     }

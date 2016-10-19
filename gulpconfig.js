@@ -40,7 +40,7 @@ module.exports = {
 
     //working directory for all sass files, bower components, etc
     assets: {
-        folder:             'resources',
+        folder:             'resources/assets',
         svg: {
             template:       'resources/sass/font/_font.tpl',
             formats:        ['ttf', 'eot', 'woff', 'woff2', 'svg']
@@ -81,6 +81,7 @@ module.exports = {
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
         ],
         forms: [
             'resources/components/bootstrap-fileinput/js/fileinput.js',

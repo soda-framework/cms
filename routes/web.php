@@ -12,10 +12,49 @@ Route::group(['middleware' => 'web'], function () {
         // Dashboard and user routes...
         Route::group(['middleware' => 'soda.auth:soda'], function () {
             Route::get('/', 'HomeController@getIndex')->name('soda.home');
-            Route::get('test', 'HomeController@getTest')->name('soda.test');
-
             Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft");
 
+            Route::post('pages/move', 'PageController@move')->name('soda.pages.move');
+            Route::resource('pages', 'PageController', [
+                'as'     => 'soda',
+                'except' => 'show'
+            ]);
+
+            Route::resource('page-types', 'PageTypeController', [
+                'as'     => 'soda',
+                'except' => 'show'
+            ]);
+
+            Route::resource('pages.blocks', 'PageBlockController', [
+                'as'     => 'soda',
+                'except' => 'show'
+            ]);
+
+            Route::resource('blocks', 'BlockController', [
+                'as'     => 'soda',
+                'except' => 'show'
+            ]);
+
+            Route::resource('block-types', 'BlockTypeController', [
+                'as'     => 'soda',
+                'except' => 'show'
+            ]);
+
+            Route::resource('fields', 'FieldController', [
+                'as'     => 'soda',
+                'except' => 'show'
+            ]);
+
+            Route::resource('users', 'UserController', [
+                'as'     => 'soda',
+                'except' => 'show'
+            ]);
+
+            Route::group(['prefix' => 'upload'], function () {
+                Route::post('/', 'UploadController@upload')->name('soda.upload');
+                Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
+            });
+            /*
             Route::group(['prefix' => 'pages'], function () {
                 Route::get('/', 'PageController@getIndex')->name('soda.page');
                 Route::get('view/{id?}', 'PageController@view')->name('soda.page.view');
@@ -84,13 +123,10 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('delete/{id?}', 'NavigationController@deleteTree')->name('soda.navigation.delete');
                 Route::get('move/{parent_id?}/{id?}/{position?}', 'NavigationController@move')->name('soda.navigation.move');
             });
+            */
 
-            Route::group(['prefix' => 'upload'], function () {
-                Route::post('/', 'UploadController@upload')->name('soda.upload');
-                Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
-            });
         });
     });
 
-    Route::any('{slug?}', 'PageController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
+    Route::any('{slug?}', 'HomeController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
 });

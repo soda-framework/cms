@@ -15,13 +15,16 @@ class CreateBlocksTable extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 45);
+            $table->string('name', 50);
             $table->text('description', 65535)->nullable();
-            $table->string('identifier');
-            $table->integer('status')->unsigned();
+            $table->integer('is_shared')->unsigned()->default(0);
+            $table->string('identifier', 50);
+            $table->integer('block_type_id')->unsigned()->index('FK_blocks_block_types');
             $table->integer('application_id')->unsigned()->nullable()->index('FK_blocks_applications');
-            $table->integer('block_type_id')->unsigned()->nullable()->index('FK_blocks_block_types');
-            $table->integer('is_shared')->unsigned();
+            $table->string('list_action')->nullable();
+            $table->string('list_action_type')->nullable();
+            $table->string('edit_action')->nullable();
+            $table->string('edit_action_type')->nullable();
             $table->timestamps();
         });
     }

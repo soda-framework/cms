@@ -3,10 +3,10 @@
 namespace Soda\Cms\Http\Middleware;
 
 use Closure;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\BlockType;
-use Soda\Cms\Models\Page;
-use Soda\Cms\Models\PageType;
+use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
+use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\PageTypeInterface;
 
 /*
  *
@@ -29,12 +29,16 @@ class Cms
     {
         config()->set('auth.defaults.guard', 'soda');
 
-        //this is a work around for a laravel bug - the guard flicks back to the default when run through an auth Gate
-        //so we need to temporarily set the guard to the incomming guard here instead.
-        Block::disableDrafts();
-        BlockType::disableDrafts();
-        Page::disableDrafts();
-        PageType::disableDrafts();
+        $block = resolve_class(BlockInterface::class);
+        $blockType = resolve_class(BlockTypeInterface::class);
+        $page = resolve_class(PageInterface::class);
+        $pageType = resolve_class(PageTypeInterface::class);
+
+        foreach([$block, $blockType, $page, $pageType] as $class) {
+            if(method_exists($class, 'disableDrafts')) {
+                $class::disableDrafts();
+            }
+        }
 
         return $next($request);
     }

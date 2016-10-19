@@ -2,18 +2,17 @@
 namespace Soda\Cms\Foundation;
 
 use Cache;
-use Exception;
 use Illuminate\Contracts\Foundation\Application as IlluminateApplication;
 use Route;
-use Soda\Cms\Models\Application;
-use Soda\Cms\Models\ApplicationUrl;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\ModelBuilder;
-use Soda\Cms\Models\Page;
+use Soda\Cms\Foundation\Application\Interfaces\ApplicationInterface;
+use Soda\Cms\Foundation\Blocks\Interfaces\DynamicBlockInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\DynamicPageInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
 
 class SodaInstance
 {
     protected $app;
+    protected $requestMatcher;
     protected $application = null;
     protected $blocks = [];
     protected $currentPage;
@@ -22,16 +21,8 @@ class SodaInstance
     {
         $this->app = $app;
 
-        if (!app()->runningInConsole()) {
-            $domain = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-
-            if(config('soda.cache.application') === true) {
-                $application = $this->app['cache']->rememberForever('soda.application-'.$domain, function() use ($domain) {
-                    return $this->findApplicationByDomain($domain);
-                });
-            } else {
-                $application = $this->findApplicationByDomain($domain);
-            }
+        if (!$this->app->runningInConsole()) {
+            $application = $this->getRequestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
             $this->setApplication($application);
         }
@@ -50,58 +41,15 @@ class SodaInstance
     /**
      * Sets the application
      *
-     * @param \Soda\Cms\Models\Application $application
+     * @param ApplicationInterface $application
      *
      * @return $this
      */
-    public function setApplication(Application $application)
+    public function setApplication(ApplicationInterface $application)
     {
         $this->application = $application;
 
         return $this;
-    }
-
-    /**
-     * Get a block by its identifier
-     *
-     * @param $identifier
-     *
-     * @return mixed
-     */
-    public function getBlock($identifier)
-    {
-        if (!isset($this->blocks[$identifier])) {
-            $this->blocks[$identifier] = Block::with('type')->where('identifier', $identifier)->first();
-        }
-
-        return $this->blocks[$identifier];
-    }
-
-    /**
-     * @deprecated Load a dynamic model
-     *
-     * @param $table
-     *
-     * @return mixed
-     */
-    public function dynamicModel($table)
-    {
-        return ModelBuilder::fromTable($table, []);
-    }
-
-    /**
-     * Load a dynamic model
-     *
-     * @param      $table
-     * @param bool $autoprefix
-     *
-     * @return mixed
-     */
-    public function model($table, $autoprefix = true)
-    {
-        if ($autoprefix) $table = 'soda_'.$table;
-
-        return ModelBuilder::fromTable($table);
     }
 
     /**
@@ -117,27 +65,27 @@ class SodaInstance
     /**
      * Set the current page that we're visiting
      *
-     * @param \Soda\Cms\Models\Page $page
+     * @param PageInterface $page
      */
-    public function setCurrentPage(Page $page)
+    public function setCurrentPage(PageInterface $page)
     {
         $this->currentPage = $page;
     }
 
     /**
-     * Return instance of PageBuilder
+     * Return instance of MenuBuilder
      *
-     * @return \Soda\Cms\Foundation\Pages\PageBuilder
+     * @return \Soda\Cms\Http\Matcher\RequestMatcher
      */
-    public function getPageBuilder()
+    public function getRequestMatcher()
     {
-        return $this->app['soda.page'];
+        return $this->app['soda.request-matcher'];
     }
 
     /**
      * Return instance of MenuBuilder
      *
-     * @return \Soda\Cms\Foundation\Pages\MenuBuilder
+     * @return \Soda\Cms\Menu\MenuBuilder
      */
     public function getMenuBuilder()
     {
@@ -147,11 +95,35 @@ class SodaInstance
     /**
      * Return instance of FormBuilder
      *
-     * @return \Soda\Cms\Foundation\Pages\FormBuilder
+     * @return \Soda\Cms\Forms\FormBuilder
      */
     public function getFormBuilder()
     {
         return $this->app['soda.form'];
+    }
+
+    /**
+     * Load a dynamic page
+     *
+     * @param      $table
+     *
+     * @return mixed
+     */
+    public function dynamicPage($table)
+    {
+        return app(DynamicPageInterface::class)->fromTable($table);
+    }
+
+    /**
+     * Load a dynamic block
+     *
+     * @param      $table
+     *
+     * @return mixed
+     */
+    public function dynamicBlock($table)
+    {
+        return app(DynamicBlockInterface::class)->fromTable($table);
     }
 
     /**
@@ -164,24 +136,5 @@ class SodaInstance
     public function field($field)
     {
         return $this->getFormBuilder()->field($field);
-    }
-
-    /**
-     * Determines the application by our current URL and sets it
-     *
-     * @return \Soda\Cms\Foundation\Soda
-     * @throws \Exception
-     */
-    protected function findApplicationByDomain($domain)
-    {
-        if ($applicationUrl = ApplicationUrl::whereDomain($domain)->first()) {
-            if ($application = $applicationUrl->application()->first()) {
-                return $application;
-            }
-
-            throw new Exception('Application URL is not associated with an application');
-        }
-
-        throw new Exception('No application found at URL');
     }
 }

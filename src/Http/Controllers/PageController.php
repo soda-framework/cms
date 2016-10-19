@@ -2,168 +2,122 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
-use Soda;
-use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
-use Soda\Cms\Models\Page;
-use Soda\Cms\Models\PageType;
+use Soda\Cms\Foundation\Pages\Interfaces\PageRepositoryInterface;
 
 class PageController extends BaseController
 {
-    use TreeableTrait;
-    public $hint = 'page';
+    protected $pages;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(Page $page)
+    public function __construct(PageRepositoryInterface $pages)
     {
-        //$this->middleware('auth');
-        $this->model = $page;
-        $this->tree = $page;
+        $this->pages = $pages;
     }
 
     /**
-     * Main page view method.
+     * Display a listing of the resource.
      *
-     * @param $slug
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
-    public static function page($slug = '/')
+    public function index()
     {
-        return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
-    }
-
-    /**
-     * Show the page.
-     *
-     * @return Response
-     */
-    public function getIndex(Request $request)
-    {
-        if ($request->input('id')) {
-            $page = $this->model->find($request->input('id'));
-        } else {
-            $page = $this->model->getRoots()->first();    //todo: from application.
-            if (!$page) $page = Page::createRoot();
-        }
-
-        $page_types = PageType::get();
-
-        $pages = $page ? $page->collectDescendants()->orderBy('position')->get()->toTree() : [];
-        $tree = $this->htmlTree($pages, $this->hint);
-
-        return soda_cms_view('page.index', [
-            'hint'       => $this->hint,
-            'pages'      => $pages,
-            'tree'       => $tree,
-            'page_types' => $page_types,
+        return soda_cms_view('pages.index', [
+            'pages'      => $this->pages->getPageTree(),
+            'page_types' => $this->pages->getPageTypes(),
         ]);
     }
 
-    public function view($id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
     {
-        if ($id) {
-            $model = $this->model->with('blocks.type.fields', 'type.fields')->findOrFail($id);
-        } else {
-            $model = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
-        }
-        if (@$model->type->identifier) {
-            $page_table = Soda::dynamicModel('soda_'.$model->type->identifier,
-                $model->type->fields->pluck('field_name')->toArray())->where('page_id', $model->id)->first();
-        } else {
-            $page_table = null;
+        try {
+            $parentId = $request->input('parentId');
+            $pageTypeId = $request->input('pageTypeId');
+            $page = $this->pages->createStub($parentId, $pageTypeId);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'page']));
         }
 
-        return soda_cms_view('page.view', ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
-    }
-
-    public function edit(Request $request, $id = null)
-    {
-        if ($id) {
-            $this->model = $this->model->findOrFail($id);
-        }
-
-        $this->model->fill($request->all());
-        $this->model->save();
-
-        //we also need to save the settings - careful here..
-        $this->model->load('type.fields');
-
-        if ($request->has('settings')) {
-
-            Soda::model($this->model->type->identifier)
-                ->firstOrNew(['page_id' => $this->model->id])
-                ->fill($request->input('settings'))
-                ->save();
-        }
-
-        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
-    }
-
-    public function create(Request $request, $parent_id = null)
-    {
-        $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
-
-        $this->model->parent_id = $parent ? $parent->id : null;
-        $this->model->page_type_id = $request->input('page_type_id');
-
-        if ($this->model->page_type_id) {
-            $this->model->load('type.fields');
-            $this->model->action = $this->model->type->action;
-            $this->model->action_type = $this->model->type->action_type;
-            $this->model->edit_action = $this->model->type->edit_action;
-            $this->model->edit_action_type = $this->model->type->edit_action_type;
-        }
-
-        return soda_cms_view('page.view', ['model' => $this->model, 'hint' => $this->hint]);
+        return soda_cms_view('pages.view', compact('page'));
     }
 
     /**
-     * create page save functions
+     * Store a newly created resource in storage.
      *
-     * @param null $parent_id
+     * @param  \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
-    public function save(Request $request)
+    public function store(Request $request)
     {
-        $page = $this->model;
-        $parent_id = $request->input('parent_id');
-
-        $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
-
-        //todo validation
-
-        $page->fill([
-            'name'           => $request->input('name'),
-            'slug'           => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
-            'status'         => $request->has('status') ? $request->input('status') : 0,
-            'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
-            'package'        => $request->has('package') ? $request->input('package') : 'soda',
-            'action'         => $request->has('action') ? $request->input('action') : 'default.view',
-            'application_id' => Soda::getApplication()->id,
-            'page_type_id'   => $request->input('page_type_id'),
-        ]);
-
-        $page->save();
-
-        if ($parent) {
-            $parent->addChild($page);
+        try {
+            $page = $this->pages->save($request);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'page']));
         }
 
-        if ($page->type) {
-            if ($request->has('settings')) {
-                $dyn_table = Soda::model($page->type->identifier)->where('page_id', $page->id)->first();
-                $dyn_table->fill($request->input('settings'));
-                $dyn_table->save();
-            }
-        }
-
-        return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
+        return redirect()->route('soda.pages.edit', $page->id)->with('success', trans('soda::messages.created', ['object' => 'page']));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $page = $this->pages->findById($id);
+
+        if(!$page) {
+            return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
+        }
+
+        return soda_cms_view('pages.view', compact('page'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $page = $this->pages->save($request, $id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.update', ['object' => 'page']));
+        }
+
+        return redirect()->route('soda.pages.edit', $page->id)->with('success', trans('soda::messages.updated', ['object' => 'page']));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $page = $this->pages->destroy($id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'page']));
+        }
+
+        return redirect()->route('soda.pages.edit', $page->id)->with('warning', trans('soda::messages.deleted', ['object' => 'page']));
+    }
 }

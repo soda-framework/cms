@@ -3,37 +3,89 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Soda;
-use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
-use Soda\Cms\Models\BlockType;
+use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\PageRepositoryInterface;
 
 class BlockTypeController extends BaseController
 {
 
-    use CrudableTrait;
-    protected $hint = 'block-type';
-
-    public function __construct(BlockType $type)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        $this->model = $type;
     }
 
-    public function edit(Request $request, $id = null)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        if ($id) {
-            $this->model = $this->model->findOrFail($id);
-        }
-
-        $this->model->fill($request->except('fields'));
-
-        $this->model->application_id = Soda::getApplication()->id;
-        if ($fields = $request->input('fields')) {
-            $this->model->fields()->sync($fields);
-        }
-        $this->model->save();
-
-        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
-            'updated');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }

@@ -2,44 +2,90 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
-use Soda\Cms\Models\User;
+use Illuminate\Http\Request;
+use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\PageRepositoryInterface;
 
 class UserController extends BaseController
 {
 
-    use CrudableTrait;
-
-    public $hint = 'user';
-
-    public function __construct(User $user)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        //$this->middleware('auth');
-        $this->model = $user;
     }
 
-    public function index()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $filter = \DataFilter::source($this->model);
-        $filter->add('name', 'name', 'text');;
-        $filter->submit('Search');
-        $filter->reset('Clear');
-        $filter->build();
-
-        $grid = \DataGrid::source($filter);  //same source types of DataSet
-        $grid->add('username', 'Username', true); //field name, label, sortable
-        $grid->add('email', 'Email', true); //field name, label, sortable
-        $grid->add('{{ $id }}', 'Options')->style('width:180px')->cell(function ($value) {
-            $edit = "<a href='".route('soda.'.$this->hint.'.edit', [$value])."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";
-            $edit .= "<a href='".route('soda.'.$this->hint.'.delete', [$value])."' class='btn btn-danger'><i class='fa fa-remove'></i> <span>Delete</span></a>";
-
-            return $edit;
-        });
-        $grid->orderBy('id', 'desc'); //default orderby
-        $grid->paginate(10)->getGrid(soda_cms_view_path('partials.grid'));
-        $hint = $this->hint;
-
-        return soda_cms_view($this->hint.'.index', compact('filter', 'grid', 'hint'));
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }

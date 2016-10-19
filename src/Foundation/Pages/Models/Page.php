@@ -1,0 +1,111 @@
+<?php
+namespace Soda\Cms\Foundation\Pages\Models;
+
+use Cache;
+use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Soda;
+use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\CachedPageRepositoryInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\DynamicPageInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Foundation\Pages\Interfaces\PageTypeInterface;
+use Soda\Cms\Foundation\Pages\Models\Observers\PageObserver;
+use Soda\Cms\Foundation\Support\Models\AbstractClosureEntityModel;
+use Soda\Cms\Foundation\Support\Traits\DraftableTrait;
+use Soda\Cms\Foundation\Support\Traits\HasDefaultAttributesTrait;
+use Soda\Cms\Foundation\Support\Traits\IdentifiableTrait;
+use Soda\Cms\Foundation\Support\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Foundation\Support\Traits\PositionableTrait;
+use Soda\Cms\Foundation\Support\Traits\SluggableTrait;
+
+class Page extends AbstractClosureEntityModel implements PageInterface
+{
+    use SoftDeletes, SluggableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait, IdentifiableTrait, HasDefaultAttributesTrait;
+
+    protected $table = 'pages';
+
+    public $fillable = [
+        'name',
+        'slug',
+        'application_id',
+        'status',
+        'position',
+        'page_type_id',
+        'parent_id',
+        'edit_action',
+        'edit_action_type',
+        'list_action',
+        'list_action_type',
+    ];
+
+    protected $defaults = [
+        'edit_action'      => 'soda::pages.view',
+        'edit_action_type' => 'view',
+        'list_action'      => 'soda::pages.index',
+        'list_action_type' => 'view',
+    ];
+
+    /**
+     * ClosureTable model instance.
+     *
+     * @var pagesClosure
+     */
+    protected $closure = PageClosure::class;
+
+    public static function boot()
+    {
+        static::observe(PageObserver::class);
+
+        parent::boot();
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(resolve_class(PageTypeInterface::class), 'page_type_id');
+    }
+
+    public function blocks()
+    {
+        return $this->belongsToMany(resolve_class(BlockInterface::class), 'page_blocks')->withPivot('can_create', 'can_delete');
+    }
+
+    public function getBlock($identifier)
+    {
+        return $this->blocks->filter(function ($item) use ($identifier) {
+            return $item->identifier == $identifier;
+        })->first();
+    }
+
+    public function getBlockModel($identifier)
+    {
+        $block = $identifier instanceof BlockInterface ? $identifier : $this->getBlock($identifier);
+
+        if ($block) {
+            return $block->model($this->id);
+        }
+
+        return app(BlockInterface::class)->newCollection();
+    }
+
+    public function blockModel($identifier)
+    {
+        $block = $identifier instanceof BlockInterface ? $identifier : $this->getBlock($identifier);
+
+        if ($block) {
+            return $block->modelQuery($this->id);
+        }
+
+        throw new Exception('Page does not have block: \''.$identifier.'\'.');
+    }
+
+    public function getDynamicModel()
+    {
+        return app(DynamicPageInterface::class);
+    }
+
+    public function pageAttributes()
+    {
+        return app(CachedPageRepositoryInterface::class)->getAttributesForPage($this);
+    }
+}

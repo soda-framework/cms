@@ -6,7 +6,7 @@ use Auth;
 use Gate;
 use Request;
 use Session;
-use Soda\Cms\Events\DashboardWasRendered;
+use SodaMatcher;
 use SodaMenu;
 
 class HomeController extends BaseController
@@ -23,13 +23,7 @@ class HomeController extends BaseController
             return response()->view(soda_cms_view_path("errors.no-permission"), [], 401);
         }
 
-        $dashboard = event(new DashboardWasRendered);
-
-        if (!empty($dashboard)) {
-            return $dashboard[0];
-        } else {
-            return soda_cms_view('dashboard');
-        }
+        return soda_cms_view('dashboard');
     }
 
     public function getToggleDraft()
@@ -41,10 +35,16 @@ class HomeController extends BaseController
         return redirect()->back()->with("info", ($draft_mode ? "Draft" : "Live")." mode active. <a href=\"/\" target=\"_blank\">View site</a>");
     }
 
-    public function getTest()
+    /**
+     * Main page view method.
+     *
+     * @param $slug
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function page($slug = '/')
     {
-
-        return (SodaMenu::render('sidebar'));
+        return SodaMatcher::match($slug)->render();
     }
 
 }
