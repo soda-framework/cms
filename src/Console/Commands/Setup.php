@@ -2,9 +2,6 @@
 
 namespace Soda\Cms\Console\Commands;
 
-use Config as AppConfig;
-use DB;
-use PDO;
 use Illuminate\Console\Command;
 
 class Setup extends Command
@@ -35,6 +32,7 @@ class Setup extends Command
                 if ($baseName == 'src') {
                     $baseName = str_slug(basename(dirname(base_path())), '-');
                 }
+
                 $dbHost = $this->ask('Database host', '127.0.0.1');
                 $dbPort = $this->ask('Database port', '3306');
                 $dbName = $this->ask('Database name', $baseName);
@@ -47,14 +45,16 @@ class Setup extends Command
                 $contents = preg_replace('/DB_USERNAME=(.*)/', 'DB_USERNAME='.$dbUser, $contents);
                 $contents = preg_replace('/DB_PASSWORD=(.*)/', 'DB_PASSWORD='.$dbPass, $contents);
 
-                AppConfig::set('database.connections.mysql.host', $dbHost);
-                AppConfig::set('database.connections.mysql.port', $dbPort);
-                AppConfig::set('database.connections.mysql.database', $dbName);
-                AppConfig::set('database.connections.mysql.username', $dbUser);
-                AppConfig::set('database.connections.mysql.password', $dbPass);
+                file_put_contents($envFilePath, $contents);
 
-                $connection = new PDO("mysql:host={$dbHost};port={$dbPort}", $dbUser, $dbPass);
-                $connection->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}`");
+                $this->laravel['config']->set('database.connections.mysql.host', $dbHost);
+                $this->laravel['config']->set('database.connections.mysql.port', $dbPort);
+                $this->laravel['config']->set('database.connections.mysql.database', null);
+                $this->laravel['config']->set('database.connections.mysql.username', $dbUser);
+                $this->laravel['config']->set('database.connections.mysql.password', $dbPass);
+
+                $this->laravel['db']->purge('mysql');
+                $this->laravel['db']->connection('mysql')->getPdo()->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}`");
             }
 
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);
