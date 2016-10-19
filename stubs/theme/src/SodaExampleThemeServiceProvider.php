@@ -2,14 +2,11 @@
 namespace Themes\SodaExample\Providers;
 
 use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
-use Soda\Cms\Foundation\Providers\Traits\RegistersFacadesAndDependencies;
 use Soda\Cms\Support\ThemeExceptionHandler;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class SodaExampleThemeServiceProvider extends ServiceProvider
 {
-    use RegistersFacadesAndDependencies;
-
     /**
      * The event listener mappings for the application.
      *
@@ -17,8 +14,10 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
      */
 
     protected $defer = false;
-    protected $namespace = 'Themes\SodaExample\Http\Controllers';
+
     protected $handlesErrors = false;
+
+    protected $namespace = 'Themes\SodaExample\Http\Controllers';
 
     public function boot()
     {
@@ -35,11 +34,6 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
     {
         $this->publishes([__DIR__.'/../../public' => public_path('themes/soda-example')], 'public');
         $this->mergeConfigFrom(__DIR__.'/../../config/auth.php', 'themes.soda-example.auth');
-
-        $this->registerDependencies([
-            RouteServiceProvider::class,
-            AuthServiceProvider::class,
-        ]);
 
         if ($this->handlesErrors) {
             $this->bindErrorHandler();
