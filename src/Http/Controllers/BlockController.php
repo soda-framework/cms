@@ -22,7 +22,7 @@ class BlockController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('blocks.index', array_merge($this->blocks->getFilteredGrid(10), [
+        return soda_cms_view('data.blocks.index', array_merge($this->blocks->getFilteredGrid(10), [
             'blockTypes' => $this->blocks->getTypes(),
         ]));
     }
@@ -43,7 +43,7 @@ class BlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block']));
         }
 
-        return soda_cms_view('blocks.view', compact('block'));
+        return soda_cms_view('data.blocks.view', compact('block'));
     }
 
     /**
@@ -79,7 +79,7 @@ class BlockController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block']));
         }
 
-        return soda_cms_view('blocks.view', compact('block'));
+        return soda_cms_view('data.blocks.view', compact('block'));
     }
 
     /**

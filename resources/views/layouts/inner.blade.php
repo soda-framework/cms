@@ -2,7 +2,7 @@
 
 @section('main-content')
 	<div class="row">
-		@include(soda_cms_view_path('partials.sidebar'))
+		@include(soda_cms_view_path('layouts.partials.sidebar'))
 		<div class="col-xs-offset-2 col-xs-10 main-content">
 			@yield('breadcrumb')
 			<div class="container-fluid">
@@ -12,7 +12,7 @@
 						@yield('content-heading')
 					</div>
 				</div>
-                @include(soda_cms_view_path('partials.alert'))
+                @include(soda_cms_view_path('layouts.partials.alert'))
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="main-content-inner">

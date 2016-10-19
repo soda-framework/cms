@@ -21,7 +21,7 @@
 ])
 
 @section('content')
-	@include(soda_cms_view_path('pages.tree.root'), ['tree' => $pages])
+	@include(soda_cms_view_path('data.pages.tree.root'), ['tree' => $pages])
 
 	<div class="modal fade" id="pageTypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">

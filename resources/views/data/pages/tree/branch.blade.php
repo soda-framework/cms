@@ -40,7 +40,7 @@
     <ul class="tree-sub-items">
         @if ($page->hasChildrenRelation() && count($page->children) > 0)
             @foreach($page->getRelation('children') as $child)
-                @include(soda_cms_view_path('pages.tree.branch'), ['page' => $child, 'display' => $page->parent_id === null ? null : 'none'])
+                @include(soda_cms_view_path('data.pages.tree.branch'), ['page' => $child, 'display' => $page->parent_id === null ? null : 'none'])
             @endforeach
         @endif
     </ul>

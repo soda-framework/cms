@@ -1,6 +1,4 @@
-
-@include('rapyd::toolbar', array('label'=>$label, 'buttons_right'=>$buttons['TR']))
-
+@include('rapyd::toolbar', ['label' => $label, 'buttons_right' => $buttons['TR']])
 
 <table{!! $dg->buildAttributes() !!}>
 	<thead>

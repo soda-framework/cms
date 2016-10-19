@@ -1,6 +1,6 @@
 <ul class="page-tree">
     @foreach($tree as $treeItem)
-        @include(soda_cms_view_path('pages.tree.branch'), ['page' => $treeItem])
+        @include(soda_cms_view_path('data.pages.tree.branch'), ['page' => $treeItem])
     @endforeach
 </ul>
 

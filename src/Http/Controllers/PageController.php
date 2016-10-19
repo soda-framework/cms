@@ -22,7 +22,7 @@ class PageController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('pages.index', [
+        return soda_cms_view('data.pages.index', [
             'pages'      => $this->pages->getTree(),
             'page_types' => $this->pages->getTypes(),
         ]);
@@ -45,7 +45,7 @@ class PageController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'page']));
         }
 
-        return soda_cms_view('pages.view', compact('page'));
+        return soda_cms_view('data.pages.view', compact('page'));
     }
 
     /**
@@ -81,7 +81,7 @@ class PageController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 
-        return soda_cms_view('pages.view', compact('page'));
+        return soda_cms_view('data.pages.view', compact('page'));
     }
 
     /**
