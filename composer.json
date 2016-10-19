@@ -37,9 +37,6 @@
   "autoload": {
     "psr-4": {
       "Soda\\Cms\\": "src/"
-    },
-    "classmap": [
-      "database/seeds"
-    ]
+    }
   }
 }

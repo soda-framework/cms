@@ -2,7 +2,7 @@
 namespace Themes\SodaExample\Providers;
 
 use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
-use Soda\Cms\Foundation\Support\Providers\Traits\RegistersFacadesAndDependencies;
+use Soda\Cms\Foundation\Providers\Traits\RegistersFacadesAndDependencies;
 use Soda\Cms\Support\ThemeExceptionHandler;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 

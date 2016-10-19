@@ -3,12 +3,12 @@
 use Config;
 use Exception;
 use Request;
-use Soda\Cms\Foundation\Blocks\BlockType;
-use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
-use Soda\Cms\Foundation\Blocks\Interfaces\DynamicBlockInterface;
-use Soda\Cms\Foundation\Fields\Field;
-use Soda\Cms\Foundation\Fields\Interfaces\FieldInterface;
-use Soda\Cms\Foundation\ModelBuilder;
+use Soda\Cms\Database\Blocks\BlockType;
+use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
+use Soda\Cms\Database\Blocks\Interfaces\DynamicBlockInterface;
+use Soda\Cms\Database\Fields\Field;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\ModelBuilder;
 
 class FormBuilder
 {

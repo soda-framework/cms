@@ -3,10 +3,10 @@
 namespace Soda\Cms\Http\Middleware;
 
 use Closure;
-use Soda\Cms\Foundation\Blocks\Interfaces\BlockInterface;
-use Soda\Cms\Foundation\Blocks\Interfaces\BlockTypeInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\PageTypeInterface;
+use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
+use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 
 /*
  *

@@ -5,15 +5,15 @@ use Blade;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Soda\Cms\Forms\FormServiceProvider;
-use Soda\Cms\Foundation\Application\ApplicationServiceProvider;
-use Soda\Cms\Foundation\Blocks\BlocksServiceProvider;
-use Soda\Cms\Foundation\Fields\FieldsServiceProvider;
-use Soda\Cms\Foundation\Pages\PageServiceProvider;
+use Soda\Cms\Database\Application\ApplicationServiceProvider;
+use Soda\Cms\Database\Blocks\BlockServiceProvider;
+use Soda\Cms\Database\Fields\FieldsServiceProvider;
+use Soda\Cms\Database\Pages\PageServiceProvider;
 use Soda\Cms\Foundation\SodaInstance;
-use Soda\Cms\Foundation\Support\Providers\AuthServiceProvider;
-use Soda\Cms\Foundation\Support\Providers\RouteServiceProvider;
-use Soda\Cms\Foundation\Support\Providers\Traits\RegistersFacadesAndDependencies;
-use Soda\Cms\Foundation\Users\UserServiceProvider;
+use Soda\Cms\Foundation\Providers\AuthServiceProvider;
+use Soda\Cms\Foundation\Providers\RouteServiceProvider;
+use Soda\Cms\Foundation\Providers\Traits\RegistersFacadesAndDependencies;
+use Soda\Cms\Database\Users\UserServiceProvider;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherFacade;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
 use Soda\Cms\Menu\MenuFacade;
@@ -45,9 +45,9 @@ class SodaServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../config' => config_path('soda')], 'soda.config');
         $this->publishes([__DIR__.'/../public' => public_path('soda/cms')], 'soda.assets');
 
+        $this->loadMigrationsFrom(__DIR__.'/../migrations');
         $this->loadTranslationsFrom(__DIR__.'/../translations', 'soda');
         $this->loadViewsFrom(__DIR__.'/../resources/views', config('soda.cms.hint'));
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->extendBlade();
 
@@ -79,7 +79,7 @@ class SodaServiceProvider extends ServiceProvider
             RapydServiceProvider::class,
 
             ApplicationServiceProvider::class,
-            BlocksServiceProvider::class,
+            BlockServiceProvider::class,
             FieldsServiceProvider::class,
             PageServiceProvider::class,
             UserServiceProvider::class,

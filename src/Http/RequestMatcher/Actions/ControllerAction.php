@@ -3,7 +3,7 @@
 namespace Soda\Cms\Http\RequestMatcher\Actions;
 
 use App;
-use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class ControllerAction implements ActionInterface
 {

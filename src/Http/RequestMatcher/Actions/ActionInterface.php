@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Http\RequestMatcher\Actions;
 
-use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 interface ActionInterface
 {

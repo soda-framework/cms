@@ -3,7 +3,7 @@
 return [
     'provider' => [
         'driver' => 'eloquent',
-        'model'  => \Soda\Cms\Foundation\User\Models\User::class,
+        'model'  => Soda\Cms\Database\User\Models\User::class,
     ],
     'guard' => [
         'driver'   => 'session',

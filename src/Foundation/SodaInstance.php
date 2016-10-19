@@ -4,10 +4,10 @@ namespace Soda\Cms\Foundation;
 use Cache;
 use Illuminate\Contracts\Foundation\Application as IlluminateApplication;
 use Route;
-use Soda\Cms\Foundation\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Foundation\Blocks\Interfaces\DynamicBlockInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\DynamicPageInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
+use Soda\Cms\Database\Blocks\Interfaces\DynamicBlockInterface;
+use Soda\Cms\Database\Pages\Interfaces\DynamicPageInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class SodaInstance
 {

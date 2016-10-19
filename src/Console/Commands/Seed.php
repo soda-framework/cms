@@ -16,7 +16,7 @@ class Seed extends Command
     public function handle()
     {
         $this->call('db:seed', [
-            '--class' => 'Soda\\Cms\\Seeds\\'.$this->option('class'),
+            '--class' => 'Soda\\Cms\\Database\\Support\\Seeders\\'.$this->option('class'),
         ]);
     }
 }

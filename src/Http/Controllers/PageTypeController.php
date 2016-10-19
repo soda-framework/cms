@@ -3,8 +3,8 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\PageRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 
 class PageTypeController extends BaseController
 {

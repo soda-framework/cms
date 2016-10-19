@@ -4,9 +4,9 @@ namespace  Soda\Cms\Http\RequestMatcher;
 
 use Exception;
 use Soda;
-use Soda\Cms\Foundation\Application\Interfaces\CachedApplicationRepositoryInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\CachedPageRepositoryInterface;
-use Soda\Cms\Foundation\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Http\RequestMatcher\Actions\ActionInterface;
 use Soda\Cms\Http\RequestMatcher\Actions\ControllerAction;
 use Soda\Cms\Http\RequestMatcher\Actions\ViewAction;
