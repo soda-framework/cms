@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Soda\Cms\Forms\Fields\FormFieldInterface;
-use Soda\Cms\Foundation\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 use Soda\Cms\Models\Field;
 
 abstract class AbstractFormField implements FormFieldInterface

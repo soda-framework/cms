@@ -21,7 +21,7 @@ class ApplicationSeeder extends Seeder
             $baseName = str_slug(basename(dirname(base_path())), '-');
         }
 
-        $application = app(ApplicationInterface::class)->create([
+        $application = app('soda.application.model')->create([
             'name' => ucwords(str_replace('-', '', $baseName)),
         ]);
 

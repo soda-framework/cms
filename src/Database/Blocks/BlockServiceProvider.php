@@ -14,15 +14,42 @@ use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Blocks\Interfaces\DynamicBlockInterface;
 use Soda\Cms\Database\Blocks\Repositories\BlockRepository;
 use Soda\Cms\Database\Blocks\Repositories\BlockTypeRepository;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
 
 class BlockServiceProvider extends ServiceProvider
 {
+    use RegistersBindings;
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
     protected $defer = true;
+
+    protected $bindings = [
+        'soda.block.model' => [
+            'abstract' => BlockInterface::class,
+            'concrete' => Block::class,
+        ],
+        'soda.dynamic-block.model' => [
+            'abstract' => DynamicBlockInterface::class,
+            'concrete' => DynamicBlock::class,
+        ],
+        'soda.block-type.model' => [
+            'abstract' => BlockTypeInterface::class,
+            'concrete' => BlockType::class,
+        ],
+        'soda.block.repository' => [
+            'instance' => true,
+            'abstract' => BlockRepositoryInterface::class,
+            'concrete' => BlockRepository::class,
+        ],
+        'soda.block-type.repository' => [
+            'instance' => true,
+            'abstract' => BlockTypeRepositoryInterface::class,
+            'concrete' => BlockTypeRepository::class,
+        ],
+    ];
 
     /**
      * Perform post-registration booting of services.
@@ -32,7 +59,7 @@ class BlockServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap([
-            'BlockType' => resolve_class(BlockTypeInterface::class),
+            'BlockType' => resolve_class('soda.block-type.model'),
         ]);
     }
 
@@ -43,11 +70,7 @@ class BlockServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(BlockInterface::class, Block::class);
-        $this->app->bind(DynamicBlockInterface::class, DynamicBlock::class);
-        $this->app->bind(BlockTypeInterface::class, BlockType::class);
-        $this->app->bind(BlockRepositoryInterface::class, BlockRepository::class);
-        $this->app->bind(BlockTypeRepositoryInterface::class, BlockTypeRepository::class);
+        $this->registerBindings($this->bindings);
     }
 
     /**
@@ -57,12 +80,6 @@ class BlockServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [
-            BlockInterface::class,
-            DynamicBlockInterface::class,
-            BlockIypeInterface::class,
-            BlockRepositoryInterface::class,
-            BlockTypeRepositoryInterface::class,
-        ];
+        return array_keys($this->bindings);
     }
 }

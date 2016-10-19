@@ -12,6 +12,6 @@ class DynamicBlock extends AbstractDynamicModel implements DynamicBlockInterface
 
     public function getDynamicModelTablePrefix()
     {
-        return app(BlockTypeInterface::class)->getDynamicModelTablePrefix();
+        return app('soda.block-type.model')->getDynamicModelTablePrefix();
     }
 }

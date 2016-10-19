@@ -42,12 +42,12 @@ class PageType extends Model implements PageTypeInterface
 
     public function fields()
     {
-        return $this->morphToMany(resolve_class(FieldInterface::class), 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
+        return $this->morphToMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
     }
 
     public function pages()
     {
-        return $this->hasMany(resolve_class(PageInterface::class), 'page_type_id');
+        return $this->hasMany(resolve_class('soda.page.model'), 'page_type_id');
     }
 
     public function getDynamicModelTablePrefix()

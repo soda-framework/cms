@@ -5,8 +5,6 @@ namespace Soda\Cms\Database\Blocks\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
-use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
-use Soda\Cms\Database\Blocks\Interfaces\DynamicBlockInterface;
 use Soda\Cms\Database\Blocks\Observers\BlockObserver;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
@@ -47,7 +45,7 @@ class Block extends Model implements BlockInterface
 
     public function type()
     {
-        return $this->belongsTo(resolve_class(BlockTypeInterface::class), 'block_type_id');
+        return $this->belongsTo(resolve_class('soda.block-type.model'), 'block_type_id');
     }
 
     public function modelQuery($pageId = null)
@@ -79,6 +77,6 @@ class Block extends Model implements BlockInterface
 
     public function getDynamicModel()
     {
-        return app(DynamicBlockInterface::class);
+        return app('soda.dynamic-block.model');
     }
 }

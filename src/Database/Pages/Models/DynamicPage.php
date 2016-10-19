@@ -12,6 +12,6 @@ class DynamicPage extends AbstractDynamicModel implements DynamicPageInterface
 
     public function getDynamicModelTablePrefix()
     {
-        return app(PageTypeInterface::class)->getDynamicModelTablePrefix();
+        return app('soda.page-type.model')->getDynamicModelTablePrefix();
     }
 }

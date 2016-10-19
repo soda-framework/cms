@@ -52,7 +52,7 @@ abstract class AbstractDynamicModel extends Model
 
     public function parseField(Field $field, Request $request)
     {
-        $field = Soda::getFormBuilder()->field($field);
+        $field = app('soda.form')->field($field);
 
         $field->saveToModel($this, $request);
 

@@ -62,12 +62,12 @@ class Page extends AbstractClosureEntityModel implements PageInterface
 
     public function type()
     {
-        return $this->belongsTo(resolve_class(PageTypeInterface::class), 'page_type_id');
+        return $this->belongsTo(resolve_class('soda.page-type.model'), 'page_type_id');
     }
 
     public function blocks()
     {
-        return $this->belongsToMany(resolve_class(BlockInterface::class), 'page_blocks')->withPivot('can_create', 'can_delete');
+        return $this->belongsToMany(resolve_class('soda.block.model'), 'page_blocks')->withPivot('can_create', 'can_delete');
     }
 
     public function getBlock($identifier)
@@ -85,7 +85,7 @@ class Page extends AbstractClosureEntityModel implements PageInterface
             return $block->model($this->id);
         }
 
-        return app(BlockInterface::class)->newCollection();
+        return app('soda.block.model')->newCollection();
     }
 
     public function blockModel($identifier)
@@ -101,11 +101,11 @@ class Page extends AbstractClosureEntityModel implements PageInterface
 
     public function getDynamicModel()
     {
-        return app(DynamicPageInterface::class);
+        return app('soda.dynamic-page.model');
     }
 
     public function pageAttributes()
     {
-        return app(CachedPageRepositoryInterface::class)->getAttributesForPage($this);
+        return app('soda.page.cached-repository')->getAttributesForPage($this);
     }
 }

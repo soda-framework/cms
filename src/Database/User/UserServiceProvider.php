@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustFacade;
 use Laratrust\LaratrustServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
 use Soda\Cms\Foundation\Providers\Traits\RegistersFacadesAndDependencies;
 use Soda\Cms\Database\User\Interfaces\PermissionInterface;
 use Soda\Cms\Database\User\Interfaces\RoleInterface;
@@ -16,13 +17,28 @@ use Soda\Cms\Database\User\Models\User;
 
 class UserServiceProvider extends ServiceProvider
 {
-    use RegistersFacadesAndDependencies;
+    use RegistersFacadesAndDependencies, RegistersBindings;
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
     protected $defer = true;
+
+    protected $bindings = [
+        'soda.user.model' => [
+            'abstract' => UserInterface::class,
+            'concrete' => User::class,
+        ],
+        'soda.role.model' => [
+            'abstract' => RoleInterface::class,
+            'concrete' => Role::class,
+        ],
+        'soda.permission.model' => [
+            'abstract' => PermissionInterface::class,
+            'concrete' => Permission::class,
+        ],
+    ];
 
     /**
      * Perform post-registration booting of services.
@@ -32,11 +48,11 @@ class UserServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap([
-            'SodaUser' => resolve_class(UserInterface::class),
+            'SodaUser' => resolve_class('soda.user.model'),
         ]);
 
-        $this->app->config->set('laratrust.role', resolve_class(RoleInterface::class));
-        $this->app->config->set('laratrust.permission', resolve_class(PermissionInterface::class));
+        $this->app->config->set('laratrust.role', resolve_class('soda.role.model'));
+        $this->app->config->set('laratrust.permission', resolve_class('soda.permission.model'));
     }
 
     /**
@@ -46,6 +62,8 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerBindings($this->bindings);
+
         $this->registerDependencies([
             LaratrustServiceProvider::class,
         ]);
@@ -54,9 +72,6 @@ class UserServiceProvider extends ServiceProvider
             'Laratrust' => LaratrustFacade::class,
         ]);
 
-        $this->app->bind(UserInterface::class, User::class);
-        $this->app->bind(RoleInterface::class, Role::class);
-        $this->app->bind(PermissionInterface::class, Permission::class);
     }
 
     /**
@@ -66,10 +81,6 @@ class UserServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [
-            UserInterface::class,
-            RoleInterface::class,
-            PermissionInterface::class,
-        ];
+        return array_keys($this->bindings);
     }
 }

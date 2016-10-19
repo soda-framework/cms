@@ -50,7 +50,7 @@ class FormBuilder
     public function field($field)
     {
         if (is_array($field)) {
-            $field = app(FieldInterface::class)->fill($field);
+            $field = app('soda.field.model')->fill($field);
         }
 
         if (!$field instanceOf FieldInterface) {
@@ -77,7 +77,7 @@ class FormBuilder
             $unique = uniqid();
             if ($model instanceof DynamicBlockInterface) {
                 //we need to get the db name and attach to the field..
-                $type = app(BlockTypeInterface::class)->where('identifier', $type)->first();
+                $type = app('soda.block-type.model')->where('identifier', $type)->first();
                 $link = route('soda.dyn.inline.edit', [
                     'type'  => $type->identifier,
                     'model' => $model->id,
@@ -117,7 +117,7 @@ class FormBuilder
     public function __call($name, $arguments)
     {
         if ($this->getRegistrar()->isRegistered($name)) {
-            $field = app(FieldInterface::class)->fill($arguments[0]);
+            $field = app('soda.field.model')->fill($arguments[0]);
             $field->field_type = $name;
 
             return $this->getRegistrar()->resolve($field);

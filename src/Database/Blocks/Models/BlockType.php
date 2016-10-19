@@ -38,12 +38,12 @@ class BlockType extends Model implements BlockTypeInterface
 
     public function fields()
     {
-        return $this->morphToMany(resolve_class(FormFieldInterface::class), 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
+        return $this->morphToMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
     }
 
     public function blocks()
     {
-        return $this->hasMany(resolve_class(BlockInterface::class), 'block_type_id');
+        return $this->hasMany(resolve_class('soda.block.model'), 'block_type_id');
     }
 
     public function getDynamicModelTablePrefix()
@@ -57,8 +57,7 @@ class BlockType extends Model implements BlockTypeInterface
         $blockReferenceColumn = $this->blocks()->getForeignKey();
         $blockIndex = 'FK_'.$this->getDynamicTableName().'_'.$blockReferenceColumn.'_'.$blockTable;
 
-        $page = app(PageInterface::class);
-        $pageTable = $page->getTable();
+        $pageTable = app('soda.page.model')->getTable();
         $pageReferenceColumn = 'page_id';
         $pageIndex = 'FK_'.$this->getDynamicTableName().'_page_id_pages';
 

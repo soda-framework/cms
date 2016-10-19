@@ -79,8 +79,8 @@ class SodaServiceProvider extends ServiceProvider
             RapydServiceProvider::class,
 
             ApplicationServiceProvider::class,
-            BlockServiceProvider::class,
             FieldsServiceProvider::class,
+            BlockServiceProvider::class,
             PageServiceProvider::class,
             UserServiceProvider::class,
         ]);

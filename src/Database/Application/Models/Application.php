@@ -4,8 +4,6 @@ namespace Soda\Cms\Database\Application\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class Application extends Model implements ApplicationInterface
 {
@@ -25,11 +23,11 @@ class Application extends Model implements ApplicationInterface
      */
     public function pages()
     {
-        return $this->hasMany(resolve_class(PageInterface::class));
+        return $this->hasMany(resolve_class('soda.page.model'));
     }
 
     public function urls()
     {
-        return $this->hasMany(resolve_class(ApplicationUrlInterface::class));
+        return $this->hasMany(resolve_class('soda.application-urls.model'));
     }
 }

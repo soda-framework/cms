@@ -3,7 +3,6 @@
 namespace Soda\Cms\Database\Application\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 
 class ApplicationUrl extends Model implements ApplicationUrlInterface
@@ -17,6 +16,6 @@ class ApplicationUrl extends Model implements ApplicationUrlInterface
 
     public function application()
     {
-        return $this->belongsTo(resolve_class(ApplicationInterface::class));
+        return $this->belongsTo(resolve_class('soda.application.model'));
     }
 }

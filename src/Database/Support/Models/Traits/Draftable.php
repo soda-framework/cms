@@ -4,6 +4,7 @@ namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Session;
+use Auth;
 use Soda\Cms\Support\Constants;
 
 trait Draftable

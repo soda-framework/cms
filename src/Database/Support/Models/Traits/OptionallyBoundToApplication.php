@@ -13,7 +13,7 @@ trait OptionallyBoundToApplication
     public static function bootOptionallyBoundToApplication()
     {
         static::addGlobalScope('in-application', function (Builder $builder) {
-            $builder->where('application_id', '=', Soda::getApplication()->id)
+            $builder->where('application_id', '=', app('soda')->getApplication()->id)
                 ->orWhereNull('application_id')
                 ->orWhere('application_id', '=', '');
         });

@@ -11,15 +11,38 @@ use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Application\Repositories\ApplicationRepository;
 use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Repositories\CachedApplicationRepository;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
 
 class ApplicationServiceProvider extends ServiceProvider
 {
+    use RegistersBindings;
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
     protected $defer = true;
+
+    protected $bindings = [
+        'soda.application.model' => [
+            'abstract' => ApplicationInterface::class,
+            'concrete' => Application::class,
+        ],
+        'soda.application-url.model' => [
+            'abstract' => ApplicationUrlInterface::class,
+            'concrete' => ApplicationUrl::class,
+        ],
+        'soda.application.repository' => [
+            'instance' => true,
+            'abstract' => ApplicationRepositoryInterface::class,
+            'concrete' => ApplicationRepository::class,
+        ],
+        'soda.application.cached-repository' => [
+            'instance' => true,
+            'abstract' => CachedApplicationRepositoryInterface::class,
+            'concrete' => CachedApplicationRepository::class,
+        ],
+    ];
 
     /**
      * Perform post-registration booting of services.
@@ -37,10 +60,7 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ApplicationInterface::class, Application::class);
-        $this->app->bind(ApplicationUrlInterface::class, ApplicationUrl::class);
-        $this->app->bind(ApplicationRepositoryInterface::class, ApplicationRepository::class);
-        $this->app->bind(CachedApplicationRepositoryInterface::class, CachedApplicationRepository::class);
+        $this->registerBindings($this->bindings);
     }
 
     /**
@@ -50,11 +70,6 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [
-            ApplicationInterface::class,
-            ApplicationTypeInterface::class,
-            ApplicationRepositoryInterface::class,
-            CachedApplicationRepositoryInterface::class,
-        ];
+        return array_keys($this->bindings);
     }
 }

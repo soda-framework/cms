@@ -15,17 +15,43 @@ use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Pages\Repositories\PageRepository;
 use Soda\Cms\Database\Pages\Models\DynamicPage;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
 use Soda\Cms\Foundation\Providers\Traits\RegistersFacadesAndDependencies;
 
 class PageServiceProvider extends ServiceProvider
 {
-    use RegistersFacadesAndDependencies;
+    use RegistersFacadesAndDependencies, RegistersBindings;
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
     protected $defer = true;
+
+    protected $bindings = [
+        'soda.page.model' => [
+            'abstract' => PageInterface::class,
+            'concrete' => Page::class,
+        ],
+        'soda.page-type.model' => [
+            'abstract' => PageTypeInterface::class,
+            'concrete' => PageType::class,
+        ],
+        'soda.dynamic-page.model' => [
+            'abstract' => DynamicPageInterface::class,
+            'concrete' => DynamicPage::class,
+        ],
+        'soda.page.repository' => [
+            'instance' => true,
+            'abstract' => PageRepositoryInterface::class,
+            'concrete' => PageRepository::class,
+        ],
+        'soda.page.cached-repository' => [
+            'instance' => true,
+            'abstract' => CachedPageRepositoryInterface::class,
+            'concrete' => CachedPageRepository::class,
+        ],
+    ];
 
     /**
      * Perform post-registration booting of services.
@@ -35,7 +61,7 @@ class PageServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap([
-            'PageType' => resolve_class(PageTypeInterface::class),
+            'PageType' => resolve_class('soda.page-type.model'),
         ]);
     }
 
@@ -50,11 +76,7 @@ class PageServiceProvider extends ServiceProvider
             ClosureTableServiceProvider::class,
         ]);
 
-        $this->app->bind(PageInterface::class, Page::class);
-        $this->app->bind(PageTypeInterface::class, PageType::class);
-        $this->app->bind(DynamicPageInterface::class, DynamicPage::class);
-        $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
-        $this->app->bind(CachedPageRepositoryInterface::class, CachedPageRepository::class);
+        $this->registerBindings($this->bindings);
     }
 
     /**
@@ -64,12 +86,6 @@ class PageServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [
-            PageInterface::class,
-            PageTypeInterface::class,
-            DynamicPageInterface::class,
-            PageRepositoryInterface::class,
-            CachedPageRepositoryInterface::class,
-        ];
+        return array_keys($this->bindings);
     }
 }

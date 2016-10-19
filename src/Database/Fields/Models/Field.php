@@ -23,17 +23,17 @@ class Field extends Model implements FieldInterface
 
     public function blockTypes()
     {
-        return $this->morphedByMany(BlockType::class, 'fieldable');
+        return $this->morphedByMany('soda.block-type.model', 'fieldable');
     }
 
     public function pageTypes()
     {
-        return $this->morphedByMany(PageType::class, 'fieldable');
+        return $this->morphedByMany('soda.page-type.model', 'fieldable');
     }
 
     public static function getFieldTypes()
     {
-        return Soda::getFormBuilder()->getFieldTypes();
+        return app('soda.form')->getFieldTypes();
     }
 
     public function setFieldNameAttribute($value)

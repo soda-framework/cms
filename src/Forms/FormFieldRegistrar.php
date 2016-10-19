@@ -3,7 +3,7 @@ namespace Soda\Cms\Forms;
 
 use Exception;
 use Soda\Cms\Forms\Fields\FormFieldInterface;
-use Soda\Cms\Foundation\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 
 class FormFieldRegistrar
 {

@@ -2,7 +2,7 @@
 namespace Soda\Cms\Foundation;
 
 use Cache;
-use Illuminate\Contracts\Foundation\Application as IlluminateApplication;
+use Illuminate\Contracts\Foundation\Application as Laravel;
 use Route;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
 use Soda\Cms\Database\Blocks\Interfaces\DynamicBlockInterface;
@@ -11,17 +11,17 @@ use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class SodaInstance
 {
-    protected $app;
+    protected $laravel;
     protected $requestMatcher;
     protected $application = null;
     protected $blocks = [];
     protected $currentPage;
 
-    public function __construct(IlluminateApplication $app)
+    public function __construct(Laravel $laravel)
     {
-        $this->app = $app;
+        $this->laravel = $laravel;
 
-        if (!$this->app->runningInConsole()) {
+        if (!$this->laravel->runningInConsole()) {
             $application = $this->getRequestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
             $this->setApplication($application);
@@ -79,7 +79,7 @@ class SodaInstance
      */
     public function getRequestMatcher()
     {
-        return $this->app['soda.request-matcher'];
+        return $this->laravel['soda.request-matcher'];
     }
 
     /**
@@ -89,7 +89,7 @@ class SodaInstance
      */
     public function getMenuBuilder()
     {
-        return $this->app['soda.menu'];
+        return $this->laravel['soda.menu'];
     }
 
     /**
@@ -99,7 +99,7 @@ class SodaInstance
      */
     public function getFormBuilder()
     {
-        return $this->app['soda.form'];
+        return $this->laravel['soda.form'];
     }
 
     /**
@@ -111,7 +111,7 @@ class SodaInstance
      */
     public function dynamicPage($table)
     {
-        return app(DynamicPageInterface::class)->fromTable($table);
+        return app('soda.dynamic-page.model')->fromTable($table);
     }
 
     /**
@@ -123,7 +123,7 @@ class SodaInstance
      */
     public function dynamicBlock($table)
     {
-        return app(DynamicBlockInterface::class)->fromTable($table);
+        return app('soda.dynamic-block.model')->fromTable($table);
     }
 
     /**
