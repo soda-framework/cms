@@ -33,17 +33,17 @@ class Page extends AbstractClosureEntityModel implements PageInterface
         'position',
         'page_type_id',
         'parent_id',
+        'view_action',
+        'view_action_type',
         'edit_action',
         'edit_action_type',
-        'list_action',
-        'list_action_type',
     ];
 
     protected $defaults = [
-        'edit_action'      => 'soda::pages.view',
+        'view_action'      => '',
+        'view_action_type' => 'view',
+        'edit_action'      => 'soda::data.pages.view',
         'edit_action_type' => 'view',
-        'list_action'      => 'soda::pages.index',
-        'list_action_type' => 'view',
     ];
 
     /**
@@ -67,25 +67,14 @@ class Page extends AbstractClosureEntityModel implements PageInterface
 
     public function blocks()
     {
-        return $this->belongsToMany(resolve_class('soda.block.model'), 'page_blocks')->withPivot('can_create', 'can_delete');
+        return $this->belongsToMany(resolve_class('soda.block.model'), 'page_blocks')->withPivot('min_blocks', 'max_blocks');
     }
 
     public function getBlock($identifier)
     {
-        return $this->blocks->filter(function ($item) use ($identifier) {
+        return $this->getRelation('blocks')->filter(function ($item) use ($identifier) {
             return $item->identifier == $identifier;
         })->first();
-    }
-
-    public function getBlockModel($identifier)
-    {
-        $block = $identifier instanceof BlockInterface ? $identifier : $this->getBlock($identifier);
-
-        if ($block) {
-            return $block->model($this->id);
-        }
-
-        return app('soda.block.model')->newCollection();
     }
 
     public function blockModel($identifier)
@@ -93,10 +82,15 @@ class Page extends AbstractClosureEntityModel implements PageInterface
         $block = $identifier instanceof BlockInterface ? $identifier : $this->getBlock($identifier);
 
         if ($block) {
-            return $block->modelQuery($this->id);
+            return $block->modelQuery($this->getKey());
         }
 
         throw new Exception('Page does not have block: \''.$identifier.'\'.');
+    }
+
+    public function getBlockModel($identifier)
+    {
+        return $this->blockModel($identifier)->get();
     }
 
     public function getDynamicModel()
@@ -107,5 +101,12 @@ class Page extends AbstractClosureEntityModel implements PageInterface
     public function pageAttributes()
     {
         return app('soda.page.cached-repository')->getAttributesForPage($this);
+    }
+
+    public function getPageAttribute($attribute)
+    {
+        $attributes = $this->pageAttributes();
+
+        return isset($attributes[$attribute]) ? $attributes[$attribute] : null;
     }
 }

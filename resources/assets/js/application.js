@@ -47,6 +47,28 @@ $(function () {
         var form = $(this).data('submits');
         $(form).submit();
     });
+
+    $('[data-delete-button]').on('click', function(e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
+        var attributes = {
+            _method: 'DELETE',
+            _token: $('meta[name="csrf-token"]').attr('content'),
+        }
+
+        swal({
+            title: "Are you sure?",
+            text: "This action can not be reversed!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function(){
+            post(url, attributes);
+        });
+    });
 });
 
 function slugify(text) {
@@ -62,4 +84,26 @@ function slugify(text) {
     }
 
     return text;
+}
+
+function post(path, parameters) {
+    var form = $('<form></form>');
+
+    form.attr("method", "post");
+    form.attr("action", path);
+
+    $.each(parameters, function(key, value) {
+        var field = $('<input></input>');
+
+        field.attr("type", "hidden");
+        field.attr("name", key);
+        field.attr("value", value);
+
+        form.append(field);
+    });
+
+    // The form needs to be a part of the document in
+    // order for us to be able to submit it.
+    $(document.body).append(form);
+    form.submit();
 }

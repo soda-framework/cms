@@ -82,6 +82,7 @@ module.exports = {
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
+            'resources/components/bootstrap-sweetalert/lib/sweet-alert.js',
         ],
         forms: [
             'resources/components/bootstrap-fileinput/js/fileinput.js',

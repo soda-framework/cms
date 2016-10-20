@@ -42,7 +42,7 @@ trait BuildsDataGrids
                     $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";
                 }
                 if ($deleteRoute) {
-                    $buttons .= "<a href='".route($deleteRoute, $value)."' class='btn btn-danger'><i class='fa fa-remove'></i> <span>Delete</span></a> ";
+                    $buttons .= "<a href='".route($deleteRoute, $value)."' class='btn btn-danger' data-delete-button><i class='fa fa-remove'></i> <span>Delete</span></a> ";
                 }
 
                 return $buttons;

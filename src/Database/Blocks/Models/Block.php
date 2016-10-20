@@ -30,9 +30,9 @@ class Block extends Model implements BlockInterface
     ];
 
     protected $defaults = [
-        'edit_action'      => 'soda::blocks.view',
+        'edit_action'      => 'soda::data.page-blocks.view',
         'edit_action_type' => 'view',
-        'list_action'      => 'soda::blocks.index',
+        'list_action'      => 'soda::data.page-blocks.index',
         'list_action_type' => 'view',
     ];
 
@@ -54,7 +54,7 @@ class Block extends Model implements BlockInterface
             $this->load('type');
         }
 
-        return $this->getDynamicModel()->fromTable($this->type->identifier)->where('block_id', $this->getKey())->where(function ($q) use ($pageId) {
+        return $this->getDynamicModel()->fromTable($this->getRelation('type')->getAttribute('identifier'))->where('block_id', $this->getKey())->where(function ($q) use ($pageId) {
             $q->where('is_shared', 1);
             if ($pageId) {
                 $q->orWhere('page_id', $pageId);

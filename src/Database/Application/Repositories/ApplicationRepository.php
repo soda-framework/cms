@@ -25,7 +25,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         $domain = str_replace('www.', '', $url);
 
         if ($url = $this->urlModel->where('domain', $domain)->first()) {
-            return $this->findById($url->application_id);
+            return $this->findById($url->getAttribute('application_id'));
         }
 
         return null;

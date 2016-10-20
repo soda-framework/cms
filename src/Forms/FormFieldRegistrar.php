@@ -53,11 +53,11 @@ class FormFieldRegistrar
 
     public function resolve(FieldInterface $field)
     {
-        if (!$this->isRegistered($field->field_type)) {
-            throw new Exception("Field ".$field->field_type." is not registered.");
+        if (!$this->isRegistered($field->getAttribute('field_type'))) {
+            throw new Exception("Field ".$field->getAttribute('field_type')." is not registered.");
         }
 
-        $class = $this->getRegisteredFieldClass($field->field_type);
+        $class = $this->getRegisteredFieldClass($field->getAttribute('field_type'));
         $instance = new $class;
 
         return $instance->setField($field);

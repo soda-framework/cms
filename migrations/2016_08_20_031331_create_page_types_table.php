@@ -17,12 +17,10 @@ class CreatePageTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description', 65535)->nullable();
-            $table->string('identifier');
+            $table->string('identifier', 50);
             $table->integer('application_id')->unsigned()->index('fk_page_types_applications1_idx');
-            $table->integer('status')->unsigned()->nullable();
-            $table->string('package');
-            $table->string('action');
-            $table->string('action_type');
+            $table->string('view_action')->nullable();
+            $table->string('view_action_type');
             $table->string('edit_action')->nullable();
             $table->string('edit_action_type')->nullable();
             $table->timestamps();

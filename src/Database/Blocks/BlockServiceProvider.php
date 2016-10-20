@@ -14,11 +14,11 @@ use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Blocks\Interfaces\DynamicBlockInterface;
 use Soda\Cms\Database\Blocks\Repositories\BlockRepository;
 use Soda\Cms\Database\Blocks\Repositories\BlockTypeRepository;
-use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class BlockServiceProvider extends ServiceProvider
 {
-    use RegistersBindings;
+    use RegistersBindingsAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -26,29 +26,12 @@ class BlockServiceProvider extends ServiceProvider
      */
     protected $defer = true;
 
-    protected $bindings = [
-        'soda.block.model' => [
-            'abstract' => BlockInterface::class,
-            'concrete' => Block::class,
-        ],
-        'soda.dynamic-block.model' => [
-            'abstract' => DynamicBlockInterface::class,
-            'concrete' => DynamicBlock::class,
-        ],
-        'soda.block-type.model' => [
-            'abstract' => BlockTypeInterface::class,
-            'concrete' => BlockType::class,
-        ],
-        'soda.block.repository' => [
-            'instance' => true,
-            'abstract' => BlockRepositoryInterface::class,
-            'concrete' => BlockRepository::class,
-        ],
-        'soda.block-type.repository' => [
-            'instance' => true,
-            'abstract' => BlockTypeRepositoryInterface::class,
-            'concrete' => BlockTypeRepository::class,
-        ],
+    protected $aliases = [
+        'soda.block.model'           => [BlockInterface::class, Block::class],
+        'soda.dynamic-block.model'   => [DynamicBlockInterface::class, DynamicBlock::class],
+        'soda.block-type.model'      => [BlockTypeInterface::class, BlockType::class],
+        'soda.block.repository'      => [BlockRepositoryInterface::class, BlockRepository::class],
+        'soda.block-type.repository' => [BlockTypeRepositoryInterface::class, BlockTypeRepository::class],
     ];
 
     /**
@@ -70,7 +53,27 @@ class BlockServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerBindings($this->bindings);
+        $this->app->bind('soda.block.model', function($app) {
+            return new Block;
+        });
+
+        $this->app->bind('soda.dynamic-block.model', function($app) {
+            return new DynamicBlock;
+        });
+
+        $this->app->bind('soda.block-type.model', function($app) {
+            return new BlockType;
+        });
+
+        $this->app->singleton('soda.block.repository', function($app) {
+            return new BlockRepository($app['soda.block.model']);
+        });
+
+        $this->app->singleton('soda.block-type.repository', function($app) {
+            return new BlockTypeRepository($app['soda.block-type.model']);
+        });
+
+        $this->registerAliases($this->aliases);
     }
 
     /**
@@ -80,6 +83,6 @@ class BlockServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array_keys($this->bindings);
+        return array_keys($this->aliases);
     }
 }

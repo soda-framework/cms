@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Database\Blocks\Observers;
 
-use Soda\Cms\Database\Blocks\Blocks\Models\DynamicBlock;
-use Soda\Cms\Database\Blocks\Models\Interfaces\BlockInterface;
+use Soda\Cms\Database\Blocks\Models\DynamicBlock;
+use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
 
 class BlockObserver
 {
@@ -19,7 +19,7 @@ class BlockObserver
                 $block->load('type');
             }
 
-            DynamicBlock::fromTable($block->type->identifier)->where('block_id', $block->id)->update(['is_shared' => $block->is_shared]);
+            DynamicBlock::fromTable($block->getRelation('type')->getAttribute('identifier'))->where('block_id', $block->getKey())->update(['is_shared' => $block->getAttribute('is_shared')]);
         }
     }
 }

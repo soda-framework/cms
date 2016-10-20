@@ -61,44 +61,6 @@ class FormBuilder
     }
 
     /**
-     * Work In Progress
-     * Returns a view for an inline editable field
-     *
-     * @param $model
-     * @param $element
-     * @param $type
-     *
-     * @return \Illuminate\View\View
-     */
-    public function editable($model, $element, $type)
-    {
-        $field_value = $model->{$element};
-        if (Request::get('soda_edit')) {
-            $unique = uniqid();
-            if ($model instanceof DynamicBlockInterface) {
-                //we need to get the db name and attach to the field..
-                $type = app('soda.block-type.model')->where('identifier', $type)->first();
-                $link = route('soda.dyn.inline.edit', [
-                    'type'  => $type->identifier,
-                    'model' => $model->id,
-                    'field' => $element,
-                ]);
-            }
-
-            //TODO: figure out which type of field we need to use here..
-            return soda_cms_view('inputs.inline.text', [
-                'link'        => $link,
-                'element'     => $element,
-                'model'       => $model,
-                'unique'      => $unique,
-                'field_value' => $field_value,
-            ]);
-        } else {
-            return $field_value;
-        }
-    }
-
-    /**
      * Formats a JSON string to be pasted into our Javascript
      *
      * @param $parameters
@@ -118,7 +80,7 @@ class FormBuilder
     {
         if ($this->getRegistrar()->isRegistered($name)) {
             $field = app('soda.field.model')->fill($arguments[0]);
-            $field->field_type = $name;
+            $field->setAttribute('field_type', $name);
 
             return $this->getRegistrar()->resolve($field);
         } else {

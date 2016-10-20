@@ -8,7 +8,7 @@
         <thead>
         <tr>
             @foreach($block->type->fields as $field)
-                @if($field->show_in_table)
+                @if($field->pivot->show_in_table)
                     <th>{{ $field->name }}</th>
                 @endif
             @endforeach
@@ -19,16 +19,16 @@
         @foreach($models as $model)
             <tr>
                 @foreach($block->type->fields as $field)
-                    @if($field->show_in_table)
+                    @if($field->pivot->show_in_table)
                         <td>
                             {!! SodaForm::field($field)->setModel($model)->renderForTable() !!}
                         </td>
                     @endif
                 @endforeach
                 <td>
-                    <a href="{{route('soda.page.block.view', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a>
-                    @if($block->pivot->can_delete)
-                        <a href="{{route('soda.page.block.delete', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>
+                    <a href="{{route('soda.pages.blocks.edit', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a>
+                    @if($block->pivot->min_blocks === null || count($models) > $block->pivot->min_blocks)
+                        <a href="{{route('soda.pages.blocks.destroy', ['page_id' => $page->id, 'id'=>$model->id, 'type'=>$block->identifier])}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>
                     @endif
                 </td>
             </tr>
@@ -41,6 +41,6 @@
 <p>No records found.</p>
 @endif
 
-@if($block->pivot->can_create)
-    @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.page.block.view',['page_id' => $page->id, 'type' => $block->identifier])])
+@if($block->pivot->max_blocks === null || count($models) < $block->pivot->max_blocks)
+    @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.pages.blocks.create', ['page_id' => $page->id, 'type' => $block->identifier])])
 @endif

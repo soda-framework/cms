@@ -16,7 +16,7 @@ class Migrate extends Command
     public function handle()
     {
         $this->call('migrate', [
-            '--path' => '/vendor/soda-framework/cms/database/migrations',
+            '--path' => '/vendor/soda-framework/cms/migrations',
         ]);
     }
 }

@@ -11,10 +11,10 @@ trait HasMedia
 
     public function getMedia($field)
     {
-        if (!$this->media) {
+        if (!$this->relationLoaded('media')) {
             $this->load('media');
         }
 
-        return $this->media->where('related_field', $field);
+        return $this->getRelation('media')->where('related_field', $field);
     }
 }

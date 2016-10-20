@@ -1,5 +1,5 @@
 <?php
-namespace Themes\SodaExample\Providers;
+namespace Themes\SodaExample;
 
 use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
 use Soda\Cms\Support\ThemeExceptionHandler;

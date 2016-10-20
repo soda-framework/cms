@@ -45,7 +45,7 @@ class PageController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'page']));
         }
 
-        return soda_cms_view('data.pages.view', compact('page'));
+        return view($page->edit_action, compact('page'));
     }
 
     /**
@@ -63,7 +63,7 @@ class PageController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'page']));
         }
 
-        return redirect()->route('soda.pages.edit', $page->id)->with('success', trans('soda::messages.created', ['object' => 'page']));
+        return redirect()->route('soda.pages.edit', $page->getKey())->with('success', trans('soda::messages.created', ['object' => 'page']));
     }
 
     /**
@@ -81,7 +81,7 @@ class PageController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 
-        return soda_cms_view('data.pages.view', compact('page'));
+        return view($page->edit_action, compact('page'));
     }
 
     /**
@@ -100,7 +100,7 @@ class PageController extends BaseController
             return $this->handleException($e, trans('soda::errors.update', ['object' => 'page']));
         }
 
-        return redirect()->route('soda.pages.edit', $page->id)->with('success', trans('soda::messages.updated', ['object' => 'page']));
+        return redirect()->route('soda.pages.edit', $page->getKey())->with('success', trans('soda::messages.updated', ['object' => 'page']));
     }
 
     /**
@@ -118,6 +118,6 @@ class PageController extends BaseController
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'page']));
         }
 
-        return redirect()->route('soda.pages.edit', $page->id)->with('warning', trans('soda::messages.deleted', ['object' => 'page']));
+        return redirect()->route('soda.pages.edit', $page->getKey())->with('warning', trans('soda::messages.deleted', ['object' => 'page']));
     }
 }

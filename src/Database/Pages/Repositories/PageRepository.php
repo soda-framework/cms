@@ -52,10 +52,10 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
             $page->load('type');
 
             if ($page->relationLoaded('type')) {
-                $page->action = $page->type->action;
-                $page->action_type = $page->type->action_type;
-                $page->edit_action = $page->type->edit_action;
-                $page->edit_action_type = $page->type->edit_action_type;
+                $page->action = $page->getRelation('type')->getAttribute('action');
+                $page->action_type = $page->getRelation('type')->getAttribute('action_type');
+                $page->edit_action = $page->getRelation('type')->getAttribute('edit_action');
+                $page->edit_action_type = $page->getRelation('type')->getAttribute('edit_action_type');
             }
         }
 
@@ -68,7 +68,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
             'name'           => 'Homepage',
             'slug'           => '/',
             'parent_id'      => null,
-            'application_id' => Soda::getApplication()->id,
+            'application_id' => Soda::getApplication()->getKey(),
             'position'       => 0,
             'real_depth'     => 0,
             'status'         => Constants::STATUS_LIVE,
@@ -96,18 +96,18 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     protected function initializePage(Request $request)
     {
         $page = $this->newInstance($request->except(['slug', 'application_id']));
-        $parent = $page->parent_id ? $this->model->findOrFail($page->parent_id) : $this->getRoot();
+        $parent = $page->getAttribute('parent_id') ? $this->model->findOrFail($page->getAttribute('parent_id')) : $this->getRoot();
 
         $slug = $page->generateSlug($request->input('slug'));
 
-        if($parent && !starts_with($slug, $parent->slug)) {
+        if($parent && !starts_with($slug, $parent->getAttribute('slug'))) {
             $slug = $parent->generateSlug($request->input('slug'));
         }
 
         $page->fill([
-            'parent_id'      => $parent->id,
+            'parent_id'      => $parent->getKey(),
             'slug'           => $slug,
-            'application_id' => Soda::getApplication()->id,
+            'application_id' => Soda::getApplication()->getKey(),
         ])->save();
 
 
@@ -120,8 +120,8 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     protected function saveSettings(PageInterface $page, $settings)
     {
-        return Soda::dynamicPage($page->type->identifier)
-            ->firstOrNew(['page_id' => $page->id])
+        return Soda::dynamicPage($page->getRelation('type')->getAttribute('identifier'))
+            ->firstOrNew(['page_id' => $page->getKey()])
             ->fill($settings)
             ->save();
     }

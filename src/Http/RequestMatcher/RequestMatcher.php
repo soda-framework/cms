@@ -117,7 +117,7 @@ class RequestMatcher
             $page = Soda::getCurrentPage($page);
         }
 
-        return $this->handleAction($page->action_type, $page, $parameters);
+        return $this->handleAction($page->getAttribute('view_action_type'), $page, $parameters);
     }
 
     /**

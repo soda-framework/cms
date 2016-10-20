@@ -25,11 +25,11 @@ class CommandsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        Update::class  => 'soda.command.update',
-        Assets::class  => 'soda.command.assets',
-        Migrate::class => 'soda.command.migrate',
-        Seed::class    => 'soda.command.seed',
-        Config::class  => 'soda.command.config',
+        'Update'  => 'soda.command.update',
+        'Assets'  => 'soda.command.assets',
+        'Migrate' => 'soda.command.migrate',
+        'Seed'    => 'soda.command.seed',
+        'Config'  => 'soda.command.config',
     ];
 
     /**
@@ -38,8 +38,8 @@ class CommandsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $devCommands = [
-        Setup::class => 'soda.command.setup',
-        Theme::class => 'soda.command.theme',
+        'Setup' => 'soda.command.setup',
+        'Theme' => 'soda.command.theme',
     ];
 
     /**
@@ -66,23 +66,102 @@ class CommandsServiceProvider extends ServiceProvider
     /**
      * Register the given commands.
      *
-     * @param  array $commands
-     *
+     * @param  array  $commands
      * @return void
      */
     protected function registerCommands(array $commands)
     {
-        foreach ($commands as $class => $command) {
+        foreach ($commands as $command => $binding) {
             $method = "register{$command}Command";
 
-            if (method_exists($this, $method)) {
-                call_user_func_array([$this, $method], []);
-            } else {
-                $this->app->singleton($command, $class);
-            }
+            call_user_func_array([$this, $method], [$binding]);
         }
 
         $this->commands(array_values($commands));
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param $binding
+     */
+    protected function registerUpdateCommand($binding)
+    {
+        $this->app->singleton($binding, function ($app) {
+            return new Update();
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param $binding
+     */
+    protected function registerAssetsCommand($binding)
+    {
+        $this->app->singleton($binding, function ($app) {
+            return new Assets();
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param $binding
+     */
+    protected function registerMigrateCommand($binding)
+    {
+        $this->app->singleton($binding, function ($app) {
+            return new Migrate();
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param $binding
+     */
+    protected function registerSeedCommand($binding)
+    {
+        $this->app->singleton($binding, function ($app) {
+            return new Seed();
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param $binding
+     */
+    protected function registerConfigCommand($binding)
+    {
+        $this->app->singleton($binding, function ($app) {
+            return new Config();
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param $binding
+     */
+    protected function registerSetupCommand($binding)
+    {
+        $this->app->singleton($binding, function ($app) {
+            return new Setup($app['config'], $app['db']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param $binding
+     */
+    protected function registerThemeCommand($binding)
+    {
+        $this->app->singleton($binding, function ($app) {
+            return new Theme();
+        });
     }
 
     /**

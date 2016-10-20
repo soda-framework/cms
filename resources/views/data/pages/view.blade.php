@@ -100,16 +100,16 @@ if (!$page->type || !count($page->type->fields)) {
         <div class="row fieldset-group">
             <div class="col-sm-6 col-xs-12">
                 {!! SodaForm::dropdown([
-                    'name'        => 'List Action',
-                    'field_name'  => 'list_action_type',
+                    'name'        => 'View Action',
+                    'field_name'  => 'view_action_type',
                     'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
-                    'description'  => 'Specifies the interface supplied when listing this page.',
+                    'description'  => 'Specifies the interface supplied when viewing this page.',
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
             <div class="col-sm-6 col-xs-12">
                 {!! SodaForm::text([
                     'name'        => null,
-                    'field_name'  => 'list_action',
+                    'field_name'  => 'view_action',
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
         </div>
@@ -141,7 +141,7 @@ if (!$page->type || !count($page->type->fields)) {
         </li>
 
         @foreach($page->blocks as $block)
-            @if($block->type->edit_action_type == 'view')
+            @if($block->list_action_type == 'view')
                 <li role='presentation' aria-controls="block_{{ $block->id }}">
                     <a role="tab" data-toggle="tab" href="#tab_block_{{ $block->id }}">{{ $block->name }}</a>
                 </li>
@@ -173,12 +173,10 @@ if (!$page->type || !count($page->type->fields)) {
                 @yield('tab.settings')
             </div>
             @foreach($page->blocks as $block)
-                @if($block->type->edit_action_type == 'view')
+                @if($block->list_action_type == 'view')
                     <div class="tab-pane" id="tab_block_{{ $block->id }}" role="tabpanel">
                         <div class="content-block">
-                            @include($block->type->edit_action, [
-                                'unique' => uniqid(),
-                                'render' => 'card',
+                            @include($block->list_action, [
                                 'block'  => $block,
                                 'page'   => $page,
                                 'models' => $page->blockModel($block)->paginate(null, ['*'], $block->identifier .'-page')

@@ -15,7 +15,6 @@ class Field extends Model implements FieldInterface
         'field_name',
         'field_type',
         'field_params',
-        'show_in_table',
         'value',
         'application_id',
     ];

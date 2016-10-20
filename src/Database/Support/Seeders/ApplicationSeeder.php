@@ -27,7 +27,7 @@ class ApplicationSeeder extends Seeder
 
         app(ApplicationUrlInterface::class)->create([
             'domain'         => $baseName.'.dev',
-            'application_id' => $application->id,
+            'application_id' => $application->getKey(),
         ]);
     }
 }

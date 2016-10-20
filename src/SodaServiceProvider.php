@@ -12,7 +12,7 @@ use Soda\Cms\Database\Pages\PageServiceProvider;
 use Soda\Cms\Foundation\SodaInstance;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
 use Soda\Cms\Foundation\Providers\RouteServiceProvider;
-use Soda\Cms\Foundation\Providers\Traits\RegistersFacadesAndDependencies;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 use Soda\Cms\Database\Users\UserServiceProvider;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherFacade;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
@@ -24,7 +24,7 @@ use Zofe\Rapyd\RapydServiceProvider;
 
 class SodaServiceProvider extends ServiceProvider
 {
-    use RegistersFacadesAndDependencies;
+    use RegistersBindingsAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -46,7 +46,7 @@ class SodaServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../public' => public_path('soda/cms')], 'soda.assets');
 
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
-        $this->loadTranslationsFrom(__DIR__.'/../translations', 'soda');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'soda');
         $this->loadViewsFrom(__DIR__.'/../resources/views', config('soda.cms.hint'));
 
         $this->extendBlade();

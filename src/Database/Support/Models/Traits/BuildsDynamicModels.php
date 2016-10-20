@@ -6,11 +6,18 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Schema\Blueprint;
 use Schema;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 use Soda\Cms\Database\Support\Observers\DynamicModelObserver;
 use SodaForm;
 
 trait BuildsDynamicModels
 {
+    abstract function getTable();
+
+    abstract function getDynamicModelTablePrefix();
+
+    abstract function buildDynamicTable(Blueprint $table);
+
     public static function bootBuildsDynamicModels()
     {
         static::observe(DynamicModelObserver::class);
@@ -25,7 +32,7 @@ trait BuildsDynamicModels
 
     public function getDynamicTableName()
     {
-        return $this->getDynamicModelTablePrefix().str_slug($this->identifier, '-');
+        return $this->getDynamicModelTablePrefix().str_slug($this->getAttribute('identifier'), '-');
     }
 
     public function createTable()
@@ -57,8 +64,6 @@ trait BuildsDynamicModels
             });
 
             Schema::rename($table, $table.'_deleted_'.Carbon::now()->timestamp);
-        } else {
-            Throw new Exception('Table '.$table.' does not exist');
         }
 
         return $this;
@@ -73,10 +78,10 @@ trait BuildsDynamicModels
         return $this;
     }
 
-    public function addField(Field $field)
+    public function addField(FieldInterface $field)
     {
         $table = $this->getDynamicTableName();
-        $field_name = $field->field_name;
+        $field_name = $field->getAttribute('field_name');
 
         if (!Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
@@ -87,10 +92,10 @@ trait BuildsDynamicModels
         return $this;
     }
 
-    public function removeField(Field $field)
+    public function removeField(FieldInterface $field)
     {
         $table = $this->getDynamicTableName();
-        $field_name = $field->field_name;
+        $field_name = $field->getAttribute('field_name');
 
         if (Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {

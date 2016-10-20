@@ -4,6 +4,7 @@ namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Cache;
 use Config;
+use DB;
 use Illuminate\Cache\TaggableStore;
 use Laratrust\Traits\LaratrustRoleTrait;
 
@@ -36,7 +37,7 @@ trait RoleHasPermissions
 
         static::deleting(function ($role) {
             if (!method_exists(Config::get('laratrust.role'), 'bootSoftDeletes')) {
-                \DB::table(Config::get('laratrust.role_user_table'))->where('role_id', $role->id)->delete();
+                DB::table(Config::get('laratrust.role_user_table'))->where('role_id', $role->getKey())->delete();
                 $role->permissions()->sync([]);
             }
         });
@@ -57,7 +58,7 @@ trait RoleHasPermissions
                     $this->load('permissions');
                 }
 
-                return $this->permissions;
+                return $this->getRelation('permissions');
             });
         }
 
@@ -65,7 +66,7 @@ trait RoleHasPermissions
             $this->load('permissions');
         }
 
-        return $this->permissions;
+        return $this->getRelation('permissions');
     }
 
     /**

@@ -11,11 +11,11 @@ use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Application\Repositories\ApplicationRepository;
 use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Repositories\CachedApplicationRepository;
-use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class ApplicationServiceProvider extends ServiceProvider
 {
-    use RegistersBindings;
+    use RegistersBindingsAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -23,25 +23,11 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     protected $defer = true;
 
-    protected $bindings = [
-        'soda.application.model' => [
-            'abstract' => ApplicationInterface::class,
-            'concrete' => Application::class,
-        ],
-        'soda.application-url.model' => [
-            'abstract' => ApplicationUrlInterface::class,
-            'concrete' => ApplicationUrl::class,
-        ],
-        'soda.application.repository' => [
-            'instance' => true,
-            'abstract' => ApplicationRepositoryInterface::class,
-            'concrete' => ApplicationRepository::class,
-        ],
-        'soda.application.cached-repository' => [
-            'instance' => true,
-            'abstract' => CachedApplicationRepositoryInterface::class,
-            'concrete' => CachedApplicationRepository::class,
-        ],
+    protected $aliases = [
+        'soda.application.model'             => [ApplicationInterface::class, Application::class],
+        'soda.application-url.model'         => [ApplicationUrlInterface::class, ApplicationUrl::class,],
+        'soda.application.repository'        => [ApplicationRepositoryInterface::class, ApplicationRepository::class],
+        'soda.application.cached-repository' => [CachedApplicationRepositoryInterface::class, CachedApplicationRepository::class],
     ];
 
     /**
@@ -60,7 +46,23 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerBindings($this->bindings);
+        $this->app->bind('soda.application.model', function($app) {
+            return new Application;
+        });
+
+        $this->app->bind('soda.application-url.model', function($app) {
+            return new ApplicationUrl;
+        });
+
+        $this->app->singleton('soda.application.repository', function($app) {
+            return new ApplicationRepository($app['soda.application.model'], $app['soda.application-url.model']);
+        });
+
+        $this->app->singleton('soda.application.cached-repository', function($app) {
+            return new CachedApplicationRepository($app['soda.application.repository']);
+        });
+
+        $this->registerAliases($this->aliases);
     }
 
     /**
@@ -70,6 +72,6 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array_keys($this->bindings);
+        return array_keys($this->aliases);
     }
 }

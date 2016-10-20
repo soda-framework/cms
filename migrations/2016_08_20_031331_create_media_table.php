@@ -18,7 +18,7 @@ class CreateMediaTable extends Migration
             $table->integer('related_id')->unsigned();
             $table->string('related_table');
             $table->string('related_field');
-            $table->integer('position')->unsigned();
+            $table->integer('position')->unsigned()->nullable()->default('0');
             $table->text('media', 65535);
             $table->enum('media_type', ['image', 'video', 'other']);
             $table->timestamps();

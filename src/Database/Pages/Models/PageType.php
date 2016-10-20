@@ -16,7 +16,7 @@ use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class PageType extends Model implements PageTypeInterface
 {
-    use OptionallyBoundToApplication, Draftable, Identifiable, BuildsDynamicModels, HasDefaultAttributes;
+    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes;
 
     protected $table = 'page_types';
 
@@ -25,24 +25,22 @@ class PageType extends Model implements PageTypeInterface
         'identifier',
         'description',
         'application_id',
-        'status',
-        'position',
+        'view_action',
+        'view_action_type',
         'edit_action',
         'edit_action_type',
-        'list_action',
-        'list_action_type',
     ];
 
     protected $defaults = [
-        'edit_action'      => 'soda::pages.view',
+        'view_action'      => '',
+        'view_action_type' => 'view',
+        'edit_action'      => 'soda::data.pages.view',
         'edit_action_type' => 'view',
-        'list_action'      => 'soda::pages.index',
-        'list_action_type' => 'view',
     ];
 
     public function fields()
     {
-        return $this->morphToMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
+        return $this->morphToMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position', 'show_in_table')->orderBy('pivot_position', 'asc');
     }
 
     public function pages()

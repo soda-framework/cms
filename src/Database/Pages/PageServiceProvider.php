@@ -15,12 +15,11 @@ use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Pages\Repositories\PageRepository;
 use Soda\Cms\Database\Pages\Models\DynamicPage;
-use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
-use Soda\Cms\Foundation\Providers\Traits\RegistersFacadesAndDependencies;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class PageServiceProvider extends ServiceProvider
 {
-    use RegistersFacadesAndDependencies, RegistersBindings;
+    use RegistersBindingsAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -28,29 +27,12 @@ class PageServiceProvider extends ServiceProvider
      */
     protected $defer = true;
 
-    protected $bindings = [
-        'soda.page.model' => [
-            'abstract' => PageInterface::class,
-            'concrete' => Page::class,
-        ],
-        'soda.page-type.model' => [
-            'abstract' => PageTypeInterface::class,
-            'concrete' => PageType::class,
-        ],
-        'soda.dynamic-page.model' => [
-            'abstract' => DynamicPageInterface::class,
-            'concrete' => DynamicPage::class,
-        ],
-        'soda.page.repository' => [
-            'instance' => true,
-            'abstract' => PageRepositoryInterface::class,
-            'concrete' => PageRepository::class,
-        ],
-        'soda.page.cached-repository' => [
-            'instance' => true,
-            'abstract' => CachedPageRepositoryInterface::class,
-            'concrete' => CachedPageRepository::class,
-        ],
+    protected $aliases = [
+        'soda.page.model'             => [PageInterface::class, Page::class],
+        'soda.page-type.model'        => [PageTypeInterface::class, PageType::class],
+        'soda.dynamic-page.model'     => [DynamicPageInterface::class, DynamicPage::class],
+        'soda.page.repository'        => [PageRepositoryInterface::class, PageRepository::class],
+        'soda.page.cached-repository' => [CachedPageRepositoryInterface::class, CachedPageRepository::class],
     ];
 
     /**
@@ -76,7 +58,27 @@ class PageServiceProvider extends ServiceProvider
             ClosureTableServiceProvider::class,
         ]);
 
-        $this->registerBindings($this->bindings);
+        $this->app->bind('soda.page.model', function($app) {
+            return new Page;
+        });
+
+        $this->app->bind('soda.page-type.model', function($app) {
+            return new PageType;
+        });
+
+        $this->app->bind('soda.dynamic-page.model', function($app) {
+            return new DynamicPage;
+        });
+
+        $this->app->singleton('soda.page.repository', function($app) {
+            return new PageRepository($app['soda.page.model']);
+        });
+
+        $this->app->singleton('soda.page.cached-repository', function($app) {
+            return new CachedPageRepository($app['soda.page.repository']);
+        });
+
+        $this->registerAliases($this->aliases);
     }
 
     /**
@@ -86,6 +88,6 @@ class PageServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array_keys($this->bindings);
+        return array_keys($this->aliases);
     }
 }

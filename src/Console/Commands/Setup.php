@@ -3,12 +3,42 @@
 namespace Soda\Cms\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Database\DatabaseManager;
 
 class Setup extends Command
 {
 
     protected $signature = 'soda:setup {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
     protected $description = 'Initial setup command for the Soda Framework';
+
+    /**
+     * The config instance.
+     *
+     * @var \Illuminate\Contracts\Config\Repository
+     */
+    protected $config;
+
+    /**
+     * The database instance.
+     *
+     * @var \Illuminate\Database\DatabaseManager
+     */
+    protected $db;
+
+    /**
+     * Create a new optimize command instance.
+     *
+     * @param Repository      $config
+     * @param DatabaseManager $db
+     */
+    public function __construct(Repository $config, DatabaseManager $db)
+    {
+        parent::__construct();
+
+        $this->config = $config;
+        $this->db = $db;
+    }
 
     public function handle()
     {
@@ -47,14 +77,14 @@ class Setup extends Command
 
                 file_put_contents($envFilePath, $contents);
 
-                $this->laravel['config']->set('database.connections.mysql.host', $dbHost);
-                $this->laravel['config']->set('database.connections.mysql.port', $dbPort);
-                $this->laravel['config']->set('database.connections.mysql.database', null);
-                $this->laravel['config']->set('database.connections.mysql.username', $dbUser);
-                $this->laravel['config']->set('database.connections.mysql.password', $dbPass);
+                $this->config->set('database.connections.mysql.host', $dbHost);
+                $this->config->set('database.connections.mysql.port', $dbPort);
+                $this->config->set('database.connections.mysql.database', null);
+                $this->config->set('database.connections.mysql.username', $dbUser);
+                $this->config->set('database.connections.mysql.password', $dbPass);
 
-                $this->laravel['db']->purge('mysql');
-                $this->laravel['db']->connection('mysql')->getPdo()->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}`");
+                $this->db->purge('mysql');
+                $this->db->connection('mysql')->getPdo()->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}`");
             }
 
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);

@@ -19,12 +19,12 @@ class PageObserver
      */
     public function created(PageInterface $page)
     {
-        if ($page->page_type_id !== null) {
+        if ($page->getAttribute('page_type_id') !== null) {
             if(!$page->relationLoaded('type')) {
                 $page->load('type');
             }
 
-            DynamicPage::fromTable($page->type->identifier)->fill(['page_id' => $page->id])->save();
+            DynamicPage::fromTable($page->getRelation('type')->getAttribute('identifier'))->fill(['page_id' => $page->getKey()])->save();
         }
     }
 }

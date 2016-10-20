@@ -27,7 +27,7 @@ class BlockRepository extends AbstractRepository implements BlockRepositoryInter
     {
         $filter = $this->buildFilter($this->model);
         $grid = $this->buildGrid($filter);
-        $grid = $this->addButtonsToGrid($grid, 'soda.blocks.edit', 'soda.blocks.delete');
+        $grid = $this->addButtonsToGrid($grid, 'soda.blocks.edit', 'soda.blocks.destroy');
         $grid->paginate($perPage)->getGrid($this->getGridView());
 
         return compact('filter', 'grid');
@@ -43,13 +43,13 @@ class BlockRepository extends AbstractRepository implements BlockRepositoryInter
             $block->load('type');
 
             if ($block->relationLoaded('type')) {
-                $block->name = $block->type->name;
-                $block->description = $block->type->description;
-                $block->identifier = $block->type->identifier;
-                $block->edit_action = $block->type->edit_action;
-                $block->edit_action_type = $block->type->edit_action_type;
-                $block->list_action = $block->type->list_action;
-                $block->list_action_type = $block->type->list_action_type;
+                $block->name = $block->getRelation('type')->getAttribute('name');
+                $block->description = $block->getRelation('type')->getAttribute('description');
+                $block->identifier = $block->getRelation('type')->getAttribute('identifier');
+                $block->edit_action = $block->getRelation('type')->getAttribute('edit_action');
+                $block->edit_action_type = $block->getRelation('type')->getAttribute('edit_action_type');
+                $block->list_action = $block->getRelation('type')->getAttribute('list_action');
+                $block->list_action_type = $block->getRelation('type')->getAttribute('list_action_type');
             }
         }
 

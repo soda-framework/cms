@@ -31,7 +31,7 @@ class CachedPageRepository extends AbstractCacheRepository implements CachedPage
     }
 
     public function getAttributesForPage(PageInterface $page) {
-        return $this->cache($this->getPageAttributesCacheKey($page->id), config('soda.cache.page-data'), function () use ($page) {
+        return $this->cache($this->getPageAttributesCacheKey($page->getKey()), config('soda.cache.page-data'), function () use ($page) {
             if (!$page->relationLoaded('type')) {
                 $page->load('type');
             }
@@ -39,8 +39,8 @@ class CachedPageRepository extends AbstractCacheRepository implements CachedPage
             $model = $page->getDynamicModel();
 
             if ($page->relationLoaded('type')) {
-                $model = $model->fromTable($page->type->identifier)->firstOrNew([
-                    'page_id' => $page->id,
+                $model = $model->fromTable($page->getRelation('type')->getAttribute('identifier'))->firstOrNew([
+                    'page_id' => $page->getKey(),
                 ]);
             }
 

@@ -72,7 +72,7 @@ trait UserHasRoles
                     $this->load('roles');
                 }
 
-                return $this->roles;
+                return $this->getRelation('roles');
             });
         }
 
@@ -80,7 +80,7 @@ trait UserHasRoles
             $this->load('roles');
         }
 
-        return $this->roles;
+        return $this->getRelation('roles');
     }
 
     /**

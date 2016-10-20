@@ -232,7 +232,7 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function getFieldLabel()
     {
-        return $this->field->name;
+        return $this->field->getAttribute('name');
     }
 
     /**
@@ -242,7 +242,7 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function getFieldName()
     {
-        return $this->field->field_name;
+        return $this->field->getAttribute('field_name');
     }
 
     /**
@@ -252,7 +252,7 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function getPrefixedFieldName()
     {
-        $field_name = $this->field->field_name;
+        $field_name = $this->field->getAttribute('field_name');
 
         if ($this->prefix) {
             return $this->prefix.'['.$field_name.']';
@@ -268,7 +268,7 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function getFieldDescription()
     {
-        return $this->field->description;
+        return $this->field->getAttribute('description');
     }
 
     /**
@@ -279,7 +279,7 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function getFieldValue()
     {
-        $field_name = $this->field->field_name;
+        $field_name = $this->field->getAttribute('field_name');
 
         if (old($this->getPrefixedFieldName()) === null) {
             if ($this->model) {
@@ -290,7 +290,7 @@ abstract class AbstractFormField implements FormFieldInterface
                 }
             }
 
-            return $this->field->value;
+            return $this->field->getAttribute('value');
         }
 
         return old($this->getPrefixedFieldName());
@@ -332,7 +332,7 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function getFieldParameters()
     {
-        return $this->field->field_params;
+        return $this->field->getAttribute('field_params');
     }
 
     /**

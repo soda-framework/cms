@@ -14,7 +14,11 @@ class DynamicModelObserver
      */
     public function creating(CanBuildDynamicModels $type)
     {
-        $type->createTable()->addFields($type->fields);
+        if(!$type->relationLoaded('fields')) {
+            $type->load('fields');
+        }
+
+        $type->createTable()->addFields($type->getRelation('fields'));
     }
 
     /**
@@ -29,9 +33,9 @@ class DynamicModelObserver
 
     public function saving(CanBuildDynamicModels $type)
     {
-        if ($type->isDirty('identifier') && $type->id) {
+        if ($type->isDirty('identifier') && $type->getKey()) {
             $old_table = $type->getDynamicModelTablePrefix().$type->getOriginal('identifier');
-            $new_table = $type->getDynamicModelTablePrefix().$type->identifier;
+            $new_table = $type->getDynamicModelTablePrefix().$type->getAttribute('identifier');
 
             if (Schema::hasTable($old_table)) {
                 Schema::rename($old_table, $new_table);

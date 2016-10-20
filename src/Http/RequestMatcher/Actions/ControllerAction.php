@@ -9,9 +9,8 @@ class ControllerAction implements ActionInterface
 {
     public function handle(PageInterface $page, $parameters = [])
     {
-        $namespace = $page->package;
-        $controller = trim($page->action, '\\');
+        $controller = trim($page->getAttribute('view_action'), '\\');
 
-        return App::call($namespace ? "$namespace\\$controller" : $controller);
+        return app()->call($controller, [], 'handle');
     }
 }

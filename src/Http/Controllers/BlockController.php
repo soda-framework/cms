@@ -3,6 +3,7 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Blocks\Interfaces\BlockRepositoryInterface;
 
@@ -61,7 +62,7 @@ class BlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block']));
         }
 
-        return redirect()->route('soda.blocks.edit', $block->id)->with('success', trans('soda::messages.created', ['object' => 'block']));
+        return redirect()->route('soda.blocks.edit', $block->getKey())->with('success', trans('soda::messages.created', ['object' => 'block']));
     }
 
     /**
@@ -98,7 +99,7 @@ class BlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.update', ['object' => 'block']));
         }
 
-        return redirect()->route('soda.blocks.edit', $block->id)->with('success', trans('soda::messages.updated', ['object' => 'block']));
+        return redirect()->route('soda.blocks.edit', $block->getKey())->with('success', trans('soda::messages.updated', ['object' => 'block']));
     }
 
     /**
@@ -112,10 +113,15 @@ class BlockController extends BaseController
     {
         try {
             $block = $this->blocks->destroy($id);
-        } catch (Exception $e) {
+        }
+        catch ( ModelNotFoundException $e )
+        {
+            return $this->handleException($e, trans('soda::errors.not-found', ['object' => 'block']));
+        }
+        catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block']));
         }
 
-        return redirect()->route('soda.blocks.edit', $block->id)->with('warning', trans('soda::messages.deleted', ['object' => 'block']));
+        return redirect()->route('soda.blocks.edit', $block->getKey())->with('warning', trans('soda::messages.deleted', ['object' => 'block']));
     }
 }

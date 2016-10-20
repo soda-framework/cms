@@ -17,8 +17,8 @@ class CreatePageBlocksTable extends Migration
             $table->increments('id');
             $table->integer('page_id')->unsigned()->index('FK_page_blocks_pages');
             $table->integer('block_id')->unsigned()->index('FK_page_blocks_blocks');
-            $table->integer('can_create')->unsigned();
-            $table->integer('can_delete')->unsigned();
+            $table->integer('min_blocks')->unsigned()->nullable();
+            $table->integer('max_blocks')->unsigned()->nullable();
         });
     }
 

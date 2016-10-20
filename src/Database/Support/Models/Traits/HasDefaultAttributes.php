@@ -15,7 +15,7 @@ trait HasDefaultAttributes
     {
         $value = parent::getAttribute($key);
 
-        if ($value === null && property_exists($this, 'defaults') && array_key_exists($key, $this->defaults)) {
+        if (($value === null || $value === '') && property_exists($this, 'defaults') && array_key_exists($key, $this->defaults)) {
             $value = $this->defaults[$key];
         }
 

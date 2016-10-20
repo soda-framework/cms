@@ -7,11 +7,11 @@ use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 use Soda\Cms\Database\Fields\Interfaces\MediaInterface;
 use Soda\Cms\Database\Fields\Models\Field;
 use Soda\Cms\Database\Fields\Models\Media;
-use Soda\Cms\Foundation\Providers\Traits\RegistersBindings;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class FieldsServiceProvider extends ServiceProvider
 {
-    use RegistersBindings;
+    use RegistersBindingsAndDependencies;
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -19,15 +19,9 @@ class FieldsServiceProvider extends ServiceProvider
      */
     protected $defer = true;
 
-    protected $bindings = [
-        'soda.field.model' => [
-            'abstract' => FieldInterface::class,
-            'concrete' => Field::class,
-        ],
-        'soda.media.model' => [
-            'abstract' => MediaInterface::class,
-            'concrete' => Media::class,
-        ],
+    protected $aliases = [
+        'soda.field.model' => [FieldInterface::class, Field::class],
+        'soda.media.model' => [MediaInterface::class, Media::class],
     ];
 
     /**
@@ -46,7 +40,15 @@ class FieldsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerBindings($this->bindings);
+        $this->app->bind('soda.field.model', function($app) {
+            return new Field;
+        });
+
+        $this->app->bind('soda.media.model', function($app) {
+            return new Media;
+        });
+
+        $this->registerAliases($this->aliases);
     }
 
     /**
@@ -56,6 +58,6 @@ class FieldsServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array_keys($this->bindings);
+        return array_keys($this->aliases);
     }
 }

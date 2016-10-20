@@ -11,5 +11,6 @@ interface PageInterface extends EntityInterface
     public function getBlockModel($identifier);
     public function blockModel($identifier);
     public function pageAttributes();
+    public function getPageAttribute($attribute);
     public function generateSlug($slug);
 }

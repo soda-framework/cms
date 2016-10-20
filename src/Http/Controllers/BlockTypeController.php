@@ -58,7 +58,7 @@ class BlockTypeController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
         }
 
-        return redirect()->route('soda.block-types.edit', $blockType->id)->with('success', trans('soda::messages.created', ['object' => 'block type']));
+        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('success', trans('soda::messages.created', ['object' => 'block type']));
     }
 
     /**
@@ -95,7 +95,7 @@ class BlockTypeController extends BaseController
             return $this->handleException($e, trans('soda::errors.update', ['object' => 'block type']));
         }
 
-        return redirect()->route('soda.block-types.edit', $blockType->id)->with('success', trans('soda::messages.updated', ['object' => 'block type']));
+        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('success', trans('soda::messages.updated', ['object' => 'block type']));
     }
 
     /**
@@ -108,11 +108,11 @@ class BlockTypeController extends BaseController
     public function destroy($id)
     {
         try {
-            $blockTypeType = $this->blockTypeTypes->destroy($id);
+            $blockType = $this->blockTypes->destroy($id);
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block type']));
         }
 
-        return redirect()->route('soda.block-type.edit', $blockTypeType->id)->with('warning', trans('soda::messages.deleted', ['object' => 'block type']));
+        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('warning', trans('soda::messages.deleted', ['object' => 'block type']));
     }
 }
