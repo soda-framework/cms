@@ -6,4 +6,5 @@ use Soda\Cms\Database\Support\Interfaces\CanBuildDataGrid;
 
 interface FieldRepositoryInterface extends CanBuildDataGrid, BaseRepositoryInterface
 {
+    public function getFieldTypes();
 }

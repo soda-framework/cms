@@ -3,8 +3,8 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ route('soda.home') }}">Home</a></li>
-        <li><a href="{{ route('soda.field') }}">Fields</a></li>
-        <li class="active">{{ $model->name ? $model->name : 'New Field' }}</li>
+        <li><a href="{{ route('soda.fields.index') }}">Fields</a></li>
+        <li class="active">{{ $field->name ? $field->name : 'New Field' }}</li>
     </ol>
 @stop
 
@@ -18,56 +18,51 @@
 
 @include(soda_cms_view_path('partials.heading'), [
     'icon'        => 'fa fa-pencil',
-    'title'       => $model->name? ' Field: ' . $model->name : 'New Field',
+    'title'       => $field->name? ' Field: ' . $field->name : 'New Field',
 ])
 
 @section('content')
     <div class="content-block">
-        <form id="field-form" method="POST" action='{{route('soda.'.$hint.'.edit',['id'=>@$model->id])}}' enctype="multipart/form-data">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+        <form method="POST" id="field-form" action="{{ route('soda.fields.' . ($field->id ? 'update' : 'store'), $field->id) }}">
+            {!! csrf_field() !!}
+            {!! method_field($field->id ? 'PUT' : 'POST') !!}
 
             {!! SodaForm::text([
                 'name'        => 'Field Label',
                 'field_name'  => 'name',
                 'description' => 'Label of the field, visible when entering forms'
-            ])->setModel($model) !!}
+            ])->setModel($field) !!}
 
             {!! SodaForm::dropdown([
                 'name'         => 'Field Type',
                 'field_name'   => 'field_type',
-                'field_params' => ['options' => Soda::getFormBuilder()->getFieldTypes()],
+                'field_params' => ['options' => $fieldTypes],
                 'description'  => 'Type of field to be used'
-            ])->setModel($model) !!}
+            ])->setModel($field) !!}
 
             {!! SodaForm::text([
                 'name'         => 'Field Default Value',
                 'field_name'   => 'value',
                 'description'  => 'Default value for field'
-            ])->setModel($model) !!}
+            ])->setModel($field) !!}
 
             {!! SodaForm::text([
                 'name'        => 'Field Name',
                 'field_name'  => 'field_name',
                 'description' => 'Name of the field, used when accessing models'
-            ])->setModel($model) !!}
+            ])->setModel($field) !!}
 
             {!! SodaForm::textarea([
                 'name'        => 'Field Description',
                 'field_name'  => 'description',
                 'description'  => 'Informative text to guide users when inputting this field'
-            ])->setModel($model) !!}
+            ])->setModel($field) !!}
 
             {!! SodaForm::json([
                 'name'        => 'Field Parameters',
                 'field_name'  => 'field_params',
                 'description'  => 'Parameters for the field'
-            ])->setModel($model) !!}
-
-            {!! SodaForm::toggle([
-                'name'        => 'Show in table',
-                'field_name'  => 'show_in_table',
-                'description' => 'Determines whether column for this field should be shown in CMS table-view',
-            ])->setModel($model) !!}
+            ])->setModel($field) !!}
         </form>
     </div>
 

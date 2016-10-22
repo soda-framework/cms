@@ -2,6 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Fields\Interfaces\FieldRepositoryInterface;
 
@@ -21,18 +23,28 @@ class FieldController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        return soda_cms_view('data.fields.index', $this->fields->getFilteredGrid(10));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            $field = $this->fields->newInstance($request);
+            $fieldTypes = $this->fields->getFieldTypes();
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'field']));
+        }
+
+        return soda_cms_view('data.fields.view', compact('field', 'fieldTypes'));
     }
 
     /**
@@ -44,19 +56,13 @@ class FieldController extends BaseController
      */
     public function store(Request $request)
     {
-        //
-    }
+        try {
+            $field = $this->fields->save($request);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'field']));
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('soda.fields.edit', $field->getKey())->with('success', trans('soda::messages.created', ['object' => 'field']));
     }
 
     /**
@@ -68,7 +74,14 @@ class FieldController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $field = $this->fields->findById($id);
+        $fieldTypes = $this->fields->getFieldTypes();
+
+        if (!$field) {
+            return $this->handleError(trans('soda::errors.not-found', ['object' => 'field']));
+        }
+
+        return soda_cms_view('data.fields.view', compact('field', 'fieldTypes'));
     }
 
     /**
@@ -81,7 +94,13 @@ class FieldController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $field = $this->fields->save($request, $id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.update', ['object' => 'field']));
+        }
+
+        return redirect()->route('soda.fields.edit', $field->getKey())->with('success', trans('soda::messages.updated', ['object' => 'field']));
     }
 
     /**
@@ -93,6 +112,14 @@ class FieldController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $this->fields->destroy($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->handleException($e, trans('soda::errors.not-found', ['object' => 'field']));
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'field']));
+        }
+
+        return redirect()->route('soda.fields.index')->with('warning', trans('soda::messages.deleted', ['object' => 'field']));
     }
 }
