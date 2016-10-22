@@ -26,8 +26,25 @@ class Application extends Model implements ApplicationInterface
         return $this->hasMany(resolve_class('soda.page.model'));
     }
 
+    public function settings()
+    {
+        return $this->hasMany(resolve_class('soda.application-setting.model'));
+    }
+
     public function urls()
     {
-        return $this->hasMany(resolve_class('soda.application-urls.model'));
+        return $this->hasMany(resolve_class('soda.application-url.model'));
+    }
+
+    public function getSettings()
+    {
+        return app('soda.application.cached-repository')->getSettingsForApplication($this);
+    }
+
+    public function getSetting($setting)
+    {
+        $settings = $this->getSettings();
+
+        return isset($settings[$setting]) ? $settings[$setting] : null;
     }
 }

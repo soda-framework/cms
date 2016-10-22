@@ -2,12 +2,15 @@
 
 namespace Soda\Cms\Database\Application;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationSettingInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Models\Application;
+use Soda\Cms\Database\Application\Models\ApplicationSetting;
 use Soda\Cms\Database\Application\Models\ApplicationUrl;
 use Soda\Cms\Database\Application\Repositories\ApplicationRepository;
 use Soda\Cms\Database\Application\Repositories\CachedApplicationRepository;
@@ -25,7 +28,8 @@ class ApplicationServiceProvider extends ServiceProvider
 
     protected $aliases = [
         'soda.application.model'             => [ApplicationInterface::class, Application::class],
-        'soda.application-url.model'         => [ApplicationUrlInterface::class, ApplicationUrl::class,],
+        'soda.application-url.model'         => [ApplicationUrlInterface::class, ApplicationUrl::class],
+        'soda.application-setting.model'         => [ApplicationSettingInterface::class, ApplicationSetting::class],
         'soda.application.repository'        => [ApplicationRepositoryInterface::class, ApplicationRepository::class],
         'soda.application.cached-repository' => [CachedApplicationRepositoryInterface::class, CachedApplicationRepository::class],
     ];
@@ -52,6 +56,10 @@ class ApplicationServiceProvider extends ServiceProvider
 
         $this->app->bind('soda.application-url.model', function ($app) {
             return new ApplicationUrl;
+        });
+
+        $this->app->bind('soda.application-setting.model', function ($app) {
+            return new ApplicationSetting;
         });
 
         $this->app->singleton('soda.application.repository', function ($app) {

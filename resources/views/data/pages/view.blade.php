@@ -1,9 +1,6 @@
 <?php
 $smallView = false;
-if($page->type) {
-    $page->load('type.fields');
-}
-if (!$page->type || !count($page->type->fields->where('pivot.show_in_table', 1))) {
+if ($page->getRelation('type') === null || $page->getRelation('type')->getRelation('fields') === null || !count($page->getRelation('type')->getRelation('fields')->where('pivot.show_in_table', 1))) {
     $smallView = true;
 }
 ?>
@@ -62,7 +59,7 @@ if (!$page->type || !count($page->type->fields->where('pivot.show_in_table', 1))
                     'description' => 'The url of this page',
                     'field_name'  => 'slug',
                     'field_params' => [
-                        'prefix' => ($parent = $page->getParent()) ? $parent->slug : '',
+                        'prefix' => ($page->parent_id !== null && $parent = $page->getParent()) ? $parent->slug : '',
                     ],
                 ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
 

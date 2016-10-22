@@ -51,12 +51,9 @@
 @import "../../components/bootstrap-fileinput/css/fileinput";
 @import "../../components/bootstrap-sweetalert/lib/sweet-alert";
 @import "../../components/bootstrap-select/sass/bootstrap-select";
+@import "../../components/bootstrap-tagsinput/src/bootstrap-tagsinput";
 @import "../../components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min";
 @import "../../components/font-awesome/scss/font-awesome";
-
-// Old/unimplemented plugins
-//@import "../../components/bootstrap-tagsinput/dist/bootstrap-tagsinput";
-//@import "../../components/select2/src/scss/core";
 
 @import "helpers";
 @import "core";

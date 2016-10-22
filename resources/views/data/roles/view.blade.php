@@ -42,15 +42,25 @@
                 "field_name"  => 'description',
             ])->setModel($role) !!}
 
-            {!! SodaForm::multiselect([
-                "name"         => "Permissions",
-                "field_name"   => 'permission_id',
-                "value"        => $role->permissions->pluck('id')->toArray(),
-                "field_params" => [
-                    "placeholder" => "Select permission(s)",
-                    "options"     => $permissionIds
-                ]
-            ])->setModel($role) !!}
+            @permission('assign-role-permissions')
+                {!! SodaForm::multiselect([
+                    "name"         => "Permissions",
+                    "field_name"   => 'permission_id',
+                    "value"        => $role->permissions->pluck('id')->toArray(),
+                    "field_params" => [
+                        "placeholder" => "Select permission(s)",
+                        "options"     => $permissionIds
+                    ]
+                ])->setModel($role) !!}
+            @else
+
+                {!! SodaForm::static_text([
+                    "name"         => "Permissions",
+                    "field_name"   => 'permission_id',
+                    "value"        => '<ul class="list-inline"><li style="width:33%">' . implode('</li><li style="width:33%">', $role->permissions->pluck('display_name')->toArray()) . '</li></ul>',
+                ])->setModel($role) !!}
+            @endpermission
+
         </form>
     </div>
 

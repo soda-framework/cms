@@ -81,6 +81,7 @@ class PageController extends BaseController
     public function edit($id)
     {
         $page = $this->pages->findById($id);
+        $this->pages->loadType($page);
 
         if (!$page) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));

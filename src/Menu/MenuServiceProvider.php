@@ -55,6 +55,14 @@ class MenuServiceProvider extends ServiceProvider
                 'permissions' => 'access-cms',
             ]);
 
+            $menu->addItem('Application', [
+                'url'         => route('soda.application.edit'),
+                'icon'        => 'fa fa-database',
+                'label'       => 'Application',
+                'isCurrent'   => soda_request_is('application*'),
+                'permissions' => 'view-application-settings',
+            ]);
+
             $menu->addItem('Content', [
                 'label'     => 'Content',
                 'icon'      => 'fa fa-file-o',

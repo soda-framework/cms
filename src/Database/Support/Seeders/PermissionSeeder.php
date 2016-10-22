@@ -55,6 +55,45 @@ class PermissionSeeder extends Seeder
             'category'     => 'Application',
         ]);
 
+        $permission_view_application_settings = $permissionModel->create([
+            'name'         => 'view-application-settings',
+            'display_name' => 'View Application Settings',
+            'description'  => 'View settings used for configuring the application.',
+            'category'     => 'Application',
+        ]);
+
+        $permission_edit_application_settings = $permissionModel->create([
+            'name'         => 'edit-application-settings',
+            'display_name' => 'Edit Application Settings',
+            'description'  => 'Edit settings used for configuring the application.',
+            'category'     => 'Application',
+        ]);
+
+        /*
+
+        $permission_create_application_settings = $permissionModel->create([
+            'name'         => 'create-application-settings',
+            'display_name' => 'Create Application Settings',
+            'description'  => 'Create settings used for configuring the application.',
+            'category'     => 'Application',
+        ]);
+
+        $permission_delete_application_settings = $permissionModel->create([
+            'name'         => 'delete-application-settings',
+            'display_name' => 'Delete Application Settings',
+            'description'  => 'Delete settings used for configuring the application.',
+            'category'     => 'Application',
+        ]);
+
+        */
+
+        $permission_manage_application_urls = $permissionModel->create([
+            'name'         => 'manage-application-urls',
+            'display_name' => 'Manage Application Urls',
+            'description'  => 'Manage urls assoicated with the application.',
+            'category'     => 'Application',
+        ]);
+
         $permission_view_users = $permissionModel->create([
             'name'         => 'view-users',
             'display_name' => 'View Users',
@@ -244,7 +283,15 @@ class PermissionSeeder extends Seeder
             'category'     => 'Fields',
         ]);
 
+
+
+
+
+
         $role_developer->attachPermissions([
+            //$permission_create_application_settings,
+            //$permission_delete_application_settings,
+            $permission_manage_application_urls,
             $permission_manage_page_types,
             $permission_advanced_pages,
             $permission_manage_block_types,
@@ -268,6 +315,8 @@ class PermissionSeeder extends Seeder
 
         $role_admin->attachPermissions([
             $permission_access_cms,
+            $permission_view_application_settings,
+            $permission_edit_application_settings,
             $permission_view_users,
             $permission_edit_users,
             $permission_create_users,

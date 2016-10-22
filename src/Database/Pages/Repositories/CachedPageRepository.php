@@ -56,6 +56,6 @@ class CachedPageRepository extends AbstractCacheRepository implements CachedPage
 
     protected function getPageAttributesCacheKey($pageId)
     {
-        return 'soda.'.Soda::getApplication()->id.'.page.'.$pageId.'.data';
+        return 'soda.'.Soda::getApplication()->id.'.page.'.$pageId.':attributes';
     }
 }

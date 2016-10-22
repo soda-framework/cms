@@ -1,11 +1,16 @@
 <?php namespace Soda\Cms\Database\Application\Repositories;
 
+use Illuminate\Http\Request;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
+use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Support\Facades\Soda;
 
 class ApplicationRepository implements ApplicationRepositoryInterface
 {
+    use BuildsDataGrids;
+
     protected $appModel;
     protected $urlModel;
 
@@ -20,6 +25,15 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         return $this->appModel->find($id);
     }
 
+    public function getApplication($id = null)
+    {
+        if ($id !== null) {
+            return $this->findById($id);
+        } else {
+            return Soda::getApplication();
+        }
+    }
+
     public function findByUrl($url)
     {
         $domain = str_replace('www.', '', $url);
@@ -29,5 +43,45 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         }
 
         return null;
+    }
+
+    public function save(Request $request, $id = null)
+    {
+        $model = $this->getApplication($id);
+
+        $model->fill($request->input())->save();
+
+        if ($request->has('application_urls')) {
+            $newUrls = $request->input('application_urls');
+            $currentUrls = $model->urls()->pluck('domain')->toArray();
+
+            $detach = array_diff($currentUrls, $newUrls);
+            $attach = [];
+
+            foreach (array_diff($newUrls, $currentUrls) as $new) {
+                $attach[] = ['domain' => $new, 'application_id' => $model->id];
+            };
+
+            if (count($detach)) {
+                // Remove detachable URLs, EXCEPT our current host!
+                $model->urls()->whereIn('domain', $detach)->where('domain', '!=', str_replace('www.', '', $_SERVER['HTTP_HOST']))->delete();
+            }
+
+            if (count($attach)) {
+                $model->urls()->insert($attach);
+            }
+        }
+
+        return $model;
+    }
+
+    public function getFilteredGrid($perPage)
+    {
+        $filter = $this->buildFilter($this->appModel);
+        $grid = $this->buildGrid($filter);
+        $grid = $this->addButtonsToGrid($grid, 'soda.application.edit', 'soda.application.destroy');
+        $grid->paginate($perPage)->getGrid($this->getGridView());
+
+        return compact('filter', 'grid');
     }
 }

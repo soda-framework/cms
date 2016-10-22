@@ -23,6 +23,11 @@ abstract class AbstractCacheRepository
         return $closure();
     }
 
+    protected function forget($key)
+    {
+        return $this->getCacheStore()->forget($key);
+    }
+
     protected function getCacheStore()
     {
         return app('cache');

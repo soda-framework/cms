@@ -27,6 +27,21 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
         return $this->model->type()->getRelated()->get();
     }
 
+    public function loadType(PageInterface $page)
+    {
+        if(!$page->relationLoaded('type'))
+        {
+            $page->load('type');
+        }
+
+        if($page->getRelation('type') !== null && !$page->getRelation('type')->relationLoaded('fields'))
+        {
+            $page->getRelation('type')->load('fields');
+        }
+
+        return $page;
+    }
+
     public function getTree()
     {
         $page = $this->getRoot() ?: $this->createRoot();

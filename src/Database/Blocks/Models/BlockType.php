@@ -37,7 +37,7 @@ class BlockType extends Model implements BlockTypeInterface
 
     public function fields()
     {
-        return $this->morphToSortedMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position', 'show_in_table')->orderBy('pivot_position', 'asc');
+        return $this->morphToSortedMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('show_in_table');
     }
 
     public function blocks()

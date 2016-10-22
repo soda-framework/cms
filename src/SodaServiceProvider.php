@@ -8,7 +8,7 @@ use Rutorika\Sortable\SortableServiceProvider;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Soda\Cms\Database\Application\ApplicationServiceProvider;
 use Soda\Cms\Database\Blocks\BlockServiceProvider;
-use Soda\Cms\Database\Fields\FieldsServiceProvider;
+use Soda\Cms\Database\Fields\FieldServiceProvider;
 use Soda\Cms\Database\Pages\PageServiceProvider;
 use Soda\Cms\Database\Roles\RoleServiceProvider;
 use Soda\Cms\Database\Permissions\PermissionServiceProvider;
@@ -91,7 +91,7 @@ class SodaServiceProvider extends ServiceProvider
 
             // Deferred Model Providers
             ApplicationServiceProvider::class,
-            FieldsServiceProvider::class,
+            FieldServiceProvider::class,
             BlockServiceProvider::class,
             PageServiceProvider::class,
             UserServiceProvider::class,

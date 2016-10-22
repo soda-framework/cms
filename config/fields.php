@@ -14,6 +14,7 @@ return [
     'static_text'  => Soda\Cms\Forms\Fields\StaticText::class,
     'hidden'       => Soda\Cms\Forms\Fields\Hidden::class,
     'relationship' => Soda\Cms\Forms\Fields\Relationship::class,
+    'tags'         => Soda\Cms\Forms\Fields\Tags::class,
     'text'         => Soda\Cms\Forms\Fields\Text::class,
     'textarea'     => Soda\Cms\Forms\Fields\Textarea::class,
     'tinymce'      => Soda\Cms\Forms\Fields\Tinymce::class,

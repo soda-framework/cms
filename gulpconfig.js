@@ -88,6 +88,7 @@ module.exports = {
             'resources/components/bootstrap-fileinput/js/fileinput.js',
             'resources/components/bootstrap-fileinput/themes/fa/fa.js',
             'resources/components/bootstrap-select/js/bootstrap-select.js',
+            'resources/components/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
             'resources/components/jquery-sortable/source/js/jquery-sortable.js',
             'resources/components/moment/min/moment.min.js',
             'resources/components/jsoneditor/dist/jsoneditor.min.js',

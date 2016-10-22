@@ -9,6 +9,8 @@ interface PageRepositoryInterface extends BaseRepositoryInterface
 
     public function getTypes();
 
+    public function loadType(PageInterface $page);
+
     public function getTree();
 
     public function getRoot();
