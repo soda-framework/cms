@@ -2,11 +2,11 @@
 namespace Soda\Cms\Database\Pages\Repositories;
 
 use Illuminate\Http\Request;
-use Soda;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractRepository;
 use Soda\Cms\Support\Constants;
+use Soda\Cms\Support\Facades\Soda;
 
 class PageRepository extends AbstractRepository implements PageRepositoryInterface
 {
@@ -77,7 +77,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function save(Request $request, $id = null)
     {
-        if($id) {
+        if ($id) {
             $page = $this->model->findOrFail($id);
             $page->fill($request->all())->save();
         } else {
@@ -100,7 +100,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
         $slug = $page->generateSlug($request->input('slug'));
 
-        if($parent && !starts_with($slug, $parent->getAttribute('slug'))) {
+        if ($parent && !starts_with($slug, $parent->getAttribute('slug'))) {
             $slug = $parent->generateSlug($request->input('slug'));
         }
 
@@ -109,7 +109,6 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
             'slug'           => $slug,
             'application_id' => Soda::getApplication()->getKey(),
         ])->save();
-
 
         if ($parent) {
             $parent->addChild($page);

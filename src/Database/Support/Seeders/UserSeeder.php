@@ -2,10 +2,8 @@
 
 namespace Soda\Cms\Database\Support\Seeders;
 
-use Hash;
 use Illuminate\Database\Seeder;
-use Soda\Cms\Database\User\Interfaces\RoleInterface;
-use Soda\Cms\Database\User\Interfaces\UserInterface;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {

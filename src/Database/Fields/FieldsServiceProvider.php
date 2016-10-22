@@ -40,11 +40,11 @@ class FieldsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('soda.field.model', function($app) {
+        $this->app->bind('soda.field.model', function ($app) {
             return new Field;
         });
 
-        $this->app->bind('soda.media.model', function($app) {
+        $this->app->bind('soda.media.model', function ($app) {
             return new Media;
         });
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Database\User\Interfaces;
+namespace Soda\Cms\Database\Users\Interfaces;
 
 use Laratrust\Contracts\LaratrustRoleInterface;
 

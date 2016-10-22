@@ -3,8 +3,8 @@
 namespace Soda\Cms\Database\Fields\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class Field extends Model implements FieldInterface
 {

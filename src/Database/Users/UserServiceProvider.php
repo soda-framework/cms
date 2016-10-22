@@ -2,17 +2,17 @@
 
 namespace Soda\Cms\Database\Users;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustFacade;
 use Laratrust\LaratrustServiceProvider;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Soda\Cms\Database\Users\Interfaces\PermissionInterface;
+use Soda\Cms\Database\Users\Interfaces\RoleInterface;
+use Soda\Cms\Database\Users\Interfaces\UserInterface;
+use Soda\Cms\Database\Users\Models\Permission;
+use Soda\Cms\Database\Users\Models\Role;
+use Soda\Cms\Database\Users\Models\User;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
-use Soda\Cms\Database\User\Interfaces\PermissionInterface;
-use Soda\Cms\Database\User\Interfaces\RoleInterface;
-use Soda\Cms\Database\User\Interfaces\UserInterface;
-use Soda\Cms\Database\User\Models\Permission;
-use Soda\Cms\Database\User\Models\Role;
-use Soda\Cms\Database\User\Models\User;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -60,15 +60,15 @@ class UserServiceProvider extends ServiceProvider
             'Laratrust' => LaratrustFacade::class,
         ]);
 
-        $this->app->bind('soda.user.model', function($app) {
+        $this->app->bind('soda.user.model', function ($app) {
             return new User;
         });
 
-        $this->app->bind('soda.role.model', function($app) {
+        $this->app->bind('soda.role.model', function ($app) {
             return new Role;
         });
 
-        $this->app->bind('soda.permission.model', function($app) {
+        $this->app->bind('soda.permission.model', function ($app) {
             return new Permission;
         });
 

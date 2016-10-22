@@ -2,10 +2,10 @@
 
 namespace Soda\Cms\Database\Support\Models\Traits;
 
-use Cache;
-use Config;
-use DB;
 use Illuminate\Cache\TaggableStore;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Laratrust\Traits\LaratrustRoleTrait;
 
 trait RoleHasPermissions
@@ -46,7 +46,7 @@ trait RoleHasPermissions
     //Big block of caching functionality.
     public function cachedPermissions()
     {
-        if($ttl = config('soda.cache.permissions')) {
+        if ($ttl = config('soda.cache.permissions')) {
             $cache = app('cache');
 
             if ($cache->getStore() instanceof TaggableStore) {

@@ -3,11 +3,18 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
+use Soda\Cms\Database\Fields\Interfaces\FieldRepositoryInterface;
 
 class FieldController extends BaseController
 {
+    protected $fields;
+
+    public function __construct(FieldRepositoryInterface $fields)
+    {
+        $this->fields = $fields;
+
+        $this->middleware('soda.permission:manage-fields');
+    }
 
     /**
      * Display a listing of the resource.

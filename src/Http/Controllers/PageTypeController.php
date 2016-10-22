@@ -3,11 +3,18 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 
 class PageTypeController extends BaseController
 {
+    protected $pageTypes;
+
+    public function __construct(PageRepositoryInterface $pageTypes)
+    {
+        $this->pageTypes = $pageTypes;
+
+        $this->middleware('soda.permission:manage-page-types');
+    }
 
     /**
      * Display a listing of the resource.

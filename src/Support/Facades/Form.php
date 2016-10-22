@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
  * @see \Illuminate\Cache\CacheManager
  * @see \Illuminate\Cache\Repository
  */
-class SodaFacade extends Facade
+class Form extends Facade
 {
     /**
      *
@@ -18,7 +18,7 @@ class SodaFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'soda';
+        return 'soda.form';
     }
 
 }

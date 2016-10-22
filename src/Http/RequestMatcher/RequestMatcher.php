@@ -1,15 +1,15 @@
 <?php
 
-namespace  Soda\Cms\Http\RequestMatcher;
+namespace Soda\Cms\Http\RequestMatcher;
 
 use Exception;
-use Soda;
 use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Http\RequestMatcher\Actions\ActionInterface;
 use Soda\Cms\Http\RequestMatcher\Actions\ControllerAction;
 use Soda\Cms\Http\RequestMatcher\Actions\ViewAction;
+use Soda\Cms\Support\Facades\Soda;
 
 class RequestMatcher
 {
@@ -72,7 +72,8 @@ class RequestMatcher
         return array_map('ucfirst', array_combine(array_keys($this->actions), array_keys($this->actions)));
     }
 
-    public function matchApplication($url) {
+    public function matchApplication($url)
+    {
         $application = $this->application->findByUrl($url);
 
         if ($application) {

@@ -28,7 +28,7 @@ class FormServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/fields.php', 'soda.fields');
+        $this->mergeConfigFrom(__DIR__.'/../../config/fields.php', 'soda.fields');
 
         $this->app->singleton('soda.form.registrar', function ($app) {
             return new FormFieldRegistrar($app['config']->get('soda.fields'));

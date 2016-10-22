@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Menu;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 {

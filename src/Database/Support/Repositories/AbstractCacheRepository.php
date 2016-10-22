@@ -1,17 +1,19 @@
 <?php namespace Soda\Cms\Database\Support\Repositories;
 
-abstract class AbstractCacheRepository {
-    protected function cache($key, $ttl, \Closure $closure, $forgetNull = true) {
-        if($ttl === true) {
+abstract class AbstractCacheRepository
+{
+    protected function cache($key, $ttl, \Closure $closure, $forgetNull = true)
+    {
+        if ($ttl === true) {
             $value = $this->getCacheStore()->rememberForever($key, $closure);
-            if($value === null && $forgetNull) {
+            if ($value === null && $forgetNull) {
                 $this->getCacheStore()->forget($key);
             }
 
             return $value;
-        } elseif(is_int($ttl)) {
+        } elseif (is_int($ttl)) {
             $value = $this->getCacheStore()->remember($key, is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), $closure);
-            if($value === null && $forgetNull) {
+            if ($value === null && $forgetNull) {
                 $this->getCacheStore()->forget($key);
             }
 
@@ -21,7 +23,8 @@ abstract class AbstractCacheRepository {
         return $closure();
     }
 
-    protected function getCacheStore() {
+    protected function getCacheStore()
+    {
         return app('cache');
     }
 }

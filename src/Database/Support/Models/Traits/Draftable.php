@@ -3,9 +3,9 @@
 namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use Session;
-use Auth;
+use Illuminate\Support\Facades\Session;
 use Soda\Cms\Support\Constants;
+use Soda\Cms\Support\Facades\Soda;
 
 trait Draftable
 {
@@ -37,6 +37,6 @@ trait Draftable
 
     protected static function isDraftsEnabled()
     {
-        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
+        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Soda::auth()->user()->can('view-drafts'));
     }
 }

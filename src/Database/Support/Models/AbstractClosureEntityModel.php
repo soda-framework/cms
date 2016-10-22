@@ -122,16 +122,4 @@ abstract class AbstractClosureEntityModel extends Entity
     {
         return $this->siblings([$from, $to]);
     }
-
-    /*
-     * get tree from given tree.
-     */
-    public function buildTree($id = null)
-    {
-        $treeModel = isset($id) && $id && $id !== '#' ? $this->find($id) : $this->getRoots()->first();
-
-        // we need to get elements for each element in the tree.
-        // TODO: see https://github.com/franzose/ClosureTable/issues/164
-        return $treeModel ? $treeModel->collectDescendants(true)->orderBy('position')->get()->toTree() : [];
-    }
 }

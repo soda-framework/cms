@@ -9,7 +9,6 @@ use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use URL;
 
 class ThemeExceptionHandler extends Handler
 {

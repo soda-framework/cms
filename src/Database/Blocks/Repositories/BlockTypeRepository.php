@@ -1,7 +1,6 @@
 <?php
 namespace Soda\Cms\Database\Blocks\Repositories;
 
-use Soda;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractRepository;

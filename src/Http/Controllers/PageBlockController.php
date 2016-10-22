@@ -3,8 +3,6 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 
 class PageBlockController extends BaseController
 {

@@ -1,12 +1,9 @@
 <?php
 namespace Soda\Cms\Foundation;
 
-use Cache;
 use Illuminate\Contracts\Foundation\Application as Laravel;
-use Route;
+use Illuminate\Support\Facades\Auth;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Database\Blocks\Interfaces\DynamicBlockInterface;
-use Soda\Cms\Database\Pages\Interfaces\DynamicPageInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class SodaInstance
@@ -75,7 +72,7 @@ class SodaInstance
     /**
      * Return instance of MenuBuilder
      *
-     * @return \Soda\Cms\Http\Matcher\RequestMatcher
+     * @return \Soda\Cms\Http\RequestMatcher\RequestMatcher
      */
     public function getRequestMatcher()
     {
@@ -136,5 +133,15 @@ class SodaInstance
     public function field($field)
     {
         return $this->getFormBuilder()->field($field);
+    }
+
+    public function noPermission()
+    {
+        return response()->view(soda_cms_view_path("errors.no-permission"), [], 401);
+    }
+
+    public function auth()
+    {
+        return Auth::guard('soda');
     }
 }

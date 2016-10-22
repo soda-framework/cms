@@ -2,7 +2,6 @@
 namespace Soda\Cms\Database\Pages\Models;
 
 use Soda\Cms\Database\Pages\Interfaces\DynamicPageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Database\Support\Models\AbstractDynamicModel;
 use Soda\Cms\Database\Support\Models\Traits\HasMedia;
 

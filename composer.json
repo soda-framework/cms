@@ -32,7 +32,8 @@
     "league/flysystem-aws-s3-v3": "^1.0",
     "zofe/rapyd": "2.2.*",
     "santigarcor/laratrust": "3.0.*",
-    "doctrine/dbal": "^2.5"
+    "doctrine/dbal": "^2.5",
+    "rutorika/sortable": "^3.2"
   },
   "autoload": {
     "psr-4": {

@@ -20,7 +20,7 @@
                 <li>
                     <a href="/" target="_blank">View Site</a>
                 </li>
-                @if (Auth::guest())
+                @if (Soda::auth()->guest())
                     <li class="">
                         <a class="" href="{{ url('/login') }}">Login</a>
                     </li>
@@ -31,12 +31,12 @@
                     --}}
                 @endif
             </ul>
-            @if(Auth::check())
+            @if(Soda::auth()->check())
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-btn fa-user"></i>
-                        <span>{{ Auth::user()->username }}</span>
+                        <span>{{ Soda::auth()->user()->username }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         @permission('view-drafts')

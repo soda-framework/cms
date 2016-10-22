@@ -4,6 +4,7 @@ namespace Soda\Cms\Database\Blocks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Rutorika\Sortable\MorphToSortedManyTrait;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Support\Models\Traits\BuildsDynamicModels;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
@@ -12,7 +13,7 @@ use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class BlockType extends Model implements BlockTypeInterface
 {
-    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes;
+    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedManyTrait;
 
     protected $table = 'block_types';
 
@@ -36,7 +37,7 @@ class BlockType extends Model implements BlockTypeInterface
 
     public function fields()
     {
-        return $this->morphToMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position', 'show_in_table')->orderBy('pivot_position', 'asc');
+        return $this->morphToSortedMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position', 'show_in_table')->orderBy('pivot_position', 'asc');
     }
 
     public function blocks()

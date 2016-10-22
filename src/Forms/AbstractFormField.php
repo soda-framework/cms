@@ -5,9 +5,8 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
-use Soda\Cms\Forms\Fields\FormFieldInterface;
 use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
-use Soda\Cms\Models\Field;
+use Soda\Cms\Forms\Fields\FormFieldInterface;
 
 abstract class AbstractFormField implements FormFieldInterface
 {

@@ -14,6 +14,11 @@ class BlockController extends BaseController
     public function __construct(BlockRepositoryInterface $blocks)
     {
         $this->blocks = $blocks;
+
+        $this->middleware('soda.permission:view-blocks');
+        $this->middleware('soda.permission:create-blocks')->only(['create', 'store']);
+        $this->middleware('soda.permission:edit-blocks')->only(['edit', 'update']);
+        $this->middleware('soda.permission:delete-blocks')->only(['delete']);
     }
 
     /**
@@ -76,7 +81,7 @@ class BlockController extends BaseController
     {
         $block = $this->blocks->findById($id);
 
-        if(!$block) {
+        if (!$block) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block']));
         }
 
@@ -113,12 +118,9 @@ class BlockController extends BaseController
     {
         try {
             $block = $this->blocks->destroy($id);
-        }
-        catch ( ModelNotFoundException $e )
-        {
+        } catch (ModelNotFoundException $e) {
             return $this->handleException($e, trans('soda::errors.not-found', ['object' => 'block']));
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block']));
         }
 

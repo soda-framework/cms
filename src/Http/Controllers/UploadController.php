@@ -2,12 +2,10 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use DB;
 use Illuminate\Http\Request;
-use Soda\Cms\Models\Media;
-use Storage;
-use Uploader;
-use URL;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Soda\Cms\Database\Fields\Models\Media;
 
 class UploadController extends BaseController
 {

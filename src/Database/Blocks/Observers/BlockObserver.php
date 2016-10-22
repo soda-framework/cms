@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Database\Blocks\Observers;
 
-use Soda\Cms\Database\Blocks\Models\DynamicBlock;
 use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
+use Soda\Cms\Database\Blocks\Models\DynamicBlock;
 
 class BlockObserver
 {

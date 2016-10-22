@@ -5,16 +5,16 @@ namespace Soda\Cms\Database\Pages;
 use Franzose\ClosureTable\ClosureTableServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\DynamicPageInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
+use Soda\Cms\Database\Pages\Models\DynamicPage;
 use Soda\Cms\Database\Pages\Models\Page;
 use Soda\Cms\Database\Pages\Models\PageType;
 use Soda\Cms\Database\Pages\Repositories\CachedPageRepository;
-use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Pages\Repositories\PageRepository;
-use Soda\Cms\Database\Pages\Models\DynamicPage;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class PageServiceProvider extends ServiceProvider
@@ -58,23 +58,23 @@ class PageServiceProvider extends ServiceProvider
             ClosureTableServiceProvider::class,
         ]);
 
-        $this->app->bind('soda.page.model', function($app) {
+        $this->app->bind('soda.page.model', function ($app) {
             return new Page;
         });
 
-        $this->app->bind('soda.page-type.model', function($app) {
+        $this->app->bind('soda.page-type.model', function ($app) {
             return new PageType;
         });
 
-        $this->app->bind('soda.dynamic-page.model', function($app) {
+        $this->app->bind('soda.dynamic-page.model', function ($app) {
             return new DynamicPage;
         });
 
-        $this->app->singleton('soda.page.repository', function($app) {
+        $this->app->singleton('soda.page.repository', function ($app) {
             return new PageRepository($app['soda.page.model']);
         });
 
-        $this->app->singleton('soda.page.cached-repository', function($app) {
+        $this->app->singleton('soda.page.cached-repository', function ($app) {
             return new CachedPageRepository($app['soda.page.repository']);
         });
 

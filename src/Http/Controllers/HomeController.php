@@ -2,12 +2,9 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Auth;
-use Gate;
-use Request;
-use Session;
-use SodaMatcher;
-use SodaMenu;
+use Soda\Cms\Support\Facades\RequestMatcher;
+use Soda\Cms\Support\Facades\Session;
+use Soda\Cms\Support\Facades\Soda;
 
 class HomeController extends BaseController
 {
@@ -19,10 +16,6 @@ class HomeController extends BaseController
      */
     public function getIndex()
     {
-        if (!Auth::user()->can('access-cms')) {
-            return response()->view(soda_cms_view_path("errors.no-permission"), [], 401);
-        }
-
         return soda_cms_view('dashboard');
     }
 
@@ -44,7 +37,7 @@ class HomeController extends BaseController
      */
     public function page($slug = '/')
     {
-        return SodaMatcher::match($slug)->render();
+        return RequestMatcher::match($slug)->render();
     }
 
 }

@@ -1,8 +1,8 @@
 <?php namespace Soda\Cms\Database\Application\Repositories;
 
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 
 class ApplicationRepository implements ApplicationRepositoryInterface
 {

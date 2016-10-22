@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
 use Soda\Cms\Database\Blocks\Observers\BlockObserver;
-use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
+use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class Block extends Model implements BlockInterface
 {

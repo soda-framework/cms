@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Database\Support\Observers;
 
-use Schema;
+use Illuminate\Support\Facades\Schema;
 use Soda\Cms\Database\Support\Interfaces\CanBuildDynamicModels;
 
 class DynamicModelObserver
@@ -14,7 +14,7 @@ class DynamicModelObserver
      */
     public function creating(CanBuildDynamicModels $type)
     {
-        if(!$type->relationLoaded('fields')) {
+        if (!$type->relationLoaded('fields')) {
             $type->load('fields');
         }
 

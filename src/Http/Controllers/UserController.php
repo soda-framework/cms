@@ -3,11 +3,21 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
+use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 
 class UserController extends BaseController
 {
+    protected $users;
+
+    public function __construct(UserRepositoryInterface $users)
+    {
+        $this->users = $users;
+
+        $this->middleware('soda.permission:view-users');
+        $this->middleware('soda.permission:create-users')->only(['create', 'store']);
+        $this->middleware('soda.permission:edit-users')->only(['edit', 'update']);
+        $this->middleware('soda.permission:delete-users')->only(['delete']);
+    }
 
     /**
      * Display a listing of the resource.

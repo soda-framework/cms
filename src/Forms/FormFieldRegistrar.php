@@ -2,8 +2,8 @@
 namespace Soda\Cms\Forms;
 
 use Exception;
-use Soda\Cms\Forms\Fields\FormFieldInterface;
 use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Forms\Fields\FormFieldInterface;
 
 class FormFieldRegistrar
 {

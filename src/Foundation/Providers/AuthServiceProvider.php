@@ -19,9 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->config->set('auth.providers.soda', $this->app->config->get('soda.auth.provider'));
-        $this->app->config->set('auth.guards.soda', $this->app->config->get('soda.auth.guard'));
-        $this->app->config->set('auth.passwords.soda', $this->app->config->get('soda.auth.password'));
+        $this->app['config']->set('auth.providers.soda', $this->app->config->get('soda.auth.provider'));
+        $this->app['config']->set('auth.guards.soda', $this->app->config->get('soda.auth.guard'));
+        $this->app['config']->set('auth.passwords.soda', $this->app->config->get('soda.auth.password'));
     }
 
     /**
@@ -31,6 +31,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../../config/auth.php', 'soda.auth');
+        $this->mergeConfigFrom(__DIR__.'/../../../config/publish/auth.php', 'soda.auth');
     }
 }

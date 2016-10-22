@@ -1,132 +1,129 @@
 <?php
 
-Route::group(['middleware' => 'web'], function () {
-    Route::group(['prefix' => config('soda.cms.path'), 'middleware' => 'soda.main'], function () {
-        Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
-            // Authentication routes
-            Route::get('login', 'LoginController@showLoginForm')->name('soda.login');
-            Route::post('login', 'LoginController@login')->name('soda.login-attempt');
-            Route::get('logout', 'LoginController@logout')->name('soda.logout');
-        });
-
-        // Dashboard and user routes...
-        Route::group(['middleware' => 'soda.auth:soda'], function () {
-            Route::get('/', 'HomeController@getIndex')->name('soda.home');
-            Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft");
-
-            Route::post('pages/move', 'PageController@move')->name('soda.pages.move');
-            Route::resource('pages', 'PageController', [
-                'as'     => 'soda',
-                'except' => 'show'
-            ]);
-
-            Route::resource('page-types', 'PageTypeController', [
-                'as'     => 'soda',
-                'except' => 'show'
-            ]);
-
-            Route::resource('pages.blocks', 'PageBlockController', [
-                'as'     => 'soda',
-                'except' => 'show'
-            ]);
-
-            Route::resource('blocks', 'BlockController', [
-                'as'     => 'soda',
-                'except' => 'show'
-            ]);
-
-            Route::resource('block-types', 'BlockTypeController', [
-                'as'     => 'soda',
-                'except' => 'show'
-            ]);
-
-            Route::resource('fields', 'FieldController', [
-                'as'     => 'soda',
-                'except' => 'show'
-            ]);
-
-            Route::resource('users', 'UserController', [
-                'as'     => 'soda',
-                'except' => 'show'
-            ]);
-
-            Route::group(['prefix' => 'upload'], function () {
-                Route::post('/', 'UploadController@upload')->name('soda.upload');
-                Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
-            });
-            /*
-            Route::group(['prefix' => 'pages'], function () {
-                Route::get('/', 'PageController@getIndex')->name('soda.page');
-                Route::get('view/{id?}', 'PageController@view')->name('soda.page.view');
-                Route::post('view/{id?}', 'PageController@edit')->name('soda.page.edit');
-                Route::get('delete/{id?}', 'PageController@deleteTree')->name('soda.page.delete');
-                Route::get('move/{parent_id?}/{id?}/{position?}', 'PageController@move')->name('soda.page.move');
-                Route::get('create/{id?}', 'PageController@create')->name('soda.page.create');
-                Route::post('create/{parent_id?}', 'PageController@save')->name('soda.page.save');
-
-                Route::get('view/{page_id?}/{type}', 'PageBlockController@index')->name('soda.page.block');
-                Route::get('view/{page_id?}/{type}/view/{id?}', 'PageBlockController@view')->name('soda.page.block.view');
-                Route::post('view/{page_id?}/{type}/view/{id?}', 'PageBlockController@edit')->name('soda.page.block.edit');
-                Route::post('view/{page_id?}/{type}/inline/{id}/{field}', 'PageBlockController@inlineEdit')->name('soda.page.block.inline.edit');
-                Route::get('view/{page_id?}/{type}/delete/{id?}', 'PageBlockController@delete')->name('soda.page.block.delete');
-
-                //test routes..
-                //Route::get('/makeroot/{id?}', 'PageController@getMakeRoot')->name('page-makeroot');
-            });
-
-            Route::group(['prefix' => 'fields'], function () {
-                Route::get('/', 'FieldController@index')->name('soda.field');
-                Route::get('view', 'FieldController@view')->name('soda.field.create');
-                Route::get('view/{id?}', 'FieldController@view')->name('soda.field.view');
-                Route::post('view/{id?}', 'FieldController@edit')->name('soda.field.edit');
-                Route::get('delete/{id?}', 'FieldController@delete')->name('soda.field.delete');
-            });
-
-            Route::group(['prefix' => 'blocks'], function () {
-                Route::get('/', 'BlockController@index')->name('soda.block');
-                Route::get('view', 'BlockController@view')->name('soda.block.create');
-                Route::get('view/{id?}', 'BlockController@view')->name('soda.block.view');
-                Route::post('view/{id?}', 'BlockController@edit')->name('soda.block.edit');
-                Route::get('delete/{id?}', 'BlockController@delete')->name('soda.block.delete');
-            });
-
-            Route::group(['prefix' => 'block-types'], function () {
-                Route::get('/', 'BlockTypeController@index')->name('soda.block-type');
-                Route::get('view', 'BlockTypeController@view')->name('soda.block-type.create');
-                Route::get('view/{id?}', 'BlockTypeController@view')->name('soda.block-type.view');
-                Route::post('view/{id?}', 'BlockTypeController@edit')->name('soda.block-type.edit');
-                Route::get('delete/{id?}', 'BlockTypeController@delete')->name('soda.block-type.delete');
-            });
-
-            Route::group(['prefix' => 'page-types'], function () {
-                Route::get('/', 'PageTypeController@index')->name('soda.page-type');
-                Route::get('view', 'PageTypeController@view')->name('soda.page-type.create');
-                Route::get('view/{id?}', 'PageTypeController@view')->name('soda.page-type.view');
-                Route::post('view/{id?}', 'PageTypeController@edit')->name('soda.page-type.edit');
-                Route::get('delete/{id?}', 'PageTypeController@delete')->name('soda.page-type.delete');
-            });
-
-            Route::group(['prefix' => 'users'], function () {
-                Route::get('/', 'UserController@index')->name('soda.user');
-                Route::get('view', 'UserController@view')->name('soda.user.create');
-                Route::get('view/{id}', 'UserController@view')->name('soda.user.view');
-                Route::post('view/{id?}', 'UserController@edit')->name('soda.user.edit');
-                Route::get('delete/{id?}', 'UserController@delete')->name('soda.user.delete');
-            });
-
-            Route::group(['prefix' => 'navigation'], function () {
-                Route::get('/', 'NavigationController@index')->name('soda.navigation');
-                Route::get('view/{id}', 'NavigationController@view')->name('soda.navigation.view');
-                Route::post('view/{id?}', 'NavigationController@edit')->name('soda.navigation.edit');
-                Route::get('create/{parent_id?}', 'NavigationController@createForm')->name('soda.navigation.create');
-                Route::post('create/{parent_id?}', 'NavigationController@create')->name('soda.navigation.create');
-                Route::get('delete/{id?}', 'NavigationController@deleteTree')->name('soda.navigation.delete');
-                Route::get('move/{parent_id?}/{id?}/{position?}', 'NavigationController@move')->name('soda.navigation.move');
-            });
-            */
-
-        });
+Route::group(['prefix' => config('soda.cms.path')], function() {
+    Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
+        // Authentication routes
+        Route::get('login', 'LoginController@showLoginForm')->name('soda.login');
+        Route::post('login', 'LoginController@login')->name('soda.login-attempt');
+        Route::get('logout', 'LoginController@logout')->name('soda.logout');
     });
 
-    Route::any('{slug?}', 'HomeController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
+    // Dashboard and user routes...
+    Route::group(['middleware' => 'soda.auth:soda'], function () {
+        Route::get('/', 'HomeController@getIndex')->name('soda.home')->middleware('soda.permission:access-cms');
+        Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft");
+
+        Route::post('pages/move', 'PageController@move')->name('soda.pages.move');
+        Route::resource('pages', 'PageController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::resource('page-types', 'PageTypeController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::resource('pages.blocks', 'PageBlockController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::resource('blocks', 'BlockController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::resource('block-types', 'BlockTypeController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::resource('fields', 'FieldController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::resource('users', 'UserController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::group(['prefix' => 'upload'], function () {
+            Route::post('/', 'UploadController@upload')->name('soda.upload');
+            Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
+        });
+        /*
+        Route::group(['prefix' => 'pages'], function () {
+            Route::get('/', 'PageController@getIndex')->name('soda.page');
+            Route::get('view/{id?}', 'PageController@view')->name('soda.page.view');
+            Route::post('view/{id?}', 'PageController@edit')->name('soda.page.edit');
+            Route::get('delete/{id?}', 'PageController@deleteTree')->name('soda.page.delete');
+            Route::get('move/{parent_id?}/{id?}/{position?}', 'PageController@move')->name('soda.page.move');
+            Route::get('create/{id?}', 'PageController@create')->name('soda.page.create');
+            Route::post('create/{parent_id?}', 'PageController@save')->name('soda.page.save');
+
+            Route::get('view/{page_id?}/{type}', 'PageBlockController@index')->name('soda.page.block');
+            Route::get('view/{page_id?}/{type}/view/{id?}', 'PageBlockController@view')->name('soda.page.block.view');
+            Route::post('view/{page_id?}/{type}/view/{id?}', 'PageBlockController@edit')->name('soda.page.block.edit');
+            Route::post('view/{page_id?}/{type}/inline/{id}/{field}', 'PageBlockController@inlineEdit')->name('soda.page.block.inline.edit');
+            Route::get('view/{page_id?}/{type}/delete/{id?}', 'PageBlockController@delete')->name('soda.page.block.delete');
+
+            //test routes..
+            //Route::get('/makeroot/{id?}', 'PageController@getMakeRoot')->name('page-makeroot');
+        });
+
+        Route::group(['prefix' => 'fields'], function () {
+            Route::get('/', 'FieldController@index')->name('soda.field');
+            Route::get('view', 'FieldController@view')->name('soda.field.create');
+            Route::get('view/{id?}', 'FieldController@view')->name('soda.field.view');
+            Route::post('view/{id?}', 'FieldController@edit')->name('soda.field.edit');
+            Route::get('delete/{id?}', 'FieldController@delete')->name('soda.field.delete');
+        });
+
+        Route::group(['prefix' => 'blocks'], function () {
+            Route::get('/', 'BlockController@index')->name('soda.block');
+            Route::get('view', 'BlockController@view')->name('soda.block.create');
+            Route::get('view/{id?}', 'BlockController@view')->name('soda.block.view');
+            Route::post('view/{id?}', 'BlockController@edit')->name('soda.block.edit');
+            Route::get('delete/{id?}', 'BlockController@delete')->name('soda.block.delete');
+        });
+
+        Route::group(['prefix' => 'block-types'], function () {
+            Route::get('/', 'BlockTypeController@index')->name('soda.block-type');
+            Route::get('view', 'BlockTypeController@view')->name('soda.block-type.create');
+            Route::get('view/{id?}', 'BlockTypeController@view')->name('soda.block-type.view');
+            Route::post('view/{id?}', 'BlockTypeController@edit')->name('soda.block-type.edit');
+            Route::get('delete/{id?}', 'BlockTypeController@delete')->name('soda.block-type.delete');
+        });
+
+        Route::group(['prefix' => 'page-types'], function () {
+            Route::get('/', 'PageTypeController@index')->name('soda.page-type');
+            Route::get('view', 'PageTypeController@view')->name('soda.page-type.create');
+            Route::get('view/{id?}', 'PageTypeController@view')->name('soda.page-type.view');
+            Route::post('view/{id?}', 'PageTypeController@edit')->name('soda.page-type.edit');
+            Route::get('delete/{id?}', 'PageTypeController@delete')->name('soda.page-type.delete');
+        });
+
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/', 'UserController@index')->name('soda.user');
+            Route::get('view', 'UserController@view')->name('soda.user.create');
+            Route::get('view/{id}', 'UserController@view')->name('soda.user.view');
+            Route::post('view/{id?}', 'UserController@edit')->name('soda.user.edit');
+            Route::get('delete/{id?}', 'UserController@delete')->name('soda.user.delete');
+        });
+
+        Route::group(['prefix' => 'navigation'], function () {
+            Route::get('/', 'NavigationController@index')->name('soda.navigation');
+            Route::get('view/{id}', 'NavigationController@view')->name('soda.navigation.view');
+            Route::post('view/{id?}', 'NavigationController@edit')->name('soda.navigation.edit');
+            Route::get('create/{parent_id?}', 'NavigationController@createForm')->name('soda.navigation.create');
+            Route::post('create/{parent_id?}', 'NavigationController@create')->name('soda.navigation.create');
+            Route::get('delete/{id?}', 'NavigationController@deleteTree')->name('soda.navigation.delete');
+            Route::get('move/{parent_id?}/{id?}/{position?}', 'NavigationController@move')->name('soda.navigation.move');
+        });
+        */
+    });
 });
+
+Route::any('{slug?}', 'HomeController@page')->where('slug', '^(?!_).+')->name('soda.page.match');

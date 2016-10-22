@@ -30,7 +30,6 @@ abstract class ApiController extends BaseController
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -51,66 +50,72 @@ abstract class ApiController extends BaseController
         return $this;
     }
 
-    public function respondCreated($message = 'Created')
+    public function respondSuccess($message = 'Success', $extraData = null)
     {
-        return $this->setStatusCode(Response::HTTP_CREATED)->setStatusMessage($message)->respond();
+        return $this->setStatusCode(Response::HTTP_OK)->setStatusMessage($message)->respond($extraData);
     }
 
-    public function respondNotFound($message = 'Not Found')
+    public function respondCreated($message = 'Created', $extraData = null)
     {
-        return $this->respondWithError(Response::HTTP_NOT_FOUND, $message);
+        return $this->setStatusCode(Response::HTTP_CREATED)->setStatusMessage($message)->respond($extraData);
     }
 
-    public function respondUnauthorized($message = 'Unauthorized')
+    public function respondNotFound($message = 'Not Found', $extraData = null)
     {
-        return $this->respondWithError(Response::HTTP_UNAUTHORIZED, $message);
+        return $this->respondWithError(Response::HTTP_NOT_FOUND, $message, $extraData);
     }
 
-    public function respondRateLimited($message = 'Rate Limited')
+    public function respondUnauthorized($message = 'Unauthorized', $extraData = null)
     {
-        return $this->respondWithError(Response::HTTP_TOO_MANY_REQUESTS, $message);
+        return $this->respondWithError(Response::HTTP_UNAUTHORIZED, $message, $extraData);
     }
 
-    public function respondNotAllowed($message = 'Not Allowed')
+    public function respondRateLimited($message = 'Rate Limited', $extraData = null)
     {
-        return $this->respondWithError(Response::HTTP_FORBIDDEN, $message);
+        return $this->respondWithError(Response::HTTP_TOO_MANY_REQUESTS, $message, $extraData);
     }
 
-    public function respondInvalid($message = 'Invalid Input')
+    public function respondNotAllowed($message = 'Not Allowed', $extraData = null)
     {
-        return $this->respondWithError(Response::HTTP_UNPROCESSABLE_ENTITY, $message);
+        return $this->respondWithError(Response::HTTP_FORBIDDEN, $message, $extraData);
+    }
+
+    public function respondInvalid($message = 'Invalid Input', $extraData = null)
+    {
+        return $this->respondWithError(Response::HTTP_UNPROCESSABLE_ENTITY, $message, $extraData);
     }
 
     public function respond($data = [])
     {
-        return $this->setStatusCode(Response::HTTP_OK)->buildResponse(static::STATUS_SUCCESS, ['data' => $data]);
+        return $this->setStatusCode(Response::HTTP_OK)->buildResponse(static::STATUS_SUCCESS, $data);
     }
 
-    protected function respondWithError($code, $message)
+    protected function respondWithError($code, $message, $extraData = null)
     {
-        return $this->setStatusCode($code)->setStatusMessage($message)->buildResponse(static::STATUS_ERROR);
+        return $this->setStatusCode($code)->setStatusMessage($message)->buildResponse(static::STATUS_ERROR, $extraData);
     }
 
-    protected function buildResponse($statusType, array $data = [])
+    protected function buildResponse($statusType, array $extraData = [])
     {
         $response = [
-            'status' => $this->buildStatus($statusType)
+            'status' => $this->buildStatus($statusType),
         ];
 
-        if(count($data)) {
-            $response['data'] = $data;
+        if (count($extraData)) {
+            $response = array_merge($response, $extraData);
         }
 
         return response()->json(compact('response'), $this->getStatusCode());
     }
 
-    protected function buildStatus($statusType) {
+    protected function buildStatus($statusType)
+    {
         $status = [
             'type' => $statusType,
             'code' => $this->getStatusCode(),
         ];
 
-        if($message = $this->getStatusMessage()) {
+        if ($message = $this->getStatusMessage()) {
             $status['message'] = $message;
         }
 

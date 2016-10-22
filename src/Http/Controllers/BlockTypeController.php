@@ -13,6 +13,8 @@ class BlockTypeController extends BaseController
     public function __construct(BlockTypeRepositoryInterface $blockTypes)
     {
         $this->blockTypes = $blockTypes;
+
+        $this->middleware('soda.permission:manage-block-types');
     }
 
     /**
@@ -72,7 +74,7 @@ class BlockTypeController extends BaseController
     {
         $blockType = $this->blockTypes->findById($id);
 
-        if(!$blockType) {
+        if (!$blockType) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block type']));
         }
 

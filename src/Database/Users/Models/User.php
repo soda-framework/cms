@@ -1,11 +1,11 @@
 <?php
 
-namespace Soda\Cms\Database\User\Models;
+namespace Soda\Cms\Database\Users\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\UserHasRoles;
-use Soda\Cms\Database\User\Interfaces\UserInterface;
+use Soda\Cms\Database\Users\Interfaces\UserInterface;
 
 class User extends Authenticatable implements UserInterface
 {

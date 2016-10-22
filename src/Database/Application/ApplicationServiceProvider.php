@@ -3,13 +3,13 @@
 namespace Soda\Cms\Database\Application;
 
 use Illuminate\Support\ServiceProvider;
+use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Models\Application;
 use Soda\Cms\Database\Application\Models\ApplicationUrl;
-use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Application\Repositories\ApplicationRepository;
-use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Repositories\CachedApplicationRepository;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
@@ -46,19 +46,19 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('soda.application.model', function($app) {
+        $this->app->bind('soda.application.model', function ($app) {
             return new Application;
         });
 
-        $this->app->bind('soda.application-url.model', function($app) {
+        $this->app->bind('soda.application-url.model', function ($app) {
             return new ApplicationUrl;
         });
 
-        $this->app->singleton('soda.application.repository', function($app) {
+        $this->app->singleton('soda.application.repository', function ($app) {
             return new ApplicationRepository($app['soda.application.model'], $app['soda.application-url.model']);
         });
 
-        $this->app->singleton('soda.application.cached-repository', function($app) {
+        $this->app->singleton('soda.application.cached-repository', function ($app) {
             return new CachedApplicationRepository($app['soda.application.repository']);
         });
 

@@ -66,7 +66,6 @@ trait RegistersBindingsAndDependencies
         }
     }
 
-
     /**
      * Register aliases
      *

@@ -4,19 +4,17 @@ namespace Soda\Cms\Database\Pages\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Rutorika\Sortable\MorphToSortedManyTrait;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Database\Support\AbstractDynamicType;
 use Soda\Cms\Database\Support\Models\Traits\BuildsDynamicModels;
-use Soda\Cms\Database\Support\Models\Traits\Draftable;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class PageType extends Model implements PageTypeInterface
 {
-    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes;
+    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedManyTrait;
 
     protected $table = 'page_types';
 
@@ -40,7 +38,7 @@ class PageType extends Model implements PageTypeInterface
 
     public function fields()
     {
-        return $this->morphToMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('position', 'show_in_table')->orderBy('pivot_position', 'asc');
+        return $this->morphToSortedMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('show_in_table');
     }
 
     public function pages()

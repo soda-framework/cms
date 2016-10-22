@@ -1,29 +1,26 @@
 <?php
 namespace Soda\Cms\Database\Pages\Models;
 
-use Cache;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda;
 use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
-use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\DynamicPageInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Database\Pages\Models\Observers\PageObserver;
 use Soda\Cms\Database\Support\Models\AbstractClosureEntityModel;
-use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\Draftable;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
-use Soda\Cms\Database\Support\Models\Traits\Sortable;
+use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\Sluggable;
+use Soda\Cms\Database\Support\Models\Traits\Sortable;
 
 class Page extends AbstractClosureEntityModel implements PageInterface
 {
     use SoftDeletes, Sluggable, OptionallyBoundToApplication, Sortable, Draftable, Identifiable, HasDefaultAttributes;
 
     protected $table = 'pages';
+
+    protected static $sortableGroupField = ['application_id', 'parent_id'];
 
     public $fillable = [
         'name',

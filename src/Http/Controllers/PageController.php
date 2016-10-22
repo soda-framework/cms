@@ -13,6 +13,11 @@ class PageController extends BaseController
     public function __construct(PageRepositoryInterface $pages)
     {
         $this->pages = $pages;
+
+        $this->middleware('soda.permission:view-pages');
+        $this->middleware('soda.permission:create-pages')->only(['create', 'store']);
+        $this->middleware('soda.permission:edit-pages')->only(['edit', 'update']);
+        $this->middleware('soda.permission:delete-pages')->only(['delete']);
     }
 
     /**
@@ -77,7 +82,7 @@ class PageController extends BaseController
     {
         $page = $this->pages->findById($id);
 
-        if(!$page) {
+        if (!$page) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 

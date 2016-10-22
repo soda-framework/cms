@@ -2,7 +2,6 @@
 
 namespace Soda\Cms\Http\RequestMatcher\Actions;
 
-use App;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class ControllerAction implements ActionInterface

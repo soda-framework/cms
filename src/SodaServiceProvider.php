@@ -1,25 +1,26 @@
 <?php
 namespace Soda\Cms;
 
-use Blade;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Rutorika\Sortable\SortableServiceProvider;
 use Soda\Cms\Console\CommandsServiceProvider;
-use Soda\Cms\Forms\FormServiceProvider;
 use Soda\Cms\Database\Application\ApplicationServiceProvider;
 use Soda\Cms\Database\Blocks\BlockServiceProvider;
 use Soda\Cms\Database\Fields\FieldsServiceProvider;
 use Soda\Cms\Database\Pages\PageServiceProvider;
-use Soda\Cms\Foundation\SodaInstance;
+use Soda\Cms\Database\Users\UserServiceProvider;
+use Soda\Cms\Forms\FormServiceProvider;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
 use Soda\Cms\Foundation\Providers\RouteServiceProvider;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
-use Soda\Cms\Database\Users\UserServiceProvider;
-use Soda\Cms\Http\RequestMatcher\RequestMatcherFacade;
+use Soda\Cms\Foundation\SodaInstance;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
-use Soda\Cms\Menu\MenuFacade;
-use Soda\Cms\Forms\FormFacade;
 use Soda\Cms\Menu\MenuServiceProvider;
-use Soda\Cms\Support\Facades\SodaFacade;
+use Soda\Cms\Support\Facades\Form;
+use Soda\Cms\Support\Facades\Menu;
+use Soda\Cms\Support\Facades\RequestMatcher;
+use Soda\Cms\Support\Facades\Soda;
 use Zofe\Rapyd\RapydServiceProvider;
 
 class SodaServiceProvider extends ServiceProvider
@@ -42,7 +43,7 @@ class SodaServiceProvider extends ServiceProvider
         $this->configure();
 
         // Publishing configs
-        $this->publishes([__DIR__.'/../config' => config_path('soda')], 'soda.config');
+        $this->publishes([__DIR__.'/../config/publish' => config_path('soda')], 'soda.config');
         $this->publishes([__DIR__.'/../public' => public_path('soda/cms')], 'soda.assets');
 
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
@@ -65,9 +66,10 @@ class SodaServiceProvider extends ServiceProvider
     {
         require_once(__DIR__.'/Foundation/helpers.php');
 
-        $this->mergeConfigFrom(__DIR__.'/../config/cms.php', 'soda.cms');
-        $this->mergeConfigFrom(__DIR__.'/../config/cache.php', 'soda.cache');
-        $this->mergeConfigFrom(__DIR__.'/../config/upload.php', 'soda.upload');
+        $this->mergeConfigFrom(__DIR__.'/../config/publish/cms.php', 'soda.cms');
+        $this->mergeConfigFrom(__DIR__.'/../config/publish/cache.php', 'soda.cache');
+        $this->mergeConfigFrom(__DIR__.'/../config/publish/upload.php', 'soda.upload');
+        $this->mergeConfigFrom(__DIR__.'/../config/sortable.php', 'soda.sortable');
 
         $this->registerDependencies([
             AuthServiceProvider::class,
@@ -77,6 +79,7 @@ class SodaServiceProvider extends ServiceProvider
             MenuServiceProvider::class,
 
             RapydServiceProvider::class,
+            SortableServiceProvider::class,
 
             ApplicationServiceProvider::class,
             FieldsServiceProvider::class,
@@ -86,10 +89,10 @@ class SodaServiceProvider extends ServiceProvider
         ]);
 
         $this->registerFacades([
-            'Soda'        => SodaFacade::class,
-            'SodaForm'    => FormFacade::class,
-            'SodaMenu'    => MenuFacade::class,
-            'SodaMatcher' => RequestMatcherFacade::class,
+            'Soda'        => Soda::class,
+            'SodaForm'    => Form::class,
+            'SodaMenu'    => Menu::class,
+            'SodaMatcher' => RequestMatcher::class,
         ]);
 
         $this->app->singleton('soda', function ($app) {

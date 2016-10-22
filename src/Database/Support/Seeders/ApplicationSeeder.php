@@ -3,7 +3,6 @@
 namespace Soda\Cms\Database\Support\Seeders;
 
 use Illuminate\Database\Seeder;
-use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 
 class ApplicationSeeder extends Seeder

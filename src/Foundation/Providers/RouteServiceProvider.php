@@ -3,12 +3,12 @@
 namespace Soda\Cms\Foundation\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
-use Laratrust\Middleware\LaratrustAbility;
-use Laratrust\Middleware\LaratrustPermission;
-use Laratrust\Middleware\LaratrustRole;
+use Illuminate\Support\Facades\Route;
 use Soda\Cms\Http\Middleware\Authenticate;
-use Soda\Cms\Http\Middleware\Cms;
+use Soda\Cms\Http\Middleware\EnableDrafts;
+use Soda\Cms\Http\Middleware\HasAbility;
+use Soda\Cms\Http\Middleware\HasPermission;
+use Soda\Cms\Http\Middleware\HasRole;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -28,11 +28,18 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app['router']->middleware('soda.main', Cms::class);
+        $this->app['router']->middlewareGroup('soda.web', [
+            EnableDrafts::class,
+        ]);
+        $this->app['router']->middlewareGroup('soda.api', [
+            EnableDrafts::class,
+        ]);
+
         $this->app['router']->middleware('soda.auth', Authenticate::class);
-        $this->app['router']->middleware('role', LaratrustRole::class);
-        $this->app['router']->middleware('permission', LaratrustPermission::class);
-        $this->app['router']->middleware('ability', LaratrustAbility::class);
+
+        $this->app['router']->middleware('soda.role', HasRole::class);
+        $this->app['router']->middleware('soda.permission', HasPermission::class);
+        $this->app['router']->middleware('soda.ability', HasAbility::class);
 
         parent::boot();
     }
@@ -40,14 +47,48 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router $router
+     * @return void
+     */
+    public function map()
+    {
+        $this->mapApiRoutes();
+
+        $this->mapWebRoutes();
+        //
+    }
+
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
      *
      * @return void
      */
-    public function map(Router $router)
+    protected function mapWebRoutes()
     {
-        $router->group(['namespace' => $this->namespace], function ($router) {
+        Route::group([
+            'middleware' => ['web', 'soda.web'],
+            'namespace'  => $this->namespace,
+        ], function ($router) {
             require(__DIR__.'/../../../routes/web.php');
+        });
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::group([
+            'middleware' => ['api'],
+            'namespace'  => $this->namespace,
+            'prefix'     => config('soda.cms.path').'/api',
+        ], function ($router) {
+            require(__DIR__.'/../../../routes/api.php');
         });
     }
 }

@@ -3,8 +3,6 @@
 namespace Soda\Cms\Database\Support\Seeders;
 
 use Illuminate\Database\Seeder;
-use Soda\Cms\Database\User\Interfaces\RoleInterface;
-use Soda\Cms\Database\User\Interfaces\PermissionInterface;
 
 class PermissionSeeder extends Seeder
 {
