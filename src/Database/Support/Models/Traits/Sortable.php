@@ -2,10 +2,10 @@
 
 namespace Soda\Cms\Database\Support\Models\Traits;
 
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Rutorika\Sortable\SortableTrait;
-use Exception;
 
 trait Sortable
 {

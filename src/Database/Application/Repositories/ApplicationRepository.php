@@ -75,6 +75,28 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         return $model;
     }
 
+    public function getSettingsForApplication(ApplicationInterface $application)
+    {
+        if (!$application->relationLoaded('settings')) {
+            $application->load('settings');
+        }
+
+        $settings = $application->getRelation('settings');
+
+        if ($settings !== null) {
+            $settings = $settings->groupBy('category');
+
+            // Move 'Settings' category to the start
+            if (isset($settings['Settings'])) {
+                $defaultCategory = $settings->pull('Settings');
+
+                return $settings->prepend($defaultCategory, 'Settings');
+            }
+        }
+
+        return [];
+    }
+
     public function getFilteredGrid($perPage)
     {
         $filter = $this->buildFilter($this->appModel);

@@ -4,7 +4,6 @@ namespace Soda\Cms\Http\Controllers;
 
 use Soda\Cms\Support\Facades\RequestMatcher;
 use Soda\Cms\Support\Facades\Session;
-use Soda\Cms\Support\Facades\Soda;
 
 class HomeController extends BaseController
 {

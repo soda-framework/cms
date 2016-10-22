@@ -20,50 +20,44 @@
     'title'       => 'Application',
 ])
 @section('tab.settings')
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="content-block">
-                {!! SodaForm::text([
-                    "name"        => "Name",
-                    "description" => "The name of the application",
-                    "field_name"  => 'name',
-                ])->setModel($application) !!}
+    {!! SodaForm::text([
+        "name"        => "Name",
+        "description" => "The name of the application",
+        "field_name"  => 'name',
+    ])->setModel($application) !!}
 
-                @permission('manage-application-urls')
-                {!! SodaForm::tags([
-                    "name"        => "Application URLs",
-                    "description" => "URLs that may be used to access the application",
-                    "field_name"  => 'application_urls',
-                    "value"       => $application->urls->pluck('domain', 'domain')
-                ]) !!}
-                @else
-                    {!! SodaForm::static_text([
-                        "name"        => "Application URLs",
-                        "description" => "URLs that may be used to access the application",
-                        "field_name"  => 'application_urls',
-                        "value"       => implode(', ', $application->urls->pluck('domain', 'domain')->toArray()),
-                    ]) !!}
-                @endif
-            </div>
-        </div>
-    </div>
+    @permission('manage-application-urls')
+    {!! SodaForm::tags([
+        "name"        => "Application URLs",
+        "description" => "URLs that may be used to access the application",
+        "field_name"  => 'application_urls',
+        "value"       => $application->urls->pluck('domain', 'domain')
+    ]) !!}
+    @else
+        {!! SodaForm::static_text([
+            "name"        => "Application URLs",
+            "description" => "URLs that may be used to access the application",
+            "field_name"  => 'application_urls',
+            "value"       => implode(', ', $application->urls->pluck('domain', 'domain')->toArray()),
+        ]) !!}
+    @endif
 @stop
 
 @section('content')
     <ul class="nav nav-tabs" role="tablist">
-        <li role='presentation' aria-controls="Page Settings">
+        @if(!isset($settingsByCategory['Settings']))
+        <li role='presentation' aria-controls="tab_application_settings">
             <a role="tab" data-toggle="tab" href="#tab_application_settings">Settings</a>
         </li>
+        @endif
 
-        {{--
-        @foreach($fieldCategories as $fieldCategory => $fields)
-            @if(count($fields))
-                <li role='presentation' aria-controls="block_{{ $fieldCategory }}">
-                    <a role="tab" data-toggle="tab" href="#tab_block_{{ $fieldCategory }}">{{ $fieldCategory }}</a>
+        @foreach($settingsByCategory as $category => $settings)
+            @if(count($settings))
+                <li role='presentation' aria-controls="setting_group_{{ $category }}">
+                    <a role="tab" data-toggle="tab" href="#tab_setting_group_{{ $category }}">{{ $category }}</a>
                 </li>
             @endif
         @endforeach
-        --}}
     </ul>
 
     <form method="POST" id="application-form" action="{{ route('soda.application.update', $application->id) }}">
@@ -71,19 +65,28 @@
         {!! method_field('PUT') !!}
 
         <div class="tab-content">
+            @if(!isset($settingsByCategory['Settings']))
             <div class="tab-pane" id="tab_application_settings" role="tabpanel">
-                @yield('tab.settings')
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="content-block">
+                            @yield('tab.settings')
+                        </div>
+                    </div>
+                </div>
             </div>
-            {{--
-            @foreach($fieldCategories as $fieldCategory => $fields)
-                @if(count($fields))
-                    <div class="tab-pane" id="tab_block_{{ $block->id }}" role="tabpanel">
-
+            @endif
+            @foreach($settingsByCategory as $category => $settings)
+                @if(count($settings))
+                    <div class="tab-pane" id="tab_setting_group_{{ $category }}" role="tabpanel">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="content-block">
-                                    @foreach($fields as $field)
-                                        {!! SodaForm::field($field)->setModel($model) !!}
+                                    @if($category == 'Settings')
+                                        @yield('tab.settings')
+                                    @endif
+                                    @foreach($settings as $setting)
+                                        {!! SodaForm::field($setting)->setModel($setting) !!}
                                     @endforeach
                                 </div>
                             </div>
@@ -91,7 +94,6 @@
                     </div>
                 @endif
             @endforeach
-            --}}
         </div>
     </form>
 

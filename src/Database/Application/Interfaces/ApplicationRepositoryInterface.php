@@ -7,4 +7,6 @@ interface ApplicationRepositoryInterface
     public function findById($id);
 
     public function findByUrl($url);
+
+    public function getSettingsForApplication(ApplicationInterface $application);
 }

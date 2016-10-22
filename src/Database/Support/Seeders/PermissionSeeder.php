@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder
             'display_name' => 'User',
             'description'  => 'Generic user role',
         ]);
-        
+
         $role_developer = $roleModel->create([
             'name'         => 'developer',
             'display_name' => 'Developer',
@@ -282,11 +282,6 @@ class PermissionSeeder extends Seeder
             'description'  => 'Manage fields association with page/block content.',
             'category'     => 'Fields',
         ]);
-
-
-
-
-
 
         $role_developer->attachPermissions([
             //$permission_create_application_settings,

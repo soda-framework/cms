@@ -29,4 +29,9 @@ class ApplicationSetting extends Model implements ApplicationSettingInterface
     {
         return $this->belongsTo(resolve_class('soda.application.model'));
     }
+
+    public static function getFieldTypes()
+    {
+        return app('soda.form')->getFieldTypes();
+    }
 }

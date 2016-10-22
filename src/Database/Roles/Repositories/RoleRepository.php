@@ -22,7 +22,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
 
     public function getPermissions()
     {
-        return $this->model->permissions()->getRelated()->get()->groupBy('category')->map(function($item, $key){
+        return $this->model->permissions()->getRelated()->get()->groupBy('category')->map(function ($item, $key) {
             return $item->pluck('display_name', 'id');
         })->toArray();
     }
@@ -31,7 +31,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
     {
         $model = parent::save($request, $id);
 
-        if($request->has('permission_id')) {
+        if ($request->has('permission_id')) {
             $model->permissions()->sync($request->input('permission_id'));
         }
 

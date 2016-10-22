@@ -2,7 +2,6 @@
 
 namespace Soda\Cms\Database\Application;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
@@ -29,7 +28,7 @@ class ApplicationServiceProvider extends ServiceProvider
     protected $aliases = [
         'soda.application.model'             => [ApplicationInterface::class, Application::class],
         'soda.application-url.model'         => [ApplicationUrlInterface::class, ApplicationUrl::class],
-        'soda.application-setting.model'         => [ApplicationSettingInterface::class, ApplicationSetting::class],
+        'soda.application-setting.model'     => [ApplicationSettingInterface::class, ApplicationSetting::class],
         'soda.application.repository'        => [ApplicationRepositoryInterface::class, ApplicationRepository::class],
         'soda.application.cached-repository' => [CachedApplicationRepositoryInterface::class, CachedApplicationRepository::class],
     ];

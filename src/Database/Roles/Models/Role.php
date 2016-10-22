@@ -1,9 +1,9 @@
 <?php namespace Soda\Cms\Database\Roles\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Soda\Cms\Database\Roles\Interfaces\RoleInterface;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\RoleHasPermissions;
-use Soda\Cms\Database\Roles\Interfaces\RoleInterface;
 
 class Role extends Model implements RoleInterface
 {

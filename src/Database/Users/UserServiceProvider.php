@@ -4,9 +4,6 @@ namespace Soda\Cms\Database\Users;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use Laratrust\LaratrustFacade;
-use Laratrust\LaratrustServiceProvider;
-use Soda\Cms\Database\Permissions\Repositories\PermissionRepository;
 use Soda\Cms\Database\Users\Interfaces\UserInterface;
 use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 use Soda\Cms\Database\Users\Models\User;
@@ -24,8 +21,8 @@ class UserServiceProvider extends ServiceProvider
     protected $defer = true;
 
     protected $aliases = [
-        'soda.user.model'            => [UserInterface::class, User::class],
-        'soda.user.repository'       => [UserRepositoryInterface::class, UserRepository::class],
+        'soda.user.model'      => [UserInterface::class, User::class],
+        'soda.user.repository' => [UserRepositoryInterface::class, UserRepository::class],
     ];
 
     /**

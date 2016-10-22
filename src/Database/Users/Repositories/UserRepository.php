@@ -2,10 +2,10 @@
 namespace Soda\Cms\Database\Users\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Users\Interfaces\UserInterface;
-use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractRepository;
 use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Database\Users\Interfaces\UserInterface;
+use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
 
@@ -29,7 +29,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         $model = parent::save($request, $id);
 
-        if($request->has('role_id')) {
+        if ($request->has('role_id')) {
             $model->roles()->sync($request->input('role_id'));
         }
 
@@ -42,7 +42,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $filter->add('username', 'Username', 'text');
         $filter->add('email', 'Email', 'text');
         $filter->add('roles.id', 'Role', 'select')
-            ->option("","")
+            ->option("", "")
             ->options($this->getRoles());
         $filter->submit('Search');
         $filter->reset('Clear');

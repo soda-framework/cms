@@ -40,8 +40,9 @@ class ApplicationController extends BaseController
     public function edit($id = null)
     {
         $application = $this->applications->getApplication($id);
+        $settingsByCategory = $this->applications->getSettingsForApplication($application);
 
-        return soda_cms_view('data.application.view', compact('application'));
+        return soda_cms_view('data.application.view', compact('application', 'settingsByCategory'));
     }
 
     /**

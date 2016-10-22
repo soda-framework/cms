@@ -9,13 +9,14 @@ class RecordLastLoginTimestamp
     /**
      * Handle the event.
      *
-     * @param  Login  $event
+     * @param  Login $event
+     *
      * @return void
      */
     public function handle(Login $event)
     {
         $user = $event->user;
-        if(method_exists($user, 'updateLoginTimestamp')) {
+        if (method_exists($user, 'updateLoginTimestamp')) {
             $user->updateLoginTimestamp();
         }
     }

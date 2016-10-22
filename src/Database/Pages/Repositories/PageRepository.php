@@ -29,13 +29,11 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function loadType(PageInterface $page)
     {
-        if(!$page->relationLoaded('type'))
-        {
+        if (!$page->relationLoaded('type')) {
             $page->load('type');
         }
 
-        if($page->getRelation('type') !== null && !$page->getRelation('type')->relationLoaded('fields'))
-        {
+        if ($page->getRelation('type') !== null && !$page->getRelation('type')->relationLoaded('fields')) {
             $page->getRelation('type')->load('fields');
         }
 

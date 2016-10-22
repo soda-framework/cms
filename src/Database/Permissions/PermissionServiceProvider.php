@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Permissions;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Database\Permissions\Repositories\PermissionRepository;
 use Soda\Cms\Database\Permissions\Interfaces\PermissionInterface;
 use Soda\Cms\Database\Permissions\Interfaces\PermissionRepositoryInterface;
 use Soda\Cms\Database\Permissions\Models\Permission;
+use Soda\Cms\Database\Permissions\Repositories\PermissionRepository;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class PermissionServiceProvider extends ServiceProvider

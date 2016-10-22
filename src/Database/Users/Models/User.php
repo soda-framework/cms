@@ -42,7 +42,7 @@ class User extends Authenticatable implements UserInterface
     protected $dates = [
         'created_at',
         'updated_at',
-        'last_loggedin_at'
+        'last_loggedin_at',
     ];
 
     public function updateLoginTimestamp()

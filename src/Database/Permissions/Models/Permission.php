@@ -1,8 +1,8 @@
 <?php namespace Soda\Cms\Database\Permissions\Models;
 
 use Laratrust\LaratrustPermission;
-use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Permissions\Interfaces\PermissionInterface;
+use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class Permission extends LaratrustPermission implements PermissionInterface
 {

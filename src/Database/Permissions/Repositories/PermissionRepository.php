@@ -29,7 +29,7 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
     {
         $model = parent::save($request, $id);
 
-        if($request->has('role_id')) {
+        if ($request->has('role_id')) {
             $model->roles()->sync($request->input('role_id'));
         }
 
@@ -41,7 +41,7 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
         $filter = (new DataFilter)->source($model);
         $filter->add('display_name', 'Name', 'text');
         $filter->add('category', 'Category', 'select')
-            ->option("","")
+            ->option("", "")
             ->options($this->model->pluck('category', 'category'));
         $filter->submit('Search');
         $filter->reset('Clear');
