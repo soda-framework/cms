@@ -164,7 +164,9 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
         @if($page->type)
             <input type="hidden" name="page_type_id" value="{{ $page->type->id }}"/>
         @endif
+        @if(!$page->id)
         <input type="hidden" name="parent_id" value="{{ $page->parent_id }}"/>
+        @endif
         <div class="tab-content">
             <div class="tab-pane" id="tab_page_settings" role="tabpanel">
                 @yield('tab.settings')
