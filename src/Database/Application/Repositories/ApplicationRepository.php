@@ -52,23 +52,19 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         $model->fill($request->input())->save();
 
         if ($request->has('application_urls')) {
-            $newUrls = $request->input('application_urls');
-            $currentUrls = $model->urls()->pluck('domain')->toArray();
+            $this->syncUrlsToApplication($model, $request->input('application_urls'));
+        }
 
-            $detach = array_diff($currentUrls, $newUrls);
-            $attach = [];
-
-            foreach (array_diff($newUrls, $currentUrls) as $new) {
-                $attach[] = ['domain' => $new, 'application_id' => $model->id];
-            };
-
-            if (count($detach)) {
-                // Remove detachable URLs, EXCEPT our current host!
-                $model->urls()->whereIn('domain', $detach)->where('domain', '!=', str_replace('www.', '', $_SERVER['HTTP_HOST']))->delete();
+        if ($request->has('settings')) {
+            if(!$model->relationLoaded('settings'))
+            {
+                $model->load('settings');
             }
 
-            if (count($attach)) {
-                $model->urls()->insert($attach);
+            foreach($model->getRelation('settings') as $setting)
+            {
+                $setting->parseField($request);
+                $setting->save();
             }
         }
 
@@ -105,5 +101,28 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         $grid->paginate($perPage)->getGrid($this->getGridView());
 
         return compact('filter', 'grid');
+    }
+
+    protected function syncUrlsToApplication(ApplicationInterface $application, $urls = [])
+    {
+        $currentUrls = $application->urls()->pluck('domain')->toArray();
+
+        $detach = array_diff($currentUrls, $urls);
+        $attach = [];
+
+        foreach (array_diff($urls, $currentUrls) as $new) {
+            $attach[] = ['domain' => $new, 'application_id' => $application->id];
+        };
+
+        if (count($detach)) {
+            // Remove detachable URLs, EXCEPT our current host!
+            $application->urls()->whereIn('domain', $detach)->where('domain', '!=', str_replace('www.', '', $_SERVER['HTTP_HOST']))->delete();
+        }
+
+        if (count($attach)) {
+            $application->urls()->insert($attach);
+        }
+
+        return $application;
     }
 }

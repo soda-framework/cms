@@ -39,12 +39,14 @@ class FormBuilder
     /**
      * Instantiates a new FormField from our Field model or array
      *
-     * @param $field
+     * @param      $field
+     *
+     * @param null $prefix
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
-    public function field($field)
+    public function field($field, $prefix = null)
     {
         if (is_array($field)) {
             $field = app('soda.field.model')->fill($field);
@@ -54,7 +56,13 @@ class FormBuilder
             Throw new Exception("Field must implement interface ".FieldInterface::class." or be an array.");
         }
 
-        return $this->getRegistrar()->resolve($field);
+        $formField = $this->getRegistrar()->resolve($field);
+
+        if($prefix) {
+            $formField->setPrefix($prefix);
+        }
+
+        return $formField;
     }
 
     /**

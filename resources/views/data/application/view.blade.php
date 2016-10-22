@@ -28,17 +28,18 @@
 
     @permission('manage-application-urls')
     {!! SodaForm::tags([
-        "name"        => "Application URLs",
-        "description" => "URLs that may be used to access the application",
-        "field_name"  => 'application_urls',
-        "value"       => $application->urls->pluck('domain', 'domain')
+        "name"         => "Application URLs",
+        "description"  => "URLs that may be used to access the application",
+        "field_name"   => 'application_urls',
+        "field_params" => ['array-save' => null],
+        "value"        => $application->urls->pluck('domain', 'domain')->toArray()
     ]) !!}
     @else
         {!! SodaForm::static_text([
-            "name"        => "Application URLs",
-            "description" => "URLs that may be used to access the application",
-            "field_name"  => 'application_urls',
-            "value"       => implode(', ', $application->urls->pluck('domain', 'domain')->toArray()),
+            "name"         => "Application URLs",
+            "description"  => "URLs that may be used to access the application",
+            "field_name"   => 'application_urls',
+            "value"        => implode(', ', $application->urls->pluck('domain', 'domain')->toArray()),
         ]) !!}
     @endif
 @stop
@@ -86,7 +87,7 @@
                                         @yield('tab.settings')
                                     @endif
                                     @foreach($settings as $setting)
-                                        {!! SodaForm::field($setting)->setModel($setting) !!}
+                                        {!! SodaForm::field($setting, 'settings')->setModel($setting) !!}
                                     @endforeach
                                 </div>
                             </div>

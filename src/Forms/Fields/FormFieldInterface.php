@@ -37,6 +37,8 @@ interface FormFieldInterface
 
     public function getFieldName();
 
+    public function buildPrefixedFieldName();
+
     public function getPrefixedFieldName();
 
     public function getFieldDescription();

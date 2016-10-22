@@ -37,7 +37,7 @@ class CachedApplicationRepository extends AbstractCacheRepository implements Cac
             $settings = $application->getRelation('settings');
 
             if ($settings !== null) {
-                return $settings->pluck('value', 'field_name');
+                return $settings;
             }
 
             return [];

@@ -3,6 +3,7 @@
 namespace Soda\Cms\Database\Application\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Soda\Cms\Database\Application\Interfaces\ApplicationSettingInterface;
 use Soda\Cms\Database\Support\Models\Traits\BoundToApplication;
 
@@ -33,5 +34,25 @@ class ApplicationSetting extends Model implements ApplicationSettingInterface
     public static function getFieldTypes()
     {
         return app('soda.form')->getFieldTypes();
+    }
+
+    public function getFieldValue()
+    {
+        $field = app('soda.form')->field($this);
+
+        $field->getFieldValue();
+
+        return $this;
+    }
+
+    public function parseField(Request $request)
+    {
+        $field = app('soda.form')->field($this);
+
+        $field->setPrefix('settings');
+
+        $this->setAttribute('value', $field->getSaveValue($request));
+
+        return $this;
     }
 }
