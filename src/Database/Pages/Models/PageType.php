@@ -53,8 +53,9 @@ class PageType extends Model implements PageTypeInterface
 
     public function buildDynamicTable(Blueprint $table)
     {
-        $reference_column = $this->pages()->getForeignKey();
-        $reference_table = $this->pages()->getRelated()->getTable();
+        $related = $this->pages()->getRelated();
+        $reference_column = $related->getForeignKey();
+        $reference_table = $related->getTable();
         $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
 
         $table->increments('id');

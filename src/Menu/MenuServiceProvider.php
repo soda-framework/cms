@@ -102,12 +102,32 @@ class MenuServiceProvider extends ServiceProvider
                 'permissions' => 'manage-fields',
             ]);
 
-            $menu->addItem('Users', [
+            $menu->addItem('User Management', [
+                'label'       => 'User Management',
+                'icon'        => 'fa fa-users',
+                'isCurrent'   => soda_request_is('users*') || soda_request_is('roles*') || soda_request_is('permissions*'),
+                'permissions' => 'view-users',
+            ]);
+
+            $menu['User Management']->addChild('Users', [
                 'url'         => route('soda.users.index'),
                 'label'       => 'Users',
-                'icon'        => 'fa fa-users',
                 'isCurrent'   => soda_request_is('users*'),
                 'permissions' => 'view-users',
+            ]);
+
+            $menu['User Management']->addChild('Roles', [
+                'url'         => route('soda.roles.index'),
+                'label'       => 'Roles',
+                'isCurrent'   => soda_request_is('roles*'),
+                'permissions' => 'view-roles',
+            ]);
+
+            $menu['User Management']->addChild('Permissions', [
+                'url'         => route('soda.permissions.index'),
+                'label'       => 'Permissions',
+                'isCurrent'   => soda_request_is('permissions*'),
+                'permissions' => 'view-permissions',
             ]);
 
             $menu->addItem('Applications', [

@@ -19,6 +19,7 @@ class AlterUsersTable extends Migration
                     $table->renameColumn('name', 'username');
                 }
                 $table->integer('application_id')->unsigned()->nullable()->after('remember_token');
+                $table->timestamp('last_loggedin_at')->nullable();
             });
         } else {
             Schema::create('users', function (Blueprint $table) {
@@ -29,6 +30,7 @@ class AlterUsersTable extends Migration
                 $table->rememberToken();
                 $table->integer('application_id')->unsigned()->nullable();
                 $table->timestamps();
+                $table->timestamp('last_loggedin_at')->nullable();
             });
         }
     }
@@ -43,6 +45,7 @@ class AlterUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->renameColumn('username', 'name');
             $table->dropColumn('application_id');
+            $table->dropColumn('last_loggedin_at');
         });
     }
 

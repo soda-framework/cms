@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustFacade;
 use Laratrust\LaratrustServiceProvider;
-use Soda\Cms\Database\Users\Interfaces\PermissionInterface;
-use Soda\Cms\Database\Users\Interfaces\RoleInterface;
+use Soda\Cms\Database\Permissions\Repositories\PermissionRepository;
 use Soda\Cms\Database\Users\Interfaces\UserInterface;
-use Soda\Cms\Database\Users\Models\Permission;
-use Soda\Cms\Database\Users\Models\Role;
+use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 use Soda\Cms\Database\Users\Models\User;
+use Soda\Cms\Database\Users\Repositories\UserRepository;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class UserServiceProvider extends ServiceProvider
@@ -25,9 +24,8 @@ class UserServiceProvider extends ServiceProvider
     protected $defer = true;
 
     protected $aliases = [
-        'soda.user.model'       => [UserInterface::class, User::class],
-        'soda.role.model'       => [RoleInterface::class, Role::class],
-        'soda.permission.model' => [PermissionInterface::class, Permission::class],
+        'soda.user.model'            => [UserInterface::class, User::class],
+        'soda.user.repository'       => [UserRepositoryInterface::class, UserRepository::class],
     ];
 
     /**
@@ -52,24 +50,12 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerDependencies([
-            LaratrustServiceProvider::class,
-        ]);
-
-        $this->registerFacades([
-            'Laratrust' => LaratrustFacade::class,
-        ]);
-
         $this->app->bind('soda.user.model', function ($app) {
             return new User;
         });
 
-        $this->app->bind('soda.role.model', function ($app) {
-            return new Role;
-        });
-
-        $this->app->bind('soda.permission.model', function ($app) {
-            return new Permission;
+        $this->app->bind('soda.user.repository', function ($app) {
+            return new UserRepository($app['soda.user.model']);
         });
 
         $this->registerAliases($this->aliases);

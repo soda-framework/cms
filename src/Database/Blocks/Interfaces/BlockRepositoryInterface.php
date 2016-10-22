@@ -8,7 +8,5 @@ interface BlockRepositoryInterface extends CanBuildDataGrid, BaseRepositoryInter
 {
     public function getTypes();
 
-    public function getFilteredGrid($perPage);
-
     public function createStub($blockTypeId = null);
 }

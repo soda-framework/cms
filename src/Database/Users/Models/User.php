@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Database\Users\Models;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\UserHasRoles;
@@ -21,6 +22,7 @@ class User extends Authenticatable implements UserInterface
         'name',
         'email',
         'password',
+        'last_loggedin_at',
     ];
 
     /**
@@ -32,4 +34,20 @@ class User extends Authenticatable implements UserInterface
         'password',
         'remember_token',
     ];
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'last_loggedin_at'
+    ];
+
+    public function updateLoginTimestamp()
+    {
+        $this->setAttribute('last_loggedin_at', Carbon::now());
+        $this->save();
+    }
 }

@@ -118,7 +118,7 @@ class PageController extends BaseController
     public function destroy($id)
     {
         try {
-            $page = $this->pages->destroy($id);
+            $this->pages->destroy($id);
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'page']));
         }

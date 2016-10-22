@@ -101,4 +101,9 @@ trait UserHasRoles
     {
         return 'soda.permissions.'.$this->getTable().'.'.$this->getKey();
     }
+
+    public function listRoles()
+    {
+        return $this->cachedRoles()->pluck('name', 'id');
+    }
 }

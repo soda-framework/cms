@@ -117,7 +117,7 @@ class BlockController extends BaseController
     public function destroy($id)
     {
         try {
-            $block = $this->blocks->destroy($id);
+            $this->blocks->destroy($id);
         } catch (ModelNotFoundException $e) {
             return $this->handleException($e, trans('soda::errors.not-found', ['object' => 'block']));
         } catch (Exception $e) {

@@ -16,7 +16,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-square',
+    'icon'        => 'fa fa-puzzle-piece',
     'title'       => 'Block Types',
     'description' => 'Different Block Types have different field types applied to them',
 ])

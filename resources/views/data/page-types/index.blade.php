@@ -12,14 +12,14 @@
 @endsection
 
 @section('content-heading-button')
-    <a class='btn btn-success btn-lg' href="{{route('soda.page-type.create')}}">
+    <a class='btn btn-success btn-lg' href="{{route('soda.page-types.create')}}">
         <i class="fa fa-plus"></i>
         <span>Create</span>
     </a>
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-edit',
+    'icon'        => 'fa fa-file-o',
     'title'       => 'Page Types',
     'description' => 'Different Page Types have different field types applied to them',
 ])

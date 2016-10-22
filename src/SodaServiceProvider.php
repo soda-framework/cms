@@ -3,15 +3,19 @@ namespace Soda\Cms;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Laratrust\LaratrustServiceProvider;
 use Rutorika\Sortable\SortableServiceProvider;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Soda\Cms\Database\Application\ApplicationServiceProvider;
 use Soda\Cms\Database\Blocks\BlockServiceProvider;
 use Soda\Cms\Database\Fields\FieldsServiceProvider;
 use Soda\Cms\Database\Pages\PageServiceProvider;
+use Soda\Cms\Database\Roles\RoleServiceProvider;
+use Soda\Cms\Database\Permissions\PermissionServiceProvider;
 use Soda\Cms\Database\Users\UserServiceProvider;
 use Soda\Cms\Forms\FormServiceProvider;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
+use Soda\Cms\Foundation\Providers\EventServiceProvider;
 use Soda\Cms\Foundation\Providers\RouteServiceProvider;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 use Soda\Cms\Foundation\SodaInstance;
@@ -72,20 +76,27 @@ class SodaServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/sortable.php', 'soda.sortable');
 
         $this->registerDependencies([
+            // Soda Dependencies
             AuthServiceProvider::class,
-            FormServiceProvider::class,
-            CommandsServiceProvider::class,
+            EventServiceProvider::class,
             RequestMatcherServiceProvider::class,
+            CommandsServiceProvider::class,
+            FormServiceProvider::class,
             MenuServiceProvider::class,
 
+            // Plugins
             RapydServiceProvider::class,
             SortableServiceProvider::class,
+            LaratrustServiceProvider::class,
 
+            // Deferred Model Providers
             ApplicationServiceProvider::class,
             FieldsServiceProvider::class,
             BlockServiceProvider::class,
             PageServiceProvider::class,
             UserServiceProvider::class,
+            RoleServiceProvider::class,
+            PermissionServiceProvider::class,
         ]);
 
         $this->registerFacades([
@@ -93,6 +104,7 @@ class SodaServiceProvider extends ServiceProvider
             'SodaForm'    => Form::class,
             'SodaMenu'    => Menu::class,
             'SodaMatcher' => RequestMatcher::class,
+            'Laratrust'   => LaratrustFacade::class,
         ]);
 
         $this->app->singleton('soda', function ($app) {

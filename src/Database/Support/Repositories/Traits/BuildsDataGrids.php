@@ -10,7 +10,7 @@ trait BuildsDataGrids
     public function buildFilter($model)
     {
         $filter = (new DataFilter)->source($model);
-        $filter->add('name', 'name', 'text');
+        $filter->add('name', 'Name', 'text');
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
@@ -23,7 +23,7 @@ trait BuildsDataGrids
         $grid = (new DataGrid)->source($filter);
         $grid->add('name', 'Name', true);
         $grid->add('description', 'Description', true);
-        $grid->orderBy('id', 'desc');
+        $grid->orderBy('id', 'asc');
 
         return $grid;
     }

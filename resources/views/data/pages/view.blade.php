@@ -3,7 +3,7 @@ $smallView = false;
 if($page->type) {
     $page->load('type.fields');
 }
-if (!$page->type || !count($page->type->fields)) {
+if (!$page->type || !count($page->type->fields->where('pivot.show_in_table', 1))) {
     $smallView = true;
 }
 ?>
@@ -27,7 +27,7 @@ if (!$page->type || !count($page->type->fields)) {
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-file-o',
+    'icon'        => 'fa fa-pencil',
     'title'       => $page->name? ' Page: ' . $page->name : 'New Page',
     'description' => $page->description,
 ])
@@ -42,7 +42,7 @@ if (!$page->type || !count($page->type->fields)) {
                     <hr/>
                 @endif
                 @if($page->type && $page->type->fields)
-                    @foreach($page->type->fields as $field)
+                    @foreach($page->type->fields->where('pivot.show_in_table', 1) as $field)
                         {!! SodaForm::field($field)->setModel($page->pageAttributes())->setPrefix('settings') !!}
                     @endforeach
                 @endif

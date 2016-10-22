@@ -3,8 +3,8 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ route('soda.home') }}">Home</a></li>
-        <li><a href="{{ route('soda.page-type') }}">Page Types</a></li>
-        <li class="active">{{ $model->name ? $model->name : 'New Page Type' }}</li>
+        <li><a href="{{ route('soda.page-types.index') }}">Page Types</a></li>
+        <li class="active">{{ $pageType->name ? $pageType->name : 'New Page Type' }}</li>
     </ol>
 @stop
 
@@ -18,18 +18,19 @@
 
 @include(soda_cms_view_path('partials.heading'), [
     'icon'        => 'fa fa-edit',
-    'title'       => $model->name ? 'Page Type: ' . $model->name : 'New Page Type',
+    'title'       => $pageType->name ? 'Page Type: ' . $pageType->name : 'New Page Type',
 ])
 
 @section('content')
     <div class="content-block">
-        <form method="POST" id="page-type-form" action='{{route('soda.'.$hint.'.edit',['id' => $model->id])}}' enctype="multipart/form-data">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+        <form method="POST" id="page-type-form" action="{{ route('soda.page-types.' . ($pageType->id ? 'update' : 'store'), $pageType->id) }}">
+            {!! csrf_field() !!}
+            {!! method_field($pageType->id ? 'PUT' : 'POST') !!}
 
             {!! SodaForm::text([
                 "name"        => 'Page Type Name',
                 "field_name"  => 'name',
-            ])->setModel($model) !!}
+            ])->setModel($pageType) !!}
 
             {!! SodaForm::toggle([
                 'name'         => 'Status',
@@ -37,39 +38,52 @@
                 'field_name'   => 'status',
                 'value'        => Soda\Cms\Support\Constants::STATUS_LIVE,
                 'field_params' => ['checked-value' => Soda\Cms\Support\Constants::STATUS_LIVE, 'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
-            ])->setModel($model) !!}
+            ])->setModel($pageType) !!}
 
             {!! SodaForm::textarea([
                 "name"        => "Page Type Description",
                 "field_name"  => 'description',
-            ])->setModel($model) !!}
-
-            {!! SodaForm::text([
-                'name'        => 'Package Prefix',
-                'field_name'  => 'package',
-            ])->setModel($model) !!}
+            ])->setModel($pageType) !!}
 
             <div class="row fieldset-group">
                 <div class="col-sm-6 col-xs-12">
                     {!! SodaForm::dropdown([
-                        'name'        => 'Default Action',
-                        'field_name'  => 'action_type',
-                        'value'       => 'view',
-                        'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
-                    ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
+                        'name'        => 'View Action',
+                        'field_name'  => 'view_action_type',
+                        'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                        'description'  => 'Specifies the interface supplied when viewing this page.',
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     {!! SodaForm::text([
                         'name'        => null,
-                        'field_name'  => 'action',
-                    ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
+                        'field_name'  => 'view_action',
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
+                </div>
+            </div>
+
+            <div class="row fieldset-group">
+                <div class="col-sm-6 col-xs-12">
+                    {!! SodaForm::dropdown([
+                        'name'        => 'Edit Action',
+                        'field_name'  => 'edit_action_type',
+                        'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                        'description'  => 'Specifies the interface supplied when editing this page.',
+
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    {!! SodaForm::text([
+                        'name'        => null,
+                        'field_name'  => 'edit_action',
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
                 </div>
             </div>
 
             {!! SodaForm::text([
                 "name"        => "Identifier",
                 "field_name"  => 'identifier',
-            ])->setModel($model) !!}
+            ])->setModel($pageType) !!}
         </form>
     </div>
 

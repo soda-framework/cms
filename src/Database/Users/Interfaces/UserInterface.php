@@ -6,5 +6,6 @@ use Laratrust\Contracts\LaratrustUserInterface;
 
 interface UserInterface extends LaratrustUserInterface
 {
-
+    public function updateLoginTimestamp();
+    public function listRoles();
 }

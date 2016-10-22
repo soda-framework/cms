@@ -2,6 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 
@@ -24,18 +26,28 @@ class UserController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        return soda_cms_view('data.users.index', $this->users->getFilteredGrid(10));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            $user = $this->users->newInstance($request);
+            $roleIds = $this->users->getRoles();
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'user']));
+        }
+
+        return soda_cms_view('data.users.view', compact('user', 'roleIds'));
     }
 
     /**
@@ -47,19 +59,13 @@ class UserController extends BaseController
      */
     public function store(Request $request)
     {
-        //
-    }
+        try {
+            $user = $this->users->save($request);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'user']));
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('soda.users.edit', $user->getKey())->with('success', trans('soda::messages.created', ['object' => 'user']));
     }
 
     /**
@@ -71,7 +77,14 @@ class UserController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $user = $this->users->findById($id);
+        $roleIds = $this->users->getRoles();
+
+        if (!$user) {
+            return $this->handleError(trans('soda::errors.not-found', ['object' => 'user']));
+        }
+
+        return soda_cms_view('data.users.view', compact('user', 'roleIds'));
     }
 
     /**
@@ -84,7 +97,13 @@ class UserController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $user = $this->users->save($request, $id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.update', ['object' => 'user']));
+        }
+
+        return redirect()->route('soda.users.edit', $user->getKey())->with('success', trans('soda::messages.updated', ['object' => 'user']));
     }
 
     /**
@@ -96,6 +115,14 @@ class UserController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $this->users->destroy($id);
+        } catch (ModelNotFoundException $e) {
+            return $this->handleException($e, trans('soda::errors.not-found', ['object' => 'user']));
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'user']));
+        }
+
+        return redirect()->route('soda.users.index')->with('warning', trans('soda::messages.deleted', ['object' => 'user']));
     }
 }

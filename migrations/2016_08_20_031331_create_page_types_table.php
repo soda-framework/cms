@@ -20,7 +20,7 @@ class CreatePageTypesTable extends Migration
             $table->string('identifier', 50);
             $table->integer('application_id')->unsigned()->index('fk_page_types_applications1_idx');
             $table->string('view_action')->nullable();
-            $table->string('view_action_type');
+            $table->string('view_action_type')->nullable();
             $table->string('edit_action')->nullable();
             $table->string('edit_action_type')->nullable();
             $table->timestamps();

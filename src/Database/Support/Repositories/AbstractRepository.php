@@ -3,6 +3,7 @@
 namespace Soda\Cms\Database\Support\Repositories;
 
 use Illuminate\Http\Request;
+use Soda\Cms\Support\Facades\Soda;
 
 abstract class AbstractRepository
 {
@@ -21,7 +22,9 @@ abstract class AbstractRepository
 
     public function newInstance($attributes = [])
     {
-        return $this->model->newInstance($attributes);
+        return $this->model->newInstance($attributes)->fill([
+            'application_id' => Soda::getApplication()->id,
+        ]);
     }
 
     public function destroy($id)

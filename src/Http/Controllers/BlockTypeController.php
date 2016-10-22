@@ -110,7 +110,7 @@ class BlockTypeController extends BaseController
     public function destroy($id)
     {
         try {
-            $blockType = $this->blockTypes->destroy($id);
+            $this->blockTypes->destroy($id);
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block type']));
         }

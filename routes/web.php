@@ -50,6 +50,16 @@ Route::group(['prefix' => config('soda.cms.path')], function() {
             'except' => 'show',
         ]);
 
+        Route::resource('roles', 'RoleController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
+        Route::resource('permissions', 'PermissionController', [
+            'as'     => 'soda',
+            'except' => 'show',
+        ]);
+
         Route::group(['prefix' => 'upload'], function () {
             Route::post('/', 'UploadController@upload')->name('soda.upload');
             Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');

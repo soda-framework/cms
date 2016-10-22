@@ -9,6 +9,7 @@ return [
     'fancy_upload' => Soda\Cms\Forms\Fields\FancyUpload::class,
     'json'         => Soda\Cms\Forms\Fields\Json::class,
     'lat_lon'      => Soda\Cms\Forms\Fields\LatLon::class,
+    'multiselect'  => Soda\Cms\Forms\Fields\Multiselect::class,
     'password'     => Soda\Cms\Forms\Fields\Password::class,
     'static_text'  => Soda\Cms\Forms\Fields\StaticText::class,
     'hidden'       => Soda\Cms\Forms\Fields\Hidden::class,

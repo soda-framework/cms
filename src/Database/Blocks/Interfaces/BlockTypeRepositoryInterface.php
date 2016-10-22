@@ -6,5 +6,4 @@ use Soda\Cms\Database\Support\Interfaces\CanBuildDataGrid;
 
 interface BlockTypeRepositoryInterface extends CanBuildDataGrid, BaseRepositoryInterface
 {
-    public function getFilteredGrid($perPage);
 }

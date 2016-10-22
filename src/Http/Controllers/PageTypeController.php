@@ -2,14 +2,15 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageTypeRepositoryInterface;
 
 class PageTypeController extends BaseController
 {
     protected $pageTypes;
 
-    public function __construct(PageRepositoryInterface $pageTypes)
+    public function __construct(PageTypeRepositoryInterface $pageTypes)
     {
         $this->pageTypes = $pageTypes;
 
@@ -21,18 +22,27 @@ class PageTypeController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        return soda_cms_view('data.page-types.index', $this->pageTypes->getFilteredGrid(10));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        try {
+            $pageType = $this->pageTypes->newInstance($request);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'page type']));
+        }
+
+        return soda_cms_view('data.page-types.view', compact('pageType'));
     }
 
     /**
@@ -44,19 +54,13 @@ class PageTypeController extends BaseController
      */
     public function store(Request $request)
     {
-        //
-    }
+        try {
+            $pageType = $this->pageTypes->save($request);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.create', ['object' => 'page type']));
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('soda.page-types.edit', $pageType->getKey())->with('success', trans('soda::messages.created', ['object' => 'page type']));
     }
 
     /**
@@ -68,7 +72,13 @@ class PageTypeController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $pageType = $this->pageTypes->findById($id);
+
+        if (!$pageType) {
+            return $this->handleError(trans('soda::errors.not-found', ['object' => 'page type']));
+        }
+
+        return soda_cms_view('data.page-types.view', compact('pageType'));
     }
 
     /**
@@ -81,7 +91,13 @@ class PageTypeController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $pageType = $this->pageTypes->save($request, $id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.update', ['object' => 'page type']));
+        }
+
+        return redirect()->route('soda.page-types.edit', $pageType->getKey())->with('success', trans('soda::messages.updated', ['object' => 'page type']));
     }
 
     /**
@@ -93,6 +109,12 @@ class PageTypeController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $this->pageTypes->destroy($id);
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'page type']));
+        }
+
+        return redirect()->route('soda.page-types.index')->with('warning', trans('soda::messages.deleted', ['object' => 'page type']));
     }
 }
