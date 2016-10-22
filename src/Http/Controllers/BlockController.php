@@ -124,6 +124,6 @@ class BlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block']));
         }
 
-        return redirect()->route('soda.blocks.edit', $block->getKey())->with('warning', trans('soda::messages.deleted', ['object' => 'block']));
+        return redirect()->route('soda.blocks.index')->with('warning', trans('soda::messages.deleted', ['object' => 'block']));
     }
 }

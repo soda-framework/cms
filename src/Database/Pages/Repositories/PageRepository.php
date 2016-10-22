@@ -31,7 +31,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     {
         $page = $this->getRoot() ?: $this->createRoot();
 
-        return $page ? $page->collectDescendants(true)->get()->toTree() : [];
+        return $page ? $page->collectDescendants(true)->orderBy('parent_id', 'ASC')->orderBy('position', 'ASC')->get()->toTree() : [];
     }
 
     public function getRoot()

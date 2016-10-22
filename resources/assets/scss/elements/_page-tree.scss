@@ -9,23 +9,23 @@
   }
 
   .root-node {
-    .tree-sub-items {
+    > .tree-sub-items {
       padding-left: 0;
     }
   }
 
-  .locked-handle, .handle, .minify, .item-status, .item-title {
+  .locked-handle, .handle, .locked-minify, .minify, .item-status, .item-title {
     display: inline-block;
     vertical-align: middle;
   }
 
-  .locked-handle, .handle, .minify {
+  .locked-handle, .handle, .locked-minify, .minify {
     margin: 0 5px;
     color: $slate-060;
     line-height: 35px;
   }
 
-  .locked-handle {
+  .locked-handle, .locked-minify {
     opacity: 0;
   }
 

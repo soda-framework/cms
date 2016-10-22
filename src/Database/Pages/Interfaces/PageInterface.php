@@ -2,6 +2,7 @@
 namespace Soda\Cms\Database\Pages\Interfaces;
 
 use Franzose\ClosureTable\Contracts\EntityInterface;
+use Illuminate\Database\Eloquent\Model;
 
 interface PageInterface extends EntityInterface
 {

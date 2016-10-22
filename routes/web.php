@@ -11,7 +11,8 @@ Route::group(['prefix' => config('soda.cms.path')], function() {
     // Dashboard and user routes...
     Route::group(['middleware' => 'soda.auth:soda'], function () {
         Route::get('/', 'HomeController@getIndex')->name('soda.home')->middleware('soda.permission:access-cms');
-        Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft");
+        Route::post('sort', 'Api\SortController@sort')->name('soda.sort')->middleware('soda.permission:access-cms');
+        Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft")->middleware('soda.permission:view-drafts');
 
         Route::post('pages/move', 'PageController@move')->name('soda.pages.move');
         Route::resource('pages', 'PageController', [

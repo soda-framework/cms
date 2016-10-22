@@ -2,6 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
+
 class SortController extends ApiController
 {
     /**
@@ -51,7 +53,7 @@ class SortController extends ApiController
         $validator = app('validator');
 
         $rules = [
-            'type'             => ['required', 'in:moveAfter,moveBefore'],
+            'type'             => ['required', 'in:moveAfter,moveBefore,moveInto'],
             'entityName'       => ['required', 'in:'.implode(',', array_keys($sortableEntities))],
             'id'               => 'required',
             'positionEntityId' => 'required',
@@ -60,20 +62,20 @@ class SortController extends ApiController
         /** @var Model|bool $entityClass */
         list($entityClass, $relation) = $this->getEntityInfo($sortableEntities, (string)$request->input('entityName'));
 
-        if (!class_exists($entityClass)) {
+        if (!class_exists(resolve_class($entityClass))) {
             $rules['entityClass'] = 'required'; // fake rule for not exist field
             return $validator->make($request->all(), $rules);
         }
 
-        $tableName = with(new $entityClass())->getTable();
-        $primaryKey = with(new $entityClass())->getKeyName();
+        $tableName = app($entityClass)->getTable();
+        $primaryKey = app($entityClass)->getKeyName();
 
         if (!$relation) {
             $rules['id'] .= '|exists:'.$tableName.','.$primaryKey;
             $rules['positionEntityId'] .= '|exists:'.$tableName.','.$primaryKey;
         } else {
             /** @var BelongsToSortedMany $relationObject */
-            $relationObject = with(new $entityClass())->$relation();
+            $relationObject = app($entityClass)->$relation();
             $pivotTable = $relationObject->getTable();
 
             $rules['parentId'] = 'required|exists:'.$tableName.','.$primaryKey;

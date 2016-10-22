@@ -2,21 +2,25 @@
 namespace Soda\Cms\Database\Pages\Models;
 
 use Exception;
+use Franzose\ClosureTable\Models\Entity;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Pages\Models\Observers\PageObserver;
 use Soda\Cms\Database\Support\Models\AbstractClosureEntityModel;
+use Soda\Cms\Database\Support\Models\Traits\AdditionalClosureScopes;
 use Soda\Cms\Database\Support\Models\Traits\Draftable;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\Sluggable;
 use Soda\Cms\Database\Support\Models\Traits\Sortable;
+use Soda\Cms\Database\Support\Models\Traits\SortableClosure;
 
-class Page extends AbstractClosureEntityModel implements PageInterface
+class Page extends Entity implements PageInterface
 {
-    use SoftDeletes, Sluggable, OptionallyBoundToApplication, Sortable, Draftable, Identifiable, HasDefaultAttributes;
+    use SoftDeletes, Sluggable, OptionallyBoundToApplication, Draftable, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure;
 
     protected $table = 'pages';
 

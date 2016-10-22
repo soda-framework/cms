@@ -1,10 +1,8 @@
 <?php
 
-namespace Soda\Cms\Database\Support\Models;
+namespace Soda\Cms\Database\Support\Models\Traits;
 
-use Franzose\ClosureTable\Models\Entity;
-
-abstract class AbstractClosureEntityModel extends Entity
+trait AdditionalClosureScopes
 {
     /**
      * Retrieves query builder for root (with no ancestors) models.

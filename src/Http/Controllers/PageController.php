@@ -123,6 +123,6 @@ class PageController extends BaseController
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'page']));
         }
 
-        return redirect()->route('soda.pages.edit', $page->getKey())->with('warning', trans('soda::messages.deleted', ['object' => 'page']));
+        return redirect()->route('soda.pages.index')->with('warning', trans('soda::messages.deleted', ['object' => 'page']));
     }
 }

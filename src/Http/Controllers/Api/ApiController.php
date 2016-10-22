@@ -10,6 +10,9 @@ abstract class ApiController extends BaseController
     protected $statusCode = 200;
     protected $statusMessage;
 
+    const STATUS_ERROR = 'error';
+    const STATUS_SUCCESS = 'success';
+
     /**
      * @return int
      */

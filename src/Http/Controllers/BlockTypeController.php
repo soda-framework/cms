@@ -115,6 +115,6 @@ class BlockTypeController extends BaseController
             return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block type']));
         }
 
-        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('warning', trans('soda::messages.deleted', ['object' => 'block type']));
+        return redirect()->route('soda.block-types.index')->with('warning', trans('soda::messages.deleted', ['object' => 'block type']));
     }
 }
