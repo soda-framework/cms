@@ -39,7 +39,7 @@ trait SortableClosure
      * @return \Franzose\ClosureTable\Models\Entity
      * @throws \Exception
      */
-    public function moveInto(Model $entity)
+    public function moveInto($entity)
     {
         return $this->moveTo($this->getNextAfterLastPosition($entity->id), $entity);
     }

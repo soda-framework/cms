@@ -3,11 +3,14 @@
 namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Rutorika\Sortable\SortableTrait;
+use Exception;
 
 trait Sortable
 {
     use SortableTrait;
+
     /**
      * Adds position to model on creating event.
      */
@@ -35,5 +38,10 @@ trait Sortable
                 $model->next()->decrement(static::getSortableField());
             }
         );
+    }
+
+    function moveInto($entity)
+    {
+        throw new Exception('You must provide your own functionality for moving a model to a new parent');
     }
 }
