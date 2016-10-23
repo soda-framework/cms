@@ -7,6 +7,11 @@ use Soda\Cms\Support\Facades\Soda;
 
 abstract class AbstractRepository
 {
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+
     public function findById($id)
     {
         return $this->model->find($id);

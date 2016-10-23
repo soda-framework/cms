@@ -19,7 +19,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-file-o',
+    'icon'        => 'fa fa-file-text-o',
     'title'       => 'Page Types',
     'description' => 'Different Page Types have different field types applied to them',
 ])

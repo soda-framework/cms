@@ -52,7 +52,7 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
                     "name"        => "Name",
                     "description" => "The name of this page",
                     "field_name"  => 'name',
-                ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
+                ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
 
                 {!! SodaForm::slug([
                     'name'        => 'Slug',
@@ -61,7 +61,7 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
                     'field_params' => [
                         'prefix' => ($page->parent_id !== null && $parent = $page->getParent()) ? $parent->slug : '',
                     ],
-                ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
+                ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
 
                 {!! SodaForm::toggle([
                     'name'         => 'Published',
@@ -70,7 +70,7 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
                     'field_params' => [
                         'checked-value'   => Soda\Cms\Support\Constants::STATUS_LIVE,
                         'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
-                ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
+                ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
             </div>
         </div>
     </div>
@@ -133,29 +133,37 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
 
 @section('content')
     <ul class="nav nav-tabs" role="tablist">
-        <li role='presentation' aria-controls="Page Settings">
-            <a role="tab" data-toggle="tab" href="#tab_page_settings">Settings</a>
+        <li role='presentation' aria-controls="tab_settings">
+            <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
         </li>
 
-        @foreach($page->blocks as $block)
-            @if($block->list_action_type == 'view')
-                <li role='presentation' aria-controls="block_{{ $block->id }}">
-                    <a role="tab" data-toggle="tab" href="#tab_block_{{ $block->id }}">{{ $block->name }}</a>
+        @foreach($page->block_types as $blockType)
+            @if($blockType->list_action_type == 'view')
+                <li role='presentation' aria-controls="tab_{{ strtolower($blockType->identifier) }}">
+                    <a role="tab" data-toggle="tab" href="#tab_{{ strtolower($blockType->identifier) }}">{{ $blockType->name }}</a>
                 </li>
             @endif
         @endforeach
 
         @permission("live-preview")
-        <li role='presentation' aria-controls="Live View">
+        <li role='presentation' aria-controls="tab_live">
             <a role="tab" data-toggle="tab" href="#tab_live">Live View</a>
         </li>
         @endpermission
 
         @permission("advanced-pages")
-        <li role='presentation' aria-controls="Advanced View">
+        <li role='presentation' aria-controls="tab_advanced">
             <a role="tab" data-toggle="tab" href="#tab_advanced">Advanced</a>
         </li>
         @endpermission
+
+        @if($page->id && count($blockTypes))
+        @permission("attach-blocks")
+        <li role='presentation'>
+            <a role="tab" href="#tab_new-block">+</a>
+        </li>
+        @endpermission
+        @endif
     </ul>
 
     <form method="POST" id="page-form" action="{{ route('soda.pages.' . ($page->id ? 'update' : 'store'), $page->id) }}">
@@ -168,17 +176,17 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
         <input type="hidden" name="parent_id" value="{{ $page->parent_id }}"/>
         @endif
         <div class="tab-content">
-            <div class="tab-pane" id="tab_page_settings" role="tabpanel">
+            <div class="tab-pane" id="tab_settings" role="tabpanel">
                 @yield('tab.settings')
             </div>
-            @foreach($page->blocks as $block)
-                @if($block->list_action_type == 'view')
-                    <div class="tab-pane" id="tab_block_{{ $block->id }}" role="tabpanel">
+            @foreach($page->block_types as $blockType)
+                @if($blockType->list_action_type == 'view')
+                    <div class="tab-pane" id="tab_{{ strtolower($blockType->identifier) }}" role="tabpanel">
                         <div class="content-block">
-                            @include($block->list_action, [
-                                'block'  => $block,
-                                'page'   => $page,
-                                'models' => $page->blockModel($block)->paginate(null, ['*'], $block->identifier .'-page')
+                            @include($blockType->list_action, [
+                                'blockType'  => $blockType,
+                                'page'       => $page,
+                                'blocks'     => $page->block($blockType)->paginate(null, ['*'], $blockType->identifier .'-page')
                             ])
                         </div>
                     </div>
@@ -199,6 +207,50 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
         </div>
     </form>
 
+    @if($page->id && count($blockTypes))
+    @permission("attach-blocks")
+    <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Select a block to add...</h4>
+                </div>
+                <form method="POST" action="{{ route('soda.pages.blocks.attach', $page->id) }}">
+                    {!! csrf_field() !!}
+                    <div class="modal-body">
+                        {!! SodaForm::dropdown([
+                            "name"         => "Blocks",
+                            "field_name"   => 'block_id',
+                            "field_params" => ['options' => $blockTypes->pluck('name', 'id')]
+                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+
+                        @permission("manage-block-types")
+                        {!! SodaForm::text([
+                            "name"        => "Max Blocks",
+                            "field_name"  => "max_blocks",
+                            "description" => "Defines the maximum number of rows this block can hold. Default: unlimited"
+                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+
+                        {!! SodaForm::text([
+                            "name"        => "Min Blocks",
+                            "field_name"  => "min_blocks",
+                            "description" => "Defines the minimum number of rows this block can hold. Default: unlimited"
+                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+                        @endpermission
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button  class="btn btn-primary">Add Block</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endpermission
+    @endif
+
     <div class="content-bottom">
         @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-form'])
     </div>
@@ -207,15 +259,11 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
 @section('footer.js')
     @parent
     <script>
-        <?php $active_set = false; ?>
-        @foreach($page->blocks as $block)
-            @if((Request::has('tab') && Request::input('tab') == $block->identifier) || Request::has($block->identifier . '-page'))
-                <?php $active_set = true; ?>
-                $('a[href="#tab_block_{{ $block->id }}"]').tab('show');
-        @endif
-    @endforeach
-    @if(!$active_set)
-        $('.nav-tabs a[data-toggle="tab"]').first().tab('show');
-    @endif
+        $(function() {
+            $('a[href="#tab_new-block"]').on('click', function(e) {
+                e.preventDefault();
+                $('#newBlockModal').modal('show')
+            })
+        });
     </script>
 @stop

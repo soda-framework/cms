@@ -14,7 +14,7 @@ class AddForeignKeysToPageBlocksTable extends Migration
     public function up()
     {
         Schema::table('page_blocks', function (Blueprint $table) {
-            $table->foreign('block_id', 'FK_page_blocks_blocks')->references('id')->on('blocks')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('block_type_id', 'FK_page_blocks_block_types')->references('id')->on('block_types')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('page_id', 'FK_page_blocks_pages')->references('id')->on('pages')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
@@ -27,7 +27,7 @@ class AddForeignKeysToPageBlocksTable extends Migration
     public function down()
     {
         Schema::table('page_blocks', function (Blueprint $table) {
-            $table->dropForeign('FK_page_blocks_blocks');
+            $table->dropForeign('FK_page_blocks_block_types');
             $table->dropForeign('FK_page_blocks_pages');
         });
     }

@@ -14,6 +14,7 @@ class SeedAll extends Seeder
     public function run()
     {
         $this->call(ApplicationSeeder::class);
+        $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(UserSeeder::class);
     }

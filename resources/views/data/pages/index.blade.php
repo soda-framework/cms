@@ -16,12 +16,12 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-file-o',
+    'icon'        => 'fa fa-file-text-o',
     'title'       => 'Pages',
 ])
 
 @section('content')
-	@include(soda_cms_view_path('data.pages.tree.root'), ['tree' => $pages])
+	@include(soda_cms_view_path('partials.page-tree.root'), ['tree' => $pages])
 
 	<div class="modal fade" id="pageTypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">

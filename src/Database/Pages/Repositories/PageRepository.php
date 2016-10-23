@@ -27,6 +27,20 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
         return $this->model->type()->getRelated()->get();
     }
 
+    public function getBlockTypes()
+    {
+        return app('soda.block-type.repository')->getAll();
+    }
+
+    public function getAvailableBlockTypes(PageInterface $page)
+    {
+        if (!$page->relationLoaded('block_types')) {
+            $page->load('block_types');
+        }
+
+        return $this->getBlockTypes()->diff($page->getRelation('block_types'));
+    }
+
     public function loadType(PageInterface $page)
     {
         if (!$page->relationLoaded('type')) {

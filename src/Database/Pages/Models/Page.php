@@ -5,6 +5,7 @@ use Exception;
 use Franzose\ClosureTable\Models\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
+use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Pages\Models\Observers\PageObserver;
 use Soda\Cms\Database\Support\Models\AbstractClosureEntityModel;
@@ -64,32 +65,32 @@ class Page extends Entity implements PageInterface
         return $this->belongsTo(resolve_class('soda.page-type.model'), 'page_type_id');
     }
 
-    public function blocks()
+    public function block_types()
     {
-        return $this->belongsToMany(resolve_class('soda.block.model'), 'page_blocks')->withPivot('min_blocks', 'max_blocks');
+        return $this->belongsToMany(resolve_class('soda.block-type.model'), 'page_blocks')->withPivot('min_blocks', 'max_blocks');
     }
 
-    public function getBlock($identifier)
+    public function getBlockType($identifier)
     {
-        return $this->getRelation('blocks')->filter(function ($item) use ($identifier) {
+        return $this->getRelation('block_types')->filter(function ($item) use ($identifier) {
             return $item->identifier == $identifier;
         })->first();
     }
 
-    public function blockModel($identifier)
+    public function block($identifier)
     {
-        $block = $identifier instanceof BlockInterface ? $identifier : $this->getBlock($identifier);
+        $block = $identifier instanceof BlockTypeInterface ? $identifier : $this->getBlockType($identifier);
 
         if ($block) {
-            return $block->modelQuery($this->getKey());
+            return $block->blockQuery($this->getKey());
         }
 
         throw new Exception('Page does not have block: \''.$identifier.'\'.');
     }
 
-    public function getBlockModel($identifier)
+    public function getBlock($identifier)
     {
-        return $this->blockModel($identifier)->get();
+        return $this->block($identifier)->get();
     }
 
     public function getDynamicModel()

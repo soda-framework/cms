@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Rutorika\Sortable\MorphToSortedManyTrait;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
+use Soda\Cms\Database\Blocks\Observers\BlockTypeObserver;
 use Soda\Cms\Database\Support\Models\Traits\BuildsDynamicModels;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
@@ -21,6 +22,7 @@ class BlockType extends Model implements BlockTypeInterface
         'name',
         'description',
         'identifier',
+        'is_shared',
         'application_id',
         'edit_action',
         'edit_action_type',
@@ -29,20 +31,22 @@ class BlockType extends Model implements BlockTypeInterface
     ];
 
     protected $defaults = [
-        'edit_action'      => 'soda::data.page-blocks.view',
+        'edit_action'      => 'soda::data.pages.blocks.view',
         'edit_action_type' => 'view',
-        'list_action'      => 'soda::data.page-blocks.index',
+        'list_action'      => 'soda::data.pages.blocks.index',
         'list_action_type' => 'view',
     ];
+
+    public static function boot()
+    {
+        static::observe(BlockTypeObserver::class);
+
+        parent::boot();
+    }
 
     public function fields()
     {
         return $this->morphToSortedMany(resolve_class('soda.field.model'), 'fieldable')->withPivot('show_in_table');
-    }
-
-    public function blocks()
-    {
-        return $this->hasMany(resolve_class('soda.block.model'), 'block_type_id');
     }
 
     public function getDynamicModelTablePrefix()
@@ -57,8 +61,8 @@ class BlockType extends Model implements BlockTypeInterface
         $pageReferenceColumn = $page->getForeignKey();
         $pageIndex = 'FK_'.$this->getDynamicTableName().'_'.$pageReferenceColumn.'_pages';
 
-        $blockTable = $page->blocks()->getRelated()->getTable();
-        $blockReferenceColumn = $page->blocks()->getRelated()->getForeignKey();
+        $blockTable = $page->block_types()->getRelated()->getTable();
+        $blockReferenceColumn = $page->block_types()->getRelated()->getForeignKey();
         $blockIndex = 'FK_'.$this->getDynamicTableName().'_'.$blockReferenceColumn.'_'.$blockTable;
 
         $table->increments('id');
@@ -68,5 +72,33 @@ class BlockType extends Model implements BlockTypeInterface
         $table->foreign($blockReferenceColumn, $blockIndex)->references('id')->on($blockTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->foreign($pageReferenceColumn, $pageIndex)->references('id')->on($pageTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->timestamps();
+    }
+
+    public function blockQuery($pageId = null)
+    {
+        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where('block_type_id', $this->getKey())->where(function ($q) use ($pageId) {
+            $q->where('is_shared', 1);
+            if ($pageId) {
+                $q->orWhere('page_id', $pageId);
+            }
+        });
+    }
+
+    public function block($pageId = null)
+    {
+        $query = $this->blockQuery($pageId);
+
+        $model = $query->get();
+
+        if (!$model) {
+            $model = new Collection;
+        }
+
+        return $model;
+    }
+
+    public function getDynamicModel()
+    {
+        return app('soda.dynamic-block.model');
     }
 }

@@ -17,19 +17,41 @@
 @section('head.css')
     <!-- Styles -->
     <link href="/soda/cms/css/application.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 @stop
 
 @section('head.js')
     <!-- JavaScripts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: ['Lato:400,700,i400:latin']
+            }
+        };
+
+        (function(d) {
+            var wf = d.createElement('script'), s = d.scripts[0];
+            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js';
+            s.parentNode.insertBefore(wf, s);
+        })(document);
+    </script>
     <script src="/soda/cms/js/core.min.js"></script>
     <script src="/soda/cms/js/application.min.js"></script>
+    <script>
+        (function (Soda) {
+            Soda.queryString = {!! json_encode(Request::query(), JSON_HEX_TAG) !!}
+            Soda.urls = {
+                sort: '{{ route('soda.sort') }}',
+            };
+            return Soda;
+        })(Soda || {});
+    </script>
 @stop
 
 @section('head.extra')
 @stop
 
 @section('footer.js')
+    <script src="/soda/cms/js/forms/slugs.min.js"></script>
     <script src="/soda/cms/js/forms/dates.min.js"></script>
     <script src="/soda/cms/js/forms/tinymce.min.js"></script>
     <script src="/soda/cms/js/forms/upload.min.js"></script>

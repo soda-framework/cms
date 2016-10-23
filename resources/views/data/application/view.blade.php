@@ -47,15 +47,15 @@
 @section('content')
     <ul class="nav nav-tabs" role="tablist">
         @if(!isset($settingsByCategory['Settings']))
-        <li role='presentation' aria-controls="tab_application_settings">
-            <a role="tab" data-toggle="tab" href="#tab_application_settings">Settings</a>
+        <li role='presentation' aria-controls="tab_settings">
+            <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
         </li>
         @endif
 
         @foreach($settingsByCategory as $category => $settings)
             @if(count($settings))
-                <li role='presentation' aria-controls="setting_group_{{ $category }}">
-                    <a role="tab" data-toggle="tab" href="#tab_setting_group_{{ $category }}">{{ $category }}</a>
+                <li role='presentation' aria-controls="tab_{{ strtolower($category) }}">
+                    <a role="tab" data-toggle="tab" href="#tab_{{ strtolower($category) }}">{{ $category }}</a>
                 </li>
             @endif
         @endforeach
@@ -67,7 +67,7 @@
 
         <div class="tab-content">
             @if(!isset($settingsByCategory['Settings']))
-            <div class="tab-pane" id="tab_application_settings" role="tabpanel">
+            <div class="tab-pane" id="tab_settings" role="tabpanel">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="content-block">
@@ -79,7 +79,7 @@
             @endif
             @foreach($settingsByCategory as $category => $settings)
                 @if(count($settings))
-                    <div class="tab-pane" id="tab_setting_group_{{ $category }}" role="tabpanel">
+                    <div class="tab-pane" id="tab_{{ strtolower($category) }}" role="tabpanel">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="content-block">

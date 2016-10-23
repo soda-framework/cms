@@ -14,7 +14,7 @@
             <i class="fa fa-chevron-right"></i>
         </span>
         <div class="option-buttons pull-right">
-            <div style="display:inline-block;position:relative;">
+            <div style="display:inline-block;">
                 <a href="#" class="btn btn-info option-more" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
@@ -40,7 +40,7 @@
     @if ($page->hasChildrenRelation() && count($page->children) > 0)
     <ul>
         @foreach($page->getRelation('children') as $child)
-            @include(soda_cms_view_path('data.pages.tree.branch'), ['page' => $child])
+            @include(soda_cms_view_path('partials.page-tree.branch'), ['page' => $child])
         @endforeach
     </ul>
     @endif

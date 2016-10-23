@@ -24,7 +24,7 @@ class PageTypeController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('data.page-types.index', $this->pageTypes->getFilteredGrid(10));
+        return soda_cms_view('data.pages.types.index', $this->pageTypes->getFilteredGrid(10));
     }
 
     /**
@@ -42,7 +42,7 @@ class PageTypeController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'page type']));
         }
 
-        return soda_cms_view('data.page-types.view', compact('pageType'));
+        return soda_cms_view('data.pages.types.view', compact('pageType'));
     }
 
     /**
@@ -78,7 +78,7 @@ class PageTypeController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page type']));
         }
 
-        return soda_cms_view('data.page-types.view', compact('pageType'));
+        return soda_cms_view('data.pages.types.view', compact('pageType'));
     }
 
     /**

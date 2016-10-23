@@ -27,7 +27,7 @@ trait SortableClosure
         });
 
         static::deleting(function ($model) {
-            $model->next()->decrement((new static)->getPositionColumn());
+            $model->siblings(static::QUERY_NEXT_ALL)->decrement((new static)->getPositionColumn());
         });
     }
 

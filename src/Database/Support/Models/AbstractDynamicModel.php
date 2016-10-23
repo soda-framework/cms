@@ -3,6 +3,7 @@ namespace Soda\Cms\Database\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 
 abstract class AbstractDynamicModel extends Model
 {
@@ -49,7 +50,7 @@ abstract class AbstractDynamicModel extends Model
         return $this;
     }
 
-    public function parseField(Field $field, Request $request)
+    public function parseField(FieldInterface $field, Request $request)
     {
         $field = app('soda.form')->field($field);
 

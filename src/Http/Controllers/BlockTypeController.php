@@ -24,7 +24,7 @@ class BlockTypeController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('data.block-types.index', $this->blockTypes->getFilteredGrid(10));
+        return soda_cms_view('data.blocks.types.index', $this->blockTypes->getFilteredGrid(10));
     }
 
     /**
@@ -42,7 +42,7 @@ class BlockTypeController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
         }
 
-        return soda_cms_view('data.block-types.view', compact('blockType'));
+        return soda_cms_view('data.blocks.types.view', compact('blockType'));
     }
 
     /**
@@ -78,7 +78,7 @@ class BlockTypeController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block type']));
         }
 
-        return soda_cms_view('data.block-types.view', compact('blockType'));
+        return soda_cms_view('data.blocks.types.view', compact('blockType'));
     }
 
     /**

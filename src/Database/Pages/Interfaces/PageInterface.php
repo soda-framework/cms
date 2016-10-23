@@ -8,11 +8,11 @@ interface PageInterface extends EntityInterface, CanBeSorted
 {
     public function getDynamicModel();
 
+    public function getBlockType($identifier);
+
     public function getBlock($identifier);
 
-    public function getBlockModel($identifier);
-
-    public function blockModel($identifier);
+    public function block($identifier);
 
     public function pageAttributes();
 

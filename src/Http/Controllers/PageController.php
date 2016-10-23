@@ -82,12 +82,13 @@ class PageController extends BaseController
     {
         $page = $this->pages->findById($id);
         $this->pages->loadType($page);
+        $blockTypes = $this->pages->getAvailableBlockTypes($page);
 
         if (!$page) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 
-        return view($page->edit_action, compact('page'));
+        return view($page->edit_action, compact('page', 'blockTypes'));
     }
 
     /**

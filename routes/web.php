@@ -30,12 +30,9 @@ Route::group(['prefix' => config('soda.cms.path')], function() {
             'except' => 'show',
         ]);
 
-        Route::resource('pages.blocks', 'PageBlockController', [
-            'as'     => 'soda',
-            'except' => 'show',
-        ]);
-
-        Route::resource('blocks', 'BlockController', [
+        Route::post('pages/{pageId}/block-types/attach', 'PageBlockController@attach')->name('soda.pages.blocks.attach');
+        Route::delete('pages/{pageId}/block-types/{blockTypeId}/detach', 'PageBlockController@detach')->name('soda.pages.blocks.detach');
+        Route::resource('pages.block-types.block', 'PageBlockController', [
             'as'     => 'soda',
             'except' => 'show',
         ]);

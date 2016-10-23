@@ -7,6 +7,10 @@ interface PageRepositoryInterface extends BaseRepositoryInterface
 {
     public function findBySlug($slug);
 
+    public function getBlockTypes();
+
+    public function getAvailableBlockTypes(PageInterface $page);
+
     public function getTypes();
 
     public function loadType(PageInterface $page);

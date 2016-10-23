@@ -3,22 +3,20 @@ ul.page-tree {
   padding-left: 0;
   .tree-row {
     > ul {
-      max-height: 0;
-      overflow: hidden;
       list-style: none;
-      will-change: max-height;
-      transition-duration: 0.3s;
-      transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+      transition: opacity 0.25s ease;
+      will-change: opacity;
+      visibility: hidden;
+      opacity: 0;
+      height: 0;
     }
 
     &.root-node {
       > ul {
         padding-left: 0;
-      }
-      &.collapsed {
-        > ul {
-          max-height: 1000px;
-        }
+        visibility: visible;
+        opacity: 1;
+        height: auto;
       }
     }
 
@@ -33,10 +31,9 @@ ul.page-tree {
 
     &.expanded {
       > ul {
-        transition-duration: 0.3s;
-        transition-timing-function: cubic-bezier(1, 0,1, 0.5);
-        max-height: 1000px;
-        overflow: hidden;
+        visibility: visible;
+        opacity: 1;
+        height: auto;
       }
       > .tree-item > .minify > i {
         transform: rotate(90deg);

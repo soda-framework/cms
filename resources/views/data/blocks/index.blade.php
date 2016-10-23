@@ -16,7 +16,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-puzzle-piece',
+    'icon'        => 'fa fa-cube',
     'title'       => 'Blocks',
     'description' => 'Blocks are added onto pages',
 ])

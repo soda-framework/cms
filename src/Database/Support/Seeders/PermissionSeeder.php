@@ -17,29 +17,8 @@ class PermissionSeeder extends Seeder
         $permissionModel = app('soda.permission.model');
         $roleModel = app('soda.role.model');
 
-        $role_guest = $roleModel->create([
-            'name'         => 'guest',
-            'display_name' => 'Guest',
-            'description'  => 'Generic guest role.',
-        ]);
-
-        $role_user = $roleModel->create([
-            'name'         => 'user',
-            'display_name' => 'User',
-            'description'  => 'Generic user role',
-        ]);
-
-        $role_developer = $roleModel->create([
-            'name'         => 'developer',
-            'display_name' => 'Developer',
-            'description'  => 'Developers gain access to additional functionality',
-        ]);
-
-        $role_admin = $roleModel->create([
-            'name'         => 'admin',
-            'display_name' => 'Admin',
-            'description'  => 'Admins have high-level access to the CMS. Recommended for clients.',
-        ]);
+        $developer = $roleModel->withoutGlobalScope('in-application')->where('name', 'developer')->first();
+        $admin = $roleModel->withoutGlobalScope('in-application')->where('name','admin')->first();
 
         $permission_access_cms = $permissionModel->create([
             'name'         => 'access-cms',
@@ -192,6 +171,13 @@ class PermissionSeeder extends Seeder
             'category'     => 'Permissions',
         ]);
 
+        $permission_manage_own_role_permissions = $permissionModel->create([
+            'name'         => 'manage-own-permissions',
+            'display_name' => 'Manage Own Permissions',
+            'description'  => 'Manage roles and permissions for own account.',
+            'category'     => 'Roles',
+        ]);
+
         $permission_view_pages = $permissionModel->create([
             'name'         => 'view-pages',
             'display_name' => 'View Pages',
@@ -234,31 +220,17 @@ class PermissionSeeder extends Seeder
             'category'     => 'Pages',
         ]);
 
-        $permission_view_blocks = $permissionModel->create([
-            'name'         => 'view-blocks',
-            'display_name' => 'View Blocks',
-            'description'  => 'View list of blocks and their contents.',
+        $permission_attach_blocks = $permissionModel->create([
+            'name'         => 'attach-blocks',
+            'display_name' => 'Attach Blocks',
+            'description'  => 'Attach new block types to pages.',
             'category'     => 'Blocks',
         ]);
 
-        $permission_edit_blocks = $permissionModel->create([
-            'name'         => 'edit-blocks',
-            'display_name' => 'Edit Blocks',
-            'description'  => 'Edit blocks content.',
-            'category'     => 'Blocks',
-        ]);
-
-        $permission_create_blocks = $permissionModel->create([
-            'name'         => 'create-blocks',
-            'display_name' => 'Create Blocks',
-            'description'  => 'Create new blocks.',
-            'category'     => 'Blocks',
-        ]);
-
-        $permission_delete_blocks = $permissionModel->create([
-            'name'         => 'delete-blocks',
-            'display_name' => 'Delete Blocks',
-            'description'  => 'Delete existing blocks.',
+        $permission_detach_blocks = $permissionModel->create([
+            'name'         => 'detach-blocks',
+            'display_name' => 'Detach Blocks',
+            'description'  => 'Detach existing block types from pages.',
             'category'     => 'Blocks',
         ]);
 
@@ -269,13 +241,6 @@ class PermissionSeeder extends Seeder
             'category'     => 'Blocks',
         ]);
 
-        $permission_advanced_blocks = $permissionModel->create([
-            'name'         => 'advanced-blocks',
-            'display_name' => 'Blocks (advanced options)',
-            'description'  => 'Access advanced block options.',
-            'category'     => 'Blocks',
-        ]);
-
         $permission_manage_fields = $permissionModel->create([
             'name'         => 'manage-fields',
             'display_name' => 'Manage Fields',
@@ -283,44 +248,46 @@ class PermissionSeeder extends Seeder
             'category'     => 'Fields',
         ]);
 
-        $role_developer->attachPermissions([
-            //$permission_create_application_settings,
-            //$permission_delete_application_settings,
-            $permission_manage_application_urls,
-            $permission_manage_page_types,
-            $permission_advanced_pages,
-            $permission_manage_block_types,
-            $permission_advanced_blocks,
-            $permission_manage_fields,
-            $permission_view_drafts,
-            $permission_view_blocks,
-            $permission_edit_blocks,
-            $permission_create_blocks,
-            $permission_delete_blocks,
-            $permission_view_roles,
-            $permission_edit_roles,
-            $permission_create_roles,
-            $permission_delete_roles,
-            $permission_assign_role_permissions,
-            $permission_view_permissions,
-            $permission_edit_permissions,
-            $permission_create_permissions,
-            $permission_delete_permissions,
-        ]);
+        if($developer) {
+            $developer->attachPermissions([
+                //$permission_create_application_settings,
+                //$permission_delete_application_settings,
+                $permission_manage_application_urls,
+                $permission_manage_page_types,
+                $permission_advanced_pages,
+                $permission_manage_block_types,
+                $permission_manage_fields,
+                $permission_view_drafts,
+                $permission_attach_blocks,
+                $permission_detach_blocks,
+                $permission_view_roles,
+                $permission_edit_roles,
+                $permission_create_roles,
+                $permission_delete_roles,
+                $permission_manage_own_role_permissions,
+                $permission_assign_role_permissions,
+                $permission_view_permissions,
+                $permission_edit_permissions,
+                $permission_create_permissions,
+                $permission_delete_permissions,
+            ]);
+        }
 
-        $role_admin->attachPermissions([
-            $permission_access_cms,
-            $permission_view_application_settings,
-            $permission_edit_application_settings,
-            $permission_view_users,
-            $permission_edit_users,
-            $permission_create_users,
-            $permission_delete_users,
-            $permission_assign_user_roles,
-            $permission_view_pages,
-            $permission_edit_pages,
-            $permission_create_pages,
-            $permission_delete_pages,
-        ]);
+        if($admin) {
+            $admin->attachPermissions([
+                $permission_access_cms,
+                $permission_view_application_settings,
+                $permission_edit_application_settings,
+                $permission_view_users,
+                $permission_edit_users,
+                $permission_create_users,
+                $permission_delete_users,
+                $permission_assign_user_roles,
+                $permission_view_pages,
+                $permission_edit_pages,
+                $permission_create_pages,
+                $permission_delete_pages,
+            ]);
+        }
     }
 }
