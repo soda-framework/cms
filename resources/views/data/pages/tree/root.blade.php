@@ -1,17 +1,45 @@
-<ul class="page-tree">
+<ul class="page-tree" id="page-tree">
     @foreach($tree as $treeItem)
         @include(soda_cms_view_path('data.pages.tree.branch'), ['page' => $treeItem])
     @endforeach
 </ul>
+@section('footer.js')
+    @parent
+    <script src="/soda/cms/js/forms/sortable.min.js"></script>
+    <script>
+        $(function(){
+            $('#page-tree').nestedSortable({
+                handle: '> .tree-item > .handle',
+                items: 'li',
+                listType: 'ul',
+                toleranceElement: '> .tree-item',
+                isTree: true,
+                protectRoot: true,
+                startCollapsed: true,
+                expandOnHover: 300,
+                tabSize: 75,
+                branchClass: 'has-sub-items',
+                collapsedClass: 'collapsed',
+                disableNestingClass: false,
+                errorClass: false,
+                expandedClass: 'expanded',
+                hoveringClass: false,
+                placeholder: 'tree-item hovering',
+                leafClass: false,
+                disabledClass: false,
+                relocate: function(event, item) {
+                    moveNode(item.item);
+                },
+            });
 
-<script>
-    $(".page-tree").sortable({
-        group: 'page-tree',
-        handle: '.handle',
-        isValidTarget: function  ($item, container) {
-            return container.el.closest('.root-node').length ? true : false;
-        },
-        onDrop: function ($item, container, _super) {
+            $(".minify").on('click', function (e) {
+                e.preventDefault();
+
+                $(this).closest('.tree-row').toggleClass('expanded collapsed');
+            });
+        });
+
+        function moveNode($item) {
             var itemId = $item.data('id');
             var parent = $item.parent().closest('.tree-row');
             var parentId = parent.data('id');
@@ -42,84 +70,22 @@
 
                 $item.data('parent-id')
             }
-
-            _super($item, container);
-
-            $('.tree-sub-items:has(li)').closest('.tree-row:not(.root-node)').addClass('has-sub-items');
-            $('.tree-sub-items:not(:has(li))').closest('.tree-row').removeClass('has-sub-items');
-
-            showTreeSubnodes($item.closest('.tree-sub-items'));
-            $('.tree-row:not(.has-sub-items):not(.root-node) > .tree-sub-items.sub-items-expanded').each(function(key, item) {
-                hideTreeSubnodes($(item));
-            });
-
-
-        },
-        serialize: function (parent, children, isContainer) {
-            return isContainer ? children.join() : parent.text();
         }
-    });
 
-    $(".minify").on('click', function (e) {
-        e.preventDefault();
-        var row = $(this).closest('.tree-row');
-        var container = row.children('.tree-sub-items');
-
-        if(container.hasClass('sub-items-expanded')) {
-            hideTreeSubnodes(container);
-        } else {
-            showTreeSubnodes(container);
-        }
-    });
-
-    function hideTreeSubnodes(container) {
-        container.closest('.tree-row').removeClass('row-expanded');
-        if(container.hasClass('sub-items-expanded'))
-        {
-            container.removeClass('sub-items-expanded');
-
-            container.slideUp('fast', function() {
-                $(this).children().hide();
-                $(this).show();
-            });
-        }
-    }
-
-    function showTreeSubnodes(container) {
-        container.closest('.tree-row').addClass('row-expanded');
-        if(!container.hasClass('sub-items-expanded'))
-        {
-            container.addClass('sub-items-expanded');
-
-            container.children().show();
-            container.hide();
-
-            container.slideDown('fast', function() {
-                $(this).show();
-            });
-        }
-    }
-
-    /**
-     *
-     * @param type string 'insertAfter' or 'insertBefore'
-     * @param entityName
-     * @param id
-     * @param positionId
-     */
-    var changePosition = function(requestData){
-        $.ajax({
-            'url': '{{ route('soda.sort') }}',
-            'type': 'POST',
-            'data': requestData,
-            'success': function(data) {
-                if (data.errors) {
-                    console.error(data.errors);
+        var changePosition = function(requestData){
+            $.ajax({
+                'url': '{{ route('soda.sort') }}',
+                'type': 'POST',
+                'data': requestData,
+                'success': function(data) {
+                    if (data.errors) {
+                        console.error(data.errors);
+                    }
+                },
+                'error': function(){
+                    console.error('Something wrong!');
                 }
-            },
-            'error': function(){
-                console.error('Something wrong!');
-            }
-        });
-    };
-</script>
+            });
+        };
+    </script>
+@stop

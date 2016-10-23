@@ -25,7 +25,7 @@
   text-align: left;
   background-color: #fff;
   background-clip: padding-box;
-  li {
+  > li, > div {
     a {
       padding: 5px 10px;
       border-radius: 4px;

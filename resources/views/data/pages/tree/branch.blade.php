@@ -1,5 +1,5 @@
 {{--renders tree in html --}}
-<li class="tree-row {{ $page->hasChildrenRelation() && count($page->children) > 0 ? 'has-sub-items' : '' }} {{ $page->parent_id === null ? 'root-node' : '' }}" data-id="{{ $page->id }}" data-parentId="{{ $page->parent_id }}" style="display:{{ isset($display) ? $display : 'block' }}">
+<li id="page-tree-node-{{ $page->id }}" class="tree-row {{ $page->parent_id === null ? 'root-node' : '' }} {{ $page->hasChildrenRelation() && count($page->children) > 0 ? 'collapsed' : '' }}" data-id="{{ $page->id }}">
     <div class="tree-item clearfix">
         <span class="{{ $page->parent_id === null ? 'locked-handle' : 'handle' }}">
             <img src="/soda/cms/img/drag-dots.gif" />
@@ -18,30 +18,30 @@
                 <a href="#" class="btn btn-info option-more" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
-                <ul class="dropdown-menu">
-                    <li>
+                <div class="dropdown-menu">
+                    <div>
                         <a data-page-id="{{ $page->id }}" data-toggle="modal" data-target="#pageTypeModal">Create Sub-page</a>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <a href="{{ route('soda.pages.edit', $page->id) }}">Edit Page</a>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <a href="{{ $page->slug }}" target="_blank" data-tree-link>View page</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li class="warning">
+                    </div>
+                    <div class="divider"></div>
+                    <div class="warning">
                         <a data-delete-button href="{{ route('soda.pages.destroy', $page->id) }}">Delete</a>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <ul class="tree-sub-items {{ $page->parent_id === null ? 'sub-items-expanded' : '' }}">
-        @if ($page->hasChildrenRelation() && count($page->children) > 0)
-            @foreach($page->getRelation('children') as $child)
-                @include(soda_cms_view_path('data.pages.tree.branch'), ['page' => $child, 'display' => $page->parent_id === null ? null : 'none'])
-            @endforeach
-        @endif
+    @if ($page->hasChildrenRelation() && count($page->children) > 0)
+    <ul>
+        @foreach($page->getRelation('children') as $child)
+            @include(soda_cms_view_path('data.pages.tree.branch'), ['page' => $child])
+        @endforeach
     </ul>
+    @endif
 </li>

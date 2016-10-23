@@ -23,7 +23,6 @@
 @section('head.js')
     <!-- JavaScripts -->
     <script src="/soda/cms/js/core.min.js"></script>
-    <script src="/soda/cms/js/forms.min.js"></script>
     <script src="/soda/cms/js/application.min.js"></script>
 @stop
 
@@ -31,6 +30,12 @@
 @stop
 
 @section('footer.js')
+    <script src="/soda/cms/js/forms/dates.min.js"></script>
+    <script src="/soda/cms/js/forms/tinymce.min.js"></script>
+    <script src="/soda/cms/js/forms/upload.min.js"></script>
+    <script src="/soda/cms/js/forms/json.min.js"></script>
+    <script src="/soda/cms/js/forms/multiselect.min.js"></script>
+    <script src="/soda/cms/js/forms/tags.min.js"></script>
 @stop
 
 @section('head')

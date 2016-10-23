@@ -53,7 +53,7 @@ module.exports = {
             folder:         'public'
         },
         {
-            folder:         '../test/src/public/soda/cms',
+            folder:         '../test/public/soda/cms',
             css: {
                 clean:      true,
             },
@@ -81,20 +81,34 @@ module.exports = {
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
-            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
+            //'resources/components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
             'resources/components/bootstrap-sweetalert/lib/sweet-alert.js',
         ],
-        forms: [
-            'resources/components/bootstrap-fileinput/js/fileinput.js',
-            'resources/components/bootstrap-fileinput/themes/fa/fa.js',
-            'resources/components/bootstrap-select/js/bootstrap-select.js',
-            'resources/components/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
-            'resources/components/jquery-sortable/source/js/jquery-sortable.js',
+
+        'forms/sortable': [
+            'resources/components/jquery-ui/jquery-ui.js',
+            'resources/components/nested-sortable/jquery.nested-sortable.js',
+        ],
+        'forms/dates': [
             'resources/components/moment/min/moment.min.js',
-            'resources/components/jsoneditor/dist/jsoneditor.min.js',
+            'resources/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+        ],
+        'forms/tinymce': [
             'resources/components/tinymce/tinymce.min.js',
             'resources/components/tinymce/jquery.tinymce.min.js',
-            'resources/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+        ],
+        'forms/upload': [
+            'resources/components/bootstrap-fileinput/js/fileinput.js',
+            'resources/components/bootstrap-fileinput/themes/fa/fa.js',
+        ],
+        'forms/json': [
+            'resources/components/jsoneditor/dist/jsoneditor.js',
+        ],
+        'forms/multiselect': [
+            'resources/components/bootstrap-select/js/bootstrap-select.js',
+        ],
+        'forms/tags': [
+            'resources/components/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
         ]
     }
 };

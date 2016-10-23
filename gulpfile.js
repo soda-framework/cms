@@ -146,7 +146,7 @@ gulp.task('publish:components', function () {
 
         //write for each output folder
         config.publish.map(function (output) {
-            stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path')))
+            stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path')), {overwrite: true})
                 .pipe($.notify({message: 'Components  published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path'), onLast: true}));
 
             //push onto task array

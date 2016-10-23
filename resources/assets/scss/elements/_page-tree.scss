@@ -1,16 +1,46 @@
-.page-tree {
+ul.page-tree {
   list-style: none;
   padding-left: 0;
-  li {
+  .tree-row {
+    > ul {
+      max-height: 0;
+      overflow: hidden;
+      list-style: none;
+      will-change: max-height;
+      transition-duration: 0.3s;
+      transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    }
 
-  }
-  ul {
-    list-style: none;
-  }
+    &.root-node {
+      > ul {
+        padding-left: 0;
+      }
+      &.collapsed {
+        > ul {
+          max-height: 1000px;
+        }
+      }
+    }
 
-  .root-node {
-    > .tree-sub-items {
-      padding-left: 0;
+    &.has-sub-items {
+      > .tree-item > .minify {
+        cursor: pointer;
+        > i {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.expanded {
+      > ul {
+        transition-duration: 0.3s;
+        transition-timing-function: cubic-bezier(1, 0,1, 0.5);
+        max-height: 1000px;
+        overflow: hidden;
+      }
+      > .tree-item > .minify > i {
+        transform: rotate(90deg);
+      }
     }
   }
 
@@ -29,26 +59,31 @@
     opacity: 0;
   }
 
+  .handle {
+    cursor: move;
+  }
+
+  .active-circle, .inactive-circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .active-circle {
+    background-color: $brand-success;
+  }
+
+  .inactive-circle {
+    background-color: $gray-light;
+  }
+
   .minify {
     i {
       opacity: 0;
       will-change: transform, opacity;
       transition: transform .2s ease, opacity .2s ease;
-    }
-  }
-
-  .has-sub-items {
-    > .tree-item > .minify {
-      cursor: pointer;
-      > i {
-        opacity: 1;
-      }
-    }
-  }
-
-  .row-expanded {
-    > .tree-item > .minify > i {
-      transform: rotate(90deg);
     }
   }
 
@@ -68,29 +103,29 @@
     box-shadow: $standard-shadow;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    transition: background-color 0.25s ease-in;
-    will-change: background-color;
+    transition: opacity 0.25s ease-in, background-color 0.25s ease-in;
 
     &:hover {
       background-color: #f6f6f7;
     }
-  }
 
-  .dragged {
-    opacity: 0.5;
-    position: absolute;
-  }
-
-  .placeholder {
-    content: " ";
-    border: 2px dotted $brand-info;
-    height: 2em;
-  }
-  .active {
-    /*border:2px dotted tomato;*/
-  }
-  .handle {
-    cursor: move;
+    &.hovering {
+      background-color: transparent;
+      margin-left: 20px;
+      height: 55px;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: $slate-060;
+      &:before {
+        content: "\f105";
+        display: inline-block;
+        margin-left: -30px;
+        line-height: 35px;
+      }
+    }
   }
 
   .option-buttons {
@@ -110,24 +145,4 @@
       }
     }
   }
-}
-
-.sortable-handle {
-  text-align: center;
-}
-
-.active-circle, .inactive-circle {
-  width: 8px;
-  height: 8px;
-  border-radius: 100%;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.active-circle {
-  background-color: $brand-success;
-}
-
-.inactive-circle {
-  background-color: $gray-light;
 }

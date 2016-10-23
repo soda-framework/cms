@@ -1,0 +1,36 @@
+{
+  "name": "nested-sortable",
+  "description": "NestedSortable is a jQuery plugin that extends jQuery Sortable UI functionalities to nested lists.",
+  "main": "jquery.nested-sortable.js",
+  "authors": [
+    "Manuele J Sarfatti <manuele@mjsarfatti.com>",
+    "Daren B Sipes <daren@teamwilletts.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "CakePHP",
+    "jQuery",
+    "Nested",
+    "Sortable",
+    "Tree"
+  ],
+  "homepage": "https://github.com/QueenCityCodeFactory/nested-sortable",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "2.1.0",
+  "_release": "2.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.1.0",
+    "commit": "fa89b7c11b99cbf9f1816cc9ec3049a9e12a5716"
+  },
+  "_source": "https://github.com/QueenCityCodeFactory/nested-sortable.git",
+  "_target": "^2.1.0",
+  "_originalSource": "nested-sortable",
+  "_direct": true
+}

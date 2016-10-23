@@ -24,8 +24,8 @@
  * Copyright (c) 2011-2016 Jos de Jong, http://jsoneditoronline.org
  *
  * @author  Jos de Jong, <wjosdejong@gmail.com>
- * @version 5.5.7
- * @date    2016-08-17
+ * @version 5.5.9
+ * @date    2016-10-17
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -10601,6 +10601,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    var value = jsonPath.substring(1, end);
+	    if (value[0] === '\'') {
+	      // ajv produces string prop names with single quotes, so we need
+	      // to reformat them into valid double-quoted JSON strings
+	      value = '\"' + value.substring(1, value.length - 1) + '\"';
+	    }
+
 	    prop = value === '*' ? value : JSON.parse(value); // parse string and number
 	    remainder = jsonPath.substr(end + 1);
 	  }
@@ -13338,7 +13344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var duplicateKeys = [];
 	    for (var i = 0; i < this.childs.length; i++) {
 	      var child = this.childs[i];
-	      if (keys[child.field]) {
+	      if (keys.hasOwnProperty(child.field)) {
 	        duplicateKeys.push(child.field);
 	      }
 	      keys[child.field] = true;

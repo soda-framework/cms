@@ -6,11 +6,6 @@
 
 .dialog-box {
   position: relative;
-  padding: 40px 140px;
-  background-color: $login-box;
-  color: $login-box-text;
-  border-radius: 10px;
-  border-bottom: 5px solid rgba(0,0,0,0.5);
   a {
     color: $login-box-link;
     &:hover {
@@ -75,24 +70,30 @@
       color: $slate-050;
     }
   }
-
-  &:before, &:after {
-    z-index: -1;
-    position: absolute;
-    content: "";
-    bottom: 15px;
-    left: 10px;
-    width: 50%;
-    top: 80%;
-    max-width: 300px;
-    background: #777;
-    box-shadow: 0 15px 10px #777;
-    transform: rotate(-3deg);
-  }
-  &:after {
-    transform: rotate(3deg);
-    right: 10px;
-    left: auto;
+  .dialog-box-inner {
+    padding: 40px 140px;
+    background-color: $login-box;
+    color: $login-box-text;
+    border-radius: 10px;
+    border-bottom: 5px solid rgba(0,0,0,0.5);
+    &:before, &:after {
+      z-index: -1;
+      position: absolute;
+      content: "";
+      bottom: 15px;
+      left: 10px;
+      width: 50%;
+      top: 80%;
+      max-width: 300px;
+      background: #777;
+      box-shadow: 0 15px 10px #777;
+      transform: rotate(-3deg);
+    }
+    &:after {
+      transform: rotate(3deg);
+      right: 10px;
+      left: auto;
+    }
   }
 
   a.btn-dialog {
