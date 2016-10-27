@@ -137,10 +137,15 @@ class PageController extends BaseController
         $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
 
         //todo validation
+        $slug = $page->generateSlug($request->input('slug'));
+
+        if ($parent && !starts_with($slug, $parent->getAttribute('slug'))) {
+            $slug = $parent->generateSlug($request->input('slug'));
+        }
 
         $page->fill([
             'name'           => $request->input('name'),
-            'slug'           => $parent ? $parent->generateSlug($request->input('slug')) : $page->generateSlug($request->input('slug')),
+            'slug'           => $slug,
             'status'         => $request->has('status') ? $request->input('status') : 0,
             'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
             'package'        => $request->has('package') ? $request->input('package') : 'soda',

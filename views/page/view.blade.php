@@ -52,23 +52,24 @@ if (!$model->type || !count($model->type->fields)) {
                     "name"        => "Name",
                     "description" => "The name of this page",
                     "field_name"  => 'name',
-                ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($model) !!}
+                ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($model) !!}
 
                 {!! SodaForm::slug([
                     'name'        => 'Slug',
                     'description' => 'The url of this page',
                     'field_name'  => 'slug',
                     'field_params' => [
-                        'prefix' => $model->getParent()->slug,
+                        'prefix' => ($model->parent_id !== null && $parent = $model->getParent()) ? $parent->slug : '',
                     ],
-                ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($model) !!}
+                ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($model) !!}
 
                 {!! SodaForm::toggle([
                     'name'         => 'Published',
                     'field_name'   => 'status',
                     'value'        => Soda\Cms\Support\Constants::STATUS_LIVE,
                     'field_params' => ['checked-value' => Soda\Cms\Support\Constants::STATUS_LIVE, 'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
-                ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($model) !!}
+                ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($model) !!}
+
             </div>
         </div>
     </div>
@@ -95,14 +96,15 @@ if (!$model->type || !count($model->type->fields)) {
         {!! SodaForm::text([
             'name'        => 'Package Prefix',
             'field_name'  => 'package',
+            'value'       => $model->type->package,
         ])->setModel($model) !!}
 
         <div class="row fieldset-group">
             <div class="col-sm-6 col-xs-12">
                 {!! SodaForm::dropdown([
-                    'name'        => 'Action',
-                    'field_name'  => 'action_type',
-                    'value'       => 'view',
+                    'name'         => 'Action',
+                    'field_name'   => 'action_type',
+                    'value'        => $model->type->action_type ? $model->type->action_type : 'view',
                     'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
                 ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
@@ -110,6 +112,7 @@ if (!$model->type || !count($model->type->fields)) {
                 {!! SodaForm::text([
                     'name'        => null,
                     'field_name'  => 'action',
+                    'value'       => $model->type->action,
                 ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
         </div>
@@ -117,9 +120,9 @@ if (!$model->type || !count($model->type->fields)) {
         <div class="row fieldset-group">
             <div class="col-sm-6 col-xs-12">
                 {!! SodaForm::dropdown([
-                    'name'        => 'Edit Action',
-                    'field_name'  => 'edit_action_type',
-                    'value'       => 'view',
+                    'name'         => 'Edit Action',
+                    'field_name'   => 'edit_action_type',
+                    'value'        => $model->type->edit_action_type ? $model->type->edit_action_type : 'view',
                     'field_params' => ['options' => Soda::getPageBuilder()->getActionTypes()],
                 ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
@@ -127,6 +130,7 @@ if (!$model->type || !count($model->type->fields)) {
                 {!! SodaForm::text([
                     'name'        => null,
                     'field_name'  => 'edit_action',
+                    'value'       => $model->type->edit_action,
                 ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
         </div>
