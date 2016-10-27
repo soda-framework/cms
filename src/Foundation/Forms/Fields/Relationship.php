@@ -80,6 +80,6 @@ class Relationship extends Dropdown
         $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
         $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
 
-        return (array)$query->pluck($value_column, $key_column);
+        return $query->pluck($value_column, $key_column)->toArray();
     }
 }
