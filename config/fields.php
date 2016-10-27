@@ -21,4 +21,5 @@ return [
     'slug'         => Soda\Cms\Foundation\Forms\Fields\Slug::class,
     'upload'       => Soda\Cms\Foundation\Forms\Fields\Upload::class,
     'url'          => Soda\Cms\Foundation\Forms\Fields\Url::class,
+    'relationship_group' => Soda\Cms\Foundation\Forms\Fields\RelationshipGroup::class,
 ];

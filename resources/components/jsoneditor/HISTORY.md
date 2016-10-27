@@ -3,6 +3,18 @@
 https://github.com/josdejong/jsoneditor
 
 
+## 2016-10-17, version 5.5.9
+
+- Fixed #329: Editor showing duplicate key warnings for keys defined on the
+  Object prototype, like `toString` and `watch`.
+
+
+## 2016-09-27, version 5.5.8
+
+- Fixed #314: JSON schema validation throwing an error "Unexpected token ' in
+  JSON at position 0" in specific cases. Thanks @apostrophest
+
+
 ## 2016-08-17, version 5.5.7
 
 - Fixed #308: wrong positioning of label "empty array" when `onEditable`
