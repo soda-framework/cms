@@ -41,7 +41,7 @@ class FormServiceProvider extends ServiceProvider
             return new FormFieldRegistrar($app['config']->get('soda.fields'));
         });
 
-        $this->app->bind('soda.form', function ($app) {
+        $this->app->singleton('soda.form', function ($app) {
             return new FormBuilder($app['soda.form.registrar']);
         });
     }

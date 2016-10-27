@@ -35,7 +35,7 @@
             {!! SodaForm::dropdown([
                 'name'         => 'Field Type',
                 'field_name'   => 'field_type',
-                'field_params' => ['options' => Soda::getFormBuilder()->getFieldTypes()],
+                'field_params' => ['options' => SodaForm::getFieldTypes()],
                 'description'  => 'Type of field to be used'
             ])->setModel($model) !!}
 
