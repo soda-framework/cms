@@ -7,7 +7,7 @@
 	<script type="text/javascript">
 		$(function () {
 			$('#field_{{ $field_name }}').datetimepicker({
-				{!! Soda::getFormBuilder()->buildJsParams($field_parameters) !!}
+				{!! Soda::getFormBuilder()->buildJsParams($field_parameters['options']) !!}
 			});
 		});
 	</script>

@@ -15,6 +15,7 @@ class RelationshipGroup extends Relationship
         return [
             'options'              => $this->loadRelationship(),
             'multiple'             => false,
+            'combo'                => false,
             'array-save'           => 'json',
             'style'                => 'btn-dropdown',
             'selected-text-format' => 'count > 3',

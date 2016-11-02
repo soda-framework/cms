@@ -55,9 +55,11 @@ class ModelBuilder extends Model
         return $this;
     }
 
-    public function parseField(Field $field, Request $request)
+    public function parseField(Field $field, Request $request, $prefix = null)
     {
         $field = Soda::getFormBuilder()->field($field);
+
+        if($prefix) $field->setPrefix($prefix);
 
         $field->saveToModel($this, $request);
 

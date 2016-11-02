@@ -93,12 +93,17 @@ class PageController extends BaseController
         //we also need to save the settings - careful here..
         $this->model->load('type.fields');
 
-        if ($request->has('settings')) {
 
-            Soda::model($this->model->type->identifier)
-                ->firstOrNew(['page_id' => $this->model->id])
-                ->fill($request->input('settings'))
-                ->save();
+        if ($this->model->type && $this->model->type->fields) {
+            $dyn_table = Soda::model($this->model->type->identifier)->firstOrNew(['page_id' => $this->model->id]);
+
+            foreach ($this->model->type->fields as $field) {
+                if ($request->input('settings.'.$field->field_name) !== null) {
+                    $dyn_table->parseField($field, $request, 'settings');
+                }
+            }
+
+            $dyn_table->save();
         }
 
         return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
@@ -160,12 +165,16 @@ class PageController extends BaseController
             $parent->addChild($page);
         }
 
-        if ($page->type) {
-            if ($request->has('settings')) {
-                $dyn_table = Soda::model($page->type->identifier)->where('page_id', $page->id)->first();
-                $dyn_table->fill($request->input('settings'));
-                $dyn_table->save();
+        if ($page->type && $page->type->fields) {
+            $dyn_table = Soda::model($page->type->identifier)->firstOrNew(['page_id' => $this->model->id]);
+
+            foreach ($page->type->fields as $field) {
+                if ($request->input('settings.'.$field->field_name) !== null) {
+                    $dyn_table->parseField($field, $request, 'settings');
+                }
             }
+
+            $dyn_table->save();
         }
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');

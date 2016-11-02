@@ -1,13 +1,12 @@
-
 .dropdown-menu {
   position: absolute;
-  top: 100%;
-  float: left;
+  top: auto;
+  //float: left;
   border: 1px solid rgba(0, 0, 0, .1);
   border-radius: 6px;
   left: auto;
   pointer-events: none;
-  right: 0;
+  right: 25px;
   margin-top: 5px;
   min-width: 180px;
   padding: 8px;
@@ -25,7 +24,7 @@
   text-align: left;
   background-color: #fff;
   background-clip: padding-box;
-  li {
+  > li, > div {
     a {
       padding: 5px 10px;
       border-radius: 4px;
@@ -48,7 +47,7 @@
   }
 }
 
-.open .dropdown-menu {
+.open .dropdown-menu, .bootstrap-datetimepicker-widget.dropdown-menu {
   transform: scale(1);
   opacity: 1;
   z-index: 9999;

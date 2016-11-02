@@ -244,18 +244,29 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
+     * Build the field name with prefix applied
+     *
+     * @return string
+     */
+    public function buildPrefixedFieldName()
+    {
+        $field_name = $this->field->getAttribute('field_name');
+        if ($this->prefix) {
+            return $this->prefix.'['.$field_name.']';
+        }
+        return $field_name;
+    }
+    /**
      * Get the field name with prefix applied
      *
      * @return string
      */
     public function getPrefixedFieldName()
     {
-        $field_name = $this->field->field_name;
-
+        $field_name = $this->field->getAttribute('field_name');
         if ($this->prefix) {
-            return $this->prefix.'['.$field_name.']';
+            return $this->prefix.'.'.$field_name;
         }
-
         return $field_name;
     }
 
@@ -445,7 +456,7 @@ abstract class AbstractFormField implements FormFieldInterface
         return [
             'layout'              => $this->getLayout(),
             'field_view'          => $this->getViewPath().'.'.$this->getView(),
-            'prefixed_field_name' => $this->getPrefixedFieldName(),
+            'prefixed_field_name' => $this->buildPrefixedFieldName(),
             'field_label'         => $this->getFieldLabel(),
             'field_name'          => $this->getFieldName(),
             'field_value'         => $this->getFieldValue(),
