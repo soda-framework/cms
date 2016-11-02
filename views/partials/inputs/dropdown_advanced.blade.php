@@ -15,7 +15,9 @@
             @endif
         @endforeach
         @foreach(array_diff(is_array($field_value) ? $field_value : [$field_value], $values) as $value)
+            @if($value !== null && $value !== '')
                 <option value="{{ $value }}" selected>{{ $value }}</option>
+            @endif
         @endforeach
     </select>
 
