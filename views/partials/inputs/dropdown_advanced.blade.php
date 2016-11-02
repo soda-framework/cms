@@ -1,6 +1,6 @@
 <?php $values = []; ?>
 @section("field")
-    <select name="{{ $prefixed_field_name }}{{ $field_parameters['multiple'] ? '[]' : '' }}" {{ $field_parameters['multiple'] ? 'multiple' : '' }} class="form-control" id="field_{{ $field_name }}">
+    <select name="{{ $prefixed_field_name }}{{ $field_parameters['multiple'] ? '[]' : '' }}" {{ $field_parameters['multiple'] ? 'multiple' : '' }} class="form-control" id="{{ $field_id }}">
         @foreach($field_parameters['options'] as $optGroup => $options)
             @if(is_array($options))
                 <optgroup label="{{ $optGroup }}">
@@ -23,7 +23,7 @@
 
     <script>
         $(function(){
-            $('#field_{{ $field_name }}').select2({
+            $('#{{ $field_id }}').select2({
                 @if($field_parameters['combo'])
                 tags: {{ $field_parameters['multiple'] ? 'true' : 'false' }},
                 createTag: function (params) {

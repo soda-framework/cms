@@ -51,7 +51,7 @@ class Datetime extends AbstractFormField
         $value = parent::getSaveValue($request);
         $parameters = $this->parseFieldParameters();
 
-        if(!$value) return '';
+        if(!$value) return null;
 
         $tz = isset($parameters['timezone']) && $parameters['timezone'] ? $parameters['timezone'] : null;
 

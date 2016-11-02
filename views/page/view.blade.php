@@ -96,7 +96,7 @@ if (!$model->type || !count($model->type->fields)) {
         {!! SodaForm::text([
             'name'        => 'Package Prefix',
             'field_name'  => 'package',
-            'value'       => $model->type && $model->type->package,
+            'value'       => $model->type && $model->type->package ? $model->type->package : '',
         ])->setModel($model) !!}
 
         <div class="row fieldset-group">
@@ -112,7 +112,7 @@ if (!$model->type || !count($model->type->fields)) {
                 {!! SodaForm::text([
                     'name'        => null,
                     'field_name'  => 'action',
-                    'value'       => $model->type && $model->type->action,
+                    'value'       => $model->type && $model->type->action ? $model->type->action : '',
                 ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
         </div>
@@ -130,7 +130,7 @@ if (!$model->type || !count($model->type->fields)) {
                 {!! SodaForm::text([
                     'name'        => null,
                     'field_name'  => 'edit_action',
-                    'value'       => $model->type && $model->type->edit_action,
+                    'value'       => $model->type && $model->type->edit_action ? $model->type->edit_action : '',
                 ])->setModel($model)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
         </div>

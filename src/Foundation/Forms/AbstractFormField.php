@@ -10,6 +10,13 @@ use Soda\Cms\Models\Field;
 abstract class AbstractFormField implements FormFieldInterface
 {
 
+    /*
+     * Unique identifier for the field
+     *
+     * @var string
+     */
+    protected $id;
+
     /**
      * The view used to lay out our form field
      *
@@ -228,6 +235,30 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @return string
      */
+    public function getFieldId()
+    {
+        return $this->id ?: str_replace('.', '_', $this->getPrefixedFieldName());
+    }
+
+    /**
+     * Set the id used by the field
+     *
+     * @param $id
+     *
+     * @return $this
+     */
+    public function setFieldId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the field label
+     *
+     * @return string
+     */
     public function getFieldLabel()
     {
         return $this->field->name;
@@ -254,8 +285,10 @@ abstract class AbstractFormField implements FormFieldInterface
         if ($this->prefix) {
             return $this->prefix.'['.$field_name.']';
         }
+
         return $field_name;
     }
+
     /**
      * Get the field name with prefix applied
      *
@@ -267,6 +300,7 @@ abstract class AbstractFormField implements FormFieldInterface
         if ($this->prefix) {
             return $this->prefix.'.'.$field_name;
         }
+
         return $field_name;
     }
 
@@ -459,6 +493,7 @@ abstract class AbstractFormField implements FormFieldInterface
             'layout'              => $this->getLayout(),
             'field_view'          => $this->getViewPath().'.'.$this->getView(),
             'prefixed_field_name' => $this->buildPrefixedFieldName(),
+            'field_id'            => $this->getFieldId(),
             'field_label'         => $this->getFieldLabel(),
             'field_name'          => $this->getFieldName(),
             'field_value'         => $this->getFieldValue(),
