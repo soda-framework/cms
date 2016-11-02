@@ -237,7 +237,7 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function getFieldId()
     {
-        return $this->id ?: str_replace('.', '_', $this->getPrefixedFieldName());
+        return $this->id ?: 'field_' . str_replace('.', '_', $this->getPrefixedFieldName());
     }
 
     /**
