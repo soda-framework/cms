@@ -24,8 +24,9 @@
     <script>
         $(function(){
             $('#{{ $field_id }}').select2({
+                tags: {{ $field_parameters['combo'] == true ? 'true' : 'false' }},
+                multiple: {{ $field_parameters['multiple'] == true ? 'true' : 'false' }},
                 @if($field_parameters['combo'])
-                tags: {{ $field_parameters['multiple'] ? 'true' : 'false' }},
                 createTag: function (params) {
                     return {
                         id: params.term,
