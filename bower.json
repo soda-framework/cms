@@ -9,7 +9,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-
     "bootstrap-sass": "~3",
     "bootstrap-fileinput": "4.3.*",
     "bootstrap-select": "^1.11.2",
@@ -21,6 +20,8 @@
     "jquery-ui": "^1.12.1",
     "jsoneditor": "^5.5.9",
     "jstree": "~3",
-    "jquery-sortable": "~0.9.13"
+    "jquery-sortable": "~0.9.13",
+    "select2": "^4.0.3",
+    "select2-bootstrap-theme": "^0.1.0-beta.9"
   }
 }

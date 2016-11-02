@@ -14,15 +14,18 @@ class RelationshipGroup extends Relationship
     {
         return [
             'options'              => $this->loadRelationship(),
-            'multiple'             => false,
-            'combo'                => false,
-            'array-save'           => 'json',
-            'style'                => 'btn-dropdown',
-            'selected-text-format' => 'count > 3',
-            'placeholder'          => 'Please select...',
             'key_column'           => 'id',
             'value_column'         => 'id',
             'group_column'         => null,
+
+            'multiple'             => true,
+            'combo'                => false,
+            'array-save'           => 'json',
+            'settings'             => [
+                'placeholder'             => 'Please select...',
+                'minimumResultsForSearch' => 'infinity',
+                'theme'                   => 'bootstrap',
+            ],
         ];
     }
 

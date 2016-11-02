@@ -1,5 +1,5 @@
 @section("field")
-    <select name="{{ $prefixed_field_name }}{{ $field_parameters['multiple'] ? '[]' : '' }}" class="form-control selectpicker" id="field_{{ $field_name}}" {{ $field_parameters['multiple'] ? 'multiple' : '' }} title="{{ $field_parameters['placeholder'] }}" data-style="{{ $field_parameters['style'] }}" data-selected-text-format="{{ $field_parameters['selected-text-format'] }}">
+    <select name="{{ $prefixed_field_name }}{{ $field_parameters['multiple'] ? '[]' : '' }}" {{ $field_parameters['multiple'] ? 'multiple' : '' }} class="form-control" id="field_{{ $field_name }}">
         @foreach($field_parameters['options'] as $optGroup => $options)
             @if(is_array($options))
                 <optgroup label="{{ $optGroup }}">
@@ -12,4 +12,31 @@
             @endif
         @endforeach
     </select>
+
+    <script>
+        $(function(){
+            $('#field_{{ $field_name }}').select2({
+                tags: {{ $field_parameters['multiple'] ? 'true' : 'false' }},
+                createTag: function (params) {
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newOption: true
+                    }
+                },
+                templateResult: function (data) {
+                    var $result = $("<span></span>");
+
+                    $result.text(data.text);
+
+                    if (data.newOption) {
+                        $result.append(" <em>(new)</em>");
+                    }
+
+                    return $result;
+                },
+                {!! Soda::getFormBuilder()->buildJsParams($field_parameters['settings']) !!}
+            });
+        });
+    </script>
 @overwrite

@@ -15,10 +15,12 @@ class Combobox extends AbstractFormField
             'multiple'             => false,
             'combo'                => true,
             'array-save'           => 'json',
-            'style'                => 'btn-dropdown',
-            'selected-text-format' => 'count > 3',
-            'placeholder'          => 'Please select...',
             'options'              => [],
+            'settings'             => [
+                'placeholder'             => 'Please select...',
+                'minimumResultsForSearch' => 'infinity',
+                'theme'                   => 'bootstrap',
+            ],
         ];
     }
 }

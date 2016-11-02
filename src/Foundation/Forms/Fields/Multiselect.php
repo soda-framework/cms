@@ -14,10 +14,12 @@ class Multiselect extends AbstractFormField
             'multiple'             => true,
             'combo'                => false,
             'array-save'           => 'json',
-            'style'                => 'btn-dropdown',
-            'selected-text-format' => 'count > 3',
-            'placeholder'          => 'Please select...',
             'options'              => [],
+            'settings'             => [
+                'placeholder'             => 'Please select...',
+                'minimumResultsForSearch' => 'infinity',
+                'theme'                   => 'bootstrap',
+            ],
         ];
     }
 }
