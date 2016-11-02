@@ -14,7 +14,7 @@
                 <option value="{{ $optGroup }}" {{ $field_value == $optGroup || (is_array($field_value) && in_array($optGroup, $field_value)) ? "selected" : "" }}>{{ $options }}</option>
             @endif
         @endforeach
-        @foreach(array_diff($field_value, $values) as $value)
+        @foreach(array_diff(is_array($field_value) ? $field_value : [$field_value], $values) as $value)
                 <option value="{{ $value }}" selected>{{ $value }}</option>
         @endforeach
     </select>

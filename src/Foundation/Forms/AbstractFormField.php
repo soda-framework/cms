@@ -329,6 +329,8 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function saveToModel(Model $model, Request $request)
     {
+        $this->setModel($model);
+
         $model->{$this->getFieldName()} = $this->getSaveValue($request);
 
         return $this;
