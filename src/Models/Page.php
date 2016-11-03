@@ -33,6 +33,7 @@ class Page extends AbstractSodaClosureEntity
     ];
     protected $table = 'pages';
     protected $pageAttributes;
+    public $timestamps = true;
 
     /**
      * ClosureTable model instance.
