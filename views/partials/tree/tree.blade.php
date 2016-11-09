@@ -19,19 +19,25 @@
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
                 <ul class="dropdown-menu">
+                    @permission('create-pages')
                     <li>
                         <a data-tree-add href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
                     </li>
+                    @endpermission
+                    @permission('edit-pages')
                     <li>
                         <a href="{{ route('soda.'.$hint.'.view', ['id'=>$tree->id]) }}">Edit Page</a>
                     </li>
+                    @endpermission
                     <li>
                         <a href="{{ $tree->slug }}" target="_blank" data-tree-link>View page</a>
                     </li>
+                    @permission('delete-pages')
                     <li class="divider"></li>
                     <li class="warning">
                         <a data-tree-delete href="{{ route('soda.'.$hint.'.delete', ['id' => $tree->id]) }}">Delete</a>
                     </li><!--v-if-->
+                    @endpermission
                 </ul>
             </div>
         </div>
