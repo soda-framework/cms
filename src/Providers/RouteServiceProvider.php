@@ -4,9 +4,9 @@ namespace Soda\Cms\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
-use Laratrust\Middleware\LaratrustAbility;
-use Laratrust\Middleware\LaratrustPermission;
-use Laratrust\Middleware\LaratrustRole;
+use Soda\Cms\Http\Middleware\HasAbility;
+use Soda\Cms\Http\Middleware\HasPermission;
+use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\Cms;
 
@@ -30,9 +30,11 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->app['router']->middleware('soda.main', Cms::class);
         $this->app['router']->middleware('soda.auth', Authenticate::class);
-        $this->app['router']->middleware('role', LaratrustRole::class);
-        $this->app['router']->middleware('permission', LaratrustPermission::class);
-        $this->app['router']->middleware('ability', LaratrustAbility::class);
+
+
+        $this->app['router']->middleware('soda.role', HasRole::class);
+        $this->app['router']->middleware('soda.permission', HasPermission::class);
+        $this->app['router']->middleware('soda.ability', HasAbility::class);
 
         parent::boot();
     }
