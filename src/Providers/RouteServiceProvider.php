@@ -9,6 +9,7 @@ use Soda\Cms\Http\Middleware\HasPermission;
 use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\Cms;
+use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
 
 class RouteServiceProvider extends ServiceProvider
 {
