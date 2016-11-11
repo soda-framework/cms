@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->app['router']->middleware('soda.main', Cms::class);
         $this->app['router']->middleware('soda.auth', Authenticate::class);
-
+        $this->app['router']->middleware('soda.guest', RedirectIfAuthenticated::class);
 
         $this->app['router']->middleware('soda.role', HasRole::class);
         $this->app['router']->middleware('soda.permission', HasPermission::class);
