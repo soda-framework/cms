@@ -27,6 +27,6 @@ class ForgotPasswordController extends BaseController
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('soda.guest');
     }
 }

@@ -12,7 +12,9 @@
 @endsection
 
 @section('content-heading-button')
-	@include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#page_type_modal'])
+    @permission('create-pages')
+	    @include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#page_type_modal'])
+	@endpermission
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
@@ -23,6 +25,7 @@
 @section('content')
 	{!! $tree !!}
 
+    @permission('create-pages')
 	<div class="modal fade" id="page_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -62,4 +65,5 @@
 			modal.modal('show');
 		});
 	</script>
+	@endpermission
 @endsection

@@ -166,6 +166,12 @@ class SodaInstance
         return $this->getFormBuilder()->field($field);
     }
 
+
+    public function noPermission()
+    {
+        return response()->view(soda_cms_view_path("errors.no-permission"), [], 401);
+    }
+
     /**
      * Determines the application by our current URL and sets it
      *

@@ -10,7 +10,7 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         // Dashboard and user routes...
-        Route::group(['middleware' => 'soda.auth:soda'], function () {
+        Route::group(['middleware' => 'soda.auth'], function () {
             Route::get('/', 'HomeController@getIndex')->name('soda.home');
             Route::get('test', 'HomeController@getTest')->name('soda.test');
 
