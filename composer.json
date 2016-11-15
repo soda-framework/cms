@@ -36,7 +36,7 @@
     "laravel/framework": "5.3.*",
     "franzose/closure-table": "^4.1",
     "league/flysystem-aws-s3-v3": "^1.0",
-    "zofe/rapyd": "dev-bugfix as 2.2.6 || 2.2.*",
+    "zofe/rapyd": "2.2.*",
     "santigarcor/laratrust": "3.0.*",
     "doctrine/dbal": "^2.5"
   },
