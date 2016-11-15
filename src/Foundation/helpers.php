@@ -36,6 +36,6 @@ if (!function_exists('soda_request_is')) {
     {
         $path = $path !== '' ? '/'.ltrim($path, '/') : $path;
 
-        return Request::is(config('soda.cms.path').$path);
+        return Request::is(ltrim(config('soda.cms.path').$path, '/'));
     }
 }
