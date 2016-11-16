@@ -7,7 +7,7 @@
     </ol>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>Soda CMS | Users</title>
 @endsection
 
