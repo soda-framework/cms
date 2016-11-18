@@ -50,6 +50,9 @@ class SodaServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Override Zofe DataSet
+        class_alias('Soda\Cms\Support\DataSet', 'Zofe\Rapyd\DataSet');
+
         $this->mergeConfigFrom(__DIR__.'/../../config/cms.php', 'soda.cms');
         $this->mergeConfigFrom(__DIR__.'/../../config/cache.php', 'soda.cache');
         $this->mergeConfigFrom(__DIR__.'/../../config/fields.php', 'soda.fields');

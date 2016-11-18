@@ -8,7 +8,7 @@
     </ol>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>Soda CMS | Page Types</title>
 @endsection
 

@@ -3,6 +3,7 @@
 namespace Soda\Cms\Foundation\Pages\Actions;
 
 use App;
+use Illuminate\Support\Facades\Route as RouteFacade;
 use Soda\Cms\Models\Page;
 
 class ControllerAction implements ActionInterface
@@ -12,6 +13,9 @@ class ControllerAction implements ActionInterface
         $namespace = $page->package;
         $controller = trim($page->action, '\\');
 
-        return App::call($namespace ? "$namespace\\$controller" : $controller);
+        $currentRoute = RouteFacade::getCurrentRoute();
+        RouteFacade::any($currentRoute->getUri(), ['uses' => $namespace ? "$namespace\\$controller" : $controller]);
+
+        return RouteFacade::dispatch(app('request'));
     }
 }

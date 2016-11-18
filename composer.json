@@ -25,6 +25,12 @@
       "name": "Jacob Mackenzie"
     }
   ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/soda-framework/rapyd-laravel"
+    }
+  ],
   "require": {
     "php": ">=5.5.9",
     "laravel/framework": "5.3.*",
