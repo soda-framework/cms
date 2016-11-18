@@ -35,6 +35,6 @@ class PageServiceProvider extends ServiceProvider
         $this->registerFacades([
             'SodaPage' => SodaPageFacade::class,
         ]);
-        $this->app->bind('soda.page', PageBuilder::class);
+        $this->app->instance('soda.page', PageBuilder::class);
     }
 }

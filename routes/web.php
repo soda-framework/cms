@@ -91,6 +91,6 @@ Route::group(['middleware' => 'web'], function () {
             });
         });
     });
-
-    Route::any('{slug?}', 'PageController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
 });
+
+Route::any('{slug?}', 'PageController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
