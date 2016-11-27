@@ -18,11 +18,12 @@ class PageBlockController extends BaseController
 
     public function __construct(ModelBuilder $modelBuilder)
     {
+        Page::disableDrafts();
         $type = Route::current()->getParameter('type');
         $page_id = Route::current()->getParameter('page_id');
-        $this->page = $page_id ? Page::find($page_id) : new Page;
+        $this->page = $page_id ? Page::findOrFail($page_id) : new Page;
 
-        $block = $page_id ? $this->page->blocks() : new Block;
+        $block = $this->page ? $this->page->blocks() : new Block;
         $this->block = $block->with('type', 'type.fields')->where('identifier', $type)->first();
         $this->model = Soda::model($this->block->type->identifier, $this->block->type->fields->pluck('field_name')->toArray());
     }
