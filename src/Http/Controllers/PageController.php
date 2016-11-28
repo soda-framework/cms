@@ -93,7 +93,6 @@ class PageController extends BaseController
         //we also need to save the settings - careful here..
         $this->model->load('type.fields');
 
-
         if ($this->model->type && $this->model->type->fields) {
             $dyn_table = Soda::model($this->model->type->identifier)->firstOrNew(['page_id' => $this->model->id]);
 
@@ -106,22 +105,26 @@ class PageController extends BaseController
             $dyn_table->save();
         }
 
-        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'page updated');
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $request->id])->with('success', 'Page saved successfully.');
     }
 
-    public function create(Request $request, $parent_id = null)
+    public function create(Request $request, $parentId = null)
     {
-        $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
+        $parent = $parentId ? $this->model->find($parentId) : $this->model->getRoots()->first();
 
         $this->model->parent_id = $parent ? $parent->id : null;
         $this->model->page_type_id = $request->input('page_type_id');
 
         if ($this->model->page_type_id) {
             $this->model->load('type.fields');
-            $this->model->action = $this->model->type->action;
-            $this->model->action_type = $this->model->type->action_type;
-            $this->model->edit_action = $this->model->type->edit_action;
-            $this->model->edit_action_type = $this->model->type->edit_action_type;
+            if($this->model->type) {
+                $this->model->fill([
+                    'action'           => $this->model->type->action,
+                    'action_type'      => $this->model->type->action_type,
+                    'edit_action'      => $this->model->type->edit_action,
+                    'edit_action_type' => $this->model->type->edit_action_type,
+                ]);
+            }
         }
 
         return soda_cms_view('page.view', ['model' => $this->model, 'hint' => $this->hint]);
@@ -130,51 +133,62 @@ class PageController extends BaseController
     /**
      * create page save functions
      *
-     * @param null $parent_id
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function save(Request $request)
     {
-        $page = $this->model;
-        $parent_id = $request->input('parent_id');
+        $parentId = $request->input('parent_id');
+        $parentPage = $parentId ? $this->model->find($parentId) : $this->model->getRoots()->first();
+        $pageType = PageType::with('fields')->find($request->input('page_type_id'));
 
-        $parent = $parent_id ? $this->model->find($parent_id) : $this->model->getRoots()->first();
-
-        //todo validation
-        $slug = $page->generateSlug($request->input('slug'));
-
-        if ($parent && !starts_with($slug, $parent->getAttribute('slug'))) {
-            $slug = $parent->generateSlug($request->input('slug'));
+        $slug = $this->model->generateSlug($request->input('slug'));
+        if ($parentPage && !starts_with($slug, $parentPage->getAttribute('slug'))) {
+            $slug = $parentPage->generateSlug($request->input('slug'));
         }
 
-        $page->fill([
+        // DEFAULTS
+        $this->model->fill($pageType ? [
+            'package'          => $pageType->package,
+            'action'           => $pageType->action,
+            'action_type'      => $pageType->action_type,
+            'edit_action'      => $pageType->edit_action,
+            'edit_action_type' => $pageType->edit_action_type,
+        ] : [
+            'package'     => 'soda',
+            'action'      => 'default.view',
+            'action_type' => 'view',
+        ]);
+
+        $this->model->fill([
             'name'           => $request->input('name'),
             'slug'           => $slug,
             'status'         => $request->has('status') ? $request->input('status') : 0,
-            'action_type'    => $request->has('action_type') ? $request->input('action_type') : 'view',
-            'package'        => $request->has('package') ? $request->input('package') : 'soda',
-            'action'         => $request->has('action') ? $request->input('action') : 'default.view',
             'application_id' => Soda::getApplication()->id,
-            'page_type_id'   => $request->input('page_type_id'),
+            'page_type_id'   => $pageType ? $pageType->id : null,
         ]);
 
-        $page->save();
+        if ($request->has('package')) $this->model->package = $request->input('package');
+        if ($request->has('action')) $this->model->action = $request->input('action');
+        if ($request->has('action_type')) $this->model->action_type = $request->input('action_type');
+        if ($request->has('edit_action')) $this->model->edit_action = $request->input('edit_action');
+        if ($request->has('edit_action_type')) $this->model->edit_action_type = $request->input('edit_action_type');
 
-        if ($parent) {
-            $parent->addChild($page);
+        $this->model->save();
+
+        if ($parentPage) {
+            $parentPage->addChild($this->model);
         }
 
-        if ($page->type && $page->type->fields) {
-            $dyn_table = Soda::model($page->type->identifier)->firstOrNew(['page_id' => $this->model->id]);
+        if ($pageType && $pageType->fields) {
+            $pageTypeModel = Soda::model($pageType->identifier)->firstOrNew(['page_id' => $this->model->id]);
 
-            foreach ($page->type->fields as $field) {
+            foreach ($pageType->fields as $field) {
                 if ($request->input('settings.'.$field->field_name) !== null) {
-                    $dyn_table->parseField($field, $request, 'settings');
+                    $pageTypeModel->parseField($field, $request, 'settings');
                 }
             }
 
-            $dyn_table->save();
+            $pageTypeModel->save();
         }
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
