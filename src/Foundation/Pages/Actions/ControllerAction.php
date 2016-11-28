@@ -3,19 +3,24 @@
 namespace Soda\Cms\Foundation\Pages\Actions;
 
 use App;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Soda\Cms\Models\Page;
 
 class ControllerAction implements ActionInterface
 {
-    public function handle(Page $page, $parameters = [])
+    public function handle(Request $request, Page $page, $parameters = [])
     {
         $namespace = $page->package;
         $controller = trim($page->action, '\\');
 
-        $currentRoute = Route::getCurrentRoute();
-        Route::any($currentRoute->getUri(), ['uses' => $namespace ? "$namespace\\$controller" : $controller])->middleware('web');
+        // Invalidate the current route
+        Route::getCurrentRoute()->setUri('INVALID@ROUTE');
 
-        return Route::dispatch(app('request'));
+        // Create a route for our matched slug
+        Route::match([$request->getMethod()], $page->slug, ['uses' => $namespace ? "$namespace\\$controller" : $controller])->middleware('web');
+
+        // Dispatch, and match to our new route
+        return Route::dispatch($request);
     }
 }

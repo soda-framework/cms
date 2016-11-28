@@ -3,6 +3,7 @@
 namespace Soda\Cms\Foundation\Pages;
 
 use Exception;
+use Illuminate\Http\Request;
 use Soda;
 use Soda\Cms\Foundation\Pages\Actions\ActionInterface;
 use Soda\Cms\Foundation\Pages\Actions\ControllerAction;
@@ -120,32 +121,34 @@ class PageBuilder
     /**
      * Renders the hint path and view of given page (or pageable item)
      *
-     * @param       $page
-     * @param array $parameters
+     * @param Request $request
+     * @param         $page
+     * @param array   $parameters
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public function render($page = null, $parameters = [])
+    public function render(Request $request, $page = null, $parameters = [])
     {
         if (!$page) {
             $page = Soda::getCurrentPage($page);
         }
 
-        return $this->handleAction($page->action_type, $page, $parameters);
+        return $this->handleAction($request, $page->action_type, $page, $parameters);
     }
 
     /**
      * Handles a page action
      *
+     * @param Request               $request
      * @param                       $action_type
      * @param \Soda\Cms\Models\Page $page
      * @param array                 $parameters
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
-    public function handleAction($action_type, Page $page, $parameters = [])
+    public function handleAction(Request $request, $action_type, Page $page, $parameters = [])
     {
         if (!isset($this->actions[$action_type])) {
             Throw new Exception('Action \''.$action_type.'\' is not registered');
@@ -153,7 +156,7 @@ class PageBuilder
 
         $handler = new $this->actions[$action_type];
 
-        return $handler->handle($page, $parameters);
+        return $handler->handle($request, $page, $parameters);
     }
 
     /**

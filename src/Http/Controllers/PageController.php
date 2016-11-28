@@ -28,13 +28,14 @@ class PageController extends BaseController
     /**
      * Main page view method.
      *
-     * @param $slug
+     * @param Request $request
+     * @param string  $slug
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function page($slug = '/')
+    public function page(Request $request, $slug = '/')
     {
-        return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
+        return Soda::getPageBuilder()->loadPageBySlug($slug)->render($request);
     }
 
     /**
