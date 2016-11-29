@@ -12,6 +12,7 @@ return [
     'lat_lon'            => Soda\Cms\Foundation\Forms\Fields\LatLon::class,
     'password'           => Soda\Cms\Foundation\Forms\Fields\Password::class,
     'static_text'        => Soda\Cms\Foundation\Forms\Fields\StaticText::class,
+    'static_image'       => Soda\Cms\Foundation\Forms\Fields\StaticImage::class,
     'hidden'             => Soda\Cms\Foundation\Forms\Fields\Hidden::class,
     'relationship'       => Soda\Cms\Foundation\Forms\Fields\Relationship::class,
     'text'               => Soda\Cms\Foundation\Forms\Fields\Text::class,
