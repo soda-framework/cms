@@ -52,5 +52,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->group(['namespace' => $this->namespace], function ($router) {
             require(__DIR__.'/../../routes/web.php');
         });
+
+        $this->app->events->fire('soda.routing', $this->app->router);
     }
 }
