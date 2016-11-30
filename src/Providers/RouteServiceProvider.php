@@ -53,6 +53,8 @@ class RouteServiceProvider extends ServiceProvider
             require(__DIR__.'/../../routes/web.php');
         });
 
+        $router->getRoutes()->refreshNameLookups();
+
         $this->app->events->fire('soda.routing', $this->app->router);
     }
 }
