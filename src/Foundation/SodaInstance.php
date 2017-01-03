@@ -14,7 +14,8 @@ use Soda\Cms\Models\Page;
 class SodaInstance
 {
     protected $app;
-    protected $application = null;
+    protected $application;
+    protected $applicationUrl;
     protected $blocks = [];
     protected $currentPage;
 
@@ -25,8 +26,8 @@ class SodaInstance
         if (!app()->runningInConsole()) {
             $domain = str_replace('www.', '', $_SERVER['HTTP_HOST']);
 
-            if(config('soda.cache.application') === true) {
-                $application = $this->app['cache']->rememberForever('soda.application-'.$domain, function() use ($domain) {
+            if (config('soda.cache.application') === true) {
+                $application = $this->app['cache']->rememberForever('soda.application-'.$domain, function () use ($domain) {
                     return $this->findApplicationByDomain($domain);
                 });
             } else {
@@ -166,10 +167,14 @@ class SodaInstance
         return $this->getFormBuilder()->field($field);
     }
 
-
     public function noPermission()
     {
         return response()->view(soda_cms_view_path("errors.no-permission"), [], 401);
+    }
+
+    public function applicationUrl()
+    {
+        return $this->applicationUrl;
     }
 
     /**
@@ -181,6 +186,7 @@ class SodaInstance
     protected function findApplicationByDomain($domain)
     {
         if ($applicationUrl = ApplicationUrl::whereDomain($domain)->first()) {
+            $this->applicationUrl = $applicationUrl;
             if ($application = $applicationUrl->application()->first()) {
                 return $application;
             }
