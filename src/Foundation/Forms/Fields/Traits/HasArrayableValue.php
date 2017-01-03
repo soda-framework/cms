@@ -35,7 +35,7 @@ trait HasArrayableValue
         if ($this->isMulti() && $this->isJsonable()) {
             return json_decode($value);
         } elseif ($this->isMulti() && $this->isDelimited()) {
-            $delimiter = $this->getDelimiter($value, 8);
+            $delimiter = $this->getDelimiter();
 
             return explode($delimiter, $value);
         }
@@ -64,8 +64,10 @@ trait HasArrayableValue
         return isset($parameters['array-save']) && starts_with($parameters['array-save'], 'delimit:');
     }
 
-    protected function getDelimiter($value)
+    protected function getDelimiter()
     {
-        return substr($value, 8);
+        $parameters = $this->parseFieldParameters();
+
+        return substr($parameters['array-save'], 8);
     }
 }
