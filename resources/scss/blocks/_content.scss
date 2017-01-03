@@ -39,6 +39,17 @@
         }
       }
     }
+
+    .table {
+      &.table-bordered {
+        border-width: 0;
+      }
+      > thead, > tbody, > tfoot {
+        > tr > th, > tr > td {
+          padding: 12px 16px;
+        }
+      }
+    }
   }
 }
 

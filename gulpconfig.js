@@ -82,6 +82,9 @@ module.exports = {
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
         ],
+        extra: [
+            'resources/components/jquery-ui/jquery-ui.js',
+        ],
         forms: [
             'resources/components/bootstrap-fileinput/js/fileinput.js',
             'resources/components/bootstrap-fileinput/themes/fa/fa.js',
