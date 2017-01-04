@@ -3,7 +3,9 @@
 
     <div style="margin:5px 0;">
         <button data-slug-generate="#{{ $field_id }}" data-slug-generate-from="{{ $field_parameters['from'] }}" type="button" class="btn btn-success slug-generate">Generate</button>
+        @if($field_parameters['allow_external'])
         <button data-slug-external="#{{ $field_id }}" type="button" class="btn btn-warning slug-external">External link</button>
+        @endif
     </div>
 @overwrite
 
