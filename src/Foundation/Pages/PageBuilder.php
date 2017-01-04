@@ -8,13 +8,23 @@ use Soda;
 use Soda\Cms\Foundation\Pages\Actions\ActionInterface;
 use Soda\Cms\Foundation\Pages\Actions\ControllerAction;
 use Soda\Cms\Foundation\Pages\Actions\ViewAction;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Models\PageType;
 
 class PageBuilder
 {
     protected $actions = [
         'view'       => ViewAction::class,
         'controller' => ControllerAction::class,
+    ];
+
+    protected $draftables = [
+        Block::class,
+        BlockType::class,
+        Page::class,
+        PageType::class,
     ];
 
     /**
@@ -38,7 +48,32 @@ class PageBuilder
     public function registerActions($actions)
     {
         foreach ($actions as $name => $action) {
-            $this->register($name, $action);
+            $this->registerAction($name, $action);
+        }
+    }
+
+    /**
+     * Registers a new draftable
+     *
+     * @param null $draftable
+     */
+    public function registerDraftable($draftable)
+    {
+        // Check if class uses Draftable trait
+        if (method_exists($draftable, 'bootDraftableTrait')) {
+            $this->draftables[] = $draftable;
+        }
+    }
+
+    /**
+     * Registers an array of draftables
+     *
+     * @param $draftables
+     */
+    public function registerDraftables($draftables)
+    {
+        foreach ($draftables as $draftable) {
+            $this->registerDraftable($draftable);
         }
     }
 
@@ -50,6 +85,16 @@ class PageBuilder
     public function getRegisteredActions()
     {
         return $this->actions;
+    }
+
+    /**
+     * Returns a list of draftables that have been registered
+     *
+     * @return array
+     */
+    public function getDraftables()
+    {
+        return $this->draftables;
     }
 
     /**

@@ -14,6 +14,7 @@ class Datetime extends AbstractFormField
     {
         return [
             'options' => [
+                'format' => 'DD/MM/Y h:mm A',
                 'icons'         => [
                     'time'     => "fa fa-clock-o",
                     'date'     => "fa fa-calendar",
@@ -23,7 +24,7 @@ class Datetime extends AbstractFormField
                     'next'     => "fa fa-caret-right",
                 ],
             ],
-            'input-format'  => 'm/d/Y g:i A',
+            'input-format'  => 'd/m/Y g:i A',
             'output-format' => 'Y-m-d H:i:s',
         ];
     }
@@ -34,7 +35,6 @@ class Datetime extends AbstractFormField
         $parameters = $this->parseFieldParameters();
 
         if(!$value) return '';
-
 
         $dateTime = Carbon::createFromFormat($parameters['output-format'], $value);
 

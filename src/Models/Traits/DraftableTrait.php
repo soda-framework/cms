@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Models\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Session;
 use Soda\Cms\Support\Constants;
@@ -17,7 +18,11 @@ trait DraftableTrait
     {
         static::addGlobalScope('published', function (Builder $builder) {
             if (static::isDraftsEnabled()) {
-                return $builder->where('status', '=', Constants::STATUS_LIVE);
+                $builder->where('status', '=', Constants::STATUS_LIVE);
+
+                if(isset(static::$publishDateField)) {
+                    $builder->where(static::$publishDateField, '<', Carbon::now());
+                }
             }
 
             return $builder;
