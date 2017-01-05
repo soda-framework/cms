@@ -1,26 +1,11 @@
 <?php namespace Soda\Cms\Models;
 
-use Cache;
-use Config;
+use Illuminate\Database\Eloquent\Model;
+use Laratrust\Contracts\LaratrustRoleInterface;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Zizaco\Entrust\EntrustRole;
+use Soda\Cms\Models\Traits\PermissionsRoleTrait;
 
-class Role extends EntrustRole
+class Role extends Model implements LaratrustRoleInterface
 {
-    use OptionallyInApplicationTrait;
-
-    //Big block of caching functionality.
-    public function cachedPermissions()
-    {
-        $rolePrimaryKey = $this->primaryKey;
-        $cacheKey = 'entrust_permissions_for_role_'.$this->$rolePrimaryKey;
-
-        return Cache::tags(Config::get('entrust.permission_role_table'))->remember($cacheKey, Config::get('cache.ttl'), function () {
-            if (!$this->perms) {
-                return $this->load('perms');
-            }
-
-            return $this->perms;
-        });
-    }
+    use OptionallyInApplicationTrait, PermissionsRoleTrait;
 }

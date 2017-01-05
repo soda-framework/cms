@@ -9,7 +9,6 @@ class Migrate extends Command
 
     protected $signature = 'soda:migrate';
     protected $description = 'Migrate the Soda Database';
-    protected $except = [];
 
     /**
      * Runs all database migrations for Soda

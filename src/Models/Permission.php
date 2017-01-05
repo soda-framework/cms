@@ -1,9 +1,9 @@
 <?php namespace Soda\Cms\Models;
 
+use Laratrust\LaratrustPermission;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Zizaco\Entrust\EntrustPermission;
 
-class Permission extends EntrustPermission
+class Permission extends LaratrustPermission
 {
     use OptionallyInApplicationTrait;
 }

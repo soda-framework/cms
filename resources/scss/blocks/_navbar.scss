@@ -19,4 +19,8 @@
       text-decoration: none;
     }
   }
+  .navbar-nav > li > a {
+    transition: background-color .25s ease, color .25s ease;
+    will-change: background
+  }
 }

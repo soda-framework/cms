@@ -1,5 +1,5 @@
 @section("field")
-	<div id="field_{{ $field_name}}">
+	<div id="{{ $field_id}}">
 		@foreach($field_parameters['options'] as $key => $option)
 			<div class="radio-inline">
 				<label>

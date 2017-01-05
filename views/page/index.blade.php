@@ -11,6 +11,12 @@
 	<title>Soda CMS | Pages</title>
 @endsection
 
+@section('content-heading-button')
+    @permission('create-pages')
+	    @include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#page_type_modal'])
+	@endpermission
+@stop
+
 @include(soda_cms_view_path('partials.heading'), [
     'icon'        => 'fa fa-file-o',
     'title'       => 'Pages',
@@ -19,11 +25,7 @@
 @section('content')
 	{!! $tree !!}
 
-	<a data-tree-add href="{{route('soda.'.$hint.'.create')}}" class="btn btn-primary btn-lg">
-		<i class="fa fa-plus"></i>
-		<span>Create Page</span>
-	</a>
-
+    @permission('create-pages')
 	<div class="modal fade" id="page_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -38,10 +40,6 @@
 							<label for="field_page_type">Page Type</label>
 
 							<select name="page_type_id" class="form-control" id="page_type_id">
-								<option value="">None</option>
-								@foreach($page_types as $page_type)
-									<option value="{{$page_type->id}}">{{$page_type->name}}</option>
-								@endforeach
 							</select>
 						</fieldset>
 					</div>
@@ -54,13 +52,52 @@
 		</div>
 	</div>
 	<script>
+	    var pageTypes = {!! json_encode($page_types->pluck('name', 'id')->prepend('None', 0), JSON_FORCE_OBJECT) !!};
+        var allowedSubpageTypes = {!! json_encode($page_types->keyBy('id')->transform(function($item) {
+            return $item->subpageTypes->pluck('id')->toArray();
+        })) !!};
+
 		$('[data-tree-add]').on('click', function(e){
 			e.preventDefault();
 			var modal = $('#page_type_modal');
 			var action = $(this).attr('href');
+			var pageType = $(this).data('tree-add');
+
+			var allowedSubpages = getAllowedSubpages(pageType);
+			var pageTypeSelector = $('select#page_type_id');
+
+            pageTypeSelector.empty();
+            $.each(allowedSubpages, function(id, name){
+                pageTypeSelector.append('<option value="' + id + '">' + name + '</option>');
+            });
 
 			$('form', modal).attr('action', action);
 			modal.modal('show');
 		});
+
+		function getAllowedSubpages(pageTypeId)
+        {
+            var allowedSubpages = allowedSubpageTypes[pageTypeId];
+            if(allowedSubpages && allowedSubpages.length) {
+                return filterByKeys(pageTypes, allowedSubpages);
+            }
+
+            return pageTypes;
+        }
+
+        // Avoid issues with `{hasOwnProperty: 5}`
+        var hasOwnProperty = ({}).hasOwnProperty;
+        function filterByKeys(obj, keep) {
+            var result = {};
+            for (var i = 0, len = keep.length; i < len; i++) {
+                var key = keep[i];
+                if (hasOwnProperty.call(obj, key)) {
+                    result[key] = obj[key];
+                }
+            }
+
+            return result;
+        };
 	</script>
+	@endpermission
 @endsection

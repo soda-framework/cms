@@ -4,11 +4,12 @@ namespace Soda\Cms\Providers;
 use Auth;
 use Illuminate\Support\ServiceProvider;
 use Request;
-use Soda\Cms\Components\Menu\MenuBuilder;
-use Soda\Cms\Components\Menu\MenuFactory;
-use Soda\Cms\Components\Menu\MenuRegistrar;
-use Soda\Cms\Components\Menu\SidebarMenuRenderer;
-use Soda\Cms\Facades\SodaMenuFacade;
+use Soda\Cms\Foundation\Menu\MenuBuilder;
+use Soda\Cms\Foundation\Menu\MenuFactory;
+use Soda\Cms\Foundation\Menu\MenuRegistrar;
+use Soda\Cms\Foundation\Menu\SidebarMenuRenderer;
+use Soda\Cms\Support\Facades\SodaMenuFacade;
+use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 use SodaMenu;
 
 class MenuServiceProvider extends ServiceProvider
@@ -95,14 +96,14 @@ class MenuServiceProvider extends ServiceProvider
             ]);
 
             $menu['Content Types']->addChild('Page Types', [
-                'url'         => route('soda.page_type'),
+                'url'         => route('soda.page-type'),
                 'label'       => 'Page Types',
                 'isCurrent'   => soda_request_is('page-types*'),
                 'permissions' => 'manage-page-types',
             ]);
 
             $menu['Content Types']->addChild('Block Types', [
-                'url'         => route('soda.block_type'),
+                'url'         => route('soda.block-type'),
                 'label'       => 'Block Types',
                 'isCurrent'   => soda_request_is('block-types*'),
                 'permissions' => 'manage-block-types',

@@ -2,9 +2,10 @@
 namespace Soda\Cms\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Components\Forms\FormBuilder;
-use Soda\Cms\Components\Forms\FormFieldRegistrar;
-use Soda\Cms\Facades\SodaFormFacade;
+use Soda\Cms\Foundation\Forms\FormBuilder;
+use Soda\Cms\Foundation\Forms\FormFieldRegistrar;
+use Soda\Cms\Support\Facades\SodaFormFacade;
+use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class FormServiceProvider extends ServiceProvider
 {
@@ -40,7 +41,7 @@ class FormServiceProvider extends ServiceProvider
             return new FormFieldRegistrar($app['config']->get('soda.fields'));
         });
 
-        $this->app->bind('soda.form', function ($app) {
+        $this->app->singleton('soda.form', function ($app) {
             return new FormBuilder($app['soda.form.registrar']);
         });
     }

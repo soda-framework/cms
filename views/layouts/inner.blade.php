@@ -12,6 +12,7 @@
 						@yield('content-heading')
 					</div>
 				</div>
+                @include(soda_cms_view_path('partials.alert'))
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="main-content-inner">

@@ -2,8 +2,9 @@
 namespace Soda\Cms\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Components\Pages\PageBuilder;
-use Soda\Cms\Facades\SodaPageFacade;
+use Soda\Cms\Foundation\Pages\PageBuilder;
+use Soda\Cms\Support\Facades\SodaPageFacade;
+use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class PageServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,9 @@ class PageServiceProvider extends ServiceProvider
         $this->registerFacades([
             'SodaPage' => SodaPageFacade::class,
         ]);
-        $this->app->bind('soda.page', PageBuilder::class);
+
+        $this->app->singleton('soda.page', function ($app) {
+            return new PageBuilder($app);
+        });
     }
 }

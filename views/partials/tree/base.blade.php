@@ -1,6 +1,6 @@
 <ul class="tree-view">
     @foreach($tree as $tree_item)
-        @include('soda::partials.tree.tree',['tree'=>$tree_item])
+        @include(soda_cms_view_path('partials.tree.tree'),['tree'=>$tree_item])
     @endforeach
 </ul>
 

@@ -10,7 +10,6 @@ class PageType extends AbstractDynamicType
 {
     use OptionallyInApplicationTrait, DraftableTrait;
 
-    protected $table = 'page_types';
     public $fillable = [
         'name',
         'identifier',
@@ -24,15 +23,21 @@ class PageType extends AbstractDynamicType
         'edit_action',
         'edit_action_type',
     ];
+    protected $table = 'page_types';
 
     public function fields()
     {
         return $this->morphToMany(Field::class, 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
     }
 
-    public function block()
+    public function blocks()
     {
-        return $this->hasMany(Block::class, 'block_type_id');
+        return $this->belongsToMany(Block::class, 'page_type_blocks')->withPivot('can_create', 'can_delete');
+    }
+
+    public function subpageTypes()
+    {
+        return $this->belongsToMany(PageType::class, 'page_type_subpage_types', 'page_type_id', 'subpage_type_id');
     }
 
     public function setIdentifierAttribute($value)

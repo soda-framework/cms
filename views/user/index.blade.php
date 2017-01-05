@@ -7,9 +7,13 @@
     </ol>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>Soda CMS | Users</title>
 @endsection
+
+@section('content-heading-button')
+    @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.'.$hint.'.create')])
+@stop
 
 @include(soda_cms_view_path('partials.heading'), [
     'icon'        => 'fa fa-users',
@@ -17,10 +21,11 @@
 ])
 
 @section('content')
-    {!! $filter !!}
-    {!! $grid !!}
-    <a class='btn btn-primary' href="{{route('soda.'.$hint.'.create')}}">
-        <i class="fa fa-users"></i>
-        <span>Create</span>
-    </a>
+    <div class="content-top">
+        {!! $filter !!}
+    </div>
+
+    <div class="content-block">
+        {!! $grid !!}
+    </div>
 @endsection

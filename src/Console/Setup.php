@@ -12,7 +12,6 @@ class Setup extends Command
 
     protected $signature = 'soda:setup {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
     protected $description = 'Initial setup command for the Soda Framework';
-    protected $except = [];
 
     public function handle()
     {
@@ -27,37 +26,42 @@ class Setup extends Command
 
     protected function updateEnv()
     {
-        $environment_file_path = base_path('.env');
+        $envFilePath = base_path('.env');
 
-        if (file_exists($environment_file_path)) {
-            $contents = file_get_contents($environment_file_path);
+        if (file_exists($envFilePath)) {
+            $contents = file_get_contents($envFilePath);
             if (!$this->option('no-database')) {
-                $base_name = str_slug(basename(base_path()));
-                if ($base_name == 'src') {
-                    $base_name = str_slug(basename(dirname(base_path())), '-');
+                $baseName = str_slug(basename(base_path()), '-');
+                if ($baseName == 'src') {
+                    $baseName = str_slug(basename(dirname(base_path())), '-');
                 }
-                $db_host = $this->ask('Database host', 'localhost');
-                $db_name = $this->ask('Database name', $base_name);
-                $db_user = $this->ask('Database user', 'root');
-                $db_pass = $this->ask('Database password', false);
+                $dbHost = $this->ask('Database host', '127.0.0.1');
+                $dbPort = $this->ask('Database port', '3306');
+                $dbName = $this->ask('Database name', $baseName);
+                $dbUser = $this->ask('Database user', 'root');
+                $dbPass = $this->ask('Database password', false);
 
-                $contents = preg_replace('/DB_HOST=(.*)/', 'DB_HOST='.$db_host, $contents);
-                $contents = preg_replace('/DB_DATABASE=(.*)/', 'DB_DATABASE='.$db_name, $contents);
-                $contents = preg_replace('/DB_USERNAME=(.*)/', 'DB_USERNAME='.$db_user, $contents);
-                $contents = preg_replace('/DB_PASSWORD=(.*)/', 'DB_PASSWORD='.$db_pass, $contents);
+                $contents = preg_replace('/DB_HOST=(.*)/', 'DB_HOST='.$dbHost, $contents);
+                $contents = preg_replace('/DB_PORT=(.*)/', 'DB_PORT='.$dbPort, $contents);
+                $contents = preg_replace('/DB_DATABASE=(.*)/', 'DB_DATABASE='.$dbName, $contents);
+                $contents = preg_replace('/DB_USERNAME=(.*)/', 'DB_USERNAME='.$dbUser, $contents);
+                $contents = preg_replace('/DB_PASSWORD=(.*)/', 'DB_PASSWORD='.$dbPass, $contents);
 
-                Config::set('database.connections.mysql.host', $db_host);
-                Config::set('database.connections.mysql.database', $db_name);
-                Config::set('database.connections.mysql.username', $db_user);
-                Config::set('database.connections.mysql.password', $db_pass);
+                file_put_contents($envFilePath, $contents);
 
-                $connection = new PDO("mysql:host={$db_host}", $db_user, $db_pass);
-                $connection->exec("CREATE DATABASE IF NOT EXISTS `{$db_name}`");
+                Config::set('database.connections.mysql.host', $dbHost);
+                Config::set('database.connections.mysql.port', $dbPort);
+                Config::set('database.connections.mysql.database', null);
+                Config::set('database.connections.mysql.username', $dbUser);
+                Config::set('database.connections.mysql.password', $dbPass);
+
+                DB::purge('mysql');
+
+                DB::connection('mysql')->getPdo()->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}`");
             }
 
-            $contents = str_replace('CACHE_DRIVER=file', 'CACHE_DRIVER=array', $contents);
             $contents = str_replace('SESSION_DRIVER=file', 'SESSION_DRIVER=database', $contents);
-            file_put_contents($environment_file_path, $contents);
+            file_put_contents($envFilePath, $contents);
         }
     }
 

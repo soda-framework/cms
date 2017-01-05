@@ -6,11 +6,11 @@ Install easily using the[Soda Installer](https://github.com/soda-framework/insta
 
 #### 1. Create new Laravel Project
 
-`composer create-project --prefer-dist laravel/laravel app-name "5.2.*"`
+`composer create-project --prefer-dist laravel/laravel app-name "5.3.*"`
 
 or
 
-`laravel new app-name --5.2`
+`laravel new app-name`
 
 #### 2. Require Soda Framework
 
@@ -32,7 +32,7 @@ Add package to providers in `/config/app.php`
 
 `php artisan soda:setup`
 
-or, manually set up database in your `.env` file. Ensure `CACHE_DRIVER` is set to `array`, or a key-store system.
+or, manually set up database in your `.env` file.
 
 #### 5. Migrate & Seed
 

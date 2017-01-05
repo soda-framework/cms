@@ -46,10 +46,12 @@
 // Utility classes
 @import "../components/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
 @import "../components/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
-@import "../components/bootstrap-fileinput/css/fileinput";
+@import "../components/bootstrap-fileinput/sass/fileinput";
+//@import "../components/bootstrap-select/sass/bootstrap-select";
 //@import "../components/bootstrap-tagsinput/dist/bootstrap-tagsinput";
 @import "../components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css";
 @import "../components/select2/src/scss/core";
+@import "../components/select2-bootstrap-theme/src/select2-bootstrap.scss";
 @import "../components/font-awesome/scss/font-awesome";
 
 @import "helpers";
@@ -64,7 +66,9 @@
 @import "elements/dropdown-menu";
 @import "elements/form";
 @import "elements/json-editor";
+@import "elements/nav-tabs";
 @import "elements/table";
+@import "elements/text";
 @import "elements/tree";
 
 @import "pages/auth";

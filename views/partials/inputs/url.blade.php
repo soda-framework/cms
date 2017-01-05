@@ -5,7 +5,7 @@
 		<option value="3620194" selected="selected">select2/select2</option>
 	</select>
 
-	<input name="{{ $prefixed_field_name }}" id="field_{{ $field_name }}" type="text"
+	<input name="{{ $prefixed_field_name }}" id="{{ $field_id }}" type="text"
 		   class="form-control field_{{ $field_name }} {{ $field_name }} js-example-basic-single"
 		   value="{{ $field_value }}"/>
 @overwrite

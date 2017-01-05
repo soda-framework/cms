@@ -12,7 +12,6 @@ use Soda\Cms\Console\Update;
 
 class CommandsServiceProvider extends ServiceProvider
 {
-    use SodaServiceProviderTrait;
     /**
      * Indicates if loading of the provider is deferred.
      *

@@ -5,19 +5,18 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda;
-use Soda\Cms\Components\Status;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 use Soda\Cms\Models\Traits\PositionableTrait;
 use Soda\Cms\Models\Traits\SluggableTrait;
 use Soda\Cms\Models\Traits\TreeableTrait;
+use Soda\Cms\Support\Constants;
 
 class Page extends AbstractSodaClosureEntity
 {
     use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait, HasDynamicModelTrait;
 
-    protected $table = 'pages';
     public $fillable = [
         'name',
         'slug',
@@ -32,8 +31,9 @@ class Page extends AbstractSodaClosureEntity
         'edit_action',
         'edit_action_type',
     ];
-
+    protected $table = 'pages';
     protected $pageAttributes;
+    public $timestamps = true;
 
     /**
      * ClosureTable model instance.
@@ -50,8 +50,17 @@ class Page extends AbstractSodaClosureEntity
             'application_id' => Soda::getApplication()->id,
             'position'       => 0,
             'real_depth'     => 0,
-            'status'         => Status::LIVE,
+            'status'         => Constants::STATUS_LIVE,
         ]);
+    }
+
+    public static function hasFieldsOrBlocks($page)
+    {
+        if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())) {
+            return true;
+        }
+
+        return false;
     }
 
     public function type()
@@ -103,19 +112,18 @@ class Page extends AbstractSodaClosureEntity
         $this->attributes['identifier'] = str_slug($value);
     }
 
-    public static function hasFieldsOrBlocks($page)
-    {
-        if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function pageAttributes()
     {
         if (!$this->pageAttributes) {
-            $this->loadPageAttributes();
+            if ($ttl = config('soda.cache.page-data')) {
+                $attributes = \Cache::remember(static::getDataCacheKey($this->id), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
+                    return $this->loadPageAttributes();
+                });
+            } else {
+                $attributes = $this->loadPageAttributes();
+            }
+
+            $this->setPageAttributes($attributes);
         }
 
         return $this->pageAttributes;
@@ -128,13 +136,18 @@ class Page extends AbstractSodaClosureEntity
         return $this;
     }
 
+    public function getRelatedField()
+    {
+        return 'page_id';
+    }
+
     protected function loadPageAttributes()
     {
-        if (!$this->type) {
+        if (!$this->relationLoaded('type')) {
             $this->load('type');
         }
 
-        if (!$this->type) {
+        if (!$this->relationLoaded('type')) {
             $model = new ModelBuilder;
         } else {
             $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
@@ -144,11 +157,11 @@ class Page extends AbstractSodaClosureEntity
             }
         }
 
-        return $this->setPageAttributes($model);
+        return $model;
     }
 
-    public function getRelatedField()
+    public static function getDataCacheKey($pageId)
     {
-        return 'page_id';
+        return 'soda.'.\Soda::getApplication()->id.'.page.'.$pageId.'.data';
     }
 }

@@ -2,9 +2,10 @@
 
 namespace Soda\Cms\Models\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Session;
-use Soda\Cms\Components\Status;
+use Soda\Cms\Support\Constants;
 
 trait DraftableTrait
 {
@@ -17,16 +18,15 @@ trait DraftableTrait
     {
         static::addGlobalScope('published', function (Builder $builder) {
             if (static::isDraftsEnabled()) {
-                return $builder->where('status', '=', Status::LIVE);
+                $builder->where('status', '=', Constants::STATUS_LIVE);
+
+                if(isset(static::$publishDateField)) {
+                    $builder->where(static::$publishDateField, '<', Carbon::now());
+                }
             }
 
             return $builder;
         });
-    }
-
-    protected static function isDraftsEnabled()
-    {
-        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
     }
 
     public static function enableDrafts()
@@ -37,5 +37,10 @@ trait DraftableTrait
     public static function disableDrafts()
     {
         static::$drafts = false;
+    }
+
+    protected static function isDraftsEnabled()
+    {
+        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
     }
 }

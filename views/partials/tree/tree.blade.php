@@ -5,7 +5,7 @@
             <img src="/soda/cms/img/drag-dots.gif" />
         </span>
         <span class="item-status">
-            <span class="{{ $tree->status == \Soda\Cms\Components\Status::DRAFT ? 'inactive' : 'active' }}-circle"></span>
+            <span class="{{ $tree->status == \Soda\Cms\Support\Constants::STATUS_DRAFT ? 'inactive' : 'active' }}-circle"></span>
         </span>
         <a class="item-title" href="{{ route('soda.'.$hint.'.view', ['id'=>$tree->id]) }}">
             <span>{{ $tree->name }}</span>
@@ -19,19 +19,25 @@
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
                 <ul class="dropdown-menu">
+                    @permission('create-pages')
                     <li>
-                        <a data-tree-add href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
+                        <a data-tree-add="{{ $tree->page_type_id }}" href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
                     </li>
+                    @endpermission
+                    @permission('edit-pages')
                     <li>
                         <a href="{{ route('soda.'.$hint.'.view', ['id'=>$tree->id]) }}">Edit Page</a>
                     </li>
+                    @endpermission
                     <li>
                         <a href="{{ $tree->slug }}" target="_blank" data-tree-link>View page</a>
                     </li>
+                    @permission('delete-pages')
                     <li class="divider"></li>
                     <li class="warning">
                         <a data-tree-delete href="{{ route('soda.'.$hint.'.delete', ['id' => $tree->id]) }}">Delete</a>
                     </li><!--v-if-->
+                    @endpermission
                 </ul>
             </div>
         </div>
@@ -40,7 +46,7 @@
     <ul class="tree-sub-items">
         @if ($tree->hasChildrenRelation() && count($tree->children) > 0)
             @foreach($tree->children as $child)
-                @include('soda::partials.tree.tree', ['tree' => $child, 'display' => 'none'])
+                @include(soda_cms_view_path('partials.tree.tree'), ['tree' => $child, 'display' => 'none'])
             @endforeach
         @endif
     </ul>

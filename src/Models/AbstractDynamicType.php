@@ -12,6 +12,11 @@ use SodaForm;
 
 abstract class AbstractDynamicType extends Model
 {
+    public static function bootDynamicCreatorTrait()
+    {
+        static::observe(DynamicObserver::class);
+    }
+
     public function getDynamicType()
     {
         $table = $this->getTable();
@@ -22,11 +27,6 @@ abstract class AbstractDynamicType extends Model
     public function getDynamicTableName()
     {
         return 'soda_'.str_slug($this->identifier, '_');
-    }
-
-    public static function bootDynamicCreatorTrait()
-    {
-        static::observe(DynamicObserver::class);
     }
 
     public function createTable()
@@ -42,18 +42,6 @@ abstract class AbstractDynamicType extends Model
         }
 
         return $this;
-    }
-
-    protected function buildDynamicTable(Blueprint $table)
-    {
-        $reference_column = $this->getDynamicType().'_id';
-        $reference_table = $this->getDynamicType().'s';
-        $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
-
-        $table->increments('id');
-        $table->integer($reference_column)->unsigned()->nullable();
-        $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
-        $table->timestamps();
     }
 
     public function deleteTable()
@@ -117,5 +105,17 @@ abstract class AbstractDynamicType extends Model
     public function syncFields()
     {
         // todo
+    }
+
+    protected function buildDynamicTable(Blueprint $table)
+    {
+        $reference_column = $this->getDynamicType().'_id';
+        $reference_table = $this->getDynamicType().'s';
+        $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
+
+        $table->increments('id');
+        $table->integer($reference_column)->unsigned()->nullable();
+        $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
+        $table->timestamps();
     }
 }

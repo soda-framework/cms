@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Classes reorganised
+
+## [0.4.0] - 2016-10-06
+### Upgraded
+- Upgraded to Laravel 5.3
+
+### Fixed
+- Absolute paths to '/cms' removed
 
 ## [0.3.14] - 2016-10-12
 ### Changed

@@ -12,26 +12,18 @@ use Soda;
  */
 class ModelBuilder extends Model
 {
-    public $table;
     protected static $lastTable;
+    public $table;
     protected $fillable = [];
     protected $guarded = [];
+
     //public $index_fields = [];
 
     public function __construct($params = [])
     {
-        if ($params) {
-            $this->fillable = array_keys($params);
-        }
-
         $this->table = static::$lastTable;
 
         parent::__construct($params);
-    }
-
-    public function media()
-    {
-        return $this->hasMany(Media::class, 'related_id')->where('related_table', $this->getTable());
     }
 
     public static function fromTable($table, $params = [])
@@ -45,6 +37,16 @@ class ModelBuilder extends Model
         return $model->setTable($table);
     }
 
+    public function media()
+    {
+        return $this->hasMany(Media::class, 'related_id')->where('related_table', $this->getTable());
+    }
+
+    public function getTable()
+    {
+        return $this->table;
+    }
+
     public function setTable($table)
     {
         $this->table = $table;
@@ -53,14 +55,11 @@ class ModelBuilder extends Model
         return $this;
     }
 
-    public function getTable()
-    {
-        return $this->table;
-    }
-
-    public function parseField(Field $field, Request $request)
+    public function parseField(Field $field, Request $request, $prefix = null)
     {
         $field = Soda::getFormBuilder()->field($field);
+
+        if($prefix) $field->setPrefix($prefix);
 
         $field->saveToModel($this, $request);
 

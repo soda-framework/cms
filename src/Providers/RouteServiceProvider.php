@@ -4,11 +4,12 @@ namespace Soda\Cms\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
-use Soda\Cms\Middleware\Authenticate;
-use Soda\Cms\Middleware\Cms;
-use Zizaco\Entrust\Middleware\EntrustAbility;
-use Zizaco\Entrust\Middleware\EntrustPermission;
-use Zizaco\Entrust\Middleware\EntrustRole;
+use Soda\Cms\Http\Middleware\HasAbility;
+use Soda\Cms\Http\Middleware\HasPermission;
+use Soda\Cms\Http\Middleware\HasRole;
+use Soda\Cms\Http\Middleware\Authenticate;
+use Soda\Cms\Http\Middleware\Cms;
+use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -19,24 +20,24 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'Soda\Cms\Controllers';
+    protected $namespace = 'Soda\Cms\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router $router
-     *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
-        $router->middleware('soda.main', Cms::class);
-        $router->middleware('soda.auth', Authenticate::class);
-        $router->middleware('role', EntrustRole::class);
-        $router->middleware('permission', EntrustPermission::class);
-        $router->middleware('ability', EntrustAbility::class);
+        $this->app['router']->middleware('soda.main', Cms::class);
+        $this->app['router']->middleware('soda.auth', Authenticate::class);
+        $this->app['router']->middleware('soda.guest', RedirectIfAuthenticated::class);
 
-        parent::boot($router);
+        $this->app['router']->middleware('soda.role', HasRole::class);
+        $this->app['router']->middleware('soda.permission', HasPermission::class);
+        $this->app['router']->middleware('soda.ability', HasAbility::class);
+
+        parent::boot();
     }
 
     /**
@@ -49,7 +50,11 @@ class RouteServiceProvider extends ServiceProvider
     public function map(Router $router)
     {
         $router->group(['namespace' => $this->namespace], function ($router) {
-            require(__DIR__.'/../routes.php');
+            require(__DIR__.'/../../routes/web.php');
         });
+
+        $router->getRoutes()->refreshNameLookups();
+
+        $this->app->events->fire('soda.routing', $this->app->router);
     }
 }

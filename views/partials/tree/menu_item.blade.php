@@ -5,7 +5,7 @@
 	@if (@$tree->subnodes && $tree->subnodes !== null && $tree->subnodes->count() > 0)
 	<ul>
 		@foreach($tree->subnodes as $child)
-			@include('soda::partials.tree.menu_item', ['tree'=>$child])
+			@include(soda_cms_view_path('partials.tree.menu_item'), ['tree'=>$child])
 		@endforeach
 	</ul>
 	@endif

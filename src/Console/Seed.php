@@ -7,9 +7,8 @@ use Illuminate\Console\Command;
 class Seed extends Command
 {
 
-    protected $signature = 'soda:seed {--class=SodaSeeder : The class name of the root seeder}';
+    protected $signature = 'soda:seed {--class=SeedAll : The class name of the root seeder}';
     protected $description = 'Seed the Soda Database';
-    protected $except = [];
 
     /**
      * Runs seeds for Soda CMS, defaulting to 'SodaSeeder'
@@ -17,7 +16,7 @@ class Seed extends Command
     public function handle()
     {
         $this->call('db:seed', [
-            '--class' => $this->option('class'),
+            '--class' => 'Soda\\Cms\\Seeds\\'.$this->option('class'),
         ]);
     }
 }

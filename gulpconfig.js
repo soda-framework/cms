@@ -82,10 +82,15 @@ module.exports = {
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
         ],
+        extra: [
+            'resources/components/jquery-ui/jquery-ui.js',
+        ],
         forms: [
             'resources/components/bootstrap-fileinput/js/fileinput.js',
             'resources/components/bootstrap-fileinput/themes/fa/fa.js',
             'resources/components/jquery-sortable/source/js/jquery-sortable.js',
+            //'resources/components/bootstrap-select/js/bootstrap-select.js',
+            'resources/components/select2/dist/js/select2.full.min.js',
             'resources/components/moment/min/moment.min.js',
             'resources/components/select2/dist/js/select2.full.min.js',
             'resources/components/jsoneditor/dist/jsoneditor.min.js',

@@ -2,7 +2,10 @@
 namespace Soda\Cms\Providers;
 
 use Franzose\ClosureTable\ClosureTableServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Laratrust\LaratrustFacade;
+use Laratrust\LaratrustServiceProvider;
 use Soda\Cms\Models\Block;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Observers\BlockObserver;
@@ -13,8 +16,7 @@ use Soda\Cms\Models\PageType;
 use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
-use Zizaco\Entrust\EntrustFacade;
-use Zizaco\Entrust\EntrustServiceProvider;
+use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class EloquentServiceProvider extends ServiceProvider
 {
@@ -35,6 +37,12 @@ class EloquentServiceProvider extends ServiceProvider
     {
         $this->configure();
         $this->bootObservers();
+
+        Relation::morphMap([
+            'PageType'  => PageType::class,
+            'BlockType' => BlockType::class,
+            'SodaUser'  => User::class,
+        ]);
     }
 
     /**
@@ -47,11 +55,11 @@ class EloquentServiceProvider extends ServiceProvider
 
         $this->registerDependencies([
             ClosureTableServiceProvider::class,
-            EntrustServiceProvider::class,
+            LaratrustServiceProvider::class,
         ]);
 
         $this->registerFacades([
-            'Entrust' => EntrustFacade::class,
+            'Laratrust' => LaratrustFacade::class,
         ]);
     }
 
@@ -65,24 +73,7 @@ class EloquentServiceProvider extends ServiceProvider
 
     protected function configure()
     {
-        $this->app->config->set('entrust.role', Role::class);
-        $this->app->config->set('entrust.permission', Permission::class);
-
-        $this->app->config->set('auth.providers.soda', [
-            'driver' => 'eloquent',
-            'model'  => User::class,
-        ]);
-
-        $this->app->config->set('auth.guards.soda', [
-            'driver'   => 'session',
-            'provider' => 'soda',
-        ]);
-
-        $this->app->config->set('auth.passwords.soda', [
-            'provider' => 'soda',
-            'email'    => 'auth.emails.password',
-            'table'    => 'password_resets',
-            'expire'   => 60,
-        ]);
+        $this->app->config->set('laratrust.role', Role::class);
+        $this->app->config->set('laratrust.permission', Permission::class);
     }
 }
