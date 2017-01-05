@@ -13,7 +13,7 @@ class RelationshipGroup extends Relationship
     public function getDefaultParameters()
     {
         return [
-            'options'              => $this->loadRelationship(),
+            'options'              => [],
             'key_column'           => 'id',
             'value_column'         => 'id',
             'group_column'         => null,
@@ -39,12 +39,17 @@ class RelationshipGroup extends Relationship
      */
     protected function getRelationshipArray($query, $field_parameters)
     {
-        $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
-        $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
-        $group = $field_parameters['group_column'];
+        // Relationship data is stored to prevent re-querying
+        if(!$this->relationshipData) {
+            $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
+            $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
+            $group = $field_parameters['group_column'];
 
-        return $query->get([$group, $value_column, $key_column])->groupBy($group)->transform(function ($item) use ($value_column, $key_column) {
-            return $item->pluck($value_column, $key_column);
-        })->toArray();
+            $this->relationshipData = $query->get([$group, $value_column, $key_column])->groupBy($group)->transform(function ($item) use ($value_column, $key_column) {
+                return $item->pluck($value_column, $key_column);
+            })->toArray();
+        }
+
+        return $this->relationshipData;
     }
 }

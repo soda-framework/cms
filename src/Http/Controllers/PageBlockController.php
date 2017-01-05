@@ -25,7 +25,7 @@ class PageBlockController extends BaseController
 
         $block = $this->page ? $this->page->blocks() : new Block;
         $this->block = $block->with('type', 'type.fields')->where('identifier', $type)->first();
-        $this->model = Soda::model($this->block->type->identifier, $this->block->type->fields->pluck('field_name')->toArray());
+        $this->model = Soda::model($this->block->type->identifier);
     }
 
     public function index()

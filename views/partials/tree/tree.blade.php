@@ -21,7 +21,7 @@
                 <ul class="dropdown-menu">
                     @permission('create-pages')
                     <li>
-                        <a data-tree-add href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
+                        <a data-tree-add="{{ $tree->page_type_id }}" href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
                     </li>
                     @endpermission
                     @permission('edit-pages')

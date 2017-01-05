@@ -52,7 +52,7 @@ class PageController extends BaseController
             if (!$page) $page = Page::createRoot();
         }
 
-        $page_types = PageType::get();
+        $page_types = PageType::with('subpageTypes')->get(['id', 'name']);
 
         $pages = $page ? $page->collectDescendants()->orderBy('position')->get()->toTree() : [];
         $tree = $this->htmlTree($pages, $this->hint);
@@ -68,9 +68,9 @@ class PageController extends BaseController
     public function view($id)
     {
         if ($id) {
-            $model = $this->model->with('blocks.type.fields', 'type.fields')->findOrFail($id);
+            $model = $this->model->with('blocks.type.fields', 'type.blocks.type.fields', 'type.fields')->findOrFail($id);
         } else {
-            $model = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
+            $model = $this->model->with('blocks.type.fields', 'type.blocks.type.fields', 'type.fields')->getRoots()->first();
         }
         if (@$model->type->identifier) {
             $page_table = Soda::dynamicModel('soda_'.$model->type->identifier,
@@ -112,6 +112,13 @@ class PageController extends BaseController
     public function create(Request $request, $parentId = null)
     {
         $parent = $parentId ? $this->model->find($parentId) : $this->model->getRoots()->first();
+
+        if($parent->type) {
+            $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
+            if(count($allowedPageTypes) && !in_array($request->input('page_type_id'), $allowedPageTypes)) {
+                return redirect()->back()->with('danger', 'You cannot create a page of this type here');
+            }
+        }
 
         $this->model->parent_id = $parent ? $parent->id : null;
         $this->model->page_type_id = $request->input('page_type_id');

@@ -3,6 +3,11 @@ $smallView = false;
 if (!$model->type || !count($model->type->fields)) {
     $smallView = true;
 }
+
+$blocks = $model->blocks->keyBy('block_id');
+if($model->type && $model->type->blocks) {
+    $blocks->merge($model->type->blocks->keyBy('block_id'));
+}
 ?>
 
 @extends(soda_cms_view_path('layouts.inner'))
@@ -143,7 +148,7 @@ if (!$model->type || !count($model->type->fields)) {
             <a role="tab" data-toggle="tab" href="#tab_page_settings">Settings</a>
         </li>
 
-        @foreach($model->blocks as $block)
+        @foreach($blocks as $block)
             @if($block->type->edit_action_type == 'view')
                 <li role='presentation' aria-controls="block_{{ $block->id }}">
                     <a role="tab" data-toggle="tab" href="#tab_block_{{ $block->id }}">{{ $block->name }}</a>
@@ -174,7 +179,7 @@ if (!$model->type || !count($model->type->fields)) {
             <div class="tab-pane" id="tab_page_settings" role="tabpanel">
                 @yield('tab.settings')
             </div>
-            @foreach($model->blocks as $block)
+            @foreach($blocks as $block)
                 @if($block->type->edit_action_type == 'view')
                     <div class="tab-pane" id="tab_block_{{ $block->id }}" role="tabpanel">
                         <div class="content-block">

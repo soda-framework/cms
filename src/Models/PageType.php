@@ -30,9 +30,14 @@ class PageType extends AbstractDynamicType
         return $this->morphToMany(Field::class, 'fieldable')->withPivot('position')->orderBy('pivot_position', 'asc');
     }
 
-    public function block()
+    public function blocks()
     {
-        return $this->hasMany(Block::class, 'block_type_id');
+        return $this->belongsToMany(Block::class, 'page_type_blocks')->withPivot('can_create', 'can_delete');
+    }
+
+    public function subpageTypes()
+    {
+        return $this->belongsToMany(PageType::class, 'page_type_subpage_types', 'page_type_id', 'subpage_type_id');
     }
 
     public function setIdentifierAttribute($value)
