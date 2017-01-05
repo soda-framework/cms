@@ -58,7 +58,7 @@ class Page extends AbstractSodaClosureEntity
 
     public static function hasFieldsOrBlocks($page)
     {
-        if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())) {
+        if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count()) || (@$page->type->blocks && @$page->type->blocks->count())) {
             return true;
         }
 
@@ -77,9 +77,17 @@ class Page extends AbstractSodaClosureEntity
 
     public function getBlock($identifier)
     {
-        return $this->blocks->filter(function ($item) use ($identifier) {
+        $block = $this->blocks->filter(function ($item) use ($identifier) {
             return $item->identifier == $identifier;
         })->first();
+
+        if(!$block) {
+            $block = $this->type->blocks->filter(function ($item) use ($identifier) {
+                return $item->identifier == $identifier;
+            })->first();
+        }
+
+        return $block;
     }
 
     public function getBlockModel($identifier)
