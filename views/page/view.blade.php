@@ -4,9 +4,9 @@ if (!$model->type || !count($model->type->fields)) {
     $smallView = true;
 }
 
-$blocks = $model->blocks->keyBy('block_id');
+$blocks = $model->blocks->keyBy('id');
 if($model->type && $model->type->blocks) {
-    $blocks->merge($model->type->blocks->keyBy('block_id'));
+    $blocks = $blocks->merge($model->type->blocks->keyBy('id'));
 }
 ?>
 
