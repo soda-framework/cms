@@ -23,8 +23,7 @@ class PageBlockController extends BaseController
         $page_id = Route::current()->getParameter('page_id');
         $this->page = $page_id ? Page::findOrFail($page_id) : new Page;
 
-        $block = $this->page ? $this->page->blocks() : new Block;
-        $this->block = $block->with('type', 'type.fields')->where('identifier', $type)->first();
+        $this->block = Block::with('type', 'type.fields')->where('identifier', $type)->first();
         $this->model = Soda::model($this->block->type->identifier);
     }
 
