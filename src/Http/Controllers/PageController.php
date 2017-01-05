@@ -109,7 +109,7 @@ class PageController extends BaseController
 
     public function create(Request $request, $parentId = null)
     {
-        $parent = $parentId ? $this->model->with('type')->find($parentId) : $this->model->getRoots()->with('type')->first();
+        $parent = $parentId ? $this->model->with('type')->find($parentId) : $this->model->with('type')->getRoots()->first();
 
         if($parent->type) {
             $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
