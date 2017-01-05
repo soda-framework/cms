@@ -43,18 +43,15 @@ class PageController extends BaseController
      *
      * @return Response
      */
-    public function getIndex(Request $request)
+    public function getIndex()
     {
-        if ($request->input('id')) {
-            $page = $this->model->find($request->input('id'));
-        } else {
-            $page = $this->model->getRoots()->first();    //todo: from application.
-            if (!$page) $page = Page::createRoot();
-        }
+        $root = $this->model->getRoots()->first();    //todo: from application.
+        if (!$root) $root = Page::createRoot();
 
-        $page_types = PageType::with('subpageTypes')->get(['id', 'name']);
+        $page_types = PageType::with('subpageTypes')->where('can_create', 1)->get(['id', 'name']);
 
-        $pages = $page ? $page->collectDescendants()->orderBy('position')->get()->toTree() : [];
+        $pages = $root ? $root->collectDescendants()->orderBy('position')->get()->toTree() : [];
+
         $tree = $this->htmlTree($pages, $this->hint);
 
         return soda_cms_view('page.index', [
@@ -62,6 +59,7 @@ class PageController extends BaseController
             'pages'      => $pages,
             'tree'       => $tree,
             'page_types' => $page_types,
+            'root'       => $root,
         ]);
     }
 
@@ -111,13 +109,18 @@ class PageController extends BaseController
 
     public function create(Request $request, $parentId = null)
     {
-        $parent = $parentId ? $this->model->find($parentId) : $this->model->getRoots()->first();
+        $parent = $parentId ? $this->model->with('type')->find($parentId) : $this->model->getRoots()->with('type')->first();
 
         if($parent->type) {
             $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
-            if(count($allowedPageTypes) && !in_array($request->input('page_type_id'), $allowedPageTypes)) {
+            if(!$parent->type->can_create || count($allowedPageTypes) && !in_array($request->input('page_type_id'), $allowedPageTypes)) {
                 return redirect()->back()->with('danger', 'You cannot create a page of this type here');
             }
+        }
+
+        if(!$parent->allowed_children)
+        {
+            return redirect()->back()->with('danger', 'You cannot create a subpage here');
         }
 
         $this->model->parent_id = $parent ? $parent->id : null;
@@ -131,6 +134,7 @@ class PageController extends BaseController
                     'action_type'      => $this->model->type->action_type,
                     'edit_action'      => $this->model->type->edit_action,
                     'edit_action_type' => $this->model->type->edit_action_type,
+                    'allowed_children' => $this->model->type->allowed_children
                 ]);
             }
         }

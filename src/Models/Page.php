@@ -30,6 +30,8 @@ class Page extends AbstractSodaClosureEntity
         'action_type',
         'edit_action',
         'edit_action_type',
+        'can_delete',
+        'allowed_children',
     ];
     protected $table = 'pages';
     protected $pageAttributes;

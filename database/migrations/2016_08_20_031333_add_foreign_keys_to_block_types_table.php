@@ -14,7 +14,7 @@ class AddForeignKeysToBlockTypesTable extends Migration
     public function up()
     {
         Schema::table('block_types', function (Blueprint $table) {
-            $table->foreign('application_id', 'FK_block_types_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('application_id', 'FK_block_types_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('SET NULL');
         });
     }
 

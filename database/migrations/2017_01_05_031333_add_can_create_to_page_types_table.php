@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToPageTypesTable extends Migration
+class AddCanCreateToPageTypesTable extends Migration
 {
 
     /**
@@ -14,7 +14,7 @@ class AddForeignKeysToPageTypesTable extends Migration
     public function up()
     {
         Schema::table('page_types', function (Blueprint $table) {
-            $table->foreign('application_id', 'FK_page_types_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->integer('can_create')->unsigned()->nullable()->after('identifier')->default(1);
         });
     }
 
@@ -26,7 +26,7 @@ class AddForeignKeysToPageTypesTable extends Migration
     public function down()
     {
         Schema::table('page_types', function (Blueprint $table) {
-            $table->dropForeign('FK_page_types_applications');
+            $table->dropColumn('can_create');
         });
     }
 

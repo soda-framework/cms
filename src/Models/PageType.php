@@ -22,6 +22,8 @@ class PageType extends AbstractDynamicType
         'action_type',
         'edit_action',
         'edit_action_type',
+        'allowed_children',
+        'can_create',
     ];
     protected $table = 'page_types';
 

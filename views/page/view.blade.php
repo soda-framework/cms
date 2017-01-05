@@ -98,6 +98,22 @@ if($model->type && $model->type->blocks) {
         <p>Advanced page settings</p>
         <hr/>
 
+        {!! SodaForm::toggle([
+            'name'         => 'Prevent delete',
+            'field_name'   => 'can_delete',
+            'value'        => 1,
+            'field_params' => ['checked-value' => 0, 'unchecked-value' => 1],
+            'description'  => 'If enabled, this page can not be deleted'
+        ])->setModel($model) !!}
+
+        {!! SodaForm::toggle([
+            'name'         => 'Allowed Children',
+            'field_name'   => 'allowed_children',
+            'value'        => 1,
+            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+            'description'  => 'If enabled, this page can have child pages'
+        ])->setModel($model) !!}
+
         {!! SodaForm::text([
             'name'        => 'Package Prefix',
             'field_name'  => 'package',
