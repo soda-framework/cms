@@ -14,6 +14,7 @@ use Soda\Cms\Database\Permissions\PermissionServiceProvider;
 use Soda\Cms\Database\Roles\RoleServiceProvider;
 use Soda\Cms\Database\Users\UserServiceProvider;
 use Soda\Cms\Forms\FormServiceProvider;
+use Soda\Cms\Foundation\DraftingHandler;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
 use Soda\Cms\Foundation\Providers\EventServiceProvider;
 use Soda\Cms\Foundation\Providers\RouteServiceProvider;
@@ -70,6 +71,9 @@ class SodaServiceProvider extends ServiceProvider
     {
         require_once(__DIR__.'/Foundation/helpers.php');
 
+        // Override Zofe DataSet
+        class_alias('Soda\Cms\Foundation\DataSet', 'Zofe\Rapyd\DataSet');
+
         $this->mergeConfigFrom(__DIR__.'/../config/publish/cms.php', 'soda.cms');
         $this->mergeConfigFrom(__DIR__.'/../config/publish/cache.php', 'soda.cache');
         $this->mergeConfigFrom(__DIR__.'/../config/publish/upload.php', 'soda.upload');
@@ -109,6 +113,10 @@ class SodaServiceProvider extends ServiceProvider
 
         $this->app->singleton('soda', function ($app) {
             return new SodaInstance($app);
+        });
+
+        $this->app->singleton('soda.drafting', function ($app) {
+            return new DraftingHandler();
         });
     }
 

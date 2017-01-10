@@ -37,12 +37,22 @@ class ApplicationRepository implements ApplicationRepositoryInterface
     public function findByUrl($url)
     {
         $domain = str_replace('www.', '', $url);
+        $application = [
+            'url'         => null,
+            'application' => null,
+        ];
 
         if ($url = $this->urlModel->where('domain', $domain)->first()) {
-            return $this->findById($url->getAttribute('application_id'));
+            $application['url'] = $url;
+
+            $applicationModel = $this->findById($url->getAttribute('application_id'));
+
+            if($applicationModel) {
+                $application['application'] = $applicationModel;
+            }
         }
 
-        return null;
+        return $application;
     }
 
     public function save(Request $request, $id = null)
@@ -56,13 +66,11 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         }
 
         if ($request->has('settings')) {
-            if(!$model->relationLoaded('settings'))
-            {
+            if (!$model->relationLoaded('settings')) {
                 $model->load('settings');
             }
 
-            foreach($model->getRelation('settings') as $setting)
-            {
+            foreach ($model->getRelation('settings') as $setting) {
                 $setting->parseField($request);
                 $setting->save();
             }

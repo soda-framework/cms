@@ -9,7 +9,7 @@ class Slug extends Text
     public function getDefaultParameters()
     {
         return [
-            'allow-external' => false,
+            'allow-external' => true,
             'from'           => '#field_name',
             'prefix'         => '',
         ];

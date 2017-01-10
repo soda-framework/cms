@@ -11,6 +11,13 @@ use Soda\Cms\Forms\Fields\FormFieldInterface;
 abstract class AbstractFormField implements FormFieldInterface
 {
 
+    /*
+     * Unique identifier for the field
+     *
+     * @var string
+     */
+    protected $id;
+
     /**
      * The view used to lay out our form field
      *
@@ -225,6 +232,30 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
+     * Get the unqiue id for the field
+     *
+     * @return string
+     */
+    public function getFieldId()
+    {
+        return $this->id ?: 'field_' . str_replace('.', '_', $this->getPrefixedFieldName());
+    }
+
+    /**
+     * Set the id used by the field
+     *
+     * @param $id
+     *
+     * @return $this
+     */
+    public function setFieldId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get the field label
      *
      * @return string
@@ -254,7 +285,13 @@ abstract class AbstractFormField implements FormFieldInterface
         $field_name = $this->field->getAttribute('field_name');
 
         if ($this->prefix) {
-            return $this->prefix.'['.$field_name.']';
+            $adjustedPrefix = str_replace('.', '[', $this->prefix);
+
+            if(str_contains($adjustedPrefix, '[')) {
+                $adjustedPrefix = $adjustedPrefix . ']';
+            }
+
+            return $adjustedPrefix.'['.$field_name.']';
         }
 
         return $field_name;
@@ -335,6 +372,8 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function saveToModel(Model $model, Request $request)
     {
+        $this->setModel($model);
+
         $model->setAttribute($this->getFieldName(), $this->getSaveValue($request));
 
         return $this;
@@ -463,6 +502,7 @@ abstract class AbstractFormField implements FormFieldInterface
             'layout'              => $this->getLayout(),
             'field_view'          => $this->getViewPath().'.'.$this->getView(),
             'prefixed_field_name' => $this->buildPrefixedFieldName(),
+            'field_id'            => $this->getFieldId(),
             'field_label'         => $this->getFieldLabel(),
             'field_name'          => $this->getFieldName(),
             'field_value'         => $this->getFieldValue(),

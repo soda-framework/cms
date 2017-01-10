@@ -27,7 +27,7 @@ class LoginController extends BaseController
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('soda.guest', ['except' => 'logout']);
     }
 
     /**

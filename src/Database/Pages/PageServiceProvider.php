@@ -51,6 +51,11 @@ class PageServiceProvider extends ServiceProvider
         Relation::morphMap([
             'PageType' => resolve_class('soda.page-type.model'),
         ]);
+
+        app('soda.drafting')->registerDraftables([
+            resolve_class('soda.page.model'),
+            resolve_class('soda.page-type.model'),
+        ]);
     }
 
     /**

@@ -50,9 +50,11 @@ abstract class AbstractDynamicModel extends Model
         return $this;
     }
 
-    public function parseField(FieldInterface $field, Request $request)
+    public function parseField(FieldInterface $field, Request $request, $prefix = null)
     {
         $field = app('soda.form')->field($field);
+
+        if($prefix) $field->setPrefix($prefix);
 
         $field->saveToModel($this, $request);
 

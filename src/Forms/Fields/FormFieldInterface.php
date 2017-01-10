@@ -33,6 +33,10 @@ interface FormFieldInterface
 
     public function setClass($class);
 
+    public function getFieldId();
+
+    public function setFieldId($id);
+
     public function getFieldLabel();
 
     public function getFieldName();

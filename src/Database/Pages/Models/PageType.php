@@ -27,6 +27,8 @@ class PageType extends Model implements PageTypeInterface
         'view_action_type',
         'edit_action',
         'edit_action_type',
+        'allowed_children',
+        'can_create',
     ];
 
     protected $defaults = [
@@ -44,6 +46,16 @@ class PageType extends Model implements PageTypeInterface
     public function pages()
     {
         return $this->hasMany(resolve_class('soda.page.model'), 'page_type_id');
+    }
+
+    public function block_types()
+    {
+        return $this->belongsToMany(resolve_class('soda.block-type.model'), 'page_type_block_types')->withPivot('can_create', 'can_delete');
+    }
+
+    public function subpage_types()
+    {
+        return $this->belongsToMany(static::class, 'page_type_subpage_types', 'page_type_id', 'subpage_type_id');
     }
 
     public function getDynamicModelTablePrefix()

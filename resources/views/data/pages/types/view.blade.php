@@ -8,7 +8,7 @@
     </ol>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>Soda CMS | Page Types</title>
 @endsection
 
@@ -44,6 +44,22 @@
                 "name"        => "Page Type Description",
                 "field_name"  => 'description',
             ])->setModel($pageType) !!}
+
+            {!! SodaForm::toggle([
+                'name'         => 'Allowed Children',
+                'field_name'   => 'allowed_children',
+                'value'        => 1,
+                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                'description'  => 'If enabled, pages of this type can have child pages'
+            ])->setModel($model) !!}
+
+            {!! SodaForm::toggle([
+                'name'         => 'Can Create',
+                'field_name'   => 'can_create',
+                'value'        => 1,
+                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                'description'  => 'If enabled, pages of this type can be created from the CMS interface'
+            ])->setModel($model) !!}
 
             <div class="row fieldset-group">
                 <div class="col-sm-6 col-xs-12">

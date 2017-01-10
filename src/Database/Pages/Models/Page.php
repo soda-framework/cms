@@ -22,8 +22,9 @@ class Page extends Entity implements PageInterface
     use SoftDeletes, Sluggable, OptionallyBoundToApplication, Draftable, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure;
 
     protected $table = 'pages';
-
     protected static $sortableGroupField = ['application_id', 'parent_id'];
+
+    public $timestamps = true;
 
     public $fillable = [
         'name',
@@ -37,6 +38,8 @@ class Page extends Entity implements PageInterface
         'view_action_type',
         'edit_action',
         'edit_action_type',
+        'can_delete',
+        'allowed_children',
     ];
 
     protected $defaults = [
@@ -72,9 +75,17 @@ class Page extends Entity implements PageInterface
 
     public function getBlockType($identifier)
     {
-        return $this->getRelation('block_types')->filter(function ($item) use ($identifier) {
+        $block = $this->getRelation('block_types')->filter(function ($item) use ($identifier) {
             return $item->identifier == $identifier;
         })->first();
+
+        if(!$block) {
+            $block = $this->type->blocks->filter(function ($item) use ($identifier) {
+                return $item->identifier == $identifier;
+            })->first();
+        }
+
+        return $block;
     }
 
     public function block($identifier)

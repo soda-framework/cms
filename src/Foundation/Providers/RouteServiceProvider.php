@@ -5,10 +5,12 @@ namespace Soda\Cms\Foundation\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Soda\Cms\Http\Middleware\Authenticate;
-use Soda\Cms\Http\Middleware\EnableDrafts;
+use Soda\Cms\Http\Middleware\Drafting;
+use Soda\Cms\Http\Middleware\Security;
 use Soda\Cms\Http\Middleware\HasAbility;
 use Soda\Cms\Http\Middleware\HasPermission;
 use Soda\Cms\Http\Middleware\HasRole;
+use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -29,13 +31,16 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app['router']->middlewareGroup('soda.web', [
-            EnableDrafts::class,
+            Drafting::class,
+            Security::class,
         ]);
+
         $this->app['router']->middlewareGroup('soda.api', [
-            EnableDrafts::class,
+            Drafting::class,
         ]);
 
         $this->app['router']->middleware('soda.auth', Authenticate::class);
+        $this->app['router']->middleware('soda.guest', RedirectIfAuthenticated::class);
 
         $this->app['router']->middleware('soda.role', HasRole::class);
         $this->app['router']->middleware('soda.permission', HasPermission::class);
@@ -67,11 +72,15 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::group([
-            'middleware' => ['web', 'soda.web'],
+            'middleware' => ['soda.web'],
             'namespace'  => $this->namespace,
         ], function ($router) {
             require(__DIR__.'/../../../routes/web.php');
         });
+
+        $this->app->router->getRoutes()->refreshNameLookups();
+
+        $this->app->events->fire('soda.routing', $this->app->router);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace Soda\Cms\Database\Pages\Repositories;
 
+use Illuminate\Http\Request;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractRepository;
@@ -14,6 +15,16 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
     public function __construct(PageTypeInterface $model)
     {
         $this->model = $model;
+    }
+
+    public function save(Request $request, $id = null)
+    {
+        if($this->model->id && $this->model->isDirty('allowed_children'))
+        {
+            $this->model->pages()->update(['allowed_children' => $this->model->allowed_children]);
+        }
+
+        return parent::save();
     }
 
     public function getFilteredGrid($perPage)

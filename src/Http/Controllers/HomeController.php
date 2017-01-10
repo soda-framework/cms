@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Soda\Cms\Support\Facades\RequestMatcher;
 use Soda\Cms\Support\Facades\Session;
 
@@ -34,9 +35,9 @@ class HomeController extends BaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function page($slug = '/')
+    public function page(Request $request, $slug = '/')
     {
-        return RequestMatcher::match($slug)->render();
+        return RequestMatcher::match($slug)->render($request);
     }
 
 }

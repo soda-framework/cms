@@ -9,12 +9,30 @@ use Illuminate\Database\Eloquent\Model;
 class Relationship extends Dropdown
 {
     protected $onlyQueryFrom;
+    protected $relationshipData;
 
     public function getDefaultParameters()
     {
         return [
-            'options' => $this->loadRelationship(),
+            'options' => [],
         ];
+    }
+
+    /**
+     * Merges default field parameters and additional field parameters
+     *
+     * @return array
+     */
+    public function parseFieldParameters()
+    {
+        $parameters = parent::parseFieldParameters();
+
+        if(!isset($parameters['options']) || !is_array($parameters['options']) || count($parameters['options']) == 0)
+        {
+            $parameters['options'] = $this->loadRelationship();
+        }
+
+        return $parameters;
     }
 
     /**
@@ -77,9 +95,14 @@ class Relationship extends Dropdown
      */
     protected function getRelationshipArray($query, $field_parameters)
     {
-        $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
-        $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
+        // Relationship data is stored to prevent re-querying
+        if(!$this->relationshipData) {
+            $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
+            $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
 
-        return (array)$query->pluck($value_column, $key_column);
+            $this->relationshipData = $query->pluck($value_column, $key_column)->toArray();
+        }
+
+        return $this->relationshipData;
     }
 }

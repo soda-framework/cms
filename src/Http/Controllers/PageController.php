@@ -27,10 +27,11 @@ class PageController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('data.pages.index', [
-            'pages'      => $this->pages->getTree(),
-            'page_types' => $this->pages->getTypes(),
-        ]);
+        $pages = $this->pages->getTree();
+        $page_types = $this->pages->getTypes(true);
+        $page_types->load('subpage_types');
+
+        return soda_cms_view('data.pages.index', compact('pages', 'page_types'));
     }
 
     /**
@@ -81,12 +82,13 @@ class PageController extends BaseController
     public function edit($id)
     {
         $page = $this->pages->findById($id);
-        $this->pages->loadType($page);
-        $blockTypes = $this->pages->getAvailableBlockTypes($page);
 
         if (!$page) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
+
+        $page->load('blocks.type.fields', 'type.blocks.type.fields', 'type.fields');
+        $blockTypes = $this->pages->getAvailableBlockTypes($page);
 
         return view($page->edit_action, compact('page', 'blockTypes'));
     }

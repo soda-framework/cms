@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->app['config']->set('auth.providers.soda', $this->app->config->get('soda.auth.provider'));
         $this->app['config']->set('auth.guards.soda', $this->app->config->get('soda.auth.guard'));
         $this->app['config']->set('auth.passwords.soda', $this->app->config->get('soda.auth.password'));
+
     }
 
     /**

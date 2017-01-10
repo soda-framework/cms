@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => config('soda.cms.path')], function() {
+Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], function() {
     Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
         // Authentication routes
         Route::get('login', 'LoginController@showLoginForm')->name('soda.login');
@@ -9,7 +9,7 @@ Route::group(['prefix' => config('soda.cms.path')], function() {
     });
 
     // Dashboard and user routes...
-    Route::group(['middleware' => 'soda.auth:soda'], function () {
+    Route::group(['middleware' => 'soda.auth'], function () {
         Route::get('/', 'HomeController@getIndex')->name('soda.home')->middleware('soda.permission:access-cms');
         Route::post('sort', 'Api\SortController@sort')->name('soda.sort')->middleware('soda.permission:access-cms');
         Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft")->middleware('soda.permission:view-drafts');

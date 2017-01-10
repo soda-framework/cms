@@ -22,9 +22,16 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
         return $this->model->where('slug', '/'.ltrim($slug, '/'))->first();
     }
 
-    public function getTypes()
+    public function getTypes($creatableOnly = false)
     {
-        return $this->model->type()->getRelated()->get();
+        $query = $this->model->type()->getRelated();
+
+        if($creatableOnly)
+        {
+            $query->where('can_create', 1);
+        }
+
+        return $query->get();
     }
 
     public function getBlockTypes()
@@ -39,19 +46,6 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
         }
 
         return $this->getBlockTypes()->diff($page->getRelation('block_types'));
-    }
-
-    public function loadType(PageInterface $page)
-    {
-        if (!$page->relationLoaded('type')) {
-            $page->load('type');
-        }
-
-        if ($page->getRelation('type') !== null && !$page->getRelation('type')->relationLoaded('fields')) {
-            $page->getRelation('type')->load('fields');
-        }
-
-        return $page;
     }
 
     public function getTree()
@@ -70,6 +64,18 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     {
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
+        if($parent->type) {
+            $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
+            if(count($allowedPageTypes) && !in_array($pageTypeId, $allowedPageTypes)) {
+                throw new \Exception('You cannot create a page of this type here');
+            }
+        }
+
+        if(!$parent->allowed_children)
+        {
+            throw new \Exception('You cannot create a subpage here');
+        }
+
         $page = $this->newInstance([
             'parent_id'    => $parent ? $parentId : null,
             'page_type_id' => $pageTypeId,
@@ -79,10 +85,12 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
             $page->load('type');
 
             if ($page->relationLoaded('type')) {
-                $page->action = $page->getRelation('type')->getAttribute('action');
-                $page->action_type = $page->getRelation('type')->getAttribute('action_type');
-                $page->edit_action = $page->getRelation('type')->getAttribute('edit_action');
-                $page->edit_action_type = $page->getRelation('type')->getAttribute('edit_action_type');
+                $page->fill([
+                    'view_action'      => $page->getRelation('type')->getAttribute('view_action'),
+                    'view_action_type' => $page->getRelation('type')->getAttribute('view_action_type'),
+                    'edit_action'      => $page->getRelation('type')->getAttribute('edit_action'),
+                    'edit_action_type' => $page->getRelation('type')->getAttribute('edit_action_type'),
+                ]);
             }
         }
 
@@ -106,7 +114,9 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     {
         if ($id) {
             $page = $this->model->findOrFail($id);
-            $page->fill($request->all())->save();
+            $page->fill($request->all());
+            $page->slug = $page->generateSlug($request->input('slug'), false);
+            $page->save();
         } else {
             $page = $this->initializePage($request);
         }
@@ -123,22 +133,22 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     protected function initializePage(Request $request)
     {
         $page = $this->newInstance($request->except(['slug', 'application_id']));
-        $parent = $page->getAttribute('parent_id') ? $this->model->findOrFail($page->getAttribute('parent_id')) : $this->getRoot();
+        $parentPage = $page->getAttribute('parent_id') ? $this->model->findOrFail($page->getAttribute('parent_id')) : $this->getRoot();
 
         $slug = $page->generateSlug($request->input('slug'));
 
-        if ($parent && !starts_with($slug, $parent->getAttribute('slug'))) {
-            $slug = $parent->generateSlug($request->input('slug'));
+        if ($parentPage && !starts_with($slug, $parentPage->getAttribute('slug'))) {
+            $slug = $parentPage->generateSlug($request->input('slug'));
         }
 
         $page->fill([
-            'parent_id'      => $parent->getKey(),
+            'parent_id'      => $parentPage->getKey(),
             'slug'           => $slug,
             'application_id' => Soda::getApplication()->getKey(),
         ])->save();
 
-        if ($parent) {
-            $parent->addChild($page);
+        if ($parentPage) {
+            $parentPage->addChild($page);
         }
 
         return $page;
@@ -146,9 +156,14 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     protected function saveSettings(PageInterface $page, $settings)
     {
-        return Soda::dynamicPage($page->getRelation('type')->getAttribute('identifier'))
-            ->firstOrNew(['page_id' => $page->getKey()])
-            ->fill($settings)
-            ->save();
+        $dynamicPageRecord = Soda::dynamicPage($page->getRelation('type')->getAttribute('identifier'))->firstOrNew(['page_id' => $page->getKey()]);
+
+        foreach ($page->type->fields as $field) {
+            if ($settings !== null) {
+                $dynamicPageRecord->parseField($field, $settings, 'settings');
+            }
+        }
+
+        return $dynamicPageRecord->save();
     }
 }

@@ -3,6 +3,11 @@ $smallView = false;
 if ($page->getRelation('type') === null || $page->getRelation('type')->getRelation('fields') === null || !count($page->getRelation('type')->getRelation('fields')->where('pivot.show_in_table', 1))) {
     $smallView = true;
 }
+
+$blockTypes = $model->block_types->keyBy('id');
+if($model->type && $model->type->block_types) {
+    $blockTypes->merge($model->type->block_types->keyBy('id'));
+}
 ?>
 
 @extends(soda_cms_view_path('layouts.inner'))
@@ -25,7 +30,7 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
 
 @include(soda_cms_view_path('partials.heading'), [
     'icon'        => 'fa fa-pencil',
-    'title'       => $page->name? ' Page: ' . $page->name : 'New Page',
+    'title'       => $page->name ? ' Page: ' . $page->name : 'New Page',
     'description' => $page->description,
 ])
 
@@ -76,23 +81,26 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
     </div>
 @stop
 
-@section('tab.live-preview')
-    <div class="content-block">
-        <p>Use this tab to customise information on the page in a live view</p>
-        <hr/>
-        @if($page->slug)
-            <p>{{ $page->slug }}</p>
-            <iframe width="100%" height=400 src="{{ $page->slug }}?soda_edit=true"></iframe>
-        @else
-            <p>You must set a slug to enabled this feature.</p>
-        @endif
-    </div>
-@stop
-
 @section('tab.advanced')
     <div class="content-block">
         <p>Advanced page settings</p>
         <hr/>
+
+        {!! SodaForm::toggle([
+            'name'         => 'Prevent delete',
+            'field_name'   => 'can_delete',
+            'value'        => 1,
+            'field_params' => ['checked-value' => 0, 'unchecked-value' => 1],
+            'description'  => 'If enabled, this page can not be deleted'
+        ])->setModel($model) !!}
+
+        {!! SodaForm::toggle([
+            'name'         => 'Allowed Children',
+            'field_name'   => 'allowed_children',
+            'value'        => 1,
+            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+            'description'  => 'If enabled, this page can have child pages'
+        ])->setModel($model) !!}
 
         <div class="row fieldset-group">
             <div class="col-sm-6 col-xs-12">
@@ -101,12 +109,14 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
                     'field_name'  => 'view_action_type',
                     'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
                     'description'  => 'Specifies the interface supplied when viewing this page.',
+                    'value'        => $page->type && $page->type->view_action_type ? $page->type->view_action_type : 'view',
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
             <div class="col-sm-6 col-xs-12">
                 {!! SodaForm::text([
                     'name'        => null,
                     'field_name'  => 'view_action',
+                    'value'       => $page->type && $page->type->view_action,
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
         </div>
@@ -118,13 +128,14 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
                     'field_name'  => 'edit_action_type',
                     'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
                     'description'  => 'Specifies the interface supplied when editing this page.',
-
+                    'value'        => $page->type && $page->type->edit_action_type ? $page->type->edit_action_type : 'view',
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
             <div class="col-sm-6 col-xs-12">
                 {!! SodaForm::text([
                     'name'        => null,
                     'field_name'  => 'edit_action',
+                    'value'       => $page->type && $page->type->edit_action,
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
             </div>
         </div>
@@ -137,19 +148,13 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
             <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
         </li>
 
-        @foreach($page->block_types as $blockType)
+        @foreach($blockTypes as $blockType)
             @if($blockType->list_action_type == 'view')
                 <li role='presentation' aria-controls="tab_{{ strtolower($blockType->identifier) }}">
                     <a role="tab" data-toggle="tab" href="#tab_{{ strtolower($blockType->identifier) }}">{{ $blockType->name }}</a>
                 </li>
             @endif
         @endforeach
-
-        @permission("live-preview")
-        <li role='presentation' aria-controls="tab_live">
-            <a role="tab" data-toggle="tab" href="#tab_live">Live View</a>
-        </li>
-        @endpermission
 
         @permission("advanced-pages")
         <li role='presentation' aria-controls="tab_advanced">
@@ -179,7 +184,7 @@ if ($page->getRelation('type') === null || $page->getRelation('type')->getRelati
             <div class="tab-pane" id="tab_settings" role="tabpanel">
                 @yield('tab.settings')
             </div>
-            @foreach($page->block_types as $blockType)
+            @foreach($blockTypes as $blockType)
                 @if($blockType->list_action_type == 'view')
                     <div class="tab-pane" id="tab_{{ strtolower($blockType->identifier) }}" role="tabpanel">
                         <div class="content-block">

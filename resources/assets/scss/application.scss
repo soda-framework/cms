@@ -50,9 +50,10 @@
 // Plugins
 @import "../../components/bootstrap-fileinput/css/fileinput";
 @import "../../components/bootstrap-sweetalert/lib/sweet-alert";
-@import "../../components/bootstrap-select/sass/bootstrap-select";
+//@import "../../components/bootstrap-select/sass/bootstrap-select";
 @import "../../components/bootstrap-tagsinput/src/bootstrap-tagsinput";
 @import "../../components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min";
+@import "../../components/select2/src/scss/core";
 @import "../../components/font-awesome/scss/font-awesome";
 
 @import "helpers";
@@ -69,6 +70,7 @@
 @import "elements/json-editor";
 @import "elements/nav-tabs";
 @import "elements/table";
+@import "elements/text";
 @import "elements/page-tree";
 
 @import "pages/auth";

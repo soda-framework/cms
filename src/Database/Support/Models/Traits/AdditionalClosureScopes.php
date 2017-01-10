@@ -120,4 +120,24 @@ trait AdditionalClosureScopes
     {
         return $this->siblings([$from, $to]);
     }
+
+    /**
+     * Deletes a subtree from database.
+     *
+     * @param bool $withSelf
+     * @param bool $forceDelete
+     * @return void
+     */
+    public function deleteSubtree($withSelf = false, $forceDelete = false)
+    {
+        $action = ($forceDelete === true ? 'forceDelete' : 'delete');
+
+        $ids = $this->joinClosureBy('descendant', $withSelf)->pluck($this->getKeyName());
+
+        if ($forceDelete) {
+            $this->closure->whereIn($this->closure->getDescendantColumn(), $ids)->delete();
+        }
+
+        $this->whereIn($this->getKeyName(), $ids)->$action();
+    }
 }

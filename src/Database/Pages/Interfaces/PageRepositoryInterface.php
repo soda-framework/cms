@@ -11,9 +11,7 @@ interface PageRepositoryInterface extends BaseRepositoryInterface
 
     public function getAvailableBlockTypes(PageInterface $page);
 
-    public function getTypes();
-
-    public function loadType(PageInterface $page);
+    public function getTypes($creatableOnly = false);
 
     public function getTree();
 

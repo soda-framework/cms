@@ -4,13 +4,15 @@ namespace Soda\Cms\Foundation;
 use Illuminate\Contracts\Foundation\Application as Laravel;
 use Illuminate\Support\Facades\Auth;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class SodaInstance
 {
     protected $laravel;
     protected $requestMatcher;
-    protected $application = null;
+    protected $application;
+    protected $applicationUrl;
     protected $blocks = [];
     protected $currentPage;
 
@@ -21,7 +23,12 @@ class SodaInstance
         if (!$this->laravel->runningInConsole()) {
             $application = $this->getRequestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
-            $this->setApplication($application);
+            if(isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
+                $this->setApplicationUrl($application['url']);
+                $this->setApplication($application['application']);
+            }
+
+            $this->getRequestMatcher()->handleApplicationNotFound();
         }
     }
 
@@ -45,6 +52,30 @@ class SodaInstance
     public function setApplication(ApplicationInterface $application)
     {
         $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Returns the application url model matched to the current application
+     *
+     * @return null
+     */
+    public function getApplicationUrl()
+    {
+        return $this->applicationUrl;
+    }
+
+    /**
+     * Sets the application
+     *
+     * @param ApplicationUrlInterface $applicationUrl
+     *
+     * @return $this
+     */
+    public function setApplicationUrl(ApplicationUrlInterface $applicationUrl)
+    {
+        $this->applicationUrl = $applicationUrl;
 
         return $this;
     }

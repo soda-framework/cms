@@ -210,7 +210,7 @@ var objMap = function (obj, callback) {
 //delete all files at specified path
 var cleanFolder = function (path) {
     $.util.log(chalk.yellow('Cleaning directory ' + path));
-    del([path + '/**/*']);
+    del([path + '/**/*'], {force: true});
 };
 
 //check if folder should be cleaned - then clean it

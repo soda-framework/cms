@@ -1,6 +1,6 @@
 @section("field.label")
     @if($field_label !== null)
-    <label class="col-sm-4 col-xs-2" for="field_{{ $field_name }}">{{ $field_label }}</label>
+    <label class="col-sm-4 col-xs-2" for="{{ $field_id }}">{{ $field_label }}</label>
     @endif
 @overwrite
 

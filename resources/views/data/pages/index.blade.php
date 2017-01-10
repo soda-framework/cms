@@ -12,7 +12,9 @@
 @endsection
 
 @section('content-heading-button')
-	@include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#pageTypeModal'])
+    @permission('create-pages')
+	    @include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#pageTypeModal'])
+    @endpermission
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
@@ -23,6 +25,7 @@
 @section('content')
 	@include(soda_cms_view_path('partials.page-tree.root'), ['tree' => $pages])
 
+    @permission('create-pages')
 	<div class="modal fade" id="pageTypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -37,11 +40,7 @@
 							<label for="field_page_type">Page Type</label>
 
 							<input type="hidden" name="parentId" value="" />
-							<select name="pageTypeId" class="form-control">
-								<option value="">None</option>
-								@foreach($page_types as $page_type)
-									<option value="{{ $page_type->id }}">{{ $page_type->name }}</option>
-								@endforeach
+							<select name="pageTypeId" class="form-control" id="page_type_id">
 							</select>
 						</fieldset>
 					</div>
@@ -53,10 +52,56 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		$('#pageTypeModal').on('show.bs.modal', function (event) {
+
+    <script>
+        var pageTypes = {!! json_encode($page_types->pluck('name', 'id')->prepend('None', 0), JSON_FORCE_OBJECT) !!};
+        var allowedSubpageTypes = {!! json_encode($page_types->keyBy('id')->transform(function($item) {
+            return $item->subpageTypes->pluck('id')->toArray();
+        })) !!};
+
+        $('#pageTypeModal').on('show.bs.modal', function (event) {
 			var parentId = $(event.relatedTarget).data('page-id');
-			$('input[name="parentId"]', this).val(parentId ? parentId : "");
-		})
-	</script>
+            var pageTypeId = $(event.relatedTarget).data('page-type-id');
+
+            configurePagetypeDropdown(pageTypeId);
+
+            $('input[name="parentId"]', this).val(parentId ? parentId : "");
+		});
+
+		function configurePagetypeDropdown(pageType)
+        {
+            var allowedSubpages = getAllowedSubpages(pageType);
+            var pageTypeSelector = $('select#page_type_id');
+
+            pageTypeSelector.empty();
+            $.each(allowedSubpages, function(id, name){
+                pageTypeSelector.append('<option value="' + id + '">' + name + '</option>');
+            });
+        }
+
+        function getAllowedSubpages(pageTypeId)
+        {
+            var allowedSubpages = allowedSubpageTypes[pageTypeId];
+            if(allowedSubpages && allowedSubpages.length) {
+                return filterByKeys(pageTypes, allowedSubpages);
+            }
+
+            return pageTypes;
+        }
+
+        // Avoid issues with `{hasOwnProperty: 5}`
+        var hasOwnProperty = ({}).hasOwnProperty;
+        function filterByKeys(obj, keep) {
+            var result = {};
+            for (var i = 0, len = keep.length; i < len; i++) {
+                var key = keep[i];
+                if (hasOwnProperty.call(obj, key)) {
+                    result[key] = obj[key];
+                }
+            }
+
+            return result;
+        };
+    </script>
+    @endpermission
 @endsection

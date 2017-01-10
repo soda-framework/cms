@@ -1,5 +1,5 @@
 @section("field")
-	<select name="{{ $prefixed_field_name }}[]" class="form-control selectpicker" id="field_{{ $field_name}}" multiple title="{{ $field_parameters['placeholder'] }}" data-style="{{ $field_parameters['style'] }}" data-selected-text-format="{{ $field_parameters['selected-text-format'] }}">
+	<select name="{{ $prefixed_field_name }}[]" class="form-control selectpicker field_{{ $field_name }}" id="{{ $field_id }}" multiple title="{{ $field_parameters['placeholder'] }}" data-style="{{ $field_parameters['style'] }}" data-selected-text-format="{{ $field_parameters['selected-text-format'] }}">
 		@foreach($field_parameters['options'] as $optGroup => $options)
 			@if(is_array($options))
 				<optgroup label="{{ $optGroup }}">

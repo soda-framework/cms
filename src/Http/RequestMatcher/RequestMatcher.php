@@ -3,6 +3,7 @@
 namespace Soda\Cms\Http\RequestMatcher;
 
 use Exception;
+use Illuminate\Http\Request;
 use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
@@ -48,7 +49,7 @@ class RequestMatcher
     public function registerActions($actions)
     {
         foreach ($actions as $name => $action) {
-            $this->register($name, $action);
+            $this->registerAction($name, $action);
         }
     }
 
@@ -72,15 +73,16 @@ class RequestMatcher
         return array_map('ucfirst', array_combine(array_keys($this->actions), array_keys($this->actions)));
     }
 
+    /**
+     * Matches a url to an ApplicationUrl model and it's related Application model
+     *
+     * @param $url
+     *
+     * @return mixed
+     */
     public function matchApplication($url)
     {
-        $application = $this->application->findByUrl($url);
-
-        if ($application) {
-            return $application;
-        }
-
-        return $this->handleApplicationNotFound();
+        return $this->application->findByUrl($url);
     }
 
     /**
@@ -106,24 +108,26 @@ class RequestMatcher
     /**
      * Renders the hint path and view of given page (or pageable item)
      *
-     * @param       $page
-     * @param array $parameters
+     * @param Request $request
+     * @param         $page
+     * @param array   $parameters
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
-    public function render($page = null, $parameters = [])
+    public function render(Request $request, $page = null, $parameters = [])
     {
         if (!$page) {
             $page = Soda::getCurrentPage($page);
         }
 
-        return $this->handleAction($page->getAttribute('view_action_type'), $page, $parameters);
+        return $this->handleAction($request, $page->getAttribute('view_action_type'), $page, $parameters);
     }
 
     /**
      * Handles a page action
      *
+     * @param Request       $request
      * @param               $action_type
      * @param PageInterface $page
      * @param array         $parameters
@@ -131,7 +135,7 @@ class RequestMatcher
      * @return mixed
      * @throws Exception
      */
-    public function handleAction($action_type, PageInterface $page, $parameters = [])
+    public function handleAction(Request $request, $action_type, PageInterface $page, $parameters = [])
     {
         if (!isset($this->actions[$action_type])) {
             Throw new Exception('Action \''.$action_type.'\' is not registered');
@@ -139,13 +143,13 @@ class RequestMatcher
 
         $handler = new $this->actions[$action_type];
 
-        return $handler->handle($page, $parameters);
+        return $handler->handle($request, $page, $parameters);
     }
 
     /**
      * Handles not found errors
      */
-    protected function handleApplicationNotFound()
+    public function handleApplicationNotFound()
     {
         abort(404, 'No Application Found at URL');
     }
@@ -153,7 +157,7 @@ class RequestMatcher
     /**
      * Handles not found errors
      */
-    protected function handlePageNotFound()
+    public function handlePageNotFound()
     {
         abort(404, '404 Page not found');
     }

@@ -10,7 +10,7 @@ use Closure;
  *
  */
 
-class EnableDrafts
+class Drafting
 {
     /**
      * Handle an incoming request.
@@ -23,13 +23,10 @@ class EnableDrafts
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $page = resolve_class('soda.page.model');
-        $pageType = resolve_class('soda.page-type.model');
-
-        foreach ([$page, $pageType] as $class) {
-            if (method_exists($class, 'disableDrafts')) {
-                $class::disableDrafts();
-            }
+        $draftables = app('soda.drafting')->getDraftables();
+        foreach($draftables as $draftable)
+        {
+            $draftable::disableDrafts();
         }
 
         return $next($request);
