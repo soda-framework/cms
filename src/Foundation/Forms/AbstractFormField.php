@@ -283,7 +283,12 @@ abstract class AbstractFormField implements FormFieldInterface
     {
         $field_name = $this->field->getAttribute('field_name');
         if ($this->prefix) {
-            return $this->prefix.'['.$field_name.']';
+            $adjustedPrefix = str_replace('.', '[', $this->prefix);
+            if(str_contains($adjustedPrefix, '[')) {
+                $adjustedPrefix = $adjustedPrefix . ']';
+            }
+
+            return $adjustedPrefix.'['.$field_name.']';
         }
 
         return $field_name;
