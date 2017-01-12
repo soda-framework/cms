@@ -3,7 +3,7 @@
 namespace Soda\Cms\Forms\Fields;
 
 use DB;
-use Soda\Cms\Forms\Fields\HasArrayableValue;
+use Soda\Cms\Forms\Fields\Traits\HasArrayableValue;
 
 class RelationshipGroup extends Relationship
 {

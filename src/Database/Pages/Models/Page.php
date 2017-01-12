@@ -120,4 +120,14 @@ class Page extends Entity implements PageInterface
 
         return isset($attributes[$attribute]) ? $attributes[$attribute] : null;
     }
+
+    public function isAllowedChildren()
+    {
+        return $this->allowed_children ? true : false;
+    }
+
+    public function canDelete()
+    {
+        return $this->can_delete ? true : false;
+    }
 }

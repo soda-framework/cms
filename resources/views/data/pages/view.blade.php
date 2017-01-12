@@ -1,12 +1,12 @@
 <?php
 $smallView = false;
-if ($page->getRelation('type') === null || $page->getRelation('type')->getRelation('fields') === null || !count($page->getRelation('type')->getRelation('fields')->where('pivot.show_in_table', 1))) {
+if ($page->type === null || $page->type->fields === null || !count($page->type->fields->where('pivot.show_in_table', 1))) {
     $smallView = true;
 }
 
-$blockTypes = $model->block_types->keyBy('id');
-if($model->type && $model->type->block_types) {
-    $blockTypes->merge($model->type->block_types->keyBy('id'));
+$blockTypes = $page->block_types->keyBy('id');
+if($page->type && $page->type->block_types) {
+    $blockTypes->merge($page->type->block_types->keyBy('id'));
 }
 ?>
 
@@ -39,7 +39,7 @@ if($model->type && $model->type->block_types) {
         @if(!$smallView)
         <div class="col-md-9 col-xs-12">
             <div class="content-block">
-                @if($page->type->description)
+                @if($page->type && $page->type->description)
                     <p>{{ $page->type->description }}</p>
                     <hr/>
                 @endif
@@ -92,7 +92,7 @@ if($model->type && $model->type->block_types) {
             'value'        => 1,
             'field_params' => ['checked-value' => 0, 'unchecked-value' => 1],
             'description'  => 'If enabled, this page can not be deleted'
-        ])->setModel($model) !!}
+        ])->setModel($page) !!}
 
         {!! SodaForm::toggle([
             'name'         => 'Allowed Children',
@@ -100,7 +100,7 @@ if($model->type && $model->type->block_types) {
             'value'        => 1,
             'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
             'description'  => 'If enabled, this page can have child pages'
-        ])->setModel($model) !!}
+        ])->setModel($page) !!}
 
         <div class="row fieldset-group">
             <div class="col-sm-6 col-xs-12">

@@ -26,9 +26,9 @@ class SodaInstance
             if(isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
                 $this->setApplicationUrl($application['url']);
                 $this->setApplication($application['application']);
+            } else {
+                $this->getRequestMatcher()->handleApplicationNotFound();
             }
-
-            $this->getRequestMatcher()->handleApplicationNotFound();
         }
     }
 

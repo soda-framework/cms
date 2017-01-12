@@ -6,8 +6,6 @@ use Illuminate\Foundation\AliasLoader;
 
 trait RegistersBindingsAndDependencies
 {
-    protected $app;
-
     /**
      * Register facades
      *

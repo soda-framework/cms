@@ -15,26 +15,23 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $developer = app('soda.user.model')->create([
+        $developer = app('soda.user.model')->firstOrCreate([
             'username' => 'Developer',
             'email'    => 'developer@admin.com',
             'password' => Hash::make('madeinkatana'),
         ]);
 
-        $admin = app('soda.user.model')->create([
+        $admin = app('soda.user.model')->firstOrCreate([
             'username' => 'Admin',
             'email'    => 'admin@admin.com',
             'password' => Hash::make('admin'),
         ]);
 
-        $admin_role = app('soda.role.model')->where('name', 'admin')->first();
-        $developer_role = app('soda.role.model')->where('name', 'developer')->first();
-
-        if ($admin_role) {
+        if ($admin_role = app('soda.role.model')->where('name', 'admin')->first()) {
             $admin->attachRole($admin_role);
         }
 
-        if ($developer_role) {
+        if ($developer_role = app('soda.role.model')->where('name', 'developer')->first()) {
             $developer->attachRole($developer_role);
             $developer->attachRole($admin_role);
         }

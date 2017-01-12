@@ -20,11 +20,11 @@ class ApplicationSeeder extends Seeder
             $baseName = str_slug(basename(dirname(base_path())), '-');
         }
 
-        $application = app('soda.application.model')->create([
+        $application = app('soda.application.model')->firstOrCreate([
             'name' => ucwords(str_replace('-', '', $baseName)),
         ]);
 
-        app(ApplicationUrlInterface::class)->create([
+        app(ApplicationUrlInterface::class)->firstOrCreate([
             'domain'         => $baseName.'.dev',
             'application_id' => $application->getKey(),
         ]);

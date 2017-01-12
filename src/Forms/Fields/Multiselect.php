@@ -1,9 +1,9 @@
 <?php
 
-namespace Soda\Cms\Foundation\Forms\Fields;
+namespace Soda\Cms\Forms\Fields;
 
-use Soda\Cms\Foundation\Forms\AbstractFormField;
-use Soda\Cms\Foundation\Forms\Fields\Traits\HasArrayableValue;
+use Soda\Cms\Forms\AbstractFormField;
+use Soda\Cms\Forms\Fields\Traits\HasArrayableValue;
 class Multiselect extends AbstractFormField
 {
     use HasArrayableValue;

@@ -15,11 +15,11 @@ class Authenticate extends BaseAuthenticate
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
      *
-     * @return mixed
+     * @param array                     $guards
      *
-     * @throws \Illuminate\Auth\AuthenticationException
+     * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$guards)
     {
         config()->set('auth.defaults.guard', 'soda');
 

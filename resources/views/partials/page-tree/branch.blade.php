@@ -19,7 +19,7 @@
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
                 <div class="dropdown-menu">
-                    @if($tree->allowed_children)
+                    @if($page->isAllowedChildren())
                     @permission('create-pages')
                     <div>
                         <a data-page-id="{{ $page->id }}" data-page-type-id="{{ $page->type_id }}" data-toggle="modal" data-target="#pageTypeModal">Create Sub-page</a>
@@ -34,7 +34,7 @@
                     <div>
                         <a href="{{ $page->slug }}" target="_blank" data-tree-link>View page</a>
                     </div>
-                    @if($tree->can_delete)
+                    @if($page->canDelete())
                     @permission('delete-pages')
                     <div class="divider"></div>
                     <div class="warning">

@@ -12,9 +12,13 @@ trait OptionallyBoundToApplication
     public static function bootOptionallyBoundToApplication()
     {
         static::addGlobalScope('in-application', function (Builder $builder) {
-            $builder->where('application_id', '=', app('soda')->getApplication()->getKey())
-                ->orWhereNull('application_id')
-                ->orWhere('application_id', '=', '');
+            $builder->where(function($sq) {
+                $sq->whereNull('application_id')->orWhere('application_id', '=', '');
+
+                if($application = app('soda')->getApplication()) {
+                    $sq->orWhere('application_id', '=', $application->getKey());
+                }
+            });
         });
     }
 }

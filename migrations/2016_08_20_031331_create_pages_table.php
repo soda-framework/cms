@@ -20,11 +20,11 @@ class CreatePagesTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable()->index('pages_parent_id_foreign');
             $table->integer('position')->unsigned()->nullable()->default('0');
             $table->integer('real_depth')->unsigned();
-            $table->integer('allowed_children', 1)->unsigned()->nullable()->default(1);
-            $table->integer('can_delete', 1)->unsigned()->nullable()->default(1);
+            $table->tinyInteger('allowed_children')->unsigned()->nullable()->default(1);
+            $table->tinyInteger('can_delete')->unsigned()->nullable()->default(1);
             $table->integer('application_id')->unsigned()->nullable()->index('FK_pages_applications');
             $table->integer('page_type_id')->unsigned()->nullable()->index('FK_pages_page_types');
-            $table->integer('status', 1)->unsigned()->nullable()->default(0);
+            $table->tinyInteger('status')->unsigned()->nullable()->default(0);
             $table->string('view_action')->nullable();
             $table->string('view_action_type');
             $table->string('edit_action')->nullable();
