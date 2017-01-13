@@ -43,6 +43,7 @@
                 "value"        => $user->roles->pluck('id')->toArray(),
                 "field_params" => [
                     "placeholder" => "Select role(s)",
+                    'array-save'  => 'array',
                     "options"     => $roleIds
                 ]
             ])->setModel($user) !!}

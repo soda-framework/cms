@@ -162,7 +162,7 @@ if($page->type && $page->type->block_types) {
         </li>
         @endpermission
 
-        @if($page->id && count($blockTypes))
+        @if($page->id)
         @permission("attach-blocks")
         <li role='presentation'>
             <a role="tab" href="#tab_new-block">+</a>
@@ -212,7 +212,7 @@ if($page->type && $page->type->block_types) {
         </div>
     </form>
 
-    @if($page->id && count($blockTypes))
+    @if($page->id)
     @permission("attach-blocks")
     <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

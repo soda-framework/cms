@@ -17,7 +17,7 @@ use Soda\Cms\Forms\FormServiceProvider;
 use Soda\Cms\Foundation\DraftingHandler;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
 use Soda\Cms\Foundation\Providers\EventServiceProvider;
-use Soda\Cms\Foundation\Providers\RouteServiceProvider;
+use Soda\Cms\Foundation\Routing\RouteServiceProvider;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 use Soda\Cms\Foundation\SodaInstance;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;

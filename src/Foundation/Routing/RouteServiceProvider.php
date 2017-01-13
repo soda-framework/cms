@@ -1,8 +1,11 @@
 <?php
 
-namespace Soda\Cms\Foundation\Providers;
+namespace Soda\Cms\Foundation\Routing;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Redirector;
+use Illuminate\Routing\ResponseFactory;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Route;
 use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\Drafting;
@@ -47,6 +50,22 @@ class RouteServiceProvider extends ServiceProvider
         $this->app['router']->middleware('soda.ability', HasAbility::class);
 
         parent::boot();
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind('Illuminate\Routing\Router', Router::class);
+
+        $this->app['router'] = $this->app->share(function ($app) {
+            return new Router($app['events'], $app);
+        });
+
+        $this->app->instance('routes', $this->app['router']->getRoutes());
     }
 
     /**

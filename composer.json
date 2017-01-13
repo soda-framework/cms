@@ -36,6 +36,7 @@
     "rutorika/sortable": "^3.2"
   },
   "autoload": {
+    "files": ["src/Foundation/Routing/route_overrider.php"],
     "psr-4": {
       "Soda\\Cms\\": "src/"
     }

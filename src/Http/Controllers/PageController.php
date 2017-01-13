@@ -87,7 +87,7 @@ class PageController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 
-        $page->load('block_types.type.fields', 'type.block_types.type.fields', 'type.fields');
+        $page->load('block_types.fields', 'type.block_types.fields', 'type.fields');
         $blockTypes = $this->pages->getAvailableBlockTypes($page);
 
         return view($page->edit_action, compact('page', 'blockTypes'));

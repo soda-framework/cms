@@ -23,6 +23,8 @@ trait HasArrayableValue
             $delimiter = $this->getDelimiter();
 
             return implode($delimiter, $value);
+        } elseif ($this->isArrayable()) {
+            return (array) $value;
         }
 
         return $value;
@@ -38,9 +40,18 @@ trait HasArrayableValue
             $delimiter = $this->getDelimiter($value, 8);
 
             return explode($delimiter, $value);
+        } elseif ($this->isArrayable()) {
+            return (array) $value;
         }
 
         return $value;
+    }
+
+    protected function isArrayable()
+    {
+        $parameters = $this->parseFieldParameters();
+
+        return isset($parameters['array-save']) && $parameters['array-save'] === 'array';
     }
 
     protected function isJsonable()

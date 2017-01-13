@@ -49,6 +49,7 @@
                     "value"        => $role->permissions->pluck('id')->toArray(),
                     "field_params" => [
                         "placeholder" => "Select permission(s)",
+                        'array-save'  => 'array',
                         "options"     => $permissionIds
                     ]
                 ])->setModel($role) !!}
