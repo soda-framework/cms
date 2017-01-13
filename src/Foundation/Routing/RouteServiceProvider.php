@@ -3,10 +3,10 @@
 namespace Soda\Cms\Foundation\Routing;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Redirector;
-use Illuminate\Routing\ResponseFactory;
-use Illuminate\Routing\UrlGenerator;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route as IlluminateRoute;
 use Illuminate\Support\Facades\Route;
+use ReflectionClass;
 use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\Drafting;
 use Soda\Cms\Http\Middleware\Security;
@@ -33,21 +33,23 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app['router']->middlewareGroup('soda.web', [
+        $router = $this->app['router'];
+
+        $router->middlewareGroup('soda.web', [
             Drafting::class,
             Security::class,
         ]);
 
-        $this->app['router']->middlewareGroup('soda.api', [
+        $router->middlewareGroup('soda.api', [
             Drafting::class,
         ]);
 
-        $this->app['router']->middleware('soda.auth', Authenticate::class);
-        $this->app['router']->middleware('soda.guest', RedirectIfAuthenticated::class);
+        $router->middleware('soda.auth', Authenticate::class);
+        $router->middleware('soda.guest', RedirectIfAuthenticated::class);
 
-        $this->app['router']->middleware('soda.role', HasRole::class);
-        $this->app['router']->middleware('soda.permission', HasPermission::class);
-        $this->app['router']->middleware('soda.ability', HasAbility::class);
+        $router->middleware('soda.role', HasRole::class);
+        $router->middleware('soda.permission', HasPermission::class);
+        $router->middleware('soda.ability', HasAbility::class);
 
         parent::boot();
     }
@@ -59,13 +61,45 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Illuminate\Routing\Router', Router::class);
+        $coreRouter = $this->app['router'];
+        $coreRouter->dispatch = function(Request $request)
+        {
+            return $this->app['router']->dispatch($request);
+        };
+        $coreRouter->gatherRouteMiddleware = function(IlluminateRoute $route)
+        {
+            return $this->app['router']->gatherRouteMiddleware($route);
+        };
 
-        $this->app['router'] = $this->app->share(function ($app) {
+        // If the router is "rebound", we will need to rebuild the middleware.
+        // by copying properties from the existing router instance
+
+        $this->app->rebinding('router', function ($app, $router) use ($coreRouter){
+            $reflectionRouter = new ReflectionClass($coreRouter);
+            $property = $reflectionRouter->getProperty('middlewareGroups');
+            $property->setAccessible(true);
+            $middlewareGroups = $property->getValue($coreRouter);
+
+            $router->middlewarePriority = $coreRouter->middlewarePriority;
+
+            foreach ($middlewareGroups as $key => $middleware) {
+                $router->middlewareGroup($key, $middleware);
+            }
+
+            foreach ($coreRouter->getMiddleware() as $key => $middleware) {
+                $router->middleware($key, $middleware);
+            }
+
+            $app->instance('routes', $router->getRoutes());
+            \Route::clearResolvedInstance('router');
+        });
+
+        $this->app->singleton('router', function ($app) {
             return new Router($app['events'], $app);
         });
 
-        $this->app->instance('routes', $this->app['router']->getRoutes());
+        $this->app->alias('router', 'Illuminate\Contracts\Routing\Registrar');
+        $this->app->alias('router', 'Illuminate\Routing\Router');
     }
 
     /**
@@ -97,9 +131,9 @@ class RouteServiceProvider extends ServiceProvider
             require(__DIR__.'/../../../routes/web.php');
         });
 
-        $this->app->router->getRoutes()->refreshNameLookups();
+        $this->app['router']->getRoutes()->refreshNameLookups();
 
-        $this->app->events->fire('soda.routing', $this->app->router);
+        $this->app['events']->fire('soda.routing', $this->app->router);
     }
 
     /**

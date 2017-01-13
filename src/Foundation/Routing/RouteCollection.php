@@ -12,7 +12,7 @@ class RouteCollection extends IlluminateRouteCollection
      */
     protected function addToCollections($route)
     {
-        $domainAndUri = $route->domain().$route->getUri().$route->getPriority();
+        $domainAndUri = $route->domain().$route->getUri().$this->getRoutePriority($route);
 
         foreach ($route->methods() as $method) {
             $this->routes[$method][$domainAndUri] = $route;
@@ -29,8 +29,8 @@ class RouteCollection extends IlluminateRouteCollection
     public function buildRoutesOrder()
     {
         $comparePriority = function ($r1, $r2) {
-            $a = $r1->getPriority();
-            $b = $r2->getPriority();
+            $a = $this->getRoutePriority($r1);
+            $b = $this->getRoutePriority($r2);
             if ($a == $b) {
                 return 0;
             }
@@ -44,5 +44,10 @@ class RouteCollection extends IlluminateRouteCollection
         }
 
         return $this;
+    }
+
+    protected function getRoutePriority($route)
+    {
+        return method_exists($route, 'getPriority') ? $route->getPriority() : Router::DEFAULT_PRIORITY;
     }
 }
