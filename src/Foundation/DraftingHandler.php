@@ -13,7 +13,7 @@ class DraftingHandler {
     public function registerDraftable($draftable)
     {
         // Check if class uses Draftable trait
-        if (method_exists($draftable, 'bootDraftableTrait')) {
+        if (method_exists($draftable, 'bootDraftable')) {
             $this->draftables[] = $draftable;
         }
     }

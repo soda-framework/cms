@@ -2,75 +2,60 @@
 
 namespace Soda\Cms\Http\RequestMatcher;
 
-use Exception;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Http\RequestMatcher\Actions\ActionInterface;
-use Soda\Cms\Http\RequestMatcher\Actions\ControllerAction;
-use Soda\Cms\Http\RequestMatcher\Actions\ViewAction;
-use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Http\RequestMatcher\Matchers\MatcherInterface;
+use Soda\Cms\Http\RequestMatcher\Matchers\SluggedPageMatcher;
 
 class RequestMatcher
 {
     protected $application;
-    protected $pages;
 
-    protected $actions = [
-        'view'       => ViewAction::class,
-        'controller' => ControllerAction::class,
+    protected $matchers = [
+        SluggedPageMatcher::class,
     ];
 
-    public function __construct(CachedPageRepositoryInterface $pages, CachedApplicationRepositoryInterface $application)
+    public function __construct(CachedApplicationRepositoryInterface $application)
     {
-        $this->pages = $pages;
         $this->application = $application;
     }
 
     /**
-     * Registers a new action
+     * Registers a new matcher
      *
-     * @param      $name
-     * @param null $action
+     * @param      $matcher
+     *
+     * @return $this
      */
-    public function registerAction($name, $action = null)
+    public function registerMatcher($matcher)
     {
-        if (new $action instanceof ActionInterface) {
-            $this->actions[$name] = $action;
+        if (!in_array($matcher, $this->matchers) && is_a($matcher, MatcherInterface::class, true)) {
+            $this->matchers[] = $matcher;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Registers an array of new matchers
+     *
+     * @param $matchers
+     */
+    public function registerMatchers($matchers)
+    {
+        foreach ($matchers as $matcher) {
+            $this->registerMatcher($matcher);
         }
     }
 
     /**
-     * Registers an array of new actions
-     *
-     * @param $actions
-     */
-    public function registerActions($actions)
-    {
-        foreach ($actions as $name => $action) {
-            $this->registerAction($name, $action);
-        }
-    }
-
-    /**
-     * Returns a list of actions that have been registered
+     * Returns a list of matchers that have been registered
      *
      * @return array
      */
-    public function getRegisteredActions()
+    public function getRegisteredMatchers()
     {
-        return $this->actions;
-    }
-
-    /**
-     * Get a list of action types in human-readable format
-     *
-     * @return array
-     */
-    public function getActionTypes()
-    {
-        return array_map('ucfirst', array_combine(array_keys($this->actions), array_keys($this->actions)));
+        return $this->matchers;
     }
 
     /**
@@ -88,62 +73,21 @@ class RequestMatcher
     /**
      * Loads a page by it's slug
      *
-     * @param $slug
-     *
-     * @return \Soda\Cms\Foundation\Pages\PageBuilder|void
+     * @param Request $request
+     * @param         $slug
      */
-    public function match($slug)
+    public function match(Request $request, $slug)
     {
-        $page = $this->pages->findBySlug($slug);
-
-        if ($page) {
-            Soda::setCurrentPage($page);
-
-            return $this;
+        foreach($this->matchers as $matcher)
+        {
+            $matcherInstance = app($matcher);
+            if($match = $matcherInstance->match($slug))
+            {
+                return $matcherInstance->render($request);
+            }
         }
 
         return $this->handlePageNotFound();
-    }
-
-    /**
-     * Renders the hint path and view of given page (or pageable item)
-     *
-     * @param Request $request
-     * @param         $page
-     * @param array   $parameters
-     *
-     * @return string
-     * @throws Exception
-     */
-    public function render(Request $request, $page = null, $parameters = [])
-    {
-        if (!$page) {
-            $page = Soda::getCurrentPage($page);
-        }
-
-        return $this->handleAction($request, $page->getAttribute('view_action_type'), $page, $parameters);
-    }
-
-    /**
-     * Handles a page action
-     *
-     * @param Request       $request
-     * @param               $action_type
-     * @param PageInterface $page
-     * @param array         $parameters
-     *
-     * @return mixed
-     * @throws Exception
-     */
-    public function handleAction(Request $request, $action_type, PageInterface $page, $parameters = [])
-    {
-        if (!isset($this->actions[$action_type])) {
-            Throw new Exception('Action \''.$action_type.'\' is not registered');
-        }
-
-        $handler = new $this->actions[$action_type];
-
-        return $handler->handle($request, $page, $parameters);
     }
 
     /**

@@ -36,8 +36,8 @@
                 'name'         => 'Status',
                 'description'  => 'Determines whether pages of this type are visible on the live website',
                 'field_name'   => 'status',
-                'value'        => Soda\Cms\Support\Constants::STATUS_LIVE,
-                'field_params' => ['checked-value' => Soda\Cms\Support\Constants::STATUS_LIVE, 'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
+                'value'        => Soda\Cms\Support\Foundation::STATUS_LIVE,
+                'field_params' => ['checked-value' => Soda\Cms\Support\Foundation::STATUS_LIVE, 'unchecked-value' => Soda\Cms\Support\Foundation::STATUS_DRAFT],
             ])->setModel($pageType) !!}
 
             {!! SodaForm::textarea([
@@ -66,7 +66,7 @@
                     {!! SodaForm::dropdown([
                         'name'        => 'View Action',
                         'field_name'  => 'view_action_type',
-                        'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when viewing this page.',
                     ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
                 </div>
@@ -83,7 +83,7 @@
                     {!! SodaForm::dropdown([
                         'name'        => 'Edit Action',
                         'field_name'  => 'edit_action_type',
-                        'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when editing this page.',
 
                     ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}

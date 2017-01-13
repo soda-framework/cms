@@ -71,10 +71,10 @@ if($page->type && $page->type->block_types) {
                 {!! SodaForm::toggle([
                     'name'         => 'Published',
                     'field_name'   => 'status',
-                    'value'        => Soda\Cms\Support\Constants::STATUS_LIVE,
+                    'value'        => Soda\Cms\Foundation\Constants::STATUS_LIVE,
                     'field_params' => [
-                        'checked-value'   => Soda\Cms\Support\Constants::STATUS_LIVE,
-                        'unchecked-value' => Soda\Cms\Support\Constants::STATUS_DRAFT],
+                        'checked-value'   => Soda\Cms\Foundation\Constants::STATUS_LIVE,
+                        'unchecked-value' => Soda\Cms\Foundation\Constants::STATUS_DRAFT],
                 ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
             </div>
         </div>
@@ -107,7 +107,7 @@ if($page->type && $page->type->block_types) {
                 {!! SodaForm::dropdown([
                     'name'        => 'View Action',
                     'field_name'  => 'view_action_type',
-                    'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                    'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
                     'description'  => 'Specifies the interface supplied when viewing this page.',
                     'value'        => $page->type && $page->type->view_action_type ? $page->type->view_action_type : 'view',
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
@@ -126,7 +126,7 @@ if($page->type && $page->type->block_types) {
                 {!! SodaForm::dropdown([
                     'name'        => 'Edit Action',
                     'field_name'  => 'edit_action_type',
-                    'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                    'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
                     'description'  => 'Specifies the interface supplied when editing this page.',
                     'value'        => $page->type && $page->type->edit_action_type ? $page->type->edit_action_type : 'view',
                 ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}

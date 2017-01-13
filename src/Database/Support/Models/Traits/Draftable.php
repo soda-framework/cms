@@ -5,7 +5,7 @@ namespace Soda\Cms\Database\Support\Models\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
-use Soda\Cms\Support\Constants;
+use Soda\Cms\Foundation\Constants;
 use Soda\Cms\Support\Facades\Soda;
 
 trait Draftable

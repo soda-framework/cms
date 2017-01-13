@@ -31,13 +31,14 @@ class HomeController extends BaseController
     /**
      * Main page view method.
      *
-     * @param $slug
+     * @param Request $request
+     * @param string  $slug
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function page(Request $request, $slug = '/')
     {
-        return RequestMatcher::match($slug)->render($request);
+        return RequestMatcher::match($request, $slug);
     }
 
 }

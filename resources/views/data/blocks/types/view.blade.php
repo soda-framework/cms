@@ -42,7 +42,7 @@
                     {!! SodaForm::dropdown([
                         'name'        => 'List Action',
                         'field_name'  => 'list_action_type',
-                        'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when listing this block.',
                     ])->setModel($blockType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
                 </div>
@@ -59,7 +59,7 @@
                     {!! SodaForm::dropdown([
                         'name'        => 'Edit Action',
                         'field_name'  => 'edit_action_type',
-                        'field_params' => ['options' => app('soda.request-matcher')->getActionTypes()],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when editing this block.',
 
                     ])->setModel($blockType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}

@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractRepository;
-use Soda\Cms\Support\Constants;
+use Soda\Cms\Foundation\Constants;
 use Soda\Cms\Support\Facades\Soda;
 
 class PageRepository extends AbstractRepository implements PageRepositoryInterface

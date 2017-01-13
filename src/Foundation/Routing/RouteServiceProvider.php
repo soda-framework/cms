@@ -61,45 +61,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $coreRouter = $this->app['router'];
-        $coreRouter->dispatch = function(Request $request)
-        {
-            return $this->app['router']->dispatch($request);
-        };
-        $coreRouter->gatherRouteMiddleware = function(IlluminateRoute $route)
-        {
-            return $this->app['router']->gatherRouteMiddleware($route);
-        };
-
-        // If the router is "rebound", we will need to rebuild the middleware.
-        // by copying properties from the existing router instance
-
-        $this->app->rebinding('router', function ($app, $router) use ($coreRouter){
-            $reflectionRouter = new ReflectionClass($coreRouter);
-            $property = $reflectionRouter->getProperty('middlewareGroups');
-            $property->setAccessible(true);
-            $middlewareGroups = $property->getValue($coreRouter);
-
-            $router->middlewarePriority = $coreRouter->middlewarePriority;
-
-            foreach ($middlewareGroups as $key => $middleware) {
-                $router->middlewareGroup($key, $middleware);
-            }
-
-            foreach ($coreRouter->getMiddleware() as $key => $middleware) {
-                $router->middleware($key, $middleware);
-            }
-
-            $app->instance('routes', $router->getRoutes());
-            \Route::clearResolvedInstance('router');
-        });
-
-        $this->app->singleton('router', function ($app) {
-            return new Router($app['events'], $app);
-        });
-
-        $this->app->alias('router', 'Illuminate\Contracts\Routing\Registrar');
-        $this->app->alias('router', 'Illuminate\Routing\Router');
+        //$this->overrideRouter();
     }
 
     /**
@@ -152,5 +114,40 @@ class RouteServiceProvider extends ServiceProvider
         ], function ($router) {
             require(__DIR__.'/../../../routes/api.php');
         });
+    }
+
+    protected function overrideRouter()
+    {
+        $coreRouter = $this->app['router'];
+
+        // If the router is "rebound", we will need to rebuild the middleware.
+        // by copying properties from the existing router instance
+
+        $this->app->rebinding('router', function ($app, $router) use ($coreRouter){
+            $reflectionRouter = new ReflectionClass($coreRouter);
+            $property = $reflectionRouter->getProperty('middlewareGroups');
+            $property->setAccessible(true);
+            $middlewareGroups = $property->getValue($coreRouter);
+
+            $router->middlewarePriority = $coreRouter->middlewarePriority;
+
+            foreach ($middlewareGroups as $key => $middleware) {
+                $router->middlewareGroup($key, $middleware);
+            }
+
+            foreach ($coreRouter->getMiddleware() as $key => $middleware) {
+                $router->middleware($key, $middleware);
+            }
+
+            $app->instance('routes', $router->getRoutes());
+            \Route::clearResolvedInstance('router');
+        });
+
+        $this->app['router'] = $this->app->share(function ($app) {
+            return new Router($app['events'], $app);
+        });
+
+        $this->app->alias('router', 'Illuminate\Contracts\Routing\Registrar');
+        $this->app->alias('router', 'Illuminate\Routing\Router');
     }
 }
