@@ -3,6 +3,21 @@
 https://github.com/josdejong/jsoneditor
 
 
+## 2017-01-06, version 5.5.11
+
+- Fixed embedded version of jsoneditor ace theme not being loaded in
+  minimalist version (see #55).
+- Fixed a styling issue in the SearchBox of Ace editor (mode `code`).
+- Fixed #347: CSS more robust against global settings of div position.
+- Added docs and example on how to use a custom version of Ace editor.
+
+
+## 2016-11-02, version 5.5.10
+
+- Fixed #85: pressing enter in an input in a form containing a JSONEditor too
+  breaks submitting the form.
+
+
 ## 2016-10-17, version 5.5.9
 
 - Fixed #329: Editor showing duplicate key warnings for keys defined on the

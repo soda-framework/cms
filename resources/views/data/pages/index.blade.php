@@ -56,7 +56,7 @@
     <script>
         var pageTypes = {!! json_encode($page_types->pluck('name', 'id')->prepend('None', 0), JSON_FORCE_OBJECT) !!};
         var allowedSubpageTypes = {!! json_encode($page_types->keyBy('id')->transform(function($item) {
-            return $item->subpageTypes->pluck('id')->toArray();
+            return $item->subpageTypes ? $item->subpageTypes->pluck('id')->toArray() : [];
         })) !!};
 
         $('#pageTypeModal').on('show.bs.modal', function (event) {

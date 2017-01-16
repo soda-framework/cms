@@ -3,17 +3,16 @@
 namespace Soda\Cms\Foundation\Routing;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Route as IlluminateRoute;
 use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\Drafting;
-use Soda\Cms\Http\Middleware\Security;
+use Soda\Cms\Http\Middleware\ForceHttps;
 use Soda\Cms\Http\Middleware\HasAbility;
 use Soda\Cms\Http\Middleware\HasPermission;
 use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
+use Soda\Cms\Http\Middleware\Security;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -43,6 +42,10 @@ class RouteServiceProvider extends ServiceProvider
         $router->middlewareGroup('soda.api', [
             Drafting::class,
         ]);
+
+        if (config('soda.cms.https')) {
+            $router->pushMiddlewareToGroup('soda.web', ForceHttps::class);
+        }
 
         $router->middleware('soda.auth', Authenticate::class);
         $router->middleware('soda.guest', RedirectIfAuthenticated::class);
@@ -123,7 +126,7 @@ class RouteServiceProvider extends ServiceProvider
         // If the router is "rebound", we will need to rebuild the middleware.
         // by copying properties from the existing router instance
 
-        $this->app->rebinding('router', function ($app, $router) use ($coreRouter){
+        $this->app->rebinding('router', function ($app, $router) use ($coreRouter) {
             $reflectionRouter = new ReflectionClass($coreRouter);
             $property = $reflectionRouter->getProperty('middlewareGroups');
             $property->setAccessible(true);

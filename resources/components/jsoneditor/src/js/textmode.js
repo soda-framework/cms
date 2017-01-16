@@ -16,6 +16,8 @@ var textmode = {};
 
 var MAX_ERRORS = 3; // maximum number of displayed errors at the bottom
 
+var DEFAULT_THEME = 'ace/theme/jsoneditor';
+
 /**
  * Create a text editor
  * @param {Element} container
@@ -63,7 +65,10 @@ textmode.create = function (container, options) {
   }
 
   // determine theme
-  this.theme = options.theme || 'ace/theme/jsoneditor';
+  this.theme = options.theme || DEFAULT_THEME;
+  if (this.theme === DEFAULT_THEME && window.ace) {
+    require('./ace/theme-jsoneditor');
+  }
 
   var me = this;
   this.container = container;
@@ -95,6 +100,7 @@ textmode.create = function (container, options) {
 
   // create format button
   var buttonFormat = document.createElement('button');
+  buttonFormat.type = 'button';
   buttonFormat.className = 'jsoneditor-format';
   buttonFormat.title = 'Format JSON data, with proper indentation and line feeds (Ctrl+\\)';
   this.menu.appendChild(buttonFormat);
@@ -110,6 +116,7 @@ textmode.create = function (container, options) {
 
   // create compact button
   var buttonCompact = document.createElement('button');
+  buttonCompact.type = 'button';
   buttonCompact.className = 'jsoneditor-compact';
   buttonCompact.title = 'Compact JSON data, remove all whitespaces (Ctrl+Shift+\\)';
   this.menu.appendChild(buttonCompact);

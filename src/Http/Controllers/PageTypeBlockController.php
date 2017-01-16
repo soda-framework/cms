@@ -30,7 +30,7 @@ class PageTypeBlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.attach', ['object' => 'block']));
         }
 
-        return redirect()->route('soda.page-types.edit', $pageTypeId)->with('success', trans('soda::messages.attached', ['object' => 'block']));
+        return redirect()->route('soda.page-types.edit', [$pageTypeId, 'tab' => 'blocks'])->with('success', trans('soda::messages.attached', ['object' => 'block']));
     }
 
     /**
@@ -49,6 +49,6 @@ class PageTypeBlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.detach', ['object' => 'block']));
         }
 
-        return redirect()->route('soda.page-types.edit', $pageTypeId)->with('success', trans('soda::messages.detached', ['object' => 'block']));
+        return redirect()->route('soda.page-types.edit', [$pageTypeId, 'tab' => 'blocks'])->with('success', trans('soda::messages.detached', ['object' => 'block']));
     }
 }

@@ -96,6 +96,8 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
                 return $settings->prepend($defaultCategory, 'Settings');
             }
+
+            return $settings;
         }
 
         return [];
