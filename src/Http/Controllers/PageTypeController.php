@@ -38,11 +38,12 @@ class PageTypeController extends BaseController
     {
         try {
             $pageType = $this->pageTypes->newInstance($request);
+            $pageTypes = $this->pageTypes->getList();
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'page type']));
         }
 
-        return soda_cms_view('data.pages.types.view', compact('pageType'));
+        return soda_cms_view('data.pages.types.view', compact('pageType', 'pageTypes'));
     }
 
     /**
@@ -73,12 +74,14 @@ class PageTypeController extends BaseController
     public function edit($id)
     {
         $pageType = $this->pageTypes->findById($id);
+        $pageTypes = $this->pageTypes->getList($id);
+        $blockTypes = $this->pageTypes->getAvailableBlockTypes($pageType);
 
         if (!$pageType) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page type']));
         }
 
-        return soda_cms_view('data.pages.types.view', compact('pageType'));
+        return soda_cms_view('data.pages.types.view', compact('pageType', 'pageTypes', 'blockTypes'));
     }
 
     /**

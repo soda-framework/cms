@@ -35,7 +35,10 @@ abstract class AbstractRepository
     public function destroy($id)
     {
         $block = $this->model->find($id);
-        $block->delete();
+
+        if($block) {
+            $block->delete();
+        }
 
         return $block;
     }

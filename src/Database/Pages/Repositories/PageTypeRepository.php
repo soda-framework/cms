@@ -17,14 +17,39 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
         $this->model = $model;
     }
 
-    public function save(Request $request, $id = null)
+    public function getBlockTypes()
     {
-        if($this->model->id && $this->model->isDirty('allowed_children'))
-        {
-            $this->model->pages()->update(['allowed_children' => $this->model->allowed_children]);
+        return app('soda.block-type.repository')->getAll();
+    }
+
+    public function getAvailableBlockTypes(PageTypeInterface $pageType)
+    {
+        if (!$pageType->relationLoaded('block_types')) {
+            $pageType->load('block_types');
         }
 
-        return parent::save();
+        return $this->getBlockTypes()->diff($pageType->getRelation('block_types'));
+    }
+
+    public function save(Request $request, $id = null)
+    {
+        $model = $id ? $this->model->findOrFail($id) : $this->newInstance();
+        $model->fill($request->all());
+
+        if($model->id && $model->isDirty('allowed_children'))
+        {
+            $model->pages()->update(['allowed_children' => $this->model->allowed_children]);
+        }
+
+        $model->save();
+
+        $allPageTypes = $request->input('subpage_types') ? array_keys($request->input('subpage_types')) : [];
+        $restrictedPageTypes = array_keys(array_filter($request->input('subpage_types')));
+        $isAllAllowed = $request->input('page_types_restricted') == '0' || $allPageTypes == $restrictedPageTypes;
+
+        $model->subpage_types()->sync($isAllAllowed ? [] : $restrictedPageTypes);
+
+        return $model;
     }
 
     public function getFilteredGrid($perPage)
@@ -35,5 +60,16 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
         $grid->paginate($perPage)->getGrid($this->getGridView());
 
         return compact('filter', 'grid');
+    }
+
+    public function getList($exceptId = false)
+    {
+        $pageTypes = $this->model;
+
+        if($exceptId !== false) {
+            $pageTypes = $pageTypes->where('id', '!=', $exceptId);
+        }
+
+        return $pageTypes->get();
     }
 }

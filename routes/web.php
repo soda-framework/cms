@@ -25,6 +25,8 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
             'except' => 'show',
         ]);
 
+        Route::post('page-types/{pageTypeId}/block-types/attach', 'PageTypeBlockController@attach')->name('soda.page-types.blocks.attach');
+        Route::delete('page-types/{pageTypeId}/block-types/{blockTypeId}/detach', 'PageTypeBlockController@detach')->name('soda.page-types.blocks.detach');
         Route::resource('page-types', 'PageTypeController', [
             'as'     => 'soda',
             'except' => 'show',
