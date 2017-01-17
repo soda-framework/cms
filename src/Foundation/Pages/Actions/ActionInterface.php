@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Foundation\Pages\Actions;
 
-use Illuminate\Http\Request;
 use Soda\Cms\Models\Page;
+use Illuminate\Http\Request;
 
 interface ActionInterface
 {

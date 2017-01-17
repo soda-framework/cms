@@ -2,17 +2,17 @@
 
 namespace Soda\Cms\Models\Traits;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Session;
+use Carbon\Carbon;
 use Soda\Cms\Support\Constants;
+use Illuminate\Database\Eloquent\Builder;
 
 trait DraftableTrait
 {
     protected static $drafts = true;
 
     /**
-     * Automatically filters model to only show live items
+     * Automatically filters model to only show live items.
      */
     public static function bootDraftableTrait()
     {
@@ -20,7 +20,7 @@ trait DraftableTrait
             if (static::isDraftsEnabled()) {
                 $builder->where('status', '=', Constants::STATUS_LIVE);
 
-                if(isset(static::$publishDateField)) {
+                if (isset(static::$publishDateField)) {
                     $builder->where(static::$publishDateField, '<', Carbon::now());
                 }
             }
@@ -41,6 +41,6 @@ trait DraftableTrait
 
     protected static function isDraftsEnabled()
     {
-        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
+        return static::$drafts && (Session::get('soda.draft_mode') !== true || ! Auth::user()->can('view-drafts'));
     }
 }

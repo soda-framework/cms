@@ -10,5 +10,4 @@ class HomeController extends BaseController
     {
         return view('soda-example::homepage', compact('request'));
     }
-
 }

@@ -6,5 +6,5 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Upload extends AbstractFormField
 {
-    protected $view = "upload";
+    protected $view = 'upload';
 }

@@ -6,7 +6,7 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Radio extends AbstractFormField
 {
-    protected $view = "radio";
+    protected $view = 'radio';
 
     public function getDefaultParameters()
     {

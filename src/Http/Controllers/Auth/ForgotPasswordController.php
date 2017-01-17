@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Soda\Cms\Http\Controllers\BaseController;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends BaseController
 {

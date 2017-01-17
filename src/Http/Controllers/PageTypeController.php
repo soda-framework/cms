@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 use Soda\Cms\Models\PageType;
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 
 class PageTypeController extends BaseController
 {

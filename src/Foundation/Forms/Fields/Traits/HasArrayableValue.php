@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 trait HasArrayableValue
 {
     /**
-     * Manipulate the field input before returning the value that should be saved
+     * Manipulate the field input before returning the value that should be saved.
      *
      * @param \Illuminate\Http\Request $request
      *

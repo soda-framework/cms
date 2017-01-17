@@ -8,7 +8,7 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Datetime extends AbstractFormField
 {
-    protected $view = "datetime";
+    protected $view = 'datetime';
 
     public function getDefaultParameters()
     {
@@ -16,12 +16,12 @@ class Datetime extends AbstractFormField
             'options' => [
                 'format' => 'DD/MM/Y h:mm A',
                 'icons'         => [
-                    'time'     => "fa fa-clock-o",
-                    'date'     => "fa fa-calendar",
-                    'up'       => "fa fa-caret-up",
-                    'down'     => "fa fa-caret-down",
-                    'previous' => "fa fa-caret-left",
-                    'next'     => "fa fa-caret-right",
+                    'time'     => 'fa fa-clock-o',
+                    'date'     => 'fa fa-calendar',
+                    'up'       => 'fa fa-caret-up',
+                    'down'     => 'fa fa-caret-down',
+                    'previous' => 'fa fa-caret-left',
+                    'next'     => 'fa fa-caret-right',
                 ],
             ],
             'input-format'  => 'd/m/Y g:i A',
@@ -34,12 +34,13 @@ class Datetime extends AbstractFormField
         $value = parent::getFieldValue();
         $parameters = $this->parseFieldParameters();
 
-        if(!$value) return '';
+        if (! $value) {
+            return '';
+        }
 
         $dateTime = Carbon::createFromFormat($parameters['output-format'], $value);
 
-        if(isset($parameters['timezone']) && $parameters['timezone'])
-        {
+        if (isset($parameters['timezone']) && $parameters['timezone']) {
             $dateTime->setTimezone($parameters['timezone']);
         }
 
@@ -51,7 +52,9 @@ class Datetime extends AbstractFormField
         $value = parent::getSaveValue($request);
         $parameters = $this->parseFieldParameters();
 
-        if(!$value) return null;
+        if (! $value) {
+            return;
+        }
 
         $tz = isset($parameters['timezone']) && $parameters['timezone'] ? $parameters['timezone'] : null;
 

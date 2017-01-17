@@ -6,12 +6,11 @@ use Illuminate\Console\Command;
 
 class Config extends Command
 {
-
     protected $signature = 'soda:config';
     protected $description = 'Update config for the Soda Framework';
 
     /**
-     * Force publishes Soda CMS assets
+     * Force publishes Soda CMS assets.
      */
     public function handle()
     {
@@ -23,4 +22,3 @@ class Config extends Command
         $this->info('Soda config updated successfully.');
     }
 }
-

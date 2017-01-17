@@ -2,14 +2,14 @@
 
 namespace Soda\Cms\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
-use Soda\Cms\Http\Middleware\HasAbility;
-use Soda\Cms\Http\Middleware\HasPermission;
-use Soda\Cms\Http\Middleware\HasRole;
-use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\Cms;
+use Soda\Cms\Http\Middleware\HasRole;
+use Soda\Cms\Http\Middleware\HasAbility;
+use Soda\Cms\Http\Middleware\Authenticate;
+use Soda\Cms\Http\Middleware\HasPermission;
 use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -50,7 +50,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map(Router $router)
     {
         $router->group(['namespace' => $this->namespace], function ($router) {
-            require(__DIR__.'/../../routes/web.php');
+            require __DIR__.'/../../routes/web.php';
         });
 
         $router->getRoutes()->refreshNameLookups();

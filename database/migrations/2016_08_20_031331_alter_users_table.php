@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class AlterUsersTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -45,5 +44,4 @@ class AlterUsersTable extends Migration
             $table->dropColumn('application_id');
         });
     }
-
 }
