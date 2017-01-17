@@ -2,10 +2,10 @@
 
 namespace Themes\SodaExample\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Auth;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
@@ -20,7 +20,7 @@ class AuthController extends Controller
     }
 
     /**
-     * The Main login view
+     * The Main login view.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -32,7 +32,7 @@ class AuthController extends Controller
     /**
      * This login method creates a user if the email is not present.
      * You probable want to change the auth guard to something else if
-     * you want a real login
+     * you want a real login.
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -56,9 +56,9 @@ class AuthController extends Controller
     }
 
     /**
-     * logout functions
+     * logout functions.
      *
-     * @param  boolean $redirect page to redirect to when complete.
+     * @param  bool $redirect page to redirect to when complete.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -68,5 +68,4 @@ class AuthController extends Controller
 
         return redirect()->to('/')->with('success', 'Logged out succesfully');
     }
-
 }

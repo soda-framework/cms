@@ -1,11 +1,13 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+namespace Soda\Cms\Controllers;
+
 use Soda;
-use Soda\Cms\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Page;
+use Illuminate\Http\Request;
 use Soda\Cms\Models\PageType;
+use App\Http\Controllers\Controller;
+use Soda\Cms\Controllers\Traits\TreeableTrait;
 
 class PageController extends Controller
 {
@@ -35,7 +37,9 @@ class PageController extends Controller
             $page = $this->model->find($request->input('id'));
         } else {
             $page = $this->model->getRoots()->first();    //todo: from application.
-            if (!$page) $page = Page::createRoot();
+            if (! $page) {
+                $page = Page::createRoot();
+            }
         }
 
         $page_types = PageType::get();
@@ -81,7 +85,6 @@ class PageController extends Controller
         $this->model->load('type.fields');
 
         if ($request->has('settings')) {
-
             $dyn_table = Soda::dynamicModel('soda_'.$this->model->type->identifier,
                 $this->model->type->fields->lists('field_name')->toArray())->where('page_id', $this->model->id)->first();
 
@@ -118,14 +121,13 @@ class PageController extends Controller
             $this->model->action_type = $this->model->type->action_type;
             $this->model->edit_action = $this->model->type->edit_action;
             $this->model->edit_action_type = $this->model->type->edit_action_type;
-
         }
 
         return view('soda::page.view', ['model' => $this->model, 'hint' => $this->hint]);
     }
 
     /**
-     * create page save functions
+     * create page save functions.
      *
      * @param null $parent_id
      *
@@ -167,5 +169,4 @@ class PageController extends Controller
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
     }
-
 }

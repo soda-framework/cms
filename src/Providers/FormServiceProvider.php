@@ -1,10 +1,11 @@
 <?php
+
 namespace Soda\Cms\Providers;
 
+use Soda\Cms\Facades\SodaFormFacade;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Components\Forms\FormBuilder;
 use Soda\Cms\Components\Forms\FormFieldRegistrar;
-use Soda\Cms\Facades\SodaFormFacade;
 
 class FormServiceProvider extends ServiceProvider
 {

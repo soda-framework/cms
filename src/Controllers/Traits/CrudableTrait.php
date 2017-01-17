@@ -1,12 +1,13 @@
-<?php namespace Soda\Cms\Controllers\Traits;
+<?php
 
-use Auth;
-use DataFilter;
-use DataGrid;
-use Illuminate\Http\Request;
+namespace Soda\Cms\Controllers\Traits;
+
 use Soda;
+use DataGrid;
+use DataFilter;
+use Illuminate\Http\Request;
 
-Trait CrudableTrait
+trait CrudableTrait
 {
     protected $model;
     protected $saveOnCreate = false;
@@ -103,5 +104,4 @@ Trait CrudableTrait
     {
         return 'soda::partials.grid';
     }
-
 }

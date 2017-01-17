@@ -2,25 +2,23 @@
 
 namespace Soda\Cms\Console;
 
-use Config;
-use DB;
-use Illuminate\Console\Command;
 use PDO;
+use Config;
+use Illuminate\Console\Command;
 
 class Setup extends Command
 {
-
     protected $signature = 'soda:setup {--f|no-filesystem : Skip filesystem config setup} {--e|no-env : Skip environment variable setup} {--d|no-database : Skip database environment variable setup}';
     protected $description = 'Initial setup command for the Soda Framework';
     protected $except = [];
 
     public function handle()
     {
-        if (!$this->option('no-env')) {
+        if (! $this->option('no-env')) {
             $this->updateEnv();
         }
 
-        if (!$this->option('no-filesystem')) {
+        if (! $this->option('no-filesystem')) {
             $this->updateConfig();
         }
     }
@@ -31,7 +29,7 @@ class Setup extends Command
 
         if (file_exists($environment_file_path)) {
             $contents = file_get_contents($environment_file_path);
-            if (!$this->option('no-database')) {
+            if (! $this->option('no-database')) {
                 $base_name = str_slug(basename(base_path()));
                 if ($base_name == 'src') {
                     $base_name = str_slug(basename(dirname(base_path())), '-');

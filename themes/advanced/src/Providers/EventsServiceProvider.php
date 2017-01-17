@@ -1,4 +1,5 @@
 <?php
+
 namespace Themes\SodaExample\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;

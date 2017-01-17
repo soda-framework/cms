@@ -4,7 +4,6 @@ namespace Soda\Cms\Models;
 
 use Illuminate\Database\Schema\Blueprint;
 use Soda\Cms\Models\Traits\DraftableTrait;
-use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class BlockType extends AbstractDynamicType

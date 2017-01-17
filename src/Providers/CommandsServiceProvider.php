@@ -1,14 +1,15 @@
 <?php
+
 namespace Soda\Cms\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Console\Assets;
-use Soda\Cms\Console\Config;
-use Soda\Cms\Console\Migrate;
 use Soda\Cms\Console\Seed;
 use Soda\Cms\Console\Setup;
 use Soda\Cms\Console\Theme;
+use Soda\Cms\Console\Assets;
+use Soda\Cms\Console\Config;
 use Soda\Cms\Console\Update;
+use Soda\Cms\Console\Migrate;
+use Illuminate\Support\ServiceProvider;
 
 class CommandsServiceProvider extends ServiceProvider
 {

@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Models\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
 use Soda;
+use Illuminate\Database\Eloquent\Builder;
 
 trait InApplicationTrait
 {

@@ -1,11 +1,12 @@
 <?php
+
 namespace Soda\Cms\Providers;
 
 use Blade;
-use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Components\Soda as SodaInstance;
 use Soda\Cms\Facades\SodaFacade;
 use Zofe\Rapyd\RapydServiceProvider;
+use Illuminate\Support\ServiceProvider;
+use Soda\Cms\Components\Soda as SodaInstance;
 
 class SodaServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,7 @@ class SodaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require(__DIR__.'/../helpers.php');
+        require __DIR__.'/../helpers.php';
 
         $this->configure();
 

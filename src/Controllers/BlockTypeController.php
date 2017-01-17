@@ -1,14 +1,15 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+namespace Soda\Cms\Controllers;
+
 use Soda;
-use Soda\Cms\Controllers\Traits\CrudableTrait;
+use Illuminate\Http\Request;
 use Soda\Cms\Models\BlockType;
+use App\Http\Controllers\Controller;
+use Soda\Cms\Controllers\Traits\CrudableTrait;
 
 class BlockTypeController extends Controller
 {
-
     use CrudableTrait;
     protected $hint = 'block_type';
 
@@ -34,5 +35,4 @@ class BlockTypeController extends Controller
         return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
             'updated');
     }
-
 }

@@ -3,7 +3,6 @@
 namespace Soda\Cms\Models;
 
 use Soda\Cms\Models\Traits\DraftableTrait;
-use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class PageType extends AbstractDynamicType

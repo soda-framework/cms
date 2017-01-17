@@ -2,13 +2,13 @@
 
 namespace Soda\Cms\Models;
 
-use Carbon\Carbon;
+use Schema;
+use SodaForm;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Schema;
 use Soda\Cms\Models\Observers\DynamicObserver;
-use SodaForm;
 
 abstract class AbstractDynamicType extends Model
 {
@@ -33,12 +33,12 @@ abstract class AbstractDynamicType extends Model
     {
         $table = $this->getDynamicTableName();
 
-        if (!Schema::hasTable($table)) {
+        if (! Schema::hasTable($table)) {
             Schema::create($table, function (Blueprint $table) {
                 $this->buildDynamicTable($table);
             });
         } else {
-            Throw new Exception('Table '.$table.' already exists');
+            throw new Exception('Table '.$table.' already exists');
         }
 
         return $this;
@@ -71,7 +71,7 @@ abstract class AbstractDynamicType extends Model
 
             Schema::rename($table, $table.'_deleted_'.Carbon::now()->timestamp);
         } else {
-            Throw new Exception('Table '.$table.' does not exist');
+            throw new Exception('Table '.$table.' does not exist');
         }
 
         return $this;
@@ -91,7 +91,7 @@ abstract class AbstractDynamicType extends Model
         $table = $this->getDynamicTableName();
         $field_name = $field->field_name;
 
-        if (!Schema::hasColumn($table, $field_name)) {
+        if (! Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
                 SodaForm::field($field)->addToModel($table)->after('id');
             });
