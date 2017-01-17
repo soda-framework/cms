@@ -8,18 +8,18 @@ use Soda\Cms\Components\Forms\AbstractFormField;
 
 class Datetime extends AbstractFormField
 {
-    protected $view = "datetime";
+    protected $view = 'datetime';
 
     public function getDefaultParameters()
     {
         return [
             'icons'         => [
-                'time'     => "fa fa-clock-o",
-                'date'     => "fa fa-calendar",
-                'up'       => "fa fa-caret-up",
-                'down'     => "fa fa-caret-down",
-                'previous' => "fa fa-caret-left",
-                'next'     => "fa fa-caret-right",
+                'time'     => 'fa fa-clock-o',
+                'date'     => 'fa fa-calendar',
+                'up'       => 'fa fa-caret-up',
+                'down'     => 'fa fa-caret-down',
+                'previous' => 'fa fa-caret-left',
+                'next'     => 'fa fa-caret-right',
             ],
             'input-format'  => 'm/d/Y g:i A',
             'output-format' => 'Y-m-d H:i:s',

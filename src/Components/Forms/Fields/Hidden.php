@@ -8,6 +8,6 @@ class Hidden extends AbstractFormField
 {
     public function render()
     {
-        return "";
+        return '';
     }
 }

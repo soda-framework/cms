@@ -2,9 +2,9 @@
 
 namespace Soda\Cms\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Models\Traits\DraftableTrait;
+use Illuminate\Database\Eloquent\Collection;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
@@ -37,7 +37,7 @@ class Block extends Model
 
     public function modelQuery($page_id = null)
     {
-        if (!$this->type) {
+        if (! $this->type) {
             $this->load('type');
         }
 
@@ -55,7 +55,7 @@ class Block extends Model
 
         $model = $query->get();
 
-        if (!$model) {
+        if (! $model) {
             $model = new Collection;
         }
 

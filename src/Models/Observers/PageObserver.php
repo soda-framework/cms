@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Models\Observers;
 
-use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Models\ModelBuilder;
 
 class PageObserver
 {

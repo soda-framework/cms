@@ -2,16 +2,16 @@
 
 namespace Soda\Cms\Models\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
 use Session;
 use Soda\Cms\Components\Status;
+use Illuminate\Database\Eloquent\Builder;
 
 trait DraftableTrait
 {
     protected static $drafts = true;
 
     /**
-     * Automatically filters model to only show live items
+     * Automatically filters model to only show live items.
      */
     public static function bootDraftableTrait()
     {
@@ -26,7 +26,7 @@ trait DraftableTrait
 
     protected static function isDraftsEnabled()
     {
-        return static::$drafts && (Session::get("soda.draft_mode") !== true || !Auth::user()->can('view-drafts'));
+        return static::$drafts && (Session::get('soda.draft_mode') !== true || ! Auth::user()->can('view-drafts'));
     }
 
     public static function enableDrafts()

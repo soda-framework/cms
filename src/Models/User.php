@@ -4,9 +4,9 @@ namespace Soda\Cms\Models;
 
 use Cache;
 use Config;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
@@ -41,12 +41,11 @@ class User extends Authenticatable
         $cacheKey = 'entrust_roles_for_user_'.$this->$userPrimaryKey;
 
         return Cache::tags(Config::get('entrust.role_user_table'))->remember($cacheKey, Config::get('cache.ttl'), function () {
-            if (!$this->roles) {
+            if (! $this->roles) {
                 return $this->load('roles');
             }
 
             return $this->roles;
         });
     }
-
 }

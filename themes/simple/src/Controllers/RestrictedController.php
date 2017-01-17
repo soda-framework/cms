@@ -2,12 +2,11 @@
 
 namespace Themes\SodaExample\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RestrictedController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -17,5 +16,4 @@ class RestrictedController extends Controller
     {
         return view('soda-example::logged_in', compact('request'));
     }
-
 }

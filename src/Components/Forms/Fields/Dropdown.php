@@ -6,7 +6,7 @@ use Soda\Cms\Components\Forms\AbstractFormField;
 
 class Dropdown extends AbstractFormField
 {
-    protected $view = "dropdown";
+    protected $view = 'dropdown';
 
     public function getDefaultParameters()
     {

@@ -15,5 +15,4 @@ trait TreeableTrait
         // TODO: see https://github.com/franzose/ClosureTable/issues/164
         return $treeModel ? $treeModel->collectDescendants()->orderBy('position')->get()->toTree() : [];
     }
-
 }

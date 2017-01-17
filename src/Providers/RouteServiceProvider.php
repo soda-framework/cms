@@ -2,13 +2,13 @@
 
 namespace Soda\Cms\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Soda\Cms\Middleware\Cms;
 use Illuminate\Routing\Router;
 use Soda\Cms\Middleware\Authenticate;
-use Soda\Cms\Middleware\Cms;
+use Zizaco\Entrust\Middleware\EntrustRole;
 use Zizaco\Entrust\Middleware\EntrustAbility;
 use Zizaco\Entrust\Middleware\EntrustPermission;
-use Zizaco\Entrust\Middleware\EntrustRole;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map(Router $router)
     {
         $router->group(['namespace' => $this->namespace], function ($router) {
-            require(__DIR__.'/../routes.php');
+            require __DIR__.'/../routes.php';
         });
     }
 }

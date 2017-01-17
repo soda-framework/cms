@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait PositionableTrait
 {
-
     /**
      * Adds position to model on creating event.
      */

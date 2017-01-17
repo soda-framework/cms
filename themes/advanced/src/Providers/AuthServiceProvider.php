@@ -1,4 +1,6 @@
-<?php namespace Themes\SodaExample\Providers;
+<?php
+
+namespace Themes\SodaExample\Providers;
 
 use Auth;
 use Illuminate\Support\ServiceProvider;
@@ -7,7 +9,6 @@ use Themes\SodaExample\UserProviders\UsernameUserProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      *
@@ -15,7 +16,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         Auth::extend('username', function ($app, $name, array $config) {
             // Return an instance of Illuminate\Contracts\Auth\Guard...
             return new UsernameGuard($config['provider'],
@@ -40,5 +40,4 @@ class AuthServiceProvider extends ServiceProvider
     {
         //
     }
-
 }

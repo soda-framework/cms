@@ -2,8 +2,8 @@
 
 namespace Themes\SodaExample\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -11,5 +11,4 @@ class HomeController extends Controller
     {
         return view('soda-example::homepage', compact('request'));
     }
-
 }

@@ -1,9 +1,10 @@
 <?php
+
 namespace Soda\Cms\Providers;
 
+use Soda\Cms\Facades\SodaPageFacade;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Components\Pages\PageBuilder;
-use Soda\Cms\Facades\SodaPageFacade;
 
 class PageServiceProvider extends ServiceProvider
 {

@@ -4,7 +4,6 @@ namespace Soda\Cms\Models\Traits;
 
 trait SluggableTrait
 {
-
     /**
      * takes a parent tree item and generates a slug based off it.
      *
@@ -21,7 +20,7 @@ trait SluggableTrait
             $highest = static::where('slug', 'like', "$slug-%")->orderBy('slug', 'desc')->first();
             $num = 1;
             if ($highest) {
-                $num = str_replace("$slug-", "", $highest->slug);
+                $num = str_replace("$slug-", '', $highest->slug);
                 $num++;
             }
 
@@ -37,7 +36,9 @@ trait SluggableTrait
         $slug = '';
 
         foreach ($parts as $part) {
-            if ($part) $slug .= '/'.str_slug($part);
+            if ($part) {
+                $slug .= '/'.str_slug($part);
+            }
         }
 
         return '/'.ltrim($slug, '/');

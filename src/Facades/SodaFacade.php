@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Facade;
 class SodaFacade extends Facade
 {
     /**
-     *
      * Get the registered name of the component.
      *
      * @return string
@@ -20,5 +19,4 @@ class SodaFacade extends Facade
     {
         return 'soda';
     }
-
 }

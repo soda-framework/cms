@@ -1,12 +1,13 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
+namespace Soda\Cms\Controllers;
+
+use Soda\Cms\Models\User;
 use App\Http\Controllers\Controller;
 use Soda\Cms\Controllers\Traits\CrudableTrait;
-use Soda\Cms\Models\User;
 
 class UserController extends Controller
 {
-
     use CrudableTrait;
 
     public $hint = 'user';
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $filter = \DataFilter::source($this->model);
-        $filter->add('name', 'name', 'text');;
+        $filter->add('name', 'name', 'text');
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
@@ -40,5 +41,4 @@ class UserController extends Controller
 
         return view('soda::'.$this->hint.'.index', compact('filter', 'grid', 'hint'));
     }
-
 }

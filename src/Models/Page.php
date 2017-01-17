@@ -1,17 +1,18 @@
 <?php
+
 namespace Soda\Cms\Models;
 
+use Soda;
 use Exception;
+use Soda\Cms\Components\Status;
+use Soda\Cms\Models\Traits\TreeableTrait;
+use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda;
-use Soda\Cms\Components\Status;
-use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\PositionableTrait;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Soda\Cms\Models\Traits\PositionableTrait;
-use Soda\Cms\Models\Traits\SluggableTrait;
-use Soda\Cms\Models\Traits\TreeableTrait;
 
 class Page extends AbstractSodaClosureEntity
 {
@@ -114,7 +115,7 @@ class Page extends AbstractSodaClosureEntity
 
     public function pageAttributes()
     {
-        if (!$this->pageAttributes) {
+        if (! $this->pageAttributes) {
             $this->loadPageAttributes();
         }
 
@@ -130,16 +131,16 @@ class Page extends AbstractSodaClosureEntity
 
     protected function loadPageAttributes()
     {
-        if (!$this->type) {
+        if (! $this->type) {
             $this->load('type');
         }
 
-        if (!$this->type) {
+        if (! $this->type) {
             $model = new ModelBuilder;
         } else {
             $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
 
-            if (!$model) {
+            if (! $model) {
                 $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->newInstance();
             }
         }
