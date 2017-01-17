@@ -12,7 +12,7 @@ trait AdditionalClosureScopes
     public static function collectRoots()
     {
         /**
-         * @var Entity $instance
+         * @var Entity
          */
         $instance = new static;
 

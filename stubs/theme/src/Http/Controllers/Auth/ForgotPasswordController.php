@@ -2,9 +2,9 @@
 
 namespace Themes\SodaExample\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Password;
 use Themes\SodaExample\Http\Controllers\BaseController;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends BaseController
 {

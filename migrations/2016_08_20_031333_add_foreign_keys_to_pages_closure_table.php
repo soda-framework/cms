@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class AddForeignKeysToPagesClosureTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -31,5 +30,4 @@ class AddForeignKeysToPagesClosureTable extends Migration
             $table->dropForeign('FK_pages_closure_pages_2');
         });
     }
-
 }

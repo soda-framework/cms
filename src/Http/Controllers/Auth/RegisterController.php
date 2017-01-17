@@ -2,11 +2,11 @@
 
 namespace Soda\Cms\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Soda\Cms\Database\Users\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Soda\Cms\Http\Controllers\BaseController;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends BaseController
 {

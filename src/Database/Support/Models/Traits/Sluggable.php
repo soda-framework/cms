@@ -10,6 +10,7 @@ trait Sluggable
 
         return $this;
     }
+
     /**
      * Takes a parent tree item and generates a slug based off it.
      *
@@ -23,7 +24,7 @@ trait Sluggable
         $slug = $useParent ? $this->fixSlug($this->fixSlug($this->getAttribute('slug')).$this->fixSlug($title)) : $this->fixSlug($title);
 
         // Make sure it doesn't already exist. Exclude own record if we're not using parent to generate slug
-        if ($this->getExistingSlug($slug, !$useParent)) {
+        if ($this->getExistingSlug($slug, ! $useParent)) {
             // It already exists, increment it
             $slug = $this->incrementLatestSlug($slug);
         }
@@ -32,7 +33,7 @@ trait Sluggable
     }
 
     /**
-     * Checks where slug is currently being used
+     * Checks where slug is currently being used.
      *
      * @param $slug
      * @param $excludeSelf
@@ -51,7 +52,7 @@ trait Sluggable
     }
 
     /**
-     * Increments the number appended to the slug, to prevent duplicates
+     * Increments the number appended to the slug, to prevent duplicates.
      *
      * @param $slug
      *
@@ -59,20 +60,19 @@ trait Sluggable
      */
     protected function incrementLatestSlug($slug)
     {
-        $highest = static::where('slug', 'like', "$slug-%")->orderBy('slug', 'desc')->first();;
+        $highest = static::where('slug', 'like', "$slug-%")->orderBy('slug', 'desc')->first();
         $num = 1;
 
         if ($highest) {
-            $num = str_replace("$slug-", "", $highest->getAttribute('slug'));
+            $num = str_replace("$slug-", '', $highest->getAttribute('slug'));
             $num++;
         }
 
         return $slug.'-'.$num;
     }
 
-
     /**
-     * Fixes slashes used in slug
+     * Fixes slashes used in slug.
      *
      * @param $slug
      *
@@ -83,7 +83,9 @@ trait Sluggable
         $parts = explode('/', $slug);
         $slug = '';
         foreach ($parts as $part) {
-            if ($part) $slug .= '/'.str_slug($part);
+            if ($part) {
+                $slug .= '/'.str_slug($part);
+            }
         }
 
         return strtolower('/'.ltrim($slug, '/'));

@@ -3,17 +3,17 @@
 namespace Soda\Cms\Database\Application;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationSettingInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
-use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Models\Application;
-use Soda\Cms\Database\Application\Models\ApplicationSetting;
 use Soda\Cms\Database\Application\Models\ApplicationUrl;
+use Soda\Cms\Database\Application\Models\ApplicationSetting;
+use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 use Soda\Cms\Database\Application\Repositories\ApplicationRepository;
-use Soda\Cms\Database\Application\Repositories\CachedApplicationRepository;
+use Soda\Cms\Database\Application\Interfaces\ApplicationSettingInterface;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
+use Soda\Cms\Database\Application\Repositories\CachedApplicationRepository;
+use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
+use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 
 class ApplicationServiceProvider extends ServiceProvider
 {

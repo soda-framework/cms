@@ -4,7 +4,7 @@ namespace Soda\Cms\Forms\Fields;
 
 class Slug extends Text
 {
-    protected $view = "slug";
+    protected $view = 'slug';
 
     public function getDefaultParameters()
     {

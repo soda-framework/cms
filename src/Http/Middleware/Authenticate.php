@@ -8,7 +8,6 @@ use Illuminate\Auth\Middleware\Authenticate as BaseAuthenticate;
 
 class Authenticate extends BaseAuthenticate
 {
-
     /**
      * Handle an incoming request.
      *

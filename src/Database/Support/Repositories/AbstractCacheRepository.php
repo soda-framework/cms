@@ -1,4 +1,6 @@
-<?php namespace Soda\Cms\Database\Support\Repositories;
+<?php
+
+namespace Soda\Cms\Database\Support\Repositories;
 
 abstract class AbstractCacheRepository
 {

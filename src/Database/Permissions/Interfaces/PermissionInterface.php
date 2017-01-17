@@ -6,5 +6,4 @@ use Laratrust\Contracts\LaratrustPermissionInterface;
 
 interface PermissionInterface extends LaratrustPermissionInterface
 {
-
 }

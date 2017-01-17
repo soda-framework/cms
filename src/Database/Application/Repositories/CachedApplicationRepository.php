@@ -1,9 +1,11 @@
-<?php namespace Soda\Cms\Database\Application\Repositories;
+<?php
+
+namespace Soda\Cms\Database\Application\Repositories;
 
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
+use Soda\Cms\Database\Support\Repositories\AbstractCacheRepository;
 use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
 use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
-use Soda\Cms\Database\Support\Repositories\AbstractCacheRepository;
 
 class CachedApplicationRepository extends AbstractCacheRepository implements CachedApplicationRepositoryInterface
 {
@@ -20,7 +22,7 @@ class CachedApplicationRepository extends AbstractCacheRepository implements Cac
             return $this->repository->findByUrl($url);
         });
 
-        if (!$application) {
+        if (! $application) {
             $this->forget($this->getApplicationUrlCacheKey($url));
         }
 
@@ -30,7 +32,7 @@ class CachedApplicationRepository extends AbstractCacheRepository implements Cac
     public function getSettingsForApplication(ApplicationInterface $application)
     {
         return $this->cache($this->getApplicationSettingsCacheKey($application->getKey()), config('soda.cache.application'), function () use ($application) {
-            if (!$application->relationLoaded('settings')) {
+            if (! $application->relationLoaded('settings')) {
                 $application->load('settings');
             }
 

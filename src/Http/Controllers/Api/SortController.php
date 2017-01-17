@@ -16,17 +16,17 @@ class SortController extends ApiController
         $sortableEntities = app('config')->get('soda.sortable.entities', []);
         $validator = $this->getValidator($sortableEntities, $request);
 
-        if (!$validator->passes()) {
+        if (! $validator->passes()) {
             return $this->respondInvalid(null, [
                 'errors' => $validator->errors(),
             ]);
         }
 
         /** @var Model|bool $entityClass */
-        list($entityClass, $relation) = $this->getEntityInfo($sortableEntities, (string)$request->input('entityName'));
+        list($entityClass, $relation) = $this->getEntityInfo($sortableEntities, (string) $request->input('entityName'));
         $method = $request->input('type');
 
-        if (!$relation) {
+        if (! $relation) {
             /** @var SortableTrait $entity */
             $entity = app($entityClass)->find($request->input('id'));
             $postionEntity = app($entityClass)->find($request->input('positionEntityId'));
@@ -60,9 +60,9 @@ class SortController extends ApiController
         ];
 
         /** @var Model|bool $entityClass */
-        list($entityClass, $relation) = $this->getEntityInfo($sortableEntities, (string)$request->input('entityName'));
+        list($entityClass, $relation) = $this->getEntityInfo($sortableEntities, (string) $request->input('entityName'));
 
-        if (!class_exists(resolve_class($entityClass))) {
+        if (! class_exists(resolve_class($entityClass))) {
             $rules['entityClass'] = 'required'; // fake rule for not exist field
             return $validator->make($request->all(), $rules);
         }
@@ -70,7 +70,7 @@ class SortController extends ApiController
         $tableName = app($entityClass)->getTable();
         $primaryKey = app($entityClass)->getKeyName();
 
-        if (!$relation) {
+        if (! $relation) {
             $rules['id'] .= '|exists:'.$tableName.','.$primaryKey;
             $rules['positionEntityId'] .= '|exists:'.$tableName.','.$primaryKey;
         } else {
@@ -100,7 +100,7 @@ class SortController extends ApiController
 
         if (is_array($entityConfig)) {
             $entityClass = $entityConfig['entity'];
-            $relation = !empty($entityConfig['relation']) ? $entityConfig['relation'] : false;
+            $relation = ! empty($entityConfig['relation']) ? $entityConfig['relation'] : false;
         } else {
             $entityClass = $entityConfig;
         }

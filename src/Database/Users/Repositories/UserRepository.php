@@ -1,13 +1,14 @@
 <?php
+
 namespace Soda\Cms\Database\Users\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Support\Repositories\AbstractRepository;
-use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
-use Soda\Cms\Database\Users\Interfaces\UserInterface;
-use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
-use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
+use Zofe\Rapyd\DataFilter\DataFilter;
+use Soda\Cms\Database\Users\Interfaces\UserInterface;
+use Soda\Cms\Database\Support\Repositories\AbstractRepository;
+use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
+use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
@@ -42,7 +43,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $filter->add('username', 'Username', 'text');
         $filter->add('email', 'Email', 'text');
         $filter->add('roles.id', 'Role', 'select')
-            ->option("", "")
+            ->option('', '')
             ->options($this->getRoles());
         $filter->submit('Search');
         $filter->reset('Clear');

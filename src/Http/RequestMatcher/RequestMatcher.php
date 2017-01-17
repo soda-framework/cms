@@ -3,9 +3,9 @@
 namespace Soda\Cms\Http\RequestMatcher;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 use Soda\Cms\Http\RequestMatcher\Matchers\MatcherInterface;
 use Soda\Cms\Http\RequestMatcher\Matchers\SluggedPageMatcher;
+use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
 
 class RequestMatcher
 {
@@ -21,7 +21,7 @@ class RequestMatcher
     }
 
     /**
-     * Registers a new matcher
+     * Registers a new matcher.
      *
      * @param      $matcher
      *
@@ -29,7 +29,7 @@ class RequestMatcher
      */
     public function registerMatcher($matcher)
     {
-        if (!in_array($matcher, $this->matchers) && is_a($matcher, MatcherInterface::class, true)) {
+        if (! in_array($matcher, $this->matchers) && is_a($matcher, MatcherInterface::class, true)) {
             $this->matchers[] = $matcher;
         }
 
@@ -37,7 +37,7 @@ class RequestMatcher
     }
 
     /**
-     * Registers an array of new matchers
+     * Registers an array of new matchers.
      *
      * @param $matchers
      */
@@ -49,7 +49,7 @@ class RequestMatcher
     }
 
     /**
-     * Returns a list of matchers that have been registered
+     * Returns a list of matchers that have been registered.
      *
      * @return array
      */
@@ -59,7 +59,7 @@ class RequestMatcher
     }
 
     /**
-     * Matches a url to an ApplicationUrl model and it's related Application model
+     * Matches a url to an ApplicationUrl model and it's related Application model.
      *
      * @param $url
      *
@@ -71,18 +71,16 @@ class RequestMatcher
     }
 
     /**
-     * Loads a page by it's slug
+     * Loads a page by it's slug.
      *
      * @param Request $request
      * @param         $slug
      */
     public function match(Request $request, $slug)
     {
-        foreach($this->matchers as $matcher)
-        {
+        foreach ($this->matchers as $matcher) {
             $matcherInstance = app($matcher);
-            if($match = $matcherInstance->match($slug))
-            {
+            if ($match = $matcherInstance->match($slug)) {
                 return $matcherInstance->render($request);
             }
         }
@@ -91,7 +89,7 @@ class RequestMatcher
     }
 
     /**
-     * Handles not found errors
+     * Handles not found errors.
      */
     public function handleApplicationNotFound()
     {
@@ -99,7 +97,7 @@ class RequestMatcher
     }
 
     /**
-     * Handles not found errors
+     * Handles not found errors.
      */
     public function handlePageNotFound()
     {

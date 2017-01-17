@@ -9,7 +9,7 @@ class Tags extends AbstractFormField
 {
     use HasArrayableValue;
 
-    protected $view = "tags";
+    protected $view = 'tags';
 
     public function getDefaultParameters()
     {

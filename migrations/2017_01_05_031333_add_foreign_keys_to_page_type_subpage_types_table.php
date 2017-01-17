@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class AddForeignKeysToPageTypeSubpageTypesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -31,5 +30,4 @@ class AddForeignKeysToPageTypeSubpageTypesTable extends Migration
             $table->dropForeign('FK_page_type_subpage_types_subpage_types');
         });
     }
-
 }

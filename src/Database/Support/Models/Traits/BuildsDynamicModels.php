@@ -2,21 +2,21 @@
 
 namespace Soda\Cms\Database\Support\Models\Traits;
 
-use Carbon\Carbon;
 use Exception;
-use Illuminate\Database\Schema\Blueprint;
+use Carbon\Carbon;
+use Soda\Cms\Support\Facades\Form;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 use Soda\Cms\Database\Support\Observers\DynamicModelObserver;
-use Soda\Cms\Support\Facades\Form;
 
 trait BuildsDynamicModels
 {
-    abstract function getTable();
+    abstract public function getTable();
 
-    abstract function getDynamicModelTablePrefix();
+    abstract public function getDynamicModelTablePrefix();
 
-    abstract function buildDynamicTable(Blueprint $table);
+    abstract public function buildDynamicTable(Blueprint $table);
 
     public static function bootBuildsDynamicModels()
     {
@@ -39,12 +39,12 @@ trait BuildsDynamicModels
     {
         $table = $this->getDynamicTableName();
 
-        if (!Schema::hasTable($table)) {
+        if (! Schema::hasTable($table)) {
             Schema::create($table, function (Blueprint $table) {
                 $this->buildDynamicTable($table);
             });
         } else {
-            Throw new Exception('Table '.$table.' already exists');
+            throw new Exception('Table '.$table.' already exists');
         }
 
         return $this;
@@ -83,7 +83,7 @@ trait BuildsDynamicModels
         $table = $this->getDynamicTableName();
         $field_name = $field->getAttribute('field_name');
 
-        if (!Schema::hasColumn($table, $field_name)) {
+        if (! Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
                 Form::field($field)->addToModel($table)->after('id');
             });

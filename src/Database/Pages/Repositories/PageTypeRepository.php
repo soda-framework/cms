@@ -1,11 +1,12 @@
 <?php
+
 namespace Soda\Cms\Database\Pages\Repositories;
 
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractRepository;
 use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Database\Pages\Interfaces\PageTypeRepositoryInterface;
 
 class PageTypeRepository extends AbstractRepository implements PageTypeRepositoryInterface
 {
@@ -24,7 +25,7 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
 
     public function getAvailableBlockTypes(PageTypeInterface $pageType)
     {
-        if (!$pageType->relationLoaded('block_types')) {
+        if (! $pageType->relationLoaded('block_types')) {
             $pageType->load('block_types');
         }
 
@@ -36,8 +37,7 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
         $model = $id ? $this->model->findOrFail($id) : $this->newInstance();
         $model->fill($request->all());
 
-        if($model->id && $model->isDirty('allowed_children'))
-        {
+        if ($model->id && $model->isDirty('allowed_children')) {
             $model->pages()->update(['allowed_children' => $this->model->allowed_children]);
         }
 
@@ -66,7 +66,7 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
     {
         $pageTypes = $this->model;
 
-        if($exceptId !== false) {
+        if ($exceptId !== false) {
             $pageTypes = $pageTypes->where('id', '!=', $exceptId);
         }
 

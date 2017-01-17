@@ -1,21 +1,20 @@
 <?php
+
 namespace Soda\Cms\Database\Pages\Models;
 
 use Exception;
 use Franzose\ClosureTable\Models\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda\Cms\Database\Blocks\Interfaces\BlockInterface;
-use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Database\Pages\Models\Observers\PageObserver;
-use Soda\Cms\Database\Support\Models\AbstractClosureEntityModel;
-use Soda\Cms\Database\Support\Models\Traits\AdditionalClosureScopes;
 use Soda\Cms\Database\Support\Models\Traits\Draftable;
-use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
-use Soda\Cms\Database\Support\Models\Traits\Identifiable;
-use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Support\Models\Traits\Sluggable;
+use Soda\Cms\Database\Support\Models\Traits\Identifiable;
+use Soda\Cms\Database\Pages\Models\Observers\PageObserver;
+use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Support\Models\Traits\SortableClosure;
+use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
+use Soda\Cms\Database\Support\Models\Traits\AdditionalClosureScopes;
+use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class Page extends Entity implements PageInterface
 {
@@ -79,7 +78,7 @@ class Page extends Entity implements PageInterface
             return $item->identifier == $identifier;
         })->first();
 
-        if(!$block) {
+        if (! $block) {
             $block = $this->type->blocks->filter(function ($item) use ($identifier) {
                 return $item->identifier == $identifier;
             })->first();

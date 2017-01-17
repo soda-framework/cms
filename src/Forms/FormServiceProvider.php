@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Cms\Forms;
 
 use Illuminate\Support\ServiceProvider;

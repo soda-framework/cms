@@ -1,9 +1,10 @@
 <?php
+
 namespace Soda\Cms\Forms;
 
 use Exception;
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 use Soda\Cms\Forms\Fields\FormFieldInterface;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 
 class FormFieldRegistrar
 {
@@ -17,7 +18,7 @@ class FormFieldRegistrar
     }
 
     /**
-     * Registers an array of new CMS form fields
+     * Registers an array of new CMS form fields.
      *
      * @param $formFields
      */
@@ -29,7 +30,7 @@ class FormFieldRegistrar
     }
 
     /**
-     * Registers a new CMS form field
+     * Registers a new CMS form field.
      *
      * @param      $name
      * @param null $fieldClass
@@ -42,7 +43,7 @@ class FormFieldRegistrar
     }
 
     /**
-     * Returns a list of form fields that have been registered
+     * Returns a list of form fields that have been registered.
      *
      * @return array
      */
@@ -53,8 +54,8 @@ class FormFieldRegistrar
 
     public function resolve(FieldInterface $field)
     {
-        if (!$this->isRegistered($field->getAttribute('field_type'))) {
-            throw new Exception("Field ".$field->getAttribute('field_type')." is not registered.");
+        if (! $this->isRegistered($field->getAttribute('field_type'))) {
+            throw new Exception('Field '.$field->getAttribute('field_type').' is not registered.');
         }
 
         $class = $this->getRegisteredFieldClass($field->getAttribute('field_type'));

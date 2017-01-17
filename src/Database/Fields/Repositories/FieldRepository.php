@@ -1,13 +1,14 @@
 <?php
+
 namespace Soda\Cms\Database\Fields\Repositories;
 
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
-use Soda\Cms\Database\Fields\Interfaces\FieldRepositoryInterface;
-use Soda\Cms\Database\Support\Repositories\AbstractRepository;
-use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
+use Zofe\Rapyd\DataGrid\DataGrid;
 use Soda\Cms\Support\Facades\Form;
 use Zofe\Rapyd\DataFilter\DataFilter;
-use Zofe\Rapyd\DataGrid\DataGrid;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\Support\Repositories\AbstractRepository;
+use Soda\Cms\Database\Fields\Interfaces\FieldRepositoryInterface;
+use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
 
 class FieldRepository extends AbstractRepository implements FieldRepositoryInterface
 {
@@ -30,7 +31,7 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         $filter = (new DataFilter)->source($model);
         $filter->add('name', 'Name', 'text');
         $filter->add('field_type', 'Type', 'select')
-            ->option("", "")
+            ->option('', '')
             ->options($this->getFieldTypes());
         $filter->submit('Search');
         $filter->reset('Clear');
@@ -44,7 +45,7 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         $grid = (new DataGrid)->source($filter);
         $grid->add('name', 'Name', true);
         $grid->add('description', 'Description', true);
-        $grid->add('field_type', 'type', true)->cell(function($value){
+        $grid->add('field_type', 'type', true)->cell(function ($value) {
             return ucfirst(str_replace('_', ' ', $value));
         });
 

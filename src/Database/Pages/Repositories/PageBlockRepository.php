@@ -1,11 +1,12 @@
 <?php
+
 namespace Soda\Cms\Database\Pages\Repositories;
 
 use Illuminate\Http\Request;
+use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageBlockRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Support\Facades\Soda;
 
 class PageBlockRepository implements PageBlockRepositoryInterface
 {
@@ -56,7 +57,7 @@ class PageBlockRepository implements PageBlockRepositoryInterface
     {
         list($page, $blockType, $block) = array_values($blockId === null ? $this->newInstance($pageId, $blockTypeId) : $this->findById($pageId, $blockTypeId, $blockId));
 
-        if(!$blockType->relationLoaded('fields')) {
+        if (! $blockType->relationLoaded('fields')) {
             $blockType->load('fields');
         }
 

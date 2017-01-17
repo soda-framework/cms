@@ -1,16 +1,16 @@
 <?php
+
 namespace Soda\Cms\Forms;
 
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Http\Request;
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 use Soda\Cms\Forms\Fields\FormFieldInterface;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 
 abstract class AbstractFormField implements FormFieldInterface
 {
-
     /*
      * Unique identifier for the field
      *
@@ -19,28 +19,28 @@ abstract class AbstractFormField implements FormFieldInterface
     protected $id;
 
     /**
-     * The view used to lay out our form field
+     * The view used to lay out our form field.
      *
      * @var string
      */
     protected $layout;
 
     /**
-     * The view path used to lay out our form field
+     * The view path used to lay out our form field.
      *
      * @var string
      */
     protected $view_path;
 
     /**
-     * The view used to display our form field
+     * The view used to display our form field.
      *
      * @var string
      */
     protected $view;
 
     /**
-     * Prefix our form field name, to prevent collisions
+     * Prefix our form field name, to prevent collisions.
      *
      * @var string
      */
@@ -69,7 +69,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Set the Field model to build our FormField off of
+     * Set the Field model to build our FormField off of.
      *
      * @param $field
      *
@@ -78,17 +78,17 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function setField($field)
     {
-        if ($field instanceOf FieldInterface) {
+        if ($field instanceof FieldInterface) {
             $this->field = $field;
         } else {
-            Throw new Exception("Field must be instance of ".FieldInterface::class." or array.");
+            throw new Exception('Field must be instance of '.FieldInterface::class.' or array.');
         }
 
         return $this;
     }
 
     /**
-     * Get the field prefix
+     * Get the field prefix.
      *
      * @return string
      */
@@ -98,7 +98,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Sets the field prefix
+     * Sets the field prefix.
      *
      * @param $prefix
      *
@@ -112,7 +112,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the layout used to display the field
+     * Get the layout used to display the field.
      *
      * @return string
      */
@@ -122,7 +122,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Set the layout used to display the field
+     * Set the layout used to display the field.
      *
      * @param $layout
      *
@@ -136,7 +136,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the view used to display the field
+     * Get the view used to display the field.
      *
      * @return string
      */
@@ -146,7 +146,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Set the view used to display the field
+     * Set the view used to display the field.
      *
      * @param $view
      *
@@ -160,7 +160,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the view used to display the field
+     * Get the view used to display the field.
      *
      * @return string
      */
@@ -170,7 +170,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Set the view used to display the field
+     * Set the view used to display the field.
      *
      * @param $view_path
      *
@@ -184,7 +184,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the model used to prefill the field
+     * Get the model used to prefill the field.
      *
      * @return string
      */
@@ -194,7 +194,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Set the model used to prefill the field
+     * Set the model used to prefill the field.
      *
      * @param $model
      *
@@ -208,7 +208,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the class used to style the field
+     * Get the class used to style the field.
      *
      * @return string
      */
@@ -218,7 +218,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Set the class used to style the field
+     * Set the class used to style the field.
      *
      * @param $class
      *
@@ -232,17 +232,17 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the unqiue id for the field
+     * Get the unqiue id for the field.
      *
      * @return string
      */
     public function getFieldId()
     {
-        return $this->id ?: 'field_' . str_replace('.', '_', $this->getPrefixedFieldName());
+        return $this->id ?: 'field_'.str_replace('.', '_', $this->getPrefixedFieldName());
     }
 
     /**
-     * Set the id used by the field
+     * Set the id used by the field.
      *
      * @param $id
      *
@@ -256,7 +256,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field label
+     * Get the field label.
      *
      * @return string
      */
@@ -266,7 +266,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field name
+     * Get the field name.
      *
      * @return string
      */
@@ -276,7 +276,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Build the field name with prefix applied
+     * Build the field name with prefix applied.
      *
      * @return string
      */
@@ -287,8 +287,8 @@ abstract class AbstractFormField implements FormFieldInterface
         if ($this->prefix) {
             $adjustedPrefix = str_replace('.', '[', $this->prefix);
 
-            if(str_contains($adjustedPrefix, '[')) {
-                $adjustedPrefix = $adjustedPrefix . ']';
+            if (str_contains($adjustedPrefix, '[')) {
+                $adjustedPrefix = $adjustedPrefix.']';
             }
 
             return $adjustedPrefix.'['.$field_name.']';
@@ -298,7 +298,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field name with prefix applied
+     * Get the field name with prefix applied.
      *
      * @return string
      */
@@ -314,7 +314,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field description
+     * Get the field description.
      *
      * @return string
      */
@@ -349,7 +349,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Manipulate the field input before returning the value that should be saved
+     * Manipulate the field input before returning the value that should be saved.
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -363,7 +363,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Determines how the field is saved to a model
+     * Determines how the field is saved to a model.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param \Illuminate\Http\Request            $request
@@ -380,7 +380,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field parameters
+     * Get the field parameters.
      *
      * @return string
      */
@@ -390,7 +390,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field default parameters (merged with field parameters)
+     * Get the field default parameters (merged with field parameters).
      *
      * @return string
      */
@@ -400,7 +400,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Merges default field parameters and additional field parameters
+     * Merges default field parameters and additional field parameters.
      *
      * @return array
      */
@@ -413,7 +413,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Renders the field for a cell in a table-view
+     * Renders the field for a cell in a table-view.
      *
      * @return mixed|string
      */
@@ -423,7 +423,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Adds a column for this field to a DynamicModel
+     * Adds a column for this field to a DynamicModel.
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
@@ -435,7 +435,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Removes column for this field from our DynamicModel
+     * Removes column for this field from our DynamicModel.
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
@@ -449,7 +449,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Render the view for the field
+     * Render the view for the field.
      *
      * @return string
      */
@@ -470,7 +470,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Render the view for the field
+     * Render the view for the field.
      *
      * @return string
      */
@@ -492,7 +492,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the default parameters to be sent to the field view
+     * Get the default parameters to be sent to the field view.
      *
      * @return array
      */
@@ -513,7 +513,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get additional view parameters to be sent to the field view
+     * Get additional view parameters to be sent to the field view.
      *
      * @return string
      */
@@ -523,7 +523,7 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Merges default view parameters and additional view parameters
+     * Merges default view parameters and additional view parameters.
      *
      * @return array
      */

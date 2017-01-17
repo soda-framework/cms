@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Http\RequestMatcher\Matchers;
 
-use Illuminate\Contracts\Routing\Registrar as RouterContract;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\Registrar as RouterContract;
 
 abstract class AbstractPageMatcher implements MatcherInterface
 {

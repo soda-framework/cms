@@ -2,12 +2,10 @@
 
 namespace Soda\Cms\Http\Controllers\Old;
 
-use Illuminate\Http\Request;
 use Soda;
-use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Page;
-use Soda\Cms\Models\PageType;
-use SodaMatcher;
+use Illuminate\Http\Request;
+use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
 
 class PageController extends BaseController
 {
@@ -56,7 +54,6 @@ class PageController extends BaseController
         $this->model->load('type.fields');
 
         if ($request->has('settings')) {
-
             $dyn_table = Soda::dynamicModel('soda_'.$this->model->type->identifier,
                 $this->model->type->fields->pluck('field_name')->toArray())->where('page_id', $this->model->id)->first();
 
@@ -87,7 +84,7 @@ class PageController extends BaseController
     }
 
     /**
-     * create page save functions
+     * create page save functions.
      *
      * @param null $parent_id
      *
@@ -129,5 +126,4 @@ class PageController extends BaseController
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
     }
-
 }

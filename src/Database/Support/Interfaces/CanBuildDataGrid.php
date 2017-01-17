@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Database\Support\Interfaces;
 
-use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
+use Zofe\Rapyd\DataFilter\DataFilter;
 
 interface CanBuildDataGrid
 {

@@ -6,5 +6,4 @@ use Laratrust\Contracts\LaratrustRoleInterface;
 
 interface RoleInterface extends LaratrustRoleInterface
 {
-
 }

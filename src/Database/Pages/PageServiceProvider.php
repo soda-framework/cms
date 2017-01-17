@@ -2,25 +2,25 @@
 
 namespace Soda\Cms\Database\Pages;
 
-use Franzose\ClosureTable\ClosureTableServiceProvider;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\DynamicPageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageBlockRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeBlockRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeRepositoryInterface;
-use Soda\Cms\Database\Pages\Models\DynamicPage;
 use Soda\Cms\Database\Pages\Models\Page;
 use Soda\Cms\Database\Pages\Models\PageType;
-use Soda\Cms\Database\Pages\Repositories\CachedPageRepository;
-use Soda\Cms\Database\Pages\Repositories\PageBlockRepository;
+use Soda\Cms\Database\Pages\Models\DynamicPage;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Franzose\ClosureTable\ClosureTableServiceProvider;
 use Soda\Cms\Database\Pages\Repositories\PageRepository;
-use Soda\Cms\Database\Pages\Repositories\PageTypeBlockRepository;
+use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
+use Soda\Cms\Database\Pages\Interfaces\DynamicPageInterface;
 use Soda\Cms\Database\Pages\Repositories\PageTypeRepository;
+use Soda\Cms\Database\Pages\Repositories\PageBlockRepository;
+use Soda\Cms\Database\Pages\Repositories\CachedPageRepository;
+use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
+use Soda\Cms\Database\Pages\Repositories\PageTypeBlockRepository;
+use Soda\Cms\Database\Pages\Interfaces\PageTypeRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageBlockRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageTypeBlockRepositoryInterface;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class PageServiceProvider extends ServiceProvider

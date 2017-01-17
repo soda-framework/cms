@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Cms\Database\Pages\Models;
 
 use Franzose\ClosureTable\Models\ClosureTable;

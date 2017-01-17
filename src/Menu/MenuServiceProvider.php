@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Cms\Menu;
 
 use Illuminate\Support\ServiceProvider;

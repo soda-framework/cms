@@ -1,8 +1,9 @@
 <?php
+
 namespace Themes\SodaExample;
 
-use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
 use Soda\Cms\Support\ThemeExceptionHandler;
+use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class SodaExampleThemeServiceProvider extends ServiceProvider
@@ -12,7 +13,6 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
      *
      * @var array
      */
-
     protected $defer = false;
 
     protected $handlesErrors = false;

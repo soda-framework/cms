@@ -110,7 +110,7 @@ class PageBlockController extends BaseController
     {
         list($page, $blockType, $block) = array_values($this->pageBlocks->findById($pageId, $blockTypeId, $blockId));
 
-        if (!$block) {
+        if (! $block) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block']));
         }
 

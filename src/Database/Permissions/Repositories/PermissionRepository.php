@@ -1,13 +1,14 @@
 <?php
+
 namespace Soda\Cms\Database\Permissions\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Permissions\Interfaces\PermissionInterface;
-use Soda\Cms\Database\Permissions\Interfaces\PermissionRepositoryInterface;
-use Soda\Cms\Database\Support\Repositories\AbstractRepository;
-use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
-use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
+use Zofe\Rapyd\DataFilter\DataFilter;
+use Soda\Cms\Database\Support\Repositories\AbstractRepository;
+use Soda\Cms\Database\Permissions\Interfaces\PermissionInterface;
+use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Database\Permissions\Interfaces\PermissionRepositoryInterface;
 
 class PermissionRepository extends AbstractRepository implements PermissionRepositoryInterface
 {
@@ -41,7 +42,7 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
         $filter = (new DataFilter)->source($model);
         $filter->add('display_name', 'Name', 'text');
         $filter->add('category', 'Category', 'select')
-            ->option("", "")
+            ->option('', '')
             ->options($this->model->pluck('category', 'category'));
         $filter->submit('Search');
         $filter->reset('Clear');

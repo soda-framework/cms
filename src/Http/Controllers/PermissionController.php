@@ -3,8 +3,8 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Soda\Cms\Database\Permissions\Interfaces\PermissionRepositoryInterface;
 
 class PermissionController extends BaseController
@@ -80,7 +80,7 @@ class PermissionController extends BaseController
         $permission = $this->permissions->findById($id);
         $roleIds = $this->permissions->getRoles();
 
-        if (!$permission) {
+        if (! $permission) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'permission']));
         }
 

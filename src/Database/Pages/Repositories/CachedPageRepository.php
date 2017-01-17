@@ -1,10 +1,12 @@
-<?php namespace Soda\Cms\Database\Pages\Repositories;
+<?php
 
-use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
+namespace Soda\Cms\Database\Pages\Repositories;
+
+use Soda\Cms\Support\Facades\Soda;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractCacheRepository;
-use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
 
 class CachedPageRepository extends AbstractCacheRepository implements CachedPageRepositoryInterface
 {
@@ -33,7 +35,7 @@ class CachedPageRepository extends AbstractCacheRepository implements CachedPage
     public function getAttributesForPage(PageInterface $page)
     {
         return $this->cache($this->getPageAttributesCacheKey($page->getKey()), config('soda.cache.page-data'), function () use ($page) {
-            if (!$page->relationLoaded('type')) {
+            if (! $page->relationLoaded('type')) {
                 $page->load('type');
             }
 

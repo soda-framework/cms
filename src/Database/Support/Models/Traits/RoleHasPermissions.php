@@ -2,10 +2,10 @@
 
 namespace Soda\Cms\Database\Support\Models\Traits;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Cache\TaggableStore;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
 use Laratrust\Traits\LaratrustRoleTrait;
 
 trait RoleHasPermissions
@@ -36,7 +36,7 @@ trait RoleHasPermissions
         static::saved($flushCache);
 
         static::deleting(function ($role) {
-            if (!method_exists(Config::get('laratrust.role'), 'bootSoftDeletes')) {
+            if (! method_exists(Config::get('laratrust.role'), 'bootSoftDeletes')) {
                 DB::table(Config::get('laratrust.role_user_table'))->where('role_id', $role->getKey())->delete();
                 $role->permissions()->sync([]);
             }
@@ -54,7 +54,7 @@ trait RoleHasPermissions
             }
 
             return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
-                if (!$this->relationLoaded('permissions')) {
+                if (! $this->relationLoaded('permissions')) {
                     $this->load('permissions');
                 }
 
@@ -62,7 +62,7 @@ trait RoleHasPermissions
             });
         }
 
-        if (!$this->relationLoaded('permissions')) {
+        if (! $this->relationLoaded('permissions')) {
             $this->load('permissions');
         }
 
@@ -70,7 +70,7 @@ trait RoleHasPermissions
     }
 
     /**
-     * Flush the role's cache
+     * Flush the role's cache.
      *
      * @return void
      */

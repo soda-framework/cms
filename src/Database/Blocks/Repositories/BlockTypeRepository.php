@@ -1,10 +1,11 @@
 <?php
+
 namespace Soda\Cms\Database\Blocks\Repositories;
 
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
-use Soda\Cms\Database\Blocks\Interfaces\BlockTypeRepositoryInterface;
 use Soda\Cms\Database\Support\Repositories\AbstractRepository;
 use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Database\Blocks\Interfaces\BlockTypeRepositoryInterface;
 
 class BlockTypeRepository extends AbstractRepository implements BlockTypeRepositoryInterface
 {

@@ -1,4 +1,6 @@
-<?php namespace Soda\Cms\Foundation\Routing;
+<?php
+
+namespace Soda\Cms\Foundation\Routing;
 
 use Illuminate\Routing\RouteCollection as IlluminateRouteCollection;
 
@@ -22,7 +24,7 @@ class RouteCollection extends IlluminateRouteCollection
     }
 
     /**
-     * Order routes by priority number
+     * Order routes by priority number.
      *
      * @return void
      */

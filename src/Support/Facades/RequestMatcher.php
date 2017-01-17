@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Facade;
 class RequestMatcher extends Facade
 {
     /**
-     *
      * Get the registered name of the component.
      *
      * @return string
@@ -20,5 +19,4 @@ class RequestMatcher extends Facade
     {
         return 'soda.request-matcher';
     }
-
 }

@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreatePageTypeBlockTypesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -30,5 +29,4 @@ class CreatePageTypeBlockTypesTable extends Migration
     {
         Schema::drop('page_type_block_types');
     }
-
 }

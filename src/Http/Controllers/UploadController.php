@@ -39,12 +39,12 @@ class UploadController extends BaseController
                         $url = $driver == 'soda.public' ? '/uploads/'.$final_path : Storage::disk($driver)->url(trim($final_path, '/'));
 
                         $return = [
-                            "error"                => null, // todo: what is this
-                            "initialPreview"       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"], // todo: not always an image
-                            "initialPreviewConfig" => [
-                                "caption" => $url,
-                                "width"   => "120px",
-                                "append"  => true, // todo: check if this is necessary
+                            'error'                => null, // todo: what is this
+                            'initialPreview'       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"], // todo: not always an image
+                            'initialPreviewConfig' => [
+                                'caption' => $url,
+                                'width'   => '120px',
+                                'append'  => true, // todo: check if this is necessary
                             ],
                         ];
 
@@ -62,23 +62,23 @@ class UploadController extends BaseController
                                 'media_type'    => 'image', // todo: autodetect
                             ]);
 
-                            $return["initalPreviewConfig"]["key"] = $media->id;
-                            $return["initalPreviewConfig"]["extra"] = [
-                                "key"           => $media->id,
-                                "related_table" => $table,
+                            $return['initalPreviewConfig']['key'] = $media->id;
+                            $return['initalPreviewConfig']['extra'] = [
+                                'key'           => $media->id,
+                                'related_table' => $table,
                                 'related_field' => $field,
-                                "related_id"    => $id,
+                                'related_id'    => $id,
                             ];
                         } else {
                             DB::table($table)->where('id', $id)->update([
                                 $field => $url,
                             ]);
 
-                            $return["initalPreviewConfig"]["key"] = null;
-                            $return["initalPreviewConfig"]["extra"] = [
-                                "related_table" => $table,
+                            $return['initalPreviewConfig']['key'] = null;
+                            $return['initalPreviewConfig']['extra'] = [
+                                'related_table' => $table,
                                 'related_field' => $field,
-                                "related_id"    => $id,
+                                'related_id'    => $id,
                             ];
                         }
                     }
@@ -118,5 +118,4 @@ class UploadController extends BaseController
 
         return json_encode(['error' => 'Unable to delete image, please refresh and try again']); // todo: not always an image
     }
-
 }

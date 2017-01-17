@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Cms\Menu;
 
 class MenuRegistrar
@@ -6,7 +7,7 @@ class MenuRegistrar
     protected $registered_menus = [];
 
     /**
-     * Registers a new CMS form field
+     * Registers a new CMS form field.
      *
      * @param $name
      * @param $callback
@@ -15,7 +16,7 @@ class MenuRegistrar
      */
     public function register($name, $callback)
     {
-        if (!isset($this->registered_menus[$name])) {
+        if (! isset($this->registered_menus[$name])) {
             $this->registered_menus[$name] = [];
         }
 
@@ -25,7 +26,7 @@ class MenuRegistrar
     }
 
     /**
-     * Returns a menu by its name
+     * Returns a menu by its name.
      *
      * @return array
      */
@@ -35,7 +36,7 @@ class MenuRegistrar
     }
 
     /**
-     * Checks if a menu is registered
+     * Checks if a menu is registered.
      *
      * @param $name
      *

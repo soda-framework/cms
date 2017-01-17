@@ -7,7 +7,7 @@ use Illuminate\Foundation\AliasLoader;
 trait RegistersBindingsAndDependencies
 {
     /**
-     * Register facades
+     * Register facades.
      *
      * @param array $facades
      */
@@ -17,7 +17,7 @@ trait RegistersBindingsAndDependencies
     }
 
     /**
-     * Register dependencies
+     * Register dependencies.
      *
      * @param array $services
      */
@@ -29,7 +29,7 @@ trait RegistersBindingsAndDependencies
     }
 
     /**
-     * Register bindings
+     * Register bindings.
      *
      * @param array $bindings
      */
@@ -41,7 +41,7 @@ trait RegistersBindingsAndDependencies
     }
 
     /**
-     * Register instances
+     * Register instances.
      *
      * @param array $instances
      */
@@ -53,7 +53,7 @@ trait RegistersBindingsAndDependencies
     }
 
     /**
-     * Register singletons
+     * Register singletons.
      *
      * @param array $singletons
      */
@@ -65,7 +65,7 @@ trait RegistersBindingsAndDependencies
     }
 
     /**
-     * Register aliases
+     * Register aliases.
      *
      * @param array $aliasGroup
      */

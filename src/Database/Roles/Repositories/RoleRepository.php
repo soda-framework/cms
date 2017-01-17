@@ -1,13 +1,14 @@
 <?php
+
 namespace Soda\Cms\Database\Roles\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Roles\Interfaces\RoleInterface;
-use Soda\Cms\Database\Roles\Interfaces\RoleRepositoryInterface;
-use Soda\Cms\Database\Support\Repositories\AbstractRepository;
-use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
-use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
+use Zofe\Rapyd\DataFilter\DataFilter;
+use Soda\Cms\Database\Roles\Interfaces\RoleInterface;
+use Soda\Cms\Database\Support\Repositories\AbstractRepository;
+use Soda\Cms\Database\Roles\Interfaces\RoleRepositoryInterface;
+use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
 
 class RoleRepository extends AbstractRepository implements RoleRepositoryInterface
 {

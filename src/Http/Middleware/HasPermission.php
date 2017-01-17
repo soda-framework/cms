@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Http\Middleware;
 
-/**
+/*
  * This file is part of Laratrust,
  * a role & permission management solution for Laravel.
  *
@@ -11,8 +11,8 @@ namespace Soda\Cms\Http\Middleware;
  */
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
 use Soda\Cms\Support\Facades\Soda;
+use Illuminate\Contracts\Auth\Guard;
 
 class HasPermission
 {
@@ -41,11 +41,11 @@ class HasPermission
      */
     public function handle($request, Closure $next, $permissions)
     {
-        if (!is_array($permissions)) {
+        if (! is_array($permissions)) {
             $permissions = explode(self::DELIMITER, $permissions);
         }
 
-        if ($this->auth->guest() || !$request->user()->can($permissions)) {
+        if ($this->auth->guest() || ! $request->user()->can($permissions)) {
             return Soda::noPermission();
         }
 

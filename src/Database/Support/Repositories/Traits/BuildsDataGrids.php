@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Database\Support\Repositories\Traits;
 
-use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
+use Zofe\Rapyd\DataFilter\DataFilter;
 
 trait BuildsDataGrids
 {
@@ -32,8 +32,12 @@ trait BuildsDataGrids
     {
         $width = 0;
 
-        if ($editRoute) $width += 80;
-        if ($deleteRoute) $width += 100;
+        if ($editRoute) {
+            $width += 80;
+        }
+        if ($deleteRoute) {
+            $width += 100;
+        }
 
         if ($width > 0) {
             $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value) use ($editRoute, $deleteRoute) {

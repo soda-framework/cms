@@ -3,8 +3,8 @@
 namespace Themes\SodaExample\Http\Controllers\Auth;
 
 use Auth;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Themes\SodaExample\Http\Controllers\BaseController;
 
 class LoginController extends BaseController

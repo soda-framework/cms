@@ -31,7 +31,7 @@ trait HasDefaultAttributes
      */
     protected function fillableFromArray(array $attributes)
     {
-        if (!empty($attributes) && property_exists($this, 'defaults')) {
+        if (! empty($attributes) && property_exists($this, 'defaults')) {
             $attributes = array_diff_assoc($attributes, $this->defaults);
         }
 

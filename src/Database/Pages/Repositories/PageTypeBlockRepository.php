@@ -1,9 +1,10 @@
 <?php
+
 namespace Soda\Cms\Database\Pages\Repositories;
 
+use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeBlockRepositoryInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 
 class PageTypeBlockRepository implements PageTypeBlockRepositoryInterface
 {

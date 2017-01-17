@@ -1,11 +1,12 @@
 <?php
+
 namespace Soda\Cms\Foundation;
 
-use Illuminate\Contracts\Foundation\Application as Laravel;
 use Illuminate\Support\Facades\Auth;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Illuminate\Contracts\Foundation\Application as Laravel;
 use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
 use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class SodaInstance
 {
@@ -20,10 +21,10 @@ class SodaInstance
     {
         $this->laravel = $laravel;
 
-        if (!$this->laravel->runningInConsole()) {
+        if (! $this->laravel->runningInConsole()) {
             $application = $this->getRequestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
-            if(isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
+            if (isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
                 $this->setApplicationUrl($application['url']);
                 $this->setApplication($application['application']);
             } else {
@@ -33,7 +34,7 @@ class SodaInstance
     }
 
     /**
-     * Returns the current application loaded at the current URL
+     * Returns the current application loaded at the current URL.
      *
      * @return null
      */
@@ -43,7 +44,7 @@ class SodaInstance
     }
 
     /**
-     * Sets the application
+     * Sets the application.
      *
      * @param ApplicationInterface $application
      *
@@ -57,7 +58,7 @@ class SodaInstance
     }
 
     /**
-     * Returns the application url model matched to the current application
+     * Returns the application url model matched to the current application.
      *
      * @return null
      */
@@ -67,7 +68,7 @@ class SodaInstance
     }
 
     /**
-     * Sets the application
+     * Sets the application.
      *
      * @param ApplicationUrlInterface $applicationUrl
      *
@@ -81,7 +82,7 @@ class SodaInstance
     }
 
     /**
-     * Get the current page that we're visiting
+     * Get the current page that we're visiting.
      *
      * @return mixed
      */
@@ -91,7 +92,7 @@ class SodaInstance
     }
 
     /**
-     * Set the current page that we're visiting
+     * Set the current page that we're visiting.
      *
      * @param PageInterface $page
      */
@@ -101,7 +102,7 @@ class SodaInstance
     }
 
     /**
-     * Return instance of MenuBuilder
+     * Return instance of MenuBuilder.
      *
      * @return \Soda\Cms\Http\RequestMatcher\RequestMatcher
      */
@@ -111,7 +112,7 @@ class SodaInstance
     }
 
     /**
-     * Return instance of MenuBuilder
+     * Return instance of MenuBuilder.
      *
      * @return \Soda\Cms\Menu\MenuBuilder
      */
@@ -121,7 +122,7 @@ class SodaInstance
     }
 
     /**
-     * Return instance of FormBuilder
+     * Return instance of FormBuilder.
      *
      * @return \Soda\Cms\Forms\FormBuilder
      */
@@ -131,7 +132,7 @@ class SodaInstance
     }
 
     /**
-     * Load a dynamic page
+     * Load a dynamic page.
      *
      * @param      $table
      *
@@ -143,7 +144,7 @@ class SodaInstance
     }
 
     /**
-     * Load a dynamic block
+     * Load a dynamic block.
      *
      * @param      $table
      *
@@ -155,7 +156,7 @@ class SodaInstance
     }
 
     /**
-     * Build a FormField from array or Field model
+     * Build a FormField from array or Field model.
      *
      * @param $field
      *
@@ -168,7 +169,7 @@ class SodaInstance
 
     public function noPermission()
     {
-        return response()->view(soda_cms_view_path("errors.no-permission"), [], 401);
+        return response()->view(soda_cms_view_path('errors.no-permission'), [], 401);
     }
 
     public function auth()

@@ -2,17 +2,17 @@
 
 namespace Soda\Cms\Foundation\Routing;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Route;
 use ReflectionClass;
-use Soda\Cms\Http\Middleware\Authenticate;
+use Illuminate\Support\Facades\Route;
+use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\Drafting;
+use Soda\Cms\Http\Middleware\Security;
 use Soda\Cms\Http\Middleware\ForceHttps;
 use Soda\Cms\Http\Middleware\HasAbility;
+use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\HasPermission;
-use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
-use Soda\Cms\Http\Middleware\Security;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -93,7 +93,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => ['soda.web'],
             'namespace'  => $this->namespace,
         ], function ($router) {
-            require(__DIR__.'/../../../routes/web.php');
+            require __DIR__.'/../../../routes/web.php';
         });
 
         $this->app['router']->getRoutes()->refreshNameLookups();
@@ -115,7 +115,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace'  => $this->namespace,
             'prefix'     => config('soda.cms.path').'/api',
         ], function ($router) {
-            require(__DIR__.'/../../../routes/api.php');
+            require __DIR__.'/../../../routes/api.php';
         });
     }
 

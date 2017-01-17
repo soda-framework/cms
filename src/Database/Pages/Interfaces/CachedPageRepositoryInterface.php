@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Cms\Database\Pages\Interfaces;
 
 interface CachedPageRepositoryInterface
