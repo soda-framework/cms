@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class AddAllowedChildrenToPageTypesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -29,5 +28,4 @@ class AddAllowedChildrenToPageTypesTable extends Migration
             $table->dropColumn('allowed_children');
         });
     }
-
 }

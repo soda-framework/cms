@@ -3,7 +3,6 @@
 namespace Soda\Cms\Models;
 
 use Soda\Cms\Models\Traits\DraftableTrait;
-use Soda\Cms\Models\Traits\DynamicCreatorTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class PageType extends AbstractDynamicType
@@ -39,7 +38,7 @@ class PageType extends AbstractDynamicType
 
     public function subpageTypes()
     {
-        return $this->belongsToMany(PageType::class, 'page_type_subpage_types', 'page_type_id', 'subpage_type_id');
+        return $this->belongsToMany(self::class, 'page_type_subpage_types', 'page_type_id', 'subpage_type_id');
     }
 
     public function setIdentifierAttribute($value)

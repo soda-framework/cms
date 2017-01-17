@@ -6,7 +6,7 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Checkbox extends AbstractFormField
 {
-    protected $view = "checkbox";
+    protected $view = 'checkbox';
 
     public function getDefaultParameters()
     {

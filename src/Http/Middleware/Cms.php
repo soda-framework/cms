@@ -3,10 +3,8 @@
 namespace Soda\Cms\Http\Middleware;
 
 use Closure;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Page;
-use Soda\Cms\Models\PageType;
+use Soda\Cms\Models\Block;
 
 /*
  *
@@ -28,8 +26,7 @@ class Cms
     public function handle($request, Closure $next, $guard = null)
     {
         $draftables = app('soda.page')->getDraftables();
-        foreach($draftables as $draftable)
-        {
+        foreach ($draftables as $draftable) {
             $draftable::disableDrafts();
         }
 

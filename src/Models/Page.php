@@ -1,17 +1,18 @@
 <?php
+
 namespace Soda\Cms\Models;
 
+use Soda;
 use Exception;
+use Soda\Cms\Support\Constants;
+use Soda\Cms\Models\Traits\TreeableTrait;
+use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda;
-use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\PositionableTrait;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Soda\Cms\Models\Traits\PositionableTrait;
-use Soda\Cms\Models\Traits\SluggableTrait;
-use Soda\Cms\Models\Traits\TreeableTrait;
-use Soda\Cms\Support\Constants;
 
 class Page extends AbstractSodaClosureEntity
 {
@@ -81,7 +82,7 @@ class Page extends AbstractSodaClosureEntity
             return $item->identifier == $identifier;
         })->first();
 
-        if(!$block) {
+        if (! $block) {
             $block = $this->type->blocks->filter(function ($item) use ($identifier) {
                 return $item->identifier == $identifier;
             })->first();
@@ -124,7 +125,7 @@ class Page extends AbstractSodaClosureEntity
 
     public function pageAttributes()
     {
-        if (!$this->pageAttributes) {
+        if (! $this->pageAttributes) {
             if ($ttl = config('soda.cache.page-data')) {
                 $attributes = \Cache::remember(static::getDataCacheKey($this->id), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
                     return $this->loadPageAttributes();
@@ -153,16 +154,16 @@ class Page extends AbstractSodaClosureEntity
 
     protected function loadPageAttributes()
     {
-        if (!$this->relationLoaded('type')) {
+        if (! $this->relationLoaded('type')) {
             $this->load('type');
         }
 
-        if (!$this->relationLoaded('type')) {
+        if (! $this->relationLoaded('type')) {
             $model = new ModelBuilder;
         } else {
             $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->where($this->getRelatedField(), $this->id)->first();
 
-            if (!$model) {
+            if (! $model) {
                 $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->newInstance();
             }
         }

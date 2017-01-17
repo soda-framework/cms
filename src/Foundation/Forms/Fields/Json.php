@@ -6,7 +6,7 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Json extends AbstractFormField
 {
-    protected $view = "json";
+    protected $view = 'json';
 
     public function getFieldValue()
     {
@@ -14,6 +14,6 @@ class Json extends AbstractFormField
 
         $json = json_encode($value);
 
-        return ($json && $json != "null" && $json != "[]") ? $json : '{}';
+        return ($json && $json != 'null' && $json != '[]') ? $json : '{}';
     }
 }

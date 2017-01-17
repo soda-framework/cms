@@ -2,10 +2,9 @@
 
 namespace Soda\Cms\Foundation\Pages\Actions;
 
-use App;
+use Soda\Cms\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Soda\Cms\Models\Page;
 
 class ControllerAction implements ActionInterface
 {

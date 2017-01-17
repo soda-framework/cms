@@ -6,5 +6,5 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Url extends AbstractFormField
 {
-    protected $view = "url";
+    protected $view = 'url';
 }
