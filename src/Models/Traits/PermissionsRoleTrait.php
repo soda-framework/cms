@@ -35,7 +35,7 @@ trait PermissionsRoleTrait
         static::saved($flushCache);
 
         static::deleting(function ($role) {
-            if (!method_exists(Config::get('laratrust.role'), 'bootSoftDeletes')) {
+            if (! method_exists(Config::get('laratrust.role'), 'bootSoftDeletes')) {
                 \DB::table(Config::get('laratrust.role_user_table'))->where('role_id', $role->id)->delete();
                 $role->permissions()->sync([]);
             }
@@ -45,7 +45,7 @@ trait PermissionsRoleTrait
     //Big block of caching functionality.
     public function cachedPermissions()
     {
-        if($ttl = config('soda.cache.permissions')) {
+        if ($ttl = config('soda.cache.permissions')) {
             $cache = app('cache');
 
             if ($cache->getStore() instanceof TaggableStore) {
@@ -53,7 +53,7 @@ trait PermissionsRoleTrait
             }
 
             return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
-                if (!$this->relationLoaded('permissions')) {
+                if (! $this->relationLoaded('permissions')) {
                     $this->load('permissions');
                 }
 
@@ -61,7 +61,7 @@ trait PermissionsRoleTrait
             });
         }
 
-        if (!$this->relationLoaded('permissions')) {
+        if (! $this->relationLoaded('permissions')) {
             $this->load('permissions');
         }
 
@@ -69,7 +69,7 @@ trait PermissionsRoleTrait
     }
 
     /**
-     * Flush the role's cache
+     * Flush the role's cache.
      *
      * @return void
      */

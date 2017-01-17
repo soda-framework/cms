@@ -2,16 +2,16 @@
 
 namespace Soda\Cms\Foundation\Pages;
 
-use Exception;
-use Illuminate\Http\Request;
 use Soda;
+use Exception;
+use Soda\Cms\Models\Page;
+use Soda\Cms\Models\Block;
+use Illuminate\Http\Request;
+use Soda\Cms\Models\PageType;
+use Soda\Cms\Models\BlockType;
+use Soda\Cms\Foundation\Pages\Actions\ViewAction;
 use Soda\Cms\Foundation\Pages\Actions\ActionInterface;
 use Soda\Cms\Foundation\Pages\Actions\ControllerAction;
-use Soda\Cms\Foundation\Pages\Actions\ViewAction;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\BlockType;
-use Soda\Cms\Models\Page;
-use Soda\Cms\Models\PageType;
 
 class PageBuilder
 {
@@ -28,7 +28,7 @@ class PageBuilder
     ];
 
     /**
-     * Registers a new action
+     * Registers a new action.
      *
      * @param      $name
      * @param null $action
@@ -41,7 +41,7 @@ class PageBuilder
     }
 
     /**
-     * Registers an array of new actions
+     * Registers an array of new actions.
      *
      * @param $actions
      */
@@ -53,7 +53,7 @@ class PageBuilder
     }
 
     /**
-     * Registers a new draftable
+     * Registers a new draftable.
      *
      * @param null $draftable
      */
@@ -66,7 +66,7 @@ class PageBuilder
     }
 
     /**
-     * Registers an array of draftables
+     * Registers an array of draftables.
      *
      * @param $draftables
      */
@@ -78,7 +78,7 @@ class PageBuilder
     }
 
     /**
-     * Returns a list of actions that have been registered
+     * Returns a list of actions that have been registered.
      *
      * @return array
      */
@@ -88,7 +88,7 @@ class PageBuilder
     }
 
     /**
-     * Returns a list of draftables that have been registered
+     * Returns a list of draftables that have been registered.
      *
      * @return array
      */
@@ -98,7 +98,7 @@ class PageBuilder
     }
 
     /**
-     * Get a list of action types in human-readable format
+     * Get a list of action types in human-readable format.
      *
      * @return array
      */
@@ -108,7 +108,7 @@ class PageBuilder
     }
 
     /**
-     * Loads a page by it's slug
+     * Loads a page by it's slug.
      *
      * @param $slug
      *
@@ -116,15 +116,15 @@ class PageBuilder
      */
     public function loadPageBySlug($slug)
     {
-        if($ttl = config('soda.cache.pages') === true) {
-            $page = \Cache::remember('soda.' . \Soda::getApplication()->id . '.page.slug-'.$slug, is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function() use ($slug) {
+        if ($ttl = config('soda.cache.pages') === true) {
+            $page = \Cache::remember('soda.'.\Soda::getApplication()->id.'.page.slug-'.$slug, is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () use ($slug) {
                 $page = Page::where('slug', '/'.ltrim($slug, '/'))->first();
 
-                if(config('soda.cache.page-type') === true) {
+                if (config('soda.cache.page-type') === true) {
                     $page->load('type');
                 }
 
-                if(config('soda.cache.page-blocks') === true) {
+                if (config('soda.cache.page-blocks') === true) {
                     $page->load('blocks');
                 }
 
@@ -135,11 +135,11 @@ class PageBuilder
         }
 
         if ($page) {
-            if(config('soda.cache.page-type') !== true && !$page->relationLoaded('type')) {
+            if (config('soda.cache.page-type') !== true && ! $page->relationLoaded('type')) {
                 $page->load('type');
             }
 
-            if(config('soda.cache.page-blocks') !== true && !$page->relationLoaded('blocks')) {
+            if (config('soda.cache.page-blocks') !== true && ! $page->relationLoaded('blocks')) {
                 $page->load('blocks');
             }
 
@@ -150,7 +150,7 @@ class PageBuilder
     }
 
     /**
-     * Attaches a page model to our Soda instance as the 'CurrentPage'
+     * Attaches a page model to our Soda instance as the 'CurrentPage'.
      *
      * @param \Soda\Cms\Models\Page $page
      *
@@ -164,7 +164,7 @@ class PageBuilder
     }
 
     /**
-     * Renders the hint path and view of given page (or pageable item)
+     * Renders the hint path and view of given page (or pageable item).
      *
      * @param Request $request
      * @param         $page
@@ -175,7 +175,7 @@ class PageBuilder
      */
     public function render(Request $request, $page = null, $parameters = [])
     {
-        if (!$page) {
+        if (! $page) {
             $page = Soda::getCurrentPage($page);
         }
 
@@ -183,7 +183,7 @@ class PageBuilder
     }
 
     /**
-     * Handles a page action
+     * Handles a page action.
      *
      * @param Request               $request
      * @param                       $action_type
@@ -195,8 +195,8 @@ class PageBuilder
      */
     public function handleAction(Request $request, $action_type, Page $page, $parameters = [])
     {
-        if (!isset($this->actions[$action_type])) {
-            Throw new Exception('Action \''.$action_type.'\' is not registered');
+        if (! isset($this->actions[$action_type])) {
+            throw new Exception('Action \''.$action_type.'\' is not registered');
         }
 
         $handler = new $this->actions[$action_type];
@@ -217,7 +217,7 @@ class PageBuilder
     }
 
     /**
-     * Handles not found errors
+     * Handles not found errors.
      */
     protected function handleNotFound()
     {

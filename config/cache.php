@@ -1,4 +1,6 @@
-<?php return [
+<?php
+
+return [
     'application' => false,
     'pages'       => false,
     'page-type'   => false,

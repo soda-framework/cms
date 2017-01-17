@@ -2,8 +2,8 @@
 
 namespace Themes\SodaExample\Controllers\Auth;
 
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Themes\SodaExample\Controllers\BaseController;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends BaseController
 {

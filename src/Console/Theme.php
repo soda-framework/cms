@@ -2,13 +2,12 @@
 
 namespace Soda\Cms\Console;
 
+use RecursiveIteratorIterator;
 use Illuminate\Console\Command;
 use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 
 class Theme extends Command
 {
-
     protected $signature = 'soda:theme {name?}';
     protected $description = 'Install an example Soda CMS Theme';
     protected $folder;
@@ -21,7 +20,7 @@ class Theme extends Command
     }
 
     /**
-     * Copy a file, or recursively copy a folder and its contents
+     * Copy a file, or recursively copy a folder and its contents.
      *
      * @author      Aidan Lister <aidan@php.net>
      * @version     1.0.1
@@ -46,7 +45,7 @@ class Theme extends Command
         }
 
         // Make destination directory
-        if (!is_dir($dest)) {
+        if (! is_dir($dest)) {
             mkdir($dest, $permissions);
         }
 
@@ -69,7 +68,7 @@ class Theme extends Command
     }
 
     /**
-     * Determine a suitable folder name and namespace from the user's input
+     * Determine a suitable folder name and namespace from the user's input.
      */
     protected function configureTheme()
     {
@@ -83,7 +82,7 @@ class Theme extends Command
     }
 
     /**
-     * Move and rename theme files based on user input
+     * Move and rename theme files based on user input.
      */
     protected function installTheme()
     {
@@ -104,8 +103,8 @@ class Theme extends Command
         $this->info('Theme references set.');
 
         $this->appendToComposerFile([
-            "autoload" => [
-                "psr-4" => [
+            'autoload' => [
+                'psr-4' => [
                     "Themes\\{$this->namespace}\\" => "themes/{$this->folder}/src/",
                 ],
             ],
@@ -124,7 +123,7 @@ class Theme extends Command
     }
 
     /**
-     * Guess a suitable classname based on the string provided
+     * Guess a suitable classname based on the string provided.
      *
      * @param $string
      *
@@ -136,7 +135,7 @@ class Theme extends Command
     }
 
     /**
-     * Merge config into the compser.json file
+     * Merge config into the compser.json file.
      *
      * @param $config
      *
@@ -154,7 +153,7 @@ class Theme extends Command
     }
 
     /**
-     * Add a service provider to config/app.php
+     * Add a service provider to config/app.php.
      *
      * @param $serviceProvider
      */
@@ -165,7 +164,7 @@ class Theme extends Command
         if (file_exists($application_config)) {
             $contents = file_get_contents($application_config);
 
-            $old_provider = "Soda\\Cms\\Providers\\SodaServiceProvider::class,";
+            $old_provider = 'Soda\\Cms\\Providers\\SodaServiceProvider::class,';
             $provider_replacement = "$old_provider\n        $serviceProvider,";
 
             $contents = str_replace($old_provider, $provider_replacement, $contents);
@@ -175,7 +174,7 @@ class Theme extends Command
     }
 
     /**
-     * Find and replace two strings recursively from within a path
+     * Find and replace two strings recursively from within a path.
      *
      * @param        $needle
      * @param        $replace
@@ -183,7 +182,7 @@ class Theme extends Command
      *
      * @return $this
      */
-    protected function findAndReplace($needle, $replace, $haystack = "./")
+    protected function findAndReplace($needle, $replace, $haystack = './')
     {
         $d = new RecursiveDirectoryIterator($haystack);
         foreach (new RecursiveIteratorIterator($d, 1) as $path) {
@@ -200,4 +199,3 @@ class Theme extends Command
         return $this;
     }
 }
-

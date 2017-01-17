@@ -1,13 +1,12 @@
 <?php
+
 namespace Soda\Cms\Support;
 
-use Illuminate\Support\Facades\Request;
+use Zofe\Rapyd\Widget;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Zofe\Rapyd\Exceptions\DataSetException;
-use Zofe\Rapyd\Widget;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DataSet extends Widget
 {
@@ -15,14 +14,13 @@ class DataSet extends Widget
     public $source;
 
     /**
-     *
      * @var \Illuminate\Database\Query\Builder
      */
     public $query;
-    public $url  ;
-    public $data = array();
+    public $url;
+    public $data = [];
     public $hash = '';
-    public $key  = 'id';
+    public $key = 'id';
 
     /**
      * @var \Illuminate\Pagination\Paginator
@@ -47,7 +45,7 @@ class DataSet extends Widget
      */
     public static function source($source)
     {
-        $ins         = new static();
+        $ins = new static();
         $ins->source = $source;
 
         //inherit cid from datafilter
@@ -75,34 +73,33 @@ class DataSet extends Widget
      *
      * @return mixed
      */
-    public function orderbyLink($field, $dir = "asc")
+    public function orderbyLink($field, $dir = 'asc')
     {
-        $url = ($dir == "asc") ? $this->orderby_uri_asc : $this->orderby_uri_desc;
+        $url = ($dir == 'asc') ? $this->orderby_uri_asc : $this->orderby_uri_desc;
 
         return str_replace('-field-', $field, $url);
     }
 
-    public function orderBy($field, $direction="asc")
+    public function orderBy($field, $direction = 'asc')
     {
-        $this->orderby = array($field, $direction);
+        $this->orderby = [$field, $direction];
 
         return $this;
     }
 
-    public function onOrderby($field, $direction="")
+    public function onOrderby($field, $direction = '')
     {
-        $orderby = $this->url->value("ord" . $this->cid);
+        $orderby = $this->url->value('ord'.$this->cid);
         if ($orderby) {
-            $dir = ($orderby[0] === "-") ? "desc" : "asc";
-            if (ltrim($orderby,'-') == $field) {
-                return ($direction == "" || $dir == $direction) ? true : false;
+            $dir = ($orderby[0] === '-') ? 'desc' : 'asc';
+            if (ltrim($orderby, '-') == $field) {
+                return ($direction == '' || $dir == $direction) ? true : false;
             }
-
         } else {
             if (count($this->orderby) && ($this->orderby[0] == $field)) {
                 $dir = $this->orderby[1];
 
-                return ($direction == "" || $dir == $direction) ? true : false;
+                return ($direction == '' || $dir == $direction) ? true : false;
             }
         }
 
@@ -123,52 +120,48 @@ class DataSet extends Widget
 
     public function build()
     {
-        if (is_string($this->source) && strpos(" ", $this->source) === false) {
+        if (is_string($this->source) && strpos(' ', $this->source) === false) {
             //tablename
-            $this->type = "query";
+            $this->type = 'query';
             $this->query = $this->table($this->source);
         } elseif (is_a($this->source, "\Illuminate\Database\Eloquent\Model")) {
-            $this->type = "model";
+            $this->type = 'model';
             $this->query = $this->source;
             $this->key = $this->source->getKeyName();
-
-        } elseif ( is_a($this->source, "\Illuminate\Database\Eloquent\Builder")) {
-            $this->type = "model";
+        } elseif (is_a($this->source, "\Illuminate\Database\Eloquent\Builder")) {
+            $this->type = 'model';
             $this->query = $this->source;
             $this->key = $this->source->getModel()->getKeyName();
-
-        } elseif ( is_a($this->source, "\Illuminate\Database\Query\Builder")) {
-            $this->type = "model";
+        } elseif (is_a($this->source, "\Illuminate\Database\Query\Builder")) {
+            $this->type = 'model';
             $this->query = $this->source;
-
-        } elseif ( is_a($this->source, "\Zofe\Rapyd\DataFilter\DataFilter")) {
-           $this->type = "model";
-           $this->query = $this->source->query;
+        } elseif (is_a($this->source, "\Zofe\Rapyd\DataFilter\DataFilter")) {
+            $this->type = 'model';
+            $this->query = $this->source->query;
 
             if (is_a($this->query, "\Illuminate\Database\Eloquent\Model")) {
                 $this->key = $this->query->getKeyName();
-            } elseif ( is_a($this->query, "\Illuminate\Database\Eloquent\Builder")) {
+            } elseif (is_a($this->query, "\Illuminate\Database\Eloquent\Builder")) {
                 $this->key = $this->query->getModel()->getKeyName();
             }
-
         }
         //array
         elseif (is_array($this->source)) {
-            $this->type = "array";
+            $this->type = 'array';
         } else {
-            throw new DataSetException(' "source" must be a table name, an eloquent model or an eloquent builder. you passed: ' . get_class($this->source));
+            throw new DataSetException(' "source" must be a table name, an eloquent model or an eloquent builder. you passed: '.get_class($this->source));
         }
 
         //build orderby urls
-        $this->orderby_uri_asc = $this->url->remove('page' . $this->cid)->remove('reset' . $this->cid)->append('ord' . $this->cid, "-field-")->get() . $this->hash;
+        $this->orderby_uri_asc = $this->url->remove('page'.$this->cid)->remove('reset'.$this->cid)->append('ord'.$this->cid, '-field-')->get().$this->hash;
 
-        $this->orderby_uri_desc = $this->url->remove('page' . $this->cid)->remove('reset' . $this->cid)->append('ord' . $this->cid, "--field-")->get() . $this->hash;
+        $this->orderby_uri_desc = $this->url->remove('page'.$this->cid)->remove('reset'.$this->cid)->append('ord'.$this->cid, '--field-')->get().$this->hash;
 
         //detect orderby
-        $orderby = $this->url->value("ord" . $this->cid);
+        $orderby = $this->url->value('ord'.$this->cid);
         if ($orderby) {
-            $this->orderby_field = ltrim($orderby, "-");
-            $this->orderby_direction = ($orderby[0] === "-") ? "desc" : "asc";
+            $this->orderby_field = ltrim($orderby, '-');
+            $this->orderby_direction = ($orderby[0] === '-') ? 'desc' : 'asc';
             if ($this->canOrderby($this->orderby_field)) {
                 $this->orderBy($this->orderby_field, $this->orderby_direction);
             }
@@ -176,15 +169,15 @@ class DataSet extends Widget
 
         //build subset of data
         switch ($this->type) {
-            case "array":
+            case 'array':
                 //orderby
                 if (isset($this->orderby)) {
                     list($field, $direction) = $this->orderby;
-                    $column = array();
+                    $column = [];
                     foreach ($this->source as $key => $row) {
                         $column[$key] = is_object($row) ? $row->{$field} : $row[$field];
                     }
-                    if ($direction == "asc") {
+                    if ($direction == 'asc') {
                         array_multisort($column, SORT_ASC, $this->source);
                     } else {
                         array_multisort($column, SORT_DESC, $this->source);
@@ -193,24 +186,23 @@ class DataSet extends Widget
 
                 $limit = $this->limit ? $this->limit : 100000;
                 $current_page = $this->url->value('page'.$this->cid, 0);
-                $offset = (max($current_page-1,0)) * $limit;
+                $offset = (max($current_page - 1, 0)) * $limit;
                 $this->data = array_slice($this->source, $offset, $limit);
                 $this->total_rows = count($this->source);
                 $this->paginator = new LengthAwarePaginator($this->data, $this->total_rows, $limit, $current_page,
                     ['path' => Paginator::resolveCurrentPath(),
-                    'pageName' => "page".$this->cid,
+                    'pageName' => 'page'.$this->cid,
                     ]);
                 break;
 
-            case "query":
-            case "model":
+            case 'query':
+            case 'model':
                 //orderby
                 if (isset($this->orderby)) {
                     $this->query = $this->query->orderBy($this->orderby[0], $this->orderby[1]);
                 }
                 //limit-offset
-                if (isset($this->limit)){
-                    
+                if (isset($this->limit)) {
                     $this->paginator = $this->query->paginate($this->limit, ['*'], 'page'.$this->cid);
                     $this->total_rows = $this->paginator->total();
                     $this->data = $this->paginator;
@@ -221,6 +213,7 @@ class DataSet extends Widget
 
                 break;
         }
+
         return $this;
     }
 
@@ -235,8 +228,8 @@ class DataSet extends Widget
     }
 
     /**
-     * current data collection
-     * 
+     * current data collection.
+     *
      * @return array
      */
     public function getData()
@@ -245,15 +238,15 @@ class DataSet extends Widget
     }
 
     /**
-     * total row count 
-     * 
+     * total row count.
+     *
      * @return string
      */
     public function totalRows()
     {
         return $this->total_rows;
     }
-    
+
     /**
      * @param string $view
      *
@@ -262,12 +255,14 @@ class DataSet extends Widget
     public function links($view = null)
     {
         if ($this->limit) {
-            if ($this->hash != '')
-                $links =  $this->paginator->appends($this->url->remove('page'.$this->cid)->getArray())->fragment($this->hash)->render($view);
-            else
-                $links =  $this->paginator->appends($this->url->remove('page'.$this->cid)->getArray())->render($view);
+            if ($this->hash != '') {
+                $links = $this->paginator->appends($this->url->remove('page'.$this->cid)->getArray())->fragment($this->hash)->render($view);
+            } else {
+                $links = $this->paginator->appends($this->url->remove('page'.$this->cid)->getArray())->render($view);
+            }
 
-            $links = str_replace('#pjax','%23pajax',$links);
+            $links = str_replace('#pjax', '%23pajax', $links);
+
             return str_replace('/?', '?', $links);
         }
     }
@@ -278,21 +273,21 @@ class DataSet extends Widget
     }
 
     /**
-     * add the ability to check & enable "order by" of given field/s 
-     * by default you can order by 
-     * 
+     * add the ability to check & enable "order by" of given field/s
+     * by default you can order by.
+     *
      * @param mixed $fieldname
      */
     public function addOrderBy($fieldname)
     {
         $this->orderby_check = true;
-        $this->orderby_fields = array_merge($this->orderby_fields, (array)$fieldname);
-        
+        $this->orderby_fields = array_merge($this->orderby_fields, (array) $fieldname);
+
         return $this;
     }
-    
+
     protected function canOrderby($fieldname)
     {
-        return (!$this->orderby_check || in_array($fieldname, $this->orderby_fields)); 
+        return ! $this->orderby_check || in_array($fieldname, $this->orderby_fields);
     }
 }

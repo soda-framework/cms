@@ -2,11 +2,11 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Soda;
-use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Page;
+use Illuminate\Http\Request;
 use Soda\Cms\Models\PageType;
+use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
 
 class PageController extends BaseController
 {
@@ -49,7 +49,9 @@ class PageController extends BaseController
             $page = $this->model->find($request->input('id'));
         } else {
             $page = $this->model->getRoots()->first();    //todo: from application.
-            if (!$page) $page = Page::createRoot();
+            if (! $page) {
+                $page = Page::createRoot();
+            }
         }
 
         $page_types = PageType::with('subpageTypes')->get(['id', 'name']);
@@ -113,9 +115,9 @@ class PageController extends BaseController
     {
         $parent = $parentId ? $this->model->find($parentId) : $this->model->getRoots()->first();
 
-        if($parent->type) {
+        if ($parent->type) {
             $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
-            if(count($allowedPageTypes) && !in_array($request->input('page_type_id'), $allowedPageTypes)) {
+            if (count($allowedPageTypes) && ! in_array($request->input('page_type_id'), $allowedPageTypes)) {
                 return redirect()->back()->with('danger', 'You cannot create a page of this type here');
             }
         }
@@ -125,7 +127,7 @@ class PageController extends BaseController
 
         if ($this->model->page_type_id) {
             $this->model->load('type.fields');
-            if($this->model->type) {
+            if ($this->model->type) {
                 $this->model->fill([
                     'action'           => $this->model->type->action,
                     'action_type'      => $this->model->type->action_type,
@@ -139,7 +141,7 @@ class PageController extends BaseController
     }
 
     /**
-     * create page save functions
+     * create page save functions.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -150,7 +152,7 @@ class PageController extends BaseController
         $pageType = PageType::with('fields')->find($request->input('page_type_id'));
 
         $slug = $this->model->generateSlug($request->input('slug'));
-        if ($parentPage && !starts_with($slug, $parentPage->getAttribute('slug'))) {
+        if ($parentPage && ! starts_with($slug, $parentPage->getAttribute('slug'))) {
             $slug = $parentPage->generateSlug($request->input('slug'));
         }
 
@@ -175,11 +177,21 @@ class PageController extends BaseController
             'page_type_id'   => $pageType ? $pageType->id : null,
         ]);
 
-        if ($request->has('package')) $this->model->package = $request->input('package');
-        if ($request->has('action')) $this->model->action = $request->input('action');
-        if ($request->has('action_type')) $this->model->action_type = $request->input('action_type');
-        if ($request->has('edit_action')) $this->model->edit_action = $request->input('edit_action');
-        if ($request->has('edit_action_type')) $this->model->edit_action_type = $request->input('edit_action_type');
+        if ($request->has('package')) {
+            $this->model->package = $request->input('package');
+        }
+        if ($request->has('action')) {
+            $this->model->action = $request->input('action');
+        }
+        if ($request->has('action_type')) {
+            $this->model->action_type = $request->input('action_type');
+        }
+        if ($request->has('edit_action')) {
+            $this->model->edit_action = $request->input('edit_action');
+        }
+        if ($request->has('edit_action_type')) {
+            $this->model->edit_action_type = $request->input('edit_action_type');
+        }
 
         $this->model->save();
 
@@ -201,5 +213,4 @@ class PageController extends BaseController
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
     }
-
 }

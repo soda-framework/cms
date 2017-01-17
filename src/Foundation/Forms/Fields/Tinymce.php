@@ -6,7 +6,7 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Tinymce extends AbstractFormField
 {
-    protected $view = "tinymce";
+    protected $view = 'tinymce';
 
     public function getDefaultParameters()
     {
@@ -21,7 +21,7 @@ class Tinymce extends AbstractFormField
             ],
             'toolbar1'     => 'insertfile undo redo | forecolor backcolor styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
             'image_advtab' => true,
-            'convert_urls' => false //prevent "http://site.com/my/directory" becoming "/my/directory" - https://www.tinymce.com/docs/configure/url-handling/
+            'convert_urls' => false, //prevent "http://site.com/my/directory" becoming "/my/directory" - https://www.tinymce.com/docs/configure/url-handling/
         ];
     }
 }

@@ -1,15 +1,15 @@
 <?php
+
 namespace Soda\Cms\Foundation;
 
 use Cache;
 use Exception;
-use Illuminate\Contracts\Foundation\Application as IlluminateApplication;
-use Route;
-use Soda\Cms\Models\Application;
-use Soda\Cms\Models\ApplicationUrl;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\Application;
+use Soda\Cms\Models\ModelBuilder;
+use Soda\Cms\Models\ApplicationUrl;
+use Illuminate\Contracts\Foundation\Application as IlluminateApplication;
 
 class SodaInstance
 {
@@ -23,7 +23,7 @@ class SodaInstance
     {
         $this->app = $app;
 
-        if (!app()->runningInConsole()) {
+        if (! app()->runningInConsole()) {
             $domain = str_replace('www.', '', $_SERVER['HTTP_HOST']);
 
             if (config('soda.cache.application') === true) {
@@ -39,7 +39,7 @@ class SodaInstance
     }
 
     /**
-     * Returns the current application loaded at the current URL
+     * Returns the current application loaded at the current URL.
      *
      * @return null
      */
@@ -49,7 +49,7 @@ class SodaInstance
     }
 
     /**
-     * Sets the application
+     * Sets the application.
      *
      * @param \Soda\Cms\Models\Application $application
      *
@@ -63,7 +63,7 @@ class SodaInstance
     }
 
     /**
-     * Get a block by its identifier
+     * Get a block by its identifier.
      *
      * @param $identifier
      *
@@ -71,7 +71,7 @@ class SodaInstance
      */
     public function getBlock($identifier)
     {
-        if (!isset($this->blocks[$identifier])) {
+        if (! isset($this->blocks[$identifier])) {
             $this->blocks[$identifier] = Block::with('type')->where('identifier', $identifier)->first();
         }
 
@@ -91,7 +91,7 @@ class SodaInstance
     }
 
     /**
-     * Load a dynamic model
+     * Load a dynamic model.
      *
      * @param      $table
      * @param bool $autoprefix
@@ -100,13 +100,15 @@ class SodaInstance
      */
     public function model($table, $autoprefix = true)
     {
-        if ($autoprefix) $table = 'soda_'.$table;
+        if ($autoprefix) {
+            $table = 'soda_'.$table;
+        }
 
         return ModelBuilder::fromTable($table);
     }
 
     /**
-     * Get the current page that we're visiting
+     * Get the current page that we're visiting.
      *
      * @return mixed
      */
@@ -116,7 +118,7 @@ class SodaInstance
     }
 
     /**
-     * Set the current page that we're visiting
+     * Set the current page that we're visiting.
      *
      * @param \Soda\Cms\Models\Page $page
      */
@@ -126,7 +128,7 @@ class SodaInstance
     }
 
     /**
-     * Return instance of PageBuilder
+     * Return instance of PageBuilder.
      *
      * @return \Soda\Cms\Foundation\Pages\PageBuilder
      */
@@ -136,7 +138,7 @@ class SodaInstance
     }
 
     /**
-     * Return instance of MenuBuilder
+     * Return instance of MenuBuilder.
      *
      * @return \Soda\Cms\Foundation\Pages\MenuBuilder
      */
@@ -146,7 +148,7 @@ class SodaInstance
     }
 
     /**
-     * Return instance of FormBuilder
+     * Return instance of FormBuilder.
      *
      * @return \Soda\Cms\Foundation\Pages\FormBuilder
      */
@@ -156,7 +158,7 @@ class SodaInstance
     }
 
     /**
-     * Build a FormField from array or Field model
+     * Build a FormField from array or Field model.
      *
      * @param $field
      *
@@ -169,7 +171,7 @@ class SodaInstance
 
     public function noPermission()
     {
-        return response()->view(soda_cms_view_path("errors.no-permission"), [], 401);
+        return response()->view(soda_cms_view_path('errors.no-permission'), [], 401);
     }
 
     public function applicationUrl()
@@ -178,7 +180,7 @@ class SodaInstance
     }
 
     /**
-     * Determines the application by our current URL and sets it
+     * Determines the application by our current URL and sets it.
      *
      * @return \Soda\Cms\Foundation\Soda
      * @throws \Exception

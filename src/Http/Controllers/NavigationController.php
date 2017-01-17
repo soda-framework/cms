@@ -4,10 +4,10 @@ namespace Soda\Cms\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
-use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Navigation;
 use Soda\Cms\Models\NavigationItem;
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
+use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
 
 class NavigationController extends BaseController
 {
@@ -23,9 +23,8 @@ class NavigationController extends BaseController
 
     public function index()
     {
-
         $filter = \DataFilter::source($this->model->collectRoots());
-        $filter->add('name', 'name', 'text');;
+        $filter->add('name', 'name', 'text');
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
@@ -97,7 +96,7 @@ class NavigationController extends BaseController
         //we create a new menu block
         $this->model->fill($request->input());
         $this->model->application_id = \Soda::getApplication()->id;
-        if (@$parent && !$this->model->id) {
+        if (@$parent && ! $this->model->id) {
             //create a new item and move it into a parent.
             //we need to move this item into the parent.
             $parent->addChild($this->model);
@@ -112,7 +111,6 @@ class NavigationController extends BaseController
 
     public function createForm(Request $request, $parent_id = null)
     {
-
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
             $this->model->parent_id = $parent->id;
@@ -126,5 +124,4 @@ class NavigationController extends BaseController
             'tree'  => false,
         ]);
     }
-
 }

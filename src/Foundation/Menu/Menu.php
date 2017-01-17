@@ -92,7 +92,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Implements Countable
+     * Implements Countable.
      */
     public function count()
     {
@@ -100,7 +100,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Implements IteratorAggregate
+     * Implements IteratorAggregate.
      */
     public function getIterator()
     {
@@ -108,7 +108,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Implements ArrayAccess
+     * Implements ArrayAccess.
      */
     public function offsetExists($name)
     {
@@ -116,7 +116,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Implements ArrayAccess
+     * Implements ArrayAccess.
      */
     public function offsetGet($name)
     {
@@ -129,7 +129,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Implements ArrayAccess
+     * Implements ArrayAccess.
      */
     public function offsetSet($name, $value)
     {
@@ -138,7 +138,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function addItem($item, array $options = [])
     {
-        if (!$item instanceof MenuItem) {
+        if (! $item instanceof MenuItem) {
             $item = new MenuItem($item, $options);
         } elseif (null !== $item->getMenu()) {
             throw new InvalidArgumentException('Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).');
@@ -151,7 +151,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Implements ArrayAccess
+     * Implements ArrayAccess.
      */
     public function offsetUnset($name)
     {
