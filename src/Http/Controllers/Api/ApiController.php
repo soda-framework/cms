@@ -30,7 +30,6 @@ abstract class ApiController extends BaseController
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -94,27 +93,27 @@ abstract class ApiController extends BaseController
     protected function buildResponse($statusType, array $data = [])
     {
         $response = [
-            'status' => $this->buildStatus($statusType)
+            'status' => $this->buildStatus($statusType),
         ];
 
-        if(count($data)) {
+        if (count($data)) {
             $response['data'] = $data;
         }
 
         return response()->json(compact('response'), $this->getStatusCode());
     }
 
-    protected function buildStatus($statusType) {
+    protected function buildStatus($statusType)
+    {
         $status = [
             'type' => $statusType,
             'code' => $this->getStatusCode(),
         ];
 
-        if($message = $this->getStatusMessage()) {
+        if ($message = $this->getStatusMessage()) {
             $status['message'] = $message;
         }
 
         return $status;
     }
-
 }

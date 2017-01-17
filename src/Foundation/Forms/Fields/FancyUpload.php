@@ -6,14 +6,14 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class FancyUpload extends AbstractFormField
 {
-    protected $view = "fancy_upload";
+    protected $view = 'fancy_upload';
 
     public function getDefaultParameters()
     {
         $field_name = $this->getFieldName();
         $field_params = $this->getFieldParameters();
         $is_multi = isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? true : false;
-        $has_media = $this->model && (($is_multi && $this->model->getMedia($field_name)->count() > 0) || !$is_multi && $this->model && isset($this->model->$field_name) && $this->model->$field_name) ? true : false;
+        $has_media = $this->model && (($is_multi && $this->model->getMedia($field_name)->count() > 0) || ! $is_multi && $this->model && isset($this->model->$field_name) && $this->model->$field_name) ? true : false;
 
         $related = [];
         if ($this->model) {
@@ -79,7 +79,7 @@ class FancyUpload extends AbstractFormField
                 $default_parameters['initialPreview'][] = $initialPreview;
                 $default_parameters['initialPreviewConfig'][] = $initialPreviewConfig;
             }
-        } elseif (!$is_multi && $has_media) {
+        } elseif (! $is_multi && $has_media) {
             $initialPreview = '<img src="'.$this->model->$field_name.'" width="120">';
             $initialPreviewConfig = [
                 'caption' => '',
@@ -130,7 +130,7 @@ class FancyUpload extends AbstractFormField
         $fileName = $this->getFieldValue();
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        if (!$isMulti) {
+        if (! $isMulti) {
             switch ($fileExtension) {
                 case 'jpg':
                 case 'png':

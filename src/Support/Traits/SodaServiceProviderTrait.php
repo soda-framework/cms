@@ -6,9 +6,8 @@ use Illuminate\Foundation\AliasLoader;
 
 trait SodaServiceProviderTrait
 {
-
     /**
-     * Register dependencies
+     * Register dependencies.
      *
      * @param array $services
      */
@@ -20,7 +19,7 @@ trait SodaServiceProviderTrait
     }
 
     /**
-     * Register facades
+     * Register facades.
      *
      * @param array $facades
      */

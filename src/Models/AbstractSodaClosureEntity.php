@@ -14,7 +14,7 @@ abstract class AbstractSodaClosureEntity extends Entity
     public static function collectRoots()
     {
         /**
-         * @var Entity $instance
+         * @var Entity
          */
         $instance = new static;
 
