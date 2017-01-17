@@ -1,4 +1,5 @@
 <?php
+
 namespace Themes\SodaExample\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -10,7 +11,6 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var array
      */
-
     protected $defer = false;
 
     protected $namespace = 'Themes\SodaExample\Controllers';
@@ -31,7 +31,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
     }
 
-
     /**
      * Define the "web" routes for the application.
      *
@@ -45,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => 'web',
             'namespace' => $this->namespace,
         ], function ($router) {
-            require_once __DIR__ . '/../../routes/web.php';
+            require_once __DIR__.'/../../routes/web.php';
         });
     }
 
@@ -63,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace' => $this->namespace,
             'prefix' => 'api',
         ], function ($router) {
-            require_once __DIR__ . '/../../routes/api.php';
+            require_once __DIR__.'/../../routes/api.php';
         });
     }
 }

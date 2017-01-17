@@ -1,10 +1,11 @@
 <?php
+
 namespace Themes\SodaExample\Providers;
 
-use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Support\ThemeExceptionHandler;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
+use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
 
 class SodaExampleThemeServiceProvider extends ServiceProvider
 {
@@ -15,18 +16,17 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
      *
      * @var array
      */
-
     protected $defer = false;
     protected $handlesErrors = false;
 
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../../views', 'soda-example');
+        $this->loadViewsFrom(__DIR__.'/../../views', 'soda-example');
     }
 
     public function register()
     {
-        $this->publishes([__DIR__ . '/../../public' => public_path('themes/soda-example')], 'public');
+        $this->publishes([__DIR__.'/../../public' => public_path('themes/soda-example')], 'public');
         $this->mergeConfigFrom(__DIR__.'/../../config/auth.php', 'themes.soda-example.auth');
 
         $this->registerDependencies([
@@ -39,7 +39,8 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
         }
     }
 
-    public function bindErrorHandler() {
+    public function bindErrorHandler()
+    {
         $this->app->singleton(BaseExceptionHandler::class, function ($app) {
             return (new ThemeExceptionHandler())->setTheme('soda-example');
         });

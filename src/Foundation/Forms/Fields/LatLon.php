@@ -6,5 +6,5 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class LatLon extends AbstractFormField
 {
-    protected $view = "lat_lon";
+    protected $view = 'lat_lon';
 }

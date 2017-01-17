@@ -2,13 +2,13 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Redirect;
-use Route;
 use Soda;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\ModelBuilder;
+use Route;
+use Redirect;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Models\Block;
+use Illuminate\Http\Request;
+use Soda\Cms\Models\ModelBuilder;
 
 class PageBlockController extends BaseController
 {
@@ -37,7 +37,7 @@ class PageBlockController extends BaseController
 
     public function view($page_id, $type, $id = null)
     {
-        if (!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
+        if (! $id && isset($this->block->pivot) && ! $this->block->pivot->can_create) {
             // No permission
             dd('Not allowed');
         }
@@ -49,7 +49,7 @@ class PageBlockController extends BaseController
 
     public function edit(Request $request, $page_id, $type, $id = null)
     {
-        if (!$id && isset($this->block->pivot) && !$this->block->pivot->can_create) {
+        if (! $id && isset($this->block->pivot) && ! $this->block->pivot->can_create) {
             // No permission
             dd('Not allowed');
         }
@@ -64,7 +64,7 @@ class PageBlockController extends BaseController
 
         $model->block_id = $this->block->id;
 
-        if (!$this->block->is_shared && $this->page) {
+        if (! $this->block->is_shared && $this->page) {
             $model->page_id = $this->page->id;
             $model->is_shared = false;
         } else {
@@ -81,7 +81,7 @@ class PageBlockController extends BaseController
     }
 
     /**
-     * delete
+     * delete.
      *
      * @param Request $request
      * @param null    $type
@@ -89,7 +89,7 @@ class PageBlockController extends BaseController
      */
     public function delete(Request $request, $page_id, $type, $id = null)
     {
-        if (isset($this->block->pivot) && !$this->block->pivot->can_delete) {
+        if (isset($this->block->pivot) && ! $this->block->pivot->can_delete) {
             // No permission
             dd('Not allowed');
         }
@@ -109,7 +109,6 @@ class PageBlockController extends BaseController
      */
     public function inlineEdit($page_id, $type, $id, $field)
     {
-
         $this->model = $this->model->findOrFail($id);
         $this->model->{$field} = \Request::get($field);
         $this->model->save();

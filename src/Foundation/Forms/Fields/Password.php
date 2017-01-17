@@ -6,5 +6,5 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Password extends AbstractFormField
 {
-    protected $view = "password";
+    protected $view = 'password';
 }

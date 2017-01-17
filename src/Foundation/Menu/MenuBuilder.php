@@ -2,9 +2,6 @@
 
 namespace Soda\Cms\Foundation\Menu;
 
-use Route;
-use Soda;
-
 class MenuBuilder
 {
     protected $registrar;
@@ -15,7 +12,7 @@ class MenuBuilder
     }
 
     /**
-     * Gets a menu object by its name
+     * Gets a menu object by its name.
      *
      * @param $name
      *

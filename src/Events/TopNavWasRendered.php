@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Cms\Events;
 
 class TopNavWasRendered

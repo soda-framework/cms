@@ -2,10 +2,10 @@
 
 namespace Soda\Cms\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Soda\Cms\Http\Controllers\BaseController;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends BaseController
 {

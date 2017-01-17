@@ -1,4 +1,6 @@
-<?php namespace Soda\Cms\Models;
+<?php
+
+namespace Soda\Cms\Models;
 
 use Laratrust\LaratrustPermission;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;

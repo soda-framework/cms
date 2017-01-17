@@ -19,7 +19,7 @@ class Relationship extends Dropdown
     }
 
     /**
-     * Merges default field parameters and additional field parameters
+     * Merges default field parameters and additional field parameters.
      *
      * @return array
      */
@@ -27,8 +27,7 @@ class Relationship extends Dropdown
     {
         $parameters = parent::parseFieldParameters();
 
-        if(!isset($parameters['options']) || !is_array($parameters['options']) || count($parameters['options']) == 0)
-        {
+        if (! isset($parameters['options']) || ! is_array($parameters['options']) || count($parameters['options']) == 0) {
             $parameters['options'] = $this->loadRelationship();
         }
 
@@ -36,7 +35,7 @@ class Relationship extends Dropdown
     }
 
     /**
-     * Loads array from database using field parameters specified
+     * Loads array from database using field parameters specified.
      *
      * return @array
      */
@@ -46,7 +45,7 @@ class Relationship extends Dropdown
 
         $query = $this->buildRelationshipQuery($field_parameters);
 
-        if (!$query) {
+        if (! $query) {
             throw new Exception('Could not build query from field parameters');
         }
 
@@ -58,7 +57,7 @@ class Relationship extends Dropdown
     }
 
     /**
-     * Builds base query for relationship, using field parameters specified
+     * Builds base query for relationship, using field parameters specified.
      *
      * @param $field_parameters
      *
@@ -67,11 +66,11 @@ class Relationship extends Dropdown
      */
     protected function buildRelationshipQuery($field_parameters)
     {
-        if (isset($field_parameters['table']) && !$this->onlyQueryFrom == 'model') {
+        if (isset($field_parameters['table']) && ! $this->onlyQueryFrom == 'model') {
             $table = $field_parameters['table'];
 
             return DB::table($table);
-        } elseif (isset($field_parameters['model']) && !$this->onlyQueryFrom == 'table') {
+        } elseif (isset($field_parameters['model']) && ! $this->onlyQueryFrom == 'table') {
             $class = $field_parameters['model'];
             $model = new $class;
 
@@ -86,7 +85,7 @@ class Relationship extends Dropdown
     }
 
     /**
-     * Pulls array from query, using field parameters specified
+     * Pulls array from query, using field parameters specified.
      *
      * @param $query
      * @param $field_parameters
@@ -96,7 +95,7 @@ class Relationship extends Dropdown
     protected function getRelationshipArray($query, $field_parameters)
     {
         // Relationship data is stored to prevent re-querying
-        if(!$this->relationshipData) {
+        if (! $this->relationshipData) {
             $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
             $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
 
