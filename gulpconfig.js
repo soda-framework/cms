@@ -87,7 +87,6 @@ module.exports = {
         ],
 
         'forms/sortable': [
-            'resources/components/jquery-ui/jquery-ui.js',
             'resources/components/nested-sortable/jquery.nested-sortable.js',
         ],
         'forms/dates': [
@@ -106,7 +105,6 @@ module.exports = {
             'resources/components/jsoneditor/dist/jsoneditor.js',
         ],
         'forms/multiselect': [
-            //'resources/components/bootstrap-select/js/bootstrap-select.js',
             'resources/components/select2/dist/js/select2.full.min.js',
         ],
         'forms/tags': [
