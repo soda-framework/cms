@@ -1,26 +1,27 @@
 <?php
+
 namespace Soda\Cms\Providers;
 
 use Soda;
 use Blade;
-use Franzose\ClosureTable\ClosureTableServiceProvider;
-use Soda\Cms\Components\Soda as SodaInstance;
-use Soda\Cms\Console\Assets;
-use Soda\Cms\Console\Migrate;
+use Soda\Cms\Models\Role;
+use Soda\Cms\Models\User;
 use Soda\Cms\Console\Seed;
 use Soda\Cms\Console\Setup;
 use Soda\Cms\Console\Theme;
+use Soda\Cms\Console\Assets;
 use Soda\Cms\Console\Update;
-use Soda\Cms\Facades\SodaFacade;
+use Soda\Cms\Console\Migrate;
 use Soda\Cms\Models\Permission;
-use Soda\Cms\Models\Role;
-use Soda\Cms\Models\User;
-use Storage;
+use Soda\Cms\Facades\SodaFacade;
+use Zizaco\Entrust\EntrustFacade;
 use Zofe\Rapyd\RapydServiceProvider;
 use Zizaco\Entrust\EntrustServiceProvider;
-use Zizaco\Entrust\EntrustFacade;
+use Soda\Cms\Components\Soda as SodaInstance;
+use Franzose\ClosureTable\ClosureTableServiceProvider;
 
-class SodaServiceProvider extends AbstractSodaServiceProvider {
+class SodaServiceProvider extends AbstractSodaServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -33,16 +34,17 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
      *
      * @return void
      */
-    public function boot() {
-        require(__DIR__ . '/../helpers.php');
+    public function boot()
+    {
+        require __DIR__.'/../helpers.php';
 
         $this->configure();
 
         // Publishing configs
-        $this->publishes([__DIR__ . '/../../config' => config_path()]);
-        $this->publishes([__DIR__ . '/../../database/migrations' => database_path('migrations')]);
-        $this->publishes([__DIR__ . '/../../public' => public_path('sodacms/sodacms')], 'soda.public');
-        $this->loadViewsFrom(__DIR__ . '/../../views', config('soda.hint_path'));
+        $this->publishes([__DIR__.'/../../config' => config_path()]);
+        $this->publishes([__DIR__.'/../../database/migrations' => database_path('migrations')]);
+        $this->publishes([__DIR__.'/../../public' => public_path('sodacms/sodacms')], 'soda.public');
+        $this->loadViewsFrom(__DIR__.'/../../views', config('soda.hint_path'));
 
         $this->extendBlade();
     }
@@ -52,8 +54,9 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
      *
      * @return void
      */
-    public function register() {
-        $this->mergeConfigRecursivelyFrom(__DIR__ . '/../../config/soda.php', 'soda');
+    public function register()
+    {
+        $this->mergeConfigRecursivelyFrom(__DIR__.'/../../config/soda.php', 'soda');
 
         $this->registerDependencies([
             AuthServiceProvider::class,
@@ -82,7 +85,8 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
         Soda::getFormBuilder()->registerMany(config('soda.fields'));
     }
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->app->config->set('entrust.role', Role::class);
         $this->app->config->set('entrust.permission', Permission::class);
 
@@ -110,7 +114,8 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
         ]);
     }
 
-    protected function extendBlade() {
+    protected function extendBlade()
+    {
         Blade::extend(function ($value, $compiler) {
             $value = preg_replace('/(?<=\s)@switch\((.*)\)(\s*)@case\((.*)\)(?=\s)/', '<?php switch($1):$2case $3: ?>', $value);
             $value = preg_replace('/(?<=\s)@endswitch(?=\s)/', '<?php endswitch; ?>', $value);

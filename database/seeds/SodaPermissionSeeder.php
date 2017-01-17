@@ -1,17 +1,18 @@
 <?php
 
+use Soda\Cms\Models\Role;
 use Illuminate\Database\Seeder;
 use Soda\Cms\Models\Permission;
-use Soda\Cms\Models\Role;
 
-class SodaPermissionSeeder extends Seeder {
-
+class SodaPermissionSeeder extends Seeder
+{
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         $role_developer = Role::create([
             'name'         => 'developer',
             'display_name' => 'Developer',

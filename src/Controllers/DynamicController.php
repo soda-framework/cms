@@ -1,34 +1,40 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Redirect;
-use Route;
+namespace Soda\Cms\Controllers;
+
 use Soda;
+use Route;
+use Redirect;
+use Illuminate\Http\Request;
 use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\ModelBuilder;
+use App\Http\Controllers\Controller;
 
-class DynamicController extends Controller {
-    public function __construct(ModelBuilder $modelBuilder) {
+class DynamicController extends Controller
+{
+    public function __construct(ModelBuilder $modelBuilder)
+    {
         $type = Route::current()->getParameter('type');
         $this->type = BlockType::with('fields')->where('identifier', $type)->first();
-        $this->model = Soda::dynamicModel('soda_' . $this->type->identifier, $this->type->fields->lists('field_name')->toArray());
+        $this->model = Soda::dynamicModel('soda_'.$this->type->identifier, $this->type->fields->lists('field_name')->toArray());
     }
 
-    public function index() {
+    public function index()
+    {
         $models = $this->model->all();
 
         return view($this->index_view, compact('models'));
     }
 
-    public function view($type = null, $id = null) {
+    public function view($type = null, $id = null)
+    {
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
         return view('soda::standard.view', ['type' => $this->type, 'model' => $model]);
     }
 
-    public function edit(Request $request, $type = null, $id = null) {
+    public function edit(Request $request, $type = null, $id = null)
+    {
         $model = $id ? $this->model->findOrFail($id) : $this->model;
 
         foreach ($this->type->fields as $field) {
@@ -39,18 +45,19 @@ class DynamicController extends Controller {
 
         return redirect()->route('soda.dyn.view', [
             'type' => $this->type->identifier,
-            'id' => $model->id
+            'id' => $model->id,
         ])->with('success', 'updated!');
     }
 
     /**
-     * delete
+     * delete.
      *
      * @param Request $request
      * @param null $type
      * @param null $id
      */
-    public function delete(Request $request, $type = null, $id = null) {
+    public function delete(Request $request, $type = null, $id = null)
+    {
         $this->model = $this->model->findOrFail($id);
         $this->model->delete();
 
@@ -64,8 +71,8 @@ class DynamicController extends Controller {
      * @param $id
      * @param $field
      */
-    public function inlineEdit($type, $id, $field) {
-
+    public function inlineEdit($type, $id, $field)
+    {
         $this->model = $this->model->findOrFail($id);
         $this->model->{$field} = \Request::get($field);
         $this->model->save();

@@ -4,13 +4,14 @@ namespace Soda\Cms\Console;
 
 use Illuminate\Console\Command;
 
-class Assets extends Command {
-
+class Assets extends Command
+{
     protected $signature = 'soda:assets';
     protected $description = 'Update assets for the Soda Framework';
     protected $except = [];
 
-    public function handle() {
+    public function handle()
+    {
         $this->info('Updating Soda styles and assets...');
         $this->callSilent('vendor:publish', [
             '--force' => 1,
@@ -19,4 +20,3 @@ class Assets extends Command {
         $this->info('Soda styles and assets updated successfully.');
     }
 }
-

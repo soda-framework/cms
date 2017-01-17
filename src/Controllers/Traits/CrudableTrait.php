@@ -1,18 +1,19 @@
-<?php namespace Soda\Cms\Controllers\Traits;
+<?php
 
-use Auth;
-use DataFilter;
-use DataGrid;
-use Illuminate\Http\Request;
+namespace Soda\Cms\Controllers\Traits;
+
 use Soda;
+use DataGrid;
+use DataFilter;
+use Illuminate\Http\Request;
 
-Trait CrudableTrait {
+trait CrudableTrait
+{
     protected $model;
     protected $saveOnCreate = false;
 
-
-    public function index() {
-
+    public function index()
+    {
         $filter = DataFilter::source($this->model);
         $filter->add('name', 'name', 'text');
         $filter->submit('Search');
@@ -23,8 +24,8 @@ Trait CrudableTrait {
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='" . route('soda.' . $this->hint . '.edit', [$value]) . "' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='" . route('soda.' . $this->hint . '.delete', [$value]) . "' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+            $edit = "<a href='".route('soda.'.$this->hint.'.edit', [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
+            $edit .= "<a href='".route('soda.'.$this->hint.'.delete', [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
 
             return $edit;
         });
@@ -32,12 +33,12 @@ Trait CrudableTrait {
         $grid->paginate(10)->getGrid('soda::partials.grid');
         $hint = $this->hint;
 
-        return view('soda::' . $this->hint . '.index', compact('filter', 'grid', 'hint'));
+        return view('soda::'.$this->hint.'.index', compact('filter', 'grid', 'hint'));
     }
 
-
-    public function view($id = null) {
-        if (!$id) {
+    public function view($id = null)
+    {
+        if (! $id) {
             $model = $this->model;
         } else {
             $model = $this->model->find($id);
@@ -45,10 +46,11 @@ Trait CrudableTrait {
 
         $hint = $this->hint;
 
-        return view('soda::' . $this->hint . '.view', compact('model', 'hint'));
+        return view('soda::'.$this->hint.'.view', compact('model', 'hint'));
     }
 
-    public function edit(Request $request, $id = null) {
+    public function edit(Request $request, $id = null)
+    {
         if ($id) {
             $this->model = $this->model->findOrFail($id);
         }
@@ -57,15 +59,14 @@ Trait CrudableTrait {
         $this->model->application_id = Soda::getApplication()->id;
         $this->model->save();
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
             'updated');
     }
 
-
-    public function delete($id) {
+    public function delete($id)
+    {
         $this->model->where('id', $id)->delete();
 
-        return redirect()->route('soda.' . $this->hint)->with('success', 'updated');
+        return redirect()->route('soda.'.$this->hint)->with('success', 'updated');
     }
-
 }

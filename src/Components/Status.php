@@ -2,7 +2,8 @@
 
 namespace Soda\Cms\Components;
 
-class Status {
+class Status
+{
     const DRAFT = 0;
     const LIVE = 1;
 }

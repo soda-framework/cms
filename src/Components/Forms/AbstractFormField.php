@@ -1,90 +1,106 @@
 <?php
+
 namespace Soda\Cms\Components\Forms;
 
 use Exception;
-use Illuminate\Http\Request;
 use Soda\Cms\Models\Field;
+use Illuminate\Http\Request;
 
-abstract class AbstractFormField implements FormFieldInterface {
+abstract class AbstractFormField implements FormFieldInterface
+{
     protected $field;
     protected $prefix;
     protected $class;
     protected $model = null;
-    protected $theme = "soda::inputs";
+    protected $theme = 'soda::inputs';
 
-    public function setField($field) {
-        if ($field instanceOf Field) {
+    public function setField($field)
+    {
+        if ($field instanceof Field) {
             $this->field = $field;
         } else {
-            Throw new Exception("Field must be instance of " . Field::class . " or array.");
+            throw new Exception('Field must be instance of '.Field::class.' or array.');
         }
 
         return $this;
     }
 
-    public function getPrefix() {
+    public function getPrefix()
+    {
         return $this->prefix;
     }
 
-    public function setPrefix($prefix) {
+    public function setPrefix($prefix)
+    {
         $this->prefix = $prefix;
 
         return $this;
     }
 
-    public function getTheme() {
+    public function getTheme()
+    {
         return $this->theme;
     }
 
-    public function setTheme($theme) {
+    public function setTheme($theme)
+    {
         $this->theme = $theme;
 
         return $this;
     }
 
-    public function getModel() {
+    public function getModel()
+    {
         return $this->model;
     }
 
-    public function setModel($model) {
+    public function setModel($model)
+    {
         $this->model = $model;
 
         return $this;
     }
 
-    public function getClass() {
+    public function getClass()
+    {
         return $this->class;
     }
 
-    public function setClass($class) {
+    public function setClass($class)
+    {
         $this->class = $class;
 
         return $this;
     }
 
-    public function getFieldLabel() {
+    public function getFieldLabel()
+    {
         return $this->field->name;
     }
 
-    public function getFieldName() {
+    public function getFieldName()
+    {
         return $this->field->field_name;
     }
 
-    public function getPrefixedFieldName() {
+    public function getPrefixedFieldName()
+    {
         $field_name = $this->field->field_name;
 
         if ($this->prefix) {
-            return $this->prefix . '[' . $field_name . ']';
+            return $this->prefix.'['.$field_name.']';
         }
 
         return $field_name;
     }
 
-    public function getFieldDescription() {
+    public function getFieldDescription()
+    {
         return $this->field->description;
     }
 
-    public function getFieldValue() {
+    public function getFieldValue()
+    {
         $field_name = $this->field->field_name;
 
         if ($this->model) {
@@ -93,43 +109,50 @@ abstract class AbstractFormField implements FormFieldInterface {
             if ($value) {
                 return $this->model->$field_name;
             }
-        } elseif ($this->field->field_value && !old($this->field->field_name)) {
+        } elseif ($this->field->field_value && ! old($this->field->field_name)) {
             return $this->field->field_value;
         }
 
         return old($this->getPrefixedFieldName());
     }
 
-    public function saveValue(Request $request) {
+    public function saveValue(Request $request)
+    {
         $value = $request->input($this->getPrefixedFieldName());
 
         return $value;
     }
 
-    public function getFieldParameters() {
+    public function getFieldParameters()
+    {
         return $this->field->field_params;
     }
 
-    public function getDefaultParameters() {
+    public function getDefaultParameters()
+    {
         return [];
     }
 
-    public function parseFieldParameters() {
+    public function parseFieldParameters()
+    {
         $parameters = $this->getFieldParameters();
         $default_params = $this->getDefaultParameters();
 
         return is_array($parameters) ? array_replace_recursive($default_params, $parameters) : $default_params;
     }
 
-    protected function getView() {
+    protected function getView()
+    {
         return $this->field->field_type;
     }
 
-    protected function getThemedView() {
-        return $this->getTheme() . "." . $this->getView();
+    protected function getThemedView()
+    {
+        return $this->getTheme().'.'.$this->getView();
     }
 
-    protected function getDefaultViewParameters() {
+    protected function getDefaultViewParameters()
+    {
         return [
             'prefixed_field_name' => $this->getPrefixedFieldName(),
             'field_label'         => $this->getFieldLabel(),
@@ -141,18 +164,21 @@ abstract class AbstractFormField implements FormFieldInterface {
         ];
     }
 
-    protected function getViewParameters() {
+    protected function getViewParameters()
+    {
         return [];
     }
 
-    protected function parseViewParameters() {
+    protected function parseViewParameters()
+    {
         return array_merge($this->getDefaultViewParameters(), $this->getViewParameters());
     }
 
-    public function render() {
+    public function render()
+    {
         $view = view($this->getThemedView(), $this->parseViewParameters())->render();
 
-        if(env('APP_DEBUG')) {
+        if (env('APP_DEBUG')) {
             try {
                 return $view;
             } catch (Exception $e) {
@@ -163,7 +189,8 @@ abstract class AbstractFormField implements FormFieldInterface {
         return $view;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->render();
     }
 }

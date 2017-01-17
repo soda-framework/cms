@@ -1,52 +1,60 @@
 <?php
+
 namespace Soda\Cms\Components\Forms;
 
-use Exception;
 use Request;
-use Soda\Cms\Models\BlockType;
+use Exception;
 use Soda\Cms\Models\Field;
+use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\ModelBuilder;
 
-class FormBuilder {
+class FormBuilder
+{
     protected $field_types = [];
     protected $registered_fields = [];
 
-    public function register($name, $field_class = null){
-        if(new $field_class instanceof FormFieldInterface) {
+    public function register($name, $field_class = null)
+    {
+        if (new $field_class instanceof FormFieldInterface) {
             $this->registered_fields[$name] = $field_class;
         }
     }
 
-    public function registerMany($formFields) {
-        foreach($formFields as $field_name => $field_class) {
+    public function registerMany($formFields)
+    {
+        foreach ($formFields as $field_name => $field_class) {
             $this->register($field_name, $field_class);
         }
     }
 
-    public function getRegisteredFields() {
+    public function getRegisteredFields()
+    {
         return $this->registered_fields;
     }
 
-    public function getFieldTypes() {
-        return array_map(function($value) {
+    public function getFieldTypes()
+    {
+        return array_map(function ($value) {
             $class_name = class_basename($value);
+
             return ucfirst(strtolower(preg_replace('/\B([A-Z])/', ' $1', $class_name)));
         }, $this->getRegisteredFields());
     }
 
-    public function newField($field) {
+    public function newField($field)
+    {
         if (is_array($field)) {
             $field = new Field($field);
         }
 
-        if (!$field instanceOf Field) {
-            Throw new Exception("Field must be instance of " . Field::class . " or array.");
+        if (! $field instanceof Field) {
+            throw new Exception('Field must be instance of '.Field::class.' or array.');
         }
 
         $field_types = $this->getRegisteredFields();
 
-        if (!isset($field_types[$field->field_type])) {
-            Throw new Exception("Field " . $field->field_type ." is not registered.");
+        if (! isset($field_types[$field->field_type])) {
+            throw new Exception('Field '.$field->field_type.' is not registered.');
         }
 
         $class = $field_types[$field->field_type];
@@ -55,7 +63,8 @@ class FormBuilder {
         return $field_class->setField($field);
     }
 
-    public function editable($model, $element, $type) {
+    public function editable($model, $element, $type)
+    {
         $field_value = $model->{$element};
         if (Request::get('soda_edit')) {
             $unique = uniqid();
@@ -82,8 +91,11 @@ class FormBuilder {
         }
     }
 
-    public function buildJsParams($parameters) {
-        if(!$parameters) return '';
+    public function buildJsParams($parameters)
+    {
+        if (! $parameters) {
+            return '';
+        }
 
         $json_parameters = json_encode($parameters, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 

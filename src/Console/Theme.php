@@ -2,20 +2,20 @@
 
 namespace Soda\Cms\Console;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
-use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Illuminate\Console\Command;
+use RecursiveDirectoryIterator;
+use Illuminate\Support\Collection;
 
-class Theme extends Command {
-
+class Theme extends Command
+{
     protected $signature = 'soda:theme {--a|advanced : Use advanced options to set up your theme} {--e|extra : Include extra classes to build more complex theme functionality}';
     protected $description = 'Install an example Soda CMS Theme';
     protected $except = [];
     protected $attributes;
 
-
-    public function handle() {
+    public function handle()
+    {
         $this->attributes = new Collection;
         $is_extra = $this->option('extra') ? true : false;
 
@@ -30,7 +30,8 @@ class Theme extends Command {
         $this->informCompletion();
     }
 
-    protected function configureSimple() {
+    protected function configureSimple()
+    {
         $theme_name = ucfirst($this->ask('Please enter your theme name (using CamelCase)', 'SodaSite'));
 
         $folder = snake_case($theme_name);
@@ -39,7 +40,7 @@ class Theme extends Command {
         $namespace = $this->anticipateThemeClass($folder);
         $this->attributes->put('namespace', $namespace);
 
-        $helper_class = $namespace . 'Helper';
+        $helper_class = $namespace.'Helper';
         $this->attributes->put('helper_class', $helper_class);
 
         $helper_class_facade_name = snake_case($helper_class);
@@ -52,7 +53,8 @@ class Theme extends Command {
         $this->attributes->put('view_hint', $view_hint);
     }
 
-    protected function configureAdvanced() {
+    protected function configureAdvanced()
+    {
         $folder = $this->ask('Enter a theme folder name', 'soda_theme');
         $this->attributes->put('folder', $folder);
         $class_guess = $this->anticipateThemeClass($folder);
@@ -61,7 +63,7 @@ class Theme extends Command {
         $namespace = $this->ask('Enter a namespace', $class_guess);
         $this->attributes->put('namespace', $namespace);
 
-        $helper_class = $this->ask('Enter a helper class name', $namespace . 'Helper');
+        $helper_class = $this->ask('Enter a helper class name', $namespace.'Helper');
         $this->attributes->put('helper_class', $helper_class);
 
         $helper_class_facade_name = $this->ask('Enter a helper class facade name', snake_case($helper_class));
@@ -74,11 +76,12 @@ class Theme extends Command {
         $this->attributes->put('view_hint', $view_hint);
     }
 
-    protected function installTheme($extra = false) {
-        $theme_base = __DIR__ . '/../../themes/' . ($extra ? 'advanced' : 'simple');
+    protected function installTheme($extra = false)
+    {
+        $theme_base = __DIR__.'/../../themes/'.($extra ? 'advanced' : 'simple');
 
         $base_folder = $this->attributes->get('folder');
-        $folder = './themes/' . $base_folder;
+        $folder = './themes/'.$base_folder;
         $namespace = $this->attributes->get('namespace');
         $helper_class = $this->attributes->get('helper_class');
         $helper_class_facade_name = $this->attributes->get('helper_class_facade_name');
@@ -86,29 +89,29 @@ class Theme extends Command {
         $view_hint = $this->attributes->get('view_hint');
 
         mkdir($folder, 0755, true);
-        $this->xcopy(__DIR__ . '/../../themes/shared', $folder);
+        $this->xcopy(__DIR__.'/../../themes/shared', $folder);
         $this->xcopy($theme_base, $folder);
 
         // We need to go through and find and replace everything in here with a different package name:
-        rename($folder . '/src/Providers/SodaThemeServiceProvider.php', $folder . '/src/Providers/' . $namespace . 'ServiceProvider.php');
+        rename($folder.'/src/Providers/SodaThemeServiceProvider.php', $folder.'/src/Providers/'.$namespace.'ServiceProvider.php');
         if ($extra) {
-            rename($folder . '/src/Components/SodaHelperClass.php', $folder . '/src/Components/' . $helper_class . '.php');
-            rename($folder . '/src/Facades/SodaHelperClassFacade.php', $folder . '/src/Facades/' . $helper_class . 'Facade.php');
+            rename($folder.'/src/Components/SodaHelperClass.php', $folder.'/src/Components/'.$helper_class.'.php');
+            rename($folder.'/src/Facades/SodaHelperClassFacade.php', $folder.'/src/Facades/'.$helper_class.'Facade.php');
         }
         $this->info('Classes renamed.');
 
-        $this->findAndReplace('SodaTheme', $namespace, $folder . '/src');
+        $this->findAndReplace('SodaTheme', $namespace, $folder.'/src');
         $this->findAndReplace('soda-theme', $package_name, $folder);
         $this->findAndReplace('soda_theme_hint', $view_hint, $folder);
         if ($extra) {
-            $this->findAndReplace('SodaHelperClass', $helper_class, $folder . '/src');
-            $this->findAndReplace('soda_helper_class', $helper_class_facade_name, $folder . '/src');
+            $this->findAndReplace('SodaHelperClass', $helper_class, $folder.'/src');
+            $this->findAndReplace('soda_helper_class', $helper_class_facade_name, $folder.'/src');
         }
         $this->info('Theme references set.');
 
         $this->appendToComposerFile([
-            "autoload" => [
-                "psr-4" => [
+            'autoload' => [
+                'psr-4' => [
                     "Themes\\{$namespace}\\" => "themes/$base_folder/src/",
                 ],
             ],
@@ -118,30 +121,34 @@ class Theme extends Command {
         $this->call('optimize');
     }
 
-    protected function informCompletion() {
+    protected function informCompletion()
+    {
         $namespace = $this->attributes->get('namespace');
 
-        $this->info("Initial theme setup complete.");
-        $this->info("Please follow the steps below to complete theme setup:");
+        $this->info('Initial theme setup complete.');
+        $this->info('Please follow the steps below to complete theme setup:');
         $this->comment("1. Add Themes/{$namespace}/Providers/{$namespace}ServiceProvider::class to your providers array");
-        $this->comment("2. Run php artisan vendor:publish");
+        $this->comment('2. Run php artisan vendor:publish');
 
         return $this;
     }
 
-    protected function anticipateThemeClass($string) {
+    protected function anticipateThemeClass($string)
+    {
         $class = studly_case($string);
 
-        return preg_replace('/Theme$/', '', $class) . 'Theme';
+        return preg_replace('/Theme$/', '', $class).'Theme';
     }
 
-    protected function anticipatePackageName($string) {
+    protected function anticipatePackageName($string)
+    {
         $package = snake_case($string);
 
         return str_replace('_', '-', $package);
     }
 
-    protected function appendToComposerFile($config) {
+    protected function appendToComposerFile($config)
+    {
         $file_path = base_path('composer.json');
         $composer_file = file_get_contents($file_path);
         $composer_json = json_decode($composer_file, true);
@@ -151,20 +158,21 @@ class Theme extends Command {
         return $this;
     }
 
-    protected function findAndReplace($needle, $replace, $haystack = "./") {
+    protected function findAndReplace($needle, $replace, $haystack = './')
+    {
         $d = new RecursiveDirectoryIterator($haystack);
         foreach (new RecursiveIteratorIterator($d, 1) as $path) {
-            if (!(in_array($path->getPathname(), $this->except))) {
+            if (! (in_array($path->getPathname(), $this->except))) {
                 if (is_file($path)) {
                     $orig_file = file_get_contents($path);
                     $new_file = str_replace($needle, $replace, $orig_file);
                     if ($orig_file != $new_file) {
                         file_put_contents($path, $new_file);
-                        $this->info('Updated: ' . $path);
+                        $this->info('Updated: '.$path);
                     }
                 }
             } else {
-                $this->info('Ignored:' . $path->getPathname());
+                $this->info('Ignored:'.$path->getPathname());
             }
         }
 
@@ -172,7 +180,7 @@ class Theme extends Command {
     }
 
     /**
-     * Copy a file, or recursively copy a folder and its contents
+     * Copy a file, or recursively copy a folder and its contents.
      *
      * @author      Aidan Lister <aidan@php.net>
      * @version     1.0.1
@@ -184,7 +192,8 @@ class Theme extends Command {
      *
      * @return      bool     Returns true on success, false on failure
      */
-    public function xcopy($source, $dest, $permissions = 0755) {
+    public function xcopy($source, $dest, $permissions = 0755)
+    {
         // Check for symlinks
         if (is_link($source)) {
             return symlink(readlink($source), $dest);
@@ -196,7 +205,7 @@ class Theme extends Command {
         }
 
         // Make destination directory
-        if (!is_dir($dest)) {
+        if (! is_dir($dest)) {
             mkdir($dest, $permissions);
         }
 
@@ -218,4 +227,3 @@ class Theme extends Command {
         return true;
     }
 }
-

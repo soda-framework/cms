@@ -4,8 +4,10 @@ namespace Soda\Cms\Components\Forms\Fields;
 
 use Soda\Cms\Components\Forms\AbstractFormField;
 
-class FancyUpload extends AbstractFormField {
-    public function getDefaultParameters() {
+class FancyUpload extends AbstractFormField
+{
+    public function getDefaultParameters()
+    {
         $field_name = $this->getFieldName();
         $field_params = $this->getFieldParameters();
         $has_media = $this->model && $this->model->getMedia($field_name)->count() > 0 ? true : false;
@@ -32,13 +34,13 @@ class FancyUpload extends AbstractFormField {
             'deleteUrl'               => route('soda.upload.delete'),
             'allowedFileTypes'        => [
                 'image',
-                'audio'
+                'audio',
             ],
             'allowedFileExtensions'   => [
                 'jpg',
                 'jpeg',
                 'gif',
-                'png'
+                'png',
             ],
             'uploadAsync'             => true,
             'minFileCount'            => 1,
@@ -60,15 +62,15 @@ class FancyUpload extends AbstractFormField {
 
         if ($has_media) {
             foreach ($this->model->getMedia($field_name) as $image) {
-                $initialPreview = '<img src="' . $image->media . '" width="120">';
+                $initialPreview = '<img src="'.$image->media.'" width="120">';
                 $initialPreviewConfig = [
                     'caption' => '',
                     'width'   => '120px',
                     'url'     => route('soda.upload.delete'),
                     'key'     => $image->id,
                     'extra'   => [
-                        '_token' => csrf_token()
-                    ]
+                        '_token' => csrf_token(),
+                    ],
                 ];
 
                 if ($related) {
