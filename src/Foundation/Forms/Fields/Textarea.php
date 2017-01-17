@@ -6,5 +6,5 @@ use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Textarea extends AbstractFormField
 {
-    protected $view = "textarea";
+    protected $view = 'textarea';
 }

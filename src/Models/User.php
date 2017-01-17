@@ -2,9 +2,9 @@
 
 namespace Soda\Cms\Models;
 
+use Soda\Cms\Models\Traits\PermissionsUserTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Soda\Cms\Models\Traits\PermissionsUserTrait;
 
 class User extends Authenticatable
 {

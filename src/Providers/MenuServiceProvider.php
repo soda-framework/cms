@@ -1,16 +1,14 @@
 <?php
+
 namespace Soda\Cms\Providers;
 
-use Auth;
-use Illuminate\Support\ServiceProvider;
-use Request;
-use Soda\Cms\Foundation\Menu\MenuBuilder;
-use Soda\Cms\Foundation\Menu\MenuFactory;
-use Soda\Cms\Foundation\Menu\MenuRegistrar;
-use Soda\Cms\Foundation\Menu\SidebarMenuRenderer;
-use Soda\Cms\Support\Facades\SodaMenuFacade;
-use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 use SodaMenu;
+use Illuminate\Support\ServiceProvider;
+use Soda\Cms\Foundation\Menu\MenuBuilder;
+use Soda\Cms\Foundation\Menu\MenuRegistrar;
+use Soda\Cms\Support\Facades\SodaMenuFacade;
+use Soda\Cms\Foundation\Menu\SidebarMenuRenderer;
+use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class MenuServiceProvider extends ServiceProvider
 {

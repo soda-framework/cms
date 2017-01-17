@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class RestrictedController extends BaseController
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -16,5 +15,4 @@ class RestrictedController extends BaseController
     {
         return view('soda-example::logged-in', compact('request'));
     }
-
 }

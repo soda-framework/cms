@@ -2,14 +2,14 @@
 
 namespace Soda\Cms\Models\Observers;
 
-use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Models\ModelBuilder;
 
 class PageObserver
 {
     /**
      * TODO: when type/blocks are updated, invalidate cache:
-     * soda.{app-id}.page.slug-{slug}
+     * soda.{app-id}.page.slug-{slug}.
      */
 
     /**

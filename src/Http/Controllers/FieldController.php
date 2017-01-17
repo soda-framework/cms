@@ -2,9 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Redirect;
-use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 use Soda\Cms\Models\Field;
+use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 
 class FieldController extends BaseController
 {

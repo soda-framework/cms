@@ -3,13 +3,12 @@
 namespace Soda\Cms\Support;
 
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use URL;
 
 class ThemeExceptionHandler extends Handler
 {
@@ -47,7 +46,9 @@ class ThemeExceptionHandler extends Handler
             // Default response of 400
             $status = 400;
 
-            if ($this->isTokenMismatchException($e)) $status = 403;
+            if ($this->isTokenMismatchException($e)) {
+                $status = 403;
+            }
 
             // If this exception is an instance of HttpException
             if ($this->isHttpException($e)) {
@@ -63,7 +64,9 @@ class ThemeExceptionHandler extends Handler
             } elseif ($this->isTokenMismatchException($e)) {
                 return $this->renderTokenMismatchException($e);
             } else {
-                if (!config('app.debug')) abort(500); // Return our http error page in all cases, if possible
+                if (! config('app.debug')) {
+                    abort(500);
+                } // Return our http error page in all cases, if possible
             }
         }
 
@@ -88,8 +91,8 @@ class ThemeExceptionHandler extends Handler
 
         if (view()->exists($this->getViewPath("errors.{$status}"))) {
             return response()->view($this->getViewPath("errors.{$status}"), ['exception' => $e], $status, $e->getHeaders());
-        } elseif (view()->exists($this->getViewPath("errors.other"))) {
-            return response()->view($this->getViewPath("errors.other"), ['exception' => $e], $status, $e->getHeaders());
+        } elseif (view()->exists($this->getViewPath('errors.other'))) {
+            return response()->view($this->getViewPath('errors.other'), ['exception' => $e], $status, $e->getHeaders());
         }
 
         return $this->convertExceptionToResponse($e);
@@ -104,8 +107,8 @@ class ThemeExceptionHandler extends Handler
      */
     protected function renderTokenMismatchException(TokenMismatchException $e)
     {
-        if (view()->exists($this->getViewPath("errors.token"))) {
-            return response()->view($this->getViewPath("errors.token"), ['exception' => $e], '403');
+        if (view()->exists($this->getViewPath('errors.token'))) {
+            return response()->view($this->getViewPath('errors.token'), ['exception' => $e], '403');
         }
 
         return $this->convertExceptionToResponse($e);

@@ -35,7 +35,7 @@ trait PermissionsUserTrait
         static::saved($flushCache);
 
         static::deleting(function ($user) {
-            if (!method_exists(Config::get('auth.providers.users.model'), 'bootSoftDeletes')) {
+            if (! method_exists(Config::get('auth.providers.users.model'), 'bootSoftDeletes')) {
                 $user->roles()->sync([]);
             }
         });
@@ -60,7 +60,7 @@ trait PermissionsUserTrait
     //Big block of caching functionality.
     public function cachedRoles()
     {
-        if($ttl = config('soda.cache.permissions')) {
+        if ($ttl = config('soda.cache.permissions')) {
             $cache = app('cache');
 
             if ($cache->getStore() instanceof TaggableStore) {
@@ -68,7 +68,7 @@ trait PermissionsUserTrait
             }
 
             return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
-                if (!$this->relationLoaded('roles')) {
+                if (! $this->relationLoaded('roles')) {
                     $this->load('roles');
                 }
 
@@ -76,7 +76,7 @@ trait PermissionsUserTrait
             });
         }
 
-        if (!$this->relationLoaded('roles')) {
+        if (! $this->relationLoaded('roles')) {
             $this->load('roles');
         }
 
@@ -84,7 +84,7 @@ trait PermissionsUserTrait
     }
 
     /**
-     * Flush the user's cache
+     * Flush the user's cache.
      *
      * @return void
      */

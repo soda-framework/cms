@@ -1,4 +1,5 @@
 <?php
+
 namespace Themes\SodaExample\Providers;
 
 use Illuminate\Support\ServiceProvider;
