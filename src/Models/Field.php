@@ -5,7 +5,8 @@ namespace Soda\Cms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
-class Field extends Model {
+class Field extends Model
+{
     use OptionallyInApplicationTrait;
     protected $fillable = [
         'name',
@@ -18,21 +19,25 @@ class Field extends Model {
     ];
     protected $table = 'fields';
 
-    public function block_types() {
+    public function block_types()
+    {
         return $this->morphedByMany(BlockType::class, 'fieldable');
     }
 
-    public function page_types() {
+    public function page_types()
+    {
         return $this->morphedByMany(PageType::class, 'fieldable');
     }
 
     /**/
 
-    public static function getFieldTypes() {
+    public static function getFieldTypes()
+    {
         return Soda::getFormBuilder()->getFieldTypes();
     }
 
-    public function setFieldParamsAttribute($value) {
+    public function setFieldParamsAttribute($value)
+    {
         if (is_array($value)) {
             $value = json_encode($value);
         }
@@ -40,7 +45,8 @@ class Field extends Model {
         $this->attributes['field_params'] = $value;
     }
 
-    public function getFieldParamsAttribute($value) {
+    public function getFieldParamsAttribute($value)
+    {
         return json_decode($value, true);
     }
 }

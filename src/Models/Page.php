@@ -1,15 +1,16 @@
 <?php
+
 namespace Soda\Cms\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda;
-use Soda\Cms\Models\Traits\DraftableTrait;
-use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
-use Soda\Cms\Models\Traits\PositionableTrait;
-use Soda\Cms\Models\Traits\SluggableTrait;
 use Soda\Cms\Models\Traits\TreeableTrait;
+use Soda\Cms\Models\Traits\DraftableTrait;
+use Soda\Cms\Models\Traits\SluggableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Soda\Cms\Models\Traits\PositionableTrait;
+use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
-class Page extends AbstractSodaClosureEntity {
+class Page extends AbstractSodaClosureEntity
+{
     use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait;
 
     protected $table = 'pages';
@@ -37,44 +38,49 @@ class Page extends AbstractSodaClosureEntity {
      */
     protected $closure = PageClosure::class;
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo(PageType::class, 'page_type_id');
     }
 
-    public function blocks() {
+    public function blocks()
+    {
         return $this->belongsToMany(Block::class, 'page_blocks');
     }
 
-    public function model() {
-        if (!$this->dynamicModel) {
+    public function model()
+    {
+        if (! $this->dynamicModel) {
             $this->loadDynamicModel();
         }
 
         return $this->dynamicModel;
     }
 
-    public function setModel(ModelBuilder $model) {
+    public function setModel(ModelBuilder $model)
+    {
         $this->dynamicModel = $model;
 
         return $this;
     }
 
-    protected function loadDynamicModel() {
-        $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->where('page_id', $this->id)->first();
+    protected function loadDynamicModel()
+    {
+        $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->where('page_id', $this->id)->first();
 
-        if (!$model) {
-            $model = ModelBuilder::fromTable('soda_' . $this->type->identifier)->newInstance();
+        if (! $model) {
+            $model = ModelBuilder::fromTable('soda_'.$this->type->identifier)->newInstance();
         }
 
         return $this->setModel($model);
     }
 
-    public static function hasFieldsOrBlocks($page) {
+    public static function hasFieldsOrBlocks($page)
+    {
         if ((@$page->type->fields && @$page->type->fields->count()) || (@$page->blocks && @$page->blocks->count())) {
             return true;
         }
 
         return false;
     }
-
 }

@@ -2,16 +2,15 @@
 
 namespace Themes\SodaTheme\UserProviders;
 
-use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Auth\UserProvider;
-use Illuminate\Contracts\Auth\Authenticatable as UserContract;
+use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
+use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
-
-class UsernameUserProvider extends EloquentUserProvider {
-
-
-    public function __construct(HasherContract $hasher, $model) {
+class UsernameUserProvider extends EloquentUserProvider
+{
+    public function __construct(HasherContract $hasher, $model)
+    {
         parent::__construct($hasher, $model);
     }
 
@@ -23,7 +22,8 @@ class UsernameUserProvider extends EloquentUserProvider {
      *
      * @return bool
      */
-    public function validateCredentials(UserContract $user, array $credentials) {
+    public function validateCredentials(UserContract $user, array $credentials)
+    {
         return true;
     }
 }

@@ -1,15 +1,18 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Soda\Cms\Models\Media;
-use Storage;
-use Uploader;
+namespace Soda\Cms\Controllers;
+
 use URL;
+use Storage;
+use Soda\Cms\Models\Media;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class UploadController extends Controller {
+class UploadController extends Controller
+{
     // pass a file object from request
-    public function upload(Request $request) {
+    public function upload(Request $request)
+    {
         $driver = config('soda.upload.driver');
         $url_prefix = trim(config('soda.uploder.folder'), '/');
 
@@ -21,9 +24,9 @@ class UploadController extends Controller {
                     // Name the file and place in correct directory
                     $unique = uniqid();
                     $path_info = pathinfo($file->getClientOriginalName());
-                    $final_path = ltrim($url_prefix . '/', '/') . $path_info['filename'] . '__' . $unique;
+                    $final_path = ltrim($url_prefix.'/', '/').$path_info['filename'].'__'.$unique;
                     if ($path_info['extension']) {
-                        $final_path .= '.' . $path_info['extension'];
+                        $final_path .= '.'.$path_info['extension'];
                     }
 
                     // Upload the file
@@ -34,15 +37,15 @@ class UploadController extends Controller {
 
                     // Generate return information
                     if ($uploaded) {
-                        $url = $driver == 'soda.public' ? URL::to('uploads/' . $final_path) : Storage::disk($driver)->url(trim($final_path, '/'));
+                        $url = $driver == 'soda.public' ? URL::to('uploads/'.$final_path) : Storage::disk($driver)->url(trim($final_path, '/'));
 
                         $return = [
-                            "error"                => null,
-                            "initialPreview"       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='" . $request->input('field_name') . "' />"],
-                            "initialPreviewConfig" => [
-                                "caption" => $url,
-                                "width"   => "120px",
-                                "append"  => true,
+                            'error'                => null,
+                            'initialPreview'       => ["<img src='$url' width='120' /><input type='hidden' value='$url' name='".$request->input('field_name')."' />"],
+                            'initialPreviewConfig' => [
+                                'caption' => $url,
+                                'width'   => '120px',
+                                'append'  => true,
                             ],
                         ];
 
@@ -56,11 +59,11 @@ class UploadController extends Controller {
                                 'media_type'    => 'image',
                             ]);
 
-                            $return["initalPreviewConfig"]["key"] = $media->id;
-                            $return["initalPreviewConfig"]["extra"] = [
-                                "key"           => $media->id,
-                                "related_table" => $media->related_table,
-                                "related_id"    => $media->related_id,
+                            $return['initalPreviewConfig']['key'] = $media->id;
+                            $return['initalPreviewConfig']['extra'] = [
+                                'key'           => $media->id,
+                                'related_table' => $media->related_table,
+                                'related_id'    => $media->related_id,
                             ];
                         }
                     }
@@ -79,7 +82,8 @@ class UploadController extends Controller {
         //CALL uploading scripts..
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         if ($request->has('key')) {
             $image = Media::find($request->input('key'));
             if ($image) {
@@ -91,5 +95,4 @@ class UploadController extends Controller {
 
         return json_encode(['error' => 'Unable to delete image, please refresh and try again']);
     }
-
 }

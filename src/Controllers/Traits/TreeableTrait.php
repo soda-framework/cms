@@ -1,18 +1,18 @@
-<?php namespace Soda\Cms\Controllers\Traits;
+<?php
+
+namespace Soda\Cms\Controllers\Traits;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Models\NavigationItem;
 
-Trait TreeableTrait
+trait TreeableTrait
 {
-
     /*
      * render tree item
      */
-    public function htmlTree(Request $request, $id = false, $hint)
+    public function htmlTree(Request $request, $id, $hint)
     {
         //
-        if (!isset($id) || !$id || $id == '#') {
+        if (! isset($id) || ! $id || $id == '#') {
             $treeModel = $this->tree->grabTree();
         } elseif ($id) {
             $treeModel = $this->tree->grabTree($id);
@@ -43,16 +43,15 @@ Trait TreeableTrait
         return response()->json($treeObj);
     }
 
-
     /**
-     * pass in tree item and returns a jstree formatted object
+     * pass in tree item and returns a jstree formatted object.
      * @param $tree_item
      * @param $object
      * @return \stdClass
      */
     protected function assignModelValues($tree_item, $object = null)
     {
-        if (!$object) {
+        if (! $object) {
             //this is the 1st run, we need to make an empty object;
             $object = new \stdClass();
         }
@@ -81,42 +80,41 @@ Trait TreeableTrait
             }
             $object->children = $children_array;
         }
+
         return $object;
     }
 
     /**
-     * move element into parent_id at position
+     * move element into parent_id at position.
      * @param $id
      * @param $parent_id
      * @param $position
      * @return string
      */
-    public function move(Request $request, $parent_id = null, $id = null, $position= null){
-        if(!$parent_id){
+    public function move(Request $request, $parent_id = null, $id = null, $position = null)
+    {
+        if (! $parent_id) {
             $parent_id = $request->get('parent_id');
         }
-        if(!$id){
+        if (! $id) {
             $id = $request->get('id');
         }
-        if(!$position){
+        if (! $position) {
             $position = $request->get('position');
         }
 
         $item = $this->tree->find($id);
 
-
-        if($parent_id == 'root'){
+        if ($parent_id == 'root') {
             $parent = $this->tree->getRoots()->first();    //TODO: from application.
-        }
-        else{
+        } else {
             $parent = $this->tree->find($parent_id);
         }
-        
 
         //re-handle slugging - TODO: should we make this optional?
         //$item->slug = $parent->generateSlug($item->name);
 
-        if($item->parent_id == $parent->id){
+        if ($item->parent_id == $parent->id) {
             //we just want to re-order, not move the element.
             $item->position = $position;
             $item->save();
@@ -127,25 +125,26 @@ Trait TreeableTrait
         return 'true'; //todo - should return json?
     }
 
-    public function deleteTree($id){
+    public function deleteTree($id)
+    {
         $item = $this->tree->find($id);
         $item->deleteSubtree(true);
-        return redirect()->route('soda.' . $this->hint)->with('success', 'page updated');
+
+        return redirect()->route('soda.'.$this->hint)->with('success', 'page updated');
     }
 
     /**
      * Renders a tree from a given node.. for use in jstree.
      * @param  [type]  $tree  [description]
-     * @param  integer $depth current depth - used to see where to put children nodes.
+     * @param  int $depth current depth - used to see where to put children nodes.
      * @return [type]         [description]
      */
     public function renderTree($tree, $depth = 0)
     {
-        if (!$tree->hide_in_tree) {
+        if (! $tree->hide_in_tree) {
             $depth++;
             $branch = new \stdClass();
             $branch->id = $tree->id;
-
 
             $branch->text = $tree->name;
 
@@ -155,7 +154,6 @@ Trait TreeableTrait
             } else {
                 $branch->a_attr->class = '';
             }
-
 
             if ($tree->edit_action) {
                 $branch->a_attr->href = action($tree->edit_action, [$tree->id]);
@@ -172,14 +170,13 @@ Trait TreeableTrait
             // dd($tree->hide_children);
             if (count($tree->children)) {
                 foreach ($tree->children as $child) {
-                    if (!$child->hide_in_tree) {
+                    if (! $child->hide_in_tree) {
                         $c = $this->renderTree($child, $depth);
 
                         $branch->children[] = $c;
                     } else {
                         $branch->children = false;
                     }
-
                 }
             } else {
                 if ($depth <= config('bootlegcms.cms_tree_descendents')) {
@@ -187,11 +184,12 @@ Trait TreeableTrait
                     $branch->children = true;
                 }
             }
-            return ($branch);
+
+            return $branch;
         }
+
         return false;
     }
-
 
     /**
      * show the relevant create item form.
@@ -203,7 +201,6 @@ Trait TreeableTrait
     {
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
-
         } else {
             $parent = $this->model->getRoots()->first();
         }
@@ -211,7 +208,6 @@ Trait TreeableTrait
         $this->model->parent_id = $parent->id;
         $this->model->page_type_id = $request->input('page_type_id');
 
-
-        return view('soda::'.$this->hint.'.view',['model'=>$this->model, 'hint'=>$this->hint, 'tree'=>false]);
+        return view('soda::'.$this->hint.'.view', ['model'=>$this->model, 'hint'=>$this->hint, 'tree'=>false]);
     }
 }

@@ -4,7 +4,8 @@ namespace Soda\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Application extends Model {
+class Application extends Model
+{
     protected $table = 'applications';
 
     /**
@@ -19,11 +20,13 @@ class Application extends Model {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pages() {
+    public function pages()
+    {
         return $this->hasMany(Page::class);
     }
 
-    public function urls() {
+    public function urls()
+    {
         return $this->hasMany(ApplicationUrl::class);
     }
 }

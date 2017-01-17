@@ -33,5 +33,5 @@ return [
         'tinymce'      => Soda\Cms\Components\Forms\Fields\Tinymce::class,
         'upload'       => Soda\Cms\Components\Forms\Fields\Upload::class,
         'url'          => Soda\Cms\Components\Forms\Fields\Url::class,
-    ]
+    ],
 ];

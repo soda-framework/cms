@@ -1,44 +1,50 @@
 <?php
+
 namespace Soda\Cms\Components;
 
-use Exception;
 use Route;
+use Exception;
+use Soda\Cms\Models\Page;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\Application;
+use Soda\Cms\Models\ModelBuilder;
+use Soda\Cms\Models\ApplicationUrl;
+use Soda\Cms\Models\NavigationItem;
 use Soda\Cms\Components\Forms\FormBuilder;
 use Soda\Cms\Components\Pages\PageBuilder;
-use Soda\Cms\Models\Application;
-use Soda\Cms\Models\ApplicationUrl;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\ModelBuilder;
-use Soda\Cms\Models\NavigationItem;
-use Soda\Cms\Models\Page;
 
-class Soda {
+class Soda
+{
     protected $application = null;
     protected $blocks = [];
     protected $formBuilder;
     protected $pageBuilder;
     protected $currentPage;
 
-    public function __construct(FormBuilder $formBuilder, PageBuilder $pageBuilder) {
+    public function __construct(FormBuilder $formBuilder, PageBuilder $pageBuilder)
+    {
         $this->formBuilder = $formBuilder;
         $this->pageBuilder = $pageBuilder;
     }
 
-    public function getApplication() {
-        if (!$this->application) {
+    public function getApplication()
+    {
+        if (! $this->application) {
             $this->loadApplication();
         }
 
         return $this->application;
     }
 
-    public function setApplication(Application $application) {
+    public function setApplication(Application $application)
+    {
         $this->application = $application;
 
         return $this;
     }
 
-    protected function loadApplication() {
+    protected function loadApplication()
+    {
         $domain = $_SERVER['HTTP_HOST'];
         $applicationUrl = ApplicationUrl::whereDomain($domain)->first();
 
@@ -49,45 +55,51 @@ class Soda {
                 return $this->setApplication($application);
             }
 
-            Throw new Exception('Application URL is not associated with an application');
+            throw new Exception('Application URL is not associated with an application');
         }
 
-        Throw new Exception('No application found at URL');
+        throw new Exception('No application found at URL');
     }
 
-    public function getBlock($identifier) {
-        if (!isset($this->blocks[$identifier])) {
+    public function getBlock($identifier)
+    {
+        if (! isset($this->blocks[$identifier])) {
             $this->blocks[$identifier] = Block::with('type')->where('identifier', $identifier)->first();
         }
 
         return $this->blocks[$identifier];
     }
 
-    public function dynamicModel($table) {
+    public function dynamicModel($table)
+    {
         return ModelBuilder::fromTable($table, []);
     }
 
-    public function setCurrentPage(Page $page) {
+    public function setCurrentPage(Page $page)
+    {
         $this->currentPage = $page;
     }
 
-    public function getCurrentPage() {
+    public function getCurrentPage()
+    {
         return $this->currentPage;
     }
 
-    public function getPageBuilder() {
+    public function getPageBuilder()
+    {
         return $this->pageBuilder;
     }
 
     /**
-     * renders a menu tree
+     * renders a menu tree.
      *
      * @param $name
      * @param string $view
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function menu($name, $view = 'soda::tree.menu') {
+    public function menu($name, $view = 'soda::tree.menu')
+    {
         $nav = NavigationItem::where('name', $name)->first();
         if ($nav) {
             $tree = $nav->grabTree($nav->id);
@@ -105,26 +117,30 @@ class Soda {
      *
      * @return string
      */
-    public function menuActive($route, $output = 'active') {
+    public function menuActive($route, $output = 'active')
+    {
         if (Route::currentRouteName() == $route) {
             return $output;
         }
     }
 
-    public function getFormBuilder() {
+    public function getFormBuilder()
+    {
         return $this->formBuilder;
     }
 
-    public function getFieldTypes() {
+    public function getFieldTypes()
+    {
         return $this->field_types;
     }
 
-    public function field($field) {
+    public function field($field)
+    {
         return $this->formBuilder->newField($field);
     }
 
     /**
-     * EXPERAMENTAL renders an editable field
+     * EXPERAMENTAL renders an editable field.
      *
      * @param $model
      * @param $element
@@ -132,7 +148,8 @@ class Soda {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editable($model, $element, $type) {
+    public function editable($model, $element, $type)
+    {
         return $this->formBuilder->editable($model, $element, $type);
     }
 }

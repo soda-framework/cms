@@ -4,13 +4,14 @@ namespace Soda\Cms\Console;
 
 use Illuminate\Console\Command;
 
-class Update extends Command {
-
+class Update extends Command
+{
     protected $signature = 'soda:update {--a|all : Update everything} {--c|cms : Update cms} {--m|modules : Update modules}';
     protected $description = 'Update your version of the Soda Framework';
     protected $except = [];
 
-    public function handle() {
+    public function handle()
+    {
         if ($this->option('all')) {
             $this->updateCms();
             $this->updateModules();
@@ -25,7 +26,8 @@ class Update extends Command {
         }
     }
 
-    protected function updateCms() {
+    protected function updateCms()
+    {
         $this->info('Updating Soda CMS via Composer...');
         shell_exec('composer update soda-framework/cms');
         $this->info('Soda CMS update complete.');
@@ -33,10 +35,10 @@ class Update extends Command {
         $this->call('soda:assets');
     }
 
-    protected function updateModules() {
+    protected function updateModules()
+    {
         $this->info('Updating Soda modules via Composer...');
         shell_exec('composer update soda-framework/*');
         $this->info('Soda module update complete.');
     }
 }
-

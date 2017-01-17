@@ -2,5 +2,6 @@
 
 namespace Themes\SodaTheme\Components;
 
-class SodaHelperClass {
+class SodaHelperClass
+{
 }

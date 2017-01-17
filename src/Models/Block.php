@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
-class Block extends Model {
+class Block extends Model
+{
     use OptionallyInApplicationTrait, DraftableTrait;
 
     protected $table = 'blocks';
@@ -19,8 +20,8 @@ class Block extends Model {
         'block_type_id',
     ];
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo(BlockType::class, 'block_type_id');
     }
-
 }

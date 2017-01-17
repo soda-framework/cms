@@ -2,15 +2,16 @@
 
 namespace Soda\Cms\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Auth;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Http\Request;
-use Soda\Cms\Models\User;
 use Validator;
+use Soda\Cms\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -40,7 +41,8 @@ class AuthController extends Controller {
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -50,7 +52,8 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data) {
+    protected function validator(array $data)
+    {
         return Validator::make($data, [
             'name'     => 'required|max:255',
             'email'    => 'required|email|max:255|unique:users',
@@ -65,7 +68,8 @@ class AuthController extends Controller {
      *
      * @return User
      */
-    protected function create(array $data) {
+    protected function create(array $data)
+    {
         return User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
@@ -73,7 +77,8 @@ class AuthController extends Controller {
         ]);
     }
 
-    public function getLogin() {
+    public function getLogin()
+    {
         if (view()->exists('soda::auth.authenticate')) {
             return view('soda::auth.authenticate');
         }
@@ -81,11 +86,13 @@ class AuthController extends Controller {
         return view('soda::auth.login');
     }
 
-    public function getRegister() {
+    public function getRegister()
+    {
         return view('soda::auth.register');
     }
 
-    public function postLogin(Request $request) {
+    public function postLogin(Request $request)
+    {
         config()->set('auth.defaults.guard', $this->guard);
 
         return $this->login($request);

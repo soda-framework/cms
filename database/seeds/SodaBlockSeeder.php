@@ -1,18 +1,19 @@
 <?php
 
+use Soda\Cms\Models\BlockType;
 use Illuminate\Database\Seeder;
 use Soda\Cms\Components\Status;
 use Soda\Cms\Models\Application;
-use Soda\Cms\Models\BlockType;
 
-class SodaBlockSeeder extends Seeder {
-
+class SodaBlockSeeder extends Seeder
+{
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         $application = Application::first();
         $slider = BlockType::create([
             'name'             => 'Slider',
