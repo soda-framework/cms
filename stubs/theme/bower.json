@@ -2,7 +2,8 @@
   "name": "soda-example",
   "version": "0.0.1",
   "authors": [
-    "Simon Davies <noodlewitt@noodlewitt.com>"
+    "Simon Davies <noodlewitt@noodlewitt.com>",
+    "Ryan Brereton-Canham <ryzaar@hotmail.com>"
   ],
   "license": "MIT",
   "private": true,

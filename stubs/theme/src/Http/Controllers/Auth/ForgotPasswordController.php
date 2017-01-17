@@ -3,6 +3,7 @@
 namespace Themes\SodaExample\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Password;
 use Themes\SodaExample\Http\Controllers\BaseController;
 
 class ForgotPasswordController extends BaseController
@@ -28,5 +29,15 @@ class ForgotPasswordController extends BaseController
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker('soda-example');
     }
 }

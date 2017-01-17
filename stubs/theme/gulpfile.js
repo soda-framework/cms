@@ -30,7 +30,7 @@ gulp.task('publish:css', function () {
     config.publish.map(function (output) { //write for each output folder
         tasks.push(
             stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'css.path')))
-            .pipe($.notify({message: 'CSS published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'css.path'), onLast: true}))
+                .pipe($.notify({message: 'CSS published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'css.path'), onLast: true}))
         );
     });
 
@@ -49,7 +49,7 @@ gulp.task('publish:js', function () {
             pretty: true
         }))) //output original size
         .pipe($.if(getSetting(config.assets, defaults.assets, 'js.sourcemaps'), $.sourcemaps.init())) //initialize sourcemap
-        .pipe($.uglify({mangle: true})) //minify js
+        .pipe($.uglify({mangle: false})) //minify js
         .pipe($.if(getSetting(config.assets, defaults.assets, 'js.min_suffix'), $.rename({suffix: ".min"}))) //append .min to filename
         .pipe($.if(getSetting(config.assets, defaults.assets, 'js.show_size'), $.size({
             showFiles: true,
@@ -61,7 +61,7 @@ gulp.task('publish:js', function () {
     config.publish.map(function (output) { //write for each output folder
         tasks.push(
             stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'js.path')))
-            .pipe($.notify({message: 'JS published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'js.path'), onLast: true}))
+                .pipe($.notify({message: 'JS published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'js.path'), onLast: true}))
         );
     });
 
@@ -76,8 +76,8 @@ gulp.task('publish:img', function () {
     config.publish.map(function (output) { //write for each output folder
         tasks.push(
             gulp.src('./' + fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'img.path')) + getSetting(config.assets, defaults.assets, 'img.wildcard'))
-            .pipe(gulp.dest('./' + fixPath(output.folder) + getSetting(output, defaults.publish, 'img.path')))
-            .pipe($.notify({message: 'Images published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'img.path'), onLast: true}))
+                .pipe(gulp.dest('./' + fixPath(output.folder) + getSetting(output, defaults.publish, 'img.path')))
+                .pipe($.notify({message: 'Images published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'img.path'), onLast: true}))
         );
     });
 
@@ -92,8 +92,8 @@ gulp.task('publish:font', function () {
     config.publish.map(function (output) { //write for each output folder
         tasks.push(
             gulp.src(fixPath(config.assets.folder) + fixPath(getSetting(config.assets, defaults.assets, 'font.path')) + getSetting(config.assets, defaults.assets, 'font.wildcard'))
-            .pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'font.path')))
-            .pipe($.notify({message: 'Fonts published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'font.path'), onLast: true}))
+                .pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'font.path')))
+                .pipe($.notify({message: 'Fonts published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'font.path'), onLast: true}))
         );
     });
 
@@ -147,7 +147,7 @@ gulp.task('publish:components', function () {
         //write for each output folder
         config.publish.map(function (output) {
             stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path')))
-            .pipe($.notify({message: 'Components  published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path'), onLast: true}));
+                .pipe($.notify({message: 'Components  published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path'), onLast: true}));
 
             //push onto task array
             tasks.push(stream);
@@ -210,7 +210,7 @@ var objMap = function (obj, callback) {
 //delete all files at specified path
 var cleanFolder = function (path) {
     $.util.log(chalk.yellow('Cleaning directory ' + path));
-    del([path + '/**/*']);
+    del([path + '/**/*'], {force: true});
 };
 
 //check if folder should be cleaned - then clean it

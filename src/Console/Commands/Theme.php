@@ -3,6 +3,7 @@
 namespace Soda\Cms\Console\Commands;
 
 use Illuminate\Console\Command;
+use League\Flysystem\FileExistsException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -39,9 +40,13 @@ class Theme extends Command
      */
     protected function installTheme()
     {
-        $theme_base = __DIR__.'/../../stubs/theme';
+        $theme_base = __DIR__.'/../../../stubs/theme';
 
         $path = base_path('themes/'.$this->folder);
+
+        if (file_exists($path)) {
+            throw new FileExistsException($path);
+        }
 
         mkdir($path, 0755, true);
         $this->xcopy($theme_base, $path);
@@ -51,6 +56,7 @@ class Theme extends Command
         $this->info('Classes renamed.');
 
         $this->findAndReplace('SodaExample', $this->namespace, $path.'/src');
+        $this->findAndReplace('SodaExample', $this->namespace, $path.'/config');
         $this->findAndReplace('soda-example', $this->folder, $path);
 
         $this->info('Theme references set.');
@@ -69,7 +75,18 @@ class Theme extends Command
         $this->addServiceProvider("Themes\\{$this->namespace}\\{$this->namespace}ThemeServiceProvider::class");
         $this->info('Service provider added.');
 
-        $this->call('vendor:publish');
+        require_once($path.'/src/'.$this->namespace.'ThemeServiceProvider.php');
+        app()->register("Themes\\{$this->namespace}\\{$this->namespace}ThemeServiceProvider");
+        $this->info('Service provider registered.');
+
+        $this->call('vendor:publish', [
+            '--tag' => $this->folder . '.config'
+        ]);
+
+        $this->call('vendor:publish', [
+            '--tag' => $this->folder . '.public'
+        ]);
+
         $this->info('Theme assets published.');
 
         $this->info('Done!');

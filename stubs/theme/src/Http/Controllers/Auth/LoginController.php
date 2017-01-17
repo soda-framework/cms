@@ -2,9 +2,10 @@
 
 namespace Themes\SodaExample\Http\Controllers\Auth;
 
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Themes\SodaExample\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
+use Themes\SodaExample\Http\Controllers\BaseController;
 
 class LoginController extends BaseController
 {
@@ -43,6 +44,7 @@ class LoginController extends BaseController
      * Log the user out of the application.
      *
      * @param  Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
@@ -64,5 +66,15 @@ class LoginController extends BaseController
     public function redirectPath()
     {
         return route('soda-example.restricted');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('soda-example');
     }
 }

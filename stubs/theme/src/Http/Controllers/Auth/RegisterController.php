@@ -2,6 +2,7 @@
 
 namespace Themes\SodaExample\Http\Controllers\Auth;
 
+use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Themes\SodaExample\Http\Controllers\BaseController;
 use Themes\SodaExample\Models\User;
@@ -46,13 +47,14 @@ class RegisterController extends BaseController
      * Get a validator for an incoming registration request.
      *
      * @param  array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -61,14 +63,25 @@ class RegisterController extends BaseController
      * Create a new user instance after a valid registration.
      *
      * @param  array $data
+     *
      * @return User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('soda-example');
     }
 }

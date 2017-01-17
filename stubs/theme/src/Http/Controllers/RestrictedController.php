@@ -9,7 +9,7 @@ class RestrictedController extends BaseController
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:soda-example');
     }
 
     public function index(Request $request)

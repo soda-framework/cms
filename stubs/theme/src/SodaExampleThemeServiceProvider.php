@@ -21,7 +21,9 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'soda-example');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'soda-example');
+        $this->publishes([__DIR__.'/../public' => public_path('themes/soda-example')], 'soda-example.public');
+        $this->publishes([__DIR__.'/../config' => config_path('themes/soda-example')], 'soda-example.config');
 
         $this->app->config->set('auth.providers.soda-example', $this->app->config->get('themes.soda-example.auth.provider'));
         $this->app->config->set('auth.guards.soda-example', $this->app->config->get('themes.soda-example.auth.guard'));
@@ -32,8 +34,7 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->publishes([__DIR__.'/../../public' => public_path('themes/soda-example')], 'public');
-        $this->mergeConfigFrom(__DIR__.'/../../config/auth.php', 'themes.soda-example.auth');
+        $this->mergeConfigFrom(__DIR__.'/../config/auth.php', 'themes.soda-example.auth');
 
         if ($this->handlesErrors) {
             $this->bindErrorHandler();
