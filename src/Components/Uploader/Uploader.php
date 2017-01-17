@@ -4,7 +4,6 @@ namespace Soda\Components\Uploader;
 
 class Uploader
 {
-
     public function __construct()
     {
         //
@@ -32,7 +31,6 @@ class Uploader
         return $file;
     }
 
-
     // TODO Need to name this better lol
     // takes in a file (for figuring out names etc)
     // returns a string of a nice filename
@@ -44,45 +42,42 @@ class Uploader
         // Filter that name`
         $filename = $this->createSlug($filename);
         $filename = $this->addUUID($filename);
-        $filename = $filename.".".$file->getClientOriginalExtension();
+        $filename = $filename.'.'.$file->getClientOriginalExtension();
 
         return $filename;
     }
 
-    function createSlug($string, $slug = '_', $extra = NULL)
+    public function createSlug($string, $slug = '_', $extra = null)
     {
         return strtolower(trim(preg_replace('~[^0-9a-z'.preg_quote($extra, '~').']+~i', $slug, $this->normalize($string)), $slug));
     }
 
-    function normalize($string)
+    public function normalize($string)
     {
-        if(strpos($string = htmlentities($string, ENT_QUOTES, 'UTF-8'), '&') !== FALSE)
-        {
+        if (strpos($string = htmlentities($string, ENT_QUOTES, 'UTF-8'), '&') !== false) {
             $string = html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|tilde|uml);~i', '$1', $string), ENT_QUOTES, 'UTF-8');
         }
 
         return $string;
     }
 
-    function addUUID($string)
+    public function addUUID($string)
     {
         // append a _UUID to a file
-        return uniqid($string."_");
+        return uniqid($string.'_');
     }
 
     public function compressPNG()
     {
-
     }
 
     public function compressJPG()
     {
-
     }
 
     public function compress($file)
     {
-        // switch on extension type and use the appropriate compressJPG type 
+        // switch on extension type and use the appropriate compressJPG type
         // do it with smart function calls if you wanna be fancy or just switch on the extension
     }
 }

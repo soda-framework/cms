@@ -2,17 +2,16 @@
 
 namespace Soda\Models;
 
+use Soda\Models\Scopes\LiveScope;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use \Soda\Models\Scopes\FromApplicationScope;
-use \Soda\Models\Scopes\LiveScope;
+use Soda\Models\Scopes\FromApplicationScope;
 
 class BlockType extends Model
 {
     protected $table = 'block_types';
     protected $fillable = ['name', 'description'];
-
 
     public $title = 'block_type';
     public $plural_title = 'block_types';
@@ -40,7 +39,6 @@ class BlockType extends Model
         ],
     ];
 
-
     public static function boot()
     {
         parent::boot();
@@ -58,16 +56,15 @@ class BlockType extends Model
         return $this->hasMany(Block::class, 'block_type_id');
     }
 
-
     /**
      * DUMMY SHIT.
-     * Add a new (page) type TABLE
+     * Add a new (page) type TABLE.
      */
     public function addType($fields)
     {
         try {
-            if (!Schema::hasTable('soda_' . $this->identifier)) {
-                Schema::create('soda_' . $this->identifier, function (Blueprint $table) use ($fields) {
+            if (! Schema::hasTable('soda_'.$this->identifier)) {
+                Schema::create('soda_'.$this->identifier, function (Blueprint $table) use ($fields) {
                     $table->increments('id'); //should this always be there?
                     //TODO: field decoder and runner in here..
                     foreach ($fields as $field) {
@@ -78,8 +75,10 @@ class BlockType extends Model
             }
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             return false;
         }
+
         return true;
     }
 
@@ -90,24 +89,25 @@ class BlockType extends Model
     {
         try {
             foreach ($fields as $field) {
-                if (Schema::hasColumn('soda_' . $this->identifier, $field->field_name)) {
+                if (Schema::hasColumn('soda_'.$this->identifier, $field->field_name)) {
                     //we want to alter the existing table.
-                    Schema::table('soda_' . $this->identifier, function ($table) use ($field) {
+                    Schema::table('soda_'.$this->identifier, function ($table) use ($field) {
                         $table->string($field->field_name)->change();
                     });
                 } else {
                     //we want to make a new column
-                    Schema::table('soda_' . $this->identifier, function ($table) use ($field) {
+                    Schema::table('soda_'.$this->identifier, function ($table) use ($field) {
                         $table->string($field->field_name);
                     });
                 }
             }
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             return false;
         }
-        return true;
 
+        return true;
     }
 
     public static function removeFieldFromType()
@@ -121,9 +121,10 @@ class BlockType extends Model
             }
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             return false;
         }
+
         return true;
     }
-
 }

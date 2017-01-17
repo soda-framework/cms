@@ -1,6 +1,6 @@
 <?php
 
 return [
-	'hint_path'=>'soda',
-	'cms_path'=>'cms'
+    'hint_path'=>'soda',
+    'cms_path'=>'cms',
 ];

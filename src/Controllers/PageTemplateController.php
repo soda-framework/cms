@@ -1,15 +1,14 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use Carbon\Carbon;
+namespace Soda\Controllers;
+
+use Soda\Facades\Soda;
+use Soda\Models\Template;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Soda\Models\Template;
-use Soda\Facades\Soda;
-
 
 class PageTemplateController extends Controller
 {
-
     use    Traits\TreeableTrait;
 
     /**
@@ -26,7 +25,6 @@ class PageTemplateController extends Controller
         view()->share('routeHint', $this->routeHint);
     }
 
-
     /**
      * Show the page.
      *
@@ -34,8 +32,7 @@ class PageTemplateController extends Controller
      */
     public function getIndex()
     {
-
-        if (!isset($id) || !$id || $id == '#') {
+        if (! isset($id) || ! $id || $id == '#') {
             $page = $this->model->getRoots()->first();    //todo: from application.
         } elseif ($id) {
             $page = $this->model->where('id', $id)->first();
@@ -61,6 +58,7 @@ class PageTemplateController extends Controller
         } else {
             $page = $this->model->with('blocks.type.fields')->getRoots()->first();
         }
+
         return view('soda::page.view', ['page' => $page]);
     }
 
@@ -75,7 +73,7 @@ class PageTemplateController extends Controller
         $page->fill(Request::input());
         $page->save();
 
-        return redirect()->route($this->routeHint . 'view', ['id' => $request->id])->with('success', 'page updated');
+        return redirect()->route($this->routeHint.'view', ['id' => $request->id])->with('success', 'page updated');
     }
 
     public function getMakeRoot($id)
@@ -93,10 +91,10 @@ class PageTemplateController extends Controller
         if (starts_with('/', $slug)) {
             $page = $this->model->where('slug', $slug)->first();
         } else {
-            $page = $this->model->where('slug', '/' . $slug)->first();
+            $page = $this->model->where('slug', '/'.$slug)->first();
         }
 
-        return (\Soda\Components\Page::constructView($page, ['page' => $page]));
+        return \Soda\Components\Page::constructView($page, ['page' => $page]);
     }
 
     public function createForm($parent_id = null)
@@ -114,7 +112,7 @@ class PageTemplateController extends Controller
     }
 
     /**
-     * create page save functions
+     * create page save functions.
      * @param null $parent_id
      */
     public function create(Request $request, $parent_id = null)
@@ -138,5 +136,4 @@ class PageTemplateController extends Controller
         $page->save();
         dd('saved.');
     }
-
 }

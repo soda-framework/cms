@@ -1,4 +1,6 @@
-<?php namespace Soda\Controllers;
+<?php
+
+namespace Soda\Controllers;
 
 //maybe this should be renamed to be block/page specific?
 
@@ -9,20 +11,19 @@ use App\Http\Controllers\Controller;
 
 class DynamicController extends Controller
 {
-
-
     public $model = null;
 
     public function __construct(ModelBuilder $modelBuilder)
     {
-        $this->type = BlockType::with('fields')->where('identifier',\Route::current()->getParameter('type'))->first();
-        $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier,
+        $this->type = BlockType::with('fields')->where('identifier', \Route::current()->getParameter('type'))->first();
+        $this->model = \Soda::dynamicModel('soda_'.$this->type->identifier,
             $this->type->fields->lists('field_name')->toArray());
     }
 
     public function index()
     {
         $this->model = $this->model->all();
+
         return view($this->index_view, ['models' => $this->model]);
     }
 
@@ -33,6 +34,7 @@ class DynamicController extends Controller
         } else {
             $model = $this->model;
         }
+
         return view('soda::standard.view', ['type' => $this->type, 'model' => $model]);
     }
 

@@ -1,9 +1,10 @@
 <?php
+
 namespace SodaModels;
 
 use Franzose\ClosureTable\Models\ClosureTable;
 
-class navigationClosure extends ClosureTable implements navigationClosureInterface
+class NavigationClosure extends ClosureTable implements navigationClosureInterface
 {
     /**
      * The table associated with the model.

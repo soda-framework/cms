@@ -1,12 +1,13 @@
 <?php
+
 namespace Soda\Models;
 
-use Franzose\ClosureTable\Models\Entity;
-use Soda\Models\Scopes\FromApplicationScope;
 use Soda\Models\Scopes\LiveScope;
 use Soda\Models\Scopes\PositionScope;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Models\Traits\SluggableTrait;
+use Franzose\ClosureTable\Models\Entity;
+use Soda\Models\Scopes\FromApplicationScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Entity implements PagesInterface
 {
@@ -21,9 +22,6 @@ class Page extends Entity implements PagesInterface
      *
      * @var string
      */
-
-
-
     public static function boot()
     {
         parent::boot();
@@ -31,7 +29,6 @@ class Page extends Entity implements PagesInterface
         static::addGlobalScope(new LiveScope);
         static::addGlobalScope(new PositionScope);
     }
-
 
     /**
      * ClosureTable model instance.
@@ -49,5 +46,4 @@ class Page extends Entity implements PagesInterface
     {
         return $this->belongsToMany(Block::class, 'page_blocks');
     }
-
 }

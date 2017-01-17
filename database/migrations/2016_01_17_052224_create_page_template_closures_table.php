@@ -7,8 +7,7 @@ class CreatePageTemplateClosuresTable extends Migration
 {
     public function up()
     {
-        Schema::create('page_template_closure', function(Blueprint $table)
-        {
+        Schema::create('page_template_closure', function (Blueprint $table) {
             $table->increments('closure_id');
 
             $table->integer('ancestor', false, true);
@@ -22,8 +21,7 @@ class CreatePageTemplateClosuresTable extends Migration
 
     public function down()
     {
-        Schema::table('page_template_closure', function(Blueprint $table)
-        {
+        Schema::table('page_template_closure', function (Blueprint $table) {
             Schema::dropIfExists('page_template_closure');
         });
     }

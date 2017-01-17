@@ -1,13 +1,13 @@
-<?php namespace Soda\Controllers;
+<?php
 
+namespace Soda\Controllers;
+
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use \Illuminate\Http\Request;
-use Soda\Models\PageClosure;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadController extends Controller
 {
-
     public function __construct()
     {
         //$this->middleware('auth');
@@ -15,22 +15,16 @@ class UploadController extends Controller
 
     public function postTest(Request $request)
     {
-        if($request->hasFile('file'))
-        {
-
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
 
-            if($file->isValid())
-            {
+            if ($file->isValid()) {
                 $file = \Uploader::upload($file);
             }
-        }
-        else
-        {
+        } else {
             // TODO Should do some exception catching here
             dd('something went wrong, no file');
         }
-
     }
 
     public function getTest()
@@ -50,5 +44,4 @@ class UploadController extends Controller
         //incoming file
         dd('delete.');
     }
-
 }

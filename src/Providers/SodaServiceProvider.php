@@ -1,11 +1,13 @@
 <?php
+
 namespace Soda\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Soda;
 use Soda\Models\Application;
+use Illuminate\Support\ServiceProvider;
 
-class SodaServiceProvider extends ServiceProvider {
+class SodaServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -18,8 +20,8 @@ class SodaServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
-
+    public function boot()
+    {
         $this->buildApp();
 
         // Loading routes
@@ -47,7 +49,8 @@ class SodaServiceProvider extends ServiceProvider {
      * builds common interfaces for stuff.
      * TODO: move this somewhere sensible?
      */
-    public function buildApp() {
+    public function buildApp()
+    {
         $this->app->singleton('application', function ($app) {
             return Application::find(1);
             //return('bonk');
@@ -63,7 +66,8 @@ class SodaServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->app->register('Soda\Providers\UploaderProvider');
         $this->app->register('Soda\Providers\RouteServiceProvider');
         $this->app->register('Franzose\ClosureTable\ClosureTableServiceProvider');

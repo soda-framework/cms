@@ -1,13 +1,12 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+namespace Soda\Controllers;
+
 use Soda\Models\User;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-
     use    Traits\CrudableTrait;
 
     public $model = null;
@@ -19,6 +18,4 @@ class UserController extends Controller
         //$this->middleware('auth');
         $this->model = $user;
     }
-
-
 }

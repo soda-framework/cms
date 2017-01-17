@@ -2,12 +2,10 @@
 
 namespace Soda\Components\Uploader;
 
-use Storage;
-
 // This class
 class S3 extends Uploader
 {
-    var $s3;
+    public $s3;
 
     public function __construct()
     {

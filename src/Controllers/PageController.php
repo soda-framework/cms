@@ -1,16 +1,14 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use Carbon\Carbon;
+namespace Soda\Controllers;
+
+use Soda\Models\Page;
+use Soda\Facades\Soda;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Soda\Models\Page;
-use Soda\Models\Template;
-use Soda\Facades\Soda;
-
 
 class PageController extends PageTemplateController
 {
-
     use    Traits\TreeableTrait;
 
     /**
@@ -26,7 +24,6 @@ class PageController extends PageTemplateController
         view()->share('routeHint', $this->routeHint);
     }
 
-
     /**
      * Show the page.
      *
@@ -34,8 +31,7 @@ class PageController extends PageTemplateController
      */
     public function getIndex()
     {
-
-        if (!isset($id) || !$id || $id == '#') {
+        if (! isset($id) || ! $id || $id == '#') {
             $page = $this->model->getRoots()->first();    //todo: from application.
         } elseif ($id) {
             $page = $this->model->where('id', $id)->first();
@@ -63,8 +59,8 @@ class PageController extends PageTemplateController
             $page = $this->model->with('blocks.type.fields', 'type.fields')->getRoots()->first();
         }
 
-        $page_table = Soda::dynamicModel('soda_' . $page->type->identifier,
-            $page->type->fields->lists('field_name')->toArray())->where('page_id',$page->id)->first();
+        $page_table = Soda::dynamicModel('soda_'.$page->type->identifier,
+            $page->type->fields->lists('field_name')->toArray())->where('page_id', $page->id)->first();
 
         return view('soda::page.view', ['page' => $page, 'page_table'=>$page_table]);
     }
@@ -80,7 +76,7 @@ class PageController extends PageTemplateController
         $page->fill(Request::input());
         $page->save();
 
-        return redirect()->route($this->routeHint . 'view', ['id' => $request->id])->with('success', 'page updated');
+        return redirect()->route($this->routeHint.'view', ['id' => $request->id])->with('success', 'page updated');
     }
 
     public function getMakeRoot($id)
@@ -95,16 +91,17 @@ class PageController extends PageTemplateController
      */
     public static function page($slug)
     {
-
         if (starts_with('/', $slug)) {
             $page = Page::where('slug', $slug)->first(); //TODO: might not really be page::
         } else {
-            $page = Page::where('slug', '/' . $slug)->first();
+            $page = Page::where('slug', '/'.$slug)->first();
         }
-        
-        if(!$page) abort(404);
 
-        return (\Soda\Components\Page::constructView($page, ['page' => $page]));
+        if (! $page) {
+            abort(404);
+        }
+
+        return \Soda\Components\Page::constructView($page, ['page' => $page]);
     }
 
     public function createForm($parent_id = null)
@@ -122,7 +119,7 @@ class PageController extends PageTemplateController
     }
 
     /**
-     * create page save functions
+     * create page save functions.
      * @param null $parent_id
      */
     public function create(Request $request, $parent_id = null)
@@ -145,5 +142,4 @@ class PageController extends PageTemplateController
         $page->save();
         dd('saved.');
     }
-
 }
