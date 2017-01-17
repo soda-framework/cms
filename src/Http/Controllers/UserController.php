@@ -3,8 +3,8 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 
 class UserController extends BaseController
@@ -80,7 +80,7 @@ class UserController extends BaseController
         $user = $this->users->findById($id);
         $roleIds = $this->users->getRoles();
 
-        if (!$user) {
+        if (! $user) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'user']));
         }
 

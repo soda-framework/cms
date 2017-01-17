@@ -1,32 +1,33 @@
 <?php
+
 namespace Soda\Cms;
 
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
-use Laratrust\LaratrustServiceProvider;
-use Rutorika\Sortable\SortableServiceProvider;
-use Soda\Cms\Console\CommandsServiceProvider;
-use Soda\Cms\Database\Application\ApplicationServiceProvider;
-use Soda\Cms\Database\Blocks\BlockServiceProvider;
-use Soda\Cms\Database\Fields\FieldServiceProvider;
-use Soda\Cms\Database\Pages\PageServiceProvider;
-use Soda\Cms\Database\Permissions\PermissionServiceProvider;
-use Soda\Cms\Database\Roles\RoleServiceProvider;
-use Soda\Cms\Database\Users\UserServiceProvider;
-use Soda\Cms\Forms\FormServiceProvider;
-use Soda\Cms\Foundation\DraftingHandler;
-use Soda\Cms\Foundation\Providers\AuthServiceProvider;
-use Soda\Cms\Foundation\Providers\EventServiceProvider;
-use Soda\Cms\Foundation\Routing\RouteServiceProvider;
-use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
-use Soda\Cms\Foundation\SodaInstance;
-use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
-use Soda\Cms\Menu\MenuServiceProvider;
 use Soda\Cms\Support\Facades\Form;
 use Soda\Cms\Support\Facades\Menu;
-use Soda\Cms\Support\Facades\RequestMatcher;
 use Soda\Cms\Support\Facades\Soda;
 use Zofe\Rapyd\RapydServiceProvider;
+use Illuminate\Support\Facades\Blade;
+use Soda\Cms\Foundation\SodaInstance;
+use Soda\Cms\Menu\MenuServiceProvider;
+use Illuminate\Support\ServiceProvider;
+use Laratrust\LaratrustServiceProvider;
+use Soda\Cms\Forms\FormServiceProvider;
+use Soda\Cms\Foundation\DraftingHandler;
+use Soda\Cms\Support\Facades\RequestMatcher;
+use Soda\Cms\Console\CommandsServiceProvider;
+use Rutorika\Sortable\SortableServiceProvider;
+use Soda\Cms\Database\Pages\PageServiceProvider;
+use Soda\Cms\Database\Roles\RoleServiceProvider;
+use Soda\Cms\Database\Users\UserServiceProvider;
+use Soda\Cms\Database\Blocks\BlockServiceProvider;
+use Soda\Cms\Database\Fields\FieldServiceProvider;
+use Soda\Cms\Foundation\Routing\RouteServiceProvider;
+use Soda\Cms\Foundation\Providers\AuthServiceProvider;
+use Soda\Cms\Foundation\Providers\EventServiceProvider;
+use Soda\Cms\Database\Permissions\PermissionServiceProvider;
+use Soda\Cms\Database\Application\ApplicationServiceProvider;
+use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class SodaServiceProvider extends ServiceProvider
 {
@@ -69,7 +70,7 @@ class SodaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once(__DIR__.'/Foundation/helpers.php');
+        require_once __DIR__.'/Foundation/helpers.php';
 
         // Override Zofe DataSet
         class_alias('Soda\Cms\Foundation\DataSet', 'Zofe\Rapyd\DataSet');

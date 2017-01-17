@@ -3,10 +3,10 @@
 namespace Themes\SodaExample\Http\Controllers\Auth;
 
 use Auth;
+use Validator;
+use Themes\SodaExample\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Themes\SodaExample\Http\Controllers\BaseController;
-use Themes\SodaExample\Models\User;
-use Validator;
 
 class RegisterController extends BaseController
 {

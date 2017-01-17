@@ -6,12 +6,11 @@ use Illuminate\Console\Command;
 
 class Migrate extends Command
 {
-
     protected $signature = 'soda:migrate';
     protected $description = 'Migrate the Soda Database';
 
     /**
-     * Runs all database migrations for Soda
+     * Runs all database migrations for Soda.
      */
     public function handle()
     {

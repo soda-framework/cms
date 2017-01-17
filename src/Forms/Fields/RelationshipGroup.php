@@ -2,13 +2,12 @@
 
 namespace Soda\Cms\Forms\Fields;
 
-use DB;
 use Soda\Cms\Forms\Fields\Traits\HasArrayableValue;
 
 class RelationshipGroup extends Relationship
 {
     use HasArrayableValue;
-    protected $view = "dropdown_advanced";
+    protected $view = 'dropdown_advanced';
 
     public function getDefaultParameters()
     {
@@ -30,7 +29,7 @@ class RelationshipGroup extends Relationship
     }
 
     /**
-     * Pulls array from query, using field parameters specified
+     * Pulls array from query, using field parameters specified.
      *
      * @param $query
      * @param $field_parameters
@@ -40,7 +39,7 @@ class RelationshipGroup extends Relationship
     protected function getRelationshipArray($query, $field_parameters)
     {
         // Relationship data is stored to prevent re-querying
-        if(!$this->relationshipData) {
+        if (! $this->relationshipData) {
             $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
             $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
             $group = $field_parameters['group_column'];

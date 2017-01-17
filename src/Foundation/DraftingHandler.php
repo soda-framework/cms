@@ -2,11 +2,12 @@
 
 namespace Soda\Cms\Foundation;
 
-class DraftingHandler {
+class DraftingHandler
+{
     protected $draftables = [];
 
     /**
-     * Registers a new draftable
+     * Registers a new draftable.
      *
      * @param null $draftable
      */
@@ -19,7 +20,7 @@ class DraftingHandler {
     }
 
     /**
-     * Registers an array of draftables
+     * Registers an array of draftables.
      *
      * @param $draftables
      */
@@ -31,7 +32,7 @@ class DraftingHandler {
     }
 
     /**
-     * Returns a list of draftables that have been registered
+     * Returns a list of draftables that have been registered.
      *
      * @return array
      */

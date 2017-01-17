@@ -1,11 +1,13 @@
-<?php namespace Soda\Cms\Database\Application\Repositories;
+<?php
+
+namespace Soda\Cms\Database\Application\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
-use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
 use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
+use Soda\Cms\Database\Support\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
+use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
 
 class ApplicationRepository implements ApplicationRepositoryInterface
 {
@@ -47,7 +49,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
             $applicationModel = $this->findById($url->getAttribute('application_id'));
 
-            if($applicationModel) {
+            if ($applicationModel) {
                 $application['application'] = $applicationModel;
             }
         }
@@ -66,7 +68,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         }
 
         if ($request->has('settings')) {
-            if (!$model->relationLoaded('settings')) {
+            if (! $model->relationLoaded('settings')) {
                 $model->load('settings');
             }
 
@@ -81,7 +83,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
     public function getSettingsForApplication(ApplicationInterface $application)
     {
-        if (!$application->relationLoaded('settings')) {
+        if (! $application->relationLoaded('settings')) {
             $application->load('settings');
         }
 
@@ -122,7 +124,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
         foreach (array_diff($urls, $currentUrls) as $new) {
             $attach[] = ['domain' => $new, 'application_id' => $application->id];
-        };
+        }
 
         if (count($detach)) {
             // Remove detachable URLs, EXCEPT our current host!

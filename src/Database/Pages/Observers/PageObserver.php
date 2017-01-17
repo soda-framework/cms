@@ -2,14 +2,14 @@
 
 namespace Soda\Cms\Database\Pages\Models\Observers;
 
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Soda\Cms\Database\Pages\Models\DynamicPage;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 
 class PageObserver
 {
     /**
      * TODO: when type/blocks are updated, invalidate cache:
-     * soda.{app-id}.page.slug-{slug}
+     * soda.{app-id}.page.slug-{slug}.
      */
 
     /**
@@ -20,7 +20,7 @@ class PageObserver
     public function created(PageInterface $page)
     {
         if ($page->getAttribute('page_type_id') !== null) {
-            if (!$page->relationLoaded('type')) {
+            if (! $page->relationLoaded('type')) {
                 $page->load('type');
             }
 

@@ -1,8 +1,9 @@
 <?php
+
 namespace Soda\Cms\Database\Support\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 
 abstract class AbstractDynamicModel extends Model
@@ -54,7 +55,9 @@ abstract class AbstractDynamicModel extends Model
     {
         $field = app('soda.form')->field($field);
 
-        if($prefix) $field->setPrefix($prefix);
+        if ($prefix) {
+            $field->setPrefix($prefix);
+        }
 
         $field->saveToModel($this, $request);
 
@@ -74,7 +77,7 @@ abstract class AbstractDynamicModel extends Model
         // This method just provides a convenient way for us to generate fresh model
         // instances of this current model. It is particularly useful during the
         // hydration of new objects via the Eloquent query builder instances.
-        $model = new static((array)$attributes);
+        $model = new static((array) $attributes);
 
         $model->exists = $exists;
         $model->setTable($this->table);
@@ -103,9 +106,9 @@ abstract class AbstractDynamicModel extends Model
         return $builder;
     }
 
-    abstract function getDynamicModelTablePrefix();
+    abstract public function getDynamicModelTablePrefix();
 
-    /**
+    /*
      * TODO:
      * something like this for dynamic relationship.
      * $user_model->roles = new BelongsToMany($role_model->newQuery(), $user_model, $pivot_table, $foreignKey, $otherKey);
@@ -122,5 +125,4 @@ abstract class AbstractDynamicModel extends Model
      * return new HasMany($instance->newQuery(), $this, $instance->getTable() . '.' . $foreignKey, $localKey);
      * }
      */
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Cms\Http\RequestMatcher;
 
 use Illuminate\Support\ServiceProvider;

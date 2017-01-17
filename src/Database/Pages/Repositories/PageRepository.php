@@ -1,12 +1,13 @@
 <?php
+
 namespace Soda\Cms\Database\Pages\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
-use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
-use Soda\Cms\Database\Support\Repositories\AbstractRepository;
 use Soda\Cms\Foundation\Constants;
 use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Support\Repositories\AbstractRepository;
+use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 
 class PageRepository extends AbstractRepository implements PageRepositoryInterface
 {
@@ -26,8 +27,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     {
         $query = $this->model->type()->getRelated();
 
-        if($creatableOnly)
-        {
+        if ($creatableOnly) {
             $query->where('can_create', 1);
         }
 
@@ -41,7 +41,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function getAvailableBlockTypes(PageInterface $page)
     {
-        if (!$page->relationLoaded('block_types')) {
+        if (! $page->relationLoaded('block_types')) {
             $page->load('block_types');
         }
 
@@ -64,15 +64,14 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     {
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
-        if($parent->type) {
+        if ($parent->type) {
             $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
-            if(count($allowedPageTypes) && !in_array($pageTypeId, $allowedPageTypes)) {
+            if (count($allowedPageTypes) && ! in_array($pageTypeId, $allowedPageTypes)) {
                 throw new \Exception('You cannot create a page of this type here');
             }
         }
 
-        if(!$parent->allowed_children)
-        {
+        if (! $parent->allowed_children) {
             throw new \Exception('You cannot create a subpage here');
         }
 
@@ -137,7 +136,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
         $slug = $page->generateSlug($request->input('slug'));
 
-        if ($parentPage && !starts_with($slug, $parentPage->getAttribute('slug'))) {
+        if ($parentPage && ! starts_with($slug, $parentPage->getAttribute('slug'))) {
             $slug = $parentPage->generateSlug($request->input('slug'));
         }
 

@@ -83,7 +83,7 @@ class PageController extends BaseController
     {
         $page = $this->pages->findById($id);
 
-        if (!$page) {
+        if (! $page) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 

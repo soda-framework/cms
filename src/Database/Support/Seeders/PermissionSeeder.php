@@ -6,9 +6,8 @@ use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
@@ -18,7 +17,7 @@ class PermissionSeeder extends Seeder
         $roleModel = app('soda.role.model');
 
         $developer = $roleModel->withoutGlobalScope('in-application')->where('name', 'developer')->first();
-        $admin = $roleModel->withoutGlobalScope('in-application')->where('name','admin')->first();
+        $admin = $roleModel->withoutGlobalScope('in-application')->where('name', 'admin')->first();
 
         $permission_access_cms = $permissionModel->firstOrCreate([
             'name'         => 'access-cms',
@@ -248,7 +247,7 @@ class PermissionSeeder extends Seeder
             'category'     => 'Fields',
         ]);
 
-        if($developer) {
+        if ($developer) {
             $developer->attachPermissions([
                 //$permission_create_application_settings,
                 //$permission_delete_application_settings,
@@ -273,7 +272,7 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
-        if($admin) {
+        if ($admin) {
             $admin->attachPermissions([
                 $permission_access_cms,
                 $permission_view_application_settings,

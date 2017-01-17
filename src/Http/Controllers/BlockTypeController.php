@@ -74,7 +74,7 @@ class BlockTypeController extends BaseController
     {
         $blockType = $this->blockTypes->findById($id);
 
-        if (!$blockType) {
+        if (! $blockType) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block type']));
         }
 

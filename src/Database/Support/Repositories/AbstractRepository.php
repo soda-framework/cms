@@ -36,7 +36,7 @@ abstract class AbstractRepository
     {
         $block = $this->model->find($id);
 
-        if($block) {
+        if ($block) {
             $block->delete();
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], function() {
+Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], function () {
     Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
         // Authentication routes
         Route::get('login', 'LoginController@showLoginForm')->name('soda.login');
@@ -12,10 +12,10 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
     Route::group(['middleware' => 'soda.auth'], function () {
         Route::get('/', 'HomeController@getIndex')->name('soda.home')->middleware('soda.permission:access-cms');
         Route::post('sort', 'Api\SortController@sort')->name('soda.sort')->middleware('soda.permission:access-cms');
-        Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft")->middleware('soda.permission:view-drafts');
+        Route::get('toggle-draft', 'HomeController@getToggleDraft')->name('soda.toggle-draft')->middleware('soda.permission:view-drafts');
 
         Route::get('applications', 'ApplicationController@index')->name('soda.application.index')->middleware('soda.permission:view-applications');
-        Route::group(['prefix' => 'application'], function() {
+        Route::group(['prefix' => 'application'], function () {
             Route::get('edit/{id?}', 'ApplicationController@edit')->name('soda.application.edit');
             Route::put('edit/{id?}', 'ApplicationController@update')->name('soda.application.update');
         });

@@ -1,11 +1,11 @@
-<?php namespace Soda\Cms\Forms;
+<?php
+
+namespace Soda\Cms\Forms;
 
 use Exception;
-use Illuminate\Support\Facades\Config;
-use Soda\Cms\Database\Blocks\BlockType;
 use Soda\Cms\Database\Fields\Field;
+use Illuminate\Support\Facades\Config;
 use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
-use Soda\Cms\Database\ModelBuilder;
 
 class FormBuilder
 {
@@ -23,7 +23,7 @@ class FormBuilder
 
     /**
      * Returns an array of registered fields, keyed by field slug,
-     * values in readable format
+     * values in readable format.
      *
      * @return array
      */
@@ -37,7 +37,7 @@ class FormBuilder
     }
 
     /**
-     * Instantiates a new FormField from our Field model or array
+     * Instantiates a new FormField from our Field model or array.
      *
      * @param      $field
      *
@@ -52,13 +52,13 @@ class FormBuilder
             $field = app('soda.field.model')->fill($field);
         }
 
-        if (!$field instanceOf FieldInterface) {
-            Throw new Exception("Field must implement interface ".FieldInterface::class." or be an array.");
+        if (! $field instanceof FieldInterface) {
+            throw new Exception('Field must implement interface '.FieldInterface::class.' or be an array.');
         }
 
         $formField = $this->getRegistrar()->resolve($field);
 
-        if($prefix) {
+        if ($prefix) {
             $formField->setPrefix($prefix);
         }
 
@@ -66,7 +66,7 @@ class FormBuilder
     }
 
     /**
-     * Formats a JSON string to be pasted into our Javascript
+     * Formats a JSON string to be pasted into our Javascript.
      *
      * @param $parameters
      *
@@ -74,7 +74,9 @@ class FormBuilder
      */
     public function buildJsParams($parameters)
     {
-        if (!$parameters) return '';
+        if (! $parameters) {
+            return '';
+        }
 
         $json_parameters = json_encode($parameters, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
@@ -89,12 +91,12 @@ class FormBuilder
 
             return $this->getRegistrar()->resolve($field);
         } else {
-            throw new Exception("Field ".$name." is not registered.");
+            throw new Exception('Field '.$name.' is not registered.');
         }
     }
 
     /**
-     * Set the default path to input layouts
+     * Set the default path to input layouts.
      *
      * @param $layout
      *
@@ -108,7 +110,7 @@ class FormBuilder
     }
 
     /**
-     * Set the default path to input views
+     * Set the default path to input views.
      *
      * @param $view_path
      *

@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Users\Models;
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
-use Soda\Cms\Database\Support\Models\Traits\UserHasRoles;
 use Soda\Cms\Database\Users\Interfaces\UserInterface;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Soda\Cms\Database\Support\Models\Traits\UserHasRoles;
+use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class User extends Authenticatable implements UserInterface
 {

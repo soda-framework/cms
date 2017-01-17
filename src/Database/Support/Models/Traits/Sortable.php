@@ -3,9 +3,9 @@
 namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Rutorika\Sortable\SortableTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 trait Sortable
 {
@@ -40,7 +40,7 @@ trait Sortable
         );
     }
 
-    function moveInto($entity)
+    public function moveInto($entity)
     {
         throw new Exception('You must provide your own functionality for moving a model to a new parent');
     }

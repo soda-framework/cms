@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreatePageTypeSubpageTypesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -28,5 +27,4 @@ class CreatePageTypeSubpageTypesTable extends Migration
     {
         Schema::drop('page_type_subpage_types');
     }
-
 }

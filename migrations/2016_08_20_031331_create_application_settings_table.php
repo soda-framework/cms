@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateApplicationSettingsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -36,5 +35,4 @@ class CreateApplicationSettingsTable extends Migration
     {
         Schema::drop('application_settings');
     }
-
 }

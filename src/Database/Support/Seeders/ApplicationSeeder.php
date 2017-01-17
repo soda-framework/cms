@@ -7,9 +7,8 @@ use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
 
 class ApplicationSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */

@@ -2,10 +2,10 @@
 
 namespace Soda\Cms\Database\Application\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Application\Interfaces\ApplicationSettingInterface;
+use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Database\Support\Models\Traits\BoundToApplication;
+use Soda\Cms\Database\Application\Interfaces\ApplicationSettingInterface;
 
 class ApplicationSetting extends Model implements ApplicationSettingInterface
 {

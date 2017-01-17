@@ -2,12 +2,12 @@
 
 namespace Soda\Cms\Database\Users;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Database\Users\Interfaces\UserInterface;
-use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 use Soda\Cms\Database\Users\Models\User;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Soda\Cms\Database\Users\Interfaces\UserInterface;
 use Soda\Cms\Database\Users\Repositories\UserRepository;
+use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class UserServiceProvider extends ServiceProvider

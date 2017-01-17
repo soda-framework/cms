@@ -3,8 +3,8 @@
 namespace Themes\SodaExample\Http\Controllers\Auth;
 
 use Auth;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 use Password;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Themes\SodaExample\Http\Controllers\BaseController;
 
 class ResetPasswordController extends BaseController

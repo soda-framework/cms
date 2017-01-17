@@ -1,8 +1,10 @@
-<?php namespace Soda\Cms\Foundation\Routing;
+<?php
 
+namespace Soda\Cms\Foundation\Routing;
+
+use Illuminate\Http\Request;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router as IlluminateRouter;
 
 class Router extends IlluminateRouter
@@ -66,7 +68,7 @@ class Router extends IlluminateRouter
     public $middlewarePriority = [];
 
     /**
-     * The registered route value binders.buildRoutesOrder
+     * The registered route value binders.buildRoutesOrder.
      *
      * @var array
      */
@@ -144,7 +146,7 @@ class Router extends IlluminateRouter
     protected function createRoute($methods, $uri, $action)
     {
         $route = parent::createRoute($methods, $uri, $action);
-        if (!empty($this->groupStack)) {
+        if (! empty($this->groupStack)) {
             $route = $this->mergePriority($route);
         }
 

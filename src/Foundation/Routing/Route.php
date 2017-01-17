@@ -1,7 +1,7 @@
-<?php namespace Soda\Cms\Foundation\Routing;
+<?php
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\ControllerDispatcher;
+namespace Soda\Cms\Foundation\Routing;
+
 use Illuminate\Routing\Route as IlluminateRoute;
 
 class Route extends IlluminateRoute

@@ -1,4 +1,6 @@
-<?php namespace Soda\Cms\Database\Permissions\Models;
+<?php
+
+namespace Soda\Cms\Database\Permissions\Models;
 
 use Laratrust\LaratrustPermission;
 use Soda\Cms\Database\Permissions\Interfaces\PermissionInterface;

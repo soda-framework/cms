@@ -12,42 +12,42 @@ Route::group(['middleware' => 'web'], function () {
         // Dashboard and user routes...
         Route::group(['middleware' => 'soda.auth:soda'], function () {
             Route::get('/', 'HomeController@getIndex')->name('soda.home');
-            Route::get('toggle-draft', 'HomeController@getToggleDraft')->name("soda.toggle-draft");
+            Route::get('toggle-draft', 'HomeController@getToggleDraft')->name('soda.toggle-draft');
 
             Route::post('pages/move', 'PageController@move')->name('soda.pages.move');
             Route::resource('pages', 'PageController', [
                 'as'     => 'soda',
-                'except' => 'show'
+                'except' => 'show',
             ]);
 
             Route::resource('page-types', 'PageTypeController', [
                 'as'     => 'soda',
-                'except' => 'show'
+                'except' => 'show',
             ]);
 
             Route::resource('pages.blocks', 'PageBlockController', [
                 'as'     => 'soda',
-                'except' => 'show'
+                'except' => 'show',
             ]);
 
             Route::resource('blocks', 'BlockController', [
                 'as'     => 'soda',
-                'except' => 'show'
+                'except' => 'show',
             ]);
 
             Route::resource('block-types', 'BlockTypeController', [
                 'as'     => 'soda',
-                'except' => 'show'
+                'except' => 'show',
             ]);
 
             Route::resource('fields', 'FieldController', [
                 'as'     => 'soda',
-                'except' => 'show'
+                'except' => 'show',
             ]);
 
             Route::resource('users', 'UserController', [
                 'as'     => 'soda',
-                'except' => 'show'
+                'except' => 'show',
             ]);
 
             Route::group(['prefix' => 'upload'], function () {
@@ -124,7 +124,6 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('move/{parent_id?}/{id?}/{position?}', 'NavigationController@move')->name('soda.navigation.move');
             });
             */
-
         });
     });
 

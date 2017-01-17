@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Roles;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Database\Roles\Interfaces\RoleInterface;
-use Soda\Cms\Database\Roles\Interfaces\RoleRepositoryInterface;
 use Soda\Cms\Database\Roles\Models\Role;
+use Soda\Cms\Database\Roles\Interfaces\RoleInterface;
 use Soda\Cms\Database\Roles\Repositories\RoleRepository;
+use Soda\Cms\Database\Roles\Interfaces\RoleRepositoryInterface;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class RoleServiceProvider extends ServiceProvider

@@ -15,5 +15,5 @@ return [
             'entity'   => 'soda.block-type.model',
             'relation' => 'fields',
         ],
-    ]
+    ],
 ];

@@ -6,5 +6,5 @@ use Soda\Cms\Forms\AbstractFormField;
 
 class StaticImage extends AbstractFormField
 {
-    protected $view = "static_image";
+    protected $view = 'static_image';
 }

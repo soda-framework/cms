@@ -3,12 +3,12 @@
 namespace Soda\Cms\Database\Fields;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
-use Soda\Cms\Database\Fields\Interfaces\FieldRepositoryInterface;
-use Soda\Cms\Database\Fields\Interfaces\MediaInterface;
 use Soda\Cms\Database\Fields\Models\Field;
 use Soda\Cms\Database\Fields\Models\Media;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\Fields\Interfaces\MediaInterface;
 use Soda\Cms\Database\Fields\Repositories\FieldRepository;
+use Soda\Cms\Database\Fields\Interfaces\FieldRepositoryInterface;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class FieldServiceProvider extends ServiceProvider
