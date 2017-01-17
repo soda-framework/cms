@@ -1,8 +1,10 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
+namespace Soda\Cms\Controllers;
+
+use Soda\Cms\Models\PageType;
 use App\Http\Controllers\Controller;
 use Soda\Cms\Controllers\Traits\CrudableTrait;
-use Soda\Cms\Models\PageType;
 
 class PageTypeController extends Controller
 {

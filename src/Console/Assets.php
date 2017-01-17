@@ -6,13 +6,12 @@ use Illuminate\Console\Command;
 
 class Assets extends Command
 {
-
     protected $signature = 'soda:assets';
     protected $description = 'Update assets for the Soda Framework';
     protected $except = [];
 
     /**
-     * Force publishes Soda CMS assets
+     * Force publishes Soda CMS assets.
      */
     public function handle()
     {
@@ -24,4 +23,3 @@ class Assets extends Command
         $this->info('Soda styles and assets updated successfully.');
     }
 }
-

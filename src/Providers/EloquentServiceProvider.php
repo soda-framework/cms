@@ -1,20 +1,21 @@
 <?php
+
 namespace Soda\Cms\Providers;
 
-use Franzose\ClosureTable\ClosureTableServiceProvider;
-use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\BlockType;
-use Soda\Cms\Models\Observers\BlockObserver;
-use Soda\Cms\Models\Observers\DynamicObserver;
-use Soda\Cms\Models\Observers\PageObserver;
 use Soda\Cms\Models\Page;
-use Soda\Cms\Models\PageType;
-use Soda\Cms\Models\Permission;
 use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\PageType;
+use Soda\Cms\Models\BlockType;
+use Soda\Cms\Models\Permission;
 use Zizaco\Entrust\EntrustFacade;
+use Illuminate\Support\ServiceProvider;
 use Zizaco\Entrust\EntrustServiceProvider;
+use Soda\Cms\Models\Observers\PageObserver;
+use Soda\Cms\Models\Observers\BlockObserver;
+use Soda\Cms\Models\Observers\DynamicObserver;
+use Franzose\ClosureTable\ClosureTableServiceProvider;
 
 class EloquentServiceProvider extends ServiceProvider
 {
@@ -44,7 +45,6 @@ class EloquentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->registerDependencies([
             ClosureTableServiceProvider::class,
             EntrustServiceProvider::class,

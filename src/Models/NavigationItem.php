@@ -1,8 +1,9 @@
 <?php
+
 namespace Soda\Cms\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Cms\Models\Traits\TreeableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NavigationItem extends AbstractSodaClosureEntity
 {
@@ -20,5 +21,4 @@ class NavigationItem extends AbstractSodaClosureEntity
     {
         return $this->belongsTo(Navigation::class, 'page_type_id');
     }
-
 }

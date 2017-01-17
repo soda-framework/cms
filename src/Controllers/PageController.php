@@ -1,11 +1,13 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+namespace Soda\Cms\Controllers;
+
 use Soda;
-use Soda\Cms\Controllers\Traits\TreeableTrait;
 use Soda\Cms\Models\Page;
+use Illuminate\Http\Request;
 use Soda\Cms\Models\PageType;
+use App\Http\Controllers\Controller;
+use Soda\Cms\Controllers\Traits\TreeableTrait;
 
 class PageController extends Controller
 {
@@ -35,7 +37,9 @@ class PageController extends Controller
             $page = $this->model->find($request->input('id'));
         } else {
             $page = $this->model->getRoots()->first();    //todo: from application.
-            if (!$page) $page = Page::createRoot();
+            if (! $page) {
+                $page = Page::createRoot();
+            }
         }
 
         $page_types = PageType::get();
@@ -121,7 +125,7 @@ class PageController extends Controller
     }
 
     /**
-     * create page save functions
+     * create page save functions.
      *
      * @param null $parent_id
      *
@@ -163,5 +167,4 @@ class PageController extends Controller
 
         return redirect()->route('soda.page')->with('success', 'Page saved successfully.');
     }
-
 }

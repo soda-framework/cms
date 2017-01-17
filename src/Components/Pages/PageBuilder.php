@@ -2,11 +2,11 @@
 
 namespace Soda\Cms\Components\Pages;
 
-use Exception;
 use Soda;
-use Soda\Cms\Components\Pages\Actions\ControllerAction;
-use Soda\Cms\Components\Pages\Actions\ViewAction;
+use Exception;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Components\Pages\Actions\ViewAction;
+use Soda\Cms\Components\Pages\Actions\ControllerAction;
 
 class PageBuilder
 {
@@ -16,7 +16,7 @@ class PageBuilder
     ];
 
     /**
-     * Registers a new action
+     * Registers a new action.
      *
      * @param      $name
      * @param null $action
@@ -29,7 +29,7 @@ class PageBuilder
     }
 
     /**
-     * Registers an array of new actions
+     * Registers an array of new actions.
      *
      * @param $actions
      */
@@ -41,7 +41,7 @@ class PageBuilder
     }
 
     /**
-     * Returns a list of actions that have been registered
+     * Returns a list of actions that have been registered.
      *
      * @return array
      */
@@ -51,7 +51,7 @@ class PageBuilder
     }
 
     /**
-     * Get a list of action types in human-readable format
+     * Get a list of action types in human-readable format.
      *
      * @return array
      */
@@ -61,7 +61,7 @@ class PageBuilder
     }
 
     /**
-     * Loads a page by it's slug
+     * Loads a page by it's slug.
      *
      * @param $slug
      *
@@ -79,7 +79,7 @@ class PageBuilder
     }
 
     /**
-     * Attaches a page model to our Soda instance as the 'CurrentPage'
+     * Attaches a page model to our Soda instance as the 'CurrentPage'.
      *
      * @param \Soda\Cms\Models\Page $page
      *
@@ -93,7 +93,7 @@ class PageBuilder
     }
 
     /**
-     * Renders the hint path and view of given page (or pageable item)
+     * Renders the hint path and view of given page (or pageable item).
      *
      * @param       $page
      * @param array $parameters
@@ -103,7 +103,7 @@ class PageBuilder
      */
     public function render($page = null, $parameters = [])
     {
-        if (!$page) {
+        if (! $page) {
             $page = Soda::getCurrentPage($page);
         }
 
@@ -111,7 +111,7 @@ class PageBuilder
     }
 
     /**
-     * Handles a page action
+     * Handles a page action.
      *
      * @param                       $action_type
      * @param \Soda\Cms\Models\Page $page
@@ -122,8 +122,8 @@ class PageBuilder
      */
     public function handleAction($action_type, Page $page, $parameters = [])
     {
-        if (!isset($this->actions[$action_type])) {
-            Throw new Exception('Action \''.$action_type.'\' is not registered');
+        if (! isset($this->actions[$action_type])) {
+            throw new Exception('Action \''.$action_type.'\' is not registered');
         }
 
         $handler = new $this->actions[$action_type];
@@ -144,7 +144,7 @@ class PageBuilder
     }
 
     /**
-     * Handles not found errors
+     * Handles not found errors.
      */
     protected function handleNotFound()
     {

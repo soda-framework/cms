@@ -4,7 +4,7 @@ namespace Soda\Cms\Components\Forms\Fields;
 
 class Toggle extends Checkbox
 {
-    protected $view = "toggle";
+    protected $view = 'toggle';
 
     public function getDefaultParameters()
     {

@@ -1,16 +1,16 @@
 <?php
+
 namespace Soda\Cms\Components;
 
 use Exception;
-use Route;
-use Soda\Cms\Components\Forms\FormBuilder;
-use Soda\Cms\Components\Menu\MenuBuilder;
-use Soda\Cms\Components\Pages\PageBuilder;
-use Soda\Cms\Models\Application;
-use Soda\Cms\Models\ApplicationUrl;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\ModelBuilder;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Models\Block;
+use Soda\Cms\Models\Application;
+use Soda\Cms\Models\ModelBuilder;
+use Soda\Cms\Models\ApplicationUrl;
+use Soda\Cms\Components\Menu\MenuBuilder;
+use Soda\Cms\Components\Forms\FormBuilder;
+use Soda\Cms\Components\Pages\PageBuilder;
 
 class Soda
 {
@@ -29,13 +29,13 @@ class Soda
     }
 
     /**
-     * Returns the current application loaded at the current URL
+     * Returns the current application loaded at the current URL.
      *
      * @return null
      */
     public function getApplication()
     {
-        if (!$this->application) {
+        if (! $this->application) {
             $this->loadApplication();
         }
 
@@ -43,7 +43,7 @@ class Soda
     }
 
     /**
-     * Sets the application
+     * Sets the application.
      *
      * @param \Soda\Cms\Models\Application $application
      *
@@ -57,7 +57,7 @@ class Soda
     }
 
     /**
-     * Determines the application by our current URL and sets it
+     * Determines the application by our current URL and sets it.
      *
      * @return \Soda\Cms\Components\Soda
      * @throws \Exception
@@ -74,14 +74,14 @@ class Soda
                 return $this->setApplication($application);
             }
 
-            Throw new Exception('Application URL is not associated with an application');
+            throw new Exception('Application URL is not associated with an application');
         }
 
-        Throw new Exception('No application found at URL');
+        throw new Exception('No application found at URL');
     }
 
     /**
-     * Get a block by its identifier
+     * Get a block by its identifier.
      *
      * @param $identifier
      *
@@ -89,7 +89,7 @@ class Soda
      */
     public function getBlock($identifier)
     {
-        if (!isset($this->blocks[$identifier])) {
+        if (! isset($this->blocks[$identifier])) {
             $this->blocks[$identifier] = Block::with('type')->where('identifier', $identifier)->first();
         }
 
@@ -109,7 +109,7 @@ class Soda
     }
 
     /**
-     * Load a dynamic model
+     * Load a dynamic model.
      *
      * @param      $table
      * @param bool $autoprefix
@@ -118,13 +118,15 @@ class Soda
      */
     public function model($table, $autoprefix = true)
     {
-        if ($autoprefix) $table = 'soda_'.$table;
+        if ($autoprefix) {
+            $table = 'soda_'.$table;
+        }
 
         return ModelBuilder::fromTable($table, []);
     }
 
     /**
-     * Set the current page that we're visiting
+     * Set the current page that we're visiting.
      *
      * @param \Soda\Cms\Models\Page $page
      */
@@ -134,7 +136,7 @@ class Soda
     }
 
     /**
-     * Get the current page that we're visiting
+     * Get the current page that we're visiting.
      *
      * @return mixed
      */
@@ -144,7 +146,7 @@ class Soda
     }
 
     /**
-     * Return instance of PageBuilder
+     * Return instance of PageBuilder.
      *
      * @return \Soda\Cms\Components\Pages\PageBuilder
      */
@@ -154,7 +156,7 @@ class Soda
     }
 
     /**
-     * Return instance of MenuBuilder
+     * Return instance of MenuBuilder.
      *
      * @return \Soda\Cms\Components\Pages\MenuBuilder
      */
@@ -164,7 +166,7 @@ class Soda
     }
 
     /**
-     * Return instance of FormBuilder
+     * Return instance of FormBuilder.
      *
      * @return \Soda\Cms\Components\Pages\FormBuilder
      */
@@ -174,7 +176,7 @@ class Soda
     }
 
     /**
-     * Build a FormField from array or Field model
+     * Build a FormField from array or Field model.
      *
      * @param $field
      *

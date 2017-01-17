@@ -1,14 +1,14 @@
-<?php namespace Soda\Cms\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Redirect;
-use Soda\Cms\Controllers\Traits\CrudableTrait;
+namespace Soda\Cms\Controllers;
+
 use Soda\Cms\Models\Block;
 use Soda\Cms\Models\BlockType;
+use App\Http\Controllers\Controller;
+use Soda\Cms\Controllers\Traits\CrudableTrait;
 
 class BlockController extends Controller
 {
-
     use CrudableTrait;
 
     protected $hint = 'block';

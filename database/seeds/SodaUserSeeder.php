@@ -1,14 +1,13 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Soda\Cms\Models\Role;
 use Soda\Cms\Models\User;
+use Illuminate\Database\Seeder;
 
 class SodaUserSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */

@@ -1,23 +1,21 @@
 <?php
+
 namespace Themes\SodaExample\Providers;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Routing\Router;
-use Themes\SodaExample\Components\SodaExampleInstance;
-use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
+use Illuminate\Foundation\AliasLoader;
 use Themes\SodaExample\Handlers\ExceptionHandler;
-use View;
+use Themes\SodaExample\Components\SodaExampleInstance;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
+use Illuminate\Contracts\Debug\ExceptionHandler as BaseExceptionHandler;
 
 class SodaExampleThemeServiceProvider extends RouteServiceProvider
 {
-
     /**
      * The event listener mappings for the application.
      *
      * @var array
      */
-
     protected $defer = false;
     protected $handlesErrors = false;
 
@@ -45,7 +43,7 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider
             'SodaExample' => 'Themes\SodaExample\Facades\SodaExampleFacade',
         ]);
 
-        if($this->handlesErrors) {
+        if ($this->handlesErrors) {
             $this->app->singleton(BaseExceptionHandler::class, ExceptionHandler::class);
         }
 
@@ -68,7 +66,7 @@ class SodaExampleThemeServiceProvider extends RouteServiceProvider
     }
 
     /**
-     * Register dependies conditionally (e.g. dev dependencies)
+     * Register dependies conditionally (e.g. dev dependencies).
      *
      * @param array $services
      */

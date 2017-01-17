@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 
 class Update extends Command
 {
-
     protected $signature = 'soda:update {--a|all : Update everything} {--c|cms : Update cms} {--m|modules : Update modules}';
     protected $description = 'Update your version of the Soda Framework';
     protected $except = [];
@@ -27,7 +26,7 @@ class Update extends Command
     }
 
     /**
-     * Update CMS via composer
+     * Update CMS via composer.
      */
     protected function updateCms()
     {
@@ -39,7 +38,7 @@ class Update extends Command
     }
 
     /**
-     * Update all Soda-vendored modules
+     * Update all Soda-vendored modules.
      */
     protected function updateModules()
     {
@@ -48,4 +47,3 @@ class Update extends Command
         $this->info('Soda module update complete.');
     }
 }
-

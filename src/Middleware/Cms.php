@@ -3,10 +3,10 @@
 namespace Soda\Cms\Middleware;
 
 use Closure;
-use Soda\Cms\Models\Block;
-use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\Page;
+use Soda\Cms\Models\Block;
 use Soda\Cms\Models\PageType;
+use Soda\Cms\Models\BlockType;
 
 /*
  *

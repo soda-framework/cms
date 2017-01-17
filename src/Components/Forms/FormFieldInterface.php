@@ -1,9 +1,10 @@
 <?php
+
 namespace Soda\Cms\Components\Forms;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Http\Request;
 
 interface FormFieldInterface
 {

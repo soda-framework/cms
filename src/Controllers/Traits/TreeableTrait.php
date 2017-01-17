@@ -1,10 +1,11 @@
-<?php namespace Soda\Cms\Controllers\Traits;
+<?php
+
+namespace Soda\Cms\Controllers\Traits;
 
 use Illuminate\Http\Request;
 
-Trait TreeableTrait
+trait TreeableTrait
 {
-
     /*
      * render tree item
      */
@@ -61,7 +62,7 @@ Trait TreeableTrait
     }
 
     /**
-     * pass in tree item and returns a jstree formatted object
+     * pass in tree item and returns a jstree formatted object.
      *
      * @param $tree_item
      * @param $object
@@ -70,7 +71,7 @@ Trait TreeableTrait
      */
     protected function assignModelValues($tree_item, $object = null)
     {
-        if (!$object) {
+        if (! $object) {
             //this is the 1st run, we need to make an empty object;
             $object = new \stdClass();
         }
@@ -81,7 +82,7 @@ Trait TreeableTrait
     }
 
     /**
-     * move element into parent_id at position
+     * move element into parent_id at position.
      *
      * @param $id
      * @param $parent_id
@@ -91,13 +92,13 @@ Trait TreeableTrait
      */
     public function move(Request $request, $parent_id = null, $id = null, $position = null)
     {
-        if (!$parent_id) {
+        if (! $parent_id) {
             $parent_id = $request->get('parent_id');
         }
-        if (!$id) {
+        if (! $id) {
             $id = $request->get('id');
         }
-        if (!$position) {
+        if (! $position) {
             $position = $request->get('position');
         }
 

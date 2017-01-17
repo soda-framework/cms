@@ -6,5 +6,5 @@ use Soda\Cms\Components\Forms\AbstractFormField;
 
 class StaticText extends AbstractFormField
 {
-    protected $view = "static_text";
+    protected $view = 'static_text';
 }
