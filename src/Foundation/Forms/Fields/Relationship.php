@@ -5,36 +5,16 @@ namespace Soda\Cms\Foundation\Forms\Fields;
 use DB;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Soda\Cms\Foundation\Forms\Fields\Traits\HasArrayableValue;
 
-class Relationship extends Multiselect
+class Relationship extends Dropdown
 {
-    use HasArrayableValue;
     protected $onlyQueryFrom;
 
     public function getDefaultParameters()
     {
         return [
-            'multiple'     => false,
-            'combo'        => false,
-            'array-save'   => 'relationship',
-            'key_column'   => 'id',
-            'value_column' => 'id',
-            'settings'             => [
-                'placeholder'             => 'Please select...',
-                'minimumResultsForSearch' => 'infinity',
-                'theme'                   => 'bootstrap',
-            ],
+            'options' => $this->loadRelationship(),
         ];
-    }
-
-    protected function parseViewParameters()
-    {
-        $parameters = parent::parseViewParameters();
-
-        $parameters['field_parameters']['options'] = $this->loadRelationship();
-
-        return $parameters;
     }
 
     /**
@@ -44,7 +24,7 @@ class Relationship extends Multiselect
      */
     protected function loadRelationship()
     {
-        $field_parameters = $this->parseFieldParameters();
+        $field_parameters = $this->getFieldParameters();
 
         $query = $this->buildRelationshipQuery($field_parameters);
 
@@ -56,7 +36,7 @@ class Relationship extends Multiselect
             $query = $this->amendRelationshipQuery($query);
         }
 
-        return $this->getRelationshipArray($query);
+        return $this->getRelationshipArray($query, $field_parameters);
     }
 
     /**
@@ -91,15 +71,14 @@ class Relationship extends Multiselect
      * Pulls array from query, using field parameters specified.
      *
      * @param $query
+     * @param $field_parameters
      *
      * @return array
      */
-    protected function getRelationshipArray($query)
+    protected function getRelationshipArray($query, $field_parameters)
     {
-        $field_parameters = $this->parseFieldParameters();
-
-        $key_column = $field_parameters['key_column'];
-        $value_column = $field_parameters['value_column'];
+        $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
+        $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
 
         return $query->pluck($value_column, $key_column)->toArray();
     }
