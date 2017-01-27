@@ -25,7 +25,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         $query = $this->model->roles()->getRelated();
 
-        if($filterLevel) {
+        if ($filterLevel) {
             $query->where('level', '<', \Auth::user()->getLevel());
         }
 
@@ -37,7 +37,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $model = $id ? $this->model->findOrFail($id) : $this->newInstance();
         $model->fill($request->except('password', 'password_confirmation'));
 
-        if($request->has('password') && $request->input('password')) {
+        if ($request->has('password') && $request->input('password')) {
             $model->password = \Hash::make($request->input('password'));
         }
 
