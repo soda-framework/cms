@@ -3,7 +3,6 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Soda\Cms\Models\User;
-use Illuminate\Http\Request;
 use Soda\Cms\Http\Controllers\Traits\CrudableTrait;
 
 class UserController extends BaseController
@@ -40,31 +39,5 @@ class UserController extends BaseController
         $hint = $this->hint;
 
         return soda_cms_view($this->hint.'.index', compact('filter', 'grid', 'hint'));
-    }
-
-    public function edit(Request $request, $id = null)
-    {
-        if ($id) {
-            $this->model = $this->model->findOrFail($id);
-        }
-
-        $this->validate($request, [
-            'password' => 'sometimes|confirmed',
-        ]);
-
-        $this->model->fill($request->only('username, email'));
-        $this->model->application_id = \Soda::getApplication()->id;
-        $this->model->roles()->sync($request->input('roles'));
-
-        if($request->has('password') && trim($request->input('password')))
-        {
-            $this->model->password = \Hash::make($request->input('password'));
-        }
-
-        $this->model->save();
-
-        return redirect()->route($this->getRouteTo('view'), [
-            'id' => $this->model->id,
-        ])->with('success', 'updated');
     }
 }
