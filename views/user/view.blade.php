@@ -35,10 +35,15 @@
                 "field_name"  => 'email',
             ])->setModel($model) !!}
 
-            {!! SodaForm::dropdown([
+            {!! SodaForm::multiselect([
                 "name"         => "Role",
                 "field_name"   => 'role_id',
-                "field_params" => ["options" => array_merge(['' => 'Select Role'], Soda\Cms\Models\Role::pluck('name','id')->toArray())]
+                "value"        => $model->roles->pluck('id')->toArray(),
+                "field_params" => [
+                    "placeholder" => "Select role(s)",
+                    'array-save'  => 'array',
+                    "options"     => array_merge(['' => 'Select Role'], Soda\Cms\Models\Role::pluck('name','id')->toArray())
+                ]
             ])->setModel($model) !!}
         </form>
     </div>
