@@ -23,7 +23,7 @@
 
 @section('content')
     <div class="content-block">
-        <form method="POST" id="user-form" action='{{route('soda.field.edit',['id'=>@$model->id])}}' enctype="multipart/form-data">
+        <form method="POST" id="user-form" action='{{route('soda.user.edit',['id'=>@$model->id])}}' enctype="multipart/form-data">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
             {!! SodaForm::text([
                 "name"        => "Username",
@@ -35,11 +35,29 @@
                 "field_name"  => 'email',
             ])->setModel($model) !!}
 
-            {!! SodaForm::dropdown([
+            {!! SodaForm::multiselect([
                 "name"         => "Role",
                 "field_name"   => 'role_id',
-                "field_params" => ["options" => array_merge(['' => 'Select Role'], Soda\Cms\Models\Role::pluck('name','id')->toArray())]
+                "value"        => $model->roles->pluck('id')->toArray(),
+                "field_params" => [
+                    "placeholder" => "Select role(s)",
+                    'array-save'  => 'array',
+                    "options"     => array_merge(['' => 'Select Role'], Soda\Cms\Models\Role::pluck('name','id')->toArray())
+                ]
             ])->setModel($model) !!}
+
+            <hr />
+            <br />
+            {!! SodaForm::password([
+                "name"        => "Password",
+                "field_name"  => 'password',
+                "description" => 'Keep blank to leave unchanged'
+            ]) !!}
+
+            {!! SodaForm::password([
+                "name"        => "Password Confirmation",
+                "field_name"  => 'password_confirmation',
+            ]) !!}
         </form>
     </div>
 

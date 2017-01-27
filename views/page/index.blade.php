@@ -57,23 +57,32 @@
             return $item->subpageTypes->pluck('id')->toArray();
         })) !!};
 
+        $('[data-target="#page_type_modal"]').on('click', function() {
+            configurePagetypeDropdown({{ $root->page_type_id }});
+        });
+
 		$('[data-tree-add]').on('click', function(e){
 			e.preventDefault();
 			var modal = $('#page_type_modal');
 			var action = $(this).attr('href');
 			var pageType = $(this).data('tree-add');
 
-			var allowedSubpages = getAllowedSubpages(pageType);
-			var pageTypeSelector = $('select#page_type_id');
+			configurePagetypeDropdown(pageType);
+
+			$('form', modal).attr('action', action);
+			modal.modal('show');
+		});
+
+		function configurePagetypeDropdown(pageType)
+        {
+            var allowedSubpages = getAllowedSubpages(pageType);
+            var pageTypeSelector = $('select#page_type_id');
 
             pageTypeSelector.empty();
             $.each(allowedSubpages, function(id, name){
                 pageTypeSelector.append('<option value="' + id + '">' + name + '</option>');
             });
-
-			$('form', modal).attr('action', action);
-			modal.modal('show');
-		});
+        }
 
 		function getAllowedSubpages(pageTypeId)
         {

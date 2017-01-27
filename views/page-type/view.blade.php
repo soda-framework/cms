@@ -44,6 +44,22 @@
                 "field_name"  => 'description',
             ])->setModel($model) !!}
 
+            {!! SodaForm::toggle([
+                'name'         => 'Allowed Children',
+                'field_name'   => 'allowed_children',
+                'value'        => 1,
+                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                'description'  => 'If enabled, pages of this type can have child pages'
+            ])->setModel($model) !!}
+
+            {!! SodaForm::toggle([
+                'name'         => 'Can Create',
+                'field_name'   => 'can_create',
+                'value'        => 1,
+                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                'description'  => 'If enabled, pages of this type can be created from the CMS interface'
+            ])->setModel($model) !!}
+
             {!! SodaForm::text([
                 'name'        => 'Package Prefix',
                 'field_name'  => 'package',

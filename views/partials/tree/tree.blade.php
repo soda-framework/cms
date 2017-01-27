@@ -19,11 +19,13 @@
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
                 <ul class="dropdown-menu">
+                    @if($tree->allowed_children)
                     @permission('create-pages')
                     <li>
                         <a data-tree-add="{{ $tree->page_type_id }}" href="{{ route('soda.'.$hint.'.create', ['id'=>$tree->id]) }}">Create Sub-page</a>
                     </li>
                     @endpermission
+                    @endif
                     @permission('edit-pages')
                     <li>
                         <a href="{{ route('soda.'.$hint.'.view', ['id'=>$tree->id]) }}">Edit Page</a>
@@ -32,12 +34,14 @@
                     <li>
                         <a href="{{ $tree->slug }}" target="_blank" data-tree-link>View page</a>
                     </li>
+                    @if($tree->can_delete)
                     @permission('delete-pages')
                     <li class="divider"></li>
                     <li class="warning">
                         <a data-tree-delete href="{{ route('soda.'.$hint.'.delete', ['id' => $tree->id]) }}">Delete</a>
                     </li><!--v-if-->
                     @endpermission
+                    @endif
                 </ul>
             </div>
         </div>
