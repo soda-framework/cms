@@ -42,19 +42,49 @@
                 "field_name"  => 'description',
             ])->setModel($role) !!}
 
-            @permission('assign-role-permissions')
-                {!! SodaForm::multiselect([
-                    "name"         => "Permissions",
-                    "field_name"   => 'permission_id',
-                    "value"        => $role->permissions->pluck('id')->toArray(),
-                    "field_params" => [
-                        "placeholder" => "Select permission(s)",
-                        'array-save'  => 'array',
-                        "options"     => $permissionIds
-                    ]
-                ])->setModel($role) !!}
-            @else
+            {!! SodaForm::text([
+                "name"         => "Level",
+                "field_name"   => 'level',
+                "description"  => 'Access level for role. Users cannot modify users or roles of another user or role if its level is higher than their own.',
+            ])->setModel($role) !!}
 
+            @permission('assign-role-permissions')
+                <?php $rolePermissions = $role->permissions->pluck('id')->toArray(); ?>
+                <fieldset class="form-group row field_level ">
+                    <label class="col-sm-2" for="field_level">Permissions</label>
+                    <div class="col-sm-10">
+                        <div class="tabbed-table-container">
+                            <ul class="nav nav-pills">
+                                @foreach($permissionIds as $permissionCategory => $permissions)
+                                    <li role="presentation" {!! $loop->first ? 'class="active"' : '' !!}><a href="#{{ strtolower($permissionCategory) }}" data-toggle="pill">{{ $permissionCategory }}</a></li>
+                                @endforeach
+                            </ul>
+
+                            <div class="tab-content">
+                                @foreach($permissionIds as $permissionCategory => $permissions)
+                                    <div id="{{ strtolower($permissionCategory) }}" class="tab-pane fade {{ $loop->first ? 'in active' : '' }}">
+                                        <table class="table table-striped">
+                                            @foreach($permissions as $permissionId => $permissionName)
+                                                <tr>
+                                                    <td class="middle">
+                                                        {{ $permissionName }}
+                                                    </td>
+                                                    <td width="66" class="middle">
+                                                        <div class="toggle-switch">
+                                                            <input id="permission_id_{{ $permissionId }}" type="checkbox" name="permission_id[]" value="{{ $permissionId }}" {!! in_array($permissionId, $rolePermissions) ? 'checked="checked"' : '' !!} />
+                                                            <label for="permission_id_{{ $permissionId }}"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            @else
                 {!! SodaForm::static_text([
                     "name"         => "Permissions",
                     "field_name"   => 'permission_id',

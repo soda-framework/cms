@@ -46,13 +46,17 @@
                 {!! SodaForm::multiselect([
                     "name"         => "Roles",
                     "field_name"   => 'role_id',
-                    "value"        => $permission->roles->pluck('id')->toArray(),
+                    "value"        => $permission->roles->where('level', '<', Auth::user()->getLevel())->pluck('id')->toArray(),
                     "field_params" => [
                         "placeholder" => "Select roles(s)",
                         'array-save'  => 'array',
                         "options"     => $roleIds
                     ]
                 ])->setModel($permission) !!}
+
+                @foreach($permission->roles->where('level', '>=', Auth::user()->getLevel())->pluck('id') as $hiddenRoleInput)
+                    <input type="hidden" name="role_id[]" value="{{ $hiddenRoleInput }}" />
+                @endforeach
             @else
                 {!! SodaForm::static_text([
                     "name"         => "Roles",

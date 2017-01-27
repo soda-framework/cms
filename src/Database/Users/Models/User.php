@@ -19,7 +19,7 @@ class User extends Authenticatable implements UserInterface
      * @var array
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
         'last_loggedin_at',
@@ -49,5 +49,10 @@ class User extends Authenticatable implements UserInterface
     {
         $this->setAttribute('last_loggedin_at', Carbon::now());
         $this->save();
+    }
+
+    public function getLevel()
+    {
+        return $this->roles->max('level');
     }
 }

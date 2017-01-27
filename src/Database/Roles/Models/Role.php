@@ -22,5 +22,6 @@ class Role extends Model implements RoleInterface
         'name',
         'display_name',
         'description',
+        'level',
     ];
 }

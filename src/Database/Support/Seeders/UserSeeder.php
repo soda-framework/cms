@@ -26,13 +26,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
         ]);
 
-        if ($admin_role = app('soda.role.model')->where('name', 'admin')->first()) {
-            $admin->attachRole($admin_role);
+        if ($super_admin_role = app('soda.role.model')->where('name', 'super-admin')->first()) {
+            $admin->attachRole($super_admin_role);
         }
 
         if ($developer_role = app('soda.role.model')->where('name', 'developer')->first()) {
             $developer->attachRole($developer_role);
-            $developer->attachRole($admin_role);
+            $developer->attachRole($super_admin_role);
         }
     }
 }

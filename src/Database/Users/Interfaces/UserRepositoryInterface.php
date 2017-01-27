@@ -7,5 +7,5 @@ use Soda\Cms\Database\Support\Interfaces\BaseRepositoryInterface;
 
 interface UserRepositoryInterface extends CanBuildDataGrid, BaseRepositoryInterface
 {
-    public function getRoles();
+    public function getRoles($filterLevel = true);
 }

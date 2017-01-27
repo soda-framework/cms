@@ -59,6 +59,10 @@ class UserController extends BaseController
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'password' => 'confirmed',
+        ]);
+
         try {
             $user = $this->users->save($request);
         } catch (Exception $e) {
@@ -97,6 +101,10 @@ class UserController extends BaseController
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'password' => 'sometimes|confirmed',
+        ]);
+
         try {
             $user = $this->users->save($request, $id);
         } catch (Exception $e) {

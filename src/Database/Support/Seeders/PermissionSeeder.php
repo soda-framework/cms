@@ -17,6 +17,7 @@ class PermissionSeeder extends Seeder
         $roleModel = app('soda.role.model');
 
         $developer = $roleModel->withoutGlobalScope('in-application')->where('name', 'developer')->first();
+        $super_admin = $roleModel->withoutGlobalScope('in-application')->where('name', 'super-admin')->first();
         $admin = $roleModel->withoutGlobalScope('in-application')->where('name', 'admin')->first();
 
         $permission_access_cms = $permissionModel->firstOrCreate([
@@ -269,6 +270,23 @@ class PermissionSeeder extends Seeder
                 $permission_edit_permissions,
                 $permission_create_permissions,
                 $permission_delete_permissions,
+            ]);
+        }
+
+        if ($super_admin) {
+            $admin->attachPermissions([
+                $permission_access_cms,
+                $permission_view_application_settings,
+                $permission_edit_application_settings,
+                $permission_view_users,
+                $permission_edit_users,
+                $permission_create_users,
+                $permission_delete_users,
+                $permission_assign_user_roles,
+                $permission_view_pages,
+                $permission_edit_pages,
+                $permission_create_pages,
+                $permission_delete_pages,
             ]);
         }
 

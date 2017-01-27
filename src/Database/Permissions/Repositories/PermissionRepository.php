@@ -23,11 +23,12 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
 
     public function getRoles()
     {
-        return $this->model->roles()->getRelated()->pluck('display_name', 'id')->toArray();
+        return $this->model->roles()->getRelated()->where('level', '<', \Auth::user()->getLevel())->pluck('display_name', 'id')->toArray();
     }
 
     public function save(Request $request, $id = null)
     {
+        dd($request->input());
         $model = parent::save($request, $id);
 
         if ($request->has('role_id')) {

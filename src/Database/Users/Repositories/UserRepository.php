@@ -21,14 +21,27 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $this->model = $model;
     }
 
-    public function getRoles()
+    public function getRoles($filterLevel = true)
     {
-        return $this->model->roles()->getRelated()->pluck('display_name', 'id')->toArray();
+        $query = $this->model->roles()->getRelated();
+
+        if($filterLevel) {
+            $query->where('level', '<', \Auth::user()->getLevel());
+        }
+
+        return $query->pluck('display_name', 'id')->toArray();
     }
 
     public function save(Request $request, $id = null)
     {
-        $model = parent::save($request, $id);
+        $model = $id ? $this->model->findOrFail($id) : $this->newInstance();
+        $model->fill($request->except('password', 'password_confirmation'));
+
+        if($request->has('password') && $request->input('password')) {
+            $model->password = \Hash::make($request->input('password'));
+        }
+
+        $model->save();
 
         if ($request->has('role_id')) {
             $model->roles()->sync($request->input('role_id'));
@@ -44,7 +57,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $filter->add('email', 'Email', 'text');
         $filter->add('roles.id', 'Role', 'select')
             ->option('', '')
-            ->options($this->getRoles());
+            ->options($this->getRoles(false));
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
@@ -76,5 +89,33 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $grid->paginate($perPage)->getGrid($this->getGridView());
 
         return compact('filter', 'grid');
+    }
+
+    public function addButtonsToGrid(DataGrid $grid, $editRoute = null, $deleteRoute = null)
+    {
+        $width = 0;
+
+        if ($editRoute) {
+            $width += 80;
+        }
+        if ($deleteRoute) {
+            $width += 100;
+        }
+
+        if ($width > 0) {
+            $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value, $model) use ($editRoute, $deleteRoute) {
+                $buttons = '';
+                if ($editRoute && $model->getLevel() <= \Auth::user()->getLevel()) {
+                    $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";
+                }
+                if ($deleteRoute && $model->getLevel() < \Auth::user()->getLevel()) {
+                    $buttons .= "<a href='".route($deleteRoute, $value)."' class='btn btn-danger' data-delete-button><i class='fa fa-remove'></i> <span>Delete</span></a> ";
+                }
+
+                return $buttons;
+            });
+        }
+
+        return $grid;
     }
 }
