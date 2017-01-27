@@ -56,7 +56,7 @@ class PageController extends BaseController
 
         $page_types = PageType::get();
 
-        $pages = $page ? $page->collectDescendants()->orderBy('position')->get()->toTree() : [];
+        $pages = $page ? $page->collectDescendants()->orderBy('position')->with('type')->get()->toTree() : [];
         $tree = $this->htmlTree($pages, $this->hint);
 
         return soda_cms_view('page.index', [

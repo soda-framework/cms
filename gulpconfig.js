@@ -74,13 +74,14 @@ module.exports = {
         core: [
             //'resources/components/modernizr.js',
             'resources/components/jquery/dist/jquery.js',
-            //'components/bootstrap-sass/assets/javascripts/bootstrap/util.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/util.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/button.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/tab.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
             'resources/components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
+            'resources/components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
         ],
         extra: [
             'resources/components/jquery-ui/jquery-ui.js',
@@ -92,7 +93,6 @@ module.exports = {
             //'resources/components/bootstrap-select/js/bootstrap-select.js',
             'resources/components/select2/dist/js/select2.full.min.js',
             'resources/components/moment/min/moment.min.js',
-            'resources/components/select2/dist/js/select2.full.min.js',
             'resources/components/jsoneditor/dist/jsoneditor.min.js',
             'resources/components/tinymce/tinymce.min.js',
             'resources/components/tinymce/jquery.tinymce.min.js',

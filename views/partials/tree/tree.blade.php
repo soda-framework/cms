@@ -1,3 +1,34 @@
+<?php
+
+$pageStatus = $tree->status == \Soda\Cms\Support\Constants::STATUS_DRAFT ? 'inactive' : 'active';
+$pageStatusTooltip = '';
+
+if($pageStatus == 'active' && $tree->type)
+{
+    $publishDate = $tree->pageAttributes()->published_at;
+    $publishCarbon = Carbon\Carbon::parse($publishDate);
+
+    if($publishDate && $publishCarbon > Carbon\Carbon::now())
+    {
+        $pageStatus = 'pending';
+    }
+}
+
+switch($pageStatus)
+{
+    case 'active':
+        $pageStatusTooltip = 'This page is live!';
+        break;
+    case 'inactive':
+        $pageStatusTooltip = 'This page is in draft mode';
+        break;
+    case 'pending':
+        $pageStatusTooltip = 'This page will be published in ' . $publishCarbon->diffForHumans();
+        break;
+}
+
+?>
+
 {{--renders tree in html --}}
 <li class="tree-row {{ $tree->hasChildrenRelation() && count($tree->children) > 0 ? 'has-sub-items' : '' }}" data-id="{{ $tree->id }}" data-move="{{route('soda.'.$hint.'.move')}}" style="display:{{ isset($display) ? $display : 'block' }}">
     <div class="tree-item clearfix">
@@ -5,7 +36,7 @@
             <img src="/soda/cms/img/drag-dots.gif" />
         </span>
         <span class="item-status">
-            <span class="{{ $tree->status == \Soda\Cms\Support\Constants::STATUS_DRAFT ? 'inactive' : 'active' }}-circle"></span>
+            <span class="{{ $pageStatus }}-circle" data-toggle="tooltip" title="{{ $pageStatusTooltip }}"></span>
         </span>
         <a class="item-title" href="{{ route('soda.'.$hint.'.view', ['id'=>$tree->id]) }}">
             <span>{{ $tree->name }}</span>

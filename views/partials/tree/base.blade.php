@@ -3,7 +3,6 @@
         @include(soda_cms_view_path('partials.tree.tree'),['tree'=>$tree_item])
     @endforeach
 </ul>
-
 <script>
     var oldContainer;
     $("ul.tree-view").sortable({
@@ -68,4 +67,6 @@
             $(this).show();
         });
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 </script>

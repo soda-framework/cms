@@ -105,7 +105,7 @@ ul.tree-view {
   text-align: center;
 }
 
-.active-circle, .inactive-circle {
+.active-circle, .inactive-circle, .pending-circle {
   width: 8px;
   height: 8px;
   border-radius: 100%;
@@ -119,4 +119,8 @@ ul.tree-view {
 
 .inactive-circle {
   background-color: $gray-light;
+}
+
+.pending-circle {
+  background-color: $brand-warning;
 }
