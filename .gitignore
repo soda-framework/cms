@@ -1,5 +1,7 @@
 vendor/
 node_modules/
+resources/components/
+stubs/theme/resources/components/
 
 composer.lock
 
