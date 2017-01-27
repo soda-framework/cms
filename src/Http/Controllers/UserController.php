@@ -56,8 +56,7 @@ class UserController extends BaseController
         $this->model->application_id = \Soda::getApplication()->id;
         $this->model->roles()->sync($request->input('roles'));
 
-        if($request->has('password') && trim($request->input('password')))
-        {
+        if ($request->has('password') && trim($request->input('password'))) {
             $this->model->password = \Hash::make($request->input('password'));
         }
 
