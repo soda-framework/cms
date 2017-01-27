@@ -5,16 +5,36 @@ namespace Soda\Cms\Foundation\Forms\Fields;
 use DB;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Soda\Cms\Foundation\Forms\Fields\Traits\HasArrayableValue;
 
-class Relationship extends Dropdown
+class Relationship extends Multiselect
 {
+    use HasArrayableValue;
     protected $onlyQueryFrom;
 
     public function getDefaultParameters()
     {
         return [
-            'options' => $this->loadRelationship(),
+            'multiple'     => false,
+            'combo'        => false,
+            'array-save'   => 'relationship',
+            'key_column'   => 'id',
+            'value_column' => 'id',
+            'settings'             => [
+                'placeholder'             => 'Please select...',
+                'minimumResultsForSearch' => 'infinity',
+                'theme'                   => 'bootstrap',
+            ],
         ];
+    }
+
+    protected function parseViewParameters()
+    {
+        $parameters = parent::parseViewParameters();
+
+        $parameters['field_parameters']['options'] = $this->loadRelationship();
+
+        return $parameters;
     }
 
     /**
@@ -24,7 +44,7 @@ class Relationship extends Dropdown
      */
     protected function loadRelationship()
     {
-        $field_parameters = $this->getFieldParameters();
+        $field_parameters = $this->parseFieldParameters();
 
         $query = $this->buildRelationshipQuery($field_parameters);
 
@@ -36,7 +56,7 @@ class Relationship extends Dropdown
             $query = $this->amendRelationshipQuery($query);
         }
 
-        return $this->getRelationshipArray($query, $field_parameters);
+        return $this->getRelationshipArray($query);
     }
 
     /**
@@ -71,14 +91,15 @@ class Relationship extends Dropdown
      * Pulls array from query, using field parameters specified.
      *
      * @param $query
-     * @param $field_parameters
      *
      * @return array
      */
-    protected function getRelationshipArray($query, $field_parameters)
+    protected function getRelationshipArray($query)
     {
-        $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
-        $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
+        $field_parameters = $this->parseFieldParameters();
+
+        $key_column = $field_parameters['key_column'];
+        $value_column = $field_parameters['value_column'];
 
         return $query->pluck($value_column, $key_column)->toArray();
     }

@@ -32,14 +32,15 @@ class RelationshipGroup extends Relationship
      * Pulls array from query, using field parameters specified.
      *
      * @param $query
-     * @param $field_parameters
      *
      * @return array
      */
-    protected function getRelationshipArray($query, $field_parameters)
+    protected function getRelationshipArray($query)
     {
-        $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
-        $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
+        $field_parameters = $this->parseFieldParameters();
+
+        $key_column = $field_parameters['key_column'];
+        $value_column = $field_parameters['value_column'];
         $group = $field_parameters['group_column'];
 
         return $query->get([$group, $value_column, $key_column])->groupBy($group)->transform(function ($item) use ($value_column, $key_column) {
