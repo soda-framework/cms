@@ -13,7 +13,7 @@
 *.jpg binary
 *.data binary
 
-themes/shared/public/components/* linguist-vendored
-themes/shared/resources/components/* linguist-vendored
+stubs/theme/public/components/* linguist-vendored
+stubs/theme/resources/components/* linguist-vendored
 resources/components/* linguist-vendored
 public/components/* linguist-vendored
