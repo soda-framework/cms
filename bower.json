@@ -22,6 +22,7 @@
     "jquery-sortable": "~0.9.13",
     "select2": "^4.0.3",
     "select2-bootstrap-theme": "^0.1.0-beta.9",
-    "nested-sortable": "^2.1.0"
+    "nested-sortable": "^2.1.0",
+    "JVFloat": "^1.1.0"
   }
 }
