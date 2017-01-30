@@ -17,7 +17,7 @@ class CreatePageTypesTable extends Migration
             $table->string('name');
             $table->text('description', 65535)->nullable();
             $table->string('identifier');
-            $table->integer('application_id')->unsigned()->index('fk_page_types_applications1_idx');
+            $table->integer('application_id')->unsigned()->nullable()->index('fk_page_types_applications1_idx');
             $table->integer('status')->unsigned()->nullable();
             $table->string('package');
             $table->string('action');
