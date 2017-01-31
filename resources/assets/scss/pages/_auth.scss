@@ -68,7 +68,8 @@
       &:-webkit-autofill {
         &, &:hover, &:focus, &:active {
           background: transparent none !important;
-          transition: background-color 5000s ease-in-out 0s !important;
+          background-color: transparent !important;
+          transition: background-color 9999s ease-in-out 0s !important;
           color: rgba(255, 255, 255, 0.8) !important;
           -webkit-text-fill-color: rgba(255, 255, 255, 0.8) !important;
         }
@@ -179,5 +180,23 @@
       transition: transform 100ms, opacity 120ms, visibility 120ms;
       opacity: 1;
     }
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp linear 0.75s;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
