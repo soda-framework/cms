@@ -21,7 +21,9 @@ trait DraftableTrait
                 $builder->where('status', '=', Constants::STATUS_LIVE);
 
                 if (isset(static::$publishDateField)) {
-                    $builder->where(static::$publishDateField, '<', Carbon::now());
+                    $builder->where(function($subQuery) {
+                        $subQuery->where(static::$publishDateField, '<', Carbon::now())->orWhereNull(static::$publishDateField);
+                    });
                 }
             }
 
