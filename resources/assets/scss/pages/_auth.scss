@@ -1,8 +1,183 @@
-.login-screen {
-  background-color: $content-background;
-  padding-top: 0;
-}
+.soda-login {
+  background: url($asset-path + 'img/login-bg.jpg') no-repeat center;
+  background-size: cover;
+  padding: 0;
 
-.permission-alert {
-  color: #fff;
+  .soda-login__container {
+    width: 100%;
+    max-width: 540px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .soda-login__box {
+    position: relative;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    padding: 50px;
+    z-index: 5;
+    &:before {
+      content: "";
+      height: 10px;
+      position: absolute;
+      top: -11px;
+      background: rgba(0, 0, 0, .6);
+      border-radius: 10px 10px 0 0;
+      width: 95%;
+      left: 2.5%;
+      z-index: -1;
+    }
+  }
+
+  .soda-login__logo {
+    text-align: center;
+    margin-bottom: 10px;
+    img {
+      max-height: 55px;
+    }
+  }
+
+  input, button, button .fa, .soda-login__underline, .soda-login__pass-forgot a {
+    transition: 300ms cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .soda-login__input {
+    width: 100%;
+    margin-top: 20px;
+    height: 70px;
+    position: relative;
+    input {
+      width: 100%;
+      position: relative;
+      height: 60px;
+      top: 10px;
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 300;
+
+      &:focus {
+        outline: none !important;
+      }
+      &:-webkit-autofill {
+        &, &:hover, &:focus, &:active {
+          background: transparent none !important;
+          transition: background-color 5000s ease-in-out 0s !important;
+          color: rgba(255, 255, 255, 0.8) !important;
+          -webkit-text-fill-color: rgba(255, 255, 255, 0.8) !important;
+        }
+      }
+    }
+    .soda-login__underline {
+      height: 1px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: #0ad788;
+      z-index: 4;
+      width: 0;
+    }
+
+    &:before {
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      content: "";
+      background: rgba(0, 0, 0, 0.1);
+      z-index: 3;
+    }
+  }
+  .soda-login__button-container {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    height: auto;
+    margin: 0px;
+    button {
+      position: relative;
+      width: 100%;
+      padding: 19px 0;
+      background: rgba(0, 0, 0, 0.6);
+      font-weight: 900;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-top: 2px transparent;
+      border-radius: 0px 0px 10px 10px;
+      cursor: pointer;
+      z-index: 2;
+      .fa {
+        color: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+      }
+      &:hover, &:active, &:focus {
+        outline: none;
+        background-color: #0ad788;
+        border-color: #25b37c;
+        border-top: 2px transparent;
+        color: #fff;
+        .fa {
+          color: #fff;
+          transform: scale(1);
+        }
+      }
+    }
+  }
+
+  .soda-login__pass-forgot {
+    a {
+      color: rgba(0, 0, 0, 0.35);
+      font-size: 14px;
+      &:hover, &:active, &:focus {
+        color: rgba(0, 0, 0, 0.55);
+      }
+    }
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .soda-login__errors {
+    margin-top: 20px;
+    .error {
+      color: rgba(255, 143, 143, 0.75);
+      display: block;
+    }
+  }
+
+  .jvFloat {
+    position: relative;
+    margin-top: 1em;
+    .placeHolder.required {
+      color: red;
+    }
+    .placeHolder {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: auto;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: normal;
+      transform: translate(0, 0);
+      transition: transform 150ms, opacity 100ms, visibility 100ms;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .placeHolder.active {
+      display: block;
+      visibility: visible;
+      transform: translate(0, -1em);
+      transition: transform 100ms, opacity 120ms, visibility 120ms;
+      opacity: 1;
+    }
+  }
 }
