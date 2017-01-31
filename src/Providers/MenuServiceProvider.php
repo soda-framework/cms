@@ -45,7 +45,7 @@ class MenuServiceProvider extends ServiceProvider
             return new MenuRegistrar;
         });
 
-        $this->app->bind('soda.menu', function ($app) {
+        $this->app->singleton('soda.menu', function ($app) {
             return new MenuBuilder($app['soda.menu.registrar']);
         });
     }
