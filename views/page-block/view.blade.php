@@ -24,7 +24,7 @@
 
 @section('content')
     <div class="content-block">
-        <form method="POST" id="dynamic-block-form" action='{{route('soda.page.block.edit', ['page_id' => $page->id, 'type' => $block->identifier, 'id' => $model->id])}}' class="form-wrapper">
+        <form method="POST" id="dynamic-block-form" action='{{route('soda.page.block.edit', ['page_id' => $page->id, 'type' => $block->identifier, 'id' => $model->id])}}' class="form-wrapper" enctype="multipart/form-data">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
             @foreach($block->type->fields as $field)
                 {!! SodaForm::field($field)->setModel($model) !!}

@@ -98,7 +98,7 @@ class PageController extends BaseController
             $dyn_table = Soda::model($this->model->type->identifier)->firstOrNew(['page_id' => $this->model->id]);
 
             foreach ($this->model->type->fields as $field) {
-                if ($request->input('settings.'.$field->field_name) !== null) {
+                if ($request->input('settings.'.$field->field_name) !== null || $request->file('settings.'.$field->field_name) !== null) {
                     $dyn_table->parseField($field, $request, 'settings');
                 }
             }
@@ -207,7 +207,7 @@ class PageController extends BaseController
             $pageTypeModel = Soda::model($pageType->identifier)->firstOrNew(['page_id' => $this->model->id]);
 
             foreach ($pageType->fields as $field) {
-                if ($request->input('settings.'.$field->field_name) !== null) {
+                if ($request->input('settings.'.$field->field_name) !== null || $request->file('settings.'.$field->field_name) !== null) {
                     $pageTypeModel->parseField($field, $request, 'settings');
                 }
             }

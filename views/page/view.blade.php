@@ -185,7 +185,7 @@ if($model->type && $model->type->blocks) {
         @endpermission
     </ul>
 
-    <form method="POST" id="page-form" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}">
+    <form method="POST" id="page-form" action="{{ route('soda.' . $hint . ($model->id ? '.edit' : '.create'), ['id' => $model->id]) }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         @if($model->type)
             <input type="hidden" name="page_type_id" value="{{ $model->type->id }}"/>
