@@ -3,7 +3,9 @@
 namespace Soda\Cms\Foundation;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Soda\Cms\Models\Media;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader
