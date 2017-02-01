@@ -3,8 +3,8 @@
 namespace Soda\Cms\Foundation\Forms\Fields;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Forms\AbstractFormField;
 use Soda\Cms\Foundation\Uploader;
+use Soda\Cms\Foundation\Forms\AbstractFormField;
 
 class Upload extends AbstractFormField
 {

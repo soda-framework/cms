@@ -4,7 +4,6 @@ namespace Soda\Cms\Foundation;
 
 use Cache;
 use Exception;
-use Illuminate\Http\File;
 use Soda\Cms\Models\Page;
 use Soda\Cms\Models\Block;
 use Soda\Cms\Models\Application;
