@@ -2,9 +2,9 @@
 
 namespace Soda\Cms\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Soda;
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Models\Traits\HasMediaTrait;
 
 /**
@@ -78,7 +78,7 @@ class ModelBuilder extends Model
         // This method just provides a convenient way for us to generate fresh model
         // instances of this current model. It is particularly useful during the
         // hydration of new objects via the Eloquent query builder instances.
-        $model = new static((array)$attributes);
+        $model = new static((array) $attributes);
 
         $model->exists = $exists;
         $model->setTable($this->table);
