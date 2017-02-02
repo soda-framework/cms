@@ -138,14 +138,6 @@ class MenuServiceProvider extends ServiceProvider
                 'permissions' => 'manage-applications',
             ]);
 
-            $menu->addItem('Navigation', [
-                'url'         => route('soda.navigation'),
-                'label'       => 'Navigation',
-                'icon'        => 'fa fa-compass',
-                'isCurrent'   => soda_request_is('navigation*'),
-                'permissions' => 'view-navigation',
-            ]);
-
             return $menu;
         });
     }
