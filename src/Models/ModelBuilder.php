@@ -2,15 +2,18 @@
 
 namespace Soda\Cms\Models;
 
-use Soda;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Soda;
+use Soda\Cms\Models\Traits\HasMediaTrait;
 
 /**
  * Class ModelBuilder.
  */
 class ModelBuilder extends Model
 {
+    use HasMediaTrait;
+
     protected static $lastTable;
     public $table;
     protected $fillable = [];
@@ -34,11 +37,6 @@ class ModelBuilder extends Model
         $model = new static($params);
 
         return $model->setTable($table);
-    }
-
-    public function media()
-    {
-        return $this->hasMany(Media::class, 'related_id')->where('related_table', $this->getTable());
     }
 
     public function getTable()
@@ -67,15 +65,6 @@ class ModelBuilder extends Model
         return $this;
     }
 
-    public function getMedia($field)
-    {
-        if (! $this->media) {
-            $this->load('media');
-        }
-
-        return $this->media->where('related_field', $field);
-    }
-
     /**
      * Create a new instance of the given model.
      *
@@ -89,7 +78,7 @@ class ModelBuilder extends Model
         // This method just provides a convenient way for us to generate fresh model
         // instances of this current model. It is particularly useful during the
         // hydration of new objects via the Eloquent query builder instances.
-        $model = new static((array) $attributes);
+        $model = new static((array)$attributes);
 
         $model->exists = $exists;
         $model->setTable($this->table);
