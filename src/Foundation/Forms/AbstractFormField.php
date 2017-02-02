@@ -3,6 +3,7 @@
 namespace Soda\Cms\Foundation\Forms;
 
 use Exception;
+use Soda\Cms\Foundation\Events\FieldIsRendering;
 use Soda\Cms\Models\Field;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -451,6 +452,8 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function render()
     {
+        event(new FieldIsRendering($this));
+
         $view = view($this->getLayout(), $this->parseViewParameters());
 
         // Best way I can attempt error reporting when handling errors inside of view rendering

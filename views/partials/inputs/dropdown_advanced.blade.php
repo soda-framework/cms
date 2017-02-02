@@ -6,12 +6,12 @@
                 <optgroup label="{{ $optGroup }}">
                     @foreach($options as $key => $option)
                         <?php $values[] = $key ?>
-                        <option value="{{ $key }}" {{ $field_value === $key || (is_array($field_value) && in_array($key, $field_value)) ? "selected" : "" }}>{{ $option }}</option>
+                        <option value="{{ $key }}" {{ (string) $field_value === (string) $key || (is_array($field_value) && in_array($key, $field_value)) ? "selected" : "" }}>{{ $option }}</option>
                     @endforeach
                 </optgroup>
             @else
                 <?php $values[] = $optGroup ?>
-                <option value="{{ $optGroup }}" {{ $field_value === $optGroup || (is_array($field_value) && in_array($optGroup, $field_value)) ? "selected" : "" }}>{{ $options }}</option>
+                <option value="{{ $optGroup }}" {{ (string) $field_value === (string) $optGroup || (is_array($field_value) && in_array($optGroup, $field_value)) ? "selected" : "" }}>{{ $options }}</option>
             @endif
         @endforeach
         @foreach(array_diff(is_array($field_value) ? $field_value : [$field_value], $values) as $value)
