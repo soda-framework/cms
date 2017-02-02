@@ -3,10 +3,10 @@
 namespace Soda\Cms\Foundation\Forms;
 
 use Config;
-use Exception;
 use Request;
-use Soda\Cms\Models\BlockType;
+use Exception;
 use Soda\Cms\Models\Field;
+use Soda\Cms\Models\BlockType;
 use Soda\Cms\Models\ModelBuilder;
 
 class FormBuilder
@@ -52,7 +52,7 @@ class FormBuilder
             $field = new Field($field);
         }
 
-        if (!$field instanceof Field) {
+        if (! $field instanceof Field) {
             throw new Exception('Field must be instance of '.Field::class.' or array.');
         }
 
@@ -106,7 +106,7 @@ class FormBuilder
      */
     public function buildJsParams($parameters)
     {
-        if (!$parameters) {
+        if (! $parameters) {
             return '';
         }
 
@@ -125,7 +125,7 @@ class FormBuilder
         $replaceKeys = [];
 
         foreach ($parameters as $key => &$value) {
-            if(is_string($value)) {
+            if (is_string($value)) {
                 // Look for values starting with 'function('
                 if (strpos($value, 'function(') === 0) {
                     // Store function string.
@@ -135,7 +135,7 @@ class FormBuilder
                     // Later on, we’ll look for the value, and replace it.
                     $replaceKeys[] = "\"$value\"";
                 }
-            } elseif(is_array($value)) {
+            } elseif (is_array($value)) {
                 $extract = $this->extractJsFunctions($value);
                 $valueArr = array_merge($valueArr, $extract['values']);
                 $replaceKeys = array_merge($replaceKeys, $extract['replacements']);
