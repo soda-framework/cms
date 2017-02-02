@@ -20,4 +20,3 @@ trait HasMediaTrait
         return $this->media->where('related_field', $field);
     }
 }
-
