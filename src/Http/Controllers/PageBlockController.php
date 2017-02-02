@@ -20,7 +20,7 @@ class PageBlockController extends BaseController
     {
         Page::disableDrafts();
 
-        if($currentRoute = Route::current()) {
+        if ($currentRoute = Route::current()) {
             $type = $currentRoute->getParameter('type');
             $page_id = $currentRoute->getParameter('page_id');
             $this->page = $page_id ? Page::findOrFail($page_id) : new Page;
