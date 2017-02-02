@@ -3,11 +3,11 @@
 namespace Soda\Cms\Foundation\Forms;
 
 use Exception;
-use Soda\Cms\Foundation\Events\FieldIsRendering;
 use Soda\Cms\Models\Field;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Soda\Cms\Foundation\Events\FieldIsRendering;
 
 abstract class AbstractFormField implements FormFieldInterface
 {
