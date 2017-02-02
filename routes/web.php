@@ -75,16 +75,6 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('delete/{id?}', 'UserController@delete')->name('soda.user.delete');
             });
 
-            Route::group(['prefix' => 'navigation'], function () {
-                Route::get('/', 'NavigationController@index')->name('soda.navigation');
-                Route::get('view/{id}', 'NavigationController@view')->name('soda.navigation.view');
-                Route::post('view/{id?}', 'NavigationController@edit')->name('soda.navigation.edit');
-                Route::get('create/{parent_id?}', 'NavigationController@createForm')->name('soda.navigation.create');
-                Route::post('create/{parent_id?}', 'NavigationController@create')->name('soda.navigation.create');
-                Route::get('delete/{id?}', 'NavigationController@deleteTree')->name('soda.navigation.delete');
-                Route::get('move/{parent_id?}/{id?}/{position?}', 'NavigationController@move')->name('soda.navigation.move');
-            });
-
             Route::group(['prefix' => 'upload'], function () {
                 Route::post('/', 'UploadController@upload')->name('soda.upload');
                 Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
