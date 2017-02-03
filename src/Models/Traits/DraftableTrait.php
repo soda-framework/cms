@@ -2,7 +2,8 @@
 
 namespace Soda\Cms\Models\Traits;
 
-use Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use Soda\Cms\Support\Constants;
 use Illuminate\Database\Eloquent\Builder;
