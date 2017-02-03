@@ -7,6 +7,7 @@ use Symfony\CS\FixerInterface;
 $finder = Finder::create()
     ->exclude('resources')
     ->exclude('public')
+    ->exclude('vendor')
     ->in(__DIR__)
     ->name('*.php')
     ->notName('*.blade.php')
