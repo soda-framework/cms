@@ -3,10 +3,11 @@
 namespace Soda\Cms\Models\Traits;
 
 use Carbon\Carbon;
-use Soda\Cms\Support\Constants;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Builder;
+use Soda\Cms\Models\User;
+use Soda\Cms\Support\Constants;
 
 trait DraftableTrait
 {
@@ -44,6 +45,16 @@ trait DraftableTrait
 
     protected static function isDraftsEnabled()
     {
-        return static::$drafts && (Session::get('soda.draft_mode') !== true || ! Auth::user()->can('view-drafts'));
+        if (static::$drafts && Session::get('soda.draft_mode') == true) {
+            $sodaUser = Auth::guard('soda')->user();
+            if($sodaUser) {
+                $user = User::with('roles.permissions')->find($sodaUser->id);
+                if ($user && $user->can('view-drafts')) {
+                    return false;
+                }
+            }
+        }
+
+        return static::$drafts;
     }
 }
