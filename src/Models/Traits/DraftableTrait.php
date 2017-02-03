@@ -2,10 +2,10 @@
 
 namespace Soda\Cms\Models\Traits;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use Soda\Cms\Support\Constants;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder;
 
 trait DraftableTrait
