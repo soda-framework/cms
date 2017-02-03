@@ -42,7 +42,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         \Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
         ], function ($router) {
             require_once __DIR__.'/../../routes/web.php';
         });
@@ -59,8 +59,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         \Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
+            'namespace'  => $this->namespace,
+            'prefix'     => 'api',
         ], function ($router) {
             require_once __DIR__.'/../../routes/api.php';
         });

@@ -24,7 +24,7 @@ class Theme extends Command
      *
      * @author      Aidan Lister <aidan@php.net>
      * @version     1.0.1
-     * @link        http://aidanlister.com/2004/04/recursively-copying-directories-in-php/
+     * @see        http://aidanlister.com/2004/04/recursively-copying-directories-in-php/
      *
      * @param       string $source      Source path
      * @param       string $dest        Destination path

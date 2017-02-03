@@ -14,7 +14,7 @@ class Datetime extends AbstractFormField
     {
         return [
             'options' => [
-                'format' => 'DD/MM/Y h:mm A',
+                'format'        => 'DD/MM/Y h:mm A',
                 'icons'         => [
                     'time'     => 'fa fa-clock-o',
                     'date'     => 'fa fa-calendar',

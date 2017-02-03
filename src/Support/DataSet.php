@@ -190,7 +190,7 @@ class DataSet extends Widget
                 $this->data = array_slice($this->source, $offset, $limit);
                 $this->total_rows = count($this->source);
                 $this->paginator = new LengthAwarePaginator($this->data, $this->total_rows, $limit, $current_page,
-                    ['path' => Paginator::resolveCurrentPath(),
+                    ['path'    => Paginator::resolveCurrentPath(),
                     'pageName' => 'page'.$this->cid,
                     ]);
                 break;
