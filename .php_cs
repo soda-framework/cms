@@ -5,9 +5,8 @@ use Symfony\CS\Config\Config;
 use Symfony\CS\FixerInterface;
 
 $finder = Finder::create()
-    ->exclude('vendor')
-    ->exclude('bootstrap/cache')
-    ->exclude('storage')
+    ->exclude('resources')
+    ->exclude('public')
     ->in(__DIR__)
     ->name('*.php')
     ->notName('*.blade.php')
