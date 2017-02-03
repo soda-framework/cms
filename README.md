@@ -2,7 +2,7 @@
 A sweet PHP CMS solution built on Laravel!
 
 ## Installation
-Install easily using the[Soda Installer](https://github.com/soda-framework/installer)or manually by following these steps:
+Install easily using the [Soda Installer](https://github.com/soda-framework/installer) or manually by following these steps:
 
 #### 1. Create new Laravel Project
 
