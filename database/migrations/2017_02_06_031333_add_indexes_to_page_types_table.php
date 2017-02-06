@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToPageTypesTable extends Migration
+class AddIndexesToPageTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddForeignKeysToPageTypesTable extends Migration
     public function up()
     {
         Schema::table('page_types', function (Blueprint $table) {
-            $table->foreign('application_id', 'FK_page_types_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->index(['page_id', 'status', 'application_id']);
         });
     }
 
@@ -25,7 +25,7 @@ class AddForeignKeysToPageTypesTable extends Migration
     public function down()
     {
         Schema::table('page_types', function (Blueprint $table) {
-            $table->dropForeign('FK_page_types_applications');
+            $table->dropIndex(['page_id', 'status', 'application_id']);
         });
     }
 }

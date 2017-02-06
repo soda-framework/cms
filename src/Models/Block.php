@@ -2,15 +2,15 @@
 
 namespace Soda\Cms\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Models\Traits\DraftableTrait;
-use Illuminate\Database\Eloquent\Collection;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class Block extends Model
 {
-    use OptionallyInApplicationTrait, DraftableTrait, HasDynamicModelTrait;
+    use DraftableTrait, OptionallyInApplicationTrait, HasDynamicModelTrait;
 
     protected $table = 'blocks';
     protected $fillable = [

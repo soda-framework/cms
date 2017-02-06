@@ -2,21 +2,21 @@
 
 namespace Soda\Cms\Models;
 
-use Soda;
 use Exception;
-use Soda\Cms\Support\Constants;
-use Soda\Cms\Models\Traits\TreeableTrait;
-use Soda\Cms\Models\Traits\DraftableTrait;
-use Soda\Cms\Models\Traits\SluggableTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda\Cms\Models\Traits\PositionableTrait;
+use Soda;
+use Soda\Cms\Models\Traits\DraftableTrait;
 use Soda\Cms\Models\Traits\HasDynamicModelTrait;
 use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
+use Soda\Cms\Models\Traits\PositionableTrait;
+use Soda\Cms\Models\Traits\SluggableTrait;
+use Soda\Cms\Models\Traits\TreeableTrait;
+use Soda\Cms\Support\Constants;
 
 class Page extends AbstractSodaClosureEntity
 {
-    use SoftDeletes, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, DraftableTrait, HasDynamicModelTrait;
+    use SoftDeletes, DraftableTrait, SluggableTrait, TreeableTrait, OptionallyInApplicationTrait, PositionableTrait, HasDynamicModelTrait;
 
     public $fillable = [
         'name',

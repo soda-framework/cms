@@ -7,7 +7,7 @@ use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class PageType extends AbstractDynamicType
 {
-    use OptionallyInApplicationTrait, DraftableTrait;
+    use DraftableTrait, OptionallyInApplicationTrait;
 
     public $fillable = [
         'name',

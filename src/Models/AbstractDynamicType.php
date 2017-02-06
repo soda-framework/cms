@@ -2,13 +2,13 @@
 
 namespace Soda\Cms\Models;
 
-use Schema;
-use SodaForm;
-use Exception;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Schema;
 use Soda\Cms\Models\Observers\DynamicObserver;
+use SodaForm;
 
 abstract class AbstractDynamicType extends Model
 {
@@ -112,7 +112,6 @@ abstract class AbstractDynamicType extends Model
         $reference_column = $this->getDynamicType().'_id';
         $reference_table = $this->getDynamicType().'s';
         $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
-
         $table->increments('id');
         $table->integer($reference_column)->unsigned()->nullable();
         $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
