@@ -8,7 +8,7 @@ use Soda\Cms\Models\Traits\OptionallyInApplicationTrait;
 
 class BlockType extends AbstractDynamicType
 {
-    use OptionallyInApplicationTrait, DraftableTrait;
+    use DraftableTrait, OptionallyInApplicationTrait;
 
     protected $table = 'block_types';
     protected $fillable = [

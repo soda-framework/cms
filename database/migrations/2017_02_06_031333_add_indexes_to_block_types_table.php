@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddIndexesToPageTypesTable extends Migration
+class AddIndexesToBlockTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddIndexesToPageTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table('page_types', function (Blueprint $table) {
+        Schema::table('block_types', function (Blueprint $table) {
             $table->index(['id', 'status', 'application_id']);
         });
     }
@@ -24,7 +24,7 @@ class AddIndexesToPageTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('page_types', function (Blueprint $table) {
+        Schema::table('block_types', function (Blueprint $table) {
             $table->dropIndex(['id', 'status', 'application_id']);
         });
     }
