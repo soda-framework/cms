@@ -2,13 +2,13 @@
 
 namespace Soda\Cms\Models;
 
-use Carbon\Carbon;
+use Schema;
+use SodaForm;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Schema;
 use Soda\Cms\Models\Observers\DynamicObserver;
-use SodaForm;
 
 abstract class AbstractDynamicType extends Model
 {
