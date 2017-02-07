@@ -38,6 +38,12 @@ $(function () {
         var form = $(this).data('submits');
         $(form).submit();
     });
+
+    $('[data-submits-and-publishes]').on('click', function() {
+        var form = $(this).data('submits');
+        $(form).find('input[name="status"]').val(1);
+        $(form).submit();
+    });
 });
 
 function slugify(text) {
