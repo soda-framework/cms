@@ -47,11 +47,8 @@ trait DraftableTrait
     {
         if (static::$drafts && Session::get('soda.draft_mode') == true) {
             $sodaUser = Auth::guard('soda')->user();
-            if ($sodaUser) {
-                $user = User::with('roles.permissions')->find($sodaUser->id);
-                if ($user && $user->can('view-drafts')) {
-                    return false;
-                }
+            if ($sodaUser && $sodaUser->can('view-drafts')) {
+                return false;
             }
         }
 
