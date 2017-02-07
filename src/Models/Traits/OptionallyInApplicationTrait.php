@@ -13,9 +13,12 @@ trait OptionallyInApplicationTrait
     public static function bootOptionallyInApplicationTrait()
     {
         static::addGlobalScope('in-application', function (Builder $builder) {
-            $builder->where('application_id', '=', Soda::getApplication()->id)
-                ->orWhereNull('application_id')
+            $builder->whereNull('application_id')
                 ->orWhere('application_id', '=', '');
+
+            if($application = Soda::getApplication()) {
+                $builder = $builder->orWhere('application_id', '=', Soda::getApplication()->id);
+            }
         });
     }
 }
