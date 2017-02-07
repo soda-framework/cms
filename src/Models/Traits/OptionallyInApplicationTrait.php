@@ -16,7 +16,7 @@ trait OptionallyInApplicationTrait
             $builder->whereNull('application_id')
                 ->orWhere('application_id', '=', '');
 
-            if($application = Soda::getApplication()) {
+            if ($application = Soda::getApplication()) {
                 $builder = $builder->orWhere('application_id', '=', Soda::getApplication()->id);
             }
         });
