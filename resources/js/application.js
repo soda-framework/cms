@@ -36,12 +36,9 @@ $(function () {
 
     $('[data-submits]').on('click', function() {
         var form = $(this).data('submits');
-        $(form).submit();
-    });
-
-    $('[data-submits-and-publishes]').on('click', function() {
-        var form = $(this).data('submits');
-        $(form).find('input[name="status"]').val(1);
+        if($(this).data('publishes') != null) {
+            $(form).find('input[name="status"]').val(1);
+        }
         $(form).submit();
     });
 });
@@ -61,7 +58,6 @@ function slugify(text) {
     return text;
 }
 
-
 function generateSlug(text, allowExternal) {
     if (!allowExternal || (text.substr(0, 4) !== 'http' && text.indexOf('://') == -1)) {
         text = text.toString().toLowerCase()
@@ -79,7 +75,7 @@ function generateSlug(text, allowExternal) {
     }
 
     return text;
-};
+}
 
 function prefixSlug(text, prefix) {
     // If the last character is not a slash append a slash to it.
@@ -88,9 +84,9 @@ function prefixSlug(text, prefix) {
     }
 
     return generateSlug(prefix + text);
-};
+}
 
 function externalSlug() {
     var link  = prompt("Enter external URL", "http://");
     return (link.indexOf('://') == -1) ? 'http://' + link : link;
-};
+}

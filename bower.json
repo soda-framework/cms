@@ -16,7 +16,7 @@
     "bootstrap-tagsinput": "^0.8.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "font-awesome": "^4.5.0",
-    "tinymce": "^4.3.12",
+    "tinymce": "^4.4",
     "jquery-ui": "^1.12.1",
     "jsoneditor": "^5.5.9",
     "jstree": "~3",
