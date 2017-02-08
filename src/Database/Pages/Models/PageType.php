@@ -4,16 +4,16 @@ namespace Soda\Cms\Database\Pages\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Rutorika\Sortable\MorphToSortedManyTrait;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeInterface;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
+use Soda\Cms\Database\Support\Models\Traits\MorphToSortedMany;
 use Soda\Cms\Database\Support\Models\Traits\BuildsDynamicModels;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class PageType extends Model implements PageTypeInterface
 {
-    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedManyTrait;
+    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedMany;
 
     protected $table = 'page_types';
 

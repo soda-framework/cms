@@ -4,17 +4,17 @@ namespace Soda\Cms\Database\Blocks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Rutorika\Sortable\MorphToSortedManyTrait;
 use Soda\Cms\Database\Blocks\Observers\BlockTypeObserver;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
+use Soda\Cms\Database\Support\Models\Traits\MorphToSortedMany;
 use Soda\Cms\Database\Support\Models\Traits\BuildsDynamicModels;
 use Soda\Cms\Database\Support\Models\Traits\HasDefaultAttributes;
 use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class BlockType extends Model implements BlockTypeInterface
 {
-    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedManyTrait;
+    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedMany;
 
     protected $table = 'block_types';
 

@@ -45,9 +45,9 @@ class PageBlockRepository implements PageBlockRepositoryInterface
         list($page, $blockType) = array_values($this->getParents($pageId, $blockTypeId));
 
         $block = Soda::dynamicBlock($blockType->identifier)->newInstance([
-            'page_id'   => $page->getKey(),
+            'page_id'        => $page->getKey(),
             'block_type_id'  => $blockType->getKey(),
-            'is_shared' => $blockType->is_shared,
+            'is_shared'      => $blockType->is_shared,
         ]);
 
         return compact('page', 'blockType', 'block');
