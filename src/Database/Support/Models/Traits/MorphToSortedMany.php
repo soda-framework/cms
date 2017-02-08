@@ -7,6 +7,7 @@ use Rutorika\Sortable\MorphToSortedManyTrait;
 trait MorphToSortedMany
 {
     use MorphToSortedManyTrait;
+
     /**
      * Get the relationship name of the belongs to many.
      *
