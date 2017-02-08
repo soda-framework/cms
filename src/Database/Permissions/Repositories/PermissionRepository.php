@@ -28,7 +28,6 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
 
     public function save(Request $request, $id = null)
     {
-        dd($request->input());
         $model = parent::save($request, $id);
 
         if ($request->has('role_id')) {
