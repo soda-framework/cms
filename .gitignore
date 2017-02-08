@@ -1,20 +1,11 @@
 vendor/
 node_modules/
+composer.lock
+
 resources/components/
 stubs/theme/resources/components/
 
-composer.lock
-
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
-
-# Laravel 5 & Lumen specific
-bootstrap/cache/
-storage/
-.env.*.php
-.env.php
-.env
-.env.example
 .idea
 .idea/**
+
+.php_cs.cache
