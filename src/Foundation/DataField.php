@@ -292,7 +292,7 @@ abstract class DataField extends Widget
         $process = (Input::get('search') || Input::get('save')) ? true : false;
 
         //fix, don't refill on file fields
-        if (in_array($this->type, ['file','image'])) {
+        if (in_array($this->type, ['file', 'image'])) {
             $this->request_refill = false;
         }
 
@@ -336,7 +336,7 @@ abstract class DataField extends Widget
 
                     // some kind of field on belongsToMany works with multiple values, most of time in serialized way
                     //in this case I need to fill value using a serialized array of related collection
-                    if (in_array($this->type, ['tags','checks','multiselect'])) {
+                    if (in_array($this->type, ['tags', 'checks', 'multiselect'])) {
                         $relatedCollection = $this->relation->get(); //Collection of attached models
                         $relatedIds = $relatedCollection->modelKeys(); //array of attached models ids
                         $this->value = implode($this->serialization_sep, $relatedIds);
