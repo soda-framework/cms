@@ -1,83 +1,103 @@
-@extends(soda_cms_view_path('layouts.bare'), ['body_class'=>'full-height login-screen', 'html_class'=>'full-height'])
+@extends(soda_cms_view_path('layouts.bare'), ['body_class'=>'full-height soda-login', 'html_class'=>'full-height'])
 
 @section('head.title')
     <title>Soda CMS | Login</title>
 @endsection
 
 @section('main-content')
-    <style>
-        .dialog-box {
-            transform: translateY(20px);
-            opacity: 0;
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .dialog-box-wrapper.loaded .dialog-box {
-            transform: translateY(0px);
-            opacity: 1;
-        }
-    </style>
-    <div class="dialog-box-wrapper">
-        <div class="dialog-box">
-            <div class="dialog-box-inner">
-                <div class="soda-logo-wrap">
-                    <div class="soda-logo">
-                        <img src="/soda/cms/img/sodacms_droplime.png"/><br/>
-                        <img src="/soda/cms/img/sodacms_logowhite.png"/>
-                    </div>
+    <form method="POST" class="soda-login__container">
+        <div class="fadeInUp">
+            {!! csrf_field() !!}
+            <div class="soda-login__box">
+                <div class="soda-login__logo">
+                    <img src="/soda/cms/img/sodacms_droplime.png">
+                    <img src="/soda/cms/img/sodacms_logowhite.png">
                 </div>
-                <form class="form-horizontal" role="form" method="POST" action="{{ route('soda.login-attempt') }}">
-                    {!! csrf_field() !!}
 
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} row">
-                        <div class="input-group">
-                            <label class="input-group-addon" for="email"><i class="fa fa-user"></i></label>
-                            <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}"
-                                   placeholder="Enter your email address...">
-                        </div>
+                <div class="soda-login__errors">
+                    @if ($errors->has('email'))
+                        <span class="error">{{ $errors->first('email') }}</span>
+                    @endif
 
-                        @if ($errors->has('email'))
-                            <span class="help-block">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                        @endif
-                    </div>
+                    @if ($errors->has('password'))
+                        <span class="error">{{ $errors->first('password') }}</span>
+                    @endif
+                </div>
 
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} row">
-                        <div class="input-group">
-                            <label class="input-group-addon" for="password"><i class="fa fa-unlock-alt"></i></label>
-                            <input type="password" class="form-control" name="password" id="password"
-                                   placeholder="Enter your password...">
-                        </div>
+                <div class="soda-login__input">
+                    <input type="text" name="email" placeholder="Email Address">
+                    <span class="soda-login__underline"></span>
+                </div>
 
-                        @if ($errors->has('password'))
-                            <span class="help-block">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                        @endif
-                    </div>
+                <div class="soda-login__input">
+                    <input type="password" name="password" placeholder="Password">
+                    <span class="soda-login__underline"></span>
+                </div>
+            </div>
 
-                    <div class="form-group row">
-                        <button type="submit" class="btn btn-dialog btn-block">
-                            Login
-                        </button>
-                    </div>
-                    {{--
-                    <p class="text-center">
-                        <a href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                    </p>
-                    --}}
-                </form>
+            <div class="soda-login__button-container">
+                <button><span>LOGIN</span></button>
+            </div>
+
+            <div class="soda-login__pass-forgot">
+                <a href="#">I forgot my password</a>
             </div>
         </div>
-    </div>
+    </form>
 @endsection
 
 @section('footer.js')
     @parent
     <script>
         $(function () {
-            $('.dialog-box-wrapper').addClass('loaded');
+            $(".soda-login__input input").on('focus', function () {
+                $(this).closest('.soda-login__input').find(".soda-login__underline").css({
+                    "width": "100%"
+                });
+            }).on('blur', function () {
+                $(this).closest('.soda-login__input').find(".soda-login__underline").css({
+                    "width": "0px"
+                });
+            });
+
+            // AUTOFILL STYLING REMOVAL HACK
+            var _retries = 0;
+            var _interval = window.setInterval(function ()
+            {
+                var autofills;
+                var terminateAutofillInterval = function() {
+                    $('.soda-login__input input').jvFloat();
+                    window.clearInterval(_interval); // stop polling
+                }
+
+                try {
+                    autofills = $('.soda-login__input input:-webkit-autofill');
+                } catch (error) {
+                    try {
+                        autofills = $('.soda-login__input input:autofill');
+                    } catch (error) {
+                        terminateAutofillInterval();
+                    }
+                }
+
+                if (autofills.length > 0) {
+                    var _clones = [];
+                    autofills.each(function() {
+                        var clone = $(this).clone(true, true);
+                        $(this).after(clone).remove();
+                        _clones.push(clone);
+                    });
+
+                    terminateAutofillInterval();
+
+                    $.each(_clones, function(index, _clone) {
+                        _clone.siblings('.placeHolder').addClass('active');
+                    })
+
+                } else if (_retries++ > 20) {
+                    terminateAutofillInterval();
+                }
+            }, 50);
         });
     </script>
 @stop
