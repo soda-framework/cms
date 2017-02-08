@@ -98,7 +98,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function createRoot()
     {
-        return $this->model->create([
+        $this->model->newInstance([
             'name'           => 'Homepage',
             'slug'           => '/',
             'parent_id'      => null,
@@ -106,7 +106,9 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
             'position'       => 0,
             'real_depth'     => 0,
             'status'         => Constants::STATUS_LIVE,
-        ]);
+        ])->fillDefaults()->save();
+
+        return $this->model;
     }
 
     public function save(Request $request, $id = null)

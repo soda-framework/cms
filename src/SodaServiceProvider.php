@@ -74,6 +74,7 @@ class SodaServiceProvider extends ServiceProvider
 
         // Override Zofe DataSet
         class_alias('Soda\Cms\Foundation\DataSet', 'Zofe\Rapyd\DataSet');
+        class_alias('Soda\Cms\Foundation\DataField', 'Zofe\Rapyd\DataForm\Field\Field');
 
         $this->mergeConfigFrom(__DIR__.'/../config/publish/cms.php', 'soda.cms');
         $this->mergeConfigFrom(__DIR__.'/../config/publish/cache.php', 'soda.cache');

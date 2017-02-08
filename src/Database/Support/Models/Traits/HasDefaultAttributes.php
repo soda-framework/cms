@@ -4,6 +4,17 @@ namespace Soda\Cms\Database\Support\Models\Traits;
 
 trait HasDefaultAttributes
 {
+    public function fillDefaults()
+    {
+        foreach ($this->defaults as $default => $defaultValue) {
+            if (! isset($this->attributes[$default])) {
+                $this->setAttribute($default, $defaultValue);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * Get an attribute from the $attributes array.
      *
