@@ -274,7 +274,7 @@ class PermissionSeeder extends Seeder
         }
 
         if ($super_admin) {
-            $admin->attachPermissions([
+            $super_admin->attachPermissions([
                 $permission_access_cms,
                 $permission_view_application_settings,
                 $permission_edit_application_settings,
