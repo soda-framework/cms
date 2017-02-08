@@ -47,12 +47,12 @@ class RouteServiceProvider extends ServiceProvider
             $router->pushMiddlewareToGroup('soda.web', ForceHttps::class);
         }
 
-        $router->middleware('soda.auth', Authenticate::class);
-        $router->middleware('soda.guest', RedirectIfAuthenticated::class);
+        $router->aliasMiddleware('soda.auth', Authenticate::class);
+        $router->aliasMiddleware('soda.guest', RedirectIfAuthenticated::class);
 
-        $router->middleware('soda.role', HasRole::class);
-        $router->middleware('soda.permission', HasPermission::class);
-        $router->middleware('soda.ability', HasAbility::class);
+        $router->aliasMiddleware('soda.role', HasRole::class);
+        $router->aliasMiddleware('soda.permission', HasPermission::class);
+        $router->aliasMiddleware('soda.ability', HasAbility::class);
 
         parent::boot();
     }
