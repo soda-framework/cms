@@ -24,7 +24,7 @@
 
 @section('content')
     <div class="content-block">
-        <form method="POST" id="dynamic-block-form" action='{{ route('soda.pages.block-types.block.' . ($block->id ? 'update' : 'store'), [$page->id, $blockType->id, $block->id]) }}' class="form-wrapper">
+        <form method="POST" id="dynamic-block-form" action='{{ route('soda.pages.block-types.block.' . ($block->id ? 'update' : 'store'), [$page->id, $blockType->id, $block->id]) }}' class="form-wrapper" enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field($block->id ? 'PUT' : 'POST') !!}
             @foreach($blockType->fields as $field)

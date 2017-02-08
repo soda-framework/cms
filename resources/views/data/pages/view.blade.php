@@ -171,7 +171,7 @@ if($page->type && $page->type->block_types) {
         @endif
     </ul>
 
-    <form method="POST" id="page-form" action="{{ route('soda.pages.' . ($page->id ? 'update' : 'store'), $page->id) }}">
+    <form method="POST" id="page-form" action="{{ route('soda.pages.' . ($page->id ? 'update' : 'store'), $page->id) }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         {!! method_field($page->id ? 'PUT' : 'POST') !!}
         @if($page->type)

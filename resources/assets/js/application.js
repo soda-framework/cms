@@ -49,6 +49,11 @@ var Soda = (function () {
 
         $(elements.formSubmitters).on('click', function() {
             var form = $(this).data('submits');
+
+            if($(this).data('publishes') != null) {
+                $(form).find('input[name="status"]').val(1);
+            }
+
             $(form).submit();
         });
     }

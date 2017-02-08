@@ -41,7 +41,7 @@
     </ul>
 
     <form method="POST" id="page-type-form"
-          action="{{ route('soda.page-types.' . ($pageType->id ? 'update' : 'store'), $pageType->id) }}">
+          action="{{ route('soda.page-types.' . ($pageType->id ? 'update' : 'store'), $pageType->id) }}" enctype="multipart/form-data">
         <div class="tab-content">
             <div class="tab-pane" id="tab_settings" role="tabpanel">
                 <div class="content-block">

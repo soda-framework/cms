@@ -61,7 +61,7 @@
         @endforeach
     </ul>
 
-    <form method="POST" id="application-form" action="{{ route('soda.application.update', $application->id) }}">
+    <form method="POST" id="application-form" action="{{ route('soda.application.update', $application->id) }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         {!! method_field('PUT') !!}
 

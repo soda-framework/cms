@@ -23,7 +23,7 @@
 
 @section('content')
     <div class="content-block">
-        <form method="POST" id="permission-form" action="{{ route('soda.permissions.' . ($permission->id ? 'update' : 'store'), $permission->id) }}">
+        <form method="POST" id="permission-form" action="{{ route('soda.permissions.' . ($permission->id ? 'update' : 'store'), $permission->id) }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field($permission->id ? 'PUT' : 'POST') !!}
 

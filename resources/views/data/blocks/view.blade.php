@@ -24,7 +24,7 @@
 @section('content')
     <div class="content-block">
 
-        <form method="POST" id="block-form" action="{{ route('soda.blocks.' . ($block->id ? 'update' : 'store'), $block->id) }}">
+        <form method="POST" id="block-form" action="{{ route('soda.blocks.' . ($block->id ? 'update' : 'store'), $block->id) }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field($block->id ? 'PUT' : 'POST') !!}
             <input type="hidden" name="block_type_id" value="{{ $block->block_type_id }}"/>

@@ -4,7 +4,7 @@ namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Carbon\Carbon;
 use Soda\Cms\Foundation\Constants;
-use Soda\Cms\Support\Facades\Soda;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -21,9 +21,9 @@ trait Draftable
             if (static::isDraftsEnabled()) {
                 $builder->where('status', '=', Constants::STATUS_LIVE);
 
-                if (isset(static::$publishDateField)) {
-                    $builder->where(static::$publishDateField, '<', Carbon::now());
-                }
+                $builder->where(function ($subQuery) {
+                    $subQuery->where(static::$publishDateField, '<', Carbon::now())->orWhereNull(static::$publishDateField);
+                });
             }
 
             return $builder;
@@ -42,6 +42,13 @@ trait Draftable
 
     protected static function isDraftsEnabled()
     {
-        return static::$drafts && (Session::get('soda.draft_mode') !== true || ! Soda::auth()->user()->can('view-drafts'));
+        if (static::$drafts && Session::get('soda.draft_mode') == true) {
+            $sodaUser = Auth::guard('soda')->user();
+            if ($sodaUser && $sodaUser->can('view-drafts')) {
+                return false;
+            }
+        }
+
+        return static::$drafts;
     }
 }

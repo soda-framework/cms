@@ -18,7 +18,7 @@ use Soda\Cms\Database\Support\Models\Traits\OptionallyBoundToApplication;
 
 class Page extends Entity implements PageInterface
 {
-    use SoftDeletes, Sluggable, OptionallyBoundToApplication, Draftable, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure;
+    use SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure;
 
     protected $table = 'pages';
     protected static $sortableGroupField = ['application_id', 'parent_id'];

@@ -19,7 +19,7 @@ class CreatePageTypesTable extends Migration
             $table->string('identifier', 50);
             $table->tinyInteger('allowed_children')->unsigned()->nullable()->default(1);
             $table->tinyInteger('can_create')->unsigned()->nullable()->default(1);
-            $table->integer('application_id')->unsigned()->index('fk_page_types_applications1_idx');
+            $table->integer('application_id')->unsigned()->nullable()->index('fk_page_types_applications1_idx');
             $table->string('view_action')->nullable();
             $table->string('view_action_type')->nullable();
             $table->string('edit_action')->nullable();

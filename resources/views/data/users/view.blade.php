@@ -23,7 +23,7 @@
 
 @section('content')
     <div class="content-block">
-        <form method="POST" id="user-form" action="{{ route('soda.users.' . ($user->id ? 'update' : 'store'), $user->id) }}">
+        <form method="POST" id="user-form" action="{{ route('soda.users.' . ($user->id ? 'update' : 'store'), $user->id) }}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field($user->id ? 'PUT' : 'POST') !!}
 

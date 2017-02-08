@@ -34,6 +34,10 @@ trait HasArrayableValue
     {
         $value = parent::getFieldValue();
 
+        if (is_array($value)) {
+            return $value;
+        }
+
         if ($this->isJsonable()) {
             return json_decode($value);
         } elseif ($this->isDelimited()) {

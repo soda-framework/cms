@@ -13,6 +13,11 @@
 *.jpg binary
 *.data binary
 
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+.php_cs export-ignore
+
 stubs/theme/public/components/* linguist-vendored
 stubs/theme/resources/components/* linguist-vendored
 resources/components/* linguist-vendored
