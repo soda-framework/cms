@@ -39,9 +39,11 @@
                 <button><span>LOGIN</span></button>
             </div>
 
+            {{--
             <div class="soda-login__pass-forgot">
                 <a href="#">I forgot my password</a>
             </div>
+            --}}
         </div>
     </form>
 @endsection
