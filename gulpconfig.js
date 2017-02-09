@@ -50,10 +50,7 @@ module.exports = {
     //array of directories that will be published to
     publish: [
         {
-            folder:         'public'
-        },
-        {
-            folder:         '../test/public/soda/cms',
+            folder:         'public',
             css: {
                 clean:      true,
             },

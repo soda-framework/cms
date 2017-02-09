@@ -123,10 +123,16 @@ gulp.task('publish:svg', function () {
 
 gulp.task('publish:components', function () {
     checkCleanFolder('components');
+    var fs = require('fs');
+    var path = require('path');
     var tasks = [];
 
     //run per package group
     objMap(config.components, function (pkg, pkg_name) {
+        var additionalFolders = path.dirname(pkg_name);
+        var fileName = path.basename(pkg_name);
+        var fileNameMin = fileName + (getSetting(config.assets, defaults.assets, 'components.min_suffix') ? '.min.js' : '.js');
+
         var stream = gulp.src(pkg)
             .pipe($.plumber(logError))
             .pipe($.if(getSetting(config.assets, defaults.assets, 'components.show_size'), $.size({
@@ -135,7 +141,7 @@ gulp.task('publish:components', function () {
                 pretty: true
             }))) //output original size
             .pipe($.if(getSetting(config.assets, defaults.assets, 'components.sourcemaps'), $.sourcemaps.init())) //initialize sourcemap
-            .pipe($.concat(pkg_name + (getSetting(config.assets, defaults.assets, 'components.min_suffix') ? '.min.js' : '.js'))) //merge js files into one - name based off of package group
+            .pipe($.concat(fileNameMin)) //merge js files into one - name based off of package group
             .pipe($.uglify()) //now minify it
             .pipe($.if(getSetting(config.assets, defaults.assets, 'components.show_size'), $.size({
                 showFiles: false,
@@ -146,8 +152,14 @@ gulp.task('publish:components', function () {
 
         //write for each output folder
         config.publish.map(function (output) {
-            stream.pipe(gulp.dest(fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path')), {overwrite: true})
-                .pipe($.notify({message: 'Components  published to ' + './' + fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path'), onLast: true}));
+            var dir = fixPath(output.folder) + getSetting(output, defaults.publish, 'components.path');
+
+            if(additionalFolders != '.') {
+                dir = dir + '/' + additionalFolders;
+            }
+
+            stream.pipe(gulp.dest(dir, {overwrite: true}))
+                .pipe($.notify({message: 'Components published to ' + './' + dir + '/' + fileNameMin, onLast: true}));
 
             //push onto task array
             tasks.push(stream);
