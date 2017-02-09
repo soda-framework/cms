@@ -74,7 +74,7 @@ class PageBlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block']));
         }
 
-        return soda_cms_view('data.pages.blocks.view', compact('page', 'blockType', 'block'));
+        return soda_cms_view('data.blocks.view', compact('page', 'blockType', 'block'));
     }
 
     /**
@@ -114,7 +114,7 @@ class PageBlockController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block']));
         }
 
-        return soda_cms_view('data.pages.blocks.view', compact('page', 'blockType', 'block'));
+        return soda_cms_view('data.blocks.view', compact('page', 'blockType', 'block'));
     }
 
     /**

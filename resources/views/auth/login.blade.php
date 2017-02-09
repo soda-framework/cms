@@ -1,7 +1,7 @@
 @extends(soda_cms_view_path('layouts.bare'), ['body_class'=>'full-height soda-login', 'html_class'=>'full-height'])
 
 @section('head.title')
-    <title>Soda CMS | Login</title>
+    <title>Login :: Soda CMS</title>
 @endsection
 
 @section('main-content')

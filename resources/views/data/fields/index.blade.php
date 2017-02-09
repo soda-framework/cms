@@ -8,7 +8,7 @@
 @stop
 
 @section('head.title')
-    <title>Soda CMS | Fields</title>
+    <title>Fields :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

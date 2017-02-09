@@ -9,7 +9,7 @@
 @stop
 
 @section('head.title')
-    <title>Edit Field</title>
+    <title>{{ $field->id ? 'Edit' : 'New' }} Field :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

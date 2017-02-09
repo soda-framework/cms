@@ -9,7 +9,7 @@
 @stop
 
 @section('head.title')
-    <title>Soda CMS | Page Types</title>
+    <title>{{ $pageType->id ? 'Edit' : 'New' }} Page Type :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

@@ -9,7 +9,7 @@
 @stop
 
 @section('head.cms')
-    <title>Soda CMS | Permission</title>
+    <title>{{ $permission->id ? 'Edit' : 'New' }}  Permission :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

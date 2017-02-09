@@ -9,7 +9,7 @@
 @stop
 
 @section('head.cms')
-    <title>Soda CMS | Role</title>
+    <title>{{ $role->id ? 'Edit' : 'New' }} Role :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

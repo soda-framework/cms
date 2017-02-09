@@ -8,7 +8,7 @@
 @stop
 
 @section('head.title')
-    <title>Soda CMS | Page Types</title>
+    <title>Page Types :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

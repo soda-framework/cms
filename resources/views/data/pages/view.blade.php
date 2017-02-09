@@ -21,7 +21,7 @@ if($page->type && $page->type->block_types) {
 @stop
 
 @section('head.title')
-    <title>Soda CMS | View Page</title>
+    <title>{{ $page->id ? 'Edit' : 'New' }} Page :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

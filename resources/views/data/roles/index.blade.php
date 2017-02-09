@@ -8,7 +8,7 @@
 @stop
 
 @section('head.cms')
-    <title>Soda CMS | Roles</title>
+    <title>Roles :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

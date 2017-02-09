@@ -8,7 +8,7 @@
 @stop
 
 @section('head.title')
-    <title>Soda CMS | Application</title>
+    <title>Application :: Soda CMS</title>
 @endsection
 
 @section('content-heading-button')

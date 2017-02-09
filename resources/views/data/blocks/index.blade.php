@@ -1,62 +1,53 @@
-@extends(soda_cms_view_path('layouts.inner'))
+@if($blockType->description)
+    <p>{{ $blockType->description }}</p>
+    <hr />
+@endif
+@if(count($blocks))
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            @foreach($blockType->fields as $field)
+                @if($field->pivot->show_in_table)
+                    <th>{{ $field->name }}</th>
+                @endif
+            @endforeach
+            <th width="80">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($blocks as $block)
+            <tr>
+                @foreach($blockType->fields as $field)
+                    @if($field->pivot->show_in_table)
+                        <td>
+                            {!! SodaForm::field($field)->setModel($block)->renderForTable() !!}
+                        </td>
+                    @endif
+                @endforeach
+                <td>
+                    <a href="{{ route('soda.pages.block-types.block.edit', [$page->id, $blockType->id, $block->id]) }}" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a>
+                    @if($blockType->pivot->min_blocks === null || count($blocks) > $blockType->pivot->min_blocks)
+                        <a data-delete-button href="{{ route('soda.pages.block-types.block.destroy', [$page->id, $blockType->id, $block->id]) }}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+{!! $blocks->render() !!}
+@else
+<p>No records found.</p>
+@endif
 
-@section('breadcrumb')
-	<ol class="breadcrumb">
-		<li><a href="{{ route('soda.home') }}">Home</a></li>
-		<li class="active">Blocks</li>
-	</ol>
-@stop
+@if($blockType->pivot->max_blocks === null || count($blocks) < $blockType->pivot->max_blocks)
+    @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.pages.block-types.block.create', [$page->id, $blockType->id])])
+@endif
 
-@section('head.title')
-	<title>Soda CMS | Blocks</title>
-@endsection
-
-@section('content-heading-button')
-	@include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#blockTypeModal'])
-@stop
-
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-cube',
-    'title'       => 'Blocks',
-    'description' => 'Blocks are added onto pages',
-])
-
-@section('content')
-	<div class="content-top">
-		{!! $filter !!}
-	</div>
-
-	<div class="content-block">
-		{!! $grid !!}
-	</div>
-
-	<div class="modal fade" id="blockTypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Select a block type..</h4>
-				</div>
-				<form method="GET" action="{{ route('soda.blocks.create') }}">
-					<div class="modal-body">
-						<fieldset class="form-group field_page_type page_type dropdown-field">
-							<label for="field_block_type">Block Type</label>
-
-							<select name="blockTypeId" class="form-control">
-								@foreach($blockTypes as $blockType)
-									<option value="{{ $blockType->id }}">{{ $blockType->name }}</option>
-								@endforeach
-							</select>
-						</fieldset>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button class="btn btn-primary">Create Block</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-@endsection
+@permission('detach-blocks')
+    <a data-delete-button class="btn btn-warning btn-lg" href="{{ route('soda.pages.blocks.detach', [$page->id, $blockType->id]) }}">
+        <i class="fa fa-remove"></i>
+        <span>Detach</span>
+    </a>
+@endpermission
