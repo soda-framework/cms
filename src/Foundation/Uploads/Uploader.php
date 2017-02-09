@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Foundation;
+namespace Soda\Cms\Foundation\Uploads;
 
 use Soda\Cms\Models\Media;
 use Illuminate\Http\Request;
@@ -10,31 +10,37 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader
 {
-    public function uploadFile(UploadedFile $file)
+    public function uploadFile(UploadedFile $file, array $transformConfig = [])
     {
         if ($file->isValid()) {
             // Name the file and place in correct directory
             $filePath = $file->getRealPath();
-            $uploadFilePath = $this->urlPrefix().'/'.$this->generateFileName($filePath, $file->getClientOriginalName());
 
             // Upload the file
+            if ($transformConfig) {
+                $transformer = new UploadedFileTransformer($transformConfig);
+                $transformer->transform($file);
+            }
+
+            $uploadFilePath = $this->urlPrefix().'/'.$this->generateFileName($filePath, $file->getClientOriginalName());
+
             $uploaded = $this->driver()->put($uploadFilePath, file_get_contents($filePath), 'public');
 
             // Generate return information
             if ($uploaded) {
-                return config('soda.upload.driver') == 'soda.public' ? '/uploads/'.$uploadFilePath : $this->driver()->url($uploadFilePath);
+                return config('soda.upload.driver') == 'soda.public' ? '/uploads/'.ltrim($uploadFilePath, '/') : $this->driver()->url($uploadFilePath);
             }
         }
 
         return false;
     }
 
-    public function fancyUpload(Request $request)
+    public function fancyUpload(Request $request, array $transformConfig = [])
     {
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $uploadedFile = $this->uploadFile($file);
+                    $uploadedFile = $this->uploadFile($file, $transformConfig);
 
                     // Generate return information
                     if ($uploadedFile) {
@@ -71,7 +77,7 @@ class Uploader
             $resultFilePath .= '.'.$pathInfo['extension'];
         }
 
-        return $resultFilePath;
+        return trim($resultFilePath, '/');
     }
 
     protected function generateFancyUploadResponse(Request $request, $uploadedFilePath)

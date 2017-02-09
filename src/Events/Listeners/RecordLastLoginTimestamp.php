@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Foundation\Events\Listeners;
+namespace Soda\Cms\Events\Listeners;
 
 use Illuminate\Auth\Events\Login;
 

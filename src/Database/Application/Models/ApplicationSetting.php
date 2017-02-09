@@ -55,4 +55,18 @@ class ApplicationSetting extends Model implements ApplicationSettingInterface
 
         return $this;
     }
+
+    public function setFieldParamsAttribute($value)
+    {
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
+        $this->attributes['field_params'] = $value;
+    }
+
+    public function getFieldParamsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

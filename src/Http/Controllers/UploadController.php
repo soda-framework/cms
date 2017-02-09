@@ -3,8 +3,8 @@
 namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Uploader;
 use Illuminate\Support\Facades\DB;
+use Soda\Cms\Foundation\Uploads\Uploader;
 use Soda\Cms\Database\Fields\Models\Media;
 
 class UploadController extends BaseController
@@ -12,7 +12,9 @@ class UploadController extends BaseController
     // pass a file object from request
     public function upload(Request $request)
     {
-        return (new Uploader)->fancyUpload($request);
+        $interventionConfig = json_decode($request->input('intervention'), true);
+
+        return (new Uploader)->fancyUpload($request, $interventionConfig ?: []);
     }
 
     public function delete(Request $request)

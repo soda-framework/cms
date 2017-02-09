@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Foundation\Routing;
+namespace Soda\Cms\Routing;
 
 use ReflectionClass;
 use Illuminate\Support\Facades\Route;
@@ -93,7 +93,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => ['soda.web'],
             'namespace'  => $this->namespace,
         ], function ($router) {
-            require __DIR__.'/../../../routes/web.php';
+            require __DIR__.'/../../routes/web.php';
         });
 
         $this->app['router']->getRoutes()->refreshNameLookups();
@@ -115,7 +115,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace'  => $this->namespace,
             'prefix'     => config('soda.cms.path').'/api',
         ], function ($router) {
-            require __DIR__.'/../../../routes/api.php';
+            require __DIR__.'/../../routes/api.php';
         });
     }
 

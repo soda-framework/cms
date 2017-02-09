@@ -1,1 +1,132 @@
-var Soda=function(){var t=!1,n={deleteButtons:"[data-delete-button]",formSubmitters:"[data-submits]"},e=function(t){},a=function(){return $('meta[name="csrf-token"]').attr("content")},o=function(t,n){var e=$("<form></form>");e.attr("method","POST"),e.attr("action",t),$.each(n,function(t,n){var a=$("<input></input>");a.attr("type","hidden"),a.attr("name",t),a.attr("value",n),e.append(a)}),$(document.body).append(e),e.submit()},i=function(){$(n.deleteButtons).on("click",function(t){t.preventDefault(),s($(this))}),$(n.formSubmitters).on("click",function(){var t=$(this).data("submits");null!=$(this).data("publishes")&&$(t).find('input[name="status"]').val(1),$(t).submit()})},r=function(){t===!1&&(t=!0,$.ajaxSetup({headers:{"X-CSRF-TOKEN":a()}}),$(".soda-wrapper, .main-content").css("min-height",$(window).height()),$(".nav-item-group.active .collapse").collapse("show"),Soda.queryString.tab?$('a[href="#tab_'+Soda.queryString.tab+'"]').tab("show"):$('.nav-tabs a[data-toggle="tab"]').first().tab("show"),i())},s=function(t,n){var e=t.attr("href"),i=$.extend({},{_token:a(),_method:"DELETE"},n);swal({title:"Are you sure?",text:"This action can not be reversed!",type:"warning",showCancelButton:!0,confirmButtonClass:"btn-danger",confirmButtonText:"Yes, delete it!",closeOnConfirm:!1},function(){e?o(e,i):t.closest("form").submit()})},u=function(t){$.ajax({url:Soda.urls.sort,type:"POST",data:t,success:function(t){t.errors&&e(t.errors)},error:function(){e("Something went wrong!")}})};return{initialize:r,confirmDelete:s,changePosition:u}}();$(function(){Soda.initialize()});
+// https://toddmotto.com/mastering-the-module-pattern/
+
+var Soda = (function () {
+    var _initialized = false;
+    var _debug = false;
+
+    var elements = {
+        deleteButtons: '[data-delete-button]',
+        formSubmitters: '[data-submits]',
+    }
+
+    var _log = function (message) {
+        if(_debug === true) {
+            console.log(message);
+        }
+    }
+
+    var _getCsrf = function(){
+        return $('meta[name="csrf-token"]').attr('content')
+    }
+
+    var _post = function(url, parameters) {
+        var form = $('<form></form>');
+
+        form.attr("method", "POST");
+        form.attr("action", url);
+
+        $.each(parameters, function(key, value) {
+            var field = $('<input></input>');
+
+            field.attr("type", "hidden");
+            field.attr("name", key);
+            field.attr("value", value);
+
+            form.append(field);
+        });
+
+        // The form needs to be a part of the document in
+        // order for us to be able to submit it.
+        $(document.body).append(form);
+        form.submit();
+    };
+
+    var _registerEvents = function() {
+        $(elements.deleteButtons).on('click', function(e) {
+            e.preventDefault();
+            confirmDelete($(this));
+        });
+
+        $(elements.formSubmitters).on('click', function() {
+            var form = $(this).data('submits');
+
+            if($(this).data('publishes') != null) {
+                $(form).find('input[name="status"]').val(1);
+            }
+
+            $(form).submit();
+        });
+    }
+
+    var initialize = function() {
+        if(_initialized === false) {
+            _initialized = true;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': _getCsrf()
+                }
+            });
+
+            $('.soda-wrapper, .main-content').css('min-height', $(window).height());
+            $(".nav-item-group.active .collapse").collapse('show');
+
+            if(Soda.queryString.tab) {
+                $('a[href="#tab_' + Soda.queryString.tab + '"]').tab('show');
+            } else {
+                $('.nav-tabs a[data-toggle="tab"]').first().tab('show');
+            }
+
+            _registerEvents();
+        }
+    };
+
+    var confirmDelete = function(element, attributes) {
+        var url = element.attr('href');
+        var postData = $.extend({}, {_token: _getCsrf(), _method: 'DELETE'}, attributes);
+
+        swal({
+            title: "Are you sure?",
+            text: "This action can not be reversed!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function(){
+            if(url) {
+                _post(url, postData);
+            } else {
+                element.closest('form').submit();
+            }
+        });
+    };
+
+    var changePosition = function(requestData){
+        $.ajax({
+            'url':  Soda.urls.sort,
+            'type': 'POST',
+            'data': requestData,
+            'success': function(data) {
+                if (data.errors) {
+                    _log(data.errors);
+                }
+            },
+            'error': function(){
+                _log('Something went wrong!');
+            }
+        });
+    }
+
+    return {
+        initialize: initialize,
+        confirmDelete: confirmDelete,
+        changePosition: changePosition,
+    }
+})();
+
+$(function () {
+    Soda.initialize();
+});
+
+//# sourceMappingURL=application.js.map

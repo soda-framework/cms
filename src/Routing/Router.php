@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Foundation\Routing;
+namespace Soda\Cms\Routing;
 
 use Illuminate\Http\Request;
 use Illuminate\Container\Container;

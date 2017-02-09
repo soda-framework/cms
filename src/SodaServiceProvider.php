@@ -7,12 +7,16 @@ use Soda\Cms\Support\Facades\Menu;
 use Soda\Cms\Support\Facades\Soda;
 use Zofe\Rapyd\RapydServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Intervention\Image\Facades\Image;
 use Soda\Cms\Foundation\SodaInstance;
 use Soda\Cms\Menu\MenuServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustServiceProvider;
 use Soda\Cms\Forms\FormServiceProvider;
 use Soda\Cms\Foundation\DraftingHandler;
+use Soda\Cms\Events\EventServiceProvider;
+use Soda\Cms\Routing\RouteServiceProvider;
+use Intervention\Image\ImageServiceProvider;
 use Soda\Cms\Support\Facades\RequestMatcher;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Rutorika\Sortable\SortableServiceProvider;
@@ -21,9 +25,7 @@ use Soda\Cms\Database\Roles\RoleServiceProvider;
 use Soda\Cms\Database\Users\UserServiceProvider;
 use Soda\Cms\Database\Blocks\BlockServiceProvider;
 use Soda\Cms\Database\Fields\FieldServiceProvider;
-use Soda\Cms\Foundation\Routing\RouteServiceProvider;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
-use Soda\Cms\Foundation\Providers\EventServiceProvider;
 use Soda\Cms\Database\Permissions\PermissionServiceProvider;
 use Soda\Cms\Database\Application\ApplicationServiceProvider;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
@@ -70,11 +72,11 @@ class SodaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once __DIR__.'/Foundation/helpers.php';
+        require_once __DIR__.'/helpers.php';
 
         // Override Zofe DataSet
-        class_alias('Soda\Cms\Foundation\DataSet', 'Zofe\Rapyd\DataSet');
-        class_alias('Soda\Cms\Foundation\DataField', 'Zofe\Rapyd\DataForm\Field\Field');
+        class_alias('Soda\Cms\Support\DataSet', 'Zofe\Rapyd\DataSet');
+        class_alias('Soda\Cms\Support\DataField', 'Zofe\Rapyd\DataForm\Field\Field');
 
         $this->mergeConfigFrom(__DIR__.'/../config/publish/cms.php', 'soda.cms');
         $this->mergeConfigFrom(__DIR__.'/../config/publish/cache.php', 'soda.cache');
@@ -94,6 +96,7 @@ class SodaServiceProvider extends ServiceProvider
             RapydServiceProvider::class,
             SortableServiceProvider::class,
             LaratrustServiceProvider::class,
+            ImageServiceProvider::class,
 
             // Deferred Model Providers
             ApplicationServiceProvider::class,
@@ -111,6 +114,7 @@ class SodaServiceProvider extends ServiceProvider
             'SodaMenu'    => Menu::class,
             'SodaMatcher' => RequestMatcher::class,
             'Laratrust'   => LaratrustFacade::class,
+            'Image'       => Image::class,
         ]);
 
         $this->app->singleton('soda', function ($app) {

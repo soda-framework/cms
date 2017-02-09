@@ -3,8 +3,8 @@
 namespace Soda\Cms\Forms\Fields;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Uploader;
 use Soda\Cms\Forms\AbstractFormField;
+use Soda\Cms\Foundation\Uploads\Uploader;
 
 class Upload extends AbstractFormField
 {
@@ -19,6 +19,8 @@ class Upload extends AbstractFormField
      */
     public function getSaveValue(Request $request)
     {
-        return (new Uploader)->uploadFile($request->file($this->getPrefixedFieldName()));
+        $parameters = $this->parseFieldParameters();
+
+        return (new Uploader)->uploadFile($request->file($this->getPrefixedFieldName()), isset($parameters['intervention']) ? $parameters['intervention'] : []);
     }
 }

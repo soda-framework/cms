@@ -28,8 +28,9 @@ class FancyUpload extends AbstractFormField
             'initialPreview'          => [],
             'initialPreviewConfig'    => [],
             'uploadExtraData'         => [
-                'related_field' => $field_name,
-                'multi'         => $is_multi ? 'true' : 'false',
+                'related_field'    => $field_name,
+                'multi'            => $is_multi ? 'true' : 'false',
+                'intervention'     => isset($field_params['intervention']) ? json_encode($field_params['intervention']) : '',
             ],
             'uploadUrl'               => route('soda.upload'),
             'deleteUrl'               => route('soda.upload.delete'),

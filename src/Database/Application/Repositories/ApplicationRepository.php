@@ -67,7 +67,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
             $this->syncUrlsToApplication($model, $request->input('application_urls'));
         }
 
-        if ($request->has('settings')) {
+        if ($request->input('settings') || $request->file('settings')) {
             if (! $model->relationLoaded('settings')) {
                 $model->load('settings');
             }

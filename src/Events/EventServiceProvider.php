@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Foundation\Providers;
+namespace Soda\Cms\Events;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,7 +13,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Illuminate\Auth\Events\Login' => [
-            'Soda\Cms\Foundation\Events\Listeners\RecordLastLoginTimestamp',
+            'Soda\Cms\Events\Listeners\RecordLastLoginTimestamp',
         ],
     ];
 

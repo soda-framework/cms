@@ -54,6 +54,13 @@ abstract class AbstractFormField implements FormFieldInterface
     protected $class;
 
     /**
+     * Field instance to prefill values from.
+     *
+     * @var string
+     */
+    protected $field;
+
+    /**
      * The model used to prefill our form field.
      *
      * @var Illuminate\Database\Eloquent\Model
@@ -66,6 +73,14 @@ abstract class AbstractFormField implements FormFieldInterface
         $this->setViewPath(config('soda.cms.form.default-view-path'));
 
         $this->boot();
+    }
+
+    /**
+     * Get the Field model that our FormField is built off of.
+     */
+    public function getField()
+    {
+        return $this->field;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Foundation;
+namespace Soda\Cms\Support;
 
 use Zofe\Rapyd\Widget;
 use Zofe\Rapyd\Helpers\HTML;
