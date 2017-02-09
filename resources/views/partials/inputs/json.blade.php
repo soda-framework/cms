@@ -3,7 +3,8 @@
 	<input name="{{ $prefixed_field_name }}" id="{{ $field_id }}" type="hidden" value="{{ $field_value }}">
 @overwrite
 
-@section("field.js")
+@section("footer.js")
+    @parent
 	<script>
 		// create the editor
 		var container = $("#json_{{ $field_id }}");
@@ -25,4 +26,4 @@
 			}
 		})
 	</script>
-@overwrite
+@stop

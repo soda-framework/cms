@@ -20,7 +20,10 @@
             @endif
         @endforeach
     </select>
+@overwrite
 
+@section('footer.js')
+    @parent
     <script>
         $(function(){
             $('#{{ $field_id }}').select2({
@@ -50,4 +53,4 @@
             });
         });
     </script>
-@overwrite
+@stop

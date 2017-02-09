@@ -11,8 +11,6 @@
   "dependencies": {
     "bootstrap-sass": "~3",
     "bootstrap-fileinput": "4.3.*",
-    "bootstrap-sweetalert": "~0.4.5",
-    "bootstrap-tagsinput": "^0.8.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "font-awesome": "^4.5.0",
     "tinymce": "^4.3.12",

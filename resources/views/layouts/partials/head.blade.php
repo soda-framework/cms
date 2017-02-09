@@ -16,7 +16,7 @@
 
 @section('head.css')
     <!-- Styles -->
-    <link href="/soda/cms/css/application.min.css" rel="stylesheet">
+    <link href="/soda/cms/css/application.css" rel="stylesheet">
 @stop
 
 @section('head.js')
@@ -34,8 +34,8 @@
             s.parentNode.insertBefore(wf, s);
         })(document);
     </script>
-    <script src="/soda/cms/js/core.min.js"></script>
-    <script src="/soda/cms/js/application.min.js"></script>
+    <script src="/soda/cms/js/core.js"></script>
+    <script src="/soda/cms/js/application.js"></script>
     <script>
         (function (Soda) {
             Soda.queryString = {!! json_encode(Request::query(), JSON_HEX_TAG) !!}
@@ -51,13 +51,12 @@
 @stop
 
 @section('footer.js')
-    <script src="/soda/cms/js/forms/slugs.min.js"></script>
-    <script src="/soda/cms/js/forms/dates.min.js"></script>
-    <script src="/soda/cms/js/forms/tinymce.min.js"></script>
-    <script src="/soda/cms/js/forms/upload.min.js"></script>
-    <script src="/soda/cms/js/forms/json.min.js"></script>
-    <script src="/soda/cms/js/forms/multiselect.min.js"></script>
-    <script src="/soda/cms/js/forms/tags.min.js"></script>
+    <script src="/soda/cms/js/forms/slugs.js"></script>
+    <script src="/soda/cms/js/forms/dates.js"></script>
+    <script src="/soda/cms/js/forms/tinymce.js"></script>
+    <script src="/soda/cms/js/forms/upload.js"></script>
+    <script src="/soda/cms/js/forms/json.js"></script>
+    <script src="/soda/cms/js/forms/multiselect.js"></script>
 @stop
 
 @section('head')

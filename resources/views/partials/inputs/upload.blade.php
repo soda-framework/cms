@@ -9,7 +9,8 @@
     </div>
 @overwrite
 
-@section("field.js")
+@section("footer.js")
+    @parent
     <script>
         $("#{{ $field_id }}").on('change', function(){
 

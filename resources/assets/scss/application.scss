@@ -48,10 +48,8 @@
 @import "../../components/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
 
 // Plugins
-@import "../../components/bootstrap-fileinput/css/fileinput";
-@import "../../components/bootstrap-sweetalert/lib/sweet-alert";
-//@import "../../components/bootstrap-select/sass/bootstrap-select";
-@import "../../components/bootstrap-tagsinput/src/bootstrap-tagsinput";
+@import "../../components/bootstrap-fileinput/sass/fileinput";
+//noinspection CssUnknownTarget
 @import "../../components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min";
 @import "../../components/select2/src/scss/core";
 @import "../../components/select2-bootstrap-theme/src/select2-bootstrap.scss";

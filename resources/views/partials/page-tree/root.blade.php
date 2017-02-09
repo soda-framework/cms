@@ -5,6 +5,6 @@
 </ul>
 @section('footer.js')
     @parent
-    <script src="/soda/cms/js/forms/sortable.min.js"></script>
-    <script src="/soda/cms/js/page-tree.min.js"></script>
+    <script src="/soda/cms/js/forms/sortable.js"></script>
+    <script src="/soda/cms/js/page-tree.js"></script>
 @stop

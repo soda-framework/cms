@@ -3,7 +3,8 @@
 		   class="form-control field_{{ $field_name }}" value="{{ $field_value }}"/>
 @overwrite
 
-@section("field.js")
+@section("footer.js")
+    @parent
 	<script type="text/javascript">
 		$(function () {
 			$('#{{ $field_id }}').datetimepicker({
