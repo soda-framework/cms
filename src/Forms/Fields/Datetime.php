@@ -38,7 +38,7 @@ class Datetime extends AbstractFormField
             return '';
         }
 
-        $dateTime = Carbon::createFromFormat($parameters['output-format'], $value);
+        $dateTime = $value instanceof Carbon ? $value : Carbon::createFromFormat($parameters['output-format'], $value);
 
         if (isset($parameters['timezone']) && $parameters['timezone']) {
             $dateTime->setTimezone($parameters['timezone']);
