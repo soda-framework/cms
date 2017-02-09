@@ -462,6 +462,7 @@ abstract class AbstractFormField implements FormFieldInterface
             try {
                 return $view->render();
             } catch (Exception $e) {
+                \Log::error($e);
                 dd($e->getMessage(), $this);
             }
         }
@@ -480,6 +481,7 @@ abstract class AbstractFormField implements FormFieldInterface
             try {
                 return $this->render();
             } catch (Exception $e) {
+                \Log::error($e);
                 dd($e->getMessage(), $this);
             }
         }
