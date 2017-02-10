@@ -1,2 +1,0 @@
-# sodacms
-soda cms package
