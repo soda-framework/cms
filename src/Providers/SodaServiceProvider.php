@@ -4,9 +4,11 @@ namespace Soda\Cms\Providers;
 
 use Blade;
 use Zofe\Rapyd\RapydServiceProvider;
+use Intervention\Image\Facades\Image;
 use Soda\Cms\Foundation\SodaInstance;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Support\Facades\SodaFacade;
+use Intervention\Image\ImageServiceProvider;
 use Soda\Cms\Support\Traits\SodaServiceProviderTrait;
 
 class SodaServiceProvider extends ServiceProvider
@@ -68,10 +70,12 @@ class SodaServiceProvider extends ServiceProvider
             PageServiceProvider::class,
             MenuServiceProvider::class,
             RapydServiceProvider::class,
+            ImageServiceProvider::class,
         ]);
 
         $this->registerFacades([
-            'Soda' => SodaFacade::class,
+            'Soda'  => SodaFacade::class,
+            'Image' => Image::class,
         ]);
 
         $this->app->singleton('soda', function ($app) {
