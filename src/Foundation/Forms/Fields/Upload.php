@@ -19,6 +19,8 @@ class Upload extends AbstractFormField
      */
     public function getSaveValue(Request $request)
     {
-        return (new Uploader)->uploadFile($request->file($this->getPrefixedFieldName()));
+        $parameters = $this->parseFieldParameters();
+
+        return (new Uploader)->uploadFile($request->file($this->getPrefixedFieldName()), isset($parameters['intervention']) ? $parameters['intervention'] : []);
     }
 }
