@@ -15,6 +15,7 @@ class Uploader
         if ($file->isValid()) {
             // Name the file and place in correct directory
             $filePath = $file->getRealPath();
+            $fileExtension = $file->getExtension() ?: $file->guessExtension();
 
             // Manipulate file before upload
             if ($transformConfig) {
@@ -22,7 +23,7 @@ class Uploader
                 $transformer->transform($file);
             }
 
-            $uploadFilePath = $this->urlPrefix().'/'.$this->generateFileName($filePath, $file->getClientOriginalName());
+            $uploadFilePath = $this->urlPrefix().'/'.$this->generateFileName($filePath, $file->getClientOriginalName(), $fileExtension);
 
             // Upload the file
             $uploaded = $this->driver()->put($uploadFilePath, file_get_contents($filePath), 'public');
@@ -68,13 +69,15 @@ class Uploader
         return trim(config('soda.upload.folder'), '/');
     }
 
-    protected function generateFileName($filePath, $fileName)
+    protected function generateFileName($filePath, $fileName, $fileExtension)
     {
         $sha1Hash = sha1_file($filePath);
         $pathInfo = pathinfo($fileName);
 
         $resultFilePath = $pathInfo['filename'].'__'.$sha1Hash;
-        if ($pathInfo['extension']) {
+        if ($fileExtension) {
+            $resultFilePath .= '.'.$fileExtension;
+        } elseif (! isset($pathInfo['extension']) && $pathInfo['extension']) {
             $resultFilePath .= '.'.$pathInfo['extension'];
         }
 

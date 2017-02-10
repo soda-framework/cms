@@ -37,7 +37,7 @@ class Cms
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('X-XSS-Protection', '1; mode=block');
         $response->headers->set('X-Permitted-Cross-Domain-Policies', 'none');
-        $response->headers->set('Content-Security-Policy', 'default-src * data:; script-src \'self\' \'unsafe-inline\'; style-src * \'unsafe-inline\';'); /*  'unsafe-eval'  */
+        $response->headers->set('Content-Security-Policy', 'default-src * data: blob:; script-src \'self\' \'unsafe-inline\'; style-src * \'unsafe-inline\';'); /*  'unsafe-eval'  */
 
         return $response;
     }

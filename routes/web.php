@@ -77,6 +77,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'upload'], function () {
                 Route::post('/', 'UploadController@upload')->name('soda.upload');
+                Route::post('tiny-upload', 'UploadController@tinyUpload')->name('soda.tiny-upload');
                 Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
             });
         });

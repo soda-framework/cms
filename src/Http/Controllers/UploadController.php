@@ -16,6 +16,19 @@ class UploadController extends BaseController
         return (new Uploader)->fancyUpload($request, $interventionConfig ?: []);
     }
 
+    public function tinyUpload(Request $request)
+    {
+        $interventionConfig = json_decode($request->input('intervention'), true);
+
+        $uploadedFilePath = (new Uploader)->uploadFile($request->file('file'), $interventionConfig ?: []);
+
+        if ($uploadedFilePath) {
+            return response()->json(['location' => $uploadedFilePath]);
+        }
+
+        return response()->json(['error' => 'File upload failed'], 422);
+    }
+
     public function delete(Request $request)
     {
         if ($request->has('key') && $request->input('key') !== null) {
