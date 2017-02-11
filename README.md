@@ -24,7 +24,7 @@ Add package to providers in `/config/app.php`
 
 ```
 'providers' => [
-    Soda\Providers\SodaServiceProvider::class,
+    Soda\Cms\Providers\SodaServiceProvider::class,
 ]
 ```
 
