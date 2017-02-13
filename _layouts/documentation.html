@@ -53,13 +53,13 @@
     </div>
 </header>
 
-<main>
-    <menu>
+<main class="container documentation">
+    <menu class="sidebar">
         {% for section in site.data.menu %}
-        <h2>{{ section[0] }}</h2>
+        <h2 class="section-title">{{ section[0] }}</h2>
         <ul>
             {% for link in section[1] %}
-            <li {% if page.url == link[1] %}class="selected"{% endif %}>
+            <li {% if page.url == link[1] %}class="active"{% endif %}>
                 <a href="{{ link[1] }}">{{ link[0] }}</a>
             </li>
             {% endfor %}
@@ -72,7 +72,9 @@
 </main>
 
 <footer>
-    <span>&copy; Copyright <a href="//cms.soda-framework.com">Soda CMS</a>.</span>
+    <div class="container">
+        <span>&copy; Copyright <a href="//cms.soda-framework.com">Soda CMS</a>.</span>
+    </div>
 </footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
