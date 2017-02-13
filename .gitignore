@@ -1,0 +1,11 @@
+vendor/
+node_modules/
+composer.lock
+
+resources/components/
+stubs/theme/resources/components/
+
+.idea
+.idea/**
+
+.php_cs.cache
