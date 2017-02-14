@@ -34,7 +34,7 @@
   "require": {
     "php": ">=5.5.9",
     "laravel/framework": "5.3.*",
-    "franzose/closure-table": "^4.1",
+    "franzose/closure-table": "4.1.4",
     "league/flysystem-aws-s3-v3": "^1.0",
     "zofe/rapyd": "2.2.*",
     "santigarcor/laratrust": "3.0.*",
