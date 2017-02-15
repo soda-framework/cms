@@ -12,15 +12,14 @@
 <meta name="description" content="{{ site.data.project.description }}">
 {% endif %}
 
-{% if site.data.images.favicon %}
-<link rel="icon" type="image/x-icon" href="{{ site.data.images.favicon }}" />
+{% if site.data.project.favicon %}
+<link rel="icon" type="image/x-icon" href="{{ site.data.project.base_href }}/{{ site.data.project.favicon }}" />
 {% endif %}
 
-{% if site.data.images.apple_touch %}
-<link rel="apple-touch-icon-precomposed" href="{{ site.data.images.apple_touch }}">
+{% if site.data.project.apple_touch %}
+<link rel="apple-touch-icon-precomposed" href="{{ site.data.project.base_href }}/{{ site.data.project.apple_touch }}">
 {% endif %}
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700|Source+Sans+Pro:200,400,700,600,400italic,700italic" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700|Source+Sans+Pro:200,400,700,600,400italic,700italic" rel="stylesheet" type="text/css">
 <link href="{{ site.data.project.base_href }}/assets/css/main.css" rel="stylesheet" type="text/css">

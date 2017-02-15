@@ -4,6 +4,6 @@ github_url: https://github.com/soda-framework/cms
 description:
 google_analytics_tracking_id:
 base_href: http://soda-framework.github.io/cms
-favicon:
+favicon: assets/favicon.ico
 apple_touch:
 logo:

@@ -33,6 +33,17 @@ code {
   color: #0BD685;
 }
 
+a.navbar-brand {
+  img, span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  img {
+    max-height: 20px;
+  }
+}
+
 @import 'sidebar';
 @import 'docs';
 @import 'highlighter-rouge';
