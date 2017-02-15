@@ -1,0 +1,40 @@
+.highlighter-rouge {
+  &, & > pre > code {
+    font-size: 11px;
+    line-height: 2;
+    vertical-align: middle;
+    color: #000;
+    text-shadow: 0 1px #fff;
+    text-align: left;
+    line-height: 1.7;
+    font-size: 11.5px;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    font-family: Consolas, Monaco, "Andale Mono", monospace !important;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    direction: ltr;
+  }
+}
+
+code.highlighter-rouge {
+  background: #f0f2f1;
+  padding: 1px 5px;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+}
+
+.highlighter-rouge > pre {
+  margin: 10px 0 20px;
+  overflow: auto;
+  border: none;
+  background: rgba(238, 238, 238, 0.35);
+  border-radius: 3px;
+  padding: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+}

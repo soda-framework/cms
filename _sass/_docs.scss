@@ -1,0 +1,72 @@
+.docs {
+  .btn-edit-page {
+    margin-top: 45px;
+  }
+  article {
+    padding: 25px 125px 50px 50px;
+    margin-left: 300px;
+    h2 {
+      &:first-of-type {
+        margin-top: 25px;
+      }
+      font-size: 30px;
+      font-weight: 400;
+      margin-top: 55px;
+      position: relative;
+      &:before {
+        content: "#";
+        margin-left: -25px;
+        position: absolute;
+        font-size: 28px;
+        top: 5px;
+        color: #0BD685;
+        opacity: .6;
+      }
+    }
+    h3 {
+      font-size: 24px;
+      font-weight: 400;
+      margin-top: 45px;
+    }
+    h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 35px;
+    }
+    h2, h3, h4, h5, h6 {
+      a {
+        color: #525252;
+        text-decoration: none;
+        &:hover {
+          color: #525252;
+          text-decoration: none;
+        }
+      }
+    }
+    p {
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+    ul#markdown-toc {
+      margin: 0;
+      padding: 0 0 50px;
+      list-style: none;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      border-bottom: 1px solid #f0f2f1;
+      -webkit-font-smoothing: antialiased;
+      li:before {
+        content: "# ";
+        margin-right: .25em;
+        color: #0BD685;
+        opacity: .3;
+      }
+    }
+    li > ul {
+      font-size: 15px;
+      font-weight: 400;
+      list-style: none;
+    }
+  }
+}
