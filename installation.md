@@ -14,7 +14,7 @@ Install easily using the [Soda Installer](https://github.com/soda-framework/inst
 
 #### Via Laravel Installer
 
-```php
+```bash
 laravel new app-name
 ```
 
@@ -22,7 +22,7 @@ laravel new app-name
 
 Alternatively, you may also install Laravel by issuing the Composer create-project command in your terminal:
 
-```php
+```bash
 composer create-project --prefer-dist laravel/laravel app-name "5.3.*"
 ```
 
@@ -30,7 +30,7 @@ composer create-project --prefer-dist laravel/laravel app-name "5.3.*"
 
 Require the Soda Framework by using Composer:
 
-```php
+```bash
 cd app-name && composer require soda-framework/cms
 ```
 

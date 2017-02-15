@@ -1,4 +1,5 @@
 markdown: kramdown
+highlighter: rouge
 
 gems:
   - jekyll-feed
@@ -9,6 +10,9 @@ exclude:
 
 kramdown:
   toc_levels: 2..3
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    inline_theme: base16
 
 sass:
     style: compressed
