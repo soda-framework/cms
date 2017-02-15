@@ -2,12 +2,13 @@
 title: Installation
 layout: documentation
 ---
-# Installation
+
+# Installation {#toc}
 
 * TOC
 {:toc}
 
-## Installation
+## [Installation](#installation) {#installation}
 
 Install easily using the [Soda Installer](https://github.com/soda-framework/installer) or manually by following these steps:
 
@@ -25,7 +26,7 @@ Alternatively, you may also install Laravel by issuing the Composer create-proje
 composer create-project --prefer-dist laravel/laravel app-name "5.3.*"
 ```
 
-### Require Soda Framework
+### [Require Soda Framework](#require-soda-framework) {#require-soda-framework}
 
 Require the Soda Framework by using Composer:
 
@@ -33,7 +34,7 @@ Require the Soda Framework by using Composer:
 cd app-name && composer require soda-framework/cms
 ```
 
-### Integrate into Laravel
+### [Integrate into Laravel](#integrate-into-laravel) {#integrate-into-laravel}
 
 Add package to providers array in `/config/app.php`
 
@@ -41,13 +42,13 @@ Add package to providers array in `/config/app.php`
 Soda\Providers\SodaServiceProvider::class,
 ```
 
-### Configure
+### [Configure](#configure) {#configure}
 
 Rather than setting up your .env file manually, you may run the following command:
 
 `php artisan soda:setup`
 
-### Migrate & Seed
+### [Migrate and seed](#migrate-and-seed) {#migrate-and-seed}
 
 `php artisan session:table` (optional)
 

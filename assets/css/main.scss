@@ -88,14 +88,6 @@ a {
       font-weight: 400;
       margin-top: 55px;
       position: relative;
-      a {
-        color: #525252;
-        text-decoration: none;
-        &:hover {
-          color: #525252;
-          text-decoration: none;
-        }
-      }
       &:before {
         content: "#";
         margin-left: -25px;
@@ -115,6 +107,16 @@ a {
       font-size: 16px;
       font-weight: 700;
       margin-top: 35px;
+    }
+    h2, h3, h4, h5, h6 {
+      a {
+        color: #525252;
+        text-decoration: none;
+        &:hover {
+          color: #525252;
+          text-decoration: none;
+        }
+      }
     }
     p {
       font-size: 14.5px;

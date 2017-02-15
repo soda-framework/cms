@@ -82,8 +82,6 @@
                 Edit this page on GitHub
             </a>
         </div>
-        <div>
-        </div>
         {{ content }}
     </article>
 </main>
@@ -111,6 +109,26 @@
     ga('create','{{  site.data.project.google_analytics_tracking_id }}');ga('send','pageview');
 </script>
 {% endif %}
+
+<script>
+    $(function() {
+        $('a[href*="#"]:not([href="#"])').click(function() {
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                var hash = this.hash;
+                var target = $(hash);
+                target = target.length ? target : $('[name=' + hash.slice(1) +']');
+                if (target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top
+                    }, 500, function() {
+                        window.location.hash = hash;
+                    });
+                    return false;
+                }
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
