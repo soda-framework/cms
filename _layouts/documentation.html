@@ -27,145 +27,9 @@
 
     <link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700|Source+Sans+Pro:200,400,700,600,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <style>
-        body {
-            padding-top: 70px;
-            color: #525252;
-            font-family: "Source Sans Pro",sans-serif;
-        }
-        h1 {
-            font-size: 48px;
-            font-weight: 200;
-            margin: .67em 0;
-        }
-        h1, h2, h3, h4, p strong {
-            -webkit-font-smoothing: antialiased;
-        }
-        a {
-            background-color: transparent;
-        }
-        a, p code {
-            color: #0BD685;
-        }
-        p {
-            line-height: 1.5;
-            margin: 10px 0 20px;
-        }
-        .btn.focus, .btn:focus, .btn:hover, a {
-            text-decoration: none;
-        }
-        .sidebar {
-            border-right: 1px solid #f0f2f1;
-            width: 250px;
-            float: left;
-            padding: 0 35px;
-        }
-        .sidebar>ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .sidebar>ul>li {
-            font-size: 14px;
-            font-weight: 400;
-            padding: 0 0 10px;
-            margin: 1em 0 0;
-        }
-        .sidebar>ul>li>ul {
-            border-top: 1px dashed rgba(0,0,0,.1);
-            display: block;
-            list-style: none;
-            margin: .5em 0 0;
-            padding: .5em 0 0;
-            font-size: 14px;
-        }
-        .sidebar a {
-            line-height: 1.5;
-        }
-        .sidebar a:hover {
-            color: #0BD685;
-        }
-        .docs .btn-edit-page {
-            margin-top: 45px;
-        }
-        .docs article {
-            padding: 25px 125px 50px 50px;
-            margin-left: 300px;
-        }
-        .docs article h2:first-of-type {
-            margin-top: 15px;
-        }
-        .docs article h2 {
-            font-size: 30px;
-            font-weight: 400;
-            margin-top: 55px;
-            position: relative;
-        }
-        .docs article h2 a, .docs article h2 a:hover {
-            color: #525252;
-            text-decoration: none;
-        }
-        .docs article h2:before {
-            content: "#";
-            margin-left: -25px;
-            position: absolute;
-            font-size: 28px;
-            top: 5px;
-            color: #0BD685;
-            opacity: .6;
-        }
-        .docs article h3 {
-            font-size: 24px;
-            font-weight: 400;
-            margin-top: 45px;
-        }
-        .docs article h4 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-top: 35px;
-        }
-        .docs article p {
-            font-size: 14.5px;
-            line-height: 1.7;
-        }
-        .docs article .highlighter-rouge {
-            font-size: 11px;
-            line-height: 2;
-            vertical-align: middle;
-            color: #000;
-            text-shadow: 0 1px #fff;
-            text-align: left;
-            line-height: 1.7;
-            font-size: 11.5px;
-            -moz-tab-size: 4;
-            -o-tab-size: 4;
-            tab-size: 4;
-            -webkit-hyphens: none;
-            -ms-hyphens: none;
-            hyphens: none;
-            font-family: "Operator Mono","Fira Code",Consolas,Monaco,"Andale Mono",monospace;
-            white-space: pre;
-            word-spacing: normal;
-            word-break: normal;
-            direction: ltr;
-        }
-        .docs article code.highlighter-rouge {
-            background: #f0f2f1;
-            color: #0BD685;
-            padding: 1px 5px;
-            border-radius: 3px;
-            box-shadow: 0 1px 1px rgba(0,0,0,.125);
-        }
-        .docs article .highlighter-rouge > pre {
-            margin: 10px 0 20px;
-            overflow: auto;
-            border: none;
-            background: rgba(238,238,238,.35);
-            border-radius: 3px;
-            padding: 10px;
-            box-shadow: 0 1px 1px rgba(0,0,0,.125);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700|Source+Sans+Pro:200,400,700,600,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body class="docs">
 
@@ -220,6 +84,8 @@
             <a href="{{ site.github.repository_url }}/blob/gh-pages/{{ page.path }}" class="btn btn-edit-page btn-default btn-sm">
                 Edit this page on GitHub
             </a>
+        </div>
+        <div>
         </div>
         {{ content }}
     </article>
