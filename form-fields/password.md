@@ -1,3 +1,4 @@
 ---
+title: Password
 layout: documentation
 ---

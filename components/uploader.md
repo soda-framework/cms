@@ -1,3 +1,4 @@
 ---
+title: Uploader
 layout: documentation
 ---

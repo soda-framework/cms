@@ -1,3 +1,4 @@
 ---
+title: Text
 layout: documentation
 ---

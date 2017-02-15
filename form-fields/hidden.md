@@ -1,3 +1,4 @@
 ---
+title: Hidden
 layout: documentation
 ---

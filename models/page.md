@@ -1,3 +1,4 @@
 ---
+title: Page
 layout: documentation
 ---

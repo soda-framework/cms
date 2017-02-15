@@ -1,3 +1,4 @@
 ---
+title: Role
 layout: documentation
 ---

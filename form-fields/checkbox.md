@@ -1,3 +1,4 @@
 ---
+title: Checkbox
 layout: documentation
 ---

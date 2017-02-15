@@ -1,3 +1,4 @@
 ---
+title: Multiselect
 layout: documentation
 ---

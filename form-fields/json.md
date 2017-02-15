@@ -1,3 +1,4 @@
 ---
+title: JSON
 layout: documentation
 ---

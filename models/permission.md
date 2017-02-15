@@ -1,3 +1,4 @@
 ---
+title: Permission
 layout: documentation
 ---
