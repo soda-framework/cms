@@ -13,7 +13,7 @@
     <meta name="description" content="{{ site.data.project.description }}">
     {% endif %}
     {% if site.data.project.base_href %}
-    <base href="{{ site.data.project.base_href }}">
+    <base href="{{ site.data.project.base_href }}/">
     {% endif %}
     {% if site.data.images.favicon %}
     <link rel="icon" type="image/x-icon" href="{{ site.data.images.favicon }}" />
@@ -29,7 +29,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700|Source+Sans+Pro:200,400,700,600,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <link href="{{ site.data.project.base_href }}/assets/css/main.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body class="docs">
 
@@ -52,9 +52,9 @@
             -->
             <div class="collapse navbar-collapse" id="top-navigation">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ site.data.project.base_href }}/installation">Installation</a></li>
-                    <li><a href="{{ site.data.project.base_href }}/">Documentation</a></li>
-                    <li><a href="{{ site.data.project.base_href }}/change-log">Change log</a></li>
+                    <li><a href="/installation">Installation</a></li>
+                    <li><a href="/">Documentation</a></li>
+                    <li><a href="/change-log">Change log</a></li>
                     <li><a class="github" href="{{ site.data.project.github_url }}"><i class="fa fa-github"></i></a></li>
                 </ul>
             </div>
@@ -71,7 +71,7 @@
                 <ul>
                     {% for link in section[1] %}
                     <li {% if page.url == link[1] %}class="active"{% endif %}>
-                        <a href="{{ site.data.project.base_href }}/{{ link[1] }}">{{ link[0] }}</a>
+                        <a href="/{{ link[1] }}">{{ link[0] }}</a>
                     </li>
                 {% endfor %}
                 </ul>
@@ -93,7 +93,7 @@
 
 <footer>
     <div class="container">
-        <span>&copy; Copyright <a href="//cms.soda-framework.com">Soda CMS</a>.</span>
+        <span>&copy; Copyright <a href="{{ site.data.project.base_href }}">Soda CMS</a>.</span>
     </div>
 </footer>
 
