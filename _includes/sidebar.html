@@ -1,0 +1,16 @@
+<menu class="sidebar">
+    <ul>
+        {% for section in site.data.menu %}
+        <li>
+            <span class="section-title">{{ section[0] }}</span>
+            <ul>
+                {% for link in section[1] %}
+                <li {% if page.url == link[1] %}class="active"{% endif %}>
+                    <a href="{{ site.data.project.base_href }}/{{ link[1] }}">{{ link[0] }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</menu>
