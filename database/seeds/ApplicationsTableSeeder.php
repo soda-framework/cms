@@ -3,14 +3,15 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class ApplicationsTableSeeder extends Seeder {
-
+class ApplicationsTableSeeder extends Seeder
+{
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         DB::table('applications')->delete();
 
         DB::table('applications')->insert([

@@ -1,10 +1,12 @@
 <?php
+
 namespace Soda\Components\Forms;
 
 use Request;
 use Soda\Models\BlockType;
 
-class FormBuilder {
+class FormBuilder
+{
     protected $field_types = [
         'checkbox'     => 'checkbox',
         'datetime'     => 'datetime',
@@ -20,15 +22,18 @@ class FormBuilder {
         'upload'       => 'upload',
     ];
 
-    public function newField($field) {
+    public function newField($field)
+    {
         return new FormField($field);
     }
 
-    public function getFieldTypes() {
+    public function getFieldTypes()
+    {
         return $this->field_types;
     }
 
-    public function editable($model, $element, $type) {
+    public function editable($model, $element, $type)
+    {
         $field_value = $model->{$element};
         if (Request::get('soda_edit')) {
             $unique = uniqid();
@@ -55,7 +60,8 @@ class FormBuilder {
         }
     }
 
-    public function buildJsParams($params, $default = []) {
+    public function buildJsParams($params, $default = [])
+    {
         $params = is_array($params) ? array_replace_recursive($default, $params) : $default;
         $json_params = json_encode($params, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 

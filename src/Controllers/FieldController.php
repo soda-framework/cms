@@ -1,25 +1,26 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Controllers;
+
 use Soda\Models\Field;
-use Redirect;
+use App\Http\Controllers\Controller;
 
-class FieldController extends Controller {
+class FieldController extends Controller
+{
+    use Traits\CrudableTrait;
+    public $hint = 'field';
 
-	use Traits\CrudableTrait;
-	public $hint = 'field';
+    public function __construct(Field $field)
+    {
+        //$this->middleware('auth');
+        $this->model = $field;
+    }
 
-	public function __construct(Field $field) {
-		//$this->middleware('auth');
-		$this->model = $field;
-	}
-
-
-
-	public function addField(){
-		//create a new field
-		$field = new Field();
-		//..etc..
-		//$field->save();
-	}
+    public function addField()
+    {
+        //create a new field
+        $field = new Field();
+        //..etc..
+        //$field->save();
+    }
 }

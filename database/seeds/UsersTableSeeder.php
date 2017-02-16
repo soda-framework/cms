@@ -1,18 +1,19 @@
 <?php
 
-use Carbon\Carbon;
 use DB;
 use Hash;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder {
-
+class UsersTableSeeder extends Seeder
+{
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         DB::table('users')->delete();
 
         DB::table('users')->insert([

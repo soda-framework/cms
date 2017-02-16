@@ -3,15 +3,15 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class ApplicationUrlsTableSeeder extends Seeder {
-
+class ApplicationUrlsTableSeeder extends Seeder
+{
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
-    public function run() {
-
+    public function run()
+    {
         DB::table('application_urls')->delete();
 
         DB::table('application_urls')->insert([

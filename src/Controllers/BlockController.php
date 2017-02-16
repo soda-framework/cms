@@ -1,20 +1,19 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
+namespace Soda\Controllers;
+
 use Soda\Models\Block;
-use Redirect;
+use App\Http\Controllers\Controller;
 
 class BlockController extends Controller
 {
-
     use    Traits\CrudableTrait;
 
     public $hint = 'block';
 
-    public function __construct(Block $block) {
+    public function __construct(Block $block)
+    {
         //$this->middleware('auth');
         $this->model = $block;
     }
-
-
 }

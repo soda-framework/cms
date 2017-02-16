@@ -1,19 +1,18 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Soda\Models\Navigation;
+namespace Soda\Controllers;
+
 use Auth;
+use Soda\Models\Navigation;
 use Illuminate\Http\Request;
 use Soda\Models\NavigationItem;
+use App\Http\Controllers\Controller;
 
 class NavigationController extends Controller
 {
-
     use Traits\CrudableTrait;
     use    Traits\TreeableTrait;
     public $hint = 'navigation';
-
-
 
     public function __construct(NavigationItem $navigation_item)
     {
@@ -24,9 +23,8 @@ class NavigationController extends Controller
 
     public function index()
     {
-
         $filter = \DataFilter::source($this->model->collectRoots());
-        $filter->add('name', 'name', 'text');;
+        $filter->add('name', 'name', 'text');
         $filter->submit('Search');
         $filter->reset('Clear');
         $filter->build();
@@ -35,29 +33,31 @@ class NavigationController extends Controller
         $grid->add('name', 'Name', true); //field name, label, sortable
         $grid->add('description', 'Description', true); //field name, label, sortable
         $grid->add('{{ $id }}', 'Options')->cell(function ($value) {
-            $edit = "<a href='" . route('soda.' . $this->hint . '.edit',
-                    [$value]) . "' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
-            $edit .= "<a href='" . route('soda.' . $this->hint . '.delete',
-                    [$value]) . "' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+            $edit = "<a href='".route('soda.'.$this->hint.'.edit',
+                    [$value])."' class='btn btn-warning'><span class='fa fa-pencil'></span> Edit</a> ";
+            $edit .= "<a href='".route('soda.'.$this->hint.'.delete',
+                    [$value])."' class='btn btn-danger'><span class='fa fa-pencil'></span> Delete</a>";
+
             return $edit;
         });
         $grid->orderBy('id', 'desc'); //default orderby
         $grid->paginate(10)->getGrid('soda::partials.grid');
         $hint = $this->hint;
-        return view('soda::' . $this->hint . '.index', compact('filter', 'grid', 'hint'));
+
+        return view('soda::'.$this->hint.'.index', compact('filter', 'grid', 'hint'));
     }
 
-    public function deleteTree($id){
+    public function deleteTree($id)
+    {
         $item = $this->tree->find($id);
-        $root_id = $item->getAncestorsWhere('real_depth','=',0)->first()->id;
+        $root_id = $item->getAncestorsWhere('real_depth', '=', 0)->first()->id;
         $item->deleteSubtree(true);
         //we redirect back to the root menu
-        return redirect()->route('soda.' . $this->hint . '.view',['id'=>$root_id])->with('success', 'deleted');
+        return redirect()->route('soda.'.$this->hint.'.view', ['id'=>$root_id])->with('success', 'deleted');
     }
 
     public function view(Request $request, $id = null)
     {
-
 
 //        $parent = NavigationItem::find($id);
 //
@@ -80,16 +80,15 @@ class NavigationController extends Controller
             $tree = false;
         }
 
-        return view('soda::' . $this->hint . '.view', compact('model', 'hint', 'tree'));
+        return view('soda::'.$this->hint.'.view', compact('model', 'hint', 'tree'));
     }
-
 
     public function edit(Request $request, $id = null)
     {
         if ($id) {
             $this->model = $this->model->findOrFail($id);
         }
-        if($request->get('parent_id')){
+        if ($request->get('parent_id')) {
             $parent = $this->model->find($request->get('parent_id'));
         }
 
@@ -97,33 +96,28 @@ class NavigationController extends Controller
         $this->model->fill($request->input());
         $this->model->application_id = \Soda::getApplication()->id;
         $this->model->application_user_id = Auth::user()->id;
-        if(@$parent && !$this->model->id){
+        if (@$parent && ! $this->model->id) {
             //create a new item and move it into a parent.
             //we need to move this item into the parent.
             $parent->addChild($this->model);
-        }
-        else{
+        } else {
             //otherwise, jsut assuem this is a root element I guess.
             $this->model->save();
         }
 
-        return redirect()->route('soda.' . $this->hint . '.view', ['id' => $this->model->id])->with('success',
+        return redirect()->route('soda.'.$this->hint.'.view', ['id' => $this->model->id])->with('success',
             'updated');
     }
 
-
     public function createForm(Request $request, $parent_id = null)
     {
-
         if ($parent_id) {
             $parent = $this->model->withoutGlobalScopes(['live'])->find($parent_id);
             $this->model->parent_id = $parent->id;
-
         } else {
-            $this->model->parent_id = NULL;
+            $this->model->parent_id = null;
         }
 
-        return view('soda::'.$this->hint.'.view',['model'=>$this->model, 'hint'=>$this->hint, 'tree'=>false]);
+        return view('soda::'.$this->hint.'.view', ['model'=>$this->model, 'hint'=>$this->hint, 'tree'=>false]);
     }
-
 }

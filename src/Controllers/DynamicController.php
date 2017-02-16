@@ -1,12 +1,14 @@
-<?php namespace Soda\Controllers;
+<?php
+
+namespace Soda\Controllers;
 
 //maybe this should be renamed to be block/page specific?
 
-use Carbon\Carbon;
 use Redirect;
+use Carbon\Carbon;
 use Soda\Models\BlockType;
-use Soda\Models\ModelBuilder;
 use Illuminate\Http\Request;
+use Soda\Models\ModelBuilder;
 use App\Http\Controllers\Controller;
 
 class DynamicController extends Controller
@@ -16,7 +18,7 @@ class DynamicController extends Controller
     public function __construct(ModelBuilder $modelBuilder)
     {
         $this->type = BlockType::with('fields')->where('identifier', \Route::current()->getParameter('type'))->first();
-        $this->model = \Soda::dynamicModel('soda_' . $this->type->identifier, $this->type->fields->lists('field_name')->toArray());
+        $this->model = \Soda::dynamicModel('soda_'.$this->type->identifier, $this->type->fields->lists('field_name')->toArray());
     }
 
     public function index()
@@ -34,12 +36,12 @@ class DynamicController extends Controller
         } else {
             $model = $this->model;
         }
+
         return view('soda::standard.view', ['type' => $this->type, 'model' => $model]);
     }
 
     public function edit(Request $request, $type = null, $id = null)
     {
-
         if ($id) {
             $this->model = $this->model->findOrFail($id);
         }
@@ -65,7 +67,6 @@ class DynamicController extends Controller
                 //default, just chuck in the values.
                 $this->model->{$field->field_name} = $request->input($field->field_name);
             }
-
         }
 
         //dd($request->except(['_token']));
@@ -81,7 +82,7 @@ class DynamicController extends Controller
     }
 
     /**
-     * delete
+     * delete.
      * @param Request $request
      * @param null $type
      * @param null $id
@@ -90,6 +91,7 @@ class DynamicController extends Controller
     {
         $this->model = $this->model->findOrFail($id);
         $this->model->delete();
+
         return \Redirect::back()->with('message', 'Success, item deleted'); //TODO: this should use nicer refirect?
     }
 
@@ -101,7 +103,6 @@ class DynamicController extends Controller
      */
     public function inlineEdit($type, $id, $field)
     {
-
         $this->model = $this->model->findOrFail($id);
         $this->model->{$field} = \Request::get($field);
         $this->model->save();

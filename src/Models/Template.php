@@ -1,12 +1,13 @@
 <?php
+
 namespace Soda\Models;
 
-use Franzose\ClosureTable\Models\Entity;
-use Soda\Models\Scopes\FromApplicationScope;
 use Soda\Models\Scopes\LiveScope;
 use Soda\Models\Scopes\PositionScope;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Models\Traits\SluggableTrait;
+use Franzose\ClosureTable\Models\Entity;
+use Soda\Models\Scopes\FromApplicationScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Template extends Entity implements TemplateInterface
 {
@@ -21,9 +22,6 @@ class Template extends Entity implements TemplateInterface
      *
      * @var string
      */
-
-
-
     public static function boot()
     {
         parent::boot();
@@ -31,7 +29,6 @@ class Template extends Entity implements TemplateInterface
         static::addGlobalScope(new LiveScope);
         static::addGlobalScope(new PositionScope);
     }
-
 
     /**
      * ClosureTable model instance.

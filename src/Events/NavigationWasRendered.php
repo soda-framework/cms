@@ -1,11 +1,12 @@
 <?php
+
 namespace Soda\Events;
 
-
-class NavigationWasRendered {
-
-    public function __construct($input = NULL){
-        if($input){
+class NavigationWasRendered
+{
+    public function __construct($input = null)
+    {
+        if ($input) {
             $this->input = $input;
         }
     }

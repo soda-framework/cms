@@ -1,38 +1,37 @@
 <?php
+
 namespace Themes\SodaTheme\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
-use Illuminate\Routing\Router;
-use View;
 
-
-class SodaThemeServiceProvider extends RouteServiceProvider {
-
+class SodaThemeServiceProvider extends RouteServiceProvider
+{
     /**
      * The event listener mappings for the application.
      *
      * @var array
      */
-
     protected $defer = false;
 
     protected $namespace = 'Themes\SodaTheme\Controllers';
 
-
-    public function boot(Router $router) {
+    public function boot(Router $router)
+    {
         parent::boot($router);
 
-        $this->loadViewsFrom(__DIR__ . '/../../views', 'soda_theme_hint');
+        $this->loadViewsFrom(__DIR__.'/../../views', 'soda_theme_hint');
     }
 
-    public function register() {
+    public function register()
+    {
         $this->registerDependencies([
             'Themes\SodaTheme\Providers\EventsServiceProvider',
         ]);
 
-        $this->publishes([__DIR__ . '/../../public' => public_path('soda_theme_hint')], 'public');
-        $this->publishes([__DIR__ . '/../../config' => config_path()]);
+        $this->publishes([__DIR__.'/../../public' => public_path('soda_theme_hint')], 'public');
+        $this->publishes([__DIR__.'/../../config' => config_path()]);
     }
 
     /**
@@ -42,18 +41,20 @@ class SodaThemeServiceProvider extends RouteServiceProvider {
      *
      * @return void
      */
-    public function map(Router $router) {
+    public function map(Router $router)
+    {
         $router->group(['namespace' => $this->namespace, 'middleware' => 'web'], function ($router) {
-            require_once __DIR__ . '/../routes.php';
+            require_once __DIR__.'/../routes.php';
         });
     }
 
     /**
-     * Register dependies conditionally (e.g. dev dependencies)
+     * Register dependies conditionally (e.g. dev dependencies).
      *
      * @param array $services
      */
-    public function registerDependencies(array $services) {
+    public function registerDependencies(array $services)
+    {
         foreach ($services as $service) {
             $this->app->register($service);
         }
@@ -62,10 +63,10 @@ class SodaThemeServiceProvider extends RouteServiceProvider {
     /**
      * @param array $facades
      */
-    public function registerFacades(array $facades) {
+    public function registerFacades(array $facades)
+    {
         foreach ($facades as $facade => $class) {
             AliasLoader::getInstance()->alias($facade, $class);
-
         }
     }
 }

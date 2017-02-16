@@ -5,7 +5,8 @@ namespace Themes\SodaTheme\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Authenticate {
+class Authenticate
+{
     /**
      * Handle an incoming request.
      *
@@ -15,8 +16,8 @@ class Authenticate {
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null) {
-
+    public function handle($request, Closure $next, $guard = null)
+    {
         if (Auth::guard($guard)->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
