@@ -12,8 +12,7 @@ class CreateNavigations extends Migration
      */
     public function up()
     {
-        Schema::create('navigations', function(Blueprint $table)
-        {
+        Schema::create('navigations', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name')->nullable();
             $table->integer('application_users_id');

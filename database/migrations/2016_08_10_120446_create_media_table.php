@@ -7,13 +7,13 @@ class CreateMediaTable extends Migration
 {
     /**
      * Run the migrations.
-     * Fields for the media table
+     * Fields for the media table.
      * @return void
      */
     public function up()
     {
         //The schema for the media table
-        Schema::create('media', function(Blueprint $table){
+        Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('related_id');
             $table->string('related_table');

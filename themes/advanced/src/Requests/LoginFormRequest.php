@@ -4,8 +4,8 @@ namespace Themes\SodaTheme\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginFormRequest extends FormRequest {
-
+class LoginFormRequest extends FormRequest
+{
     protected $messages = [
         'email.required' => 'Email is required',
         'email.email'    => 'Email should be a valid email address.',
@@ -15,12 +15,13 @@ class LoginFormRequest extends FormRequest {
         'email' => 'required|email',
     ];
 
-    public function rules() {
+    public function rules()
+    {
         return $this->rules;
     }
 
-    public function authorize() {
+    public function authorize()
+    {
         return true;
     }
 }
-

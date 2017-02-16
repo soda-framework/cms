@@ -3,14 +3,14 @@
  * Created by PhpStorm.
  * User: sidavies
  * Date: 7/03/2016
- * Time: 12:27 PM
+ * Time: 12:27 PM.
  */
 
 namespace Soda\Models\Scopes;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Database\Eloquent\Builder;
 
 class PositionScope implements Scope
 {

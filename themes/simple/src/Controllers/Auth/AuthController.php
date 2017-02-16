@@ -2,40 +2,44 @@
 
 namespace Themes\SodaTheme\Controllers\Auth;
 
+use Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Http\Request;
-use Auth;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     use AuthenticatesAndRegistersUsers;
 
     /**
      * Create a new authentication controller instance.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('guest', ['except' => ['logout']]);
     }
 
     /**
-     * The Main login view
+     * The Main login view.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function loginForm() {
+    public function loginForm()
+    {
         return view('soda_theme_hint::login', compact('request'));
     }
 
     /**
      * This login method creates a user if the email is not present.
      * You probable want to change the auth guard to something else if
-     * you want a real login
+     * you want a real login.
      *
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $credentials = $request->except(['_token']);
         if (Auth::attempt($credentials)) {
             return redirect()->route('soda_theme_hint.restricted', compact('request'));
@@ -52,16 +56,16 @@ class AuthController extends Controller {
     }
 
     /**
-     * logout functions
+     * logout functions.
      *
-     * @param  boolean $redirect page to redirect to when complete.
+     * @param  bool $redirect page to redirect to when complete.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function logout($redirect = false) {
+    public function logout($redirect = false)
+    {
         Auth::logout();
 
         return redirect()->to('/')->with('success', 'Logged out succesfully');
     }
-
 }

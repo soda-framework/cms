@@ -2,7 +2,7 @@
 
 namespace Soda\Facades;
 
-use \Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \Illuminate\Foundation\Application
@@ -16,12 +16,9 @@ class UploaderFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        if(config('soda')['upload_destination'] == 's3')
-        {
+        if (config('soda')['upload_destination'] == 's3') {
             return 's3';
-        }
-        else
-        {
+        } else {
             return 'uploader';
         }
     }

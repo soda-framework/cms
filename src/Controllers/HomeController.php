@@ -1,16 +1,19 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use App\Http\Controllers\Controller;
-use Auth;
+namespace Soda\Controllers;
+
 use Gate;
+use App\Http\Controllers\Controller;
 use Soda\Events\DashboardWasRendered;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
     /**
      * Create a new controller instance.
      */
-    public function __construct() {
-//		$this->middleware('soda');
+    public function __construct()
+    {
+        //		$this->middleware('soda');
     }
 
     /**
@@ -18,7 +21,8 @@ class HomeController extends Controller {
      *
      * @return Response
      */
-    public function getIndex() {
+    public function getIndex()
+    {
         if (Gate::denies('soda.dashboard')) {
             dd('nope');
             abort(403);
@@ -26,11 +30,10 @@ class HomeController extends Controller {
 
         $dashboard = event(new DashboardWasRendered());
 
-        if (!empty($dashboard)) {
+        if (! empty($dashboard)) {
             return $dashboard[0];
         } else {
             return view('soda::home.dashboard');
         }
     }
-
 }

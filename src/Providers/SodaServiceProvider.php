@@ -1,13 +1,13 @@
 <?php
+
 namespace Soda\Providers;
 
 use Blade;
-use Storage;
-use Soda\Components\Soda;
-use Soda\Models\Application;
 use Soda\Models\User;
+use Soda\Components\Soda;
 
-class SodaServiceProvider extends AbstractSodaServiceProvider {
+class SodaServiceProvider extends AbstractSodaServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -20,8 +20,9 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
      *
      * @return void
      */
-    public function boot() {
-        require (__DIR__.'/../helpers.php');
+    public function boot()
+    {
+        require __DIR__.'/../helpers.php';
 
         $this->configure();
 
@@ -39,7 +40,8 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->mergeConfigRecursivelyFrom(__DIR__.'/../../config/soda.php', 'soda');
 
         $this->registerDependencies([
@@ -47,7 +49,7 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
             RouteServiceProvider::class,
             \Franzose\ClosureTable\ClosureTableServiceProvider::class,
             \Zofe\Rapyd\RapydServiceProvider::class,
-            \Creativeorange\Gravatar\GravatarServiceProvider::class
+            \Creativeorange\Gravatar\GravatarServiceProvider::class,
         ]);
 
         $this->registerFacades([
@@ -58,14 +60,15 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
 
         $this->commands([
             \Soda\Console\InstallTheme::class,
-            \Soda\Console\Update::class
+            \Soda\Console\Update::class,
         ]);
     }
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->app->config->set('auth.providers.soda', [
             'driver' => 'eloquent',
-            'model' => User::class
+            'model' => User::class,
         ]);
 
         $this->app->config->set('auth.guards.soda', [
@@ -87,14 +90,15 @@ class SodaServiceProvider extends AbstractSodaServiceProvider {
         ]);
     }
 
-    protected function extendBlade() {
-        Blade::extend(function($value, $compiler)
-        {
+    protected function extendBlade()
+    {
+        Blade::extend(function ($value, $compiler) {
             $value = preg_replace('/(?<=\s)@switch\((.*)\)(\s*)@case\((.*)\)(?=\s)/', '<?php switch($1):$2case $3: ?>', $value);
             $value = preg_replace('/(?<=\s)@endswitch(?=\s)/', '<?php endswitch; ?>', $value);
             $value = preg_replace('/(?<=\s)@case\((.*)\)(?=\s)/', '<?php case $1: ?>', $value);
             $value = preg_replace('/(?<=\s)@default(?=\s)/', '<?php default: ?>', $value);
             $value = preg_replace('/(?<=\s)@break(?=\s)/', '<?php break; ?>', $value);
+
             return $value;
         });
 

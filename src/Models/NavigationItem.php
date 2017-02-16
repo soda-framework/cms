@@ -1,10 +1,10 @@
 <?php
+
 namespace Soda\Models;
 
-
+use Soda\Models\Traits\TreeableTrait;
 use Franzose\ClosureTable\Models\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Soda\Models\Traits\TreeableTrait;
 
 class NavigationItem extends Entity implements NavigationItemInterface
 {
@@ -23,5 +23,4 @@ class NavigationItem extends Entity implements NavigationItemInterface
     {
         return $this->belongsTo(Navigation::class, 'page_type_id');
     }
-
 }

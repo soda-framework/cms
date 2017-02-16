@@ -2,19 +2,19 @@
 
 use Illuminate\Database\Seeder;
 
-class PageTypesTableSeeder extends Seeder {
-
+class PageTypesTableSeeder extends Seeder
+{
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         DB::table('page_types')->delete();
 
         DB::table('page_types')->insert([
-            0 =>
-                [
+            0 => [
                     'id'                   => 1,
                     'name'                 => 'home',
                     'description'          => 'home',
@@ -30,8 +30,7 @@ class PageTypesTableSeeder extends Seeder {
                     'edit_action'          => 'view',
                     'edit_action_type'     => 'soda::blocks.index',
                 ],
-            1 =>
-                [
+            1 => [
                     'id'                   => 2,
                     'name'                 => 'about',
                     'description'          => 'about',

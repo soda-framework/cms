@@ -3,14 +3,15 @@
  * Created by PhpStorm.
  * User: sidavies
  * Date: 6/02/2016
- * Time: 5:37 PM
+ * Time: 5:37 PM.
  */
 
 namespace Soda\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Block extends Model {
+class Block extends Model
+{
     protected $table = 'blocks';
     protected $fillable = [
         'name',
@@ -21,8 +22,8 @@ class Block extends Model {
         'block_type_id',
     ];
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo(BlockType::class, 'block_type_id');
     }
-
 }

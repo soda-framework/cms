@@ -1,4 +1,5 @@
 <?php
+
 namespace Soda\Models;
 
 use Franzose\ClosureTable\Models\ClosureTable;
@@ -11,5 +12,4 @@ class NavigationItemClosure extends ClosureTable implements NavigationItemClosur
      * @var string
      */
     protected $table = 'navigation_items_closure';
-
 }

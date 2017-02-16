@@ -1,13 +1,12 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+namespace Soda\Controllers;
+
 use Soda\Models\PageType;
-
+use App\Http\Controllers\Controller;
 
 class PageTypeController extends Controller
 {
-
     use Traits\CrudableTrait;
     public $hint = 'page_type';
 
@@ -16,7 +15,4 @@ class PageTypeController extends Controller
         //$this->middleware('auth');
         $this->model = $type;
     }
-
-
-
 }

@@ -5,13 +5,11 @@ namespace Soda\Providers;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-
 class AuthServiceProvider extends ServiceProvider
 {
     //bleh
     public function register()
     {
-
     }
 
     /**
@@ -22,7 +20,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-
 
         //Auth::extend('soda', function($app, array $config) {
         //    // Return an instance of Illuminate\Contracts\Auth\UserProvider...
@@ -56,5 +53,4 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
     }
-
 }

@@ -2,14 +2,15 @@
 
 use Illuminate\Database\Seeder;
 
-class PermissionsTableSeeder extends Seeder {
-
+class PermissionsTableSeeder extends Seeder
+{
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         DB::table('permissions')->delete();
     }
 }

@@ -1,13 +1,13 @@
-<?php namespace Soda\Controllers;
+<?php
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
+namespace Soda\Controllers;
+
 use App\Http\Controllers\Controller;
 
-class ApplicationController extends Controller {
-
-	public function anyIndex() {
-		dd('get applications');
-	}
-
+class ApplicationController extends Controller
+{
+    public function anyIndex()
+    {
+        dd('get applications');
+    }
 }
