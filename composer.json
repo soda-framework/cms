@@ -1,5 +1,5 @@
 {
-  "name": "sodacms/sodacms",
+  "name": "soda-framework/cms",
   "license": "MIT",
   "description": "Soda CMS package",
   "keywords": ["CMS","soda","laravel"],
@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "sodacms/closure-table": "10.0",
+    "soda-framework/eloquent-closure": "^0.0",
     "league/flysystem-aws-s3-v3": "^1.0",
     "creativeorange/gravatar": "~1.0",
     "zofe/rapyd":"2.2.*"
