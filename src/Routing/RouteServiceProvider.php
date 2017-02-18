@@ -44,6 +44,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if(($key = array_search('Illuminate\Session\Middleware\StartSession', $webMiddleware)) !== false) {
             $webMiddleware[$key] = SluggableSession::class;
+            array_unshift($router->middlewarePriority, SluggableSession::class);
         }
 
         $router->middlewareGroup('soda.sluggable-web', $webMiddleware);

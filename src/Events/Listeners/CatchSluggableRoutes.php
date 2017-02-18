@@ -40,7 +40,7 @@ class CatchSluggableRoutes
 
             $action = RequestMatcher::match($event->request);
 
-            $event->route->setAction(RouteAction::parse($event->route->uri, $action));
+            $event->route->setAction(array_merge(RouteAction::parse($event->route->uri, $action), ['middleware' => 'soda.sluggable-web']));
         }
     }
 
