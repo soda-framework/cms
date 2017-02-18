@@ -2,9 +2,7 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Soda\Cms\Support\Facades\Session;
-use Soda\Cms\Support\Facades\RequestMatcher;
 
 class HomeController extends BaseController
 {

@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Events\Listeners;
 
-use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\RouteAction;
+use Illuminate\Routing\Events\RouteMatched;
 use Soda\Cms\Support\Facades\RequestMatcher;
 
 class CatchSluggableRoutes

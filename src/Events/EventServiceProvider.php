@@ -17,7 +17,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Illuminate\Routing\Events\RouteMatched' => [
             'Soda\Cms\Events\Listeners\CatchSluggableRoutes',
-        ]
+        ],
     ];
 
     /**
