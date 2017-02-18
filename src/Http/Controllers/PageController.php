@@ -28,6 +28,7 @@ class PageController extends BaseController
     public function index()
     {
         $pages = $this->pages->getTree();
+
         $page_types = $this->pages->getTypes(true);
         $page_types->load('subpage_types');
 

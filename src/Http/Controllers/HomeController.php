@@ -2,9 +2,7 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Soda\Cms\Support\Facades\Session;
-use Soda\Cms\Support\Facades\RequestMatcher;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends BaseController
 {
@@ -20,10 +18,10 @@ class HomeController extends BaseController
 
     public function getToggleDraft()
     {
-        $draft_mode = Session::get('soda.draft_mode') == true ? false : true;
+        $draftMode = Session::get('soda.draft_mode') == true ? false : true;
 
-        Session::set('soda.draft_mode', $draft_mode);
+        Session::put('soda.draft_mode', $draftMode);
 
-        return redirect()->back()->with('info', ($draft_mode ? 'Draft' : 'Live').' mode active. <a href="/" target="_blank">View site</a>');
+        return redirect()->back()->with('info', ($draftMode ? 'Draft' : 'Live').' mode active. <a href="/" target="_blank">View site</a>');
     }
 }

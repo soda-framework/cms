@@ -2,6 +2,8 @@
 
 namespace Soda\Cms\Database\Support\Models\Traits;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Rutorika\Sortable\MorphToSortedManyTrait;
 
 trait MorphToSortedMany

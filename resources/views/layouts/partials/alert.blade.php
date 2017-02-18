@@ -18,7 +18,7 @@
             @if ($alert = session($message))
                 <div class="alert alert-{{ $class }} alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ $alert }}
+                    {!! $alert !!}
                 </div>
             @endif
         @endforeach
@@ -28,7 +28,7 @@
                 There were problems validating your input:
                 <ul>
                     @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li>{!! $error !!}</li>
                     @endforeach
                 </ul>
             </div>

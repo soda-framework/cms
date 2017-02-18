@@ -13,6 +13,7 @@ use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\HasPermission;
 use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Soda\Cms\Http\Middleware\SluggableSession;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,14 @@ class RouteServiceProvider extends ServiceProvider
             Drafting::class,
             Security::class,
         ]);
+
+        $webMiddleware = $router->getMiddlewareGroups()['web'];
+
+        if(($key = array_search('Illuminate\Session\Middleware\StartSession', $webMiddleware)) !== false) {
+            $webMiddleware[$key] = SluggableSession::class;
+        }
+
+        $router->middlewareGroup('soda.sluggable-web', $webMiddleware);
 
         $router->middlewareGroup('soda.api', [
             Drafting::class,
