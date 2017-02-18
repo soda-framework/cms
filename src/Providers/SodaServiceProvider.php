@@ -68,19 +68,19 @@ class SodaServiceProvider extends AbstractSodaServiceProvider
     {
         $this->app->config->set('auth.providers.soda', [
             'driver' => 'eloquent',
-            'model' => User::class,
+            'model'  => User::class,
         ]);
 
         $this->app->config->set('auth.guards.soda', [
-            'driver' => 'session',
+            'driver'   => 'session',
             'provider' => 'soda',
         ]);
 
         $this->app->config->set('auth.passwords.soda', [
             'provider' => 'soda',
-            'email' => 'auth.emails.password',
-            'table' => 'password_resets',
-            'expire' => 60,
+            'email'    => 'auth.emails.password',
+            'table'    => 'password_resets',
+            'expire'   => 60,
         ]);
 
         $this->app->config->set('filesystems.disks.soda.public', [
