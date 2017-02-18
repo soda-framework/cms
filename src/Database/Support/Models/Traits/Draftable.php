@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
+use Soda\Cms\Foundation\Constants;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Soda\Cms\Foundation\Constants;
+use Illuminate\Database\Eloquent\Builder;
 
 trait Draftable
 {
