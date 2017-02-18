@@ -14,19 +14,7 @@ abstract class AbstractPageMatcher implements MatcherInterface
         $this->router = $router;
     }
 
-    abstract public function match($slug);
+    abstract public function matches($slug);
 
     abstract public function render(Request $request);
-
-    protected function dispatchSluggedRoute(Request $request, $slug, $handle)
-    {
-        // Invalidate the current route
-        $this->router->getCurrentRoute()->setUri('INVALID@ROUTE');
-
-        // Create a route for our matched slug
-        $this->router->match([$request->getMethod()], $slug, $handle)->middleware('web');
-
-        // Dispatch, and match to our new route
-        return $this->router->dispatch($request);
-    }
 }

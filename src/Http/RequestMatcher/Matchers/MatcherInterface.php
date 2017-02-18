@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 interface MatcherInterface
 {
-    public function match($slug);
+    public function matches($slug);
 
     public function render(Request $request);
 }

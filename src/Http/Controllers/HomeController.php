@@ -26,17 +26,4 @@ class HomeController extends BaseController
 
         return redirect()->back()->with('info', ($draft_mode ? 'Draft' : 'Live').' mode active. <a href="/" target="_blank">View site</a>');
     }
-
-    /**
-     * Main page view method.
-     *
-     * @param Request $request
-     * @param string  $slug
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function page(Request $request, $slug = '/')
-    {
-        return RequestMatcher::match($request, $slug);
-    }
 }

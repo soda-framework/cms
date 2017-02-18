@@ -15,6 +15,9 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Auth\Events\Login' => [
             'Soda\Cms\Events\Listeners\RecordLastLoginTimestamp',
         ],
+        'Illuminate\Routing\Events\RouteMatched' => [
+            'Soda\Cms\Events\Listeners\CatchSluggableRoutes',
+        ]
     ];
 
     /**

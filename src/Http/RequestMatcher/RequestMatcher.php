@@ -74,13 +74,12 @@ class RequestMatcher
      * Loads a page by it's slug.
      *
      * @param Request $request
-     * @param         $slug
      */
-    public function match(Request $request, $slug)
+    public function match(Request $request)
     {
         foreach ($this->matchers as $matcher) {
             $matcherInstance = app($matcher);
-            if ($match = $matcherInstance->match($slug)) {
+            if ($match = $matcherInstance->matches($request->getRequestUri())) {
                 return $matcherInstance->render($request);
             }
         }

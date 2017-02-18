@@ -19,7 +19,7 @@ class SluggedPageMatcher extends AbstractPageMatcher implements MatcherInterface
         $this->router = $router;
     }
 
-    public function match($slug)
+    public function matches($slug)
     {
         $this->matchedPage = $this->pages->findBySlug($slug);
 
@@ -37,24 +37,24 @@ class SluggedPageMatcher extends AbstractPageMatcher implements MatcherInterface
             throw new Exception('Action \''.ucfirst($action).'\' is not valid.');
         }
 
-        return $this->$handleAction($request, $this->matchedPage);
+        return $this->$handleAction($this->matchedPage);
     }
 
-    public function handleControllerAction(Request $request, PageInterface $page)
+    public function handleControllerAction(PageInterface $page)
     {
         $namespace = $page->package;
         $controller = trim($page->getAttribute('view_action'), '\\');
 
-        return $this->dispatchSluggedRoute($request, $page->slug, ['uses' => $namespace ? "$namespace\\$controller" : $controller]);
+        return ['uses' => $namespace ? "$namespace\\$controller" : $controller];
     }
 
-    public function handleViewAction(Request $request, PageInterface $page)
+    public function handleViewAction(PageInterface $page)
     {
         $view = $page->getAttribute('view_action');
         $view_params = compact('page');
 
-        return $this->dispatchSluggedRoute($request, $page->slug, function () use ($view, $view_params) {
+        return function () use ($view, $view_params) {
             return view($view, $view_params);
-        });
+        };
     }
 }

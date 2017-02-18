@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Support\Models\Traits;
 
 use Carbon\Carbon;
-use Soda\Cms\Foundation\Constants;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Builder;
+use Soda\Cms\Foundation\Constants;
 
 trait Draftable
 {
@@ -21,9 +21,11 @@ trait Draftable
             if (static::isDraftsEnabled()) {
                 $builder->where('status', '=', Constants::STATUS_LIVE);
 
-                $builder->where(function ($subQuery) {
-                    $subQuery->where(static::$publishDateField, '<', Carbon::now())->orWhereNull(static::$publishDateField);
-                });
+                if (isset(static::$publishDateField)) {
+                    $builder->where(function ($subQuery) {
+                        $subQuery->where(static::$publishDateField, '<', Carbon::now())->orWhereNull(static::$publishDateField);
+                    });
+                }
             }
 
             return $builder;

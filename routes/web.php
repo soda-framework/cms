@@ -71,4 +71,6 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
     });
 });
 
-Route::any('{slug?}', 'HomeController@page')->where('slug', '^(?!_).+')->name('soda.page.match');
+Route::any('{slug?}', function() {
+    // Caught by event
+})->where('slug', '^(?!_).+')->name('soda.page.match');
