@@ -31,9 +31,9 @@ class BlockType extends Model implements BlockTypeInterface
     ];
 
     protected $defaults = [
-        'edit_action'      => 'soda::data.pages.blocks.view',
+        'edit_action'      => 'soda::data.blocks.types.view',
         'edit_action_type' => 'view',
-        'list_action'      => 'soda::data.pages.blocks.index',
+        'list_action'      => 'soda::data.blocks.types.index',
         'list_action_type' => 'view',
     ];
 
@@ -61,22 +61,22 @@ class BlockType extends Model implements BlockTypeInterface
         $pageReferenceColumn = $page->getForeignKey();
         $pageIndex = 'FK_'.$this->getDynamicTableName().'_'.$pageReferenceColumn.'_pages';
 
-        $blockTable = $page->block_types()->getRelated()->getTable();
-        $blockReferenceColumn = $page->block_types()->getRelated()->getForeignKey();
-        $blockIndex = 'FK_'.$this->getDynamicTableName().'_'.$blockReferenceColumn.'_'.$blockTable;
+        //$blockTable = $page->block_types()->getRelated()->getTable();
+        //$blockReferenceColumn = $page->block_types()->getRelated()->getForeignKey();
+        //$blockIndex = 'FK_'.$this->getDynamicTableName().'_'.$blockReferenceColumn.'_'.$blockTable;
 
         $table->increments('id');
-        $table->integer($blockReferenceColumn)->unsigned()->nullable();
+        //$table->integer($blockReferenceColumn)->unsigned()->nullable();
         $table->integer($pageReferenceColumn)->unsigned()->nullable();
         $table->tinyInteger('is_shared')->unsigned()->nullable();
-        $table->foreign($blockReferenceColumn, $blockIndex)->references('id')->on($blockTable)->onUpdate('CASCADE')->onDelete('SET NULL');
+        //$table->foreign($blockReferenceColumn, $blockIndex)->references('id')->on($blockTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->foreign($pageReferenceColumn, $pageIndex)->references('id')->on($pageTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->timestamps();
     }
 
     public function blockQuery($pageId = null)
     {
-        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where('block_type_id', $this->getKey())->where(function ($q) use ($pageId) {
+        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where(function ($q) use ($pageId) {
             $q->where('is_shared', 1);
             if ($pageId) {
                 $q->orWhere('page_id', $pageId);

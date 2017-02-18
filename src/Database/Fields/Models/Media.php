@@ -1,6 +1,6 @@
 <?php
 
-namespace Soda\Cms\Models;
+namespace Soda\Cms\Database\Fields\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Database\Fields\Interfaces\MediaInterface;

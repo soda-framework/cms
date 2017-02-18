@@ -22,7 +22,7 @@
                     @if($page->isAllowedChildren())
                     @permission('create-pages')
                     <div>
-                        <a data-page-id="{{ $page->id }}" data-page-type-id="{{ $page->type_id }}" data-toggle="modal" data-target="#pageTypeModal">Create Sub-page</a>
+                        <a data-page-id="{{ $page->id }}" data-page-type-id="{{ $page->page_type_id }}" data-toggle="modal" data-target="#pageTypeModal">Create Sub-page</a>
                     </div>
                     @endpermission
                     @endif

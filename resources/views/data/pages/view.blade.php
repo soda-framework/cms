@@ -6,7 +6,7 @@ if ($page->type === null || $page->type->fields === null || !count($page->type->
 
 $blockTypes = $page->block_types->keyBy('id');
 if($page->type && $page->type->block_types) {
-    $blockTypes->merge($page->type->block_types->keyBy('id'));
+    $blockTypes = $blockTypes->merge($page->type->block_types->keyBy('id'));
 }
 ?>
 
