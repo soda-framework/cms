@@ -2,12 +2,12 @@
 
 namespace Soda\Cms\Events\Listeners;
 
-use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\RouteAction;
 use Illuminate\Session\SessionManager;
+use Illuminate\Routing\Events\RouteMatched;
 use Soda\Cms\Support\Facades\RequestMatcher;
+use Illuminate\Contracts\Encryption\Encrypter;
 
 class CatchSluggableRoutes
 {

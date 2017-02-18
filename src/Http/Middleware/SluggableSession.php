@@ -17,8 +17,7 @@ class SluggableSession extends StartSession
     protected function startSession(Request $request)
     {
         return tap($this->getSession($request), function ($session) use ($request) {
-            if(!$session->isStarted())
-            {
+            if (! $session->isStarted()) {
                 $session->setRequestOnHandler($request);
 
                 $session->start();
