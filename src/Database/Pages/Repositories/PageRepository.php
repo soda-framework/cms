@@ -65,7 +65,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
         if ($parent->type) {
-            $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
+            $allowedPageTypes = $parent->type->subpageTypes ? $parent->type->subpageTypes->pluck('id')->toArray() : [];
             if (count($allowedPageTypes) && ! in_array($pageTypeId, $allowedPageTypes)) {
                 throw new \Exception('You cannot create a page of this type here');
             }
@@ -115,7 +115,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
     {
         if ($id) {
             $page = $this->model->findOrFail($id);
-            $page->fill($request->all());
+            $page->fill($request->all())->fillDefaults();
             $page->slug = $page->generateSlug($request->input('slug'), false);
             $page->save();
         } else {
@@ -146,7 +146,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
             'parent_id'      => $parentPage->getKey(),
             'slug'           => $slug,
             'application_id' => Soda::getApplication()->getKey(),
-        ])->save();
+        ])->fillDefaults()->save();
 
         if ($parentPage) {
             $parentPage->addChild($page);

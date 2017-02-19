@@ -15,8 +15,8 @@ class CreatePageTypeBlockTypesTable extends Migration
         Schema::create('page_type_block_types', function (Blueprint $table) {
             $table->integer('page_type_id')->unsigned()->index('FK_page_type_block_types_page_types');
             $table->integer('block_type_id')->unsigned()->index('FK_page_type_block_types_block_types');
-            $table->integer('min_blocks')->unsigned();
-            $table->integer('max_blocks')->unsigned();
+            $table->integer('min_blocks')->nullable()->unsigned();
+            $table->integer('max_blocks')->nullable()->unsigned();
         });
     }
 

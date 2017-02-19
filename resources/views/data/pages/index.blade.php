@@ -75,7 +75,7 @@
 
             pageTypeSelector.empty();
             $.each(allowedSubpages, function(id, name){
-                pageTypeSelector.append('<option value="' + id + '">' + name + '</option>');
+                pageTypeSelector.append('<option value="' + (id == 0 ? '' : id) + '">' + name + '</option>');
             });
         }
 
