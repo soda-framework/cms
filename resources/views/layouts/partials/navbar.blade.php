@@ -2,10 +2,6 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="sidebar-toggle" href="#" aria-expanded="false" data-sidebar-toggle>
-                <i class="fa fa-bars"></i>
-                <span class="sr-only">Toggle navigation</span>
-            </a>
             <a class="soda-logo" href="{{ route('soda.home') }}">
                 <img src="/soda/cms/img/sodacms_droplime.png" />
                 <img src="/soda/cms/img/sodacms_logowhite.png" />
@@ -14,6 +10,14 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a class="sidebar-toggle" href="#" aria-expanded="false" data-sidebar-toggle>
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                </li>
+            </ul>
             @if(Soda::auth()->check())
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

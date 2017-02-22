@@ -13242,7 +13242,6 @@ body.sidebar-transitioning {
 }
 
 .navbar .navbar-header {
-  float: left;
   margin-left: 0;
   margin-right: 0;
 }
@@ -13289,26 +13288,66 @@ body.sidebar-transitioning {
 }
 
 .navbar .sidebar-toggle {
-  width: 0;
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transition: width 0.25s ease-in-out;
-  transition: width 0.25s ease-in-out;
+  display: none;
   color: #90A4AE;
-  overflow: hidden;
   text-decoration: none;
-  line-height: 60px;
-}
-
-@media (max-width: 991px) {
-  .navbar .sidebar-toggle {
-    width: 12px;
-  }
 }
 
 .navbar .sidebar-toggle:hover {
   text-decoration: none;
   color: #FFFFFF;
+}
+
+@media (max-width: 991px) {
+  .navbar .navbar-header {
+    position: absolute;
+    float: none;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+  .navbar .navbar-header .soda-logo {
+    margin: 0;
+  }
+  .navbar .navbar-nav {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .navbar .navbar-nav > li > a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .navbar .navbar-nav.navbar-right .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
+  .navbar .navbar-nav .open a {
+    background-color: transparent;
+  }
+  .navbar .navbar-nav .open .dropdown-menu {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+  }
+  .navbar .navbar-nav .open .dropdown-menu > li > a {
+    color: #333;
+  }
+  .navbar .navbar-nav .open .dropdown-menu > li > a:hover, .navbar .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #fff;
+    background-color: #5bc0de;
+  }
+  .navbar .navbar-nav .open .dropdown-menu > .active > a, .navbar .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #fff;
+    background-color: #5bc0de;
+  }
+  .navbar .navbar-nav .open .dropdown-menu > .disabled > a, .navbar .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+    color: #777777;
+    background-color: transparent;
+  }
+  .navbar .sidebar-toggle {
+    display: block;
+  }
 }
 
 .sidebar {
