@@ -7,6 +7,8 @@ var Soda = (function () {
     var elements = {
         deleteButtons: '[data-delete-button]',
         formSubmitters: '[data-submits]',
+        sidebarToggle: '[data-sidebar-toggle]',
+        sidebar: '.sidebar'
     }
 
     var _log = function (message) {
@@ -56,6 +58,8 @@ var Soda = (function () {
 
             $(form).submit();
         });
+
+        $(elements.sidebarToggle).on('click', toggleSidebar);
     }
 
     var initialize = function() {
@@ -68,7 +72,7 @@ var Soda = (function () {
                 }
             });
 
-            $('.soda-wrapper, .main-content').css('min-height', $(window).height());
+            $('.soda-wrapper, .main-content').css('min-height', $(window).height() - $('.navbar').outerHeight());
             $(".nav-item-group.active .collapse").collapse('show');
 
             if(Soda.queryString.tab) {
@@ -118,10 +122,25 @@ var Soda = (function () {
         });
     }
 
+    var toggleSidebar = function(e) {
+        e.preventDefault();
+
+        var isExpanded = $(elements.sidebar).hasClass('in');
+
+        $(this).attr('aria-expanded', isExpanded ? false : true);
+        $(elements.sidebar).toggleClass('in');
+        $('body').toggleClass('sidebar-in').addClass('sidebar-transitioning');
+
+        setTimeout(function() {
+            $('body').removeClass('sidebar-transitioning');
+        }, 250);
+    }
+
     return {
         initialize: initialize,
         confirmDelete: confirmDelete,
         changePosition: changePosition,
+        toggleSidebar: toggleSidebar,
     }
 })();
 

@@ -1,6 +1,6 @@
 @section("field.label")
     @if($field_label !== null)
-    <label class="col-sm-4 col-xs-2" for="{{ $field_id }}">{{ $field_label }}</label>
+    <label class="col-md-4 col-sm-2" for="{{ $field_id }}">{{ $field_label }}</label>
     @endif
 @overwrite
 
@@ -22,7 +22,7 @@
 
 <fieldset class="form-group row field_{{ $field_name }} {{ $field_class }}">
     @yield("field.label")
-    <div class="{{ $field_label !== null ? 'col-sm-8 col-xs-10' : 'col-xs-12' }}">
+    <div class="{{ $field_label !== null ? 'col-md-8 col-sm-10' : 'col-xs-12' }}">
     @yield("field")
     @yield("field.info")
     </div>

@@ -1,5 +1,5 @@
 @section("field")
-    <img src="{{ $field_value }}" data-original-src="{{ $field_value }}" id="{{ $field_id }}_preview" style="display:{{ $field_value ? 'block' : 'none' }};margin-bottom:10px;max-width:500px;max-height:500px;">
+    <img src="{{ $field_value }}" data-original-src="{{ $field_value }}" id="{{ $field_id }}_preview" style="display:{{ $field_value ? 'block' : 'none' }};margin-bottom:10px;max-width:500px;width:100%;height:auto;">
     <div class="input-group" style="width:100%">
         <input name="{{ $prefixed_field_name }}" id="{{ $field_id }}" type="file"
                class="form-control field_{{ $field_name }} {{ $field_name }}" />

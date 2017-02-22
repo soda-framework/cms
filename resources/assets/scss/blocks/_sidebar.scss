@@ -7,6 +7,21 @@
   overflow: auto;
   background: $sidebar-background;
   padding: 0;
+  transform: translateX(-300px);
+  transition: transform 0.25s ease-in-out;
+
+  @media(min-width: $screen-md-min) {
+    transform: translateX(0px);
+  }
+
+  @media(max-width: $screen-sm-max) {
+    width: 300px;
+
+    &.in {
+      transform: translateX(0);
+    }
+  }
+
   li.nav-item, li.nav-item-group {
     outline: 0;
     > span.nav-link, > a.nav-link {

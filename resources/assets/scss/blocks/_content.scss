@@ -1,17 +1,47 @@
+@media(max-width: $screen-sm-max) {
+  body.sidebar-in {
+    overflow-x: hidden;
+    .main-content {
+      transform: translateX(300px);
+    }
+  }
+}
+
+body.sidebar-transitioning {
+  overflow-x: hidden;
+}
+
 .main-content {
   background-color: $content-background;
   padding: 25px 30px;
+  transform: translateX(0px);
+  transition: transform 0.25s ease-in-out;
+
+  @media(max-width: $screen-sm-max) {
+    padding: 15px 0px;
+  }
 
   .breadcrumb {
     margin: -25px -30px 0;
-    padding: 20px 45px;
+    padding: 20px 25px;
     //border-bottom: 1px solid $content-inner-border;
     background-color: $content-inner-background;
     box-shadow: $standard-shadow;
+
+    @media(max-width: $screen-sm-max) {
+      margin: -15px 0 0;
+    }
+  }
+
+  .main-content-inner {
+    @media(max-width: $screen-sm-max) {
+      margin: 0 -15px;
+    }
   }
 }
 
 .content-block {
+  display: table;
   position: relative;
   border-radius: $border-radius-base;
   padding: 40px;
@@ -19,12 +49,15 @@
   color: $content-inner-text;
   //border: 1px solid $content-inner-border;
   box-shadow: $standard-shadow;
+  width: 100%;
 
   .jumbotron {
     background-color: $content-inner-background;
   }
+
   @media(max-width: $screen-sm-max) {
     margin-bottom: 25px;
+    padding: 30px;
   }
 
   &.full {
@@ -61,12 +94,24 @@
   margin-top: 30px;
 }
 
+.content-top, .content-bottom {
+  @media(max-width: $screen-sm-max) {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
 .content-header {
   h1 {
     margin: 0;
     font-size: 32px;
     line-height: 44px;
     margin-top: -2px;
+
+    @media(max-width: $screen-sm-max) {
+      font-size: 22px;
+      line-height: 34px;
+    }
     i, span {
       display: inline-block;
       vertical-align: middle;

@@ -1,6 +1,24 @@
 .navbar {
   margin-bottom: 0;
 
+  .navbar-header {
+    float: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .navbar-left {
+    float: left !important;
+  }
+  .navbar-right {
+    float: right !important;
+    margin-right: -$navbar-padding-horizontal;
+
+    ~ .navbar-right {
+      margin-right: 0;
+    }
+  }
+
   .btn-link {
     color: #E0E6EA;
     &:hover {
@@ -20,7 +38,27 @@
     }
   }
   .navbar-nav > li > a {
-    transition: background-color .25s ease, color .25s ease;
+    transition: background-color .25s ease-in-out, color .25s ease-in-out;
     will-change: background
+  }
+
+  .sidebar-toggle {
+    width: 0;
+    display: inline-block;
+    vertical-align: middle;
+    transition: width 0.25s ease-in-out;
+    color: $navbar-inverse-link-color;
+    overflow: hidden;
+    text-decoration: none;
+    line-height: $navbar-height;
+
+    @media(max-width: $screen-sm-max) {
+      width: 12px;
+    }
+
+    &:hover {
+      text-decoration: none;
+      color: $navbar-inverse-link-hover-color;
+    }
   }
 }

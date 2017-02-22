@@ -1,3 +1,3 @@
-<div class="col-xs-2 sidebar">
+<div id="sidebar-collape" class="col-md-2 sidebar">
     {!! SodaMenu::render('sidebar') !!}
 </div>

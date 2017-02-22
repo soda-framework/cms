@@ -100,7 +100,7 @@ class MenuServiceProvider extends ServiceProvider
             ]);
 
             $menu->addItem('User Management', [
-                'label'       => 'User Management',
+                'label'       => 'Users',
                 'icon'        => 'fa fa-users',
                 'isCurrent'   => soda_request_is('users*') || soda_request_is('roles*') || soda_request_is('permissions*'),
                 'permissions' => 'view-users',

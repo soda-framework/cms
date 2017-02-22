@@ -3,7 +3,7 @@
 @section('main-content')
 	<div class="row">
 		@include(soda_cms_view_path('layouts.partials.sidebar'))
-		<div class="col-xs-offset-2 col-xs-10 main-content">
+		<div class="col-md-offset-2 col-md-10 main-content">
 			@yield('breadcrumb')
 			<div class="container-fluid">
 				@section('main-content-outer')

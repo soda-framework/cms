@@ -2,12 +2,10 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <a class="sidebar-toggle" href="#" aria-expanded="false" data-sidebar-toggle>
+                <i class="fa fa-bars"></i>
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            </a>
             <a class="soda-logo" href="{{ route('soda.home') }}">
                 <img src="/soda/cms/img/sodacms_droplime.png" />
                 <img src="/soda/cms/img/sodacms_logowhite.png" />
@@ -15,30 +13,26 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="/" target="_blank">View Site</a>
-                </li>
-                @if (Soda::auth()->guest())
-                    <li class="">
-                        <a class="" href="{{ url('/login') }}">Login</a>
-                    </li>
-                    {{--
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/register') }}">Register</a>
-                    </li>
-                    --}}
-                @endif
-            </ul>
+        <div>
             @if(Soda::auth()->check())
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-btn fa-user"></i>
-                        <span>{{ Soda::auth()->user()->username }}</span>
+                        <span class="hidden-xs">
+                            <i class="fa fa-btn fa-user"></i>
+                            <span>{{ Soda::auth()->user()->username }}</span>
+                        </span>
+                        <span class="visible-xs">
+                            <i class="fa fa-cogs"></i>
+                        </span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li>
+                            <a class='dropdown-item' href="/" target="_blank">
+                                <i class="fa fa-eye"></i>
+                                <span>View Site</span>
+                            </a>
+                        </li>
                         @permission('view-drafts')
                         <li>
                             <a class='dropdown-item' href="{{ route('soda.toggle-draft') }}">
