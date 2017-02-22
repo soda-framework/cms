@@ -1,11 +1,17 @@
-body{ //so the main top menu can squish in.
-  padding-top: $navbar-height;
-}
-
 textarea {
   min-height: 200px;
 }
 
 .page-header {
   margin-top: 0;
+}
+
+.soda-logo-block {
+  img {
+    max-height: 40px;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
 }

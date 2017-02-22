@@ -72,7 +72,7 @@ var Soda = (function () {
                 }
             });
 
-            $('.soda-wrapper, .main-content').css('min-height', $(window).height() - $('.navbar').outerHeight());
+            $('.soda-wrapper, .main-content').css('min-height', $(window).height());
             $(".nav-item-group.active .collapse").collapse('show');
 
             if(Soda.queryString.tab) {

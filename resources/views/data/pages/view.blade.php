@@ -13,11 +13,9 @@ if($page->type && $page->type->block_types) {
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('breadcrumb')
-    <ol class="breadcrumb">
-        <li><a href="{{ route('soda.home') }}">Home</a></li>
-        <li><a href="{{ route('soda.pages.index') }}">Pages</a></li>
-        <li class="active">{{ $page->name ? $page->name : 'New ' . ($page->type ? $page->type->name . " Page" : "Page") }}</li>
-    </ol>
+    <li><a href="{{ route('soda.home') }}">Home</a></li>
+    <li><a href="{{ route('soda.pages.index') }}">Pages</a></li>
+    <li class="active">{{ $page->name ? $page->name : 'New ' . ($page->type ? $page->type->name . " Page" : "Page") }}</li>
 @stop
 
 @section('head.title')

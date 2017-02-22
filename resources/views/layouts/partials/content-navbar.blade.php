@@ -1,25 +1,10 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="content-navbar navbar navbar-default">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <a class="soda-logo" href="{{ route('soda.home') }}">
-                <img src="/soda/cms/img/sodacms_droplime.png" />
-                <img src="/soda/cms/img/sodacms_logowhite.png" />
-            </a>
+        <div class="nav navbar-nav navbar-left navbar-breadcrumb">
+            @yield('breadcrumb')
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div>
-            <ul class="nav navbar-nav navbar-left">
-                <li>
-                    <a class="sidebar-toggle" href="#" aria-expanded="false" data-sidebar-toggle>
-                        <i class="fa fa-bars"></i>
-                        <span class="sr-only">Toggle navigation</span>
-                    </a>
-                </li>
-            </ul>
-            @if(Soda::auth()->check())
-            <ul class="nav navbar-nav navbar-right">
+        @if(Soda::auth()->check())
+            <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="hidden-xs">
@@ -54,7 +39,6 @@
                     </ul>
                 </li>
             </ul>
-            @endif
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        @endif
+    </div>
 </nav>

@@ -1,13 +1,11 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('breadcrumb')
-    <ol class="breadcrumb">
-        <li><a href="{{ route('soda.home') }}">Home</a></li>
-        <li><a href="{{ route('soda.pages.index') }}">Pages</a></li>
-        <li><a href="{{ route('soda.pages.edit', $page->id) }}">{{ $page->name }}</a></li>
-        <li><a href="{{ route("soda.pages.edit", $page->id) }}?tab={{ strtolower($blockType->identifier) }}">{{ $blockType->name }}</a></li>
-        <li class="active">{{ $block->id ? 'Edit' : 'New' }}</li>
-    </ol>
+    <li><a href="{{ route('soda.home') }}">Home</a></li>
+    <li><a href="{{ route('soda.pages.index') }}">Pages</a></li>
+    <li><a href="{{ route('soda.pages.edit', $page->id) }}">{{ $page->name }}</a></li>
+    <li><a href="{{ route("soda.pages.edit", $page->id) }}?tab={{ strtolower($blockType->identifier) }}">{{ $blockType->name }}</a></li>
+    <li class="active">{{ $block->id ? 'Edit' : 'New' }}</li>
 @stop
 
 @section('head.title')

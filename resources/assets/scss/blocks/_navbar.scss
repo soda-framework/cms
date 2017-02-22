@@ -1,82 +1,42 @@
-.navbar {
+
+
+.mobile-header {
+  display: none;
   margin-bottom: 0;
+  border-radius: 0;
+  border: 0;
 
-  .navbar-header {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .navbar-left {
-    float: left !important;
-  }
-  .navbar-right {
-    float: right !important;
-    margin-right: -$navbar-padding-horizontal;
-
-    ~ .navbar-right {
-      margin-right: 0;
-    }
-  }
-
-  .btn-link {
-    color: #E0E6EA;
-    &:hover {
-      text-decoration: none;
-      color: #ffffff;
-    }
-  }
-
-  .soda-logo {
-    line-height: $navbar-height;
-    margin-right: 20px;
-    img {
-      max-height: 40px; //so we don't stretch out the nav bar.
-    }
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  .navbar-nav > li > a {
-    transition: background-color .25s ease-in-out, color .25s ease-in-out;
-    will-change: background
+  @media(max-width: $screen-sm-max) {
+    display: block;
   }
 
   .sidebar-toggle {
-    display: none;
     color: $navbar-inverse-link-color;
-    text-decoration: none;
 
     &:hover {
-      text-decoration: none;
       color: $navbar-inverse-link-hover-color;
+      text-decoration: none;
     }
   }
 
+  .soda-logo-block {
+  }
+
+  .navbar-header {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+
   @media(max-width: $screen-sm-max) {
-
-    .navbar-header {
-      position: absolute;
-      float: none;
-      left: 50%;
-      transform: translateX(-50%);
-
-      .soda-logo {
-        margin: 0;
-      }
-    }
-
     .navbar-nav {
-      margin-top: 0;
-      margin-bottom: 0;
-
-      > li > a {
-        padding-top: 20px;
-        padding-bottom: 20px;
-      }
-
-      &.navbar-right .dropdown-menu {
-        right: 0;
-        left: auto;
+      &.navbar-right {
+        .dropdown-menu {
+          right: 0;
+          left: auto;
+        }
       }
 
       .open {
@@ -117,9 +77,91 @@
         }
       }
     }
+  }
+}
 
-    .sidebar-toggle {
-      display: block;
+.content-navbar {
+  margin-left: -15px;
+  margin-right: -15px;
+  border: 0;
+  box-shadow: $standard-shadow;
+  border-radius: 0;
+  transform: translateX(0px);
+  transition: transform 0.25s ease-in-out;
+  z-index: 5;
+
+  @media(max-width: $screen-sm-max) {
+    min-height: $navbar-height * .66666;
+  }
+
+  .nav {
+    &.navbar-breadcrumb {
+      margin-left: 30px;
+
+      @media(max-width: $screen-sm-max) {
+        margin-left: 0px;
+      }
+
+      > li {
+        float: left;
+        line-height: $navbar-height;
+
+        + li:before {
+          content: "/ ";
+          color: rgb(204, 204, 204);
+          padding: 0px 5px;
+        }
+
+        &.active {
+          color: #777;
+        }
+
+        > a {
+          display: inline-block;
+          color: $brand-primary;
+          line-height: $navbar-height;
+          padding: 0;
+
+          &:hover {
+            color: darken($brand-primary, 10%);
+            text-decoration: underline;
+          }
+        }
+
+        @media(max-width: $screen-sm-max) {
+          &, & > a {
+            line-height: $navbar-height * .66666;
+          }
+        }
+      }
+    }
+  }
+}
+
+.navbar {
+  .navbar-left {
+    float: left !important;
+    margin-left: -$navbar-padding-horizontal;
+  }
+
+  .navbar-right {
+    float: right !important;
+    margin-right: -$navbar-padding-horizontal;
+
+    ~ .navbar-right {
+      margin-right: 0;
+    }
+  }
+
+  @media(max-width: $screen-sm-max) {
+    .navbar-nav {
+      margin-top: 0;
+      margin-bottom: 0;
+
+      > li > a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
     }
   }
 }

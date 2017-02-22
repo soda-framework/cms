@@ -1,7 +1,7 @@
 .sidebar {
   position: fixed;
-  z-index:1000;
-  top: $navbar-height;
+  z-index: 1000;
+  top: 0;
   bottom: 0;
   left: 0;
   overflow: auto;
@@ -15,10 +15,20 @@
   }
 
   @media(max-width: $screen-sm-max) {
+    top: $navbar-height;
     width: 300px;
 
     &.in {
       transform: translateX(0);
+    }
+  }
+
+  .soda-logo-block {
+    display: block;
+    padding: 10px 20px;
+    background-color: $slate-010;
+    @media(max-width: $screen-sm-max) {
+      display: none;
     }
   }
 
@@ -90,7 +100,7 @@
 
     ul {
       padding: 8px 0;
-      background-color: rgba(0,0,0,0.2);
+      background-color: rgba(0, 0, 0, 0.2);
       li.nav-item {
         > span.nav-link, > a.nav-link {
           display: block;

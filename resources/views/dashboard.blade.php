@@ -4,6 +4,10 @@
     <title>Soda CMS | Dashboard</title>
 @endsection
 
+@section('breadcrumb')
+    <li class="active">Dashboard</li>
+@stop
+
 @section('main-content-outer')
     <div class="row">
         <div class="col-xs-12">
