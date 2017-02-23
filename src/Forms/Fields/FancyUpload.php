@@ -2,9 +2,9 @@
 
 namespace Soda\Cms\Forms\Fields;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Soda\Cms\Forms\AbstractFormField;
+use Illuminate\Database\Eloquent\Model;
 
 class FancyUpload extends AbstractFormField
 {
@@ -151,20 +151,22 @@ class FancyUpload extends AbstractFormField
         }
 
         return 'Multiple files';
-    }/**
- * Determines how the field is saved to a model.
- *
- * @param \Illuminate\Database\Eloquent\Model $model
- * @param \Illuminate\Http\Request            $request
- *
- * @return $this
- */
+    }
+
+    /**
+     * Determines how the field is saved to a model.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Http\Request            $request
+     *
+     * @return $this
+     */
     public function saveToModel(Model $model, Request $request)
     {
         $parameters = $this->parseFieldParameters();
         $isMulti = isset($parameters['maxFileCount']) && $parameters['maxFileCount'] > 1 ? true : false;
 
-        if(!$isMulti) {
+        if (! $isMulti) {
             return parent::saveToModel($model, $request);
         }
 
