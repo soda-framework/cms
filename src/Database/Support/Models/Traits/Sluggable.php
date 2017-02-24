@@ -35,7 +35,7 @@ trait Sluggable
     /**
      * Checks where slug is currently being used.
      *
-     * @param $slug
+     * @param string $slug
      * @param $excludeSelf
      *
      * @return bool
@@ -54,7 +54,7 @@ trait Sluggable
     /**
      * Increments the number appended to the slug, to prevent duplicates.
      *
-     * @param $slug
+     * @param string $slug
      *
      * @return string
      */

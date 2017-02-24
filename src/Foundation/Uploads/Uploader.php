@@ -67,6 +67,10 @@ class Uploader
         return trim(config('soda.upload.folder'), '/');
     }
 
+    /**
+     * @param string $filePath
+     * @param string|null $fileName
+     */
     protected function generateFileName($filePath, $fileName)
     {
         $sha1Hash = sha1_file($filePath);

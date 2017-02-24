@@ -26,7 +26,7 @@ class RouteCollection extends IlluminateRouteCollection
     /**
      * Order routes by priority number.
      *
-     * @return void
+     * @return RouteCollection
      */
     public function buildRoutesOrder()
     {

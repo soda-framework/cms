@@ -28,7 +28,7 @@ class MenuRegistrar
     /**
      * Returns a menu by its name.
      *
-     * @return array
+     * @return Menu|null
      */
     public function resolve($name)
     {

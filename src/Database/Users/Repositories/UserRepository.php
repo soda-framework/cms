@@ -50,6 +50,9 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         return $model;
     }
 
+    /**
+     * @param UserInterface $model
+     */
     public function buildFilter($model)
     {
         $filter = (new DataFilter)->source($model);
@@ -91,6 +94,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         return compact('filter', 'grid');
     }
 
+    /**
+     * @param string $editRoute
+     * @param string $deleteRoute
+     */
     public function addButtonsToGrid(DataGrid $grid, $editRoute = null, $deleteRoute = null)
     {
         $width = 0;

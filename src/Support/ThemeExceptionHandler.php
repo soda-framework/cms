@@ -73,6 +73,9 @@ class ThemeExceptionHandler extends Handler
         return parent::render($request, $e);
     }
 
+    /**
+     * @param string $theme
+     */
     public function setTheme($theme)
     {
         $this->theme = $theme;

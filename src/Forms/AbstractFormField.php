@@ -211,7 +211,7 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Set the model used to prefill the field.
      *
-     * @param $model
+     * @param Model $model
      *
      * @return $this
      */
@@ -442,7 +442,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
-     * @return $this
+     * @return \Illuminate\Support\Fluent
      */
     public function addToModel(Blueprint $table)
     {

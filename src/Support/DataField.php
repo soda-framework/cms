@@ -160,7 +160,7 @@ abstract class DataField extends Widget
 
     /**
      * add rules for field es.:  required|min:5 ...
-     * @param $rule
+     * @param string $rule
      * @return $this
      */
     public function rule($rule)
