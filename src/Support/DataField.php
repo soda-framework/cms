@@ -146,7 +146,7 @@ abstract class DataField extends Widget
         //otherwise replace dots with underscores so field names are html/js friendly
         $this->name = str_replace(['.', ',', '`'], ['_', '_', '_'], $name);
 
-        if (! isset($this->db_name)) {
+        if (!isset($this->db_name)) {
             $this->db_name = $name;
         }
     }
@@ -168,7 +168,7 @@ abstract class DataField extends Widget
         $this->rule = is_string($this->rule) ? explode('|', $this->rule) : $this->rule;
         $rule = is_string($rule) ? explode('|', $rule) : $rule;
         $this->rule = array_unique(array_merge($this->rule, $rule));
-        if (in_array('required', $this->rule) && ! isset($this->no_star)) {
+        if (in_array('required', $this->rule) && !isset($this->no_star)) {
             $this->required = true;
         }
 
@@ -301,7 +301,7 @@ abstract class DataField extends Widget
                 $this->value = '';
                 if (Input::get($this->name)) {
                     $values = Input::get($this->name);
-                    if (! is_array($values)) {
+                    if (!is_array($values)) {
                         $this->value = $values;
                     } else {
                         $this->value = implode($this->serialization_sep, $values);
@@ -389,7 +389,7 @@ abstract class DataField extends Widget
                 $this->value = '';
                 if (Input::get($this->name)) {
                     $values = Input::get($this->name);
-                    if (! is_array($values)) {
+                    if (!is_array($values)) {
                         $this->new_value = $values;
                     } else {
                         $this->new_value = implode($this->serialization_sep, $values);
@@ -460,7 +460,7 @@ abstract class DataField extends Widget
                 $this->when = explode('|', $this->when);
             }
             $this->when = (array) $this->when;
-            if (! in_array($this->status, $this->when) && ! in_array($this->action, $this->when)) {
+            if (!in_array($this->status, $this->when) && !in_array($this->action, $this->when)) {
                 $this->visible = false;
                 $this->apply_rules = false;
             } else {
@@ -509,13 +509,13 @@ abstract class DataField extends Widget
     {
         $this->getValue();
         $this->getNewValue();
-        if (! $this->editable()) {
+        if (!$this->editable()) {
             return true;
         }
 
         if (is_object($this->model) && isset($this->db_name)) {
             if (
-                ! (Schema::connection($this->model->getConnectionName())->hasColumn($this->model->getTable(), $this->db_name)
+                !(Schema::connection($this->model->getConnectionName())->hasColumn($this->model->getTable(), $this->db_name)
                     || $this->model->hasSetMutator($this->db_name))
                 || is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\Relation') //Relation
             ) {
@@ -528,14 +528,14 @@ abstract class DataField extends Widget
                 }
                 //other kind of relations are postponed
                 $self = $this;
-                $this->model->saved(function () use ($self) {
+                $this->model->saved(function() use ($self) {
                     $self->updateRelations();
                 });
 
                 //check for relation then exit
                 return true;
             }
-            if (! is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\Relation')) {
+            if (!is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\Relation')) {
                 $this->model->setAttribute($this->db_name, $this->new_value);
             }
 
@@ -584,7 +584,7 @@ abstract class DataField extends Widget
                         $relation = $this->model_relations[$this->rel_name];
                     } else {
                         $relation = $this->relation->get()->first();
-                        if (! $relation) {
+                        if (!$relation) {
                             $relation = $this->relation->getRelated();
                         }
                         $this->model_relations[$this->rel_name] = $relation;
@@ -643,7 +643,7 @@ abstract class DataField extends Widget
             $this->has_wrapper = false;
         }
         $this->getValue();
-        $this->req = (! ($this->status == 'show') && $this->required) ? ' required' : '';
+        $this->req = (!($this->status == 'show') && $this->required) ? ' required' : '';
         if (($this->status == 'hidden' || $this->visible === false || in_array($this->type, ['hidden', 'auto']))) {
             $this->is_hidden = true;
         }
@@ -666,11 +666,11 @@ abstract class DataField extends Widget
                 }
             }
         }
-        if (! isset($this->attributes['id'])) {
+        if (!isset($this->attributes['id'])) {
             $this->attributes['id'] = $this->name;
         }
         if (isset($this->css_class)) {
-            if (! isset($this->attributes['class'])) {
+            if (!isset($this->attributes['class'])) {
                 $this->attributes['class'] = '';
             }
             $this->attributes['class'] .= ' '.$this->css_class;

@@ -108,7 +108,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function addChild($item, array $options = [])
     {
-        if (! $item instanceof self) {
+        if (!$item instanceof self) {
             $item = new self($item, $options);
         } elseif (null !== $item->getMenu()) {
             throw new \InvalidArgumentException('Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).');
@@ -188,7 +188,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setAttributes($attributes)
     {
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -245,7 +245,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setLabelAttributes($attributes)
     {
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -282,7 +282,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setLinkAttributes($attributes)
     {
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -339,7 +339,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setIconAttributes($attributes)
     {
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -376,7 +376,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setChildrenAttributes($attributes)
     {
-        if (! is_array($attributes)) {
+        if (!is_array($attributes)) {
             $attributes = [$attributes];
         }
 
@@ -423,7 +423,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function isVisible()
     {
-        return ! $this->isHidden;
+        return !$this->isHidden;
     }
 
     /**
@@ -440,7 +440,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function render()
     {
-        if (! $this->hasPermission() || $this->isHidden() || (! $this->getUrl() && ! $this->hasVisibleChildren())) {
+        if (!$this->hasPermission() || $this->isHidden() || (!$this->getUrl() && !$this->hasVisibleChildren())) {
             return '';
         }
 
@@ -449,16 +449,16 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function hasPermission()
     {
-        if (! count($permissions = $this->getPermissions())) {
+        if (!count($permissions = $this->getPermissions())) {
             return true;
         }
 
-        if (! $user = Auth::user()) {
+        if (!$user = Auth::user()) {
             return false;
         }
 
         foreach ($permissions as $permission) {
-            if (! $user->can($permission)) {
+            if (!$user->can($permission)) {
                 return false;
             }
         }
@@ -481,7 +481,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setPermissions($permissions)
     {
-        if (! is_array($permissions)) {
+        if (!is_array($permissions)) {
             $permissions = [$permissions];
         }
 

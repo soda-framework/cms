@@ -30,7 +30,7 @@ class RouteCollection extends IlluminateRouteCollection
      */
     public function buildRoutesOrder()
     {
-        $comparePriority = function ($r1, $r2) {
+        $comparePriority = function($r1, $r2) {
             $a = $this->getRoutePriority($r1);
             $b = $this->getRoutePriority($r2);
             if ($a == $b) {

@@ -12,7 +12,7 @@ class CreatePageTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('page_types', function (Blueprint $table) {
+        Schema::create('page_types', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->text('description', 65535)->nullable();

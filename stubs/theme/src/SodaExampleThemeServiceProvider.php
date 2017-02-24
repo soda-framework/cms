@@ -64,7 +64,7 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
         $this->app['router']->group([
             'middleware' => 'web',
             'namespace'  => $this->namespace,
-        ], function ($router) {
+        ], function($router) {
             require_once __DIR__.'/../routes/web.php';
         });
     }
@@ -82,14 +82,14 @@ class SodaExampleThemeServiceProvider extends ServiceProvider
             'middleware' => 'api',
             'namespace'  => $this->namespace,
             'prefix'     => 'api',
-        ], function ($router) {
+        ], function($router) {
             require_once __DIR__.'/../routes/api.php';
         });
     }
 
     public function bindErrorHandler()
     {
-        $this->app->singleton(BaseExceptionHandler::class, function ($app) {
+        $this->app->singleton(BaseExceptionHandler::class, function($app) {
             return (new ThemeExceptionHandler)->setTheme('soda-example');
         });
 

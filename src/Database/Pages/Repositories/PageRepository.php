@@ -41,7 +41,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function getAvailableBlockTypes(PageInterface $page)
     {
-        if (! $page->relationLoaded('blockTypes')) {
+        if (!$page->relationLoaded('blockTypes')) {
             $page->load('blockTypes');
         }
 
@@ -66,12 +66,12 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
         if ($parent->type) {
             $allowedPageTypes = $parent->type->subpageTypes ? $parent->type->subpageTypes->pluck('id')->toArray() : [];
-            if (count($allowedPageTypes) && ! in_array($pageTypeId, $allowedPageTypes)) {
+            if (count($allowedPageTypes) && !in_array($pageTypeId, $allowedPageTypes)) {
                 throw new \Exception('You cannot create a page of this type here');
             }
         }
 
-        if (! $parent->allowed_children) {
+        if (!$parent->allowed_children) {
             throw new \Exception('You cannot create a subpage here');
         }
 
@@ -138,7 +138,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
         $slug = $page->generateSlug($request->input('slug'));
 
-        if ($parentPage && ! starts_with($slug, $parentPage->getAttribute('slug'))) {
+        if ($parentPage && !starts_with($slug, $parentPage->getAttribute('slug'))) {
             $slug = $parentPage->generateSlug($request->input('slug'));
         }
 

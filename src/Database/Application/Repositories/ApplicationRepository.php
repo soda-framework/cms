@@ -71,7 +71,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         }
 
         if ($request->input('settings') || $request->file('settings')) {
-            if (! $model->relationLoaded('settings')) {
+            if (!$model->relationLoaded('settings')) {
                 $model->load('settings');
             }
 
@@ -86,7 +86,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
     public function getSettingsForApplication(ApplicationInterface $application)
     {
-        if (! $application->relationLoaded('settings')) {
+        if (!$application->relationLoaded('settings')) {
             $application->load('settings');
         }
 

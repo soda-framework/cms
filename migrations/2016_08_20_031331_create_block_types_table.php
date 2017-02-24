@@ -12,7 +12,7 @@ class CreateBlockTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('block_types', function (Blueprint $table) {
+        Schema::create('block_types', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50);
             $table->text('description', 65535)->nullable();

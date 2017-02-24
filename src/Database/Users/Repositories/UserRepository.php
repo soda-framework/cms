@@ -73,7 +73,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $grid = (new DataGrid)->source($filter);
         $grid->add('username', 'Username', true);
         $grid->add('email', 'Email', true);
-        $grid->add('roles', 'Role(s)')->cell(function ($value) {
+        $grid->add('roles', 'Role(s)')->cell(function($value) {
             $roleNames = $value->sortBy('display_name')->pluck('display_name')->toArray();
 
             return implode(', ', $roleNames);
@@ -112,7 +112,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         }
 
         if ($width > 0) {
-            $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value, $model) use ($editRoute, $deleteRoute) {
+            $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function($value, $model) use ($editRoute, $deleteRoute) {
                 $buttons = '';
                 if ($editRoute == true && $model->getLevel() <= \Auth::user()->getLevel()) {
                     $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";

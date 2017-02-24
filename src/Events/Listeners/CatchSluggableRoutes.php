@@ -52,7 +52,7 @@ class CatchSluggableRoutes
      */
     protected function startSession(Request $request)
     {
-        return tap($this->getSession($request), function ($session) use ($request) {
+        return tap($this->getSession($request), function($session) use ($request) {
             $session->setRequestOnHandler($request);
 
             $session->start();
@@ -67,7 +67,7 @@ class CatchSluggableRoutes
      */
     public function getSession(Request $request)
     {
-        return tap($this->sessionManager->driver(), function ($session) use ($request) {
+        return tap($this->sessionManager->driver(), function($session) use ($request) {
             if ($encryptedSessionId = $request->cookies->get($session->getName())) {
                 $sessionId = $this->encrypter->decrypt($encryptedSessionId);
 

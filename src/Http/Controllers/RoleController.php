@@ -80,7 +80,7 @@ class RoleController extends BaseController
         $role = $this->roles->findById($id);
         $permissionIds = $this->roles->getPermissions();
 
-        if (! $role) {
+        if (!$role) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'role']));
         }
 

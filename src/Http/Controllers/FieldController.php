@@ -77,7 +77,7 @@ class FieldController extends BaseController
         $field = $this->fields->findById($id);
         $fieldTypes = $this->fields->getFieldTypes();
 
-        if (! $field) {
+        if (!$field) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'field']));
         }
 

@@ -425,7 +425,7 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Renders the field for a cell in a table-view.
      *
-     * @return mixed|string
+     * @return string
      */
     public function renderForTable()
     {
