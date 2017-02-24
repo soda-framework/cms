@@ -89,7 +89,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerUpdateCommand($binding)
     {
-        $this->app->singleton($binding, function ($app) {
+        $this->app->singleton($binding, function($app) {
             return new Update();
         });
     }
@@ -101,7 +101,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerAssetsCommand($binding)
     {
-        $this->app->singleton($binding, function ($app) {
+        $this->app->singleton($binding, function($app) {
             return new Assets();
         });
     }
@@ -113,7 +113,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerMigrateCommand($binding)
     {
-        $this->app->singleton($binding, function ($app) {
+        $this->app->singleton($binding, function($app) {
             return new Migrate();
         });
     }
@@ -125,7 +125,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerSeedCommand($binding)
     {
-        $this->app->singleton($binding, function ($app) {
+        $this->app->singleton($binding, function($app) {
             return new Seed();
         });
     }
@@ -137,7 +137,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerConfigCommand($binding)
     {
-        $this->app->singleton($binding, function ($app) {
+        $this->app->singleton($binding, function($app) {
             return new Config();
         });
     }
@@ -149,7 +149,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerSetupCommand($binding)
     {
-        $this->app->singleton($binding, function ($app) {
+        $this->app->singleton($binding, function($app) {
             return new Setup($app['config'], $app['db']);
         });
     }
@@ -161,7 +161,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerThemeCommand($binding)
     {
-        $this->app->singleton($binding, function ($app) {
+        $this->app->singleton($binding, function($app) {
             return new Theme();
         });
     }

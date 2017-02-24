@@ -12,7 +12,7 @@ class AddForeignKeysToApplicationSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('application_settings', function (Blueprint $table) {
+        Schema::table('application_settings', function(Blueprint $table) {
             $table->foreign('application_id', 'FK_application_settings_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
@@ -24,7 +24,7 @@ class AddForeignKeysToApplicationSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('application_settings', function (Blueprint $table) {
+        Schema::table('application_settings', function(Blueprint $table) {
             $table->dropForeign('FK_application_settings_applications');
         });
     }

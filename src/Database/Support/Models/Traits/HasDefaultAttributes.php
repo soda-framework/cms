@@ -7,7 +7,7 @@ trait HasDefaultAttributes
     public function fillDefaults()
     {
         foreach ($this->defaults as $default => $defaultValue) {
-            if (! isset($this->attributes[$default])) {
+            if (!isset($this->attributes[$default])) {
                 $this->setAttribute($default, $defaultValue);
             }
         }
@@ -42,7 +42,7 @@ trait HasDefaultAttributes
      */
     protected function fillableFromArray(array $attributes)
     {
-        if (! empty($attributes) && property_exists($this, 'defaults')) {
+        if (!empty($attributes) && property_exists($this, 'defaults')) {
             $attributes = array_diff_assoc($attributes, $this->defaults);
         }
 

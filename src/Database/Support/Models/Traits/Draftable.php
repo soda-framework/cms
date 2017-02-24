@@ -17,12 +17,12 @@ trait Draftable
      */
     public static function bootDraftable()
     {
-        static::addGlobalScope('published', function (Builder $builder) {
+        static::addGlobalScope('published', function(Builder $builder) {
             if (static::isDraftsEnabled()) {
                 $builder->where('status', '=', Constants::STATUS_LIVE);
 
                 if (isset(static::$publishDateField)) {
-                    $builder->where(function ($subQuery) {
+                    $builder->where(function($subQuery) {
                         $subQuery->where(static::$publishDateField, '<', Carbon::now())->orWhereNull(static::$publishDateField);
                     });
                 }

@@ -4,6 +4,9 @@ namespace Soda\Cms\Database\Support\Repositories;
 
 abstract class AbstractCacheRepository
 {
+    /**
+     * @param string $key
+     */
     protected function cache($key, $ttl, \Closure $closure, $forgetNull = true)
     {
         if ($ttl === true) {
@@ -25,6 +28,9 @@ abstract class AbstractCacheRepository
         return $closure();
     }
 
+    /**
+     * @param string $key
+     */
     protected function forget($key)
     {
         return $this->getCacheStore()->forget($key);

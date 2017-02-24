@@ -77,7 +77,7 @@ class PageTypeController extends BaseController
         $pageTypes = $this->pageTypes->getList($id);
         $blockTypes = $this->pageTypes->getAvailableBlockTypes($pageType);
 
-        if (! $pageType) {
+        if (!$pageType) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page type']));
         }
 

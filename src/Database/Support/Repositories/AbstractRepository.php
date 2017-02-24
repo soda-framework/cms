@@ -17,6 +17,9 @@ abstract class AbstractRepository
         return $this->model->find($id);
     }
 
+    /**
+     * @param integer $id
+     */
     public function save(Request $request, $id = null)
     {
         $model = $id ? $this->model->findOrFail($id) : $this->newInstance();

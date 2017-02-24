@@ -18,11 +18,11 @@ class CachedApplicationRepository extends AbstractCacheRepository implements Cac
 
     public function findByUrl($url)
     {
-        $application = $this->cache($this->getApplicationUrlCacheKey($url), config('soda.cache.application'), function () use ($url) {
+        $application = $this->cache($this->getApplicationUrlCacheKey($url), config('soda.cache.application'), function() use ($url) {
             return $this->repository->findByUrl($url);
         });
 
-        if (! $application) {
+        if (!$application) {
             $this->forget($this->getApplicationUrlCacheKey($url));
         }
 
@@ -31,8 +31,8 @@ class CachedApplicationRepository extends AbstractCacheRepository implements Cac
 
     public function getSettingsForApplication(ApplicationInterface $application)
     {
-        return $this->cache($this->getApplicationSettingsCacheKey($application->getKey()), config('soda.cache.application'), function () use ($application) {
-            if (! $application->relationLoaded('settings')) {
+        return $this->cache($this->getApplicationSettingsCacheKey($application->getKey()), config('soda.cache.application'), function() use ($application) {
+            if (!$application->relationLoaded('settings')) {
                 $application->load('settings');
             }
 

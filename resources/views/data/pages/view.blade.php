@@ -1,6 +1,6 @@
 <?php
 $smallView = false;
-if ($page->type === null || $page->type->fields === null || ! count($page->type->fields->where('pivot.show_in_table', 1))) {
+if ($page->type === null || $page->type->fields === null || !count($page->type->fields->where('pivot.show_in_table', 1))) {
     $smallView = true;
 }
 

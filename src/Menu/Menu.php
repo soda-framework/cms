@@ -21,6 +21,9 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this->renderer->renderRoot($this);
     }
 
+    /**
+     * @param MenuItem $menu
+     */
     public function renderMenu($menu)
     {
         return $this->renderer->renderMenu($menu);
@@ -52,7 +55,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getActiveClass()
     {
@@ -138,7 +141,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function addItem($item, array $options = [])
     {
-        if (! $item instanceof MenuItem) {
+        if (!$item instanceof MenuItem) {
             $item = new MenuItem($item, $options);
         } elseif (null !== $item->getMenu()) {
             throw new InvalidArgumentException('Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).');

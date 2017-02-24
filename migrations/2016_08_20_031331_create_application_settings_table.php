@@ -12,7 +12,7 @@ class CreateApplicationSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('application_settings', function (Blueprint $table) {
+        Schema::create('application_settings', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('field_name');

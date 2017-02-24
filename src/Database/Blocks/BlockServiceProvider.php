@@ -47,15 +47,15 @@ class BlockServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('soda.dynamic-block.model', function ($app) {
+        $this->app->bind('soda.dynamic-block.model', function($app) {
             return new DynamicBlock;
         });
 
-        $this->app->bind('soda.block-type.model', function ($app) {
+        $this->app->bind('soda.block-type.model', function($app) {
             return new BlockType;
         });
 
-        $this->app->singleton('soda.block-type.repository', function ($app) {
+        $this->app->singleton('soda.block-type.repository', function($app) {
             return new BlockTypeRepository($app['soda.block-type.model']);
         });
 

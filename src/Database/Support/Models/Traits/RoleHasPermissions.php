@@ -21,7 +21,7 @@ trait RoleHasPermissions
      */
     public static function bootPermissionsRoleTrait()
     {
-        $flushCache = function ($role) {
+        $flushCache = function($role) {
             $role->flushCache();
 
             return true;
@@ -35,8 +35,8 @@ trait RoleHasPermissions
         static::deleted($flushCache);
         static::saved($flushCache);
 
-        static::deleting(function ($role) {
-            if (! method_exists(Config::get('laratrust.role'), 'bootSoftDeletes')) {
+        static::deleting(function($role) {
+            if (!method_exists(Config::get('laratrust.role'), 'bootSoftDeletes')) {
                 DB::table(Config::get('laratrust.role_user_table'))->where('role_id', $role->getKey())->delete();
                 $role->permissions()->sync([]);
             }
@@ -53,8 +53,8 @@ trait RoleHasPermissions
                 $cache = $cache->tags(Config::get('laratrust.permission_role_table'));
             }
 
-            return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
-                if (! $this->relationLoaded('permissions')) {
+            return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function() {
+                if (!$this->relationLoaded('permissions')) {
                     $this->load('permissions');
                 }
 
@@ -62,7 +62,7 @@ trait RoleHasPermissions
             });
         }
 
-        if (! $this->relationLoaded('permissions')) {
+        if (!$this->relationLoaded('permissions')) {
             $this->load('permissions');
         }
 
