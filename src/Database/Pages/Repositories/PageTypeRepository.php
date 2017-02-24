@@ -25,11 +25,11 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
 
     public function getAvailableBlockTypes(PageTypeInterface $pageType)
     {
-        if (! $pageType->relationLoaded('block_types')) {
-            $pageType->load('block_types');
+        if (! $pageType->relationLoaded('blockTypes')) {
+            $pageType->load('blockTypes');
         }
 
-        return $this->getBlockTypes()->diff($pageType->getRelation('block_types'));
+        return $this->getBlockTypes()->diff($pageType->getRelation('blockTypes'));
     }
 
     public function save(Request $request, $id = null)
@@ -47,7 +47,7 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
         $restrictedPageTypes = array_keys(array_filter($request->input('subpage_types')));
         $isAllAllowed = $request->input('page_types_restricted') == '0' || $allPageTypes == $restrictedPageTypes;
 
-        $model->subpage_types()->sync($isAllAllowed ? [] : $restrictedPageTypes);
+        $model->subpageTypes()->sync($isAllAllowed ? [] : $restrictedPageTypes);
 
         return $model;
     }

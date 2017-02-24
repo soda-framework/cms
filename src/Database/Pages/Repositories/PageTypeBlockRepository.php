@@ -20,12 +20,12 @@ class PageTypeBlockRepository implements PageTypeBlockRepositoryInterface
     public function attach($pageTypeId, $blockTypeId, $pageTypeBlockTypeParams = [])
     {
         $pageType = $this->pageTypes->findOrFail($pageTypeId);
-        $pageType->block_types()->attach($blockTypeId, $pageTypeBlockTypeParams);
+        $pageType->blockTypes()->attach($blockTypeId, $pageTypeBlockTypeParams);
     }
 
     public function detach($pageTypeId, $blockTypeId)
     {
         $pageType = $this->pageTypes->findOrFail($pageTypeId);
-        $pageType->block_types()->detach($blockTypeId);
+        $pageType->blockTypes()->detach($blockTypeId);
     }
 }

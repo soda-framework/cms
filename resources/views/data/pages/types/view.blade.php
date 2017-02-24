@@ -82,7 +82,7 @@
                     ])->setModel($pageType) !!}
 
                     <?php
-                    $subpageIds = $pageType->subpage_types->pluck('id')->toArray();
+                    $subpageIds = $pageType->subpageTypes->pluck('id')->toArray();
                     ?>
 
                     <div class="restricted_page_types" style="display:none">
@@ -141,7 +141,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach($pageType->block_types as $blockType)
+                        @foreach($pageType->blockTypes as $blockType)
                             <tr>
                                 <td>{{ $blockType->name }}</td>
                                 <td>{{ $blockType->description }}</td>

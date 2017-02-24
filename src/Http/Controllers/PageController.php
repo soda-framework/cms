@@ -30,7 +30,7 @@ class PageController extends BaseController
         $pages = $this->pages->getTree();
 
         $page_types = $this->pages->getTypes(true);
-        $page_types->load('subpage_types');
+        $page_types->load('subpageTypes');
 
         return soda_cms_view('data.pages.index', compact('pages', 'page_types'));
     }
@@ -88,7 +88,7 @@ class PageController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 
-        $page->load('block_types.fields', 'type.block_types.fields', 'type.fields');
+        $page->load('blockTypes.fields', 'type.blockTypes.fields', 'type.fields');
         $blockTypes = $this->pages->getAvailableBlockTypes($page);
 
         return view($page->edit_action, compact('page', 'blockTypes'));
