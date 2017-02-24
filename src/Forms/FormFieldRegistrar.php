@@ -54,7 +54,7 @@ class FormFieldRegistrar
 
     public function resolve(FieldInterface $field)
     {
-        if (!$this->isRegistered($field->getAttribute('field_type'))) {
+        if (! $this->isRegistered($field->getAttribute('field_type'))) {
             throw new Exception('Field '.$field->getAttribute('field_type').' is not registered.');
         }
 

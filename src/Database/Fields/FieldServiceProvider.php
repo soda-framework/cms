@@ -43,15 +43,15 @@ class FieldServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('soda.field.model', function($app) {
+        $this->app->bind('soda.field.model', function ($app) {
             return new Field;
         });
 
-        $this->app->bind('soda.media.model', function($app) {
+        $this->app->bind('soda.media.model', function ($app) {
             return new Media;
         });
 
-        $this->app->bind('soda.field.repository', function($app) {
+        $this->app->bind('soda.field.repository', function ($app) {
             return new FieldRepository($app['soda.field.model']);
         });
 

@@ -112,7 +112,7 @@ class Router extends IlluminateRouter
         $this->routes = new RouteCollection;
         $this->container = $container ?: new Container;
 
-        $this->bind('_missing', function($v) {
+        $this->bind('_missing', function ($v) {
             return explode('/', $v);
         });
     }
@@ -147,7 +147,7 @@ class Router extends IlluminateRouter
     protected function createRoute($methods, $uri, $action)
     {
         $route = parent::createRoute($methods, $uri, $action);
-        if (!empty($this->groupStack)) {
+        if (! empty($this->groupStack)) {
             $route = $this->mergePriority($route);
         }
 

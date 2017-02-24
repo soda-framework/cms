@@ -7,17 +7,17 @@ use Illuminate\Http\Request;
 interface BaseRepositoryInterface
 {
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function findById($id);
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function save(Request $request, $id = null);
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function destroy($id);
 

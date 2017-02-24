@@ -13,7 +13,7 @@ interface FormFieldInterface
      * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setField(FieldInterface $field);
-      
+
     /**
      * @return string
      */

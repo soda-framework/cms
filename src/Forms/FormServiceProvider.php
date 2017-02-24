@@ -31,11 +31,11 @@ class FormServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/fields.php', 'soda.fields');
 
-        $this->app->singleton('soda.form.registrar', function($app) {
+        $this->app->singleton('soda.form.registrar', function ($app) {
             return new FormFieldRegistrar($app['config']->get('soda.fields'));
         });
 
-        $this->app->singleton('soda.form', function($app) {
+        $this->app->singleton('soda.form', function ($app) {
             return new FormBuilder($app['soda.form.registrar']);
         });
     }

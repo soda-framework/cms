@@ -23,7 +23,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
 
     public function getPermissions()
     {
-        return $this->model->permissions()->getRelated()->get()->groupBy('category')->map(function($item, $key) {
+        return $this->model->permissions()->getRelated()->get()->groupBy('category')->map(function ($item, $key) {
             return $item->pluck('display_name', 'id');
         })->toArray();
     }
@@ -92,7 +92,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
         }
 
         if ($width > 0) {
-            $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function($value, $model) use ($editRoute, $deleteRoute) {
+            $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value, $model) use ($editRoute, $deleteRoute) {
                 $buttons = '';
                 if ($editRoute == true && $model->level < \Auth::user()->getLevel()) {
                     $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";

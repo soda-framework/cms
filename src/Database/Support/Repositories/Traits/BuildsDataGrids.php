@@ -40,7 +40,7 @@ trait BuildsDataGrids
         }
 
         if ($width > 0) {
-            $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function($value) use ($editRoute, $deleteRoute) {
+            $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value) use ($editRoute, $deleteRoute) {
                 $buttons = '';
                 if ($editRoute) {
                     $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";

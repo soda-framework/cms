@@ -84,7 +84,7 @@ class UserController extends BaseController
         $user = $this->users->findById($id);
         $roleIds = $this->users->getRoles();
 
-        if (!$user) {
+        if (! $user) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'user']));
         }
 

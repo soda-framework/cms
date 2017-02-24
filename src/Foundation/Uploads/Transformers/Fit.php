@@ -13,7 +13,7 @@ class Fit
     {
         list($width, $height) = $this->convertDimensions($image, $dimensions);
 
-        return $image->resize($width, $height, function($constraint) use ($dimensions) {
+        return $image->resize($width, $height, function ($constraint) use ($dimensions) {
             if (isset($dimensions['upsize']) && $dimensions['upsize'] == true) {
                 $constraint->upsize();
             }

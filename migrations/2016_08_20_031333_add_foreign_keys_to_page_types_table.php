@@ -12,7 +12,7 @@ class AddForeignKeysToPageTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table('page_types', function(Blueprint $table) {
+        Schema::table('page_types', function (Blueprint $table) {
             $table->foreign('application_id', 'FK_page_types_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
@@ -24,7 +24,7 @@ class AddForeignKeysToPageTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('page_types', function(Blueprint $table) {
+        Schema::table('page_types', function (Blueprint $table) {
             $table->dropForeign('FK_page_types_applications');
         });
     }

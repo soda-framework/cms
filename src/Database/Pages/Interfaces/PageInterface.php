@@ -25,12 +25,12 @@ interface PageInterface extends EntityInterface, CanBeSorted
     public function generateSlug($slug);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAllowedChildren();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function canDelete();
 }

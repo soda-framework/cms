@@ -12,7 +12,7 @@ class AddIndexesToBlockTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table('block_types', function(Blueprint $table) {
+        Schema::table('block_types', function (Blueprint $table) {
             $table->index(['id', 'application_id']);
         });
     }
@@ -24,7 +24,7 @@ class AddIndexesToBlockTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('block_types', function(Blueprint $table) {
+        Schema::table('block_types', function (Blueprint $table) {
             $table->dropIndex(['id', 'application_id']);
         });
     }

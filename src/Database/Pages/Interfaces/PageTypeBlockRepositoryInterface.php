@@ -5,15 +5,15 @@ namespace Soda\Cms\Database\Pages\Interfaces;
 interface PageTypeBlockRepositoryInterface
 {
     /**
-     * @param integer $pageTypeId
+     * @param int $pageTypeId
      *
      * @return void
      */
     public function attach($pageTypeId, $blockId, $pageBlockParams = []);
 
     /**
-     * @param integer $pageTypeId
-     * @param integer $blockId
+     * @param int $pageTypeId
+     * @param int $blockId
      *
      * @return void
      */

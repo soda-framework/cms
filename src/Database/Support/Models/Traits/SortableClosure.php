@@ -12,11 +12,11 @@ trait SortableClosure
      */
     public static function bootSortableClosure()
     {
-        static::addGlobalScope('position', function(Builder $builder) {
+        static::addGlobalScope('position', function (Builder $builder) {
             $builder->orderBy((new static)->getPositionColumn());
         });
 
-        static::saving(function($model) {
+        static::saving(function ($model) {
             /* @var Model $model */
             $sortableField = (new static)->getPositionColumn();
 
@@ -26,7 +26,7 @@ trait SortableClosure
             }
         });
 
-        static::deleting(function($model) {
+        static::deleting(function ($model) {
             $model->siblings(static::QUERY_NEXT_ALL)->decrement((new static)->getPositionColumn());
         });
     }

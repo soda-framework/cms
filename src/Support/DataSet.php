@@ -297,6 +297,6 @@ class DataSet extends Widget
      */
     protected function canOrderby($fieldname)
     {
-        return !$this->orderby_check || in_array($fieldname, $this->orderby_fields);
+        return ! $this->orderby_check || in_array($fieldname, $this->orderby_fields);
     }
 }

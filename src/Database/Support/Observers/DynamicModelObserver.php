@@ -14,7 +14,7 @@ class DynamicModelObserver
      */
     public function creating(CanBuildDynamicModels $type)
     {
-        if (!$type->relationLoaded('fields')) {
+        if (! $type->relationLoaded('fields')) {
             $type->load('fields');
         }
 

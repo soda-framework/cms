@@ -57,7 +57,7 @@ class PageBlockRepository implements PageBlockRepositoryInterface
     {
         list($page, $blockType, $block) = array_values($blockId === null ? $this->newInstance($pageId, $blockTypeId) : $this->findById($pageId, $blockTypeId, $blockId));
 
-        if (!$blockType->relationLoaded('fields')) {
+        if (! $blockType->relationLoaded('fields')) {
             $blockType->load('fields');
         }
 
@@ -82,8 +82,8 @@ class PageBlockRepository implements PageBlockRepositoryInterface
     }
 
     /**
-     * @param integer $pageId
-     * @param integer $blockTypeId
+     * @param int $pageId
+     * @param int $blockTypeId
      */
     protected function getParents($pageId, $blockTypeId)
     {

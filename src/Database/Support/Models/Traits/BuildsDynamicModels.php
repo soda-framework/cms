@@ -39,8 +39,8 @@ trait BuildsDynamicModels
     {
         $table = $this->getDynamicTableName();
 
-        if (!Schema::hasTable($table)) {
-            Schema::create($table, function(Blueprint $table) {
+        if (! Schema::hasTable($table)) {
+            Schema::create($table, function (Blueprint $table) {
                 $this->buildDynamicTable($table);
             });
         } else {
@@ -59,7 +59,7 @@ trait BuildsDynamicModels
             $reference_table = $this->getDynamicType().'s';
             $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
 
-            Schema::table($table, function(Blueprint $table) use ($reference_index) {
+            Schema::table($table, function (Blueprint $table) use ($reference_index) {
                 $table->dropForeign($reference_index);
             });
 
@@ -83,8 +83,8 @@ trait BuildsDynamicModels
         $table = $this->getDynamicTableName();
         $field_name = $field->getAttribute('field_name');
 
-        if (!Schema::hasColumn($table, $field_name)) {
-            Schema::table($table, function($table) use ($field) {
+        if (! Schema::hasColumn($table, $field_name)) {
+            Schema::table($table, function ($table) use ($field) {
                 Form::field($field)->addToModel($table)->after('id');
             });
         }
@@ -98,7 +98,7 @@ trait BuildsDynamicModels
         $field_name = $field->getAttribute('field_name');
 
         if (Schema::hasColumn($table, $field_name)) {
-            Schema::table($table, function($table) use ($field) {
+            Schema::table($table, function ($table) use ($field) {
                 Form::field($field)->removeFromModel($table);
             });
         }

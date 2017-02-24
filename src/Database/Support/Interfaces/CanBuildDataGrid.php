@@ -8,7 +8,7 @@ use Zofe\Rapyd\DataFilter\DataFilter;
 interface CanBuildDataGrid
 {
     /**
-     * @param integer $perPage
+     * @param int $perPage
      */
     public function getFilteredGrid($perPage);
 

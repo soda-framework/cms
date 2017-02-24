@@ -40,11 +40,11 @@ class RoleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('soda.role.model', function($app) {
+        $this->app->bind('soda.role.model', function ($app) {
             return new Role;
         });
 
-        $this->app->bind('soda.role.repository', function($app) {
+        $this->app->bind('soda.role.repository', function ($app) {
             return new RoleRepository($app['soda.role.model']);
         });
 

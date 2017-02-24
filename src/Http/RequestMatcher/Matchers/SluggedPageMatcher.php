@@ -34,7 +34,7 @@ class SluggedPageMatcher extends AbstractPageMatcher implements MatcherInterface
         $action = $this->matchedPage->getAttribute('view_action_type');
         $handleAction = 'handle'.ucfirst($action).'Action';
 
-        if (!method_exists($this, $handleAction)) {
+        if (! method_exists($this, $handleAction)) {
             throw new Exception('Action \''.ucfirst($action).'\' is not valid.');
         }
 
@@ -54,7 +54,7 @@ class SluggedPageMatcher extends AbstractPageMatcher implements MatcherInterface
         $view = $page->getAttribute('view_action');
         $view_params = compact('page');
 
-        return function() use ($view, $view_params) {
+        return function () use ($view, $view_params) {
             return view($view, $view_params);
         };
     }

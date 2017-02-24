@@ -20,7 +20,7 @@ class PageObserver
     public function created(PageInterface $page)
     {
         if ($page->getAttribute('page_type_id') !== null) {
-            if (!$page->relationLoaded('type')) {
+            if (! $page->relationLoaded('type')) {
                 $page->load('type');
             }
 

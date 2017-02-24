@@ -7,6 +7,8 @@ use Soda\Cms\Support\Facades\Soda;
 
 abstract class AbstractRepository
 {
+    protected $model;
+
     public function getAll()
     {
         return $this->model->all();
@@ -18,7 +20,7 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function save(Request $request, $id = null)
     {

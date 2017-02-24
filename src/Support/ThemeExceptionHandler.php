@@ -64,7 +64,7 @@ class ThemeExceptionHandler extends Handler
             } elseif ($this->isTokenMismatchException($e)) {
                 return $this->renderTokenMismatchException($e);
             } else {
-                if (!config('app.debug')) {
+                if (! config('app.debug')) {
                     abort(500);
                 } // Return our http error page in all cases, if possible
             }

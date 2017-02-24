@@ -12,7 +12,7 @@ class CreatePagesClosureTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages_closure', function(Blueprint $table) {
+        Schema::create('pages_closure', function (Blueprint $table) {
             $table->increments('closure_id');
             $table->integer('ancestor')->unsigned()->index('pages_closure_ancestor_foreign');
             $table->integer('descendant')->unsigned()->index('pages_closure_descendant_foreign');

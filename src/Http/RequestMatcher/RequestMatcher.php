@@ -29,7 +29,7 @@ class RequestMatcher
      */
     public function registerMatcher($matcher)
     {
-        if (!in_array($matcher, $this->matchers) && is_a($matcher, MatcherInterface::class, true)) {
+        if (! in_array($matcher, $this->matchers) && is_a($matcher, MatcherInterface::class, true)) {
             $this->matchers[] = $matcher;
         }
 

@@ -16,7 +16,7 @@ class MenuRegistrar
      */
     public function register($name, $callback)
     {
-        if (!isset($this->registered_menus[$name])) {
+        if (! isset($this->registered_menus[$name])) {
             $this->registered_menus[$name] = [];
         }
 

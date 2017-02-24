@@ -104,7 +104,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => ['soda.web'],
             'namespace'  => $this->namespace,
-        ], function($router) {
+        ], function ($router) {
             require __DIR__.'/../../routes/web.php';
         });
 
@@ -126,7 +126,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => ['api'],
             'namespace'  => $this->namespace,
             'prefix'     => config('soda.cms.path').'/api',
-        ], function($router) {
+        ], function ($router) {
             require __DIR__.'/../../routes/api.php';
         });
     }
@@ -138,7 +138,7 @@ class RouteServiceProvider extends ServiceProvider
         // If the router is "rebound", we will need to rebuild the middleware.
         // by copying properties from the existing router instance
 
-        $this->app->rebinding('router', function($app, $router) use ($coreRouter) {
+        $this->app->rebinding('router', function ($app, $router) use ($coreRouter) {
             $reflectionRouter = new ReflectionClass($coreRouter);
             $property = $reflectionRouter->getProperty('middlewareGroups');
             $property->setAccessible(true);
@@ -158,7 +158,7 @@ class RouteServiceProvider extends ServiceProvider
             \Route::clearResolvedInstance('router');
         });
 
-        $this->app['router'] = $this->app->share(function($app) {
+        $this->app['router'] = $this->app->share(function ($app) {
             return new Router($app['events'], $app);
         });
 

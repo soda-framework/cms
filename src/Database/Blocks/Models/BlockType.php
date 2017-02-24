@@ -71,7 +71,7 @@ class BlockType extends Model implements BlockTypeInterface
 
     public function blockQuery($pageId = null)
     {
-        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where(function($q) use ($pageId) {
+        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where(function ($q) use ($pageId) {
             $q->where('is_shared', 1);
             if ($pageId) {
                 $q->orWhere('page_id', $pageId);
@@ -85,7 +85,7 @@ class BlockType extends Model implements BlockTypeInterface
 
         $model = $query->get();
 
-        if (!$model) {
+        if (! $model) {
             $model = new Collection;
         }
 

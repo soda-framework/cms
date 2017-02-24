@@ -29,7 +29,7 @@ class RequestMatcherServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('soda.request-matcher', function($app) {
+        $this->app->singleton('soda.request-matcher', function ($app) {
             return new RequestMatcher($app['soda.application.cached-repository']);
         });
     }

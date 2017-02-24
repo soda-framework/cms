@@ -30,18 +30,18 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('soda.menu.registrar', function($app) {
+        $this->app->singleton('soda.menu.registrar', function ($app) {
             return new MenuRegistrar;
         });
 
-        $this->app->singleton('soda.menu', function($app) {
+        $this->app->singleton('soda.menu', function ($app) {
             return new MenuBuilder($app['soda.menu.registrar']);
         });
     }
 
     protected function buildCmsSidebar()
     {
-        $this->app['soda.menu']->menu('sidebar', function($menu) {
+        $this->app['soda.menu']->menu('sidebar', function ($menu) {
             $menu->setAttributes([
                 'class' => 'nav nav-sidebar',
             ]);

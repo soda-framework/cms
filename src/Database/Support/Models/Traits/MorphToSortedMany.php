@@ -19,12 +19,12 @@ trait MorphToSortedMany
     {
         $self = __FUNCTION__;
 
-        $caller = Arr::first(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), function($trace) use ($self) {
+        $caller = Arr::first(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), function ($trace) use ($self) {
             $caller = $trace['function'];
 
-            return !in_array($caller, Model::$manyMethods) && $caller != $self;
+            return ! in_array($caller, Model::$manyMethods) && $caller != $self;
         });
 
-        return !is_null($caller) ? $caller['function'] : null;
+        return ! is_null($caller) ? $caller['function'] : null;
     }
 }

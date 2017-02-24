@@ -48,7 +48,7 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         $grid = (new DataGrid)->source($filter);
         $grid->add('name', 'Name', true);
         $grid->add('description', 'Description', true);
-        $grid->add('field_type', 'type', true)->cell(function($value) {
+        $grid->add('field_type', 'type', true)->cell(function ($value) {
             return ucfirst(str_replace('_', ' ', $value));
         });
 

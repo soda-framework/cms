@@ -12,7 +12,7 @@ class AddForeignKeysToPageTypeBlockTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table('page_type_block_types', function(Blueprint $table) {
+        Schema::table('page_type_block_types', function (Blueprint $table) {
             $table->foreign('block_type_id', 'FK_page_type_blocks_block_types')->references('id')->on('block_types')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('page_type_id', 'FK_page_type_blocks_page_types')->references('id')->on('page_types')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
@@ -25,7 +25,7 @@ class AddForeignKeysToPageTypeBlockTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('page_type_block_types', function(Blueprint $table) {
+        Schema::table('page_type_block_types', function (Blueprint $table) {
             $table->dropForeign('FK_page_type_block_types_block_types');
             $table->dropForeign('FK_page_type_block_types_page_types');
         });

@@ -19,7 +19,7 @@ class CachedPageRepository extends AbstractCacheRepository implements CachedPage
 
     public function findBySlug($slug)
     {
-        return $this->cache($this->getSluggablePageCacheKey($slug), config('soda.cache.pages'), function() use ($slug) {
+        return $this->cache($this->getSluggablePageCacheKey($slug), config('soda.cache.pages'), function () use ($slug) {
             $page = $this->repository->findBySlug($slug);
             if (config('soda.cache.pages') && config('soda.cache.page-type') === true) {
                 $page->load('type');
@@ -34,8 +34,8 @@ class CachedPageRepository extends AbstractCacheRepository implements CachedPage
 
     public function getAttributesForPage(PageInterface $page)
     {
-        return $this->cache($this->getPageAttributesCacheKey($page->getKey()), config('soda.cache.page-data'), function() use ($page) {
-            if (!$page->relationLoaded('type')) {
+        return $this->cache($this->getPageAttributesCacheKey($page->getKey()), config('soda.cache.page-data'), function () use ($page) {
+            if (! $page->relationLoaded('type')) {
                 $page->load('type');
             }
 

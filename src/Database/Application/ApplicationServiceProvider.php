@@ -49,23 +49,23 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('soda.application.model', function($app) {
+        $this->app->bind('soda.application.model', function ($app) {
             return new Application;
         });
 
-        $this->app->bind('soda.application-url.model', function($app) {
+        $this->app->bind('soda.application-url.model', function ($app) {
             return new ApplicationUrl;
         });
 
-        $this->app->bind('soda.application-setting.model', function($app) {
+        $this->app->bind('soda.application-setting.model', function ($app) {
             return new ApplicationSetting;
         });
 
-        $this->app->singleton('soda.application.repository', function($app) {
+        $this->app->singleton('soda.application.repository', function ($app) {
             return new ApplicationRepository($app['soda.application.model'], $app['soda.application-url.model']);
         });
 
-        $this->app->singleton('soda.application.cached-repository', function($app) {
+        $this->app->singleton('soda.application.cached-repository', function ($app) {
             return new CachedApplicationRepository($app['soda.application.repository']);
         });
 

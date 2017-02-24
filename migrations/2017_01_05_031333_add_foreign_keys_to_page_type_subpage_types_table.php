@@ -12,7 +12,7 @@ class AddForeignKeysToPageTypeSubpageTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table('page_type_subpage_types', function(Blueprint $table) {
+        Schema::table('page_type_subpage_types', function (Blueprint $table) {
             $table->foreign('page_type_id', 'FK_page_type_subpage_types_subpage_types')->references('id')->on('page_types')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('subpage_type_id', 'FK_page_type_subpage_types_page_types')->references('id')->on('page_types')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
@@ -25,7 +25,7 @@ class AddForeignKeysToPageTypeSubpageTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('page_type_subpage_types', function(Blueprint $table) {
+        Schema::table('page_type_subpage_types', function (Blueprint $table) {
             $table->dropForeign('FK_page_type_subpage_types_page_types');
             $table->dropForeign('FK_page_type_subpage_types_subpage_types');
         });

@@ -13,7 +13,7 @@ class AlterUsersTable extends Migration
     public function up()
     {
         if (Schema::hasTable('users')) {
-            Schema::table('users', function(Blueprint $table) {
+            Schema::table('users', function (Blueprint $table) {
                 if (Schema::hasColumn('users', 'name')) {
                     $table->renameColumn('name', 'username');
                 }
@@ -21,7 +21,7 @@ class AlterUsersTable extends Migration
                 $table->timestamp('last_loggedin_at')->nullable();
             });
         } else {
-            Schema::create('users', function(Blueprint $table) {
+            Schema::create('users', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('username')->default('');
                 $table->string('email')->unique();
@@ -41,7 +41,7 @@ class AlterUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->renameColumn('username', 'name');
             $table->dropColumn('application_id');
             $table->dropColumn('last_loggedin_at');
