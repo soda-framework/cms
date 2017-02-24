@@ -26,14 +26,14 @@ class Router extends IlluminateRouter
     /**
      * The route collection instance.
      *
-     * @var \Illuminate\Routing\RouteCollection
+     * @var RouteCollection
      */
     protected $routes;
 
     /**
      * The currently dispatched route instance.
      *
-     * @var \Illuminate\Routing\Route
+     * @var Route
      */
     protected $current;
 
@@ -123,7 +123,7 @@ class Router extends IlluminateRouter
      * @param  string       $uri
      * @param  mixed        $action
      *
-     * @return \Illuminate\Routing\Route
+     * @return Route
      */
     protected function newRoute($methods, $uri, $action)
     {
@@ -141,7 +141,7 @@ class Router extends IlluminateRouter
      * @param  string       $uri
      * @param  mixed        $action
      *
-     * @return \Illuminate\Routing\Route
+     * @return Route
      */
     protected function createRoute($methods, $uri, $action)
     {
@@ -154,9 +154,11 @@ class Router extends IlluminateRouter
     }
 
     /**
-     * @param \Illuminate\Routing\Route $route
+     * @param Route $route
+     *
+     * @return Route
      */
-    protected function mergePriority($route)
+    protected function mergePriority(Route $route)
     {
         $row = last($this->groupStack);
         if (isset($row['priority'])) {
@@ -183,7 +185,7 @@ class Router extends IlluminateRouter
     /**
      * Get the underlying route collection.
      *
-     * @return \Illuminate\Routing\RouteCollection
+     * @return RouteCollection
      */
     public function getRoutes()
     {

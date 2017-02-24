@@ -211,11 +211,11 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Set the model used to prefill the field.
      *
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return $this
      */
-    public function setModel($model)
+    public function setModel(Model $model)
     {
         $this->model = $model;
 

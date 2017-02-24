@@ -97,25 +97,27 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     /**
      * @param string $editRoute
      * @param string $deleteRoute
+     *
+     * @return DataGrid
      */
     public function addButtonsToGrid(DataGrid $grid, $editRoute = null, $deleteRoute = null)
     {
         $width = 0;
 
-        if ($editRoute) {
+        if ($editRoute == true) {
             $width += 80;
         }
-        if ($deleteRoute) {
+        if ($deleteRoute == true) {
             $width += 100;
         }
 
         if ($width > 0) {
             $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value, $model) use ($editRoute, $deleteRoute) {
                 $buttons = '';
-                if ($editRoute && $model->getLevel() <= \Auth::user()->getLevel()) {
+                if ($editRoute == true && $model->getLevel() <= \Auth::user()->getLevel()) {
                     $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";
                 }
-                if ($deleteRoute && $model->getLevel() < \Auth::user()->getLevel()) {
+                if ($deleteRoute == true && $model->getLevel() < \Auth::user()->getLevel()) {
                     $buttons .= "<a href='".route($deleteRoute, $value)."' class='btn btn-danger' data-delete-button><i class='fa fa-remove'></i> <span>Delete</span></a> ";
                 }
 

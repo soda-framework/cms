@@ -28,7 +28,7 @@ interface FormFieldInterface
 
     public function getModel();
 
-    public function setModel($model);
+    public function setModel(Model $model);
 
     public function getClass();
 
