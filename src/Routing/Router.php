@@ -3,6 +3,7 @@
 namespace Soda\Cms\Routing;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router as IlluminateRouter;

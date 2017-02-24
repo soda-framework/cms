@@ -5,21 +5,22 @@ namespace Soda\Cms\Forms\Fields;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 
 interface FormFieldInterface
 {
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
-    public function setField($field);
-
+    public function setField(FieldInterface $field);
+      
     /**
      * @return string
      */
     public function getPrefix();
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setPrefix($prefix);
 
@@ -29,7 +30,7 @@ interface FormFieldInterface
     public function getLayout();
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setLayout($layout);
 
@@ -39,7 +40,7 @@ interface FormFieldInterface
     public function getViewPath();
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setViewPath($path);
 
@@ -49,14 +50,14 @@ interface FormFieldInterface
     public function getView();
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setView($view);
 
     public function getModel();
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setModel(Model $model);
 
@@ -66,7 +67,7 @@ interface FormFieldInterface
     public function getClass();
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setClass($class);
 
@@ -76,7 +77,7 @@ interface FormFieldInterface
     public function getFieldId();
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setFieldId($id);
 
@@ -124,12 +125,12 @@ interface FormFieldInterface
     public function addToModel(Blueprint $table);
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function removeFromModel(Blueprint $table);
 
     /**
-     * @return \Soda\Cms\Forms\AbstractFormField
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function saveToModel(Model $model, Request $request);
 
