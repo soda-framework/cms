@@ -18,7 +18,7 @@ if (! function_exists('resolve_class')) {
 
 if (! function_exists('soda_cms_view_path')) {
     /**
-     * @param $view
+     * @param string $view
      *
      * @return string
      */
