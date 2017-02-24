@@ -399,7 +399,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isCurrent()
     {
@@ -419,7 +419,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isVisible()
     {
@@ -491,7 +491,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHidden()
     {
@@ -540,7 +540,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function hasChildren()
     {

@@ -246,7 +246,7 @@ class DataSet extends Widget
     /**
      * total row count.
      *
-     * @return integer
+     * @return int
      */
     public function totalRows()
     {
