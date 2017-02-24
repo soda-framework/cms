@@ -88,7 +88,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param FieldInterface $field
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setField(FieldInterface $field)
     {
@@ -112,7 +112,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $prefix
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setPrefix($prefix)
     {
@@ -136,7 +136,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $layout
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setLayout($layout)
     {
@@ -160,7 +160,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $view
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setView($view)
     {
@@ -184,7 +184,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $view_path
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setViewPath($view_path)
     {
@@ -208,7 +208,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setModel(Model $model)
     {
@@ -232,7 +232,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $class
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setClass($class)
     {
@@ -256,7 +256,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $id
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setFieldId($id)
     {
@@ -378,7 +378,7 @@ abstract class AbstractFormField implements FormFieldInterface
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param \Illuminate\Http\Request            $request
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function saveToModel(Model $model, Request $request)
     {
@@ -437,11 +437,13 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
-     * @return \Illuminate\Support\Fluent
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function addToModel(Blueprint $table)
     {
-        return $table->string($this->getFieldName());
+        $table->string($this->getFieldName());
+
+        return $this;
     }
 
     /**
@@ -449,7 +451,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function removeFromModel(Blueprint $table)
     {
