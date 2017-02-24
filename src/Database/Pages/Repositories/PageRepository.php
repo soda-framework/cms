@@ -113,7 +113,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function save(Request $request, $id = null)
     {
-        if ($id) {
+        if ($id !== null) {
             $page = $this->model->findOrFail($id);
             $page->fill($request->all())->fillDefaults();
             $page->slug = $page->generateSlug($request->input('slug'), false);

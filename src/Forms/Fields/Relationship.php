@@ -61,7 +61,7 @@ class Relationship extends Dropdown
      *
      * @param string $field_parameters
      *
-     * @return bool
+     * @return \Illuminate\Database\Query\Builder
      * @throws \Exception
      */
     protected function buildRelationshipQuery($field_parameters)
