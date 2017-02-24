@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageBlockRepositoryInterface;

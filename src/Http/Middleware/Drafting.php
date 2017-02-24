@@ -17,11 +17,10 @@ class Drafting
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
-     * @param  string|null              $guard
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
         $draftables = app('soda.drafting')->getDraftables();
         foreach ($draftables as $draftable) {

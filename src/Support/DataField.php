@@ -121,7 +121,7 @@ abstract class DataField extends Widget
 
         if (isset($this->model) &&
             method_exists($this->model, $relation) &&
-            is_a(@$this->model->$relation(), 'Illuminate\Database\Eloquent\Relations\Relation')
+            is_a($this->model->$relation(), 'Illuminate\Database\Eloquent\Relations\Relation')
         ) {
             $this->relation = $this->model->$relation($relation);
             $this->rel_key = $this->relation->getModel()->getKeyName();
@@ -130,13 +130,13 @@ abstract class DataField extends Widget
             $this->rel_field = $name;
             $this->name = ($name != $relation) ? $relation.'_'.$name : $name;
 
-            if (is_a(@$this->relation, 'Illuminate\Database\Eloquent\Relations\BelongsTo')) {
+            if (is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\BelongsTo')) {
                 $this->db_name = $this->relation->getForeignKey();
             } else {
                 $this->db_name = $name;
             }
 
-            if (is_a(@$this->relation, 'Illuminate\Database\Eloquent\Relations\BelongsToMany')) {
+            if (is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\BelongsToMany')) {
                 $this->rel_other_key = $this->relation->getQualifiedRelatedKeyName();
             }
 
@@ -168,7 +168,7 @@ abstract class DataField extends Widget
         $this->rule = is_string($this->rule) ? explode('|', $this->rule) : $this->rule;
         $rule = is_string($rule) ? explode('|', $rule) : $rule;
         $this->rule = array_unique(array_merge($this->rule, $rule));
-        if (in_array('required', $this->rule) and ! isset($this->no_star)) {
+        if (in_array('required', $this->rule) && ! isset($this->no_star)) {
             $this->required = true;
         }
 
@@ -354,7 +354,6 @@ abstract class DataField extends Widget
                 //es. "article_detail" per "article"
                 case $this->relation instanceof \Illuminate\Database\Eloquent\Relations\HasOne:
                     $this->value = @$this->relation->get()->first()->$name; //value I need is the field value on related table
-//                     @$this->model->$relation->$name;
 
                     break;
 
@@ -457,11 +456,11 @@ abstract class DataField extends Widget
         }
 
         if (isset($this->when)) {
-            if (is_string($this->when) and strpos($this->when, '|')) {
+            if (is_string($this->when) && strpos($this->when, '|')) {
                 $this->when = explode('|', $this->when);
             }
             $this->when = (array) $this->when;
-            if (! in_array($this->status, $this->when) and ! in_array($this->action, $this->when)) {
+            if (! in_array($this->status, $this->when) && ! in_array($this->action, $this->when)) {
                 $this->visible = false;
                 $this->apply_rules = false;
             } else {
@@ -556,9 +555,6 @@ abstract class DataField extends Widget
             $data = $this->value;
         }
         if ($this->relation != null) {
-
-            //dd($this->relation, get_class($this->relation));
-
             $methodClass = get_class($this->relation);
             switch ($methodClass) {
                 case 'Illuminate\Database\Eloquent\Relations\BelongsToMany':
@@ -647,8 +643,7 @@ abstract class DataField extends Widget
             $this->has_wrapper = false;
         }
         $this->getValue();
-//        $this->star = (!($this->status == "show") and $this->required) ? '&nbsp;*' : '';
-        $this->req = (! ($this->status == 'show') and $this->required) ? ' required' : '';
+        $this->req = (! ($this->status == 'show') && $this->required) ? ' required' : '';
         if (($this->status == 'hidden' || $this->visible === false || in_array($this->type, ['hidden', 'auto']))) {
             $this->is_hidden = true;
         }

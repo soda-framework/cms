@@ -79,7 +79,7 @@ class RequestMatcher
     {
         foreach ($this->matchers as $matcher) {
             $matcherInstance = app($matcher);
-            if ($match = $matcherInstance->matches($request->getRequestUri())) {
+            if ($matcherInstance->matches($request->getRequestUri())) {
                 return $matcherInstance->render($request);
             }
         }

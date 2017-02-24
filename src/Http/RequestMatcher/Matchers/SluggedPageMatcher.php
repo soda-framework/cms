@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Http\RequestMatcher\Matchers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Pages\Interfaces\PageInterface;
 use Illuminate\Contracts\Routing\Registrar as RouterContract;

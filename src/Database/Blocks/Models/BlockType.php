@@ -4,6 +4,7 @@ namespace Soda\Cms\Database\Blocks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Eloquent\Collection;
 use Soda\Cms\Database\Blocks\Observers\BlockTypeObserver;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
