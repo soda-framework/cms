@@ -24,7 +24,7 @@ trait Sluggable
         $slug = $useParent ? $this->fixSlug($this->fixSlug($this->getAttribute('slug')).$this->fixSlug($title)) : $this->fixSlug($title);
 
         // Make sure it doesn't already exist. Exclude own record if we're not using parent to generate slug
-        if ($this->getExistingSlug($slug, ! $useParent)) {
+        if ($this->getExistingSlug($slug, !$useParent)) {
             // It already exists, increment it
             $slug = $this->incrementLatestSlug($slug);
         }

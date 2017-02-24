@@ -34,7 +34,7 @@ class Datetime extends AbstractFormField
         $value = parent::getFieldValue();
         $parameters = $this->parseFieldParameters();
 
-        if (! $value) {
+        if (!$value) {
             return '';
         }
 
@@ -52,7 +52,7 @@ class Datetime extends AbstractFormField
         $value = parent::getSaveValue($request);
         $parameters = $this->parseFieldParameters();
 
-        if (! $value) {
+        if (!$value) {
             return;
         }
 

@@ -39,12 +39,12 @@ class RelationshipGroup extends Relationship
     protected function getRelationshipArray($query, $field_parameters)
     {
         // Relationship data is stored to prevent re-querying
-        if (! $this->relationshipData) {
+        if (!$this->relationshipData) {
             $key_column = isset($field_parameters['key_column']) ? $field_parameters['key_column'] : 'id';
             $value_column = isset($field_parameters['value_column']) ? $field_parameters['value_column'] : $key_column;
             $group = $field_parameters['group_column'];
 
-            $this->relationshipData = $query->get([$group, $value_column, $key_column])->groupBy($group)->transform(function ($item) use ($value_column, $key_column) {
+            $this->relationshipData = $query->get([$group, $value_column, $key_column])->groupBy($group)->transform(function($item) use ($value_column, $key_column) {
                 return $item->pluck($value_column, $key_column);
             })->toArray();
         }

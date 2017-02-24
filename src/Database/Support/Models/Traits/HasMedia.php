@@ -11,7 +11,7 @@ trait HasMedia
 
     public function getMedia($field)
     {
-        if (! $this->relationLoaded('media')) {
+        if (!$this->relationLoaded('media')) {
             $this->load('media');
         }
 

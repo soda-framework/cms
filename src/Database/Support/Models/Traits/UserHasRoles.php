@@ -20,7 +20,7 @@ trait UserHasRoles
      */
     public static function bootLaratrustUserTrait()
     {
-        $flushCache = function ($user) {
+        $flushCache = function($user) {
             $user->flushCache();
 
             return true;
@@ -34,8 +34,8 @@ trait UserHasRoles
         static::deleted($flushCache);
         static::saved($flushCache);
 
-        static::deleting(function ($user) {
-            if (! method_exists(Config::get('auth.providers.users.model'), 'bootSoftDeletes')) {
+        static::deleting(function($user) {
+            if (!method_exists(Config::get('auth.providers.users.model'), 'bootSoftDeletes')) {
                 $user->roles()->sync([]);
             }
         });
@@ -67,8 +67,8 @@ trait UserHasRoles
                 $cache = $cache->tags(Config::get('laratrust.role_user_table'));
             }
 
-            return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
-                if (! $this->relationLoaded('roles')) {
+            return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function() {
+                if (!$this->relationLoaded('roles')) {
                     $this->load('roles');
                 }
 
@@ -76,7 +76,7 @@ trait UserHasRoles
             });
         }
 
-        if (! $this->relationLoaded('roles')) {
+        if (!$this->relationLoaded('roles')) {
             $this->load('roles');
         }
 

@@ -13,7 +13,7 @@ class Resize
     {
         list($width, $height) = $this->convertDimensions($image, $dimensions);
 
-        return $image->resize($width, $height, function ($constraint) use ($dimensions) {
+        return $image->resize($width, $height, function($constraint) use ($dimensions) {
             if (isset($dimensions['aspect']) && $dimensions['aspect'] == true) {
                 $constraint->aspectRatio();
             }

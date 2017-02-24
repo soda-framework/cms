@@ -12,7 +12,7 @@ class AddForeignKeysToRolesTable extends Migration
      */
     public function up()
     {
-        Schema::table('roles', function (Blueprint $table) {
+        Schema::table('roles', function(Blueprint $table) {
             $table->foreign('application_id', 'FK_roles_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
@@ -24,7 +24,7 @@ class AddForeignKeysToRolesTable extends Migration
      */
     public function down()
     {
-        Schema::table('roles', function (Blueprint $table) {
+        Schema::table('roles', function(Blueprint $table) {
             $table->dropForeign('FK_roles_applications');
         });
     }

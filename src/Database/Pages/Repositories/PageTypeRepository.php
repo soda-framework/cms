@@ -25,7 +25,7 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
 
     public function getAvailableBlockTypes(PageTypeInterface $pageType)
     {
-        if (! $pageType->relationLoaded('blockTypes')) {
+        if (!$pageType->relationLoaded('blockTypes')) {
             $pageType->load('blockTypes');
         }
 

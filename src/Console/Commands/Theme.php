@@ -194,7 +194,7 @@ class Theme extends Command
         }
 
         // Make destination directory
-        if (! is_dir($dest)) {
+        if (!is_dir($dest)) {
             mkdir($dest, $permissions);
         }
 

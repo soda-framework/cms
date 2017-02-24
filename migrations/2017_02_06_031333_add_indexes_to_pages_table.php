@@ -12,7 +12,7 @@ class AddIndexesToPagesTable extends Migration
      */
     public function up()
     {
-        Schema::table('pages', function (Blueprint $table) {
+        Schema::table('pages', function(Blueprint $table) {
             $table->index(['slug', 'deleted_at', 'status', 'application_id']);
         });
     }
@@ -24,7 +24,7 @@ class AddIndexesToPagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('pages', function (Blueprint $table) {
+        Schema::table('pages', function(Blueprint $table) {
             $table->dropIndex(['slug', 'deleted_at', 'status', 'application_id']);
         });
     }

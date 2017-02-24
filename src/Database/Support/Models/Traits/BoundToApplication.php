@@ -11,7 +11,7 @@ trait BoundToApplication
      */
     public static function bootBoundToApplication()
     {
-        static::addGlobalScope('in-application', function (Builder $builder) {
+        static::addGlobalScope('in-application', function(Builder $builder) {
             return $builder->where('application_id', '=', app('soda')->getApplication()->getKey());
         });
     }

@@ -28,7 +28,7 @@ class FormBuilder
      */
     public function getFieldTypes()
     {
-        return array_map(function ($value) {
+        return array_map(function($value) {
             $class_name = class_basename($value);
 
             return ucfirst(strtolower(preg_replace('/\B([A-Z])/', ' $1', $class_name)));
@@ -51,7 +51,7 @@ class FormBuilder
             $field = app('soda.field.model')->fill($field);
         }
 
-        if (! $field instanceof FieldInterface) {
+        if (!$field instanceof FieldInterface) {
             throw new Exception('Field must implement interface '.FieldInterface::class.' or be an array.');
         }
 
@@ -73,7 +73,7 @@ class FormBuilder
      */
     public function buildJsParams($parameters)
     {
-        if (! $parameters) {
+        if (!$parameters) {
             return '';
         }
 

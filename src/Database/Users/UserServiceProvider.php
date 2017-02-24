@@ -47,11 +47,11 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('soda.user.model', function ($app) {
+        $this->app->bind('soda.user.model', function($app) {
             return new User;
         });
 
-        $this->app->bind('soda.user.repository', function ($app) {
+        $this->app->bind('soda.user.repository', function($app) {
             return new UserRepository($app['soda.user.model']);
         });
 

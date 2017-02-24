@@ -16,12 +16,12 @@ trait Sortable
      */
     public static function bootSortable()
     {
-        static::addGlobalScope('position', function (Builder $builder) {
+        static::addGlobalScope('position', function(Builder $builder) {
             $builder->orderBy(static::getSortableField());
         });
 
         static::saving(
-            function ($model) {
+            function($model) {
                 /* @var Model $model */
                 $sortableField = static::getSortableField();
                 $query = static::applySortableGroup(static::on(), $model);
@@ -34,7 +34,7 @@ trait Sortable
         );
 
         static::deleting(
-            function ($model) {
+            function($model) {
                 $model->next()->decrement(static::getSortableField());
             }
         );

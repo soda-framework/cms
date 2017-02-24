@@ -72,35 +72,35 @@ class PageServiceProvider extends ServiceProvider
             ClosureTableServiceProvider::class,
         ]);
 
-        $this->app->bind('soda.page.model', function ($app) {
+        $this->app->bind('soda.page.model', function($app) {
             return new Page;
         });
 
-        $this->app->bind('soda.page-type.model', function ($app) {
+        $this->app->bind('soda.page-type.model', function($app) {
             return new PageType;
         });
 
-        $this->app->bind('soda.dynamic-page.model', function ($app) {
+        $this->app->bind('soda.dynamic-page.model', function($app) {
             return new DynamicPage;
         });
 
-        $this->app->singleton('soda.page.repository', function ($app) {
+        $this->app->singleton('soda.page.repository', function($app) {
             return new PageRepository($app['soda.page.model']);
         });
 
-        $this->app->singleton('soda.page-type.repository', function ($app) {
+        $this->app->singleton('soda.page-type.repository', function($app) {
             return new PageTypeRepository($app['soda.page-type.model']);
         });
 
-        $this->app->singleton('soda.page-type-block.repository', function ($app) {
+        $this->app->singleton('soda.page-type-block.repository', function($app) {
             return new PageTypeBlockRepository($app['soda.page-type.model'], $app['soda.block-type.model']);
         });
 
-        $this->app->singleton('soda.page-block.repository', function ($app) {
+        $this->app->singleton('soda.page-block.repository', function($app) {
             return new PageBlockRepository($app['soda.page.model'], $app['soda.block-type.model']);
         });
 
-        $this->app->singleton('soda.page.cached-repository', function ($app) {
+        $this->app->singleton('soda.page.cached-repository', function($app) {
             return new CachedPageRepository($app['soda.page.repository']);
         });
 
