@@ -26,6 +26,9 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         return Form::getFieldTypes();
     }
 
+    /**
+     * @param FieldInterface $model
+     */
     public function buildFilter($model)
     {
         $filter = (new DataFilter)->source($model);

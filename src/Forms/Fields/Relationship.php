@@ -59,7 +59,7 @@ class Relationship extends Dropdown
     /**
      * Builds base query for relationship, using field parameters specified.
      *
-     * @param $field_parameters
+     * @param string $field_parameters
      *
      * @return bool
      * @throws \Exception
@@ -88,7 +88,7 @@ class Relationship extends Dropdown
      * Pulls array from query, using field parameters specified.
      *
      * @param $query
-     * @param $field_parameters
+     * @param string $field_parameters
      *
      * @return array
      */

@@ -27,6 +27,9 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         return $this->appModel->find($id);
     }
 
+    /**
+     * @return ApplicationInterface
+     */
     public function getApplication($id = null)
     {
         if ($id !== null) {

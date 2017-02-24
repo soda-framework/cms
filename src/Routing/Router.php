@@ -153,6 +153,9 @@ class Router extends IlluminateRouter
         return $route;
     }
 
+    /**
+     * @param \Illuminate\Routing\Route $route
+     */
     protected function mergePriority($route)
     {
         $row = last($this->groupStack);

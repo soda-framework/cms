@@ -39,6 +39,9 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
         return $model;
     }
 
+    /**
+     * @param RoleInterface $model
+     */
     public function buildFilter($model)
     {
         $filter = (new DataFilter)->source($model);
@@ -71,6 +74,10 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
         return compact('filter', 'grid');
     }
 
+    /**
+     * @param string $editRoute
+     * @param string $deleteRoute
+     */
     public function addButtonsToGrid(DataGrid $grid, $editRoute = null, $deleteRoute = null)
     {
         $width = 0;
