@@ -76,6 +76,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(SluggableSession::class);
         //$this->overrideRouter();
     }
 
