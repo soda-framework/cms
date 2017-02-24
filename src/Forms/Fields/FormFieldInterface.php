@@ -12,7 +12,7 @@ interface FormFieldInterface
     /**
      * @param FieldInterface $field
      *
-     * @return FormFieldInterface
+     * @return \Soda\Cms\Database\Fields\Interfaces\FieldInterface
      */
     public function setField(FieldInterface $field);
 

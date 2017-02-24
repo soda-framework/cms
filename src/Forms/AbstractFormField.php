@@ -56,7 +56,7 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Field instance to prefill values from.
      *
-     * @var \Soda\Cms\Forms\Fields\FormFieldInterface
+     * @var \Soda\Cms\Database\Fields\Interfaces\FieldInterface
      */
     protected $field;
 
@@ -88,7 +88,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param FieldInterface $field
      *
-     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
+     * @return \Soda\Cms\Database\Fields\Interfaces\FieldInterface
      */
     public function setField(FieldInterface $field)
     {
