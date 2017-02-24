@@ -10,9 +10,9 @@ use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 interface FormFieldInterface
 {
     /**
-     * @param FieldInterface $field
+     * @param \Soda\Cms\Database\Fields\Interfaces\FieldInterface $field
      *
-     * @return \Soda\Cms\Database\Fields\Interfaces\FieldInterface
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setField(FieldInterface $field);
 

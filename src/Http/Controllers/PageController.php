@@ -40,7 +40,7 @@ class PageController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create(Request $request)
     {
@@ -78,7 +78,7 @@ class PageController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
