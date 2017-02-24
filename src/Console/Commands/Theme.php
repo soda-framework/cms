@@ -94,7 +94,7 @@ class Theme extends Command
     /**
      * Guess a suitable classname based on the string provided.
      *
-     * @param $string
+     * @param string $string
      *
      * @return string
      */
@@ -145,8 +145,8 @@ class Theme extends Command
     /**
      * Find and replace two strings recursively from within a path.
      *
-     * @param        $needle
-     * @param        $replace
+     * @param        string $needle
+     * @param        string $replace
      * @param string $haystack
      *
      * @return $this

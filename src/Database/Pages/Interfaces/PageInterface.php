@@ -19,9 +19,18 @@ interface PageInterface extends EntityInterface, CanBeSorted
 
     public function getPageAttribute($attribute);
 
+    /**
+     * @return string
+     */
     public function generateSlug($slug);
 
+    /**
+     * @return bool
+     */
     public function isAllowedChildren();
 
+    /**
+     * @return bool
+     */
     public function canDelete();
 }

@@ -35,7 +35,7 @@ class CatchSluggableRoutes
     {
         if ($event->route->getName() == 'soda.page.match') {
             $event->request->setLaravelSession(
-                $session = $this->startSession($event->request)
+                $this->startSession($event->request)
             );
 
             $action = RequestMatcher::match($event->request);

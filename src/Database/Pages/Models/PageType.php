@@ -47,12 +47,12 @@ class PageType extends Model implements PageTypeInterface
         return $this->hasMany(resolve_class('soda.page.model'), 'page_type_id');
     }
 
-    public function block_types()
+    public function blockTypes()
     {
         return $this->belongsToMany(resolve_class('soda.block-type.model'), 'page_type_block_types')->withPivot('min_blocks', 'max_blocks');
     }
 
-    public function subpage_types()
+    public function subpageTypes()
     {
         return $this->belongsToMany(static::class, 'page_type_subpage_types', 'page_type_id', 'subpage_type_id');
     }

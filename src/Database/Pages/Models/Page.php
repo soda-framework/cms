@@ -67,14 +67,14 @@ class Page extends Entity implements PageInterface
         return $this->belongsTo(resolve_class('soda.page-type.model'), 'page_type_id');
     }
 
-    public function block_types()
+    public function blockTypes()
     {
         return $this->belongsToMany(resolve_class('soda.block-type.model'), 'page_blocks')->withPivot('min_blocks', 'max_blocks');
     }
 
     public function getBlockType($identifier)
     {
-        $block = $this->getRelation('block_types')->filter(function ($item) use ($identifier) {
+        $block = $this->getRelation('blockTypes')->filter(function ($item) use ($identifier) {
             return $item->identifier == $identifier;
         })->first();
 

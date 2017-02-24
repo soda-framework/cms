@@ -4,6 +4,7 @@ namespace Soda\Cms\Database\Blocks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Eloquent\Collection;
 use Soda\Cms\Database\Blocks\Observers\BlockTypeObserver;
 use Soda\Cms\Database\Support\Models\Traits\Identifiable;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
@@ -61,15 +62,9 @@ class BlockType extends Model implements BlockTypeInterface
         $pageReferenceColumn = $page->getForeignKey();
         $pageIndex = 'FK_'.$this->getDynamicTableName().'_'.$pageReferenceColumn.'_pages';
 
-        //$blockTable = $page->block_types()->getRelated()->getTable();
-        //$blockReferenceColumn = $page->block_types()->getRelated()->getForeignKey();
-        //$blockIndex = 'FK_'.$this->getDynamicTableName().'_'.$blockReferenceColumn.'_'.$blockTable;
-
         $table->increments('id');
-        //$table->integer($blockReferenceColumn)->unsigned()->nullable();
         $table->integer($pageReferenceColumn)->unsigned()->nullable();
         $table->tinyInteger('is_shared')->unsigned()->nullable();
-        //$table->foreign($blockReferenceColumn, $blockIndex)->references('id')->on($blockTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->foreign($pageReferenceColumn, $pageIndex)->references('id')->on($pageTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->timestamps();
     }

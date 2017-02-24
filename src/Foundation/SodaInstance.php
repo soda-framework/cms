@@ -36,7 +36,7 @@ class SodaInstance
     /**
      * Returns the current application loaded at the current URL.
      *
-     * @return null
+     * @return ApplicationInterface
      */
     public function getApplication()
     {
@@ -60,7 +60,7 @@ class SodaInstance
     /**
      * Returns the application url model matched to the current application.
      *
-     * @return null
+     * @return ApplicationUrlInterface
      */
     public function getApplicationUrl()
     {
@@ -84,7 +84,7 @@ class SodaInstance
     /**
      * Get the current page that we're visiting.
      *
-     * @return mixed
+     * @return PageInterface
      */
     public function getCurrentPage()
     {

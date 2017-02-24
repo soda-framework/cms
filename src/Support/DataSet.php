@@ -60,6 +60,9 @@ class DataSet extends Widget
         return $ins;
     }
 
+    /**
+     * @param string $table
+     */
     protected function table($table)
     {
         $this->query = DB::table($table);
@@ -71,7 +74,7 @@ class DataSet extends Widget
      * @param        $field
      * @param string $dir
      *
-     * @return mixed
+     * @return string
      */
     public function orderbyLink($field, $dir = 'asc')
     {
@@ -80,6 +83,9 @@ class DataSet extends Widget
         return str_replace('-field-', $field, $url);
     }
 
+    /**
+     * @param string $field
+     */
     public function orderBy($field, $direction = 'asc')
     {
         $this->orderby = [$field, $direction];
@@ -240,7 +246,7 @@ class DataSet extends Widget
     /**
      * total row count.
      *
-     * @return string
+     * @return int
      */
     public function totalRows()
     {
@@ -286,6 +292,9 @@ class DataSet extends Widget
         return $this;
     }
 
+    /**
+     * @param string $fieldname
+     */
     protected function canOrderby($fieldname)
     {
         return ! $this->orderby_check || in_array($fieldname, $this->orderby_fields);

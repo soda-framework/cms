@@ -3,7 +3,6 @@
 namespace Soda\Cms\Database\Blocks;
 
 use Illuminate\Support\ServiceProvider;
-use Soda\Cms\Database\Blocks\Models\Block;
 use Soda\Cms\Database\Blocks\Models\BlockType;
 use Soda\Cms\Database\Blocks\Models\DynamicBlock;
 use Illuminate\Database\Eloquent\Relations\Relation;

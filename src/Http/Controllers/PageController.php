@@ -23,14 +23,14 @@ class PageController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index()
     {
         $pages = $this->pages->getTree();
 
         $page_types = $this->pages->getTypes(true);
-        $page_types->load('subpage_types');
+        $page_types->load('subpageTypes');
 
         return soda_cms_view('data.pages.index', compact('pages', 'page_types'));
     }
@@ -40,7 +40,7 @@ class PageController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create(Request $request)
     {
@@ -60,7 +60,7 @@ class PageController extends BaseController
      *
      * @param  \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function store(Request $request)
     {
@@ -78,7 +78,7 @@ class PageController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
@@ -88,7 +88,7 @@ class PageController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
 
-        $page->load('block_types.fields', 'type.block_types.fields', 'type.fields');
+        $page->load('blockTypes.fields', 'type.blockTypes.fields', 'type.fields');
         $blockTypes = $this->pages->getAvailableBlockTypes($page);
 
         return view($page->edit_action, compact('page', 'blockTypes'));
@@ -100,7 +100,7 @@ class PageController extends BaseController
      * @param  \Illuminate\Http\Request $request
      * @param  int                      $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function update(Request $request, $id)
     {
@@ -118,7 +118,7 @@ class PageController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function destroy($id)
     {

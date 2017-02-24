@@ -7,6 +7,8 @@ use Soda\Cms\Support\Facades\Soda;
 
 abstract class AbstractRepository
 {
+    protected $model;
+
     public function getAll()
     {
         return $this->model->all();
@@ -17,6 +19,9 @@ abstract class AbstractRepository
         return $this->model->find($id);
     }
 
+    /**
+     * @param int $id
+     */
     public function save(Request $request, $id = null)
     {
         $model = $id ? $this->model->findOrFail($id) : $this->newInstance();

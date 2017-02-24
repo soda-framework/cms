@@ -2,6 +2,7 @@
 
 namespace Soda\Cms;
 
+use Laratrust\LaratrustFacade;
 use Soda\Cms\Support\Facades\Form;
 use Soda\Cms\Support\Facades\Menu;
 use Soda\Cms\Support\Facades\Soda;

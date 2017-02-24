@@ -56,7 +56,7 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Field instance to prefill values from.
      *
-     * @var string
+     * @var \Soda\Cms\Database\Fields\Interfaces\FieldInterface
      */
     protected $field;
 
@@ -86,18 +86,13 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Set the Field model to build our FormField off of.
      *
-     * @param $field
+     * @param FieldInterface $field
      *
-     * @return $this
-     * @throws \Exception
+     * @return \Soda\Cms\Database\Fields\Interfaces\FieldInterface
      */
-    public function setField($field)
+    public function setField(FieldInterface $field)
     {
-        if ($field instanceof FieldInterface) {
-            $this->field = $field;
-        } else {
-            throw new Exception('Field must be instance of '.FieldInterface::class.' or array.');
-        }
+        $this->field = $field;
 
         return $this;
     }
@@ -117,7 +112,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $prefix
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setPrefix($prefix)
     {
@@ -141,7 +136,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $layout
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setLayout($layout)
     {
@@ -165,7 +160,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $view
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setView($view)
     {
@@ -189,7 +184,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $view_path
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setViewPath($view_path)
     {
@@ -211,11 +206,11 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Set the model used to prefill the field.
      *
-     * @param $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
-    public function setModel($model)
+    public function setModel(Model $model)
     {
         $this->model = $model;
 
@@ -237,7 +232,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $class
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setClass($class)
     {
@@ -261,7 +256,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param $id
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function setFieldId($id)
     {
@@ -383,7 +378,7 @@ abstract class AbstractFormField implements FormFieldInterface
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param \Illuminate\Http\Request            $request
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function saveToModel(Model $model, Request $request)
     {
@@ -430,7 +425,7 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Renders the field for a cell in a table-view.
      *
-     * @return mixed|string
+     * @return string
      */
     public function renderForTable()
     {
@@ -442,11 +437,13 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function addToModel(Blueprint $table)
     {
-        return $table->string($this->getFieldName());
+        $table->string($this->getFieldName());
+
+        return $this;
     }
 
     /**
@@ -454,7 +451,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
-     * @return $this
+     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     public function removeFromModel(Blueprint $table)
     {

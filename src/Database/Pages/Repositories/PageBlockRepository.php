@@ -22,13 +22,13 @@ class PageBlockRepository implements PageBlockRepositoryInterface
     public function attach($pageId, $blockTypeId, $pageBlockTypeParams = [])
     {
         $page = $this->pages->findOrFail($pageId);
-        $page->block_types()->attach($blockTypeId, $pageBlockTypeParams);
+        $page->blockTypes()->attach($blockTypeId, $pageBlockTypeParams);
     }
 
     public function detach($pageId, $blockTypeId)
     {
         $page = $this->pages->findOrFail($pageId);
-        $page->block_types()->detach($blockTypeId);
+        $page->blockTypes()->detach($blockTypeId);
     }
 
     public function findById($pageId, $blockTypeId, $blockId)
@@ -81,6 +81,10 @@ class PageBlockRepository implements PageBlockRepositoryInterface
         return compact('page', 'blockType', 'block');
     }
 
+    /**
+     * @param int $pageId
+     * @param int $blockTypeId
+     */
     protected function getParents($pageId, $blockTypeId)
     {
         $page = $this->pages->findOrFail($pageId);

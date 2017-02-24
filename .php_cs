@@ -13,6 +13,8 @@ $finder = Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
+$finder->files()->followLinks();
+
 $rules = [
     'blank_line_after_opening_tag'                => true,
     'braces'                                      => true,
@@ -76,7 +78,7 @@ $rules = [
     'no_unused_imports'                           => true,
     'visibility_required'                         => true,
     'no_whitespace_in_blank_line'                 => true,
-    'ordered_imports'                             => true,
+    'ordered_imports'                             => ['sortAlgorithm' => 'length'],
 ];
 
 return Config::create()

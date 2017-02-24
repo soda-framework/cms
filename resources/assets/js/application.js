@@ -9,7 +9,7 @@ var Soda = (function () {
         formSubmitters: '[data-submits]',
         sidebarToggle: '[data-sidebar-toggle]',
         sidebar: '.sidebar'
-    }
+    };
 
     var _log = function (message) {
         if(_debug === true) {
@@ -18,7 +18,7 @@ var Soda = (function () {
     }
 
     var _getCsrf = function(){
-        return $('meta[name="csrf-token"]').attr('content')
+        return $('meta[name="csrf-token"]').attr('content');
     }
 
     var _post = function(url, parameters) {
@@ -41,7 +41,7 @@ var Soda = (function () {
         // order for us to be able to submit it.
         $(document.body).append(form);
         form.submit();
-    };
+    }
 
     var _registerEvents = function() {
         $(elements.deleteButtons).on('click', function(e) {
@@ -83,7 +83,7 @@ var Soda = (function () {
 
             _registerEvents();
         }
-    };
+    }
 
     var confirmDelete = function(element, attributes) {
         var url = element.attr('href');
@@ -104,7 +104,7 @@ var Soda = (function () {
                 element.closest('form').submit();
             }
         });
-    };
+    }
 
     var changePosition = function(requestData){
         $.ajax({

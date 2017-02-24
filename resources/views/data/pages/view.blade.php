@@ -4,9 +4,9 @@ if ($page->type === null || $page->type->fields === null || !count($page->type->
     $smallView = true;
 }
 
-$blockTypes = $page->block_types->keyBy('id');
-if($page->type && $page->type->block_types) {
-    $blockTypes = $blockTypes->merge($page->type->block_types->keyBy('id'));
+$blockTypes = $page->blockTypes->keyBy('id');
+if ($page->type && $page->type->blockTypes) {
+    $blockTypes = $blockTypes->merge($page->type->blockTypes->keyBy('id'));
 }
 ?>
 

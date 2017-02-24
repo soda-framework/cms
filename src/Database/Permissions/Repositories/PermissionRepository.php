@@ -37,6 +37,9 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
         return $model;
     }
 
+    /**
+     * @param PermissionInterface $model
+     */
     public function buildFilter($model)
     {
         $filter = (new DataFilter)->source($model);

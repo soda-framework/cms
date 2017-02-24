@@ -134,7 +134,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -198,8 +198,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param $attribute
-     * @param $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return $this
      */
@@ -305,7 +305,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getIcon()
     {
@@ -399,7 +399,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function isCurrent()
     {
@@ -419,7 +419,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function isVisible()
     {
@@ -491,7 +491,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function isHidden()
     {
@@ -499,7 +499,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUrl()
     {
@@ -540,7 +540,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return bool
+     * @return int
      */
     public function hasChildren()
     {

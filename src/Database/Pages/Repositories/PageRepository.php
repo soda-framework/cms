@@ -41,11 +41,11 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function getAvailableBlockTypes(PageInterface $page)
     {
-        if (! $page->relationLoaded('block_types')) {
-            $page->load('block_types');
+        if (! $page->relationLoaded('blockTypes')) {
+            $page->load('blockTypes');
         }
 
-        return $this->getBlockTypes()->diff($page->getRelation('block_types'));
+        return $this->getBlockTypes()->diff($page->getRelation('blockTypes'));
     }
 
     public function getTree()
@@ -113,7 +113,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     public function save(Request $request, $id = null)
     {
-        if ($id) {
+        if ($id !== null) {
             $page = $this->model->findOrFail($id);
             $page->fill($request->all())->fillDefaults();
             $page->slug = $page->generateSlug($request->input('slug'), false);

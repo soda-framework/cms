@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Blocks\Interfaces\BlockTypeInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageBlockRepositoryInterface;
@@ -26,7 +27,7 @@ class PageBlockController extends BaseController
      * @param Request $request
      * @param  int    $pageId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function attach(Request $request, $pageId)
     {
@@ -45,7 +46,7 @@ class PageBlockController extends BaseController
      * @param  int    $pageId
      * @param  int    $blockTypeId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function detach($pageId, $blockTypeId)
     {
@@ -64,7 +65,7 @@ class PageBlockController extends BaseController
      * @param  int $pageId
      * @param  int $blockTypeId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function create($pageId, $blockTypeId)
     {
@@ -84,7 +85,7 @@ class PageBlockController extends BaseController
      * @param  int                      $pageId
      * @param  int                      $blockTypeId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function store(Request $request, $pageId, $blockTypeId)
     {
@@ -104,7 +105,7 @@ class PageBlockController extends BaseController
      * @param  int $blockTypeId
      * @param  int $blockId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit($pageId, $blockTypeId, $blockId)
     {
@@ -125,7 +126,7 @@ class PageBlockController extends BaseController
      * @param  int                      $blockTypeId
      * @param  int                      $blockId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function update(Request $request, $pageId, $blockTypeId, $blockId)
     {
@@ -145,7 +146,7 @@ class PageBlockController extends BaseController
      * @param  int $blockTypeId
      * @param  int $blockId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function destroy($pageId, $blockTypeId, $blockId)
     {

@@ -11,11 +11,10 @@ class Security
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
-     * @param  string|null              $guard
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
         $response = $next($request);
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');

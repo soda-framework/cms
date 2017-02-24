@@ -20,7 +20,7 @@ class PageTypeController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index()
     {
@@ -32,7 +32,7 @@ class PageTypeController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function create(Request $request)
     {
@@ -51,7 +51,7 @@ class PageTypeController extends BaseController
      *
      * @param  \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function store(Request $request)
     {
@@ -69,7 +69,7 @@ class PageTypeController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit($id)
     {
@@ -90,7 +90,7 @@ class PageTypeController extends BaseController
      * @param  \Illuminate\Http\Request $request
      * @param  int                      $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function update(Request $request, $id)
     {
@@ -108,7 +108,7 @@ class PageTypeController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function destroy($id)
     {
