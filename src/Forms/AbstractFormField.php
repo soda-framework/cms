@@ -86,17 +86,12 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Set the Field model to build our FormField off of.
      *
-     * @param $field
+     * @param FieldInterface $field
      *
      * @return $this
-     * @throws \Exception
      */
-    public function setField($field)
+    public function setField(FieldInterface $field)
     {
-        if (! $field instanceof FieldInterface) {
-            throw new Exception('Field must be instance of '.FieldInterface::class.' or array.');
-        }
-
         $this->field = $field;
 
         return $this;
