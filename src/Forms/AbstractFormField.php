@@ -93,11 +93,11 @@ abstract class AbstractFormField implements FormFieldInterface
      */
     public function setField($field)
     {
-        if ($field instanceof FieldInterface) {
-            $this->field = $field;
-        } else {
+        if (! $field instanceof FieldInterface) {
             throw new Exception('Field must be instance of '.FieldInterface::class.' or array.');
         }
+
+        $this->field = $field;
 
         return $this;
     }

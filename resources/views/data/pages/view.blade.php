@@ -1,11 +1,11 @@
 <?php
 $smallView = false;
-if ($page->type === null || $page->type->fields === null || !count($page->type->fields->where('pivot.show_in_table', 1))) {
+if ($page->type === null || $page->type->fields === null || ! count($page->type->fields->where('pivot.show_in_table', 1))) {
     $smallView = true;
 }
 
 $blockTypes = $page->blockTypes->keyBy('id');
-if($page->type && $page->type->blockTypes) {
+if ($page->type && $page->type->blockTypes) {
     $blockTypes = $blockTypes->merge($page->type->blockTypes->keyBy('id'));
 }
 ?>

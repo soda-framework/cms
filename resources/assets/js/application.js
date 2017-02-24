@@ -9,7 +9,7 @@ var Soda = (function () {
         formSubmitters: '[data-submits]',
         sidebarToggle: '[data-sidebar-toggle]',
         sidebar: '.sidebar'
-    }
+    };
 
     var _log = function (message) {
         if(_debug === true) {
@@ -18,7 +18,7 @@ var Soda = (function () {
     }
 
     var _getCsrf = function(){
-        return $('meta[name="csrf-token"]').attr('content')
+        return $('meta[name="csrf-token"]').attr('content');
     }
 
     var _post = function(url, parameters) {
