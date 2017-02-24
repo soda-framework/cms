@@ -18,6 +18,9 @@ interface PageRepositoryInterface extends BaseRepositoryInterface
 
     public function getRoot();
 
+    /**
+     * @return PageInterface
+     */
     public function createRoot();
 
     public function createStub($parentId = null, $pageTypeId = null);

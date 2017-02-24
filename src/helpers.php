@@ -21,6 +21,10 @@ if (! function_exists('soda_cms_view_path')) {
 }
 
 if (! function_exists('soda_cms_view')) {
+
+    /**
+     * @param string $view
+     */
     function soda_cms_view($view, $params = [])
     {
         return view(soda_cms_view_path($view), $params);
@@ -28,6 +32,11 @@ if (! function_exists('soda_cms_view')) {
 }
 
 if (! function_exists('truncate_words')) {
+
+    /**
+     * @param string $string
+     * @param integer $wordsreturned
+     */
     function truncate_words($string, $wordsreturned)
     {
         $string = preg_replace('/(?<=\S,)(?=\S)/', ' ', $string);

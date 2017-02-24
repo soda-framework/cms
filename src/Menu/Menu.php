@@ -21,6 +21,9 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this->renderer->renderRoot($this);
     }
 
+    /**
+     * @param MenuItem $menu
+     */
     public function renderMenu($menu)
     {
         return $this->renderer->renderMenu($menu);
@@ -52,7 +55,7 @@ class Menu implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getActiveClass()
     {
