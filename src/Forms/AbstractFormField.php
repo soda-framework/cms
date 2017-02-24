@@ -56,7 +56,7 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Field instance to prefill values from.
      *
-     * @var string
+     * @var \Soda\Cms\Forms\Fields\FormFieldInterface
      */
     protected $field;
 

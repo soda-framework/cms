@@ -24,7 +24,7 @@ class BlockTypeController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('data.blocks.types.index', $this->blockTypes->getFilteredGrid(10));
+        return response()->soda_cms_view('data.blocks.types.index', $this->blockTypes->getFilteredGrid(10));
     }
 
     /**
