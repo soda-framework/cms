@@ -68,9 +68,11 @@ class CatchSluggableRoutes
     public function getSession(Request $request)
     {
         return tap($this->sessionManager->driver(), function ($session) use ($request) {
-            $sessionId = $this->encrypter->decrypt($request->cookies->get($session->getName()));
+            if ($encryptedSessionId = $request->cookies->get($session->getName())) {
+                $sessionId = $this->encrypter->decrypt($encryptedSessionId);
 
-            $session->setId($sessionId);
+                $session->setId($sessionId);
+            }
         });
     }
 }
