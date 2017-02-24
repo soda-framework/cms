@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers\Api;
 
-use Illuminate\Http\Response;
 use Soda\Cms\Http\Controllers\BaseController;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class ApiController extends BaseController
 {

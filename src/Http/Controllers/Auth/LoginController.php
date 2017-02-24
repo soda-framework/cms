@@ -33,7 +33,7 @@ class LoginController extends BaseController
     /**
      * Show the application's login form.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showLoginForm()
     {

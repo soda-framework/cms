@@ -23,7 +23,7 @@ class ApplicationController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index()
     {
@@ -35,7 +35,7 @@ class ApplicationController extends BaseController
      *
      * @param null $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit($id = null)
     {
@@ -51,7 +51,7 @@ class ApplicationController extends BaseController
      * @param  \Illuminate\Http\Request $request
      * @param  int                      $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function update(Request $request, $id = null)
     {

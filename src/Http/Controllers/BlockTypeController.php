@@ -20,11 +20,11 @@ class BlockTypeController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index()
     {
-        return response()->soda_cms_view('data.blocks.types.index', $this->blockTypes->getFilteredGrid(10));
+        return soda_cms_view('data.blocks.types.index', $this->blockTypes->getFilteredGrid(10));
     }
 
     /**
@@ -32,7 +32,7 @@ class BlockTypeController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function create(Request $request)
     {
@@ -50,7 +50,7 @@ class BlockTypeController extends BaseController
      *
      * @param  \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function store(Request $request)
     {
@@ -68,7 +68,7 @@ class BlockTypeController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit($id)
     {
@@ -87,7 +87,7 @@ class BlockTypeController extends BaseController
      * @param  \Illuminate\Http\Request $request
      * @param  int                      $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function update(Request $request, $id)
     {
@@ -105,7 +105,7 @@ class BlockTypeController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function destroy($id)
     {

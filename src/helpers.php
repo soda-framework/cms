@@ -34,7 +34,7 @@ if (! function_exists('soda_cms_view')) {
      * @param string $view
      * @param array  $params
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     function soda_cms_view($view, $params = [])
     {

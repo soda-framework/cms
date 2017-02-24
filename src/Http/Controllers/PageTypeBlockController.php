@@ -21,7 +21,7 @@ class PageTypeBlockController extends BaseController
      * @param Request $request
      * @param  int    $pageTypeId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function attach(Request $request, $pageTypeId)
     {
@@ -40,7 +40,7 @@ class PageTypeBlockController extends BaseController
      * @param  int    $pageTypeId
      * @param  int    $blockTypeId
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function detach($pageTypeId, $blockTypeId)
     {
