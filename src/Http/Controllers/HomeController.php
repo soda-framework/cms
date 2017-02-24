@@ -9,7 +9,7 @@ class HomeController extends BaseController
     /**
      * Show the application dashboard.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function getIndex()
     {
