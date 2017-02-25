@@ -74,12 +74,12 @@ class Page extends Entity implements PageInterface
 
     public function getBlockType($identifier)
     {
-        $block = $this->getRelation('blockTypes')->filter(function ($item) use ($identifier) {
+        $block = $this->blockTypes->filter(function ($item) use ($identifier) {
             return $item->identifier == $identifier;
         })->first();
 
-        if (! $block) {
-            $block = $this->type->blocks->filter(function ($item) use ($identifier) {
+        if (! $block && $this->type && $this->type->blockTypes) {
+            $block = $this->type->blockTypes->filter(function ($item) use ($identifier) {
                 return $item->identifier == $identifier;
             })->first();
         }
