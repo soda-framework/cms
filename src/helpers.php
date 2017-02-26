@@ -38,7 +38,7 @@ if (! function_exists('soda_cms_view')) {
      */
     function soda_cms_view($view, $params = [])
     {
-        return app(ResponseFactory::class)->view(soda_cms_view_path($view), $params);
+        return view(soda_cms_view_path($view), $params);
     }
 }
 
