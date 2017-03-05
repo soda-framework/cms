@@ -30,7 +30,7 @@ class Uploader
                 if (config('filesystems.disks.'.config('soda.upload.driver').'.driver') == 'local') {
                     return substr($this->driver()->getAdapter()->applyPathPrefix($uploadFilePath), strlen(public_path()));
                 }
-                
+
                 return $this->driver()->url($uploadFilePath);
             }
         }
