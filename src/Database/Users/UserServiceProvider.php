@@ -51,6 +51,12 @@ class UserServiceProvider extends ServiceProvider
             return new User;
         });
 
+        $this->app->rebinding('soda.user.model', function ($app, $userModel) {
+            Relation::morphMap([
+                'SodaUser' => get_class($userModel),
+            ]);
+        });
+
         $this->app->bind('soda.user.repository', function ($app) {
             return new UserRepository($app['soda.user.model']);
         });
