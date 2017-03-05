@@ -33,6 +33,7 @@ class FancyUpload extends AbstractFormField
                 'related_field'    => $field_name,
                 'multi'            => $is_multi ? 'true' : 'false',
                 'intervention'     => isset($field_params['intervention']) ? json_encode($field_params['intervention']) : '',
+                'uploadSubDir'     => isset($field_params['uploadSubDir']) ? json_encode($field_params['uploadSubDir']) : '',
             ],
             'uploadUrl'               => route('soda.upload'),
             'deleteUrl'               => route('soda.upload.delete'),

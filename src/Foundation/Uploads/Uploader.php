@@ -2,45 +2,48 @@
 
 namespace Soda\Cms\Foundation\Uploads;
 
-use Soda\Cms\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Soda\Cms\Database\Fields\Models\Media;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader
 {
-    public function uploadFile(UploadedFile $file, array $transformConfig = [])
+    public function uploadFile(UploadedFile $file, array $transformConfig = [], $appendedPath)
     {
         if ($file->isValid()) {
-            // Name the file and place in correct directory
-            $filePath = $file->getRealPath();
+            $fileToUpload = new FileToUpload($file);
 
-            // Upload the file
-            if ($transformConfig) {
-                $transformer = new UploadedFileTransformer($transformConfig);
-                $transformer->transform($file);
+            if ($appendedPath) {
+                $fileToUpload->appendToUploadPath($appendedPath);
             }
 
-            $uploadFilePath = $this->urlPrefix().'/'.$this->generateFileName($filePath, $file->getClientOriginalName());
+            if ($transformConfig) {
+                $fileToUpload->setTransformConfig($transformConfig)->transform();
+            }
 
-            $uploaded = $this->driver()->put($uploadFilePath, file_get_contents($filePath), 'public');
+            $uploadFilePath = $fileToUpload->uploadPath();
 
             // Generate return information
-            if ($uploaded) {
-                return config('soda.upload.driver') == 'soda.public' ? '/uploads/'.ltrim($uploadFilePath, '/') : $this->driver()->url($uploadFilePath);
+            if ($this->driver()->put($uploadFilePath, $fileToUpload->fileContents(), 'public')) {
+                if (config('filesystems.disks.'.config('soda.upload.driver').'.driver') == 'local') {
+                    return substr($this->driver()->getAdapter()->applyPathPrefix($uploadFilePath), strlen(public_path()));
+                }
+                
+                return $this->driver()->url($uploadFilePath);
             }
         }
 
         return false;
     }
 
-    public function fancyUpload(Request $request, array $transformConfig = [])
+    public function fancyUpload(Request $request, array $transformConfig = [], $appendedPath)
     {
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $uploadedFile = $this->uploadFile($file, $transformConfig);
+                    $uploadedFile = $this->uploadFile($file, $transformConfig, $appendedPath);
 
                     // Generate return information
                     if ($uploadedFile) {
@@ -60,28 +63,6 @@ class Uploader
         $driver = config('soda.upload.driver');
 
         return Storage::disk($driver);
-    }
-
-    protected function urlPrefix()
-    {
-        return trim(config('soda.upload.folder'), '/');
-    }
-
-    /**
-     * @param string $filePath
-     * @param string|null $fileName
-     */
-    protected function generateFileName($filePath, $fileName)
-    {
-        $sha1Hash = sha1_file($filePath);
-        $pathInfo = pathinfo($fileName);
-
-        $resultFilePath = $pathInfo['filename'].'__'.$sha1Hash;
-        if ($pathInfo['extension']) {
-            $resultFilePath .= '.'.$pathInfo['extension'];
-        }
-
-        return trim($resultFilePath, '/');
     }
 
     protected function generateFancyUploadResponse(Request $request, $uploadedFilePath)
