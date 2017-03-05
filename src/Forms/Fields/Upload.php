@@ -21,6 +21,6 @@ class Upload extends AbstractFormField
     {
         $parameters = $this->parseFieldParameters();
 
-        return (new Uploader)->uploadFile($request->file($this->getPrefixedFieldName()), isset($parameters['intervention']) ? $parameters['intervention'] : []);
+        return (new Uploader)->uploadFile($request->file($this->getPrefixedFieldName()), isset($parameters['intervention']) ? $parameters['intervention'] : [], isset($parameters['upload_sub_dir']) ? $parameters['upload_sub_dir'] : null);
     }
 }

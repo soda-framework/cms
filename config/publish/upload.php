@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'folder' => null,
+    'folder' => 'uploads',
     'driver' => 'soda.public',
 ];

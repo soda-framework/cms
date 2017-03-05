@@ -13,8 +13,9 @@ class UploadController extends BaseController
     public function upload(Request $request)
     {
         $interventionConfig = json_decode($request->input('intervention'), true);
+        $appendedPath = $request->input('uploadSubDir');
 
-        return (new Uploader)->fancyUpload($request, $interventionConfig ?: []);
+        return (new Uploader)->fancyUpload($request, $interventionConfig ?: [], $appendedPath);
     }
 
     public function delete(Request $request)

@@ -33,6 +33,7 @@ class FancyUpload extends AbstractFormField
                 'related_field'    => $field_name,
                 'multi'            => $is_multi ? 'true' : 'false',
                 'intervention'     => isset($field_params['intervention']) ? json_encode($field_params['intervention']) : '',
+                'uploadSubDir'     => isset($field_params['uploadSubDir']) ? json_encode($field_params['uploadSubDir']) : '',
             ],
             'uploadUrl'               => route('soda.upload'),
             'deleteUrl'               => route('soda.upload.delete'),
@@ -132,6 +133,10 @@ class FancyUpload extends AbstractFormField
         $isMulti = isset($parameters['maxFileCount']) && $parameters['maxFileCount'] > 1 ? true : false;
         $fileName = $this->getFieldValue();
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+        if(! $fileName) {
+            return '';
+        }
 
         if (! $isMulti) {
             switch ($fileExtension) {
