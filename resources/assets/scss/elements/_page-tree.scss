@@ -97,9 +97,9 @@ ul.page-tree {
     padding: 10px;
     background-color: $content-inner-background;
     margin: 0 0 5px;
-    box-shadow: $standard-shadow;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    //box-shadow: $standard-shadow;
+    border: 1px solid $slate-095;
+    border-radius: 3px;
     transition: opacity 0.25s ease-in, background-color 0.25s ease-in;
 
     &:hover {

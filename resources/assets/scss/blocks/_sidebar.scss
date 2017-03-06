@@ -1,3 +1,9 @@
+.sidebar-offset {
+  @media(min-width: $screen-md-min) {
+    margin-left: 300px;
+  }
+}
+
 .sidebar {
   position: fixed;
   z-index: 1000;
@@ -12,6 +18,7 @@
 
   @media(min-width: $screen-md-min) {
     transform: translateX(0px);
+    width: 300px;
   }
 
   @media(max-width: $screen-sm-max) {
@@ -75,7 +82,6 @@
   li.nav-item {
     &.active {
       > a.nav-link, > span.nav-link {
-        font-weight: bold;
         transition: background-color 0.25s ease, color 0.25s ease;
         will-change: background-color, color;
         &, &:hover, &:focus, &:active {

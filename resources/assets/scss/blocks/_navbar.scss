@@ -84,7 +84,8 @@
   margin-left: -15px;
   margin-right: -15px;
   border: 0;
-  box-shadow: $standard-shadow;
+  //box-shadow: $standard-shadow;
+  border-bottom: 1px solid $content-inner-border;
   border-radius: 0;
   transform: translateX(0px);
   transition: transform 0.25s ease-in-out;
