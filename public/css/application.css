@@ -14866,7 +14866,15 @@ table.jsoneditor-search button.jsoneditor-previous:hover {
 }
 
 .nav-tabs {
-  border-bottom: 2px solid #D7DCDE;
+  border-bottom: 0;
+}
+
+.nav-tabs:after {
+  content: '';
+  width: 100%;
+  border-top: 2px solid #D7DCDE;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 .nav-tabs > li {
@@ -14878,8 +14886,8 @@ table.jsoneditor-search button.jsoneditor-previous:hover {
   background-color: rgba(0, 0, 0, 0.03);
   border-width: 2px 0;
   border-bottom-color: #D7DCDE !important;
-  -webkit-transition: background-color .15s ease;
-  transition: background-color .15s ease;
+  -webkit-transition: background-color .25s ease;
+  transition: background-color .25s ease;
 }
 
 .nav-tabs > li > a:hover {
@@ -14898,6 +14906,7 @@ table.jsoneditor-search button.jsoneditor-previous:hover {
 
 .tab-pane .content-block {
   border-top-left-radius: 0;
+  border-top-right-radius: 0;
   border-top: 0;
 }
 

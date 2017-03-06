@@ -1,5 +1,12 @@
 .nav-tabs {
-  border-bottom: 2px solid $content-inner-border;
+  border-bottom: 0;
+  &:after {
+    content: '';
+    width: 100%;
+    border-top: 2px solid $content-inner-border;
+    border-top-left-radius: $border-radius-base;
+    border-top-right-radius: $border-radius-base;
+  }
   > li {
     margin-right: 3px;
     margin-bottom: -2px;
@@ -7,7 +14,7 @@
       background-color: rgba(0, 0, 0, 0.03);
       border-width: 2px 0;
       border-bottom-color: $content-inner-border !important;
-      transition: background-color .15s ease;
+      transition: background-color .25s ease;
 
       &:hover {
         background-color: rgba(255, 255, 252, 0.7);
@@ -33,6 +40,7 @@
 .tab-pane {
   .content-block {
     border-top-left-radius: 0;
+    border-top-right-radius: 0;
     border-top: 0;
   }
 }
