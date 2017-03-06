@@ -17,10 +17,12 @@ use Soda\Cms\Database\Pages\Repositories\PageBlockRepository;
 use Soda\Cms\Database\Pages\Repositories\CachedPageRepository;
 use Soda\Cms\Database\Pages\Interfaces\PageRepositoryInterface;
 use Soda\Cms\Database\Pages\Repositories\PageTypeBlockRepository;
+use Soda\Cms\Database\Pages\Repositories\PageTypeFieldRepository;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageBlockRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
 use Soda\Cms\Database\Pages\Interfaces\PageTypeBlockRepositoryInterface;
+use Soda\Cms\Database\Pages\Interfaces\PageTypeFieldRepositoryInterface;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class PageServiceProvider extends ServiceProvider
@@ -40,6 +42,7 @@ class PageServiceProvider extends ServiceProvider
         'soda.page.repository'            => [PageRepositoryInterface::class, PageRepository::class],
         'soda.page-type.repository'       => [PageTypeRepositoryInterface::class, PageTypeRepository::class],
         'soda.page-type-block.repository' => [PageTypeBlockRepositoryInterface::class, PageTypeBlockRepository::class],
+        'soda.page-type-field.repository' => [PageTypeFieldRepositoryInterface::class, PageTypeFieldRepository::class],
         'soda.page-block.repository'      => [PageBlockRepositoryInterface::class, PageBlockRepository::class],
         'soda.page.cached-repository'     => [CachedPageRepositoryInterface::class, CachedPageRepository::class],
     ];
@@ -94,6 +97,10 @@ class PageServiceProvider extends ServiceProvider
 
         $this->app->singleton('soda.page-type-block.repository', function ($app) {
             return new PageTypeBlockRepository($app['soda.page-type.model'], $app['soda.block-type.model']);
+        });
+
+        $this->app->singleton('soda.page-type-field.repository', function ($app) {
+            return new PageTypeFieldRepository($app['soda.page-type.model'], $app['soda.field.model']);
         });
 
         $this->app->singleton('soda.page-block.repository', function ($app) {

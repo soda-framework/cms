@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="soda-login__input">
-                    <input type="text" name="email" placeholder="Email Address">
+                    <input type="text" name="email" placeholder="Email Address" value="{{ old('email') }}">
                     <span class="soda-login__underline"></span>
                 </div>
 

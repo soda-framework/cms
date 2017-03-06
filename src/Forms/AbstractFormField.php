@@ -437,13 +437,11 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
-     * @return \Soda\Cms\Forms\Fields\FormFieldInterface
+     * @return Blueprint
      */
     public function addToModel(Blueprint $table)
     {
-        $table->string($this->getFieldName());
-
-        return $this;
+        return $table->string($this->getFieldName());
     }
 
     /**

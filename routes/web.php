@@ -27,6 +27,8 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
 
         Route::post('page-types/{pageTypeId}/block-types/attach', 'PageTypeBlockController@attach')->name('soda.page-types.blocks.attach');
         Route::delete('page-types/{pageTypeId}/block-types/{blockTypeId}/detach', 'PageTypeBlockController@detach')->name('soda.page-types.blocks.detach');
+        Route::post('page-types/{pageTypeId}/fields/attach', 'PageTypeFieldController@attach')->name('soda.page-types.fields.attach');
+        Route::delete('page-types/{pageTypeId}/fields/{fieldId}/detach', 'PageTypeFieldController@detach')->name('soda.page-types.fields.detach');
         Route::resource('page-types', 'PageTypeController', [
             'as'     => 'soda',
             'except' => 'show',
@@ -39,6 +41,8 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
             'except' => 'show',
         ]);
 
+        Route::post('block-types/{blockTypeId}/fields/attach', 'BlockTypeFieldController@attach')->name('soda.block-types.fields.attach');
+        Route::delete('block-types/{blockTypeId}/fields/{fieldId}/detach', 'BlockTypeFieldController@detach')->name('soda.block-types.fields.detach');
         Route::resource('block-types', 'BlockTypeController', [
             'as'     => 'soda',
             'except' => 'show',

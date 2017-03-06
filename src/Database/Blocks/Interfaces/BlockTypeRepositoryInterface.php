@@ -7,4 +7,7 @@ use Soda\Cms\Database\Support\Interfaces\BaseRepositoryInterface;
 
 interface BlockTypeRepositoryInterface extends CanBuildDataGrid, BaseRepositoryInterface
 {
+    public function getFields();
+
+    public function getAvailableFields(BlockTypeInterface $pageType);
 }

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Contracts\Routing\ResponseFactory;
 
 if (! function_exists('resolve_class')) {
     /**

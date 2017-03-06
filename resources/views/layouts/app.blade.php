@@ -7,6 +7,7 @@
     <div class="soda-wrapper container-fluid">
         @yield('main-content')
     </div>
+    @yield("modals")
     @yield("footer.js")
 </body>
 </html>

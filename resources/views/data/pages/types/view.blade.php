@@ -25,6 +25,10 @@
             <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
         </li>
 
+        <li role='presentation' aria-controls="tab_fields">
+            <a role="tab" data-toggle="tab" href="#tab_fields">Fields</a>
+        </li>
+
         <li role='presentation' aria-controls="tab_subpages">
             <a role="tab" data-toggle="tab" href="#tab_subpages">Subpages</a>
         </li>
@@ -68,6 +72,46 @@
                         'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
                         'description'  => 'If enabled, pages of this type can be created from the CMS interface'
                     ])->setModel($pageType) !!}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab_fields" role="tabpanel">
+                <div class="content-block">
+                    @if($pageType->id)
+                        @if(count($pageType->fields))
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th width="20"></th>
+                                    <th>Field</th>
+                                    <th width="120">Show in table</th>
+                                    <th width="175">Options</th>
+                                </tr>
+                                </thead>
+                                <tbody class="sortable" data-entityname="page-types.fields">
+                                    @foreach($pageType->fields as $field)
+                                        <tr data-itemId="{{ $field->id }}" data-parentId="{{ $pageType->id }}">
+                                            <td class="sortable-handle"><img src="/soda/cms/img/drag-dots.gif" /></td>
+                                            <td>{{ $field->name }}</td>
+                                            <td>{{ $field->pivot->show_in_table ? 'Yes' : 'No' }}</td>
+                                            <td>
+                                                <a href='{{ route('soda.fields.edit', $field->id) }}' class='btn btn-warning' target="_blank"><i class='fa fa-pencil'></i> <span>Edit</span></a>
+                                                <button type="button" class="btn btn-danger" data-detach="{{ route('soda.page-types.fields.detach', [$pageType->id, $field->id]) }}">Delete</button>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p>No fields to show</p>
+                        @endif
+                        @if(count($fields))
+                        <a class="btn btn-lg btn-success" href="#" data-add-field>Add Field</a>
+                        @endif
+                    @else
+                        Please save the page type before managing fields.
+                    @endif
                 </div>
             </div>
 
@@ -154,7 +198,9 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <a class="btn btn-lg btn-success" href="#" data-add-block>Add Block</a>
+                        @if(count($blockTypes))
+                            <a class="btn btn-lg btn-success" href="#" data-add-block>Add Block</a>
+                        @endif
                     @else
                         Please save the page type before managing blocks.
                     @endif
@@ -202,49 +248,87 @@
         </div>
     </form>
 
-    @if($pageType->id)
-    <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Select a block to add...</h4>
-                </div>
-                <form method="POST" action="{{ route('soda.page-types.blocks.attach', $pageType->id) }}">
-                    {!! csrf_field() !!}
-                    <div class="modal-body">
-                        {!! SodaForm::dropdown([
-                            "name"         => "Blocks",
-                            "field_name"   => 'block_id',
-                            "field_params" => ['options' => $blockTypes->pluck('name', 'id')]
-                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
-
-                        {!! SodaForm::text([
-                            "name"        => "Max Blocks",
-                            "field_name"  => "max_blocks",
-                            "description" => "Defines the maximum number of rows this block can hold. Default: unlimited"
-                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
-
-                        {!! SodaForm::text([
-                            "name"        => "Min Blocks",
-                            "field_name"  => "min_blocks",
-                            "description" => "Defines the minimum number of rows this block can hold. Default: unlimited"
-                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-primary">Add Block</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    @endif
-
     <div class="content-bottom">
         @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-type-form'])
     </div>
+@stop
+
+@section('modals')
+    @parent
+
+
+    @if($pageType->id)
+        <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Select a block to add...</h4>
+                    </div>
+                    <form method="POST" action="{{ route('soda.page-types.blocks.attach', $pageType->id) }}">
+                        {!! csrf_field() !!}
+                        <div class="modal-body">
+                            {!! SodaForm::dropdown([
+                                "name"         => "Blocks",
+                                "field_name"   => 'block_id',
+                                "field_params" => ['options' => $blockTypes->pluck('name', 'id')]
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+
+                            {!! SodaForm::text([
+                                "name"        => "Max Blocks",
+                                "field_name"  => "max_blocks",
+                                "description" => "Defines the maximum number of rows this block can hold. Default: unlimited"
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+
+                            {!! SodaForm::text([
+                                "name"        => "Min Blocks",
+                                "field_name"  => "min_blocks",
+                                "description" => "Defines the minimum number of rows this block can hold. Default: unlimited"
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button  class="btn btn-primary">Add Block</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="newFieldModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Select a field to add...</h4>
+                    </div>
+                    <form method="POST" action="{{ route('soda.page-types.fields.attach', $pageType->id) }}">
+                        {!! csrf_field() !!}
+                        <div class="modal-body">
+                            {!! SodaForm::dropdown([
+                                "name"         => "Fields",
+                                "field_name"   => 'fieldable_id',
+                                "field_params" => ['options' => $fields->pluck('name', 'id')]
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+
+                            {!! SodaForm::toggle([
+                                "name"        => "Show in table?",
+                                "field_name"  => "show_in_table",
+                                "value"       => 1,
+                                "description" => "Determines whether field value is shown in table view when listing pages of this type"
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button  class="btn btn-primary">Add Field</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 @stop
 
 @section('footer.js')
@@ -274,6 +358,11 @@
                 $('#newBlockModal').modal('show')
             })
 
+            $('[data-add-field]').on('click', function(e) {
+                e.preventDefault();
+                $('#newFieldModal').modal('show')
+            })
+
             $('[data-detach]').on('click', function(e) {
                 e.preventDefault();
                 var form = $('<form></form>');
@@ -299,6 +388,41 @@
                 // order for us to be able to submit it.
                 $(document.body).append(form);
                 form.submit();
+            });
+
+            $('.sortable').sortable({
+                handle: '.sortable-handle',
+                axis: 'y',
+                update: function(a, b){
+
+                    var $sorted = b.item;
+
+                    var $previous = $sorted.prev();
+                    var $next = $sorted.next();
+
+                    var data = {
+                        id: $sorted.data('itemid'),
+                        parentId: $sorted.data('parentid'),
+                        entityName: $(this).data('entityname'),
+                    };
+
+                    if ($previous.length > 0) {
+                        data.type = 'moveAfter';
+                        data.positionEntityId = $previous.data('itemid');
+
+                        console.log(data);
+                        Soda.changePosition(data);
+                    } else if ($next.length > 0) {
+                        data.type = 'moveBefore';
+                        data.positionEntityId = $next.data('itemid');
+
+                        console.log(data);
+                        Soda.changePosition(data);
+                    } else {
+                        console.error('Something wrong!');
+                    }
+                },
+                cursor: "move"
             });
         });
     </script>

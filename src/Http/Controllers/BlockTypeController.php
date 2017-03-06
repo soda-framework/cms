@@ -73,12 +73,13 @@ class BlockTypeController extends BaseController
     public function edit($id)
     {
         $blockType = $this->blockTypes->findById($id);
+        $fields = $this->blockTypes->getAvailableFields($blockType);
 
         if (! $blockType) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block type']));
         }
 
-        return soda_cms_view('data.blocks.types.view', compact('blockType'));
+        return soda_cms_view('data.blocks.types.view', compact('blockType', 'fields'));
     }
 
     /**

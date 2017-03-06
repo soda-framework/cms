@@ -210,53 +210,56 @@ if ($page->type && $page->type->blockTypes) {
         </div>
     </form>
 
-    @if($page->id)
-    @permission("attach-blocks")
-    <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Select a block to add...</h4>
-                </div>
-                <form method="POST" action="{{ route('soda.pages.blocks.attach', $page->id) }}">
-                    {!! csrf_field() !!}
-                    <div class="modal-body">
-                        {!! SodaForm::dropdown([
-                            "name"         => "Blocks",
-                            "field_name"   => 'block_id',
-                            "field_params" => ['options' => $blockTypes->pluck('name', 'id')]
-                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
-
-                        @permission("manage-block-types")
-                        {!! SodaForm::text([
-                            "name"        => "Max Blocks",
-                            "field_name"  => "max_blocks",
-                            "description" => "Defines the maximum number of rows this block can hold. Default: unlimited"
-                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
-
-                        {!! SodaForm::text([
-                            "name"        => "Min Blocks",
-                            "field_name"  => "min_blocks",
-                            "description" => "Defines the minimum number of rows this block can hold. Default: unlimited"
-                        ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
-                        @endpermission
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-primary">Add Block</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    @endpermission
-    @endif
-
     <div class="content-bottom">
         @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-form'])
     </div>
+@stop
+
+@section('modals')
+    @parent
+    @if($page->id)
+        @permission("attach-blocks")
+        <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Select a block to add...</h4>
+                    </div>
+                    <form method="POST" action="{{ route('soda.pages.blocks.attach', $page->id) }}">
+                        {!! csrf_field() !!}
+                        <div class="modal-body">
+                            {!! SodaForm::dropdown([
+                                "name"         => "Blocks",
+                                "field_name"   => 'block_id',
+                                "field_params" => ['options' => $blockTypes->pluck('name', 'id')]
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+
+                            @permission("manage-block-types")
+                            {!! SodaForm::text([
+                                "name"        => "Max Blocks",
+                                "field_name"  => "max_blocks",
+                                "description" => "Defines the maximum number of rows this block can hold. Default: unlimited"
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+
+                            {!! SodaForm::text([
+                                "name"        => "Min Blocks",
+                                "field_name"  => "min_blocks",
+                                "description" => "Defines the minimum number of rows this block can hold. Default: unlimited"
+                            ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
+                            @endpermission
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button  class="btn btn-primary">Add Block</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endpermission
+    @endif
 @stop
 
 @section('footer.js')

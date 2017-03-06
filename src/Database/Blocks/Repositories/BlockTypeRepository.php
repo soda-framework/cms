@@ -17,6 +17,20 @@ class BlockTypeRepository extends AbstractRepository implements BlockTypeReposit
         $this->model = $model;
     }
 
+    public function getFields()
+    {
+        return app('soda.field.repository')->getAll();
+    }
+
+    public function getAvailableFields(BlockTypeInterface $blockType)
+    {
+        if (! $blockType->relationLoaded('fields')) {
+            $blockType->load('fields');
+        }
+
+        return $this->getFields()->diff($blockType->getRelation('fields'));
+    }
+
     public function getFilteredGrid($perPage)
     {
         $filter = $this->buildFilter($this->model);

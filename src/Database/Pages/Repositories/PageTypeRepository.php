@@ -23,6 +23,11 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
         return app('soda.block-type.repository')->getAll();
     }
 
+    public function getFields()
+    {
+        return app('soda.field.repository')->getAll();
+    }
+
     public function getAvailableBlockTypes(PageTypeInterface $pageType)
     {
         if (! $pageType->relationLoaded('blockTypes')) {
@@ -30,6 +35,15 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
         }
 
         return $this->getBlockTypes()->diff($pageType->getRelation('blockTypes'));
+    }
+
+    public function getAvailableFields(PageTypeInterface $pageType)
+    {
+        if (! $pageType->relationLoaded('fields')) {
+            $pageType->load('fields');
+        }
+
+        return $this->getFields()->diff($pageType->getRelation('fields'));
     }
 
     public function save(Request $request, $id = null)

@@ -11,5 +11,9 @@ interface PageTypeRepositoryInterface extends CanBuildDataGrid, BaseRepositoryIn
 
     public function getAvailableBlockTypes(PageTypeInterface $pageType);
 
+    public function getFields();
+
+    public function getAvailableFields(PageTypeInterface $pageType);
+
     public function getList($exceptId = false);
 }

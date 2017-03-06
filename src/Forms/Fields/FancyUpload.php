@@ -134,7 +134,7 @@ class FancyUpload extends AbstractFormField
         $fileName = $this->getFieldValue();
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        if(! $fileName) {
+        if (! $fileName) {
             return '';
         }
 
