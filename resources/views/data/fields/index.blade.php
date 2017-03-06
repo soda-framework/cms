@@ -20,8 +20,11 @@
 ])
 
 @section('content')
-    <div class="content-block">
+    <div class="content-top">
         {!! $filter !!}
+    </div>
+
+    <div class="content-block">
         {!! $grid !!}
     </div>
 @endsection

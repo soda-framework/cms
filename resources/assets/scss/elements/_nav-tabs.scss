@@ -1,9 +1,11 @@
 .nav-tabs {
-  border-bottom: 1px solid $content-inner-border;
+  border-bottom: 2px solid $content-inner-border;
   > li {
     margin-right: 3px;
+    margin-bottom: -2px;
     > a {
       background-color: rgba(0, 0, 0, 0.03);
+      border-width: 2px 0;
       border-bottom-color: $content-inner-border !important;
       transition: background-color .15s ease;
 
@@ -15,6 +17,7 @@
     &.active {
       > a {
         &, &:active, &:hover, &:focus {
+          border-width: 2px 0;
           background-color: $content-inner-background;
           border-bottom-color: transparent !important;
         }

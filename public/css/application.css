@@ -13219,7 +13219,7 @@ body.sidebar-transitioning {
   padding: 40px;
   background-color: #FFFFFF;
   color: #333333;
-  border: 1px solid #D7DCDE;
+  border-top: 2px solid #D7DCDE;
   width: 100%;
 }
 
@@ -13954,7 +13954,7 @@ select.form-control {
   width: 23px;
   background-color: #fff;
   border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   -webkit-transition: margin 0.4s;
   transition: margin 0.4s;
 }
@@ -14866,15 +14866,17 @@ table.jsoneditor-search button.jsoneditor-previous:hover {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #D7DCDE;
+  border-bottom: 2px solid #D7DCDE;
 }
 
 .nav-tabs > li {
   margin-right: 3px;
+  margin-bottom: -2px;
 }
 
 .nav-tabs > li > a {
   background-color: rgba(0, 0, 0, 0.03);
+  border-width: 2px 0;
   border-bottom-color: #D7DCDE !important;
   -webkit-transition: background-color .15s ease;
   transition: background-color .15s ease;
@@ -14885,6 +14887,7 @@ table.jsoneditor-search button.jsoneditor-previous:hover {
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:active, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border-width: 2px 0;
   background-color: #FFFFFF;
   border-bottom-color: transparent !important;
 }
