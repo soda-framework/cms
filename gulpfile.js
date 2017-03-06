@@ -47,6 +47,7 @@ elixir(function(mix) {
             './resources/components/tinymce/jquery.tinymce.min.js',
         ], 'public/js/forms/tinymce.js')
         .scripts([
+            './resources/components/bootstrap-fileinput/js/plugins/sortable.js',
             './resources/components/bootstrap-fileinput/js/fileinput.js',
             './resources/components/bootstrap-fileinput/themes/fa/theme.js',
         ], 'public/js/forms/upload.js')

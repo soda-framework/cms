@@ -8,5 +8,10 @@
         $("#{{ $field_id }}").fileinput({
             {!! Soda::getFormBuilder()->buildJsParams($field_parameters) !!}
         });
+
+
+        $("#{{ $field_id }}").on('filesorted', function(event, params) {
+            console.log('File sorted ', params.previewId, params.oldIndex, params.newIndex, params.stack);
+        });
     </script>
 @stop

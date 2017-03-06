@@ -161,7 +161,7 @@ class FancyUpload extends AbstractFormField
                 case 'm4a':
                     return '<audio src="'.$fileName.'" alt="" width="120"/>';
                 case 'pdf':
-                    return '<embed src="'.$fileName.'" width="120" type="application/pdf">';
+                    return '<object data="'.$fileName.'" type="application/pdf" width="120"><embed src="'.$fileName.'" width="120" type="application/pdf"></object>';
             }
 
             return '<a href="'.$fileName.'" target="_blank">View File</a>';
