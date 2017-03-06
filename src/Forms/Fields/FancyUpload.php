@@ -2,9 +2,11 @@
 
 namespace Soda\Cms\Forms\Fields;
 
-use Illuminate\Http\Request;
-use Soda\Cms\Forms\AbstractFormField;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use League\Flysystem\Util\MimeType;
+use Soda\Cms\Forms\AbstractFormField;
+use Soda\Cms\Foundation\Uploads\Uploader;
 
 class FancyUpload extends AbstractFormField
 {
@@ -15,7 +17,7 @@ class FancyUpload extends AbstractFormField
         $field_name = $this->getFieldName();
         $field_params = $this->getFieldParameters();
         $is_multi = isset($field_params['maxFileCount']) && $field_params['maxFileCount'] > 1 ? true : false;
-        $has_media = $this->model && (($is_multi && $this->model->getMedia($field_name)->count() > 0) || ! $is_multi && $this->model && isset($this->model->$field_name) && $this->model->$field_name) ? true : false;
+        $has_media = $this->model && (($is_multi && $this->model->getMedia($field_name)->count() > 0) || !$is_multi && $this->model && isset($this->model->$field_name) && $this->model->$field_name) ? true : false;
 
         $related = [];
         if ($this->model) {
@@ -30,10 +32,10 @@ class FancyUpload extends AbstractFormField
             'initialPreview'          => [],
             'initialPreviewConfig'    => [],
             'uploadExtraData'         => [
-                'related_field'    => $field_name,
-                'multi'            => $is_multi ? 'true' : 'false',
-                'intervention'     => isset($field_params['intervention']) ? json_encode($field_params['intervention']) : '',
-                'uploadSubDir'     => isset($field_params['uploadSubDir']) ? $field_params['uploadSubDir'] : '',
+                'related_field' => $field_name,
+                'multi'         => $is_multi ? true : false,
+                'intervention'  => isset($field_params['intervention']) ? json_encode($field_params['intervention']) : '',
+                'uploadSubDir'  => isset($field_params['uploadSubDir']) ? $field_params['uploadSubDir'] : '',
             ],
             'uploadUrl'               => route('soda.upload'),
             'deleteUrl'               => route('soda.upload.delete'),
@@ -48,13 +50,15 @@ class FancyUpload extends AbstractFormField
                 'png',
             ],
             'uploadAsync'             => true,
-            'minFileCount'            => 1,
+            'minFileCount'            => 0,
             'maxFileCount'            => 1,
-            'overwriteInitial'        => $is_multi ? 'false' : 'true',
-            'autoReplace'             => $is_multi ? 'false' : 'true',
-            'initialPreviewAsData'    => false, // identify if you are sending preview data only and not the raw markup
+            'overwriteInitial'        => $is_multi ? false : true,
+            'autoReplace'             => $is_multi ? false : true,
+            'initialPreviewAsData'    => true, // identify if you are sending preview data only and not the raw markup
             'theme'                   => 'fa', //we want to use font awesome instead of glyphicons.
+            'allowedPreviewTypes'     => ['image', 'pdf'],
             'previewFileIcon'         => '<i class="fa fa-file"></i>',
+            'validateInitialCount'    => true,
             'previewFileIconSettings' => [
                 'docx' => '<i class="fa fa-file-word-o text-primary"></i>',
                 'xlsx' => '<i class="fa fa-file-excel-o text-success"></i>',
@@ -67,13 +71,16 @@ class FancyUpload extends AbstractFormField
 
         if ($is_multi && $has_media) {
             foreach ($this->model->getMedia($field_name) as $image) {
-                $initialPreview = '<img src="'.$image->media.'" width="120">';
+                $mimeType = Uploader::detectByFilename($image->media);
+                $initialPreview = $image->media;
                 $initialPreviewConfig = [
-                    'caption' => '',
-                    'width'   => '120px',
-                    'url'     => route('soda.upload.delete'),
-                    'key'     => $image->id,
-                    'extra'   => [],
+                    'caption'  => '',
+                    'filetype' => $mimeType,
+                    'type'     => Uploader::guessFileTypeByMime($mimeType),
+                    'width'    => '120px',
+                    'url'      => route('soda.upload.delete'),
+                    'key'      => $image->id,
+                    'extra'    => [],
                 ];
 
                 if ($related) {
@@ -83,10 +90,13 @@ class FancyUpload extends AbstractFormField
                 $default_parameters['initialPreview'][] = $initialPreview;
                 $default_parameters['initialPreviewConfig'][] = $initialPreviewConfig;
             }
-        } elseif (! $is_multi && $has_media) {
-            $initialPreview = '<img src="'.$this->model->$field_name.'" width="120">';
+        } elseif (!$is_multi && $has_media) {
+            $mimeType = Uploader::detectByFilename($this->model->$field_name);
+            $initialPreview = $this->model->$field_name;
             $initialPreviewConfig = [
                 'caption' => '',
+                'filetype' => $mimeType,
+                'type'     => Uploader::guessFileTypeByMime($mimeType),
                 'width'   => '120px',
                 'url'     => route('soda.upload.delete'),
                 'extra'   => [],
@@ -134,11 +144,11 @@ class FancyUpload extends AbstractFormField
         $fileName = $this->getFieldValue();
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        if (! $fileName) {
+        if (!$fileName) {
             return '';
         }
 
-        if (! $isMulti) {
+        if (!$isMulti) {
             switch ($fileExtension) {
                 case 'jpg':
                 case 'png':
@@ -150,6 +160,8 @@ class FancyUpload extends AbstractFormField
                 case 'wav':
                 case 'm4a':
                     return '<audio src="'.$fileName.'" alt="" width="120"/>';
+                case 'pdf':
+                    return '<embed src="'.$fileName.'" width="120" type="application/pdf">';
             }
 
             return '<a href="'.$fileName.'" target="_blank">View File</a>';
@@ -171,7 +183,7 @@ class FancyUpload extends AbstractFormField
         $parameters = $this->parseFieldParameters();
         $isMulti = isset($parameters['maxFileCount']) && $parameters['maxFileCount'] > 1 ? true : false;
 
-        if (! $isMulti) {
+        if (!$isMulti) {
             return parent::saveToModel($model, $request);
         }
 
