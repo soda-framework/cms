@@ -3,7 +3,7 @@ tagline: A sweet PHP CMS solution built on Laravel!
 github_url: https://github.com/soda-framework/cms
 description:
 google_analytics_tracking_id:
-base_href: https://soda-framework.github.io/cms
-favicon: assets/favicon.ico
+base_href: http://sodacms.io
+s3_url: https://s3.amazonaws.com/files.madeinkatana.com/soda-framework
+favicon: common/favicon.ico
 apple_touch:
-logo:
