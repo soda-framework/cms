@@ -1,0 +1,8 @@
+{
+  "name": "cms-docs",
+  "version": "1.0.0",
+  "description": "",
+  "devDependencies": {
+    "bootstrap-sass": "^3.3.7"
+  }
+}

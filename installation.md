@@ -23,7 +23,7 @@ laravel new app-name
 Alternatively, you may also install Laravel by issuing the Composer create-project command in your terminal:
 
 ```bash
-composer create-project --prefer-dist laravel/laravel app-name "5.3.*"
+composer create-project --prefer-dist laravel/laravel app-name
 ```
 
 ### [Require Soda Framework](#require-soda-framework) {#require-soda-framework}
@@ -48,8 +48,22 @@ Rather than setting up your .env file manually, you may run the following comman
 
 `php artisan soda:setup`
 
+This command will guide you through setting up your database environment details, creating the database (if necessary).
+
 ### [Migrate and seed](#migrate-and-seed) {#migrate-and-seed}
+
+Finally, migrate and seed your database with the following commands:
 
 `php artisan session:table` (optional)
 
 `php artisan vendor:publish && php artisan migrate && php artisan soda:seed`
+
+### [Login](#login) {#login}
+
+You will now be able to log in to your CMS using the following login details:
+
+Login at: http://app-name.dev/cms
+
+Username: admin@admin.com
+
+Password: admin

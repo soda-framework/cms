@@ -1,4 +1,4 @@
-<footer>
+<footer class="footer">
     <div class="container">
         <p>&copy; Copyright <a href="{{ site.data.project.base_href }}">Soda CMS</a>.</p>
     </div>
@@ -17,7 +17,7 @@
                 target = target.length ? target : $('[name=' + hash.slice(1) +']');
                 if (target.length) {
                     $('html, body').animate({
-                        scrollTop: target.offset().top
+                        scrollTop: target.offset().top - $('.navbar-fixed-top').outerHeight()
                     }, 500, function() {
                         window.location.hash = hash;
                     });

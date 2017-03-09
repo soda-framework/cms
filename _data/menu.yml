@@ -1,8 +1,6 @@
 Getting Started:
     Installation: 'installation'
     Configuration: 'configuration'
-    Upgrade Guide: 'upgrade-guide'
-    Change log: 'change-log'
 Models:
     Application: 'models/application'
     Page Type: 'models/page-type'

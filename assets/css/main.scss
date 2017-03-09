@@ -1,9 +1,12 @@
 ---
 ---
 
+@import 'variables';
+@import 'bootstrap';
+
 body {
   padding-top: 70px;
-  color: #525252;
+  color: $grey-010;
   font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -20,7 +23,7 @@ h2, h3, h4, p strong {
 
 a {
   background-color: transparent;
-  color: #0BD685;
+  color: $soda-green;
   text-decoration: none;
 }
 
@@ -30,7 +33,7 @@ p {
 }
 
 code {
-  color: #0BD685;
+  color: $soda-green;
 }
 
 a.navbar-brand {
@@ -44,11 +47,26 @@ a.navbar-brand {
   }
 }
 
-@import 'sidebar';
-@import 'docs';
-@import 'highlighter-rouge';
-@import 'syntax-highlighters/laravel';
-@import 'footer';
+.v-center {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+@import 'animations';
+
+@import 'blocks/footer';
+@import 'blocks/sidebar';
+
+@import 'elements/btn';
+@import 'elements/highlighter-rouge';
+@import 'elements/syntax-highlighters/laravel';
+
+@import 'pages/docs';
+@import 'pages/titlescreen';
+
 
 
 

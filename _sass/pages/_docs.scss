@@ -19,7 +19,7 @@
         position: absolute;
         font-size: 28px;
         top: 5px;
-        color: #0BD685;
+        color: $soda-green;
         opacity: .6;
       }
     }
@@ -35,10 +35,10 @@
     }
     h2, h3, h4, h5, h6 {
       a {
-        color: #525252;
+        color: $grey-010;
         text-decoration: none;
         &:hover {
-          color: #525252;
+          color: $grey-010;
           text-decoration: none;
         }
       }
@@ -54,13 +54,16 @@
       font-size: 16px;
       font-weight: 700;
       line-height: 1.5;
-      border-bottom: 1px solid #f0f2f1;
+      border-bottom: 1px solid $grey-030;
       -webkit-font-smoothing: antialiased;
       li:before {
         content: "# ";
         margin-right: .25em;
-        color: #0BD685;
+        color: $soda-green;
         opacity: .3;
+      }
+      a {
+        color: $grey-010;
       }
     }
     li > ul {
