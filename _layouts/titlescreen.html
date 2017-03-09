@@ -14,34 +14,7 @@
 {% include footer.html %}
 
 <script>
-    var headerSection = document.getElementsByClassName("navbar")[0];
-    var mainSection = document.getElementsByClassName("section__main")[0];
-    var footerSection = document.getElementsByClassName("footer")[0];
-
-    var addEvent = function(object, type, callback) {
-        if (object == null || typeof(object) == 'undefined') return;
-        if (object.addEventListener) {
-            object.addEventListener(type, callback, false);
-        } else if (object.attachEvent) {
-            object.attachEvent("on" + type, callback);
-        } else {
-            object["on"+type] = callback;
-        }
-    };
-
-    var resizeMainSection = function ()
-    {
-        var windowHeight = window.innerHeight
-                || document.documentElement.clientHeight
-                || document.body.clientHeight;
-
-        mainSection.style.minHeight = (windowHeight - headerSection.clientHeight - footerSection.clientHeight) + "px";
-    }
-
-    resizeMainSection();
-
     $(function() {
-        $(window).on('resize', resizeMainSection);
         $('body').addClass('loaded');
     });
 </script>

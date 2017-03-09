@@ -4,6 +4,10 @@
 @import 'variables';
 @import 'bootstrap';
 
+html, body {
+  height: 100%;
+}
+
 body {
   padding-top: 70px;
   color: $grey-010;
@@ -45,14 +49,6 @@ a.navbar-brand {
   img {
     max-height: 20px;
   }
-}
-
-.v-center {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
-  transform: translateY(-50%);
 }
 
 @import 'animations';
