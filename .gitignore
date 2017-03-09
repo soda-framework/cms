@@ -3,13 +3,8 @@ _site
 .jekyll-metadata
 
 vendor/
-node_modules/
-composer.lock
-
-resources/components/
-stubs/theme/resources/components/
+node_modules/*
+!node_modules/bootstrap-sass
 
 .idea
 .idea/**
-
-.php_cs.cache
