@@ -14,7 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class Uploader
 {
     /**
-     * Uploads a single file and returns the filepath if successful. Returns false on failure.
+     * Uploads a single file and returns the filepath if successful.
+     * Returns false on failure.
      *
      * @param UploadedFile $file
      * @param array        $transformConfig
@@ -32,7 +33,8 @@ class Uploader
     }
 
     /**
-     * Uploads a single file and returns the filepath if successful. Returns false on failure.
+     * Creates and uploads a single file from base64 data, returning
+     * the filepath if successful. Returns false on failure.
      *
      * @param              $fileContents
      * @param null         $fileName
@@ -47,7 +49,8 @@ class Uploader
     }
 
     /**
-     * Uploads a file and returns a response to be consumed by bootstrap-fileinput jQuery plugin.
+     * Uploads a file and returns a response to be consumed by
+     * bootstrap-fileinput jQuery plugin.
      *
      * @param Request $request
      * @param array   $transformConfig
@@ -75,6 +78,16 @@ class Uploader
         return response()->json(['error' => 'No valid files to upload.']);
     }
 
+    /**
+     * Uploads an UploadableFile instance and returns the path to the image.
+     * Returns false on failure.
+     *
+     * @param UploadableFile $uploadableFile
+     * @param array          $transformConfig
+     * @param                $appendedPath
+     *
+     * @return bool|string
+     */
     protected function upload(UploadableFile $uploadableFile, array $transformConfig = [], $appendedPath)
     {
         if ($appendedPath) {
