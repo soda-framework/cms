@@ -16,7 +16,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-file-text-o',
+    'icon'        => 'mdi mdi-file-outline',
     'title'       => 'Pages',
 ])
 

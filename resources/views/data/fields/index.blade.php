@@ -14,7 +14,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-paperclip',
+    'icon'        => 'mdi mdi-paperclip',
     'title'       => 'Fields',
     'description' => 'Fields are added onto pages.',
 ])

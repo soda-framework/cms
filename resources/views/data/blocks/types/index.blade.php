@@ -14,7 +14,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-cubes',
+    'icon'        => 'mdi mdi-widgets',
     'title'       => 'Block Types',
     'description' => 'Different Block Types have different field types applied to them',
 ])

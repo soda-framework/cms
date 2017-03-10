@@ -15,7 +15,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-edit',
+    'icon'        => 'mdi mdi-file-outline',
     'title'       => $pageType->name ? 'Page Type: ' . $pageType->name : 'New Page Type',
 ])
 

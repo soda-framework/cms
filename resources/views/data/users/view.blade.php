@@ -15,7 +15,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-pencil',
+    'icon'        => 'mdi mdi-account-circle',
     'title'       => $user->username ? ' User: ' . $user->username : 'New User',
 ])
 

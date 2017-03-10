@@ -27,7 +27,7 @@ if ($page->type && $page->type->blockTypes) {
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-pencil',
+    'icon'        => 'mdi mdi-file-outline',
     'title'       => $page->name ? ' Page: ' . $page->name : 'New Page',
     'description' => $page->description,
 ])

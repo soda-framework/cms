@@ -50,7 +50,7 @@ class MenuServiceProvider extends ServiceProvider
 
             $menu->addItem('Dashboard', [
                 'url'         => route('soda.home'),
-                'icon'        => 'fa fa-home',
+                'icon'        => 'mdi mdi-collage',  //mdi-view-dashboard
                 'label'       => 'Dashboard',
                 'isCurrent'   => soda_request_is() || soda_request_is('/'),
                 'permissions' => 'access-cms',
@@ -58,7 +58,7 @@ class MenuServiceProvider extends ServiceProvider
 
             $menu->addItem('Application', [
                 'url'         => route('soda.application.edit'),
-                'icon'        => 'fa fa-database',
+                'icon'        => 'mdi mdi-lock-pattern', //mdi-buffer
                 'label'       => 'Application',
                 'isCurrent'   => soda_request_is('application*'),
                 'permissions' => 'view-application-settings',
@@ -66,7 +66,7 @@ class MenuServiceProvider extends ServiceProvider
 
             $menu->addItem('Pages', [
                 'url'         => route('soda.pages.index'),
-                'icon'        => 'fa fa-file-text-o',
+                'icon'        => 'mdi mdi-file-outline',
                 'label'       => 'Pages',
                 'isCurrent'   => soda_request_is('pages*'),
                 'permissions' => 'view-pages',
@@ -74,7 +74,7 @@ class MenuServiceProvider extends ServiceProvider
 
             $menu->addItem('Scaffolding', [
                 'label'     => 'Scaffolding',
-                'icon'      => 'fa fa-object-group',
+                'icon'      => 'mdi mdi-layers',
                 'isCurrent' => soda_request_is('page-types*') || soda_request_is('block-types*') || soda_request_is('blocks*') || soda_request_is('fields*'),
             ]);
 
@@ -101,7 +101,7 @@ class MenuServiceProvider extends ServiceProvider
 
             $menu->addItem('User Management', [
                 'label'       => 'Users',
-                'icon'        => 'fa fa-users',
+                'icon'        => 'mdi mdi-contacts',
                 'isCurrent'   => soda_request_is('users*') || soda_request_is('roles*') || soda_request_is('permissions*'),
                 'permissions' => 'view-users',
             ]);

@@ -14,7 +14,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-user',
+    'icon'        => 'mdi mdi-account-circle',
     'title'       => 'Users',
 ])
 

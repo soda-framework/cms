@@ -1,7 +1,7 @@
 const elixir = require('laravel-elixir');
 
 
-elixir.config.notifications = false;
+//elixir.config.notifications = false;
 elixir.config.appPath = 'src';
 elixir.config.css.sass.folder = 'scss';
 /*
@@ -21,7 +21,8 @@ elixir(function(mix) {
         .sass('fonts.scss')
         .sass('plugins.scss');
 
-    mix.scripts('application.js')
+    mix.scripts('application.js');
+    /*
         .scripts('page-tree.js')
         .scripts('forms/slugs.js', 'public/js/forms/slugs.js')
         .scripts([
@@ -67,4 +68,5 @@ elixir(function(mix) {
         .copy('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
         .copy('node_modules/tinymce/skins', 'public/components/tinymce/skins')
         .copy('resources/assets/img', 'public/img');
+        */
 });

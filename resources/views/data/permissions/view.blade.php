@@ -6,7 +6,7 @@
     <li class="active">{{ $permission->id ? $permission->display_name : 'New Permission' }}</li>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>{{ $permission->id ? 'Edit' : 'New' }}  Permission :: Soda CMS</title>
 @endsection
 
@@ -15,7 +15,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-pencil',
+    'icon'        => 'mdi mdi-key-variant',
     'title'       => $permission->id ? ' Permission: ' . $permission->display_name : 'New Permission',
 ])
 

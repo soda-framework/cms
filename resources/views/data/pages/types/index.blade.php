@@ -17,7 +17,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-file-text-o',
+    'icon'        => 'mdi mdi-file-outline',
     'title'       => 'Page Types',
     'description' => 'Different Page Types have different field types applied to them',
 ])

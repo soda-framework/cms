@@ -14,7 +14,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-database',
+    'icon'        => 'mdi mdi-lock-pattern',
     'title'       => 'Application',
 ])
 @section('tab.settings')

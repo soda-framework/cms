@@ -6,7 +6,7 @@
     <li class="active">{{ $role->id ? $role->display_name : 'New Role' }}</li>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>{{ $role->id ? 'Edit' : 'New' }} Role :: Soda CMS</title>
 @endsection
 
@@ -15,7 +15,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-pencil',
+    'icon'        => 'mdi mdi-account-card-details',
     'title'       => $role->id ? ' Role: ' . $role->display_name : 'New Role',
 ])
 

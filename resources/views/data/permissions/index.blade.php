@@ -5,7 +5,7 @@
     <li class="active">Permissions</li>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>Permissions :: Soda CMS</title>
 @endsection
 
@@ -14,7 +14,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-unlock',
+    'icon'        => 'mdi mdi-key-variant',
     'title'       => 'Permissions',
 ])
 

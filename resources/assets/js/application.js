@@ -1,5 +1,4 @@
 // https://toddmotto.com/mastering-the-module-pattern/
-
 var Soda = (function () {
     var _initialized = false;
     var _debug = false;
@@ -61,13 +60,29 @@ var Soda = (function () {
 
         $(elements.sidebarToggle).on('click', toggleSidebar);
 
-        $('[data-toggle="collapse"]', elements.sidebar).on('click', function () {
-            $('.nav-dropdown-indicator', this).toggleClass('active');
+        $('.collapse', elements.sidebar).on('show.bs.collapse', function () {
+            $(this).siblings('a.nav-link').find('.nav-dropdown-indicator').addClass('active');
+            $('.collapse', elements.sidebar).not(this).collapse('hide');
+        }).on('hide.bs.collapse', function () {
+            $(this).siblings('a.nav-link').find('.nav-dropdown-indicator').removeClass('active');
         });
+
+        $('.nav-item > a.nav-link', elements.sidebar).on('click', function() {
+            var navItem = $(this).closest('.nav-item');
+            var navGroup = navItem.closest('.nav-item-group');
+
+            $('.nav-item, .nav-item-group', elements.sidebar).removeClass('active');
+
+            if(navGroup.length == 0) {
+                $('.collapse', elements.sidebar).collapse('hide');
+            }
+
+            navItem.addClass('active');
+            navGroup.addClass('active');
+        })
 
         $(window).on('beforeunload', function(){
             $('body').addClass('unloading');
-
         });
     }
 

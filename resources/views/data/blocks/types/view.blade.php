@@ -15,7 +15,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-pencil',
+    'icon'        => 'fa fa-widgets',
     'title'       => $blockType->name ? 'Block Type: ' . $blockType->name : 'New Block Type',
 ])
 

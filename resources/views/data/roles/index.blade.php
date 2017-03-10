@@ -5,7 +5,7 @@
     <li class="active">Roles</li>
 @stop
 
-@section('head.cms')
+@section('head.title')
     <title>Roles :: Soda CMS</title>
 @endsection
 
@@ -14,7 +14,7 @@
 @stop
 
 @include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'fa fa-flag',
+    'icon'        => 'mdi mdi-account-card-details',
     'title'       => 'Roles',
 ])
 

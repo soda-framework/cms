@@ -15,7 +15,7 @@ class SidebarMenuRenderer
 
         $item->setLinkAttribute('role', 'button');
         $item->setLinkAttribute('data-toggle', 'collapse');
-        $item->setLinkAttribute('data-parent', '#sidebar-collape');
+        $item->setLinkAttribute('data-parent', '.nav-sidebar');
         $item->setLinkAttribute('href', '#'.str_slug($item->getName()).'-nav');
         $item->setLinkAttribute('aria-expanded', $item->isCurrent() ? 'true' : 'false');
         $item->setLinkAttribute('aria-controls', '#'.str_slug($item->getName()).'-nav');
