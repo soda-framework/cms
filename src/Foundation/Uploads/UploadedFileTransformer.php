@@ -10,7 +10,6 @@ use Soda\Cms\Foundation\Uploads\Transformers\Resize;
 use Soda\Cms\Foundation\Uploads\Transformers\Colorize;
 use Soda\Cms\Foundation\Uploads\Transformers\Contrast;
 use Soda\Cms\Foundation\Uploads\Transformers\Greyscale;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Soda\Cms\Foundation\Uploads\Transformers\Brightness;
 
 class UploadedFileTransformer
@@ -32,10 +31,9 @@ class UploadedFileTransformer
         $this->setConfig($config);
     }
 
-    public function transform(UploadedFile $file)
+    public function transform($image)
     {
-        $image = Image::make($file);
-
+        $image = Image::make($image);
         foreach ($this->config as $transformer => $transformConfig) {
             $transformer = strtolower($transformer);
             if (isset($this->transformers[$transformer])) {
