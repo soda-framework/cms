@@ -11,7 +11,6 @@ use Soda\Cms\Foundation\Transformers\Colorize;
 use Soda\Cms\Foundation\Transformers\Contrast;
 use Soda\Cms\Foundation\Transformers\Greyscale;
 use Soda\Cms\Foundation\Transformers\Brightness;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedFileTransformer
 {
@@ -32,7 +31,7 @@ class UploadedFileTransformer
         $this->setConfig($config);
     }
 
-    public function transform(UploadedFile $file)
+    public function transform($file)
     {
         $image = Image::make($file);
         $changed = false;
