@@ -53,7 +53,6 @@
       line-height: 1;
       border-radius: 0;
       transition: background-color 0.25s ease, color 0.25s ease;
-      will-change: background-color, color;
       i {
         margin-left: 0px;
         margin-right: 5px;
@@ -80,11 +79,12 @@
     }
   }
   li.nav-item {
+    transition: background-color 0.25s ease, color 0.25s ease;
     &.active {
       > a.nav-link, > span.nav-link {
-        transition: background-color 0.25s ease, color 0.25s ease;
-        will-change: background-color, color;
-        &, &:hover, &:focus, &:active {
+        @extend .animated;
+        animation-name: active-nav-link;
+        &:hover, &:focus, &:active {
           background: $sidebar-link-active;
           color: $sidebar-link-active-text;
         }
@@ -93,10 +93,9 @@
   }
 
   li.nav-item-group {
+    transition: background-color 0.25s ease, color 0.25s ease;
     &.active {
       > a.nav-link, > span.nav-link {
-        transition: background-color 0.25s ease, color 0.25s ease;
-        will-change: background-color, color;
         &, &:hover, &:focus, &:active {
           background: $sidebar-link-active-sub;
           color: $sidebar-link-active-sub-text;
@@ -113,8 +112,6 @@
           padding: 6px 24px 6px 60px;
           background: $sidebar-group-link;
           color: $sidebar-group-link-text;
-          transition: background-color 0.25s ease, color 0.25s ease;
-          will-change: background-color, color;
 
           &:hover {
             background-color: $sidebar-group-link-hover;
@@ -135,5 +132,39 @@
 
   .nav-sidebar {
     margin-bottom: 20px;
+  }
+}
+
+body.unloading {
+  .sidebar {
+    li.nav-item {
+      &.active {
+        > a.nav-link, > span.nav-link {
+          animation-name: active-nav-link-reverse;
+        }
+      }
+    }
+  }
+}
+
+@keyframes active-nav-link {
+  0% {
+    background: transparentize($sidebar-link, 1);
+    color: $sidebar-link-text;
+  }
+  100% {
+    background: transparentize($sidebar-link-active, 0);
+    color: $sidebar-link-active-text;
+  }
+}
+
+@keyframes active-nav-link-reverse {
+  0% {
+    background: transparentize($sidebar-link-active, 0);
+    color: $sidebar-link-active-text;
+  }
+  100% {
+    background: transparentize($sidebar-link-active, 1);
+    color: $sidebar-link-text;
   }
 }

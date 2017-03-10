@@ -1,33 +1,9 @@
 .animated {
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   animation-fill-mode: both;
 }
 
-.fadeInRight {
-  animation-name: fadeInRight;
-}
-
-.fadeInTop {
-  animation-name: fadeInTop;
-}
-
-.fadeInTop {
-  animation-name: fadeInTop;
-}
-
-.fadeInDown {
-  animation-name: fadeInDown;
-}
-
-.flipInX {
-  animation-name: flipInX;
-}
-
-.zoomIn {
-  animation-name: zoomIn;
-}
-
-@keyframes fadeInRight {
+@include animation('fadeInRight') {
   0% {
     opacity: 0;
     transform: translateX(20px);
@@ -38,7 +14,7 @@
   }
 }
 
-@keyframes fadeInLeft {
+@include animation('fadeInLeft') {
   0% {
     opacity: 0;
     transform: translateX(-20px);
@@ -49,7 +25,7 @@
   }
 }
 
-@keyframes fadeInUp {
+@include animation('fadeInUp') {
   0% {
     opacity: 0;
     transform: translateY(20px);
@@ -60,7 +36,7 @@
   }
 }
 
-@keyframes fadeInDown {
+@include animation('fadeInDown') {
   0% {
     opacity: 0;
     transform: translateY(-20px);
@@ -71,7 +47,7 @@
   }
 }
 
-@keyframes flipInX {
+@include animation('flipInX') {
   0% {
     opacity: 0;
     transform: perspective(400px) rotateX(90deg);
@@ -88,12 +64,83 @@
   }
 }
 
-@keyframes zoomIn {
+@include animation('zoomIn') {
   0% {
     opacity: 0;
     transform: scale3d(.3, .3, .3);
   }
   50% {
     opacity: 1;
+  }
+}
+
+@include animation('fadeOutRight') {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+@include animation('fadeOutLeft') {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@include animation('fadeOutUp') {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@include animation('fadeOutDown') {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@include animation('flipOutX') {
+  0% {
+    opacity: 1;
+    transform: perspective(400px) rotateX(0deg);
+  }
+  40% {
+    transform: perspective(400px) rotateX(10deg);
+  }
+  70% {
+    transform: perspective(400px) rotateX(-10deg);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(400px) rotateX(90deg);
+  }
+}
+
+@include animation('zoomOut') {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
   }
 }

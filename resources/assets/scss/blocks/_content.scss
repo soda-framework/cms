@@ -14,6 +14,12 @@ body.sidebar-transitioning {
   overflow-x: hidden;
 }
 
+body.unloading {
+  .main-content {
+    @extend .fadeOutDown;
+  }
+}
+
 .main-content {
   background-color: $content-background;
   transform: translateX(0px);
@@ -23,14 +29,14 @@ body.sidebar-transitioning {
   @media(max-width: $screen-sm-max) {
     min-height: 0 !important;
 
-    .main-content-inner {
-      margin: 0 -15px;
+    .main-content-inner, .content-header {
+      margin-left: -15px;
+      margin-right: -15px;
     }
   }
 }
 
 .content-block {
-  display: table;
   position: relative;
   border-radius: $border-radius-base;
   padding: 40px;
@@ -48,6 +54,10 @@ body.sidebar-transitioning {
   @media(max-width: $screen-sm-max) {
     margin-bottom: 25px;
     padding: 30px;
+  }
+
+  @media(max-width: $screen-xs-max) {
+    padding: 20px;
   }
 
   &.full {
@@ -82,13 +92,6 @@ body.sidebar-transitioning {
 
 .content-bottom {
   margin-top: 30px;
-}
-
-.content-top, .content-bottom {
-  @media(max-width: $screen-sm-max) {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
 }
 
 .content-header {

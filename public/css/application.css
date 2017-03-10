@@ -8107,7 +8107,7 @@ button.close {
 
 /*!
  * Datetimepicker for Bootstrap 3
- * version : 4.17.45
+ * version : 4.17.47
  * https://github.com/Eonasdan/bootstrap-datetimepicker/
  */
 .bootstrap-datetimepicker-widget {
@@ -12969,9 +12969,9 @@ textarea {
   text-decoration: none;
 }
 
-.animated, .tab-pane.active {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+.animated, .sidebar li.nav-item.active > a.nav-link, .sidebar li.nav-item.active > span.nav-link, .tab-pane.active {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
@@ -12979,31 +12979,6 @@ textarea {
 .fadeInRight {
   -webkit-animation-name: fadeInRight;
   animation-name: fadeInRight;
-}
-
-.fadeInTop {
-  -webkit-animation-name: fadeInTop;
-  animation-name: fadeInTop;
-}
-
-.fadeInTop {
-  -webkit-animation-name: fadeInTop;
-  animation-name: fadeInTop;
-}
-
-.fadeInDown, .tab-pane.active {
-  -webkit-animation-name: fadeInDown;
-  animation-name: fadeInDown;
-}
-
-.flipInX {
-  -webkit-animation-name: flipInX;
-  animation-name: flipInX;
-}
-
-.zoomIn {
-  -webkit-animation-name: zoomIn;
-  animation-name: zoomIn;
 }
 
 @-webkit-keyframes fadeInRight {
@@ -13032,6 +13007,11 @@ textarea {
   }
 }
 
+.fadeInLeft {
+  -webkit-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+}
+
 @-webkit-keyframes fadeInLeft {
   0% {
     opacity: 0;
@@ -13056,6 +13036,11 @@ textarea {
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
+}
+
+.fadeInUp {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
 }
 
 @-webkit-keyframes fadeInUp {
@@ -13084,6 +13069,11 @@ textarea {
   }
 }
 
+.fadeInDown, .tab-pane.active {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
 @-webkit-keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -13108,6 +13098,11 @@ textarea {
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
+}
+
+.flipInX {
+  -webkit-animation-name: flipInX;
+  animation-name: flipInX;
 }
 
 @-webkit-keyframes flipInX {
@@ -13152,6 +13147,11 @@ textarea {
   }
 }
 
+.zoomIn {
+  -webkit-animation-name: zoomIn;
+  animation-name: zoomIn;
+}
+
 @-webkit-keyframes zoomIn {
   0% {
     opacity: 0;
@@ -13171,6 +13171,204 @@ textarea {
   }
   50% {
     opacity: 1;
+  }
+}
+
+.fadeOutRight {
+  -webkit-animation-name: fadeOutRight;
+  animation-name: fadeOutRight;
+}
+
+@-webkit-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+}
+
+@keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+}
+
+.fadeOutLeft {
+  -webkit-animation-name: fadeOutLeft;
+  animation-name: fadeOutLeft;
+}
+
+@-webkit-keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+  }
+}
+
+.fadeOutUp {
+  -webkit-animation-name: fadeOutUp;
+  animation-name: fadeOutUp;
+}
+
+@-webkit-keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+}
+
+@keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+}
+
+.fadeOutDown, body.unloading .main-content {
+  -webkit-animation-name: fadeOutDown;
+  animation-name: fadeOutDown;
+}
+
+@-webkit-keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+}
+
+.flipOutX {
+  -webkit-animation-name: flipOutX;
+  animation-name: flipOutX;
+}
+
+@-webkit-keyframes flipOutX {
+  0% {
+    opacity: 1;
+    -webkit-transform: perspective(400px) rotateX(0deg);
+    transform: perspective(400px) rotateX(0deg);
+  }
+  40% {
+    -webkit-transform: perspective(400px) rotateX(10deg);
+    transform: perspective(400px) rotateX(10deg);
+  }
+  70% {
+    -webkit-transform: perspective(400px) rotateX(-10deg);
+    transform: perspective(400px) rotateX(-10deg);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: perspective(400px) rotateX(90deg);
+    transform: perspective(400px) rotateX(90deg);
+  }
+}
+
+@keyframes flipOutX {
+  0% {
+    opacity: 1;
+    -webkit-transform: perspective(400px) rotateX(0deg);
+    transform: perspective(400px) rotateX(0deg);
+  }
+  40% {
+    -webkit-transform: perspective(400px) rotateX(10deg);
+    transform: perspective(400px) rotateX(10deg);
+  }
+  70% {
+    -webkit-transform: perspective(400px) rotateX(-10deg);
+    transform: perspective(400px) rotateX(-10deg);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: perspective(400px) rotateX(90deg);
+    transform: perspective(400px) rotateX(90deg);
+  }
+}
+
+.zoomOut {
+  -webkit-animation-name: zoomOut;
+  animation-name: zoomOut;
+}
+
+@-webkit-keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}
+
+@keyframes zoomOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
 }
 
@@ -13207,13 +13405,13 @@ body.sidebar-transitioning {
   .main-content {
     min-height: 0 !important;
   }
-  .main-content .main-content-inner {
-    margin: 0 -15px;
+  .main-content .main-content-inner, .main-content .content-header {
+    margin-left: -15px;
+    margin-right: -15px;
   }
 }
 
 .content-block {
-  display: table;
   position: relative;
   border-radius: 3px;
   padding: 40px;
@@ -13231,6 +13429,12 @@ body.sidebar-transitioning {
   .content-block {
     margin-bottom: 25px;
     padding: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .content-block {
+    padding: 20px;
   }
 }
 
@@ -13262,13 +13466,6 @@ body.sidebar-transitioning {
 
 .content-bottom {
   margin-top: 30px;
-}
-
-@media (max-width: 991px) {
-  .content-top, .content-bottom {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
 }
 
 .content-header h1 {
@@ -13350,7 +13547,6 @@ body.sidebar-transitioning {
   border-bottom: 3px solid rgba(0, 0, 0, 0.2);
   -webkit-transition: background-color 0.25s ease, color 0.25s ease;
   transition: background-color 0.25s ease, color 0.25s ease;
-  will-change: background-color, color;
 }
 
 .dialog-box .form-control, .dialog-box .form-control:hover, .dialog-box .form-control:active, .dialog-box .form-control:focus {
@@ -13655,7 +13851,6 @@ body.sidebar-transitioning {
   border-radius: 0;
   -webkit-transition: background-color 0.25s ease, color 0.25s ease;
   transition: background-color 0.25s ease, color 0.25s ease;
-  will-change: background-color, color;
 }
 
 .sidebar li.nav-item > span.nav-link i, .sidebar li.nav-item > a.nav-link i, .sidebar li.nav-item-group > span.nav-link i, .sidebar li.nav-item-group > a.nav-link i {
@@ -13683,21 +13878,24 @@ body.sidebar-transitioning {
   margin-top: 0;
 }
 
-.sidebar li.nav-item.active > a.nav-link, .sidebar li.nav-item.active > span.nav-link {
+.sidebar li.nav-item {
   -webkit-transition: background-color 0.25s ease, color 0.25s ease;
   transition: background-color 0.25s ease, color 0.25s ease;
-  will-change: background-color, color;
 }
 
-.sidebar li.nav-item.active > a.nav-link, .sidebar li.nav-item.active > a.nav-link:hover, .sidebar li.nav-item.active > a.nav-link:focus, .sidebar li.nav-item.active > a.nav-link:active, .sidebar li.nav-item.active > span.nav-link, .sidebar li.nav-item.active > span.nav-link:hover, .sidebar li.nav-item.active > span.nav-link:focus, .sidebar li.nav-item.active > span.nav-link:active {
+.sidebar li.nav-item.active > a.nav-link, .sidebar li.nav-item.active > span.nav-link {
+  -webkit-animation-name: active-nav-link;
+  animation-name: active-nav-link;
+}
+
+.sidebar li.nav-item.active > a.nav-link:hover, .sidebar li.nav-item.active > a.nav-link:focus, .sidebar li.nav-item.active > a.nav-link:active, .sidebar li.nav-item.active > span.nav-link:hover, .sidebar li.nav-item.active > span.nav-link:focus, .sidebar li.nav-item.active > span.nav-link:active {
   background: #2C3A41;
   color: #FFFFFF;
 }
 
-.sidebar li.nav-item-group.active > a.nav-link, .sidebar li.nav-item-group.active > span.nav-link {
+.sidebar li.nav-item-group {
   -webkit-transition: background-color 0.25s ease, color 0.25s ease;
   transition: background-color 0.25s ease, color 0.25s ease;
-  will-change: background-color, color;
 }
 
 .sidebar li.nav-item-group.active > a.nav-link, .sidebar li.nav-item-group.active > a.nav-link:hover, .sidebar li.nav-item-group.active > a.nav-link:focus, .sidebar li.nav-item-group.active > a.nav-link:active, .sidebar li.nav-item-group.active > span.nav-link, .sidebar li.nav-item-group.active > span.nav-link:hover, .sidebar li.nav-item-group.active > span.nav-link:focus, .sidebar li.nav-item-group.active > span.nav-link:active {
@@ -13715,9 +13913,6 @@ body.sidebar-transitioning {
   padding: 6px 24px 6px 60px;
   background: #2C3A41;
   color: #90A4AE;
-  -webkit-transition: background-color 0.25s ease, color 0.25s ease;
-  transition: background-color 0.25s ease, color 0.25s ease;
-  will-change: background-color, color;
 }
 
 .sidebar li.nav-item-group ul li.nav-item > span.nav-link:hover, .sidebar li.nav-item-group ul li.nav-item > a.nav-link:hover {
@@ -13735,13 +13930,61 @@ body.sidebar-transitioning {
   margin-bottom: 20px;
 }
 
+body.unloading .sidebar li.nav-item.active > a.nav-link, body.unloading .sidebar li.nav-item.active > span.nav-link {
+  -webkit-animation-name: active-nav-link-reverse;
+  animation-name: active-nav-link-reverse;
+}
+
+@-webkit-keyframes active-nav-link {
+  0% {
+    background: transparent;
+    color: #90A4AE;
+  }
+  100% {
+    background: #2c3a41;
+    color: #FFFFFF;
+  }
+}
+
+@keyframes active-nav-link {
+  0% {
+    background: transparent;
+    color: #90A4AE;
+  }
+  100% {
+    background: #2c3a41;
+    color: #FFFFFF;
+  }
+}
+
+@-webkit-keyframes active-nav-link-reverse {
+  0% {
+    background: #2c3a41;
+    color: #FFFFFF;
+  }
+  100% {
+    background: rgba(44, 58, 65, 0);
+    color: #90A4AE;
+  }
+}
+
+@keyframes active-nav-link-reverse {
+  0% {
+    background: #2c3a41;
+    color: #FFFFFF;
+  }
+  100% {
+    background: rgba(44, 58, 65, 0);
+    color: #90A4AE;
+  }
+}
+
 .btn {
   border-radius: 3px;
   border: none;
   border-bottom: 3px solid rgba(0, 0, 0, 0.1);
   -webkit-transition: background-color 0.25s ease;
   transition: background-color 0.25s ease;
-  will-change: background-color;
 }
 
 @media (max-width: 991px) {
@@ -13800,7 +14043,6 @@ body.sidebar-transitioning {
   transform: scale(0.8);
   -webkit-transition: all .15s ease;
   transition: all .15s ease;
-  will-change: transform, opacity;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 14px 0 rgba(0, 0, 0, 0.2);
   margin: 2px 0 0;
   list-style: none;
@@ -13850,8 +14092,8 @@ select.form-control {
 
 .form-control {
   box-shadow: none;
-  -webkit-transition: background-color ease-in-out 0.15s,border-color ease-in-out 0.15s;
-  transition: background-color ease-in-out 0.15s,border-color ease-in-out 0.15s;
+  -webkit-transition: background-color ease-in-out 0.15s, border-color ease-in-out 0.15s;
+  transition: background-color ease-in-out 0.15s, border-color ease-in-out 0.15s;
 }
 
 .form-control:hover {
@@ -13969,6 +14211,12 @@ select.form-control {
 
 .select2 {
   max-width: 100%;
+}
+
+.select2-tags .select2-container--open.select2-container--below .select2-selection {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 1px solid #66afe9;
 }
 
 div.jsoneditor input {
@@ -14956,6 +15204,18 @@ table.jsoneditor-search button.jsoneditor-previous:hover {
   border-top: 1px solid #E7EAEB;
 }
 
+@media (max-width: 991px) {
+  .table {
+    table-layout: fixed;
+  }
+  .table > thead > tr > th, .table > tbody > tr > td {
+    width: auto !important;
+  }
+  .table > thead > tr > th > a > .fa {
+    display: none;
+  }
+}
+
 .text-monospaced {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -14969,7 +15229,6 @@ ul.page-tree .tree-row > ul {
   list-style: none;
   -webkit-transition: opacity 0.25s ease;
   transition: opacity 0.25s ease;
-  will-change: opacity;
   visibility: hidden;
   opacity: 0;
   height: 0;
@@ -15038,7 +15297,6 @@ ul.page-tree .inactive-circle {
 
 ul.page-tree .minify i {
   opacity: 0;
-  will-change: transform, opacity;
   -webkit-transition: opacity .2s ease, -webkit-transform .2s ease;
   transition: opacity .2s ease, -webkit-transform .2s ease;
   transition: transform .2s ease, opacity .2s ease;

@@ -48,7 +48,6 @@
     color: $slate-060;
     border-bottom: 3px solid rgba(0,0,0,0.2);
     transition: background-color 0.25s ease, color 0.25s ease;
-    will-change: background-color, color;
     &, &:hover, &:active, &:focus {
       outline: none !important;
       box-shadow: none !important;

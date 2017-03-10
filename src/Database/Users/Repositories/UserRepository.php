@@ -72,7 +72,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         $grid = (new DataGrid)->source($filter);
         $grid->add('username', 'Username', true);
-        $grid->add('email', 'Email', true);
+        $grid->add('email', 'Email', true)->attributes(['class' => 'hidden-sm hidden-xs']);
         $grid->add('roles', 'Role(s)')->cell(function ($value) {
             $roleNames = $value->sortBy('display_name')->pluck('display_name')->toArray();
 
@@ -80,6 +80,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         });
 
         $grid->orderBy('id', 'asc');
+
+        $grid->row(function ($row) {
+            $row->cell('email')->attributes(['class' => 'hidden-sm hidden-xs']);
+        });
 
         return $grid;
     }

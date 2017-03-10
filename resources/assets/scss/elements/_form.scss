@@ -1,6 +1,6 @@
-select.form-control{
+select.form-control {
   -webkit-appearance: none;
-  background-image:  url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#999' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#999' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
   background-position: 99% 50%;
   background-repeat: no-repeat;
   padding-right: 30px;
@@ -8,7 +8,7 @@ select.form-control{
 
 .form-control {
   box-shadow: none;
-  transition: background-color ease-in-out 0.15s,border-color ease-in-out 0.15s;
+  transition: background-color ease-in-out 0.15s, border-color ease-in-out 0.15s;
 
   &:hover {
     background-color: #fcfdfe;
@@ -120,6 +120,14 @@ select.form-control{
   }
 }
 
-.select2{
+.select2 {
   max-width: 100%;
+}
+
+.select2-tags {
+  .select2-container--open.select2-container--below .select2-selection {
+    border-bottom-left-radius: $s2bs-input-border-radius;
+    border-bottom-right-radius: $s2bs-input-border-radius;
+    border-bottom: 1px solid $s2bs-input-border-focus;
+  }
 }

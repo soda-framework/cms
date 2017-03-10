@@ -57,7 +57,11 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
     {
         $grid = (new DataGrid)->source($filter);
         $grid->add('display_name', 'Display Name', true);
-        $grid->add('description', 'Description', true);
+        $grid->add('description', 'Description')->attributes(['class' => 'hidden-sm hidden-xs']);
+
+        $grid->row(function ($row) {
+            $row->cell('description')->attributes(['class' => 'hidden-sm hidden-xs']);
+        });
 
         $grid->orderBy('id', 'asc');
 

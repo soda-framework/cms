@@ -58,8 +58,13 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
     {
         $grid = (new DataGrid)->source($filter);
         $grid->add('display_name', 'Display Name', true);
-        $grid->add('description', 'Description', true);
-        $grid->add('category', 'Category', true);
+        $grid->add('description', 'Description')->attributes(['class' => 'hidden-sm hidden-xs']);
+        $grid->add('category', 'Category', true)->attributes(['class' => 'hidden-xs']);
+
+        $grid->row(function ($row) {
+            $row->cell('description')->attributes(['class' => 'hidden-sm hidden-xs']);
+            $row->cell('category')->attributes(['class' => 'hidden-xs']);
+        });
 
         $grid->orderBy('id', 'asc');
 

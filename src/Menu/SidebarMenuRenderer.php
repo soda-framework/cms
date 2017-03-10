@@ -21,7 +21,7 @@ class SidebarMenuRenderer
         $item->setIconAttribute('class', $item->getIcon()); //todo
 
         $item->setChildrenAttribute('id', str_slug($item->getName()).'-nav');
-        $item->setChildrenAttribute('class', 'collapse'); //todo
+        $item->setChildrenAttribute('class', 'collapse'.($item->isCurrent() ? ' in' : '')); //todo
 
         return soda_cms_view('partials.menu.group', compact('item'));
     }

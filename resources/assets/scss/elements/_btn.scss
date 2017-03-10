@@ -3,7 +3,6 @@
   border: none;
   border-bottom: 3px solid rgba(0, 0, 0, 0.1);// !important;
   transition: background-color 0.25s ease;
-  will-change: background-color;
 
   @media(max-width: $screen-sm-max) {
     &.btn-lg {

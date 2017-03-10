@@ -48,3 +48,18 @@
     }
   }
 }
+
+
+@media(max-width: $screen-sm-max) {
+  .table {
+    table-layout: fixed;
+
+    > thead > tr > th, > tbody > tr > td {
+      width: auto !important;
+    }
+
+    > thead > tr > th > a > .fa {
+      display: none;
+    }
+  }
+}

@@ -17,7 +17,6 @@
   opacity: 0;
   transform: scale(.8);
   transition: all .15s ease;
-  will-change: transform, opacity;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2), 0 2px 14px 0 rgba(0, 0, 0, .2);
   margin: 2px 0 0;
   list-style: none;

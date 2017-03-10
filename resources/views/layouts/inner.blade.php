@@ -7,7 +7,7 @@
     @include(soda_cms_view_path('layouts.partials.sidebar'))
     <div class="sidebar-offset">
         @include(soda_cms_view_path('layouts.partials.content-navbar'))
-        <div class="main-content animated fadeInDown">
+        <div class="main-content animated fadeInDown animate-on-unload">
             <div class="container-fluid">
                 @section('main-content-outer')
                     <div class="row">
