@@ -72,6 +72,8 @@
         float: right;
         transform-origin: 50% 50%;
         transition: transform 0.25s ease;
+        font-size: 10px;
+        line-height: 14px;
 
         &.active {
           transform: rotate(90deg);

@@ -20,7 +20,7 @@
     @include($field_view)
 @endif
 
-<fieldset class="form-group row field_{{ $field_name }} {{ $field_class }}">
+<fieldset class="form-group form-group-inline-group row field_{{ $field_name }} {{ $field_class }}">
     @yield("field.label")
     <div class="{{ $field_label !== null ? 'col-md-8 col-sm-10' : 'col-xs-12' }}">
     @yield("field")

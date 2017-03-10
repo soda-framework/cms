@@ -16,24 +16,13 @@
 
 @section('head.css')
     <!-- Styles -->
-    <link href="/soda/cms/css/application.css" rel="stylesheet">
+    <link href="/soda/cms/css/fonts.css" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/bootstrap.css" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/application.css" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/plugins.css" rel="stylesheet" media="all">
 @stop
 
 @section('head.js')
-    <!-- JavaScripts -->
-    <script>
-        WebFontConfig = {
-            google: {
-                families: ['Noto Sans:400,700,i400:latin', 'Lato:400,700,i400:latin']
-            }
-        };
-
-        (function(d) {
-            var wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js';
-            s.parentNode.insertBefore(wf, s);
-        })(document);
-    </script>
     <script src="/soda/cms/js/core.js"></script>
     <script src="/soda/cms/js/application.js"></script>
     <script>

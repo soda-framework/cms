@@ -1,3 +1,5 @@
+@import "color-palette";
+
 /* GLOBAL SETTINGS
    ============================= */
 
@@ -9,8 +11,9 @@ $border-radius-large: 0;
 $border-radius-small: 0;
 
 $asset-path: "/soda/cms/";
-$font-family-sans-serif:  "Noto Sans", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif:  "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $fa-font-path: $asset-path + "fonts/font-awesome" !default;
+$mdi-font-path: $asset-path + 'fonts/mdi' !default;
 $image-path: $asset-path + "components/bootstrap-fileinput/img"; // bootstrap-fileinput plugin
 
 /* CONTENT
@@ -84,3 +87,5 @@ $btn-default-color: $slate-020;
 
 $input-border: $slate-090;
 $input-border-radius: 0;
+
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";

@@ -1,0 +1,26 @@
+@import "variables";
+@import "mixins";
+
+// Plugins
+@import "../../../node_modules/bootstrap-fileinput/sass/fileinput";
+
+//noinspection CssUnknownTarget
+@import "../../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min";
+@import "../../../node_modules/select2/src/scss/core";
+@import "../../../node_modules/select2-bootstrap-theme/src/select2-bootstrap";
+
+.bootstrap-tagsinput {
+  display: block !important;
+}
+
+.select2 {
+  max-width: 100%;
+}
+
+.select2-tags {
+  .select2-container--open.select2-container--below .select2-selection {
+    border-bottom-left-radius: $s2bs-input-border-radius;
+    border-bottom-right-radius: $s2bs-input-border-radius;
+    border-bottom: 1px solid $s2bs-input-border-focus;
+  }
+}

@@ -17,51 +17,54 @@ elixir.config.css.sass.folder = 'scss';
 
 elixir(function(mix) {
     mix.sass('application.scss')
-        .sass('extra.scss');
+        .sass('bootstrap.scss')
+        .sass('fonts.scss')
+        .sass('plugins.scss');
 
     mix.scripts('application.js')
         .scripts('page-tree.js')
         .scripts('forms/slugs.js', 'public/js/forms/slugs.js')
         .scripts([
-            './resources/components/jquery/dist/jquery.js',
-            './resources/components/jquery-ui/jquery-ui.js',
-            './resources/components/bootstrap/js/collapse.js',
-            './resources/components/bootstrap/js/button.js',
-            './resources/components/bootstrap/js/tab.js',
-            './resources/components/bootstrap/js/dropdown.js',
-            './resources/components/bootstrap/js/modal.js',
-            './resources/components/bootstrap/js/collapse.js',
-            './resources/components/bootstrap/js/transition.js',
-            './resources/components/bootstrap/js/tooltip.js',
-            './resources/components/JVFloat/jvfloat.js',
+            './node_modules/jquery/dist/jquery.js',
+            './node_modules/jquery-ui-dist/jquery-ui.js',
+            './node_modules/bootstrap/js/button.js',
+            './node_modules/bootstrap/js/collapse.js',
+            './node_modules/bootstrap/js/dropdown.js',
+            './node_modules/bootstrap/js/modal.js',
+            './node_modules/bootstrap/js/tab.js',
+            './node_modules/bootstrap/js/tooltip.js',
+            './node_modules/bootstrap/js/transition.js',
+            './node_modules/JVFloat/jvfloat.js',
         ], 'public/js/core.js')
         .scripts([
-            './resources/components/nested-sortable/jquery.nested-sortable.js',
+            './node_modules/nestedSortable/jquery.mjs.nestedSortable.js',
         ], 'public/js/forms/sortable.js')
         .scripts([
-            './resources/components/moment/min/moment.min.js',
-            './resources/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+            './node_modules/moment/min/moment.min.js',
+            './node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
         ], 'public/js/forms/dates.js')
         .scripts([
-            './resources/components/tinymce/tinymce.min.js',
-            './resources/components/tinymce/jquery.tinymce.min.js',
+            './node_modules/tinymce/tinymce.min.js',
+            './node_modules/tinymce/jquery.tinymce.min.js',
         ], 'public/js/forms/tinymce.js')
         .scripts([
-            './resources/components/bootstrap-fileinput/js/plugins/sortable.js',
-            './resources/components/bootstrap-fileinput/js/fileinput.js',
-            './resources/components/bootstrap-fileinput/themes/fa/theme.js',
+            './node_modules/bootstrap-fileinput/js/plugins/sortable.js',
+            './node_modules/bootstrap-fileinput/js/fileinput.js',
+            './node_modules/bootstrap-fileinput/themes/fa/theme.js',
         ], 'public/js/forms/upload.js')
         .scripts([
-            './resources/components/select2/dist/js/select2.full.min.js',
+            './node_modules/select2/dist/js/select2.full.min.js',
         ], 'public/js/forms/multiselect.js')
         .scripts([
-            './resources/components/jsoneditor/dist/jsoneditor-minimalist.js',
+            './node_modules/jsoneditor/dist/jsoneditor-minimalist.js',
         ], 'public/js/forms/json.js');
 
-    mix.copy('resources/components/bootstrap/fonts', 'public/fonts/bootstrap')
-        .copy('resources/components/font-awesome/fonts', 'public/fonts/font-awesome')
-        .copy('resources/components/bootstrap-fileinput/img', 'public/components/bootstrap-fileinput/img')
-        .copy('resources/components/jsoneditor/dist/img', 'public/components/jsoneditor/img')
-        .copy('resources/components/tinymce/plugins', 'public/components/tinymce/plugins')
-        .copy('resources/components/tinymce/skins', 'public/components/tinymce/skins');
+    mix.copy('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
+        .copy('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
+        .copy('node_modules/mdi/fonts', 'public/fonts/mdi')
+        .copy('node_modules/bootstrap-fileinput/img', 'public/components/bootstrap-fileinput/img')
+        .copy('node_modules/jsoneditor/dist/img', 'public/components/jsoneditor/img')
+        .copy('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
+        .copy('node_modules/tinymce/skins', 'public/components/tinymce/skins')
+        .copy('resources/assets/img', 'public/img');
 });

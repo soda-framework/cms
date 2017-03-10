@@ -15,13 +15,13 @@
 
 @section('head.css')
     <!-- Styles -->
-    <link href="/themes/soda-example/css/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/themes/soda-example/css/app.css" rel="stylesheet" type="text/css">
 @stop
 
 @section('head.js')
     <!-- JavaScripts -->
-    <script src="/themes/soda-example/js/scripts.min.js"></script>
-    <script src="/themes/soda-example/js/application.min.js"></script>
+    <script src="/themes/soda-example/js/vendor.js"></script>
+    <script src="/themes/soda-example/js/app.js"></script>
     @if($ga_code = env('GOOGLE_ANALYTICS_CODE'))
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

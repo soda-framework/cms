@@ -29,10 +29,6 @@ select.form-control {
   }
 }
 
-.bootstrap-tagsinput {
-  display: block !important;
-}
-
 .checkbox, .radio {
   &, &-inline {
     label {
@@ -120,14 +116,8 @@ select.form-control {
   }
 }
 
-.select2 {
-  max-width: 100%;
-}
-
-.select2-tags {
-  .select2-container--open.select2-container--below .select2-selection {
-    border-bottom-left-radius: $s2bs-input-border-radius;
-    border-bottom-right-radius: $s2bs-input-border-radius;
-    border-bottom: 1px solid $s2bs-input-border-focus;
+.form-group-inline,  form-group-inline-group {
+  label {
+    text-align: right;
   }
 }

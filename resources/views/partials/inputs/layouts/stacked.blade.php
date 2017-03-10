@@ -20,7 +20,7 @@
     @include($field_view)
 @endif
 
-<fieldset class="form-group field_{{ $field_name }} {{ $field_class }}">
+<fieldset class="form-group form-group-stacked field_{{ $field_name }} {{ $field_class }}">
     @yield("field.label")
     @yield("field")
     @yield("field.info")

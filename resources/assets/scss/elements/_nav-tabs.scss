@@ -12,19 +12,21 @@
     margin-bottom: -2px;
     > a {
       background-color: rgba(0, 0, 0, 0.03);
-      border-width: 2px 0;
+      border-width: 2px 1px;
+      border-style: solid;
+      border-color: $content-inner-border $slate-095 !important;
       border-bottom-color: $content-inner-border !important;
       transition: background-color .25s ease;
 
       &:hover {
-        background-color: rgba(255, 255, 252, 0.7);
+        background-color: rgba(255, 255, 252, 0.25);
       }
     }
 
     &.active {
       > a {
         &, &:active, &:hover, &:focus {
-          border-width: 2px 0;
+          border-width: 2px 1px;
           background-color: $content-inner-background;
           border-bottom-color: transparent !important;
         }
