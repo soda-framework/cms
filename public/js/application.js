@@ -61,6 +61,10 @@ var Soda = (function () {
 
         $(elements.sidebarToggle).on('click', toggleSidebar);
 
+        $('[data-toggle="collapse"]', elements.sidebar).on('click', function () {
+            $('.nav-dropdown-indicator', this).toggleClass('active');
+        });
+
         $(window).on('beforeunload', function(){
             $('body').addClass('unloading');
 

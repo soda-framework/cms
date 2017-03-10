@@ -1385,7 +1385,7 @@ html {
 }
 
 body {
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
@@ -6875,7 +6875,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -7009,7 +7009,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -13846,7 +13846,7 @@ body.sidebar-transitioning {
   color: #90A4AE;
   outline: none;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1;
   border-radius: 0;
   -webkit-transition: background-color 0.25s ease, color 0.25s ease;
@@ -13867,6 +13867,21 @@ body.sidebar-transitioning {
 .sidebar li.nav-item > span.nav-link i, .sidebar li.nav-item > span.nav-link span, .sidebar li.nav-item > a.nav-link i, .sidebar li.nav-item > a.nav-link span, .sidebar li.nav-item-group > span.nav-link i, .sidebar li.nav-item-group > span.nav-link span, .sidebar li.nav-item-group > a.nav-link i, .sidebar li.nav-item-group > a.nav-link span {
   display: inline-block;
   vertical-align: middle;
+}
+
+.sidebar li.nav-item > span.nav-link .nav-dropdown-indicator, .sidebar li.nav-item > a.nav-link .nav-dropdown-indicator, .sidebar li.nav-item-group > span.nav-link .nav-dropdown-indicator, .sidebar li.nav-item-group > a.nav-link .nav-dropdown-indicator {
+  float: right;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transition: -webkit-transform 0.25s ease;
+  transition: -webkit-transform 0.25s ease;
+  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
+}
+
+.sidebar li.nav-item > span.nav-link .nav-dropdown-indicator.active, .sidebar li.nav-item > a.nav-link .nav-dropdown-indicator.active, .sidebar li.nav-item-group > span.nav-link .nav-dropdown-indicator.active, .sidebar li.nav-item-group > a.nav-link .nav-dropdown-indicator.active {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .sidebar li.nav-item > span.nav-link:hover, .sidebar li.nav-item > a.nav-link:hover, .sidebar li.nav-item-group > span.nav-link:hover, .sidebar li.nav-item-group > a.nav-link:hover {

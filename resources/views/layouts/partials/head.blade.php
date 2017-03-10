@@ -24,7 +24,7 @@
     <script>
         WebFontConfig = {
             google: {
-                families: ['Lato:400,700,i400:latin']
+                families: ['Noto Sans:400,700,i400:latin', 'Lato:400,700,i400:latin']
             }
         };
 
