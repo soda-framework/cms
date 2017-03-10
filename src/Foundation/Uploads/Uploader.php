@@ -144,7 +144,7 @@ class Uploader
             'initialPreviewConfig' => [
                 [
                     'filetype' => $mimeType,
-                    'type'     => static::guessFileTypeByMime($mimeType),
+                    'type'     => static::guessFileTypeByMimeType($mimeType),
                     'width'    => '120px',
                 ],
             ],
@@ -221,12 +221,27 @@ class Uploader
         return empty($extension) ? 'text/plain' : static::detectByFileExtension($extension);
     }
 
+    public static function guessFileExtensionByMimeType($mimeType)
+    {
+        static $mimeTypes = null;
+
+        if ($mimeTypes === null) {
+            foreach (static::getExtensionToMimeTypeMap() as $extension => $extensionMimeType) {
+                $mimeTypes[$extensionMimeType][] = $extension;
+            }
+        }
+
+        if (isset($mimeTypes[$mimeType])) {
+            return $mimeTypes[$mimeType][0];
+        }
+    }
+
     /**
      * @param string $mimeType
      *
      * @return string
      */
-    public static function guessFileTypeByMime($mimeType)
+    public static function guessFileTypeByMimeType($mimeType)
     {
         switch ($mimeType) {
             case 'text/html':

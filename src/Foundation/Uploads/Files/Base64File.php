@@ -70,6 +70,6 @@ class Base64File extends AbstractUploadableFile implements UploadableFile
         $mimeType = finfo_buffer(finfo_open(), base64_decode($image), FILEINFO_MIME_TYPE);
 
         // Guess the extension for the image, based off the mimetype
-        return Uploader::guessFileTypeByMime($mimeType);
+        return Uploader::guessFileExtensionByMimeType($mimeType);
     }
 }

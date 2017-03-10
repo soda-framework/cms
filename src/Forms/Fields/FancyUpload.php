@@ -75,7 +75,7 @@ class FancyUpload extends AbstractFormField
                 $initialPreviewConfig = [
                     'caption'  => '',
                     'filetype' => $mimeType,
-                    'type'     => Uploader::guessFileTypeByMime($mimeType),
+                    'type'     => Uploader::guessFileTypeByMimeType($mimeType),
                     'width'    => '120px',
                     'url'      => route('soda.upload.delete'),
                     'key'      => $image->id,
@@ -95,7 +95,7 @@ class FancyUpload extends AbstractFormField
             $initialPreviewConfig = [
                 'caption'  => '',
                 'filetype' => $mimeType,
-                'type'     => Uploader::guessFileTypeByMime($mimeType),
+                'type'     => Uploader::guessFileTypeByMimeType($mimeType),
                 'width'    => '120px',
                 'url'      => route('soda.upload.delete'),
                 'extra'    => [],
