@@ -1,7 +1,7 @@
 @section("field.label")
-    @if($field_label !== null)
-    <label class="col-sm-2" for="{{ $field_id }}">{{ $field_label }}</label>
-    @endif
+    <div class="form-group__label">
+        <label for="{{ $field_id }}">{{ $field_label }}</label>
+    </div>
 @overwrite
 
 @section("field")
@@ -20,11 +20,11 @@
     @include($field_view)
 @endif
 
-<fieldset class="form-group form-group-inline row field_{{ $field_name }} {{ $field_class }}">
+<fieldset class="form-group form-group--inline field_{{ $field_name }} {{ $field_class }}">
     @yield("field.label")
-    <div class="{{ $field_label !== null ? 'col-sm-10' : 'col-xs-12' }}">
-    @yield("field")
-    @yield("field.info")
+    <div class="form-group__element">
+        @yield("field")
+        @yield("field.info")
     </div>
     @yield("field.js")
 </fieldset>

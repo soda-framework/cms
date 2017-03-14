@@ -48,9 +48,11 @@
 
             @permission('assign-role-permissions')
                 <?php $rolePermissions = $role->permissions->pluck('id')->toArray(); ?>
-                <fieldset class="form-group row field_level ">
-                    <label class="col-sm-2" for="field_level">Permissions</label>
-                    <div class="col-sm-10">
+                <fieldset class="form-group form-group--inline field_level ">
+                    <div class="form-group__label">
+                        <label for="field_level">Permissions</label>
+                    </div>
+                    <div class="form-group__element">
                         <div class="tabbed-table-container">
                             <ul class="nav nav-pills">
                                 @foreach($permissionIds as $permissionCategory => $permissions)

@@ -209,40 +209,30 @@
 
             <div class="tab-pane" id="tab_advanced" role="tabpanel">
                 <div class="content-block">
-                    <div class="row fieldset-group">
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::dropdown([
-                                'name'        => 'View Action',
-                                'field_name'  => 'view_action_type',
-                                'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
-                                'description'  => 'Specifies the interface supplied when viewing pages of this type.',
-                            ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::text([
-                                'name'        => null,
-                                'field_name'  => 'view_action',
-                            ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-                        </div>
-                    </div>
+                    {!! SodaForm::text([
+                        'name'        => null,
+                        'field_name'  => 'view_action',
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group-addon')) !!}
 
-                    <div class="row fieldset-group">
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::dropdown([
-                                'name'        => 'Edit Action',
-                                'field_name'  => 'edit_action_type',
-                                'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
-                                'description'  => 'Specifies the interface supplied when editing pages of this type.',
+                    {!! SodaForm::dropdown([
+                        'name'        => 'View Action',
+                        'field_name'  => 'view_action_type',
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+                        'description'  => 'Specifies the interface supplied when viewing pages of this type.',
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
 
-                            ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                            {!! SodaForm::text([
-                                'name'        => null,
-                                'field_name'  => 'edit_action',
-                            ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-                        </div>
-                    </div>
+                    {!! SodaForm::text([
+                        'name'        => null,
+                        'field_name'  => 'edit_action',
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group-addon')) !!}
+
+                    {!! SodaForm::dropdown([
+                        'name'        => 'Edit Action',
+                        'field_name'  => 'edit_action_type',
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+                        'description'  => 'Specifies the interface supplied when editing pages of this type.',
+
+                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
                 </div>
             </div>
         </div>

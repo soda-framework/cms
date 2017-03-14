@@ -81,6 +81,19 @@ var Soda = (function () {
             navGroup.addClass('active');
         })
 
+        $('.nav-tabs a').on('click', function (e) {
+            history.pushState(null, null, $(this).attr('href'));
+        });
+
+        $(window).on('popstate', function(){
+            var activeTab = $('a[href="' + window.location.hash + '"]');
+            if (activeTab.length) {
+                activeTab.tab('show');
+            } else {
+                $('.nav-tabs a:first').tab('show');
+            }
+        });
+
         $(window).on('beforeunload', function(){
             $('body').addClass('unloading');
         });
@@ -102,9 +115,14 @@ var Soda = (function () {
             if(Soda.queryString.tab) {
                 $('a[href="#tab_' + Soda.queryString.tab + '"]').tab('show');
             } else if (window.location.hash) {
-                $('a[href="#' + window.location.hash + '"]').tab('show');
+                var activeTab = $('a[href="' + window.location.hash + '"]');
+                if (activeTab.length) {
+                    activeTab.tab('show');
+                } else {
+                    $('.nav-tabs a:first').tab('show');
+                }
             } else {
-                $('.nav-tabs a[data-toggle="tab"]').first().tab('show');
+                $('.nav-tabs a:first').first().tab('show');
             }
 
             _registerEvents();

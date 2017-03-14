@@ -116,8 +116,47 @@ select.form-control {
   }
 }
 
-.form-group-inline,  form-group-inline-group {
-  label {
-    text-align: right;
+
+
+.form-group--inline, .form-group--inline-group {
+  .form-group__label {
+    label {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-group__element {
+    width: 100%;
+  }
+}
+
+
+
+@media(min-width: $screen-md-min) {
+  display: block;
+
+  .form-group--inline, .form-group--inline-group {
+    display: table;
+
+    .form-group__label {
+      text-align: right;
+      width: 200px;
+      min-width: 200px;
+      padding-right: 20px;
+    }
+  }
+
+  .form-group--inline {
+    .form-group__label, .form-group__element {
+      display: table-cell;
+      vertical-align: top;
+    }
+  }
+
+  .form-group--inline-group {
+    .form-group__label, .form-group__label + .form-group__element {
+      display: table-cell;
+      vertical-align: top;
+    }
   }
 }

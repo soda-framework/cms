@@ -81,43 +81,33 @@ if ($page->type && $page->type->blockTypes) {
             'description'  => 'If enabled, this page can have child pages'
         ])->setModel($page) !!}
 
-        <div class="row fieldset-group">
-            <div class="col-sm-6 col-xs-12">
-                {!! SodaForm::dropdown([
-                    'name'        => 'View Action',
-                    'field_name'  => 'view_action_type',
-                    'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
-                    'description'  => 'Specifies the interface supplied when viewing this page.',
-                    'value'        => $page->type && $page->type->view_action_type ? $page->type->view_action_type : 'view',
-                ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-            </div>
-            <div class="col-sm-6 col-xs-12">
-                {!! SodaForm::text([
-                    'name'        => null,
-                    'field_name'  => 'view_action',
-                    'value'       => $page->type && $page->type->view_action,
-                ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-            </div>
-        </div>
+        {!! SodaForm::text([
+            'name'        => null,
+            'field_name'  => 'view_action',
+            'value'       => $page->type && $page->type->view_action,
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group-addon')) !!}
 
-        <div class="row fieldset-group">
-            <div class="col-sm-6 col-xs-12">
-                {!! SodaForm::dropdown([
-                    'name'        => 'Edit Action',
-                    'field_name'  => 'edit_action_type',
-                    'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
-                    'description'  => 'Specifies the interface supplied when editing this page.',
-                    'value'        => $page->type && $page->type->edit_action_type ? $page->type->edit_action_type : 'view',
-                ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-            </div>
-            <div class="col-sm-6 col-xs-12">
-                {!! SodaForm::text([
-                    'name'        => null,
-                    'field_name'  => 'edit_action',
-                    'value'       => $page->type && $page->type->edit_action,
-                ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
-            </div>
-        </div>
+        {!! SodaForm::dropdown([
+            'name'        => 'View Action',
+            'field_name'  => 'view_action_type',
+            'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+            'description'  => 'Specifies the interface supplied when viewing this page.',
+            'value'        => $page->type && $page->type->view_action_type ? $page->type->view_action_type : 'view',
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
+
+        {!! SodaForm::text([
+            'name'        => null,
+            'field_name'  => 'edit_action',
+            'value'       => $page->type && $page->type->edit_action,
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group-addon')) !!}
+
+        {!! SodaForm::dropdown([
+            'name'        => 'Edit Action',
+            'field_name'  => 'edit_action_type',
+            'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+            'description'  => 'Specifies the interface supplied when editing this page.',
+            'value'        => $page->type && $page->type->edit_action_type ? $page->type->edit_action_type : 'view',
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
     </div>
 @stop
 
