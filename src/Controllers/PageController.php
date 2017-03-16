@@ -105,7 +105,9 @@ class PageController extends Controller
      */
     public function page(Request $request, $slug = '/')
     {
-        return Soda::getPageBuilder()->loadPageBySlug($request->getPathInfo())->render();
+        $requestPath = ltrim($request->getPathInfo(), '/');
+        
+        return Soda::getPageBuilder()->loadPageBySlug($requestPath)->render();
     }
 
     public function create(Request $request, $parent_id = null)
