@@ -103,9 +103,9 @@ class PageController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public static function page($slug = '/')
+    public function page(Request $request, $slug = '/')
     {
-        return Soda::getPageBuilder()->loadPageBySlug($slug)->render();
+        return Soda::getPageBuilder()->loadPageBySlug($request->getPathInfo())->render();
     }
 
     public function create(Request $request, $parent_id = null)
