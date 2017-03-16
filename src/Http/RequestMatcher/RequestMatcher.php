@@ -77,9 +77,10 @@ class RequestMatcher
      */
     public function match(Request $request)
     {
+    {
         foreach ($this->matchers as $matcher) {
             $matcherInstance = app($matcher);
-            if ($matcherInstance->matches($request->getRequestUri())) {
+            if ($matcherInstance->matches($request->getPathInfo())) {
                 return $matcherInstance->render($request);
             }
         }
