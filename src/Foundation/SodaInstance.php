@@ -22,13 +22,13 @@ class SodaInstance
         $this->laravel = $laravel;
 
         if (! $this->laravel->runningInConsole()) {
-            $application = $this->getRequestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
+            $application = $this->requestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
             if (isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
                 $this->setApplicationUrl($application['url']);
                 $this->setApplication($application['application']);
             } else {
-                $this->getRequestMatcher()->handleApplicationNotFound();
+                $this->requestMatcher()->handleApplicationNotFound();
             }
         }
     }
@@ -106,7 +106,7 @@ class SodaInstance
      *
      * @return \Soda\Cms\Http\RequestMatcher\RequestMatcher
      */
-    public function getRequestMatcher()
+    public function requestMatcher()
     {
         return $this->laravel['soda.request-matcher'];
     }
@@ -114,9 +114,9 @@ class SodaInstance
     /**
      * Return instance of MenuBuilder.
      *
-     * @return \Soda\Cms\Menu\MenuBuilder
+     * @return \Soda\Cms\FrontendBuilder\Menu\MenuBuilder
      */
-    public function getMenuBuilder()
+    public function menu()
     {
         return $this->laravel['soda.menu'];
     }
@@ -124,11 +124,31 @@ class SodaInstance
     /**
      * Return instance of FormBuilder.
      *
-     * @return \Soda\Cms\Forms\FormBuilder
+     * @return \Soda\Cms\FrontendBuilder\Forms\FormBuilder
      */
-    public function getFormBuilder()
+    public function form()
     {
         return $this->laravel['soda.form'];
+    }
+
+    /**
+     * Return instance of DashboardBuilder.
+     *
+     * @return \Soda\Cms\FrontendBuilder\Dashboard\DashboardBuilder
+     */
+    public function dashboard()
+    {
+        return $this->laravel['soda.dashboard'];
+    }
+
+    /**
+     * Return instance of BreadcrumbdBuilder.
+     *
+     * @return \Soda\Cms\FrontendBuilder\Breadcrumb\BreadcrumbdBuilder
+     */
+    public function breadcrumbd()
+    {
+        return $this->laravel['soda.breadcrumbd'];
     }
 
     /**
@@ -164,7 +184,7 @@ class SodaInstance
      */
     public function field($field)
     {
-        return $this->getFormBuilder()->field($field);
+        return $this->form()->field($field);
     }
 
     public function noPermission()

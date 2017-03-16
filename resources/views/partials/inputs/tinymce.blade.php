@@ -9,7 +9,7 @@
             tinyMCE.baseURL = "/soda/cms/components/tinymce";
 
             $('#{{ $field_id }}').tinymce({
-                {!! Soda::getFormBuilder()->buildJsParams($field_parameters) !!}
+                {!! Soda::form()->buildJsParams($field_parameters) !!}
             });
         });
     </script>

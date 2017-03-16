@@ -6,7 +6,7 @@
     @parent
     <script type="text/javascript">
         $("#{{ $field_id }}").fileinput({
-            {!! Soda::getFormBuilder()->buildJsParams($field_parameters) !!}
+            {!! Soda::form()->buildJsParams($field_parameters) !!}
         });
 
 

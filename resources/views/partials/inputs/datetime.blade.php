@@ -8,7 +8,7 @@
 	<script type="text/javascript">
 		$(function () {
             $('#{{ $field_id }}').datetimepicker({
-                {!! Soda::getFormBuilder()->buildJsParams($field_parameters['options']) !!}
+                {!! Soda::form()->buildJsParams($field_parameters['options']) !!}
             }).on('dp.show', function() {
                 $(this).parent().addClass('open');
             }).on('dp.hide', function() {

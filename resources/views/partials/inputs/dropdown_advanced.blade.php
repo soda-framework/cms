@@ -50,7 +50,7 @@
                     return $result;
                 },
                 @endif
-                {!! Soda::getFormBuilder()->buildJsParams($field_parameters['settings']) !!}
+                {!! Soda::form()->buildJsParams($field_parameters['settings']) !!}
             });
         });
     </script>
