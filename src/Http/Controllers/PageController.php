@@ -35,7 +35,9 @@ class PageController extends BaseController
      */
     public function page(Request $request, $slug = '/')
     {
-        return Soda::getPageBuilder()->loadPageBySlug($request->getPathInfo())->render($request);
+        $requestPath = ltrim($request->getPathInfo(), '/');
+        
+        return Soda::getPageBuilder()->loadPageBySlug($requestPath)->render($request);
     }
 
     /**
