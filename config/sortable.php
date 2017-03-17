@@ -2,17 +2,17 @@
 
 return [
     'entities' => [
-        'pages' => 'soda.page.model',
+        'pages' => Page::class,
 
         'page-types.fields' => [
-            'entity'   => 'soda.page-type.model',
+            'entity'   => PageType::class,
             'relation' => 'fields',
         ],
 
-        'blocks' => 'soda.block.model',
+        'blocks' => Block::class,
 
         'block-types.fields' => [
-            'entity'   => 'soda.block-type.model',
+            'entity'   => BlockType::class,
             'relation' => 'fields',
         ],
     ],

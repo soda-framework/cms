@@ -4,9 +4,9 @@ namespace Soda\Cms\Http\RequestMatcher\Matchers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Models\Contracts\PageInterface;
 use Illuminate\Contracts\Routing\Registrar as RouterContract;
-use Soda\Cms\Database\Pages\Interfaces\CachedPageRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\CachedPageRepositoryInterface;
 
 class SluggedPageMatcher extends AbstractPageMatcher implements MatcherInterface
 {

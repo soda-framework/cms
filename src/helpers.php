@@ -1,20 +1,5 @@
 <?php
 
-
-if (! function_exists('resolve_class')) {
-    /**
-     * Get the concrete classname for an abstract binding.
-     *
-     * @param $abstract
-     *
-     * @return string
-     */
-    function resolve_class($abstract)
-    {
-        return get_class(app($abstract));
-    }
-}
-
 if (! function_exists('soda_cms_view_path')) {
     /**
      * @param string $view

@@ -5,12 +5,12 @@ namespace Soda\Cms\FrontendBuilder\Forms\Fields;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\Models\Contracts\FieldInterface;
 
 interface FormFieldInterface
 {
     /**
-     * @param \Soda\Cms\Database\Fields\Interfaces\FieldInterface $field
+     * @param \Soda\Cms\Database\Models\Contracts\FieldInterface $field
      *
      * @return \Soda\Cms\FrontendBuilder\Forms\Fields\FormFieldInterface
      */

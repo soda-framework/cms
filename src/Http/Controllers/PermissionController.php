@@ -5,7 +5,7 @@ namespace Soda\Cms\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Soda\Cms\Database\Permissions\Interfaces\PermissionRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\PermissionRepositoryInterface;
 
 class PermissionController extends BaseController
 {

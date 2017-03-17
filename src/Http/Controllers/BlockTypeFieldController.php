@@ -4,7 +4,7 @@ namespace Soda\Cms\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Blocks\Interfaces\BlockTypeFieldRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\BlockTypeFieldRepositoryInterface;
 
 class BlockTypeFieldController extends BaseController
 {

@@ -3,8 +3,9 @@
 namespace Soda\Cms\FrontendBuilder\Forms;
 
 use Exception;
+use Soda\Cms\Database\Models\Field;
 use Illuminate\Support\Facades\Config;
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\Database\Models\Contracts\FieldInterface;
 
 class FormBuilder
 {
@@ -48,7 +49,7 @@ class FormBuilder
     public function field($field, $prefix = null)
     {
         if (is_array($field)) {
-            $field = app('soda.field.model')->fill($field);
+            $field = new Field($field);
         }
 
         if (! $field instanceof FieldInterface) {
@@ -61,7 +62,7 @@ class FormBuilder
             $formField->setPrefix($prefix);
         }
 
-        return $formField->render();
+        return $formField;
     }
 
     /**
@@ -117,7 +118,7 @@ class FormBuilder
     public function __call($name, $arguments)
     {
         if ($this->getRegistrar()->isRegistered($name)) {
-            $field = app('soda.field.model')->fill($arguments[0]);
+            $field = new Field($arguments[0]);
             $field->setAttribute('field_type', $name);
 
             return $this->getRegistrar()->resolve($field);

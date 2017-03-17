@@ -4,7 +4,7 @@ namespace Soda\Cms\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Application\Interfaces\ApplicationRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\ApplicationRepositoryInterface;
 
 class ApplicationController extends BaseController
 {

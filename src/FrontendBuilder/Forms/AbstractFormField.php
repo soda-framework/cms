@@ -2,12 +2,11 @@
 
 namespace Soda\Cms\FrontendBuilder\Forms;
 
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Soda\Cms\Database\Models\Contracts\FieldInterface;
 use Soda\Cms\FrontendBuilder\Forms\Fields\FormFieldInterface;
-use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
 
 abstract class AbstractFormField implements FormFieldInterface
 {
@@ -56,7 +55,7 @@ abstract class AbstractFormField implements FormFieldInterface
     /**
      * Field instance to prefill values from.
      *
-     * @var \Soda\Cms\Database\Fields\Interfaces\FieldInterface
+     * @var \Soda\Cms\Database\Models\Contracts\FieldInterface
      */
     protected $field;
 
@@ -88,7 +87,7 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @param FieldInterface $field
      *
-     * @return \Soda\Cms\Database\Fields\Interfaces\FieldInterface
+     * @return \Soda\Cms\Database\Models\Contracts\FieldInterface
      */
     public function setField(FieldInterface $field)
     {

@@ -5,7 +5,7 @@ namespace Soda\Cms\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Soda\Cms\Database\Users\Interfaces\UserRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\UserRepositoryInterface;
 
 class UserController extends BaseController
 {

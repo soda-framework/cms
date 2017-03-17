@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Http\Controllers\Auth;
 
+use Soda\Cms\Database\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Soda\Cms\Database\Users\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Soda\Cms\Http\Controllers\BaseController;
 use Illuminate\Foundation\Auth\RegistersUsers;
