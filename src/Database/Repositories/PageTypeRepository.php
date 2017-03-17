@@ -57,7 +57,7 @@ class PageTypeRepository extends AbstractRepository implements PageTypeRepositor
         $model->save();
 
         $allPageTypes = $request->input('subpage_types') ? array_keys($request->input('subpage_types')) : [];
-        $restrictedPageTypes = array_keys(array_filter($request->input('subpage_types')));
+        $restrictedPageTypes = array_keys(array_filter((array) $request->input('subpage_types')));
         $isAllAllowed = $request->input('page_types_restricted') == '0' || $allPageTypes == $restrictedPageTypes;
 
         $model->subpageTypes()->sync($isAllAllowed ? [] : $restrictedPageTypes);

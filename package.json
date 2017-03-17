@@ -4,7 +4,9 @@
   "description": "Package to compile assets",
   "main": "gulpfile.js",
   "author": "Ryan",
-  "dependencies": {},
+  "dependencies": {
+    "sweetalert": "^1.1.3"
+  },
   "devDependencies": {
     "JVFloat": "github:maman/JVFloat.js",
     "bootstrap-fileinput": "4.3.*",

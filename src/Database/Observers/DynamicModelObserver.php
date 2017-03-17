@@ -3,7 +3,7 @@
 namespace Soda\Cms\Database\Observers;
 
 use Illuminate\Support\Facades\Schema;
-use Soda\Cms\Database\Repositories\Contracts\CanBuildDynamicModels;
+use Soda\Cms\Database\Models\Contracts\CanBuildDynamicModels;
 
 class DynamicModelObserver
 {

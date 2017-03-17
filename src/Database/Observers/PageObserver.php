@@ -3,7 +3,7 @@
 namespace Soda\Cms\Database\Observers;
 
 use Soda\Cms\Database\Models\DynamicPage;
-use Soda\Cms\Database\Repositories\Contracts\PageInterface;
+use Soda\Cms\Database\Models\Contracts\PageInterface;
 
 class PageObserver
 {

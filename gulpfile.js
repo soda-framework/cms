@@ -35,6 +35,7 @@ elixir(function(mix) {
             './node_modules/bootstrap/js/tooltip.js',
             './node_modules/bootstrap/js/transition.js',
             './node_modules/JVFloat/jvfloat.js',
+            './node_modules/sweetalert/dist/sweetalert.min.js',
         ], 'public/js/core.js')
         .scripts([
             './node_modules/nestedSortable/jquery.mjs.nestedSortable.js',

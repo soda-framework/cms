@@ -9,6 +9,8 @@ use Soda\Cms\Database\Observers\PageObserver;
 use Soda\Cms\Database\Models\Traits\Draftable;
 use Soda\Cms\Database\Models\Traits\Sluggable;
 use Soda\Cms\Database\Models\Traits\Identifiable;
+use Soda\Cms\Database\Relationships\HasOneDynamic;
+use Soda\Cms\Database\Models\Traits\HasDynamicType;
 use Soda\Cms\Database\Models\Traits\SortableClosure;
 use Soda\Cms\Database\Models\Contracts\PageInterface;
 use Soda\Cms\Database\Models\Traits\HasDefaultAttributes;
@@ -18,7 +20,7 @@ use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class Page extends Entity implements PageInterface
 {
-    use SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure;
+    use SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure, HasDynamicType;
 
     protected $table = 'pages';
     protected static $sortableGroupField = ['application_id', 'parent_id'];
@@ -60,6 +62,11 @@ class Page extends Entity implements PageInterface
         static::observe(PageObserver::class);
 
         parent::boot();
+    }
+
+    public function properties()
+    {
+        return $this->hasOneDynamic($this->getDynamicModel());
     }
 
     public function type()

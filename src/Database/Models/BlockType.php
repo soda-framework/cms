@@ -7,6 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Collection;
 use Soda\Cms\Database\Models\Traits\Identifiable;
 use Soda\Cms\Database\Observers\BlockTypeObserver;
+use Soda\Cms\Database\Models\Traits\HasDynamicType;
 use Soda\Cms\Database\Models\Traits\MorphToSortedMany;
 use Soda\Cms\Database\Models\Traits\BuildsDynamicModels;
 use Soda\Cms\Database\Models\Traits\HasDefaultAttributes;
@@ -15,7 +16,7 @@ use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class BlockType extends Model implements BlockTypeInterface
 {
-    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedMany;
+    use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedMany, HasDynamicType;
 
     protected $table = 'block_types';
 
@@ -43,6 +44,11 @@ class BlockType extends Model implements BlockTypeInterface
         static::observe(BlockTypeObserver::class);
 
         parent::boot();
+    }
+
+    public function properties()
+    {
+        return $this->hasManyDynamic($this->getDynamicModel());
     }
 
     public function fields()

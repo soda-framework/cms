@@ -123,7 +123,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
         $page->load('type');
 
-        if ($page->relationLoaded('type') && $request->has('settings')) {
+        if ($page->relationLoaded('type')) {
             $this->saveSettings($page, $request);
         }
 
@@ -159,7 +159,7 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
         $dynamicPageRecord = Soda::dynamicPage($page->getRelation('type')->getAttribute('identifier'))->firstOrNew(['page_id' => $page->getKey()]);
 
         foreach ($page->type->fields as $field) {
-            if ($request->input('settings') !== null || $request->files('settings') !== null) {
+            if ($request->input('settings') !== null || $request->file('settings') !== null) {
                 $dynamicPageRecord->parseField($field, $request, 'settings');
             }
         }

@@ -3,7 +3,7 @@
 namespace Soda\Cms\Database\Observers;
 
 use Soda\Cms\Database\Models\DynamicBlock;
-use Soda\Cms\Database\Repositories\Contracts\BlockTypeInterface;
+use Soda\Cms\Database\Models\Contracts\BlockTypeInterface;
 
 class BlockTypeObserver
 {

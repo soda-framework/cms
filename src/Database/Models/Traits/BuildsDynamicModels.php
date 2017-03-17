@@ -85,7 +85,7 @@ trait BuildsDynamicModels
 
         if (! Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
-                Form::field($field)->addToModel($table)->after('id');
+                Form::field($field)->addToModel($table)->nullable()->after('id');
             });
         }
 
