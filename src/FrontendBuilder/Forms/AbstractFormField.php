@@ -2,12 +2,11 @@
 
 namespace Soda\Cms\FrontendBuilder\Forms;
 
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Soda\Cms\FrontendBuilder\Forms\Fields\FormFieldInterface;
 use Soda\Cms\Database\Fields\Interfaces\FieldInterface;
+use Soda\Cms\FrontendBuilder\Forms\Fields\FormFieldInterface;
 
 abstract class AbstractFormField implements FormFieldInterface
 {

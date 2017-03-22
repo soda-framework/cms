@@ -32,7 +32,7 @@ class DashboardServiceProvider extends ServiceProvider
         $this->app->singleton('soda.dashboard', function ($app) {
             $dashboardBuilder = new DashboardBuilder;
 
-            $dashboardBuilder->addBlockToRow(1, 'default', function() {
+            $dashboardBuilder->addBlockToRow(1, 'default', function () {
                 return soda_cms_view('partials.dashboard.default-block');
             });
 

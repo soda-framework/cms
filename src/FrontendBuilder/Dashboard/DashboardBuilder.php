@@ -40,7 +40,7 @@ class DashboardBuilder implements Renderable
     {
         $this->blocks[$blockName] = $callback;
 
-        if (!isset($this->rows[$rowId])) {
+        if (! isset($this->rows[$rowId])) {
             $this->rows[$rowId] = [];
         }
 
@@ -55,7 +55,7 @@ class DashboardBuilder implements Renderable
             $blockKey = array_search($blockName, $this->rows[$rowId]);
 
             if ($blockKey !== false) {
-                unset ($this->rows[$rowId][$blockKey]);
+                unset($this->rows[$rowId][$blockKey]);
             }
         }
 
@@ -72,7 +72,7 @@ class DashboardBuilder implements Renderable
     public function removeBlock($blockName)
     {
         if (isset($this->blocks[$blockName])) {
-            unset ($this->blocks[$blockName]);
+            unset($this->blocks[$blockName]);
 
             foreach ($this->rows as $rowId => $row) {
                 $this->removeBlockFromRow($rowId, $blockName);
@@ -90,7 +90,7 @@ class DashboardBuilder implements Renderable
 
         $rows = [];
 
-        if (!count($this->rows)) {
+        if (! count($this->rows)) {
             $this->rows = [array_keys($this->blocks)];
         }
 
@@ -100,7 +100,7 @@ class DashboardBuilder implements Renderable
             }
         }
 
-        return soda_cms_view("partials.dashboard.layout", compact('rows'))->render();
+        return soda_cms_view('partials.dashboard.layout', compact('rows'))->render();
     }
 
     protected function beforeRender()
@@ -142,7 +142,7 @@ class DashboardBuilder implements Renderable
         }
 
         if (count($blocks)) {
-            return soda_cms_view("partials.dashboard.row", compact('blocks'))->render();
+            return soda_cms_view('partials.dashboard.row', compact('blocks'))->render();
         }
 
         return;
