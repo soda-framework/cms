@@ -5,6 +5,12 @@
         </div>
         @if(Soda::auth()->check())
             <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-btn fa-user"></i>
+                        <span>{{ Soda::auth()->user()->username }}</span>
+                    </a>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="mdi mdi-settings"></i>
