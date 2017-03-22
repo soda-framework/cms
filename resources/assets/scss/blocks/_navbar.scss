@@ -84,8 +84,8 @@
   margin-left: -15px;
   margin-right: -15px;
   border: 0;
-  //box-shadow: $standard-shadow;
-  border-bottom: 1px solid $content-inner-border;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
+  background-color: $slate-100;
   border-radius: 0;
   transform: translateX(0px);
   transition: transform 0.25s ease-in-out;
@@ -95,9 +95,29 @@
     min-height: $navbar-height * .66666;
   }
 
-  .nav {
+  .dropdown-menu {
+    border: 0;
+    margin-top: 1px !important;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+  }
+
+  .navbar-nav {
+    .mdi.mdi-settings {
+      font-size: 18px;
+      padding: 0 7px;
+    }
+
+    > .open {
+      > a {
+
+        &, &:focus, &:hover {
+          background-color: rgba(0,0,0,0.05);
+        }
+      }
+    }
     &.navbar-breadcrumb {
-      margin-left: 30px;
+      margin-left: 15px;
+      color: rgba(0, 0, 0, 0.7);
 
       @media(max-width: $screen-sm-max) {
         margin-left: 0px;
@@ -105,22 +125,18 @@
 
       > li {
         float: left;
-        line-height: $navbar-height;
-
-        + li:before {
-          content: "/ ";
-          color: rgb(204, 204, 204);
-          padding: 0px 5px;
-        }
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 8px 14px;
+        margin: 12px 10px 12px 0;
 
         &.active {
-          color: #777;
+          color: rgba(0, 0, 0, 0.7);
         }
 
         > a {
           display: inline-block;
           color: $brand-primary;
-          line-height: $navbar-height;
           padding: 0;
 
           &:hover {

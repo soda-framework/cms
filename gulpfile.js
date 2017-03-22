@@ -20,7 +20,7 @@ elixir(function(mix) {
         .sass('bootstrap.scss')
         .sass('fonts.scss')
         .sass('plugins.scss');
-
+/*
     mix.scripts('application.js')
         .scripts('page-tree.js')
         .scripts('forms/slugs.js', 'public/js/forms/slugs.js')
@@ -59,7 +59,7 @@ elixir(function(mix) {
         .scripts([
             './node_modules/jsoneditor/dist/jsoneditor-minimalist.js',
         ], 'public/js/forms/json.js');
-
+*/
     mix.copy('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
         .copy('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
         .copy('node_modules/mdi/fonts', 'public/fonts/mdi')

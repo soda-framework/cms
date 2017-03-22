@@ -11,7 +11,7 @@ $border-radius-large: 0;
 $border-radius-small: 0;
 
 $asset-path: "/soda/cms/";
-$font-family-sans-serif:  "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif:  Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $fa-font-path: $asset-path + "fonts/font-awesome" !default;
 $mdi-font-path: $asset-path + 'fonts/mdi' !default;
 $image-path: $asset-path + "components/bootstrap-fileinput/img"; // bootstrap-fileinput plugin
@@ -19,8 +19,10 @@ $image-path: $asset-path + "components/bootstrap-fileinput/img"; // bootstrap-fi
 /* CONTENT
    ============================= */
 
-$body-bg: $slate-100;
-$content-background: $slate-100;
+$body-bg: $slate-095;
+$font-size-base: 15px;
+
+$content-background: $slate-095;
 $content-inner-background: $white;
 $content-inner-border: $slate-090;
 $content-inner-text: rgb(51, 51, 51);

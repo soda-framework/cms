@@ -7,13 +7,7 @@
             <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="hidden-xs">
-                            <i class="fa fa-btn fa-user"></i>
-                            <span>{{ Soda::auth()->user()->username }}</span>
-                        </span>
-                        <span class="visible-xs">
-                            <i class="fa fa-cogs"></i>
-                        </span>
+                        <i class="mdi mdi-settings"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li>

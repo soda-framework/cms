@@ -1,10 +1,8 @@
 @media(max-width: $screen-sm-max) {
   body.sidebar-in {
+
     overflow-x: hidden;
-    .main-content {
-      transform: translateX(300px);
-    }
-    .content-navbar {
+    .sidebar-offset {
       transform: translateX(300px);
     }
   }
@@ -42,7 +40,7 @@ body.unloading {
   padding: 40px;
   background-color: $content-inner-background;
   color: $content-inner-text;
-  border: 1px solid $slate-095;
+  border: 1px solid $content-inner-border;
   border-top: 2px solid $content-inner-border;
   width: 100%;
 
