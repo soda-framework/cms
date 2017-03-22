@@ -7,7 +7,7 @@
             <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
                 <li>
                     <a href="#">
-                        <i class="fa fa-btn fa-user"></i>
+                        <i class="mdi mdi-account-circle"></i>
                         <span>{{ Soda::auth()->user()->username }}</span>
                     </a>
                 </li>
