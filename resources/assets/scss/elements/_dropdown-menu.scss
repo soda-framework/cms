@@ -3,7 +3,7 @@
   position: absolute;
   top: auto;
   //float: left;
-  border: 1px solid rgba(0, 0, 0, .1);
+  border: 1px solid $content-inner-border;
   border-radius: 6px;
   left: auto;
   pointer-events: none;
@@ -17,7 +17,7 @@
   opacity: 0;
   transform: scale(.8);
   transition: all .15s ease;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2), 0 2px 14px 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .05), 0 2px 14px 0 rgba(0, 0, 0, .05);
   margin: 2px 0 0;
   list-style: none;
   font-size: 14px;
