@@ -5,7 +5,7 @@ namespace Soda\Cms\Http\RequestMatcher;
 use Illuminate\Http\Request;
 use Soda\Cms\Http\RequestMatcher\Matchers\MatcherInterface;
 use Soda\Cms\Http\RequestMatcher\Matchers\SluggedPageMatcher;
-use Soda\Cms\Database\Application\Interfaces\CachedApplicationRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\CachedApplicationRepositoryInterface;
 
 class RequestMatcher
 {

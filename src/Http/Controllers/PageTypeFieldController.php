@@ -4,7 +4,7 @@ namespace Soda\Cms\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Pages\Interfaces\PageTypeFieldRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\PageTypeFieldRepositoryInterface;
 
 class PageTypeFieldController extends BaseController
 {

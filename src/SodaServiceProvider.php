@@ -15,21 +15,19 @@ use Laratrust\LaratrustServiceProvider;
 use Soda\Cms\Support\Facades\Dashboard;
 use Soda\Cms\Foundation\DraftingHandler;
 use Soda\Cms\Events\EventServiceProvider;
+use Soda\Cms\Database\PageServiceProvider;
+use Soda\Cms\Database\UserServiceProvider;
 use Soda\Cms\Routing\RouteServiceProvider;
+use Soda\Cms\Database\BlockServiceProvider;
+use Soda\Cms\Database\FieldServiceProvider;
 use Intervention\Image\ImageServiceProvider;
 use Soda\Cms\Support\Facades\RequestMatcher;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Rutorika\Sortable\SortableServiceProvider;
-use Soda\Cms\Database\Pages\PageServiceProvider;
-use Soda\Cms\Database\Roles\RoleServiceProvider;
-use Soda\Cms\Database\Users\UserServiceProvider;
-use Soda\Cms\Database\Blocks\BlockServiceProvider;
-use Soda\Cms\Database\Fields\FieldServiceProvider;
+use Soda\Cms\Database\ApplicationServiceProvider;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
 use Soda\Cms\FrontendBuilder\Menu\MenuServiceProvider;
 use Soda\Cms\FrontendBuilder\Forms\FormServiceProvider;
-use Soda\Cms\Database\Permissions\PermissionServiceProvider;
-use Soda\Cms\Database\Application\ApplicationServiceProvider;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
 use Soda\Cms\FrontendBuilder\Dashboard\DashboardServiceProvider;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
@@ -108,8 +106,6 @@ class SodaServiceProvider extends ServiceProvider
             BlockServiceProvider::class,
             PageServiceProvider::class,
             UserServiceProvider::class,
-            RoleServiceProvider::class,
-            PermissionServiceProvider::class,
         ]);
 
         $this->registerFacades([

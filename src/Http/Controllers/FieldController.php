@@ -5,7 +5,7 @@ namespace Soda\Cms\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Soda\Cms\Database\Fields\Interfaces\FieldRepositoryInterface;
+use Soda\Cms\Database\Repositories\Contracts\FieldRepositoryInterface;
 
 class FieldController extends BaseController
 {

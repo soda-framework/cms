@@ -62,7 +62,7 @@ class SortController extends ApiController
         /** @var Model|bool $entityClass */
         list($entityClass, $relation) = $this->getEntityInfo($sortableEntities, (string) $request->input('entityName'));
 
-        if (! class_exists(resolve_class($entityClass))) {
+        if (! class_exists($entityClass)) {
             $rules['entityClass'] = 'required'; // fake rule for not exist field
             return $validator->make($request->all(), $rules);
         }

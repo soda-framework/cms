@@ -3,10 +3,12 @@
 namespace Soda\Cms\Foundation;
 
 use Illuminate\Support\Facades\Auth;
-use Soda\Cms\Database\Pages\Interfaces\PageInterface;
+use Soda\Cms\Database\Models\DynamicPage;
+use Soda\Cms\Database\Models\DynamicBlock;
+use Soda\Cms\Database\Models\Contracts\PageInterface;
 use Illuminate\Contracts\Foundation\Application as Laravel;
-use Soda\Cms\Database\Application\Interfaces\ApplicationInterface;
-use Soda\Cms\Database\Application\Interfaces\ApplicationUrlInterface;
+use Soda\Cms\Database\Models\Contracts\ApplicationInterface;
+use Soda\Cms\Database\Models\Contracts\ApplicationUrlInterface;
 
 class SodaInstance
 {
@@ -160,7 +162,7 @@ class SodaInstance
      */
     public function dynamicPage($table)
     {
-        return app('soda.dynamic-page.model')->fromTable($table);
+        return (new DynamicPage)->fromTable($table);
     }
 
     /**
@@ -172,7 +174,7 @@ class SodaInstance
      */
     public function dynamicBlock($table)
     {
-        return app('soda.dynamic-block.model')->fromTable($table);
+        return (new DynamicBlock)->fromTable($table);
     }
 
     /**
