@@ -67,5 +67,6 @@ elixir(function(mix) {
         .copy('node_modules/jsoneditor/dist/img', 'public/components/jsoneditor/img')
         .copy('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
         .copy('node_modules/tinymce/skins', 'public/components/tinymce/skins')
+        .copy('node_modules/tinymce/themes', 'public/components/tinymce/themes')
         .copy('resources/assets/img', 'public/img');
 });
