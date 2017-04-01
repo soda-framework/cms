@@ -46,19 +46,6 @@
                         "options"     => $roleIds
                     ]
                 ])->setModel($user) !!}
-
-                <hr />
-                <br />
-
-                {!! SodaForm::password([
-                    "name"        => "Password",
-                    "field_name"  => 'password',
-                ]) !!}
-
-                {!! SodaForm::password([
-                    "name"        => "Password Confirmation",
-                    "field_name"  => 'password_confirmation',
-                ]) !!}
             @elseif(!$user->id)
                 {!! SodaForm::multiselect([
                     "name"         => "Role",
@@ -76,6 +63,22 @@
                     "field_name"   => 'role_id',
                     "value"        => $user->roles->implode('display_name', ', '),
                 ])->setModel($user) !!}
+            @endif
+
+            @if($user->getLevel() < \Auth::user()->getLevel() || $user->id == Auth::user()->id)
+            <hr />
+            <br />
+
+            {!! SodaForm::password([
+                "name"        => "Password",
+                "field_name"  => 'password',
+            ]) !!}
+
+            {!! SodaForm::password([
+                "name"        => "Password Confirmation",
+                "field_name"  => 'password_confirmation',
+            ]) !!}
+
             @endif
         </form>
     </div>
