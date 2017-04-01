@@ -121,10 +121,12 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
             $page = $this->initializePage($request);
         }
 
-        $page->load('type');
+        if($page->page_type_id) {
+            $page->load('type');
 
-        if ($page->relationLoaded('type')) {
-            $this->saveSettings($page, $request);
+            if ($page->relationLoaded('type')) {
+                $this->saveSettings($page, $request);
+            }
         }
 
         return $page;
@@ -156,14 +158,19 @@ class PageRepository extends AbstractRepository implements PageRepositoryInterfa
 
     protected function saveSettings(PageInterface $page, Request $request)
     {
-        $dynamicPageRecord = Soda::dynamicPage($page->getRelation('type')->getAttribute('identifier'))->firstOrNew(['page_id' => $page->getKey()]);
+        if($page->type !== null)
+        {
+            $dynamicPageRecord = Soda::dynamicPage($page->getRelation('type')->getAttribute('identifier'))->firstOrNew(['page_id' => $page->getKey()]);
 
-        foreach ($page->type->fields as $field) {
-            if ($request->input('settings') !== null || $request->file('settings') !== null) {
-                $dynamicPageRecord->parseField($field, $request, 'settings');
+            foreach ($page->type->fields as $field) {
+                if ($request->input('settings') !== null || $request->file('settings') !== null) {
+                    $dynamicPageRecord->parseField($field, $request, 'settings');
+                }
             }
+
+            return $dynamicPageRecord->save();
         }
 
-        return $dynamicPageRecord->save();
+        return false;
     }
 }
