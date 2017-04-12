@@ -150,8 +150,8 @@ class Uploader
                 'media_type'    => 'image', // todo: autodetect
             ]);
 
-            $return['initalPreviewConfig'][0]['key'] = $media->id;
-            $return['initalPreviewConfig'][0]['extra'] = [
+            $return['initialPreviewConfig'][0]['key'] = $media->id;
+            $return['initialPreviewConfig'][0]['extra'] = [
                 'key'           => $media->id,
                 'related_table' => $table,
                 'related_field' => $field,
@@ -162,8 +162,8 @@ class Uploader
                 $field => $uploadedFilePath,
             ]);
 
-            $return['initalPreviewConfig'][0]['key'] = null;
-            $return['initalPreviewConfig'][0]['extra'] = [
+            $return['initialPreviewConfig'][0]['key'] = null;
+            $return['initialPreviewConfig'][0]['extra'] = [
                 'related_table' => $table,
                 'related_field' => $field,
                 'related_id'    => $id,
