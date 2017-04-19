@@ -6,7 +6,6 @@ use ReflectionClass;
 use Illuminate\Support\Facades\Route;
 use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\Drafting;
-use Soda\Cms\Http\Middleware\Security;
 use Soda\Cms\Http\Middleware\ForceHttps;
 use Soda\Cms\Http\Middleware\HasAbility;
 use Soda\Cms\Http\Middleware\Authenticate;
@@ -37,7 +36,6 @@ class RouteServiceProvider extends ServiceProvider
 
         $router->middlewareGroup('soda.web', [
             Drafting::class,
-            Security::class,
         ]);
 
         $middlewareGroups = $router->getMiddlewareGroups();

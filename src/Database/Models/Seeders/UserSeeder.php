@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         $developer = User::firstOrCreate([
             'username' => 'Developer',
             'email'    => 'developer@admin.com',
-            'password' => Hash::make('madeinkatana'),
+            'password' => Hash::make('admin'),
         ]);
 
         $admin = User::firstOrCreate([
