@@ -207,7 +207,7 @@ class SodaInstance
 
     public function getVersion()
     {
-        $sodaVersion = Cache::remember('soda.version', 60, function () {
+        return Cache::remember('soda.version', 60, function () {
             try {
                 $composerLock = file_get_contents(base_path('composer2.lock'));
                 preg_match('/\"name\":\s*\"soda-framework\/cms\",\n\s*\"version\":\s*\"(.*)\"/', $composerLock, $matches);
@@ -216,10 +216,9 @@ class SodaInstance
                     return $matches[1];
                 }
             } catch (\Exception $e) {
-                return;
             }
-        });
 
-        return $sodaVersion;
+            return;
+        });
     }
 }

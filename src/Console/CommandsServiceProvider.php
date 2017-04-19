@@ -39,7 +39,7 @@ class CommandsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $devCommands = [
-        'Setup' => 'soda.command.setup'
+        'Setup' => 'soda.command.setup',
     ];
 
     /**

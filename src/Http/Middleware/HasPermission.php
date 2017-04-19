@@ -45,7 +45,7 @@ class HasPermission
             $permissions = explode(self::DELIMITER, $permissions);
         }
 
-        if (! $request->user() || ! $request->user()->can($permissions)) {
+        if ($this->auth->guest() || ! $request->user()->can($permissions)) {
             return Soda::noPermission();
         }
 

@@ -10,7 +10,7 @@
             {!! csrf_field() !!}
             <div class="soda-login__box">
                 <div class="soda-login__logo">
-                    @include(soda_cms_view('layouts.partials.mobile-header'))
+                    @include(soda_cms_view_path('layouts.partials.header-image'))
                 </div>
 
                 <div class="soda-login__errors">
