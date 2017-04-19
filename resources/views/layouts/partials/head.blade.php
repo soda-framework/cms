@@ -16,6 +16,13 @@
 
 @section('head.css')
     <!-- Styles -->
+    @if(!Soda::getApplication()->css_url || Soda::getApplication()->append_css)
+        <link href="/soda/cms/css/application.css" rel="stylesheet" media="all">
+    @endif
+    @if($cssUrl = Soda::getApplication()->css_url)
+        <link href="{{ $cssUrl }}" rel="stylesheet" media="all">
+    @endif
+
     <link href="/soda/cms/css/fonts.css" rel="stylesheet" media="all">
     <link href="/soda/cms/css/bootstrap.css" rel="stylesheet" media="all">
     <link href="/soda/cms/css/application.css" rel="stylesheet" media="all">
