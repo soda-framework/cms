@@ -26,5 +26,8 @@
                 @show
             </div>
         </div>
+
+        <?php $version = Soda::getVersion(); ?>
+        <div class="soda-powered-by">Powered by Soda Framework{{ $version ? " (version $version)" : "" }}</div>
     </div>
 @endsection

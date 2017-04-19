@@ -1,4 +1,5 @@
 .sidebar-offset {
+  position: relative;
   transition: transform 0.25s ease-in-out;
   @media(min-width: $screen-md-min) {
     margin-left: 300px;

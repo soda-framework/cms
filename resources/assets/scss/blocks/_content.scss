@@ -22,7 +22,7 @@ body.unloading {
   background-color: $content-background;
   transform: translateX(0px);
   transition: transform 0.25s ease-in-out;
-  padding: 10px 0px;
+  padding: 10px 0px 50px;
 
   @media(max-width: $screen-sm-max) {
     min-height: 0 !important;

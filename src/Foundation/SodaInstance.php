@@ -3,6 +3,7 @@
 namespace Soda\Cms\Foundation;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Soda\Cms\Database\Models\DynamicPage;
 use Soda\Cms\Database\Models\DynamicBlock;
 use Soda\Cms\Database\Models\Contracts\PageInterface;
@@ -194,8 +195,31 @@ class SodaInstance
         return response()->view(soda_cms_view_path('errors.no-permission'), [], 401);
     }
 
+    public function resetPassword()
+    {
+        return response()->view(soda_cms_view_path('errors.reset-password'), [], 403);
+    }
+
     public function auth()
     {
         return Auth::guard('soda');
+    }
+
+    public function getVersion()
+    {
+        $sodaVersion = Cache::remember('soda.version', 60, function () {
+            try {
+                $composerLock = file_get_contents(base_path('composer2.lock'));
+                preg_match('/\"name\":\s*\"soda-framework\/cms\",\n\s*\"version\":\s*\"(.*)\"/', $composerLock, $matches);
+
+                if (isset($matches[1])) {
+                    return $matches[1];
+                }
+            } catch (\Exception $e) {
+                return;
+            }
+        });
+
+        return $sodaVersion;
     }
 }
