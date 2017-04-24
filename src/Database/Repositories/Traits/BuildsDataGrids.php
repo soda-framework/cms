@@ -38,20 +38,20 @@ trait BuildsDataGrids
         $width = 0;
 
         if ($editRoute) {
-            $width += 80;
+            $width += 83;
         }
         if ($deleteRoute) {
-            $width += 100;
+            $width += 103;
         }
 
         if ($width > 0) {
             $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value) use ($editRoute, $deleteRoute) {
                 $buttons = '';
                 if ($editRoute) {
-                    $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><i class='fa fa-pencil'></i> <span>Edit</span></a> ";
+                    $buttons .= "<a href='".route($editRoute, $value)."' class='btn btn-warning'><span>Edit</span></a> ";
                 }
                 if ($deleteRoute) {
-                    $buttons .= "<a href='".route($deleteRoute, $value)."' class='btn btn-danger' data-delete-button><i class='fa fa-remove'></i> <span>Delete</span></a> ";
+                    $buttons .= "<a href='".route($deleteRoute, $value)."' class='btn btn-danger' data-delete-button><span>Delete</span></a> ";
                 }
 
                 return $buttons;

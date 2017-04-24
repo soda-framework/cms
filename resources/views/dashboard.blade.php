@@ -9,5 +9,5 @@
 @stop
 
 @section('main-content-outer')
-    {!! Soda::dashboard()->render() !!}
+    {{--{!! app('soda.interface')->dashboard()->render() !!}--}}
 @stop

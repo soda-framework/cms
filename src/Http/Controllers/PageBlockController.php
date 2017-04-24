@@ -15,6 +15,8 @@ class PageBlockController extends BaseController
     {
         $this->pageBlocks = $pageBlocks;
 
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+
         $this->middleware('soda.permission:view-pages');
         $this->middleware('soda.permission:edit-pages')->only(['create', 'store', 'delete', 'edit', 'update']);
         $this->middleware('soda.permission:attach-blocks')->only(['attach']);
@@ -75,7 +77,12 @@ class PageBlockController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block']));
         }
 
-        return soda_cms_view('data.blocks.view', compact('page', 'blockType', 'block'));
+        app('soda.interface')->setHeading('New '.$blockType->name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.index'), 'Pages');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.edit', $page->id), $page->name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.edit', $page->id).'?tab='.strtolower($blockType->identifier), $blockType->name);
+
+        return soda_cms_view('data.pages.blocks.view', compact('page', 'blockType', 'block'));
     }
 
     /**
@@ -115,7 +122,12 @@ class PageBlockController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block']));
         }
 
-        return soda_cms_view('data.blocks.view', compact('page', 'blockType', 'block'));
+        app('soda.interface')->setHeading($block->name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.index'), 'Pages');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.edit', $page->id), $page->name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.edit', $page->id).'?tab='.strtolower($blockType->identifier), $blockType->name);
+
+        return soda_cms_view('data.pages.blocks.view', compact('page', 'blockType', 'block'));
     }
 
     /**

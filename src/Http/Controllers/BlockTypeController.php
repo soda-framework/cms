@@ -14,6 +14,9 @@ class BlockTypeController extends BaseController
     {
         $this->blockTypes = $blockTypes;
 
+        app('soda.interface')->setHeading('Block Types')->setHeadingIcon('mdi mdi mdi-widgets');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+
         $this->middleware('soda.permission:manage-block-types');
     }
 
@@ -24,7 +27,9 @@ class BlockTypeController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('data.blocks.types.index', $this->blockTypes->getFilteredGrid(10));
+        app('soda.interface')->setDescription('Different Block Types have different field types applied to them');
+
+        return soda_cms_view('data.block-types.index', $this->blockTypes->getFilteredGrid(10));
     }
 
     /**
@@ -36,13 +41,16 @@ class BlockTypeController extends BaseController
      */
     public function create(Request $request)
     {
+        app('soda.interface')->setHeading('New Block Type');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), 'Block Types');
+
         try {
             $blockType = $this->blockTypes->newInstance($request);
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
         }
 
-        return soda_cms_view('data.blocks.types.view', compact('blockType'));
+        return soda_cms_view('data.block-typeså.view', compact('blockType'));
     }
 
     /**
@@ -78,6 +86,9 @@ class BlockTypeController extends BaseController
         if (! $blockType) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block type']));
         }
+
+        app('soda.interface')->setHeading($blockType->name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), 'Block Types');
 
         return soda_cms_view('data.blocks.types.view', compact('blockType', 'fields'));
     }

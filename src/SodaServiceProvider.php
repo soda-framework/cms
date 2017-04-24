@@ -2,17 +2,12 @@
 
 namespace Soda\Cms;
 
-use Laratrust\LaratrustFacade;
-use Soda\Cms\Support\Facades\Form;
-use Soda\Cms\Support\Facades\Menu;
 use Soda\Cms\Support\Facades\Soda;
 use Zofe\Rapyd\RapydServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Intervention\Image\Facades\Image;
 use Soda\Cms\Foundation\SodaInstance;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustServiceProvider;
-use Soda\Cms\Support\Facades\Dashboard;
 use Soda\Cms\Foundation\DraftingHandler;
 use Soda\Cms\Events\EventServiceProvider;
 use Soda\Cms\Database\PageServiceProvider;
@@ -21,15 +16,15 @@ use Soda\Cms\Routing\RouteServiceProvider;
 use Soda\Cms\Database\BlockServiceProvider;
 use Soda\Cms\Database\FieldServiceProvider;
 use Intervention\Image\ImageServiceProvider;
-use Soda\Cms\Support\Facades\RequestMatcher;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Rutorika\Sortable\SortableServiceProvider;
 use Soda\Cms\Database\ApplicationServiceProvider;
 use Soda\Cms\Foundation\Providers\AuthServiceProvider;
-use Soda\Cms\FrontendBuilder\Menu\MenuServiceProvider;
-use Soda\Cms\FrontendBuilder\Forms\FormServiceProvider;
+use Soda\Cms\InterfaceBuilder\Menu\MenuServiceProvider;
+use Soda\Cms\InterfaceBuilder\Forms\FormServiceProvider;
+use Soda\Cms\InterfaceBuilder\InterfaceBuilderServiceProvider;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
-use Soda\Cms\FrontendBuilder\Dashboard\DashboardServiceProvider;
+use Soda\Cms\InterfaceBuilder\Breadcrumb\BreadcrumbServiceProvider;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class SodaServiceProvider extends ServiceProvider
@@ -90,9 +85,10 @@ class SodaServiceProvider extends ServiceProvider
             EventServiceProvider::class,
             RequestMatcherServiceProvider::class,
             CommandsServiceProvider::class,
-            FormServiceProvider::class,
+            InterfaceBuilderServiceProvider::class,
             MenuServiceProvider::class,
-            DashboardServiceProvider::class,
+            BreadcrumbServiceProvider::class,
+            FormServiceProvider::class,
 
             // Plugins
             RapydServiceProvider::class,
@@ -110,12 +106,6 @@ class SodaServiceProvider extends ServiceProvider
 
         $this->registerFacades([
             'Soda'          => Soda::class,
-            'SodaForm'      => Form::class,
-            'SodaMenu'      => Menu::class,
-            'SodaDashboard' => Dashboard::class,
-            'SodaMatcher'   => RequestMatcher::class,
-            'Laratrust'     => LaratrustFacade::class,
-            'Image'         => Image::class,
         ]);
 
         $this->app->singleton('soda', function ($app) {

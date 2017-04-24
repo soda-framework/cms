@@ -1,8 +1,5 @@
-<nav class="content-navbar navbar navbar-default">
+<nav class="navbar navbar-default content-navbar">
     <div class="container-fluid">
-        <div class="nav navbar-nav navbar-left navbar-breadcrumb">
-            @yield('breadcrumb')
-        </div>
         @if(Soda::auth()->check())
             <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
                 <li>

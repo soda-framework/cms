@@ -1,3 +1,15 @@
+// New colours for after clean up
+// #F0F0F0 Sidebar
+// #F5F5F5 Secondary sidebar
+
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5); // #222
+$gray-dark:              #3d3d3d;  // #333
+$gray:                   #9c9c9c; // #555
+$gray-light:             #ddd; // #777
+$gray-lighter:           #F0F0F0; // #eee
+
+
 $slate-010: #21242c;
 $slate-020: #252932;
 $slate-030: #242932;
@@ -17,7 +29,7 @@ $white: #FFFFFF;
 
 $brand-primary: #3B6DDF;
 $brand-secondary: #5558D5;
-$brand-success: #2CB073;
+$brand-success: #0BD685;
 $brand-info: #1BBAF9;
 $brand-warning: #FFB564;
 $brand-danger: #F93A47;

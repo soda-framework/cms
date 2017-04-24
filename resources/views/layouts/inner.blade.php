@@ -12,7 +12,35 @@
                 @section('main-content-outer')
                     <div class="row">
                         <div class="col-xs-12">
-                            @yield('content-heading')
+                            <div class="content-header clearfix">
+                                <div class="pull-left">
+                                    <h1>
+                                        @if($icon = app('soda.interface')->getHeadingIcon())
+                                            <i class="{{ $icon }}"></i>
+                                        @endif
+                                        <span>{{ app('soda.interface')->getHeading() }}</span>
+                                    </h1>
+                                    @if($description = app('soda.interface')->getDescription())
+                                        <p class="text-muted">{{ $description }}</p>
+                                    @endif
+
+                                    @section('breadcrumb')
+                                        <ul class="breadcrumb">
+                                            @foreach(app('soda.interface')->breadcrumbs()->getLinks() as $breadcrumbLink)
+                                                <li>
+                                                    <a href="{{ $breadcrumbLink['url'] }}">{{ $breadcrumbLink['title'] }}</a>
+                                                </li>
+                                            @endforeach
+                                            <li class="active">{{ app('soda.interface')->getTitle() }}</li>
+                                        </ul>
+                                    @stop
+                                    @yield('breadcrumb')
+                                </div>
+
+                                <div class="pull-right">
+                                    @yield('content-heading-button')
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @include(soda_cms_view_path('layouts.partials.alert'))
@@ -26,5 +54,8 @@
                 @show
             </div>
         </div>
+
+        <?php $version = Soda::getVersion(); ?>
+        <div class="soda-powered-by">Powered by Soda Framework{{ $version ? " (version $version)" : "" }}</div>
     </div>
 @endsection

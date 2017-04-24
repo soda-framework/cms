@@ -15,6 +15,9 @@ class FieldController extends BaseController
     {
         $this->fields = $fields;
 
+        app('soda.interface')->setHeading('Fields')->setHeadingIcon('mdi mdi-paperclip');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+
         $this->middleware('soda.permission:manage-fields');
     }
 
@@ -25,6 +28,8 @@ class FieldController extends BaseController
      */
     public function index()
     {
+        app('soda.interface')->setDescription('Fields are added onto pages.');
+
         return soda_cms_view('data.fields.index', $this->fields->getFilteredGrid(10));
     }
 
@@ -37,6 +42,9 @@ class FieldController extends BaseController
      */
     public function create(Request $request)
     {
+        app('soda.interface')->setHeading('New Field');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.fields.index'), 'Fields');
+
         try {
             $field = $this->fields->newInstance($request);
             $fieldTypes = $this->fields->getFieldTypes();
@@ -80,6 +88,9 @@ class FieldController extends BaseController
         if (! $field) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'field']));
         }
+
+        app('soda.interface')->setHeading($field->name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.fields.index'), 'Fields');
 
         return soda_cms_view('data.fields.view', compact('field', 'fieldTypes'));
     }

@@ -10,6 +10,7 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
 
     // Dashboard and user routes...
     Route::group(['middleware' => 'soda.auth'], function () {
+        Route::post('reset-password', 'HomeController@resetWeakPassword')->name('soda.reset-weak-password');
         Route::get('/', 'HomeController@getIndex')->name('soda.home')->middleware('soda.permission:access-cms');
         Route::post('sort', 'Api\SortController@sort')->name('soda.sort')->middleware('soda.permission:access-cms');
         Route::get('toggle-draft', 'HomeController@getToggleDraft')->name('soda.toggle-draft')->middleware('soda.permission:view-drafts');

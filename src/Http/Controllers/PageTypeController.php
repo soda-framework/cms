@@ -14,6 +14,9 @@ class PageTypeController extends BaseController
     {
         $this->pageTypes = $pageTypes;
 
+        app('soda.interface')->setHeading('Page Types')->setHeadingIcon('mdi mdi-file-outline');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+
         $this->middleware('soda.permission:manage-page-types');
     }
 
@@ -24,6 +27,8 @@ class PageTypeController extends BaseController
      */
     public function index()
     {
+        app('soda.interface')->setDescription('Different Page Types have different field types applied to them');
+
         return soda_cms_view('data.pages.types.index', $this->pageTypes->getFilteredGrid(10));
     }
 
@@ -36,6 +41,9 @@ class PageTypeController extends BaseController
      */
     public function create(Request $request)
     {
+        app('soda.interface')->setHeading('New Page Type');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.page-types.index'), 'Page Types');
+
         try {
             $pageType = $this->pageTypes->newInstance($request);
             $pageTypes = $this->pageTypes->getList();
@@ -81,6 +89,9 @@ class PageTypeController extends BaseController
         if (! $pageType) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page type']));
         }
+
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.page-types.index'), 'Page Types');
+        app('soda.interface')->setHeading($pageType->name);
 
         return soda_cms_view('data.pages.types.view', compact('pageType', 'pageTypes', 'blockTypes', 'fields'));
     }

@@ -13,7 +13,15 @@
                     <h4>You do not have permission to access this feature.</h4>
                 </div>
                 <br/>
-                <a class="btn btn-dialog btn-block" href="{{ URL::previous() }}">Click here to go back.</a>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a class="btn btn-dialog btn-block" href="{{ URL::previous() }}">Go back.</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-dialog btn-block" href="{{ route('soda.logout') }}">Log out.</a>
+                    </div>
+                </div>
+                <br/>
             </div>
         </div>
     </div>

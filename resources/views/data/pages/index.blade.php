@@ -1,24 +1,10 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <li><a href="{{ route('soda.home') }}">Home</a></li>
-    <li class="active">Pages</li>
-@stop
-
-@section('head.title')
-	<title>Pages :: Soda CMS</title>
-@endsection
-
 @section('content-heading-button')
     @permission('create-pages')
 	    @include(soda_cms_view_path('partials.buttons.create'), ['modal' => '#pageTypeModal'])
     @endpermission
 @stop
-
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'mdi mdi-file-outline',
-    'title'       => 'Pages',
-])
 
 @section('content')
 	@include(soda_cms_view_path('partials.page-tree.root'), ['tree' => $pages])

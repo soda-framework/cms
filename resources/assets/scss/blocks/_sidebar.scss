@@ -1,4 +1,5 @@
 .sidebar-offset {
+  position: relative;
   transition: transform 0.25s ease-in-out;
   @media(min-width: $screen-md-min) {
     margin-left: 300px;
@@ -12,7 +13,6 @@
   bottom: 0;
   left: 0;
   overflow: auto;
-  background: $sidebar-background;
   padding: 0;
   transform: translateX(-300px);
   transition: transform 0.25s ease-in-out;
@@ -32,12 +32,63 @@
   }
 
   .soda-logo-block {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
     display: block;
-    padding: 10px 20px;
-    background-color: $brand-primary;
+    position: relative;
+    text-align: center;
+    height: $navbar-height;
+    img, svg {
+      display: block;
+      padding: 10px 80px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      max-height: $navbar-height;
+    }
+  }
+
+  .sidebar__top {
+    background-color: #F0F0F0;
+    > svg {
+      width: 100%;
+      display: block;
+    }
     @media(max-width: $screen-sm-max) {
       display: none;
+    }
+  }
+
+  .sidebar__inner {
+    position: relative;
+    min-height: 100%;
+  }
+
+  .sidebar__bg {
+    position: absolute;
+    top: $navbar-height + 153px;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+
+    > svg {
+      width: 100%;
+      display: block;
+      position: absolute;
+    }
+
+    > svg:first-child {
+      bottom: 100%;
+    }
+
+    > svg:last-child {
+      bottom: 0;
+    }
+
+    @media(max-width: $screen-sm-max) {
+      top: 0;
+
+      > svg:first-child {
+        display: none;
+      }
     }
   }
 
@@ -47,8 +98,6 @@
       display: block;
       position: relative;
       padding: 12px 24px;
-      background: $sidebar-link;
-      color: $sidebar-link-text;
       outline: none;
       cursor: pointer;
       border-radius: 0;
@@ -85,60 +134,24 @@
           transform: rotate(90deg);
         }
       }
-
-      &:hover {
-        background-color: $sidebar-link-hover;
-        color: $sidebar-link-hover-text;
-      }
     }
 
     + .nav-item {
       margin-top: 0;
     }
   }
-  li.nav-item {
-    transition: background-color 0.25s ease, color 0.25s ease;
-    &.active {
-      > a.nav-link, > span.nav-link {
-        &, &:hover, &:focus, &:active {
-          background: $sidebar-link-active;
-          color: $sidebar-link-active-text;
-        }
-      }
-    }
-  }
 
   li.nav-item-group {
-    transition: background-color 0.25s ease, color 0.25s ease;
-    &.active {
-      > a.nav-link, > span.nav-link {
-        &, &:hover, &:focus, &:active {
-          background: $sidebar-link-active-sub;
-          color: $sidebar-link-active-sub-text;
-        }
-      }
-    }
-
     ul {
       padding: 8px 0;
-      background-color: rgba(0, 0, 0, 0.2);
       li.nav-item {
         > span.nav-link, > a.nav-link {
           display: block;
           padding: 6px 24px 6px 60px;
-          background: $sidebar-group-link;
-          color: $sidebar-group-link-text;
-
-          &:hover {
-            background-color: $sidebar-group-link-hover;
-            color: $sidebar-group-link-hover-text;
-          }
         }
 
         &.active {
           > span.nav-link, > a.nav-link {
-            background: $sidebar-group-link-active;
-            color: $sidebar-group-link-active-text;
             font-weight: bold;
           }
         }
@@ -147,6 +160,11 @@
   }
 
   .nav-sidebar {
-    margin-bottom: 20px;
+    margin-top: 10px;
+
+
+    @media(max-width: $screen-sm-max) {
+      margin-top: 0px;
+    }
   }
 }

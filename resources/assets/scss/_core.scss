@@ -22,3 +22,27 @@ a {
     vertical-align: middle;
   }
 }
+
+.soda-wrapper {
+  @media(max-width: $screen-sm-max) {
+    min-height: 0 !important;
+  }
+}
+
+.soda-powered-by {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(0,0,0,0.3);
+}
+
+body.loaded {
+  .soda-powered-by {
+    opacity: 1;
+  }
+}

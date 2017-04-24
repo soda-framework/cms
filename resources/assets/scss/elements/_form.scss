@@ -9,6 +9,8 @@ select.form-control {
 .form-control {
   box-shadow: none;
   transition: background-color ease-in-out 0.15s, border-color ease-in-out 0.15s;
+  padding-left: 18px;
+  padding-right: 18px;
 
   &:hover {
     background-color: #fcfdfe;
@@ -56,13 +58,80 @@ select.form-control {
   }
 }
 
-/*
-  .form-group {
-    margin-top: 20px;
-    padding-top: 30px;
-    border-top: 1px solid #ECEEEF;
+.input-group--alt {
+  // Display as table-cell
+  // -------------------------
+  .input-group-addon,
+  .input-group .form-control  {
+    &:not(:first-child):not(:last-child) {
+      border-radius: $border-radius-base;
+    }
   }
-*/
+
+  .input-group-btn {
+    &:not(:first-child):not(:last-child) {
+      border-radius: $btn-border-radius-base;
+    }
+  }
+
+  // Reset rounded corners
+  .input-group .form-control:first-child,
+  .input-group-addon:first-child {
+    @include border-right-radius($border-radius-base);
+  }
+
+  .input-group-btn:first-child > .btn,
+  .input-group-btn:first-child > .btn-group > .btn,
+  .input-group-btn:first-child > .dropdown-toggle,
+  .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+  .input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+    @include border-right-radius($btn-border-radius-base);
+  }
+
+  .input-group-addon:first-child {
+    border-right-width: 1px;
+  }
+
+  .input-group .form-control:last-child,
+  .input-group-addon:last-child {
+    @include border-left-radius($border-radius-base);
+  }
+
+  .input-group-btn:last-child > .btn,
+  .input-group-btn:last-child > .btn-group > .btn,
+  .input-group-btn:last-child > .dropdown-toggle,
+  .input-group-btn:first-child > .btn:not(:first-child),
+  .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+    @include border-left-radius($btn-border-radius-base);
+  }
+  .input-group-addon:last-child {
+    border-left-width: 1px;
+  }
+
+  // Button input groups
+  // -------------------------
+  .input-group-btn {
+    // Negative margin for spacing, position for bringing hovered/focused/actived
+    // element above the siblings.
+    > .btn {
+      margin-left: 10px;
+    }
+
+    // Negative margin to only have a 1px border between the two
+    &:first-child {
+      > .btn,
+      > .btn-group {
+        margin-left: 10px;
+      }
+    }
+    &:last-child {
+      > .btn,
+      > .btn-group {
+        margin-left: 10px;
+      }
+    }
+  }
+}
 
 .toggle-switch {
   input[type="checkbox"] {
@@ -121,6 +190,7 @@ select.form-control {
 .form-group--inline, .form-group--inline-group {
   .form-group__label {
     label {
+      margin-top: $padding-base-vertical;
       margin-bottom: 0;
     }
   }

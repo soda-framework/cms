@@ -3,6 +3,7 @@
 namespace Soda\Cms\Foundation;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Soda\Cms\Database\Models\DynamicPage;
 use Soda\Cms\Database\Models\DynamicBlock;
 use Soda\Cms\Database\Models\Contracts\PageInterface;
@@ -114,46 +115,6 @@ class SodaInstance
     }
 
     /**
-     * Return instance of MenuBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Menu\MenuBuilder
-     */
-    public function menu()
-    {
-        return $this->laravel['soda.menu'];
-    }
-
-    /**
-     * Return instance of FormBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Forms\FormBuilder
-     */
-    public function form()
-    {
-        return $this->laravel['soda.form'];
-    }
-
-    /**
-     * Return instance of DashboardBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Dashboard\DashboardBuilder
-     */
-    public function dashboard()
-    {
-        return $this->laravel['soda.dashboard'];
-    }
-
-    /**
-     * Return instance of BreadcrumbdBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Breadcrumb\BreadcrumbdBuilder
-     */
-    public function breadcrumbd()
-    {
-        return $this->laravel['soda.breadcrumbd'];
-    }
-
-    /**
      * Load a dynamic page.
      *
      * @param      $table
@@ -177,25 +138,35 @@ class SodaInstance
         return (new DynamicBlock)->fromTable($table);
     }
 
-    /**
-     * Build a FormField from array or Field model.
-     *
-     * @param $field
-     *
-     * @return mixed
-     */
-    public function field($field)
-    {
-        return $this->form()->field($field);
-    }
-
     public function noPermission()
     {
         return response()->view(soda_cms_view_path('errors.no-permission'), [], 401);
     }
 
+    public function resetPassword()
+    {
+        return response()->view(soda_cms_view_path('errors.reset-password'), [], 403);
+    }
+
     public function auth()
     {
         return Auth::guard('soda');
+    }
+
+    public function getVersion()
+    {
+        return Cache::remember('soda.version', 60, function () {
+            try {
+                $composerLock = file_get_contents(base_path('composer2.lock'));
+                preg_match('/\"name\":\s*\"soda-framework\/cms\",\n\s*\"version\":\s*\"(.*)\"/', $composerLock, $matches);
+
+                if (isset($matches[1])) {
+                    return $matches[1];
+                }
+            } catch (\Exception $e) {
+            }
+
+            return;
+        });
     }
 }

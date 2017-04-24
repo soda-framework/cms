@@ -16,6 +16,9 @@ class Application extends Model implements ApplicationInterface
      */
     protected $fillable = [
         'name',
+        'append_css',
+        'css_url',
+        'logo_url',
     ];
 
     /**

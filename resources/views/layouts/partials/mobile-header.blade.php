@@ -3,8 +3,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="soda-logo-block" href="{{ route('soda.home') }}">
-                <img src="/soda/cms/img/sodacms_droplime.png" />
-                <img src="/soda/cms/img/sodacms_logowhite.png" />
+                @include(soda_cms_view_path('layouts.partials.header-image'))
             </a>
         </div>
 

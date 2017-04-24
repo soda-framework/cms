@@ -14,6 +14,9 @@ class PageController extends BaseController
     {
         $this->pages = $pages;
 
+        app('soda.interface')->setHeading('Pages')->setHeadingIcon('mdi mdi-file-outline');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+
         $this->middleware('soda.permission:view-pages');
         $this->middleware('soda.permission:create-pages')->only(['create', 'store']);
         $this->middleware('soda.permission:edit-pages')->only(['edit', 'update']);
@@ -44,6 +47,9 @@ class PageController extends BaseController
      */
     public function create(Request $request)
     {
+        app('soda.interface')->setHeading('New Page');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.index'), 'Pages');
+
         try {
             $parentId = $request->input('parentId');
             $pageTypeId = $request->input('pageTypeId');
@@ -87,6 +93,9 @@ class PageController extends BaseController
         if (! $page) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'page']));
         }
+
+        app('soda.interface')->setHeading($page->name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.index'), 'Pages');
 
         $page->load('blockTypes.fields', 'type.blockTypes.fields', 'type.fields');
         $blockTypes = $this->pages->getAvailableBlockTypes($page);

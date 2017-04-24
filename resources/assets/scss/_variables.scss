@@ -6,10 +6,6 @@
 $theme-1: $lime-1;
 $theme-2: $lime-2;
 
-$border-radius-base: 3px;
-$border-radius-large: 0;
-$border-radius-small: 0;
-
 $asset-path: "/soda/cms/";
 $font-family-sans-serif:  Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $fa-font-path: $asset-path + "fonts/font-awesome" !default;
@@ -19,13 +15,18 @@ $image-path: $asset-path + "components/bootstrap-fileinput/img"; // bootstrap-fi
 /* CONTENT
    ============================= */
 
-$body-bg: $slate-095;
+$body-bg: $white;
 $font-size-base: 15px;
 
-$content-background: $slate-095;
-$content-inner-background: $white;
-$content-inner-border: $slate-090;
-$content-inner-text: rgb(51, 51, 51);
+$padding-base-vertical: 10px;
+$padding-base-horizontal: 24px;
+
+$padding-large-vertical: 12px;
+$padding-large-horizontal: 32px;
+
+$border-radius-base: 0;
+$border-radius-small: 0;
+$border-radius-large: 0;
 
 /* LOGIN
    ============================= */
@@ -38,7 +39,7 @@ $login-box-link-hover: $slate-080;
 /* NAVBAR
    ============================= */
 
-$navbar-height: 60px;
+$navbar-height: 75px;
 $navbar-default-bg: $white;
 
 $navbar-inverse-color: $slate-060;
@@ -58,36 +59,21 @@ $nav-tabs-border-color:                     transparent;
 $nav-tabs-link-hover-border-color:          transparent;
 
 $nav-tabs-active-link-hover-bg:             $white;
-$nav-tabs-active-link-hover-border-color:   $content-inner-border;
-
-/* SIDEBAR
-   ============================= */
-
-$sidebar-background: $slate-040;
-$sidebar-link: transparent;
-$sidebar-link-text: $slate-060;
-$sidebar-link-hover: $slate-050;
-$sidebar-link-hover-text: $slate-080;
-$sidebar-link-active: $slate-030;
-$sidebar-link-active-text: $white;
-$sidebar-link-active-sub: $slate-030;
-$sidebar-link-active-sub-text: $white;
-$sidebar-group-link: $slate-030;
-$sidebar-group-link-text: $slate-060;
-$sidebar-group-link-hover: $slate-040;
-$sidebar-group-link-hover-text: $slate-080;
-$sidebar-group-link-active: $slate-030;
-$sidebar-group-link-active-text: $white;
+$nav-tabs-active-link-hover-border-color:   $slate-090;
 
 /* OTHER
    ============================= */
 
-$list-group-border: $content-inner-border;
-$standard-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-$btn-default-bg: $slate-090;
-$btn-default-color: $slate-020;
+$breadcrumb-padding-horizontal: 0;
 
-$input-border: $slate-090;
-$input-border-radius: 0;
+$list-group-border: $slate-090;
+$standard-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+
+$btn-default-bg: #F0F0F0;
+$btn-default-color: $slate-020;
+$btn-border-radius-base: 20px;
+$btn-border-radius-large: 30px;
+
+$input-border: #DEDEDE;
 
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";

@@ -3,7 +3,6 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Zofe\Rapyd\DataGrid\DataGrid;
-use Soda\Cms\Support\Facades\Form;
 use Zofe\Rapyd\DataFilter\DataFilter;
 use Soda\Cms\Database\Models\Contracts\FieldInterface;
 use Soda\Cms\Database\Repositories\Traits\BuildsDataGrids;
@@ -22,7 +21,7 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
 
     public function getFieldTypes()
     {
-        return Form::getFieldTypes();
+        return app('soda.form')->getFieldTypes();
     }
 
     /**
