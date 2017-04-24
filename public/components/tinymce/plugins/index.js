@@ -1,7 +1,7 @@
-// Exports the "anchor" plugin for usage with module loaders
+// Exports the "advlist" plugin for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/anchor')
+//     require('tinymce/plugins/advlist')
 //   ES2015:
-//     import 'tinymce/plugins/anchor'
+//     import 'tinymce/plugins/advlist'
 require('./plugin.js');

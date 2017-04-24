@@ -34,10 +34,16 @@
   }
 
   .soda-login__logo {
-    text-align: center;
-    margin-bottom: 10px;
+    position: relative;
+    top: 15vh;
+    z-index: 10;
     img, svg {
       max-height: 55px;
+    }
+    svg{
+      path{
+        fill: $brand-secondary;
+      }
     }
   }
 
@@ -91,7 +97,7 @@
       width: 40%;
       height: 70px;
       padding: 19px 0;
-      background: #8028e9;
+      background: transparent;
       font-weight: 900;
       font-size: 18px;
       color: white;
@@ -101,7 +107,7 @@
       z-index: 2;
       &:hover, &:active, &:focus {
         outline: none;
-        background-color: #617eeb;
+        background-color: $brand-primary;
         border-color: white;
         border-width: 5px;
         color: #fff;
