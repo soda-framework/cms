@@ -42,7 +42,7 @@
     }
     svg{
       path{
-        fill: $brand-secondary;
+        fill: $secondary;
       }
     }
   }
@@ -107,7 +107,7 @@
       z-index: 2;
       &:hover, &:active, &:focus {
         outline: none;
-        background-color: $brand-primary;
+        background-color: $primary;
         border-color: white;
         border-width: 5px;
         color: #fff;

@@ -47,4 +47,5 @@ mix.sass('./resources/assets/scss/application.scss', 'public/css')
     .copy('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
     .copy('node_modules/tinymce/skins', 'public/components/tinymce/skins')
     .copy('node_modules/tinymce/themes', 'public/components/tinymce/themes')
-    .copy('resources/assets/img', 'public/img');
+    .copy('resources/assets/img', 'public/img')
+    .copy('resources/assets/js', 'public/js');
