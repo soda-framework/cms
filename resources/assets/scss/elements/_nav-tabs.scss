@@ -3,7 +3,7 @@
   &:after {
     content: '';
     width: 100%;
-    border-top: 2px solid $content-inner-border;
+    border-top: 2px solid #DEDEDE;
     border-top-left-radius: $border-radius-base;
     border-top-right-radius: $border-radius-base;
   }
@@ -14,8 +14,8 @@
       background-color: rgba(0, 0, 0, 0.03);
       border-width: 2px 1px;
       border-style: solid;
-      border-color: $content-inner-border $slate-095 !important;
-      border-bottom-color: $content-inner-border !important;
+      border-color: $slate-090 $slate-095 !important;
+      border-bottom-color: $slate-090 !important;
       transition: background-color .25s ease;
 
       &:hover {
@@ -27,7 +27,7 @@
       > a {
         &, &:active, &:hover, &:focus {
           border-width: 2px 1px;
-          background-color: $content-inner-background;
+          //background-color: $content-inner-background;
           border-bottom-color: transparent !important;
         }
       }

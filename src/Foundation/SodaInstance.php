@@ -115,46 +115,6 @@ class SodaInstance
     }
 
     /**
-     * Return instance of MenuBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Menu\MenuBuilder
-     */
-    public function menu()
-    {
-        return $this->laravel['soda.menu'];
-    }
-
-    /**
-     * Return instance of FormBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Forms\FormBuilder
-     */
-    public function form()
-    {
-        return $this->laravel['soda.form'];
-    }
-
-    /**
-     * Return instance of DashboardBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Dashboard\DashboardBuilder
-     */
-    public function dashboard()
-    {
-        return $this->laravel['soda.dashboard'];
-    }
-
-    /**
-     * Return instance of BreadcrumbdBuilder.
-     *
-     * @return \Soda\Cms\FrontendBuilder\Breadcrumb\BreadcrumbdBuilder
-     */
-    public function breadcrumbd()
-    {
-        return $this->laravel['soda.breadcrumbd'];
-    }
-
-    /**
      * Load a dynamic page.
      *
      * @param      $table
@@ -176,18 +136,6 @@ class SodaInstance
     public function dynamicBlock($table)
     {
         return (new DynamicBlock)->fromTable($table);
-    }
-
-    /**
-     * Build a FormField from array or Field model.
-     *
-     * @param $field
-     *
-     * @return mixed
-     */
-    public function field($field)
-    {
-        return $this->form()->field($field);
     }
 
     public function noPermission()

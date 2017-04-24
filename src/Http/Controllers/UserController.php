@@ -15,6 +15,9 @@ class UserController extends BaseController
     {
         $this->users = $users;
 
+        app('soda.interface')->setHeading('Users')->setHeadingIcon('mdi mdi-account-circle');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+
         $this->middleware('soda.permission:view-users');
         $this->middleware('soda.permission:create-users')->only(['create', 'store']);
         $this->middleware('soda.permission:edit-users')->only(['edit', 'update']);
@@ -40,6 +43,9 @@ class UserController extends BaseController
      */
     public function create(Request $request)
     {
+        app('soda.interface')->setHeading('New User');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.users.index'), 'Users');
+
         try {
             $user = $this->users->newInstance($request);
             $roleIds = $this->users->getRoles();
@@ -87,6 +93,9 @@ class UserController extends BaseController
         if (! $user) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'user']));
         }
+
+        app('soda.interface')->setHeading($user->username);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.users.index'), 'Users');
 
         return soda_cms_view('data.users.view', compact('user', 'roleIds'));
     }

@@ -1,23 +1,8 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <li><a href="{{ route('soda.home') }}">Home</a></li>
-    <li><a href="{{ route('soda.roles.index') }}">Roles</a></li>
-    <li class="active">{{ $role->id ? $role->display_name : 'New Role' }}</li>
-@stop
-
-@section('head.title')
-    <title>{{ $role->id ? 'Edit' : 'New' }} Role :: Soda CMS</title>
-@endsection
-
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#role-form'])
 @stop
-
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'mdi mdi-account-card-details',
-    'title'       => $role->id ? ' Role: ' . $role->display_name : 'New Role',
-])
 
 @section('content')
     <div class="content-block">
@@ -25,22 +10,22 @@
             {!! csrf_field() !!}
             {!! method_field($role->id ? 'PUT' : 'POST') !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 "name"        => "Name",
                 "field_name"  => 'name',
             ])->setModel($role) !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 "name"        => "Display Name",
                 "field_name"  => 'display_name',
             ])->setModel($role) !!}
 
-            {!! SodaForm::textarea([
+            {!! app('soda.form')->textarea([
                 "name"        => "Description",
                 "field_name"  => 'description',
             ])->setModel($role) !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 "name"         => "Level",
                 "field_name"   => 'level',
                 "description"  => 'Access level for role. Users cannot modify users or roles of another user or role if its level is higher than their own.',
@@ -85,7 +70,7 @@
                     </div>
                 </fieldset>
             @else
-                {!! SodaForm::static_text([
+                {!! app('soda.form')->static_text([
                     "name"         => "Permissions",
                     "field_name"   => 'permission_id',
                     "value"        => '<ul class="list-inline"><li style="width:33%">' . implode('</li><li style="width:33%">', $role->permissions->pluck('display_name')->toArray()) . '</li></ul>',

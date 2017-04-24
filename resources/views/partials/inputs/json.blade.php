@@ -11,7 +11,7 @@
 		var json_field = $("#{{ $field_id }}");
 		var json = json_field.val();
 		var editor = new JSONEditor(container[0], {
-			{!! Soda::form()->buildJsParams($field_parameters) !!}
+			{!! app('soda.form')->buildJsParams($field_parameters) !!}
 		});
 		editor.setText(json);
 

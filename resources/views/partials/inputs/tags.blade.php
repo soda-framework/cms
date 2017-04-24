@@ -16,7 +16,7 @@
                 tags: true,
                 multiple: true,
                 dropdownCssClass: 'hide',
-                {!! Soda::form()->buildJsParams($field_parameters['settings']) !!}
+                {!! app('soda.form')->buildJsParams($field_parameters['settings']) !!}
             });
         });
     </script>

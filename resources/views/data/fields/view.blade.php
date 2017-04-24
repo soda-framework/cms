@@ -25,38 +25,38 @@
             {!! csrf_field() !!}
             {!! method_field($field->id ? 'PUT' : 'POST') !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 'name'        => 'Field Label',
                 'field_name'  => 'name',
                 'description' => 'Label of the field, visible when entering forms'
             ])->setModel($field) !!}
 
-            {!! SodaForm::dropdown([
+            {!! app('soda.form')->dropdown([
                 'name'         => 'Field Type',
                 'field_name'   => 'field_type',
                 'field_params' => ['options' => $fieldTypes],
                 'description'  => 'Type of field to be used'
             ])->setModel($field) !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 'name'         => 'Field Default Value',
                 'field_name'   => 'value',
                 'description'  => 'Default value for field'
             ])->setModel($field) !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 'name'        => 'Field Name',
                 'field_name'  => 'field_name',
                 'description' => 'Name of the field, used when accessing models'
             ])->setModel($field) !!}
 
-            {!! SodaForm::textarea([
+            {!! app('soda.form')->textarea([
                 'name'        => 'Field Description',
                 'field_name'  => 'description',
                 'description'  => 'Informative text to guide users when inputting this field'
             ])->setModel($field) !!}
 
-            {!! SodaForm::json([
+            {!! app('soda.form')->json([
                 'name'        => 'Field Parameters',
                 'field_name'  => 'field_params',
                 'description'  => 'Parameters for the field'

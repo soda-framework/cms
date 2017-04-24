@@ -1,4 +1,5 @@
 <?php
+
 $smallView = false;
 if ($page->type === null || $page->type->fields === null || !count($page->type->fields->where('pivot.show_in_table', 1))) {
     $smallView = true;
@@ -12,51 +13,35 @@ if ($page->type && $page->type->blockTypes) {
 
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <li><a href="{{ route('soda.home') }}">Home</a></li>
-    <li><a href="{{ route('soda.pages.index') }}">Pages</a></li>
-    <li class="active">{{ $page->name ? $page->name : 'New ' . ($page->type ? $page->type->name . " Page" : "Page") }}</li>
-@stop
-
-@section('head.title')
-    <title>{{ $page->id ? 'Edit' : 'New' }} Page :: Soda CMS</title>
-@endsection
-
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-form'])
 @stop
 
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'mdi mdi-file-outline',
-    'title'       => $page->name ? ' Page: ' . $page->name : 'New Page',
-    'description' => $page->description,
-])
-
 @section('settings.basic')
     <div class="content-block">
-        {!! SodaForm::text([
+        {!! app('soda.form')->text([
             "name"        => "Name",
             "description" => "The name of this page",
             "field_name"  => 'name',
-        ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
+        ])->setModel($page) !!}
 
-        {!! SodaForm::slug([
+        {!! app('soda.form')->slug([
             'name'        => 'Slug',
             'description' => 'The url of this page',
             'field_name'  => 'slug',
             'field_params' => [
                 'prefix' => ($page->parent_id !== null && $parent = $page->getParent()) ? $parent->slug : '',
             ],
-        ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
+        ])->setModel($page) !!}
 
-        {!! SodaForm::toggle([
+        {!! app('soda.form')->toggle([
             'name'         => 'Published',
             'field_name'   => 'status',
             'value'        => Soda\Cms\Foundation\Constants::STATUS_LIVE,
             'field_params' => [
                 'checked-value'   => Soda\Cms\Foundation\Constants::STATUS_LIVE,
                 'unchecked-value' => Soda\Cms\Foundation\Constants::STATUS_DRAFT],
-        ])->setLayout($smallView ? soda_cms_view_path('partials.inputs.layouts.inline') : soda_cms_view_path('partials.inputs.layouts.stacked'))->setModel($page) !!}
+        ])->setModel($page) !!}
     </div>
 @stop
 
@@ -65,7 +50,7 @@ if ($page->type && $page->type->blockTypes) {
         <p>Advanced page settings</p>
         <hr/>
 
-        {!! SodaForm::toggle([
+        {!! app('soda.form')->toggle([
             'name'         => 'Prevent delete',
             'field_name'   => 'can_delete',
             'value'        => 1,
@@ -73,7 +58,7 @@ if ($page->type && $page->type->blockTypes) {
             'description'  => 'If enabled, this page can not be deleted'
         ])->setModel($page) !!}
 
-        {!! SodaForm::toggle([
+        {!! app('soda.form')->toggle([
             'name'         => 'Allowed Children',
             'field_name'   => 'allowed_children',
             'value'        => 1,
@@ -81,33 +66,33 @@ if ($page->type && $page->type->blockTypes) {
             'description'  => 'If enabled, this page can have child pages'
         ])->setModel($page) !!}
 
-        {!! SodaForm::text([
+        {!! app('soda.form')->text([
             'name'        => null,
             'field_name'  => 'view_action',
             'value'       => $page->type && $page->type->view_action,
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group-addon')) !!}
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
-        {!! SodaForm::dropdown([
+        {!! app('soda.form')->dropdown([
             'name'        => 'View Action',
             'field_name'  => 'view_action_type',
             'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
             'description'  => 'Specifies the interface supplied when viewing this page.',
             'value'        => $page->type && $page->type->view_action_type ? $page->type->view_action_type : 'view',
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
 
-        {!! SodaForm::text([
+        {!! app('soda.form')->text([
             'name'        => null,
             'field_name'  => 'edit_action',
             'value'       => $page->type && $page->type->edit_action,
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group-addon')) !!}
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
-        {!! SodaForm::dropdown([
+        {!! app('soda.form')->dropdown([
             'name'        => 'Edit Action',
             'field_name'  => 'edit_action_type',
             'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
             'description'  => 'Specifies the interface supplied when editing this page.',
             'value'        => $page->type && $page->type->edit_action_type ? $page->type->edit_action_type : 'view',
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.inline-group')) !!}
+        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
     </div>
 @stop
 
@@ -163,7 +148,7 @@ if ($page->type && $page->type->blockTypes) {
                             @endif
                             @if($page->type && $page->type->fields)
                                 @foreach($page->type->fields->where('pivot.show_in_table', 1) as $field)
-                                    {!! SodaForm::field($field)->setModel($page->pageAttributes())->setPrefix('settings') !!}
+                                    {!! app('soda.form')->field($field)->setModel($page->pageAttributes())->setPrefix('settings') !!}
                                 @endforeach
                             @endif
                         </div>
@@ -226,20 +211,20 @@ if ($page->type && $page->type->blockTypes) {
                     <form method="POST" action="{{ route('soda.pages.blocks.attach', $page->id) }}">
                         {!! csrf_field() !!}
                         <div class="modal-body">
-                            {!! SodaForm::dropdown([
+                            {!! app('soda.form')->dropdown([
                                 "name"         => "Blocks",
                                 "field_name"   => 'block_id',
                                 "field_params" => ['options' => $blockTypes->pluck('name', 'id')]
                             ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
 
                             @permission("manage-block-types")
-                            {!! SodaForm::text([
+                            {!! app('soda.form')->text([
                                 "name"        => "Max Blocks",
                                 "field_name"  => "max_blocks",
                                 "description" => "Defines the maximum number of rows this block can hold. Default: unlimited"
                             ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
 
-                            {!! SodaForm::text([
+                            {!! app('soda.form')->text([
                                 "name"        => "Min Blocks",
                                 "field_name"  => "min_blocks",
                                 "description" => "Defines the minimum number of rows this block can hold. Default: unlimited"

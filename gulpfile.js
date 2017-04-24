@@ -19,7 +19,8 @@ elixir(function(mix) {
     mix.sass('application.scss')
         .sass('bootstrap.scss')
         .sass('fonts.scss')
-        .sass('plugins.scss');
+        .sass('plugins.scss')
+        .sass('themes/lime.scss', 'public/css/themes');
 /*
     mix.scripts('application.js')
         .scripts('page-tree.js')

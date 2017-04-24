@@ -1,23 +1,8 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <li><a href="{{ route('soda.home') }}">Home</a></li>
-    <li><a href="{{ route('soda.permissions.index') }}">Permissions</a></li>
-    <li class="active">{{ $permission->id ? $permission->display_name : 'New Permission' }}</li>
-@stop
-
-@section('head.title')
-    <title>{{ $permission->id ? 'Edit' : 'New' }}  Permission :: Soda CMS</title>
-@endsection
-
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#permission-form'])
 @stop
-
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'mdi mdi-key-variant',
-    'title'       => $permission->id ? ' Permission: ' . $permission->display_name : 'New Permission',
-])
 
 @section('content')
     <div class="content-block">
@@ -25,23 +10,23 @@
             {!! csrf_field() !!}
             {!! method_field($permission->id ? 'PUT' : 'POST') !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 "name"        => "Name",
                 "field_name"  => 'name',
             ])->setModel($permission) !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 "name"        => "Display Name",
                 "field_name"  => 'display_name',
             ])->setModel($permission) !!}
 
-            {!! SodaForm::textarea([
+            {!! app('soda.form')->textarea([
                 "name"        => "Description",
                 "field_name"  => 'description',
             ])->setModel($permission) !!}
 
             @permission('assign-role-permissions')
-                {!! SodaForm::multiselect([
+                {!! app('soda.form')->multiselect([
                     "name"         => "Roles",
                     "field_name"   => 'role_id',
                     "value"        => $permission->roles->where('level', '<', Auth::user()->getLevel())->pluck('id')->toArray(),
@@ -56,7 +41,7 @@
                     <input type="hidden" name="role_id[]" value="{{ $hiddenRoleInput }}" />
                 @endforeach
             @else
-                {!! SodaForm::static_text([
+                {!! app('soda.form')->static_text([
                     "name"         => "Roles",
                     "field_name"   => 'role_id',
                     "value"        => implode(', ', $permission->roles->pluck('display_name')->toArray()),

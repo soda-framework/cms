@@ -1,20 +1,12 @@
 .btn {
-  border-radius: $border-radius-base;
-  border: none;
-  border-bottom: 3px solid rgba(0, 0, 0, 0.1);// !important;
   transition: background-color 0.25s ease;
-
-  @media(max-width: $screen-sm-max) {
-    &.btn-lg {
-      padding: 8px 12px;
-      font-size: 16px;
-    }
-  }
+  border: 0;
+  border-radius: 20px;
 }
 
 .btn-lg {
   font-size: 16px;
-  padding: 12px 18px;
+  border-radius: 35px;
 }
 
 .btn-dropdown {
@@ -41,6 +33,17 @@
     }
   }
 }
+
+.btn {
+  span, i {
+    vertical-align: middle;
+  }
+  .fa {
+    position: relative;
+    top: 1px;
+  }
+}
+
 
 .input-group-btn {
   .btn {

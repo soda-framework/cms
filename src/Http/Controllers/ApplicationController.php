@@ -14,6 +14,8 @@ class ApplicationController extends BaseController
     {
         $this->applications = $applications;
 
+        app('soda.interface')->setHeading('Application')->setHeadingIcon('mdi mdi-lock-pattern');
+
         $this->middleware('soda.permission:view-application-settings')->only(['edit']);
         $this->middleware('soda.permission:edit-application-settings')->only(['update']);
         //$this->middleware('soda.permission:create-applications')->only(['create', 'store']);

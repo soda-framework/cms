@@ -1,23 +1,8 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <li><a href="{{ route('soda.home') }}">Home</a></li>
-    <li><a href="{{ route('soda.users.index') }}">Users</a></li>
-    <li class="active">{{ $user->name ? $user->name : 'New User' }}</li>
-@stop
-
-@section('head.title')
-    <title>{{ $user->id ? 'Edit' : 'New' }} User :: Soda CMS</title>
-@endsection
-
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#user-form'])
 @stop
-
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'mdi mdi-account-circle',
-    'title'       => $user->username ? ' User: ' . $user->username : 'New User',
-])
 
 @section('content')
     <div class="content-block">
@@ -25,18 +10,18 @@
             {!! csrf_field() !!}
             {!! method_field($user->id ? 'PUT' : 'POST') !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 "name"        => "Username",
                 "field_name"  => 'username',
             ])->setModel($user) !!}
 
-            {!! SodaForm::text([
+            {!! app('soda.form')->text([
                 "name"        => "Email",
                 "field_name"  => 'email',
             ])->setModel($user) !!}
 
             @if($user->getLevel() < \Auth::user()->getLevel())
-                {!! SodaForm::multiselect([
+                {!! app('soda.form')->multiselect([
                     "name"         => "Role",
                     "field_name"   => 'role_id',
                     "value"        => $user->roles->pluck('id')->toArray(),
@@ -47,7 +32,7 @@
                     ]
                 ])->setModel($user) !!}
             @elseif(!$user->id)
-                {!! SodaForm::multiselect([
+                {!! app('soda.form')->multiselect([
                     "name"         => "Role",
                     "field_name"   => 'role_id',
                     "value"        => $user->roles->pluck('id')->toArray(),
@@ -58,7 +43,7 @@
                     ]
                 ])->setModel($user) !!}
             @else
-                {!! SodaForm::static_text([
+                {!! app('soda.form')->static_text([
                     "name"         => "Role",
                     "field_name"   => 'role_id',
                     "value"        => $user->roles->implode('display_name', ', '),
@@ -69,12 +54,12 @@
             <hr />
             <br />
 
-            {!! SodaForm::password([
+            {!! app('soda.form')->password([
                 "name"        => "Password",
                 "field_name"  => 'password',
             ]) !!}
 
-            {!! SodaForm::password([
+            {!! app('soda.form')->password([
                 "name"        => "Password Confirmation",
                 "field_name"  => 'password_confirmation',
             ]) !!}

@@ -1,5 +1,4 @@
 
-
 .mobile-header {
   display: none;
   margin-bottom: 0;
@@ -20,15 +19,45 @@
   }
 
   .soda-logo-block {
+    display: block;
+    width: 100%;
+    height: $navbar-height;
+    > svg, > img {
+      padding: 20px 80px;
+      max-height: $navbar-height;
+      max-width: 100%;
+    }
   }
 
   .navbar-header {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    left: 0;
+    right: 0;
+    top: 0;
   }
 
+  .navbar-left, .navbar-right {
+    margin-top: 0;
+    margin-bottom: 0;
+    > li > a {
+      padding-top: ($navbar-height - $line-height-computed) / 2;
+      padding-bottom: ($navbar-height - $line-height-computed) / 2;
+    }
+  }
+
+  .navbar-left {
+    float: left !important;
+    margin-left: -$navbar-padding-horizontal;
+  }
+
+  .navbar-right {
+    float: right !important;
+    margin-right: -$navbar-padding-horizontal;
+
+    ~ .navbar-right {
+      margin-right: 0;
+    }
+  }
 
   @media(max-width: $screen-sm-max) {
     .navbar-nav {
@@ -83,22 +112,22 @@
 .content-navbar {
   margin-left: -15px;
   margin-right: -15px;
-  border: 0;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
-  background-color: $slate-100;
-  border-radius: 0;
+  border-width: 0;
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 0 !important;
   transform: translateX(0px);
   transition: transform 0.25s ease-in-out;
   z-index: 5;
 
   @media(max-width: $screen-sm-max) {
-    min-height: $navbar-height * .66666;
+    display: none;
+    //min-height: $navbar-height * .66666;
   }
 
   .dropdown-menu {
     border: 0;
     margin-top: 1px !important;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   }
 
   .navbar-nav {
@@ -111,7 +140,7 @@
       > a {
 
         &, &:focus, &:hover {
-          background-color: rgba(0,0,0,0.05);
+          background-color: rgba(0, 0, 0, 0.05);
         }
       }
     }
@@ -126,7 +155,6 @@
       > li {
         float: left;
         background-color: #fff;
-        border: 1px solid $content-inner-border;
         border-radius: 5px;
         padding: 8px 14px;
         margin: 11px 10px 12px 0;
@@ -151,34 +179,6 @@
             line-height: $navbar-height * .66666;
           }
         }
-      }
-    }
-  }
-}
-
-.navbar {
-  .navbar-left {
-    float: left !important;
-    margin-left: -$navbar-padding-horizontal;
-  }
-
-  .navbar-right {
-    float: right !important;
-    margin-right: -$navbar-padding-horizontal;
-
-    ~ .navbar-right {
-      margin-right: 0;
-    }
-  }
-
-  @media(max-width: $screen-sm-max) {
-    .navbar-nav {
-      margin-top: 0;
-      margin-bottom: 0;
-
-      > li > a {
-        padding-top: 20px;
-        padding-bottom: 20px;
       }
     }
   }

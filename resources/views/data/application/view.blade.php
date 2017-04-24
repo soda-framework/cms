@@ -1,31 +1,18 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <li><a href="{{ route('soda.home') }}">Home</a></li>
-    <li class="active">Application</li>
-@stop
-
-@section('head.title')
-    <title>Application :: Soda CMS</title>
-@endsection
-
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#application-form'])
 @stop
 
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'mdi mdi-lock-pattern',
-    'title'       => 'Application',
-])
 @section('tab.settings')
-    {!! SodaForm::text([
+    {!! app('soda.form')->text([
         "name"        => "Name",
         "description" => "The name of the application",
         "field_name"  => 'name',
     ])->setModel($application) !!}
 
     @permission('manage-application-urls')
-    {!! SodaForm::tags([
+    {!! app('soda.form')->tags([
         "name"         => "Application URLs",
         "description"  => "URLs that may be used to access the application",
         "field_name"   => 'application_urls',
@@ -33,7 +20,7 @@
         "value"        => $application->urls->pluck('domain', 'domain')->toArray()
     ]) !!}
     @else
-        {!! SodaForm::static_text([
+        {!! app('soda.form')->static_text([
             "name"         => "Application URLs",
             "description"  => "URLs that may be used to access the application",
             "field_name"   => 'application_urls',
@@ -85,7 +72,7 @@
                                         @yield('tab.settings')
                                     @endif
                                     @foreach($settings as $setting)
-                                        {!! SodaForm::field($setting, 'settings')->setModel($setting) !!}
+                                        {!! app('soda.form')->field($setting, 'settings')->setModel($setting) !!}
                                     @endforeach
                                 </div>
                             </div>

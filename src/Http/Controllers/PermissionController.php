@@ -15,6 +15,9 @@ class PermissionController extends BaseController
     {
         $this->permissions = $permissions;
 
+        app('soda.interface')->setHeading('Permissions')->setHeadingIcon('mdi mdi-key-variant');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+
         $this->middleware('soda.permission:view-permissions');
         $this->middleware('soda.permission:create-permissions')->only(['create', 'store']);
         $this->middleware('soda.permission:edit-permissions')->only(['edit', 'update']);
@@ -40,6 +43,9 @@ class PermissionController extends BaseController
      */
     public function create(Request $request)
     {
+        app('soda.interface')->setHeading('New Permission');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.permissions.index'), 'Permissions');
+
         try {
             $permission = $this->permissions->newInstance($request);
             $roleIds = $this->permissions->getRoles();
@@ -83,6 +89,9 @@ class PermissionController extends BaseController
         if (! $permission) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'permission']));
         }
+
+        app('soda.interface')->setHeading($permission->display_name);
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.permissions.index'), 'Permissions');
 
         return soda_cms_view('data.permissions.view', compact('permission', 'roleIds'));
     }

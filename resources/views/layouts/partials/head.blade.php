@@ -5,7 +5,8 @@
 @stop
 
 @section('head.title')
-    <title>Soda CMS</title>
+    <?php $pageTitle = app('soda.interface')->getTitle(); ?>
+    <title>{{ $pageTitle ? $pageTitle . ' :: ' : '' }}Soda CMS</title>
 @stop
 
 @section('head.meta')
@@ -15,6 +16,8 @@
 @stop
 
 @section('head.css')
+    <link href="/soda/cms/css/bootstrap.css" rel="stylesheet" media="all">
+
     <!-- Styles -->
     @if(!Soda::getApplication()->css_url || Soda::getApplication()->append_css)
         <link href="/soda/cms/css/application.css" rel="stylesheet" media="all">
@@ -24,8 +27,6 @@
     @endif
 
     <link href="/soda/cms/css/fonts.css" rel="stylesheet" media="all">
-    <link href="/soda/cms/css/bootstrap.css" rel="stylesheet" media="all">
-    <link href="/soda/cms/css/application.css" rel="stylesheet" media="all">
     <link href="/soda/cms/css/plugins.css" rel="stylesheet" media="all">
 @stop
 
