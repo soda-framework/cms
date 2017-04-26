@@ -1,2 +1,2 @@
-var moment = require('moment/moment')
+window.moment = require('moment/moment')
 require('eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker')

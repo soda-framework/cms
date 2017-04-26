@@ -1,6 +1,10 @@
 const { mix } = require('laravel-mix');
 let webpack = require('webpack');
 
+mix.options({processCssUrls: false}); //prevents copying of fonts/images, which we currently do manually
+mix.setPublicPath('public');
+mix.setResourceRoot('resources/assets');
+
 mix.webpackConfig({
     externals: {
         // require("jquery") is external and available
@@ -9,8 +13,7 @@ mix.webpackConfig({
     },
     plugins: [
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new webpack.IgnorePlugin(/^brace$/, /jsoneditor$/),
-        new webpack.IgnorePlugin(/^ajv/, /jsoneditor$/)
+        new webpack.IgnorePlugin(/^brace$/, /jsoneditor/),
     ],
     module: {
         loaders: [
@@ -56,13 +59,13 @@ mix.sass('resources/assets/scss/application.scss', 'public/css')
     .js('resources/assets/js/forms/multiselect.js', 'public/js/forms')
     .js('resources/assets/js/forms/json.js', 'public/js/forms')
     .js('resources/assets/js/forms/slugs.js', 'public/js/forms')
-    .copy('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
-    .copy('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
-    .copy('node_modules/mdi/fonts', 'public/fonts/mdi')
-    .copy('node_modules/bootstrap-fileinput/img', 'public/components/bootstrap-fileinput/img')
-    .copy('node_modules/jsoneditor/dist/img', 'public/components/jsoneditor/img')
-    .copy('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
-    .copy('node_modules/tinymce/skins', 'public/components/tinymce/skins')
-    .copy('node_modules/tinymce/themes', 'public /components/tinymce/themes')
-    .copy('resources/assets/img', 'public/img')
-    .copy('resources/assets/js', 'public/js');
+    .copyDirectory('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
+    .copyDirectory('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
+    .copyDirectory('node_modules/mdi/fonts', 'public/fonts/mdi')
+    .copyDirectory('node_modules/bootstrap-fileinput/img', 'public/components/bootstrap-fileinput/img')
+    .copyDirectory('node_modules/jsoneditor/dist/img', 'public/components/jsoneditor/img')
+    .copyDirectory('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
+    .copyDirectory('node_modules/tinymce/skins', 'public/components/tinymce/skins')
+    .copyDirectory('node_modules/tinymce/themes', 'public/components/tinymce/themes')
+    .copyDirectory('resources/assets/img', 'public/img')
+    .copyDirectory('resources/assets/js', 'public/js');

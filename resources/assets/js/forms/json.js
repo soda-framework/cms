@@ -1,1 +1,1 @@
-require('jsoneditor');
+window.JSONEditor = require('jsoneditor');
