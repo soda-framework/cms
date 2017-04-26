@@ -30,7 +30,7 @@
 @stop
 
 @section('content')
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-pills" role="tablist">
         @if(!isset($settingsByCategory['Settings']))
         <li role='presentation' aria-controls="tab_settings">
             <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
@@ -86,11 +86,4 @@
     <div class="content-bottom">
         @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#settings-form'])
     </div>
-@stop
-
-@section('footer.js')
-    @parent
-    <script>
-        $('.nav-tabs a[data-toggle="tab"]').first().tab('show');
-    </script>
 @stop

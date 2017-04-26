@@ -30,7 +30,7 @@ class InterfaceBuilderServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('soda.interface', function ($app) {
-            return new Core($this->app['soda.menu'], $this->app['soda.breadcrumb']);
+            return new Core($this->app['soda.menu'], $this->app['soda.breadcrumb'], $this->app['soda.dashboard']);
         });
     }
 

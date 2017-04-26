@@ -8,3 +8,5 @@ stubs/theme/resources/components/
 .idea/**
 
 .php_cs.cache
+
+\.DS_Store

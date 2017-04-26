@@ -16,7 +16,7 @@ class MenuBuilder
      *
      * @param $name
      *
-     * @return array|\Soda\Cms\Foundation\Menu\Menu
+     * @return array|\Soda\Cms\InterfaceBuilder\Menu\Menu
      */
     public function menu($name, $callback)
     {

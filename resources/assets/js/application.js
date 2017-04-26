@@ -10,6 +10,25 @@ var Soda = (function () {
         sidebar: '.sidebar'
     };
 
+    var colours = {
+        default: {
+            primary: "#242932",
+            secondary: "#2f343f"
+        },
+        lime: {
+            primary: "#69E815",
+            secondary: "#D685"
+        },
+        strawberry: {
+            primary: "#F75F86",
+            secondary: "#EE25AF"
+        },
+        grape: {
+            primary: "#8125EE",
+            secondary: "#607EEE"
+        },
+    }
+
     var _log = function (message) {
         if(_debug === true) {
             console.log(message);
@@ -184,6 +203,7 @@ var Soda = (function () {
     }
 
     return {
+        colours: colours,
         initialize: initialize,
         confirmDelete: confirmDelete,
         changePosition: changePosition,

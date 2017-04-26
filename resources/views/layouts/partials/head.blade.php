@@ -28,7 +28,7 @@
 
     <link href="/soda/cms/css/fonts.css" rel="stylesheet" media="all">
     <link href="/soda/cms/css/plugins.css" rel="stylesheet" media="all">
-    <link href="/soda/cms/css/themes/default.css" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/themes/grape.css" rel="stylesheet" media="all">
 @stop
 
 @section('head.js')
@@ -40,6 +40,7 @@
             Soda.urls = {
                 sort: '{{ route('soda.sort') }}',
             };
+            Soda.theme = 'grape';
             return Soda;
         })(Soda || {});
     </script>

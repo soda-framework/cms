@@ -1,0 +1,14 @@
+{
+  "/mix.js": "/mix.js",
+  "/public/css/application.css": "/public/css/application.css",
+  "/public/css/bootstrap.css": "/public/css/bootstrap.css",
+  "/public/css/fonts.css": "/public/css/fonts.css",
+  "/public/css/plugins.css": "/public/css/plugins.css",
+  "/public/css/themes/default.css": "/public/css/themes/default.css",
+  "/public/css/themes/lime.css": "/public/css/themes/lime.css",
+  "/public/css/themes/strawberry.css": "/public/css/themes/strawberry.css",
+  "/public/css/themes/grape.css": "/public/css/themes/grape.css",
+  "public/js/core.js": "public/js/core.js",
+  "public/js/forms/sortable.js": "public/js/forms/sortable.js",
+  "public/js/forms/dates.js": "public/js/forms/dates.js"
+}

@@ -1,0 +1,15 @@
+.soda-login__logo {
+  svg {
+    path {
+      fill: $primary;
+    }
+  }
+}
+
+.soda-login__button-container {
+  button {
+    &:hover, &:active, &:focus {
+      background-color: $primary;
+    }
+  }
+}
