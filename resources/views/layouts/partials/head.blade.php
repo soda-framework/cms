@@ -1,3 +1,5 @@
+<?php $currentCmsTheme = 'default'; ?>
+
 @section('head.main')
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,7 +30,7 @@
 
     <link href="/soda/cms/css/fonts.css" rel="stylesheet" media="all">
     <link href="/soda/cms/css/plugins.css" rel="stylesheet" media="all">
-    <link href="/soda/cms/css/themes/grape.css" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/themes/{{ $currentCmsTheme }}.css" rel="stylesheet" media="all">
 @stop
 
 @section('head.js')
@@ -40,7 +42,7 @@
             Soda.urls = {
                 sort: '{{ route('soda.sort') }}',
             };
-            Soda.theme = 'grape';
+            Soda.theme = '{{ $currentCmsTheme }}';
             return Soda;
         })(Soda || {});
     </script>

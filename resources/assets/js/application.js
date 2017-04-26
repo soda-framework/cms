@@ -1,5 +1,5 @@
 // https://toddmotto.com/mastering-the-module-pattern/
-var Soda = (function () {
+window.Soda = (function () {
     var _initialized = false;
     var _debug = false;
 

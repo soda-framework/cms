@@ -1,4 +1,7 @@
 {
+  "/public/js/forms/json.js": "/public/js/forms/json.js",
+  "/public/js/forms/tinymce.js": "/public/js/forms/tinymce.js",
+  "/public/js/forms/sortable.js": "/public/js/forms/sortable.js",
   "/mix.js": "/mix.js",
   "/public/css/application.css": "/public/css/application.css",
   "/public/css/bootstrap.css": "/public/css/bootstrap.css",
@@ -8,7 +11,12 @@
   "/public/css/themes/lime.css": "/public/css/themes/lime.css",
   "/public/css/themes/strawberry.css": "/public/css/themes/strawberry.css",
   "/public/css/themes/grape.css": "/public/css/themes/grape.css",
-  "public/js/core.js": "public/js/core.js",
-  "public/js/forms/sortable.js": "public/js/forms/sortable.js",
-  "public/js/forms/dates.js": "public/js/forms/dates.js"
+  "/public/js/core.js": "/public/js/core.js",
+  "/public/js/forms/upload.js": "/public/js/forms/upload.js",
+  "/public/js/forms/dates.js": "/public/js/forms/dates.js",
+  "/public/js/forms/multiselect.js": "/public/js/forms/multiselect.js",
+  "/public/js/wave.js": "/public/js/wave.js",
+  "/public/js/page-tree.js": "/public/js/page-tree.js",
+  "/public/js/forms/slugs.js": "/public/js/forms/slugs.js",
+  "/public/js/application.js": "/public/js/application.js"
 }

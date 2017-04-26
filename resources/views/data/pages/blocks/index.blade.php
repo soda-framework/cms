@@ -47,7 +47,6 @@
 
 @permission('detach-blocks')
     <a data-delete-button class="btn btn-warning btn-lg" href="{{ route('soda.pages.blocks.detach', [$page->id, $blockType->id]) }}">
-        <i class="fa fa-remove"></i>
         <span>Detach</span>
     </a>
 @endpermission
