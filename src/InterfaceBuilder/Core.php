@@ -13,13 +13,13 @@ class Core
     protected $headingIcon;
     protected $description;
 
-    protected $menu;
+    protected $menuBuilder;
     protected $breadcrumbs;
     protected $dashboard;
 
-    public function __construct(MenuBuilder $menu, BreadcrumbBuilder $breadcrumbs)
+    public function __construct(MenuBuilder $menuBuilder, BreadcrumbBuilder $breadcrumbs)
     {
-        $this->menu = $menu;
+        $this->menuBuilder = $menuBuilder;
         $this->breadcrumbs = $breadcrumbs;
     }
 
@@ -106,9 +106,9 @@ class Core
     /**
      * @return Menu
      */
-    public function menu()
+    public function menuBuilder()
     {
-        return $this->menu;
+        return $this->menuBuilder;
     }
 
     /**

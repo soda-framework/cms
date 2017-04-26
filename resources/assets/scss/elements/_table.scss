@@ -23,15 +23,6 @@
   border-radius: 5px;
   overflow: hidden;
 
-  .nav-pills {
-    background-color: $slate-095;
-
-    > li > a {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-
   .tab-content {
     border: 1px solid $slate-095;
     border-top: none;

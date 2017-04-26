@@ -90,7 +90,7 @@ class BlockTypeController extends BaseController
         app('soda.interface')->setHeading($blockType->name);
         app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), 'Block Types');
 
-        return soda_cms_view('data.blocks.types.view', compact('blockType', 'fields'));
+        return soda_cms_view('data.block-types.view', compact('blockType', 'fields'));
     }
 
     /**

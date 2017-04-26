@@ -15,10 +15,10 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
         Route::post('sort', 'Api\SortController@sort')->name('soda.sort')->middleware('soda.permission:access-cms');
         Route::get('toggle-draft', 'HomeController@getToggleDraft')->name('soda.toggle-draft')->middleware('soda.permission:view-drafts');
 
-        Route::get('applications', 'ApplicationController@index')->name('soda.application.index')->middleware('soda.permission:view-applications');
-        Route::group(['prefix' => 'application'], function () {
-            Route::get('edit/{id?}', 'ApplicationController@edit')->name('soda.application.edit');
-            Route::put('edit/{id?}', 'ApplicationController@update')->name('soda.application.update');
+        Route::get('settings', 'SettingsController@index')->name('soda.settings.index')->middleware('soda.permission:view-applications');
+        Route::group(['prefix' => 'settings'], function () {
+            Route::get('edit/{id?}', 'SettingsController@edit')->name('soda.settings.edit');
+            Route::put('edit/{id?}', 'SettingsController@update')->name('soda.settings.update');
         });
 
         Route::resource('pages', 'PageController', [

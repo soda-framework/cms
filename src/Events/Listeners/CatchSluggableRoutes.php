@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\RouteAction;
 use Illuminate\Session\SessionManager;
 use Illuminate\Routing\Events\RouteMatched;
-use Soda\Cms\Support\Facades\RequestMatcher;
 use Illuminate\Contracts\Encryption\Encrypter;
 
 class CatchSluggableRoutes
@@ -38,7 +37,7 @@ class CatchSluggableRoutes
                 $this->startSession($event->request)
             );
 
-            $action = RequestMatcher::match($event->request);
+            $action = app('soda.request-matcher')->match($event->request);
 
             $event->route->setAction(array_merge(RouteAction::parse($event->route->uri, $action), ['middleware' => 'soda.sluggable-web']));
         }

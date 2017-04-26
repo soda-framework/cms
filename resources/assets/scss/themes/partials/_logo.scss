@@ -1,0 +1,13 @@
+.soda-logo-block {
+  svg {
+    fill: $logo-color;
+  }
+}
+
+.mobile-header {
+  .soda-logo-block {
+    > svg {
+      fill: $mobile-logo-color;
+    }
+  }
+}

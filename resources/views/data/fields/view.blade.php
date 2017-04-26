@@ -1,23 +1,8 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
-@section('breadcrumb')
-    <li><a href="{{ route('soda.home') }}">Home</a></li>
-    <li><a href="{{ route('soda.fields.index') }}">Fields</a></li>
-    <li class="active">{{ $field->name ? $field->name : 'New Field' }}</li>
-@stop
-
-@section('head.title')
-    <title>{{ $field->id ? 'Edit' : 'New' }} Field :: Soda CMS</title>
-@endsection
-
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#field-form'])
 @stop
-
-@include(soda_cms_view_path('partials.heading'), [
-    'icon'        => 'mdi mdi-paperclip',
-    'title'       => $field->name? ' Field: ' . $field->name : 'New Field',
-])
 
 @section('content')
     <div class="content-block">

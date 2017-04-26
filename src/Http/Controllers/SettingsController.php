@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Repositories\Contracts\ApplicationRepositoryInterface;
 
-class ApplicationController extends BaseController
+class SettingsController extends BaseController
 {
     protected $applications;
 
@@ -14,7 +14,8 @@ class ApplicationController extends BaseController
     {
         $this->applications = $applications;
 
-        app('soda.interface')->setHeading('Application')->setHeadingIcon('mdi mdi-lock-pattern');
+        app('soda.interface')->setHeading('Settings')->setHeadingIcon('mdi mdi-settings');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
 
         $this->middleware('soda.permission:view-application-settings')->only(['edit']);
         $this->middleware('soda.permission:edit-application-settings')->only(['update']);
@@ -29,7 +30,7 @@ class ApplicationController extends BaseController
      */
     public function index()
     {
-        return soda_cms_view('data.application.index', $this->applications->getFilteredGrid(10));
+        return soda_cms_view('data.settings.index', $this->applications->getFilteredGrid(10));
     }
 
     /**
@@ -44,7 +45,7 @@ class ApplicationController extends BaseController
         $application = $this->applications->getApplication($id);
         $settingsByCategory = $this->applications->getSettingsForApplication($application);
 
-        return soda_cms_view('data.application.view', compact('application', 'settingsByCategory'));
+        return soda_cms_view('data.settings.view', compact('application', 'settingsByCategory'));
     }
 
     /**
@@ -63,6 +64,6 @@ class ApplicationController extends BaseController
             return $this->handleException($e, trans('soda::errors.update', ['object' => 'application']));
         }
 
-        return redirect()->route('soda.application.edit', $application->getKey())->with('success', trans('soda::messages.updated', ['object' => 'application']));
+        return redirect()->route('soda.settings.edit', $application->getKey())->with('success', trans('soda::messages.updated', ['object' => 'application']));
     }
 }

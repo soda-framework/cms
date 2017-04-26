@@ -33,13 +33,13 @@
 
             @permission('assign-role-permissions')
                 <?php $rolePermissions = $role->permissions->pluck('id')->toArray(); ?>
-                <fieldset class="form-group form-group--inline field_level ">
+                <fieldset class="form-group form-group--stacked field_level ">
                     <div class="form-group__label">
                         <label for="field_level">Permissions</label>
                     </div>
                     <div class="form-group__element">
                         <div class="tabbed-table-container">
-                            <ul class="nav nav-pills">
+                            <ul class="nav nav-pills nav-pills--tabbed">
                                 @foreach($permissionIds as $permissionCategory => $permissions)
                                     <li role="presentation" {!! $loop->first ? 'class="active"' : '' !!}><a href="#{{ strtolower($permissionCategory) }}" data-toggle="pill">{{ $permissionCategory }}</a></li>
                                 @endforeach

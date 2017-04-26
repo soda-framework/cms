@@ -1,10 +1,9 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('content-heading-button')
-    <a class='btn btn-success btn-lg' href="{{route('soda.page-types.create')}}">
-        <i class="fa fa-plus"></i>
-        <span>Create</span>
-    </a>
+    @permission('manage-page-types')
+        @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.page-types.create')])
+    @endpermission
 @stop
 
 @section('content')

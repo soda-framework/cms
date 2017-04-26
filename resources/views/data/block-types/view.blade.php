@@ -55,7 +55,7 @@
                                     <th width="20"></th>
                                     <th>Field</th>
                                     <th width="120">Show in table</th>
-                                    <th width="175">Options</th>
+                                    <th width="192">Options</th>
                                 </tr>
                                 </thead>
                                 <tbody class="sortable" data-entityname="block-types.fields">
@@ -66,7 +66,7 @@
                                         <td>{{ $field->pivot->show_in_table ? 'Yes' : 'No' }}</td>
                                         <td>
                                             <a href='{{ route('soda.fields.edit', $field->id) }}'
-                                               class='btn btn-warning' target="_blank"><i class='fa fa-pencil'></i>
+                                               class='btn btn-warning' target="_blank">
                                                 <span>Edit</span></a>
                                             <button type="button" class="btn btn-danger"
                                                     data-detach="{{ route('soda.block-types.fields.detach', [$blockType->id, $field->id]) }}">

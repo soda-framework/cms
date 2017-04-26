@@ -24,6 +24,7 @@ use Soda\Cms\InterfaceBuilder\Menu\MenuServiceProvider;
 use Soda\Cms\InterfaceBuilder\Forms\FormServiceProvider;
 use Soda\Cms\InterfaceBuilder\InterfaceBuilderServiceProvider;
 use Soda\Cms\Http\RequestMatcher\RequestMatcherServiceProvider;
+use Soda\Cms\InterfaceBuilder\Dashboard\DashboardServiceProvider;
 use Soda\Cms\InterfaceBuilder\Breadcrumb\BreadcrumbServiceProvider;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
@@ -89,6 +90,7 @@ class SodaServiceProvider extends ServiceProvider
             MenuServiceProvider::class,
             BreadcrumbServiceProvider::class,
             FormServiceProvider::class,
+            DashboardServiceProvider::class,
 
             // Plugins
             RapydServiceProvider::class,

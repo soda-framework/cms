@@ -56,11 +56,11 @@ class MenuServiceProvider extends ServiceProvider
                 'permissions' => 'access-cms',
             ]);
 
-            $menu->addItem('Application', [
-                'url'         => route('soda.application.edit'),
-                'icon'        => 'mdi mdi-lock-pattern', //mdi-buffer
-                'label'       => 'Application',
-                'isCurrent'   => soda_request_is('application*'),
+            $menu->addItem('Settings', [
+                'url'         => route('soda.settings.edit'),
+                'icon'        => 'mdi mdi-settings', //mdi-lock-pattern mdi-buffer
+                'label'       => 'Settings',
+                'isCurrent'   => soda_request_is('settings*'),
                 'permissions' => 'view-application-settings',
             ]);
 
@@ -125,22 +125,6 @@ class MenuServiceProvider extends ServiceProvider
                 'label'       => 'Permissions',
                 'isCurrent'   => soda_request_is('permissions*'),
                 'permissions' => 'view-permissions',
-            ]);
-
-            $menu->addItem('Applications', [
-                'url'         => '#',
-                'label'       => 'Applications',
-                'icon'        => 'fa fa-desktop',
-                'isCurrent'   => soda_request_is('applications*'),
-                'permissions' => 'manage-applications',
-            ]);
-
-            $menu->addItem('Application Settings', [
-                'url'         => '#',
-                'label'       => 'Application Settings',
-                'icon'        => 'fa fa-cog',
-                'isCurrent'   => soda_request_is('application-settings*'),
-                'permissions' => 'manage-applications',
             ]);
 
             return $menu;

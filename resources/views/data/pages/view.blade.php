@@ -18,7 +18,7 @@ if ($page->type && $page->type->blockTypes) {
 @stop
 
 @section('settings.basic')
-    <div class="content-block">
+    <div class="content-block {{ $smallView ? '' : 'full' }}">
         {!! app('soda.form')->text([
             "name"        => "Name",
             "description" => "The name of this page",
@@ -110,15 +110,15 @@ if ($page->type && $page->type->blockTypes) {
         <div class="row">
             <div class="{{ !$smallView ? 'col-md-9' : 'col-md-12' }} col-xs-12">
 
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-pills" role="tablist">
                     <li role='presentation' aria-controls="tab_settings">
-                        <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
+                        <a role="tab" data-toggle="pill" href="#tab_settings">Settings</a>
                     </li>
 
                     @foreach($blockTypes as $blockType)
                         @if($blockType->list_action_type == 'view')
                             <li role='presentation' aria-controls="tab_{{ strtolower($blockType->identifier) }}">
-                                <a role="tab" data-toggle="tab"
+                                <a role="tab" data-toggle="pill"
                                    href="#tab_{{ strtolower($blockType->identifier) }}">{{ $blockType->name }}</a>
                             </li>
                         @endif
@@ -126,7 +126,7 @@ if ($page->type && $page->type->blockTypes) {
 
                     @permission("advanced-pages")
                     <li role='presentation' aria-controls="tab_advanced">
-                        <a role="tab" data-toggle="tab" href="#tab_advanced">Advanced</a>
+                        <a role="tab" data-toggle="pill" href="#tab_advanced">Advanced</a>
                     </li>
                     @endpermission
 
@@ -184,7 +184,7 @@ if ($page->type && $page->type->blockTypes) {
                 </div>
             </div>
             @if(!$smallView)
-            <div class="col-md-3 col-xs-12 pull-right" style="margin-top: 42px;">
+            <div class="col-md-3 col-xs-12 pull-right">
                 @yield('settings.basic')
             </div>
             @endif

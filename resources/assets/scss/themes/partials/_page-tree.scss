@@ -1,0 +1,8 @@
+ul.page-tree {
+  .tree-item {
+    background-color: $page-tree-item-bg;
+    &:hover {
+      background-color: $page-tree-item-hover-bg;
+    }
+  }
+}

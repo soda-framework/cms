@@ -1,0 +1,20 @@
+.nav-pills {
+  padding: 3px;
+  border-radius: 5px;
+
+  &.nav-pills--tabbed {
+    padding: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    > li > a {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.tab-pane.active{
+  @extend .animated;
+  @extend .fadeInDown;
+}

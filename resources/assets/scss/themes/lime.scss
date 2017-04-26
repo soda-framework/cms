@@ -10,10 +10,24 @@ $secondary: #0BD685;
 $logo-color: $secondary;
 $mobile-logo-color: $white;
 $content-background: $white;
+
+$page-tree-item-bg: $gray-lighter;
+$page-tree-item-hover-bg: $gray-light;
 $breadcrumb-bg: transparent;
+
+/* Breadcrumb
+   ============================= */
+
 $breadcrumb-color: $text-muted;
 $breadcrumb-active-color: $secondary;
 
+/* Nav Pills
+   ============================= */
+
+$nav-pills-bg: $gray-lighter;
+$nav-pills-border-radius: 5px;
+$nav-pills-active-bg: $primary;
+$nav-pills-active-color: $white;
 
 /* SIDEBAR
    ============================= */

@@ -17,6 +17,7 @@ $image-path: $asset-path + "components/bootstrap-fileinput/img"; // bootstrap-fi
 
 $body-bg: $white;
 $font-size-base: 15px;
+$text-muted: $gray;
 
 $padding-base-vertical: 10px;
 $padding-base-horizontal: 24px;
@@ -74,6 +75,8 @@ $btn-default-color: $slate-020;
 $btn-border-radius-base: 20px;
 $btn-border-radius-large: 30px;
 
-$input-border: #DEDEDE;
+$input-bg-disabled:              $gray-lighter;
+$input-color:                    $gray-dark;
+$input-border:                   $gray-light;
 
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";

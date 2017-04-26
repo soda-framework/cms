@@ -20,9 +20,11 @@ elixir(function(mix) {
         .sass('bootstrap.scss')
         .sass('fonts.scss')
         .sass('plugins.scss')
+        .sass('themes/default.scss', 'public/css/themes')
         .sass('themes/lime.scss', 'public/css/themes');
-/*
+
     mix.scripts('application.js')
+    /*
         .scripts('page-tree.js')
         .scripts('forms/slugs.js', 'public/js/forms/slugs.js')
         .scripts([
@@ -59,8 +61,9 @@ elixir(function(mix) {
         ], 'public/js/forms/multiselect.js')
         .scripts([
             './node_modules/jsoneditor/dist/jsoneditor-minimalist.js',
-        ], 'public/js/forms/json.js');
+        ], 'public/js/forms/json.js')
 */
+    ;
     mix.copy('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
         .copy('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
         .copy('node_modules/mdi/fonts', 'public/fonts/mdi')

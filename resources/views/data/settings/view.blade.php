@@ -1,7 +1,7 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('content-heading-button')
-    @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#application-form'])
+    @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#settings-form'])
 @stop
 
 @section('tab.settings')
@@ -46,7 +46,7 @@
         @endforeach
     </ul>
 
-    <form method="POST" id="application-form" action="{{ route('soda.application.update', $application->id) }}" enctype="multipart/form-data">
+    <form method="POST" id="settings-form" action="{{ route('soda.settings.update', $application->id) }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         {!! method_field('PUT') !!}
 
@@ -84,7 +84,7 @@
     </form>
 
     <div class="content-bottom">
-        @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#application-form'])
+        @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#settings-form'])
     </div>
 @stop
 

@@ -122,7 +122,7 @@ class PageBlockController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => 'block']));
         }
 
-        app('soda.interface')->setHeading($block->name);
+        app('soda.interface')->setHeading('Editing block');
         app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.index'), 'Pages');
         app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.edit', $page->id), $page->name);
         app('soda.interface')->breadcrumbs()->addLink(route('soda.pages.edit', $page->id).'?tab='.strtolower($blockType->identifier), $blockType->name);

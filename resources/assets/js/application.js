@@ -81,22 +81,37 @@ var Soda = (function () {
             navGroup.addClass('active');
         })
 
-        $('.nav-tabs a').on('click', function (e) {
+        $('.nav-tabs a', '.nav-pills a').on('click', function (e) {
             history.pushState(null, null, $(this).attr('href'));
         });
 
         $(window).on('popstate', function(){
-            var activeTab = $('a[href="' + window.location.hash + '"]');
-            if (activeTab.length) {
-                activeTab.tab('show');
-            } else {
-                $('.nav-tabs a:first').tab('show');
-            }
+            _selectActiveTab();
         });
 
         $(window).on('beforeunload', function(){
             $('body').addClass('unloading');
         });
+    }
+
+    var _selectActiveTab = function() {
+        var activeTab = $('a[href="' + window.location.hash + '"]');
+
+        if (activeTab.length) {
+            activeTab.tab('show');
+        } else if(Soda.queryString.tab) {
+            $('a[href="#tab_' + Soda.queryString.tab + '"]').tab('show');
+        } else {
+            var navTabs = $('.nav-tabs');
+
+            if(!navTabs.length) {
+                navTabs = $('.nav-pills');
+            }
+
+            if(navTabs.length) {
+                $('a:first', navTabs).tab('show');
+            }
+        }
     }
 
     var initialize = function() {
@@ -112,19 +127,7 @@ var Soda = (function () {
             $('body').addClass('loaded');
             $('.soda-wrapper, .main-content').css('min-height', $(window).height() - $('.content-navbar').outerHeight(true));
 
-            if(Soda.queryString.tab) {
-                $('a[href="#tab_' + Soda.queryString.tab + '"]').tab('show');
-            } else if (window.location.hash) {
-                var activeTab = $('a[href="' + window.location.hash + '"]');
-                if (activeTab.length) {
-                    activeTab.tab('show');
-                } else {
-                    $('.nav-tabs a:first').tab('show');
-                }
-            } else {
-                $('.nav-tabs a:first').first().tab('show');
-            }
-
+            _selectActiveTab();
             _registerEvents();
         }
     }
