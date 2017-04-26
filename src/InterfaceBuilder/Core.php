@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\InterfaceBuilder;
 
+use Soda\Cms\InterfaceBuilder\Dashboard\DashboardBuilder;
 use Soda\Cms\InterfaceBuilder\Menu\Menu;
 use Soda\Cms\InterfaceBuilder\Menu\MenuBuilder;
 use Soda\Cms\InterfaceBuilder\Breadcrumb\BreadcrumbBuilder;
@@ -17,10 +18,11 @@ class Core
     protected $breadcrumbs;
     protected $dashboard;
 
-    public function __construct(MenuBuilder $menu, BreadcrumbBuilder $breadcrumbs)
+    public function __construct(MenuBuilder $menu, BreadcrumbBuilder $breadcrumbs, DashboardBuilder $dashboard)
     {
         $this->menu = $menu;
         $this->breadcrumbs = $breadcrumbs;
+        $this->dashboard = $dashboard;
     }
 
     /**

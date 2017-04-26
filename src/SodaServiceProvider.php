@@ -2,6 +2,7 @@
 
 namespace Soda\Cms;
 
+use Soda\Cms\InterfaceBuilder\Dashboard\DashboardServiceProvider;
 use Soda\Cms\Support\Facades\Soda;
 use Zofe\Rapyd\RapydServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -89,6 +90,7 @@ class SodaServiceProvider extends ServiceProvider
             MenuServiceProvider::class,
             BreadcrumbServiceProvider::class,
             FormServiceProvider::class,
+            DashboardServiceProvider::class,
 
             // Plugins
             RapydServiceProvider::class,
