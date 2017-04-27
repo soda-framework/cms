@@ -4,8 +4,8 @@ namespace Soda\Cms\Foundation\Uploads;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Soda\Cms\Database\Models\Media;
 use Illuminate\Support\Facades\Storage;
-use Soda\Cms\Database\Fields\Models\Media;
 use Soda\Cms\Foundation\Uploads\Files\Base64File;
 use Soda\Cms\Foundation\Uploads\Files\SymfonyFile;
 use Soda\Cms\Foundation\Uploads\Files\UploadableFile;

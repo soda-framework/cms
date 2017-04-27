@@ -6,8 +6,6 @@
     @parent
     <script>
         $(function () {
-            tinyMCE.baseURL = "/soda/cms/components/tinymce";
-
             $('#{{ $field_id }}').tinymce({
                 {!! app('soda.form')->buildJsParams($field_parameters) !!}
             });

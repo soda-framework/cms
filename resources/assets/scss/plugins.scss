@@ -2,12 +2,38 @@
 @import "mixins";
 
 // Plugins
-@import "../../../node_modules/bootstrap-fileinput/sass/fileinput";
+@import "../../../node_modules/bootstrap-fileinput/css/fileinput";
 
 //noinspection CssUnknownTarget
 @import "../../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min";
 @import "../../../node_modules/select2/src/scss/core";
 @import "../../../node_modules/select2-bootstrap-theme/src/select2-bootstrap";
+
+.file-drop-zone {
+  margin: 0;
+  border: 0;
+}
+
+.krajee-default {
+  &.file-preview-frame {
+    box-shadow: none;
+    &:not(.file-preview-error):hover {
+      box-shadow: 3px 3px 5px -3px rgba(0,0,0,0.5);
+    }
+
+    .file-thumbnail-footer {
+      height: 25px;
+    }
+  }
+
+  .file-actions {
+    margin-top: 0;
+  }
+
+  .file-footer-caption {
+    display: none;
+  }
+}
 
 .bootstrap-tagsinput {
   display: block !important;

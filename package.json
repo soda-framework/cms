@@ -15,7 +15,7 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "bootstrap-fileinput": "4.3.*",
+    "bootstrap-fileinput": "git://github.com/kartik-v/bootstrap-fileinput.git#v4.3.9",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",

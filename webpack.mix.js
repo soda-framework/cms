@@ -2,7 +2,6 @@ const { mix } = require('laravel-mix');
 let webpack = require('webpack');
 
 mix.options({processCssUrls: false}); //prevents copying of fonts/images, which we currently do manually
-mix.setPublicPath('public');
 mix.setResourceRoot('resources/assets');
 
 mix.webpackConfig({
@@ -14,24 +13,8 @@ mix.webpackConfig({
     plugins: [
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new webpack.IgnorePlugin(/^brace$/, /jsoneditor/),
+        new webpack.IgnorePlugin(/regenerator|nodent|js\-beautify/, /ajv/),
     ],
-    module: {
-        loaders: [
-            {
-                test: require.resolve('tinymce/tinymce'),
-                loaders: [
-                    'imports?this=>window',
-                    'exports?window.tinymce'
-                ]
-            },
-            {
-                test: /tinymce\/(themes|plugins)\//,
-                loaders: [
-                    'imports?this=>window'
-                ]
-            }
-        ]
-    },
     resolve: {
         alias: {
             'jquery-ui': 'jquery-ui/ui/widgets',
