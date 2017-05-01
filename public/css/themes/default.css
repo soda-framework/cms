@@ -53,7 +53,12 @@
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > div > a:hover {
-  color: #3d3d3d;
+  color: #242932;
+}
+
+.dropdown.open > .btn.dropdown-toggle {
+  color: #FFFFFF;
+  background-color: #242932;
 }
 
 .nav-pills {

@@ -56,6 +56,11 @@
   color: #EE25AF;
 }
 
+.dropdown.open > .btn.dropdown-toggle {
+  color: #FFFFFF;
+  background-color: #EE25AF;
+}
+
 .nav-pills {
   background-color: #F0F0F0;
 }

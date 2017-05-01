@@ -5,3 +5,10 @@
     }
   }
 }
+
+.dropdown.open {
+  > .btn.dropdown-toggle {
+    color: $dropdown-button-color;
+    background-color: $dropdown-button-bg;
+  }
+}
