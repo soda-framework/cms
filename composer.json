@@ -31,6 +31,7 @@
     "soda-framework/eloquent-closure": "^0.1",
     "league/flysystem-aws-s3-v3": "^1.0",
     "zofe/rapyd": "2.2.*",
+    "owen-it/laravel-auditing": "^4.0",
     "santigarcor/laratrust": "3.0.*",
     "doctrine/dbal": "^2.5",
     "rutorika/sortable": "^3.2",

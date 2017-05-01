@@ -21,23 +21,23 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
             Route::put('edit/{id?}', 'SettingsController@update')->name('soda.settings.update');
         });
 
-        Route::resource('pages', 'PageController', [
+        Route::resource('content', 'ContentController', [
             'as'     => 'soda',
             'except' => 'show',
         ]);
 
-        Route::post('page-types/{pageTypeId}/block-types/attach', 'PageTypeBlockController@attach')->name('soda.page-types.blocks.attach');
-        Route::delete('page-types/{pageTypeId}/block-types/{blockTypeId}/detach', 'PageTypeBlockController@detach')->name('soda.page-types.blocks.detach');
-        Route::post('page-types/{pageTypeId}/fields/attach', 'PageTypeFieldController@attach')->name('soda.page-types.fields.attach');
-        Route::delete('page-types/{pageTypeId}/fields/{fieldId}/detach', 'PageTypeFieldController@detach')->name('soda.page-types.fields.detach');
-        Route::resource('page-types', 'PageTypeController', [
+        Route::post('content-types/{contentTypeId}/block-types/attach', 'ContentTypeBlockController@attach')->name('soda.content-types.blocks.attach');
+        Route::delete('content-types/{contentTypeId}/block-types/{blockTypeId}/detach', 'ContentTypeBlockController@detach')->name('soda.content-types.blocks.detach');
+        Route::post('content-types/{contentTypeId}/fields/attach', 'ContentTypeFieldController@attach')->name('soda.content-types.fields.attach');
+        Route::delete('content-types/{contentTypeId}/fields/{fieldId}/detach', 'ContentTypeFieldController@detach')->name('soda.content-types.fields.detach');
+        Route::resource('content-types', 'ContentTypeController', [
             'as'     => 'soda',
             'except' => 'show',
         ]);
 
-        Route::post('pages/{pageId}/block-types/attach', 'PageBlockController@attach')->name('soda.pages.blocks.attach');
-        Route::delete('pages/{pageId}/block-types/{blockTypeId}/detach', 'PageBlockController@detach')->name('soda.pages.blocks.detach');
-        Route::resource('pages.block-types.block', 'PageBlockController', [
+        Route::post('content/{contentId}/block-types/attach', 'ContentBlockController@attach')->name('soda.content.blocks.attach');
+        Route::delete('content/{contentId}/block-types/{blockTypeId}/detach', 'ContentBlockController@detach')->name('soda.content.blocks.detach');
+        Route::resource('content.block-types.block', 'ContentBlockController', [
             'as'     => 'soda',
             'except' => 'show',
         ]);

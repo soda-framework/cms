@@ -8,5 +8,5 @@ interface BlockTypeRepositoryInterface extends CanBuildDataGrid, BaseRepositoryI
 {
     public function getFields();
 
-    public function getAvailableFields(BlockTypeInterface $pageType);
+    public function getAvailableFields(BlockTypeInterface $blockType);
 }

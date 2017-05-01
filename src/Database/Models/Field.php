@@ -22,12 +22,12 @@ class Field extends Model implements FieldInterface
 
     public function blockTypes()
     {
-        return $this->morphedByMany('soda.block-type.model', 'fieldable');
+        return $this->morphedByMany(BlockType::class, 'fieldable');
     }
 
-    public function pageTypes()
+    public function contentTypes()
     {
-        return $this->morphedByMany('soda.page-type.model', 'fieldable');
+        return $this->morphedByMany(ContentType::class, 'fieldable');
     }
 
     public static function getFieldTypes()

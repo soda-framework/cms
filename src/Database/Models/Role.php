@@ -3,13 +3,14 @@
 namespace Soda\Cms\Database\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Soda\Cms\Database\Models\Traits\Auditable;
 use Soda\Cms\Database\Models\Contracts\RoleInterface;
 use Soda\Cms\Database\Models\Traits\RoleHasPermissions;
 use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class Role extends Model implements RoleInterface
 {
-    use OptionallyBoundToApplication, RoleHasPermissions;
+    use Auditable, OptionallyBoundToApplication, RoleHasPermissions;
 
     protected $table = 'roles';
 
@@ -22,6 +23,15 @@ class Role extends Model implements RoleInterface
         'name',
         'display_name',
         'description',
+        'level',
+    ];
+
+    /**
+     * Attributes to exclude from the Audit.
+     *
+     * @var array
+     */
+    protected $auditExclude = [
         'level',
     ];
 }

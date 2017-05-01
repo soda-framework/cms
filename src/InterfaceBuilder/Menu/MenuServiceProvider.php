@@ -65,10 +65,10 @@ class MenuServiceProvider extends ServiceProvider
             ]);
 
             $menu->addItem('Pages', [
-                'url'         => route('soda.pages.index'),
+                'url'         => route('soda.content.index'),
                 'icon'        => 'mdi mdi-file-outline',
                 'label'       => 'Pages',
-                'isCurrent'   => soda_request_is('pages*'),
+                'isCurrent'   => soda_request_is('content*'),
                 'permissions' => 'view-pages',
             ]);
 
@@ -78,11 +78,11 @@ class MenuServiceProvider extends ServiceProvider
                 'isCurrent' => soda_request_is('page-types*') || soda_request_is('block-types*') || soda_request_is('blocks*') || soda_request_is('fields*'),
             ]);
 
-            $menu['Scaffolding']->addChild('Page Types', [
-                'url'         => route('soda.page-types.index'),
-                'label'       => 'Page Types',
-                'isCurrent'   => soda_request_is('page-types*'),
-                'permissions' => 'manage-page-types',
+            $menu['Scaffolding']->addChild('Content Types', [
+                'url'         => route('soda.content-types.index'),
+                'label'       => 'Content Types',
+                'isCurrent'   => soda_request_is('content-types*'),
+                'permissions' => 'manage-content-types',
             ]);
 
             $menu['Scaffolding']->addChild('Block Types', [

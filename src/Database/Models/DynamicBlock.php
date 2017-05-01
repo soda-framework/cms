@@ -9,6 +9,14 @@ class DynamicBlock extends AbstractDynamicModel implements DynamicBlockInterface
 {
     use HasMedia;
 
+    /**
+     * Attributes to exclude from the Audit.
+     *
+     * @var array
+     */
+    protected $auditExclude = [
+    ];
+
     public function getDynamicModelTablePrefix()
     {
         return (new BlockType)->getDynamicModelTablePrefix();

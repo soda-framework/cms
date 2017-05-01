@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Database\Models\Application;
 use Soda\Cms\Database\Models\ApplicationUrl;
 use Soda\Cms\Database\Repositories\ApplicationRepository;
-use Soda\Cms\Database\Repositories\CachedApplicationRepository;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 use Soda\Cms\Database\Repositories\Contracts\ApplicationRepositoryInterface;
 use Soda\Cms\Database\Repositories\Contracts\CachedApplicationRepositoryInterface;
@@ -23,7 +22,6 @@ class ApplicationServiceProvider extends ServiceProvider
 
     protected $aliases = [
         'soda.application.repository'        => [ApplicationRepositoryInterface::class, ApplicationRepository::class],
-        'soda.application.cached-repository' => [CachedApplicationRepositoryInterface::class, CachedApplicationRepository::class],
     ];
 
     /**
@@ -44,10 +42,6 @@ class ApplicationServiceProvider extends ServiceProvider
     {
         $this->app->singleton('soda.application.repository', function ($app) {
             return new ApplicationRepository(new Application, new ApplicationUrl);
-        });
-
-        $this->app->singleton('soda.application.cached-repository', function ($app) {
-            return new CachedApplicationRepository($app['soda.application.repository']);
         });
 
         $this->registerAliases($this->aliases);

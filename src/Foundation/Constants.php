@@ -7,7 +7,7 @@ class Constants
     const STATUS_DRAFT = 0;
     const STATUS_LIVE = 1;
 
-    const PAGE_ACTION_TYPES = [
+    const CONTENT_ACTION_TYPES = [
         'view'       => 'View',
         'controller' => 'Controller',
     ];

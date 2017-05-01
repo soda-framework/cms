@@ -101,7 +101,7 @@
                     {!! app('soda.form')->dropdown([
                         'name'        => 'List Action',
                         'field_name'  => 'list_action_type',
-                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when listing this block.',
                     ])->setModel($blockType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
 
@@ -113,7 +113,7 @@
                     {!! app('soda.form')->dropdown([
                         'name'        => 'Edit Action',
                         'field_name'  => 'edit_action_type',
-                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when editing this block.',
 
                     ])->setModel($blockType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}

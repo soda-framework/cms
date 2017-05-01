@@ -10,12 +10,13 @@ use Illuminate\Support\ServiceProvider;
 use Laratrust\LaratrustServiceProvider;
 use Soda\Cms\Foundation\DraftingHandler;
 use Soda\Cms\Events\EventServiceProvider;
-use Soda\Cms\Database\PageServiceProvider;
+use Soda\Cms\Database\ContentServiceProvider;
 use Soda\Cms\Database\UserServiceProvider;
 use Soda\Cms\Routing\RouteServiceProvider;
 use Soda\Cms\Database\BlockServiceProvider;
 use Soda\Cms\Database\FieldServiceProvider;
 use Intervention\Image\ImageServiceProvider;
+use OwenIt\Auditing\AuditingServiceProvider;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Rutorika\Sortable\SortableServiceProvider;
 use Soda\Cms\Database\ApplicationServiceProvider;
@@ -97,12 +98,13 @@ class SodaServiceProvider extends ServiceProvider
             SortableServiceProvider::class,
             LaratrustServiceProvider::class,
             ImageServiceProvider::class,
+            AuditingServiceProvider::class,
 
             // Deferred Model Providers
             ApplicationServiceProvider::class,
             FieldServiceProvider::class,
             BlockServiceProvider::class,
-            PageServiceProvider::class,
+            ContentServiceProvider::class,
             UserServiceProvider::class,
         ]);
 

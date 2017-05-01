@@ -37,12 +37,12 @@
                     {!! method_field($pageType->id ? 'PUT' : 'POST') !!}
 
                     {!! app('soda.form')->text([
-                        "name"        => 'Page Type Name',
+                        "name"        => 'Content Type Name',
                         "field_name"  => 'name',
                     ])->setModel($pageType) !!}
 
                     {!! app('soda.form')->textarea([
-                        "name"        => "Page Type Description",
+                        "name"        => "Content Type Description",
                         "field_name"  => 'description',
                     ])->setModel($pageType) !!}
 
@@ -96,7 +96,7 @@
                         <a class="btn btn-lg btn-success" href="#" data-add-field>Add Field</a>
                         @endif
                     @else
-                        Please save the page type before managing fields.
+                        Please save the content type before managing fields.
                     @endif
                 </div>
             </div>
@@ -104,15 +104,15 @@
             <div class="tab-pane" id="tab_subpages" role="tabpanel">
                 <div class="content-block">
                     {!! $allowedChildrenFormItem = app('soda.form')->toggle([
-                        'name'         => 'Allowed Subpages',
-                        'field_name'   => 'allowed_children',
-                        'value'        => 1,
+                        'name'         => 'Is folder',
+                        'field_name'   => 'is_folder',
+                        'value'        => 0,
                         'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-                        'description'  => 'If enabled, pages of this type can have child pages'
+                        'description'  => 'If enabled, this type acts as a folder, capable of containing other content'
                     ])->setModel($pageType) !!}
 
                     <?php
-                    $subpageIds = $pageType->subpageTypes->pluck('id')->toArray();
+                    $subpageIds = $pageType->pageTypes->pluck('id')->toArray();
                     ?>
 
                     <div class="restricted_page_types" style="display:none">
@@ -125,7 +125,7 @@
                         ])->setModel($pageType) !!}
 
                         <div class="allowed_subpage_types">
-                            <label>Restricted Page Types</label>
+                            <label>Restricted Content Types</label>
                             <table class="table well">
                                 <thead>
                                 <tr>
@@ -145,7 +145,7 @@
                                                 'field_name'   => $subPageType->id,
                                                 'value'        => empty($subpageIds) || in_array($subPageType->id, $subpageIds),
                                                 'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-                                            ])->setModel($pageType)->setPrefix('subpage_types') !!}
+                                            ])->setModel($pageType)->setPrefix('page_types') !!}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -188,7 +188,7 @@
                             <a class="btn btn-lg btn-success" href="#" data-add-block>Add Block</a>
                         @endif
                     @else
-                        Please save the page type before managing blocks.
+                        Please save the content type before managing blocks.
                     @endif
                 </div>
             </div>

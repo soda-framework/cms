@@ -205,10 +205,10 @@ class PermissionSeeder extends Seeder
             'category'     => 'Pages',
         ]);
 
-        $permission_manage_page_types = Permission::firstOrCreate([
-            'name'         => 'manage-page-types',
-            'display_name' => 'Manage Page Types',
-            'description'  => 'Manage types to build pages from.',
+        $permission_manage_content_types = Permission::firstOrCreate([
+            'name'         => 'manage-content-types',
+            'display_name' => 'Manage Content Types',
+            'description'  => 'Manage types to build content from.',
             'category'     => 'Pages',
         ]);
 
@@ -252,7 +252,7 @@ class PermissionSeeder extends Seeder
                 //$permission_create_application_settings,
                 //$permission_delete_application_settings,
                 $permission_manage_application_urls,
-                $permission_manage_page_types,
+                $permission_manage_content_types,
                 $permission_advanced_pages,
                 $permission_manage_block_types,
                 $permission_manage_fields,

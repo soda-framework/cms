@@ -63,31 +63,31 @@ class BlockType extends Model implements BlockTypeInterface
 
     public function buildDynamicTable(Blueprint $table)
     {
-        $page = new Page;
-        $pageTable = $page->getTable();
-        $pageReferenceColumn = $page->getForeignKey();
-        $pageIndex = 'FK_'.$this->getDynamicTableName().'_'.$pageReferenceColumn.'_pages';
+        $content = new Content;
+        $contentTable = $content->getTable();
+        $contentReferenceColumn = $content->getForeignKey();
+        $contentIndex = 'FK_'.$this->getDynamicTableName().'_'.$contentReferenceColumn.'_content';
 
         $table->increments('id');
-        $table->integer($pageReferenceColumn)->unsigned()->nullable();
+        $table->integer($contentReferenceColumn)->unsigned()->nullable();
         $table->tinyInteger('is_shared')->unsigned()->nullable();
-        $table->foreign($pageReferenceColumn, $pageIndex)->references('id')->on($pageTable)->onUpdate('CASCADE')->onDelete('SET NULL');
+        $table->foreign($contentReferenceColumn, $contentIndex)->references('id')->on($contentTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->timestamps();
     }
 
-    public function blockQuery($pageId = null)
+    public function blockQuery($contentId = null)
     {
-        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where(function ($q) use ($pageId) {
+        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where(function ($q) use ($contentId) {
             $q->where('is_shared', 1);
-            if ($pageId) {
-                $q->orWhere('page_id', $pageId);
+            if ($contentId) {
+                $q->orWhere('content_id', $contentId);
             }
         });
     }
 
-    public function block($pageId = null)
+    public function block($contentId = null)
     {
-        $query = $this->blockQuery($pageId);
+        $query = $this->blockQuery($contentId);
 
         $model = $query->get();
 

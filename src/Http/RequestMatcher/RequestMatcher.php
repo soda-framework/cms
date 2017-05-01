@@ -4,18 +4,18 @@ namespace Soda\Cms\Http\RequestMatcher;
 
 use Illuminate\Http\Request;
 use Soda\Cms\Http\RequestMatcher\Matchers\MatcherInterface;
-use Soda\Cms\Http\RequestMatcher\Matchers\SluggedPageMatcher;
-use Soda\Cms\Database\Repositories\Contracts\CachedApplicationRepositoryInterface;
+use Soda\Cms\Http\RequestMatcher\Matchers\SluggedContentMatcher;
+use Soda\Cms\Database\Repositories\Contracts\ApplicationRepositoryInterface;
 
 class RequestMatcher
 {
     protected $application;
 
     protected $matchers = [
-        SluggedPageMatcher::class,
+        SluggedContentMatcher::class,
     ];
 
-    public function __construct(CachedApplicationRepositoryInterface $application)
+    public function __construct(ApplicationRepositoryInterface $application)
     {
         $this->application = $application;
     }

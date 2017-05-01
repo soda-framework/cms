@@ -4,9 +4,9 @@ namespace Soda\Cms\Foundation;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Soda\Cms\Database\Models\DynamicPage;
+use Soda\Cms\Database\Models\DynamicContent;
 use Soda\Cms\Database\Models\DynamicBlock;
-use Soda\Cms\Database\Models\Contracts\PageInterface;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Illuminate\Contracts\Foundation\Application as Laravel;
 use Soda\Cms\Database\Models\Contracts\ApplicationInterface;
 use Soda\Cms\Database\Models\Contracts\ApplicationUrlInterface;
@@ -87,7 +87,7 @@ class SodaInstance
     /**
      * Get the current page that we're visiting.
      *
-     * @return PageInterface
+     * @return ContentInterface
      */
     public function getCurrentPage()
     {
@@ -97,11 +97,11 @@ class SodaInstance
     /**
      * Set the current page that we're visiting.
      *
-     * @param PageInterface $page
+     * @param ContentInterface $content
      */
-    public function setCurrentPage(PageInterface $page)
+    public function setCurrentPage(ContentInterface $content)
     {
-        $this->currentPage = $page;
+        $this->currentPage = $content;
     }
 
     /**
@@ -115,15 +115,15 @@ class SodaInstance
     }
 
     /**
-     * Load a dynamic page.
+     * Load a dynamic content item.
      *
      * @param      $table
      *
      * @return mixed
      */
-    public function dynamicPage($table)
+    public function dynamicContent($table)
     {
-        return (new DynamicPage)->fromTable($table);
+        return (new DynamicContent)->fromTable($table);
     }
 
     /**

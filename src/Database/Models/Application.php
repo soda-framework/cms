@@ -24,9 +24,9 @@ class Application extends Model implements ApplicationInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pages()
+    public function content()
     {
-        return $this->hasMany(Page::class);
+        return $this->hasMany(Content::class);
     }
 
     public function settings()
@@ -41,7 +41,7 @@ class Application extends Model implements ApplicationInterface
 
     public function getSettings()
     {
-        return app('soda.application.cached-repository')->getSettingsForApplication($this);
+        return app('soda.application.repository')->getSettingsForApplication($this);
     }
 
     public function getSetting($setting)

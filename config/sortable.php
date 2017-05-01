@@ -2,15 +2,15 @@
 
 return [
     'entities' => [
-        'pages' => Soda\Cms\Database\Models\Page::class,
+        'pages' => Soda\Cms\Database\Models\Content::class,
 
         'page-types.fields' => [
-            'entity'   => Soda\Cms\Database\Models\PageType::class,
+            'entity'   => Soda\Cms\Database\Models\ContentType::class,
             'relation' => 'fields',
         ],
 
         'block-types.fields' => [
-            'entity'   => Soda\Cms\Database\Models\BlockType::class,
+            'entity'   => Soda\Cms\Database\Models\ContentType::class,
             'relation' => 'fields',
         ],
     ],

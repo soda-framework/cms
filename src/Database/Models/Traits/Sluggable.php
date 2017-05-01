@@ -6,7 +6,7 @@ trait Sluggable
 {
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = $this->fixSlug($value);
+        $this->attributes['slug'] = $value === null ? $value : $this->fixSlug($value);
 
         return $this;
     }

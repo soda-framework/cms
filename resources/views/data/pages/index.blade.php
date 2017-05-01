@@ -19,12 +19,12 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Select a page type..</h4>
+                    <h4 class="modal-title" id="myModalLabel">Select a content type..</h4>
                 </div>
                 <form method="GET" action="{{ route('soda.pages.create') }}">
                     <div class="modal-body">
                         <fieldset class="form-group field_page_type page_type  dropdown-field">
-                            <label for="field_page_type">Page Type</label>
+                            <label for="field_page_type">Content Type</label>
 
                             <input type="hidden" name="parentId" value="" />
                             <select name="pageTypeId" class="form-control" id="page_type_id">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-primary">Create Page</button>
+                        <button  class="btn btn-primary">Create Content</button>
                     </div>
                 </form>
             </div>
