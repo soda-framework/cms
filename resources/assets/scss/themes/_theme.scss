@@ -2,7 +2,16 @@
 @import 'partials/login';
 @import 'partials/content';
 @import 'partials/breadcrumbs';
+@import 'partials/dropdown';
 @import 'partials/nav-pills';
 @import 'partials/page-tree';
 @import 'partials/sidebar';
+@import 'partials/table';
 @import 'partials/wave';
+
+a {
+  color: $link-color;
+  &:hover, &:focus {
+    color: darken($link-color, 5%);
+  }
+}

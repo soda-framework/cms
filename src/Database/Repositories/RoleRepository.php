@@ -63,6 +63,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
         });
 
         $grid->orderBy('id', 'asc');
+        $grid->attr('class', 'table table-striped middle');
 
         return $grid;
     }
@@ -85,7 +86,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
      */
     public function addButtonsToGrid(DataGrid $grid, $editRoute = null, $deleteRoute = null)
     {
-        $width = 0;
+        $width = 40;
 
         if ($editRoute == true) {
             $width += 83;
@@ -94,7 +95,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
             $width += 103;
         }
 
-        if ($width > 0) {
+        if ($width > 40) {
             $grid->add('{{ $id }}', 'Options')->style('width:'.$width.'px')->cell(function ($value, $model) use ($editRoute, $deleteRoute) {
                 $buttons = '';
                 if ($editRoute == true && $model->level < \Auth::user()->getLevel()) {

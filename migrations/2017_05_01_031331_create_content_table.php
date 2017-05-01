@@ -17,6 +17,7 @@ class CreateContentTable extends Migration
             $table->string('name');
             $table->string('slug')->nullable();
             $table->string('identifier', 50)->nullable();
+            $table->tinyInteger('status')->unsigned()->nullable()->default(0);
             $table->integer('parent_id')->unsigned()->nullable()->index('content_parent_id_foreign');
             $table->integer('position')->unsigned()->nullable()->default('0');
             $table->integer('real_depth')->unsigned();
@@ -26,7 +27,6 @@ class CreateContentTable extends Migration
             $table->string('view_action_type');
             $table->string('edit_action')->nullable();
             $table->string('edit_action_type')->nullable();
-            $table->tinyInteger('status')->unsigned()->nullable()->default(0);
             $table->tinyInteger('is_sluggable')->unsigned()->nullable()->default(1);
             $table->tinyInteger('is_folder')->unsigned()->nullable()->default(0);
             $table->tinyInteger('is_movable')->unsigned()->nullable()->default(0);

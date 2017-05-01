@@ -11,7 +11,6 @@ use Soda\Cms\Support\Facades\Soda;
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
     protected $model;
-    protected $perPage = 20;
 
     public function __construct(ContentInterface $model)
     {
@@ -25,7 +24,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         return $content ? $content->collectDescendants(true)->orderBy('parent_id', 'ASC')->orderBy('position', 'ASC')->get()->toTree() : [];
     }
 
-    public function listFolder($contentId = null)
+    public function listFolder(Request $request, $contentId = null)
     {
         if (!$contentId) {
             $contentRoot = $this->model->getRoots()->first();
@@ -50,7 +49,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             $contentId = $contentRoot->id;
         }
 
-        return $this->model->where('parent_id', $contentId)->paginate($this->perPage);
+        return $this->model->where('parent_id', $contentId)->orderBy($request->input('order', 'position'), $request->input('dir', 'ASC'))->paginate($request->input('show', 20))->appends($request->only('order', 'dir', 'show'));
     }
 
     public function findBySlug($slug)
@@ -101,6 +100,10 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         $content = $this->newInstance([
             'parent_id'       => $parent ? $parentId : null,
             'content_type_id' => $contentTypeId,
+            'is_deletable'    => 1,
+            'is_movable'      => 1,
+            'is_sluggable'    => 1,
+            'is_folder'       => 0,
         ]);
 
         if ($contentTypeId) {
@@ -112,6 +115,8 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
                     'view_action_type' => $content->getRelation('type')->getAttribute('view_action_type'),
                     'edit_action'      => $content->getRelation('type')->getAttribute('edit_action'),
                     'edit_action_type' => $content->getRelation('type')->getAttribute('edit_action_type'),
+                    'is_sluggable'     => $content->getRelation('type')->getAttribute('is_sluggable'),
+                    'is_folder'        => $content->getRelation('type')->getAttribute('is_folder'),
                 ]);
             }
         }

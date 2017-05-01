@@ -53,6 +53,7 @@ $navbar-inverse-link-hover-bg: transparent;
 $navbar-inverse-link-active-color: $navbar-inverse-link-hover-color;
 $navbar-inverse-link-active-bg: rgba(0, 0, 0, 0.3);
 
+
 /* NAV TABS
    ============================= */
 
@@ -78,5 +79,7 @@ $btn-border-radius-large: 30px;
 $input-bg-disabled:              $gray-lighter;
 $input-color:                    $gray-dark;
 $input-border:                   $gray-light;
+
+$table-cell-padding:            25px;
 
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";

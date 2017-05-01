@@ -5,23 +5,25 @@
 	<tr>
 		@foreach ($dg->columns as $column)
 			<th{!! $column->buildAttributes() !!}>
+                {!! $column->label !!}
 				@if ($column->orderby)
-					@if ($dg->onOrderby($column->orderby_field, 'asc'))
-						<span class="fa fa-caret-up"></span>
-					@else
-						<a href="{{ $dg->orderbyLink($column->orderby_field,'asc') }}">
-							<span class="fa fa-caret-up"></span>
-						</a>
-					@endif
-					@if ($dg->onOrderby($column->orderby_field, 'desc'))
-						<span class="fa fa-caret-down"></span>
-					@else
-						<a href="{{ $dg->orderbyLink($column->orderby_field,'desc') }}">
-							<span class="fa fa-caret-down"></span>
-						</a>
-					@endif
+                    <div class="pull-right">
+                        @if ($dg->onOrderby($column->orderby_field, 'asc'))
+                            <span class="fa fa-caret-up"></span>
+                        @else
+                            <a href="{{ $dg->orderbyLink($column->orderby_field,'asc') }}">
+                                <span class="fa fa-caret-up"></span>
+                            </a>
+                        @endif
+                        @if ($dg->onOrderby($column->orderby_field, 'desc'))
+                            <span class="fa fa-caret-down"></span>
+                        @else
+                            <a href="{{ $dg->orderbyLink($column->orderby_field,'desc') }}">
+                                <span class="fa fa-caret-down"></span>
+                            </a>
+                        @endif
+                    </div>
 				@endif
-				{!! $column->label !!}
 			</th>
 		@endforeach
 	</tr>

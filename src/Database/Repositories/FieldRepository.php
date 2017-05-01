@@ -55,6 +55,7 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         });
 
         $grid->orderBy('id', 'asc');
+        $grid->attr('class', 'table table-striped middle');
 
         return $grid;
     }

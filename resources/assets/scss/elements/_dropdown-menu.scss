@@ -2,15 +2,13 @@
 .dropdown-menu {
   position: absolute;
   top: auto;
-  //float: left;
-  border: 1px solid $slate-090;
+  border: none;
   border-radius: 6px;
   left: auto;
   pointer-events: none;
-  right: 25px;
-  margin-top: 5px;
+  right: 0px;
   min-width: 180px;
-  padding: 8px;
+  padding: 0px;
   display: block;
   transform-origin: 50% 90%;
   animation-fill-mode: forwards;
@@ -18,26 +16,25 @@
   transform: scale(.8);
   transition: all .15s ease;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .05), 0 2px 14px 0 rgba(0, 0, 0, .05);
-  margin: 2px 0 0;
+  margin: 0;
   list-style: none;
   font-size: 14px;
   text-align: left;
-  background-color: #fff;
+  background-color: $gray-lighter;
   background-clip: padding-box;
+  overflow: hidden;
   > li, > div {
     a {
-      padding: 5px 10px;
-      border-radius: 4px;
+      transition: background-color 0.15s linear, color 0.15s linear;
       display: block;
-      padding: 3px 20px;
+      padding: 8px 25px;
       clear: both;
       font-weight: 400;
       color: #333;
       white-space: nowrap;
     }
     > a:hover {
-      background: $brand-info;
-      color: #fff;
+      background: #fff;
       text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
     }
     &.warning a:hover {

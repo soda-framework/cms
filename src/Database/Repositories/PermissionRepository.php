@@ -66,6 +66,7 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
         });
 
         $grid->orderBy('id', 'asc');
+        $grid->attr('class', 'table table-striped middle');
 
         return $grid;
     }

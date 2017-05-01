@@ -1,0 +1,12 @@
+.table {
+  > tbody {
+    > tr {
+      &.highlighted {
+        &, &:hover, &:focus {
+          background-color: $table-highlighted-bg;
+          color: $table-highlighted-color;
+        }
+      }
+    }
+  }
+}

@@ -4,8 +4,8 @@
 $primary: $slate-040;
 $secondary: $slate-030;
 
-$primary: #8125EE;
-$secondary: #607EEE;
+$primary: $grape-1;
+$secondary: $grape-2;
 
 $logo-color: $secondary;
 $mobile-logo-color: $white;
@@ -14,6 +14,12 @@ $content-background: $white;
 $page-tree-item-bg: $gray-lighter;
 $page-tree-item-hover-bg: $gray-light;
 $breadcrumb-bg: transparent;
+
+$table-highlighted-bg: #B5F3DC;
+$table-highlighted-color: inherit;
+
+$dropdown-link-color: $secondary;
+$link-color: $secondary;
 
 /* Breadcrumb
    ============================= */

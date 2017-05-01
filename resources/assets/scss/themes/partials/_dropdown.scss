@@ -1,0 +1,7 @@
+.dropdown-menu {
+  > li, > div {
+    > a:hover {
+      color: $dropdown-link-color;
+    }
+  }
+}

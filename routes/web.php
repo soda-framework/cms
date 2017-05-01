@@ -23,7 +23,6 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
 
         Route::resource('content', 'ContentController', [
             'as'     => 'soda',
-            'except' => 'show',
         ]);
 
         Route::post('content-types/{contentTypeId}/block-types/attach', 'ContentTypeBlockController@attach')->name('soda.content-types.blocks.attach');

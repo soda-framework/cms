@@ -28,9 +28,27 @@ class ContentController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $content = $this->content->listFolder();
+        $content = $this->content->listFolder($request);
+
+        $content_types = $this->content->getTypes(true);
+        $content_types->load('pageTypes');
+
+        return soda_cms_view('data.content.index', compact('content', 'content_types'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @param         $contentId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function show(Request $request, $contentId)
+    {
+        $content = $this->content->listFolder($request, $contentId);
 
         $content_types = $this->content->getTypes(true);
         $content_types->load('pageTypes');
