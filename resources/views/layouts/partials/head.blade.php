@@ -1,4 +1,4 @@
-<?php $currentCmsTheme = Request::input('theme', 'lime'); ?>
+<?php $currentCmsTheme = Request::input('theme', Session::get('soda-theme', 'default')); ?>
 @section('head.main')
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

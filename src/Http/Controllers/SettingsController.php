@@ -75,6 +75,9 @@ class SettingsController extends BaseController
     {
         try {
             $application = $this->applications->save($request, $id);
+            if($request->has('theme')) {
+                $request->session()->put('soda-theme', $request->input('theme'));
+            }
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.update', ['object' => 'application']));
         }

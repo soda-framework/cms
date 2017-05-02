@@ -11,6 +11,19 @@
         "field_name"  => 'name',
     ])->setModel($application) !!}
 
+    {!! app('soda.form')->dropdown([
+        "name"        => "CMS Theme",
+        "description" => "The colour scheme for the CMS interface",
+        "field_name"  => 'theme',
+        "field_params" => ['options' => [
+            'default'    => 'Default',
+            'lime'       => 'Lime green',
+            'strawberry' => 'Strawberry pink',
+            'grape'      => 'Grape purple',
+        ]],
+        "value"       => Session::get('soda-theme', 'default')
+    ]) !!}
+
     @permission('manage-application-urls')
     {!! app('soda.form')->tags([
         "name"         => "Application URLs",
