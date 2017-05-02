@@ -50,7 +50,7 @@ class BlockTypeController extends BaseController
             return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
         }
 
-        return soda_cms_view('data.block-typeså.view', compact('blockType'));
+        return soda_cms_view('data.block-types.view', compact('blockType'));
     }
 
     /**

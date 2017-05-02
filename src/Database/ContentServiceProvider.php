@@ -2,24 +2,24 @@
 
 namespace Soda\Cms\Database;
 
-use Franzose\ClosureTable\ClosureTableServiceProvider;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Soda\Cms\Database\Models\Field;
+use Soda\Cms\Database\Models\Content;
 use Illuminate\Support\ServiceProvider;
 use Soda\Cms\Database\Models\BlockType;
-use Soda\Cms\Database\Models\Content;
 use Soda\Cms\Database\Models\ContentType;
-use Soda\Cms\Database\Models\Field;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Soda\Cms\Database\Repositories\ContentRepository;
+use Franzose\ClosureTable\ClosureTableServiceProvider;
+use Soda\Cms\Database\Repositories\ContentTypeRepository;
 use Soda\Cms\Database\Repositories\ContentBlockRepository;
 use Soda\Cms\Database\Repositories\ContentTypeBlockRepository;
 use Soda\Cms\Database\Repositories\ContentTypeFieldRepository;
-use Soda\Cms\Database\Repositories\ContentTypeRepository;
 use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
+use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
+use Soda\Cms\Database\Repositories\Contracts\ContentTypeRepositoryInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentBlockRepositoryInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentTypeBlockRepositoryInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentTypeFieldRepositoryInterface;
-use Soda\Cms\Database\Repositories\Contracts\ContentTypeRepositoryInterface;
-use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 
 class ContentServiceProvider extends ServiceProvider
 {

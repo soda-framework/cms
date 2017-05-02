@@ -11,7 +11,8 @@
 @stop
 
 @section('head.meta')
-    <link rel="shortcut icon" type="image/ico" href="/soda/cms/img/favicon.ico">
+    <link rel="shortcut icon" href="/soda/cms/img/favicon.ico">
+    <link rel="icon" href="/soda/cms/img/favicon.ico">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @stop
