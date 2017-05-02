@@ -26,9 +26,9 @@
                     @endif
                 @endforeach
                 <td>
-                    <a href="{{ route('soda.pages.block-types.block.edit', [$page->id, $blockType->id, $block->id]) }}" class="btn btn-success">Edit</a>
+                    <a href="{{ route('soda.content.block-types.block.edit', [$content->id, $blockType->id, $block->id]) }}" class="btn btn-success">Edit</a>
                     @if($blockType->pivot->min_blocks === null || count($blocks) > $blockType->pivot->min_blocks)
-                        <a data-delete-button href="{{ route('soda.pages.block-types.block.destroy', [$page->id, $blockType->id, $block->id]) }}" class="btn btn-danger">Delete</a>
+                        <a data-delete-button href="{{ route('soda.content.block-types.block.destroy', [$content->id, $blockType->id, $block->id]) }}" class="btn btn-danger">Delete</a>
                     @endif
                 </td>
             </tr>
@@ -42,11 +42,11 @@
 @endif
 
 @if($blockType->pivot->max_blocks === null || count($blocks) < $blockType->pivot->max_blocks)
-    @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.pages.block-types.block.create', [$page->id, $blockType->id])])
+    @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.content.block-types.block.create', [$content->id, $blockType->id])])
 @endif
 
 @permission('detach-blocks')
-    <a data-delete-button class="btn btn-warning btn-lg" href="{{ route('soda.pages.blocks.detach', [$page->id, $blockType->id]) }}">
+    <a data-delete-button class="btn btn-warning btn-lg" href="{{ route('soda.content.blocks.detach', [$content->id, $blockType->id]) }}">
         <span>Detach</span>
     </a>
 @endpermission

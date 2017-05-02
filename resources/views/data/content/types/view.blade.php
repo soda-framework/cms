@@ -1,7 +1,7 @@
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('content-heading-button')
-    @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-type-form'])
+    @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#content-type-form'])
 @stop
 
 
@@ -29,27 +29,27 @@
     </ul>
 
     <form method="POST" id="page-type-form"
-          action="{{ route('soda.page-types.' . ($pageType->id ? 'update' : 'store'), $pageType->id) }}" enctype="multipart/form-data">
+          action="{{ route('soda.content-types.' . ($contentType->id ? 'update' : 'store'), $contentType->id) }}" enctype="multipart/form-data">
         <div class="tab-content">
             <div class="tab-pane" id="tab_settings" role="tabpanel">
                 <div class="content-block">
                     {!! csrf_field() !!}
-                    {!! method_field($pageType->id ? 'PUT' : 'POST') !!}
+                    {!! method_field($contentType->id ? 'PUT' : 'POST') !!}
 
                     {!! app('soda.form')->text([
                         "name"        => 'Content Type Name',
                         "field_name"  => 'name',
-                    ])->setModel($pageType) !!}
+                    ])->setModel($contentType) !!}
 
                     {!! app('soda.form')->textarea([
                         "name"        => "Content Type Description",
                         "field_name"  => 'description',
-                    ])->setModel($pageType) !!}
+                    ])->setModel($contentType) !!}
 
                     {!! app('soda.form')->text([
                         "name"        => "Identifier",
                         "field_name"  => 'identifier',
-                    ])->setModel($pageType) !!}
+                    ])->setModel($contentType) !!}
 
                     {!! app('soda.form')->toggle([
                         'name'         => 'Is creatable',
@@ -57,14 +57,14 @@
                         'value'        => 1,
                         'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
                         'description'  => 'If enabled, pages of this type can be created from the CMS interface'
-                    ])->setModel($pageType) !!}
+                    ])->setModel($contentType) !!}
                 </div>
             </div>
 
             <div class="tab-pane" id="tab_fields" role="tabpanel">
                 <div class="content-block">
-                    @if($pageType->id)
-                        @if(count($pageType->fields))
+                    @if($contentType->id)
+                        @if(count($contentType->fields))
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -75,14 +75,14 @@
                                 </tr>
                                 </thead>
                                 <tbody class="sortable" data-entityname="page-types.fields">
-                                    @foreach($pageType->fields as $field)
-                                        <tr data-itemId="{{ $field->id }}" data-parentId="{{ $pageType->id }}">
+                                    @foreach($contentType->fields as $field)
+                                        <tr data-itemId="{{ $field->id }}" data-parentId="{{ $contentType->id }}">
                                             <td class="sortable-handle"><img src="/soda/cms/img/drag-dots.gif" /></td>
                                             <td>{{ $field->name }}</td>
                                             <td>{{ $field->pivot->show_in_table ? 'Yes' : 'No' }}</td>
                                             <td>
                                                 <a href='{{ route('soda.fields.edit', $field->id) }}' class='btn btn-warning' target="_blank"><span>Edit</span></a>
-                                                <button type="button" class="btn btn-danger" data-detach="{{ route('soda.page-types.fields.detach', [$pageType->id, $field->id]) }}">Delete</button>
+                                                <button type="button" class="btn btn-danger" data-detach="{{ route('soda.page-types.fields.detach', [$contentType->id, $field->id]) }}">Delete</button>
 
                                             </td>
                                         </tr>
@@ -109,10 +109,10 @@
                         'value'        => 0,
                         'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
                         'description'  => 'If enabled, this type acts as a folder, capable of containing other content'
-                    ])->setModel($pageType) !!}
+                    ])->setModel($contentType) !!}
 
                     <?php
-                    $subpageIds = $pageType->pageTypes->pluck('id')->toArray();
+                    $subpageIds = $contentType->pageTypes->pluck('id')->toArray();
                     ?>
 
                     <div class="restricted_page_types" style="display:none">
@@ -122,7 +122,7 @@
                             'value'        => !empty($subpageIds),
                             'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
                             'description'  => 'If enabled, you may select what page types may be created as a child of this type'
-                        ])->setModel($pageType) !!}
+                        ])->setModel($contentType) !!}
 
                         <div class="allowed_subpage_types">
                             <label>Restricted Content Types</label>
@@ -136,7 +136,7 @@
                                 </thead>
                                 <tbody>
 
-                                @foreach($pageTypes as $subPageType)
+                                @foreach($contentTypes as $subPageType)
                                     <tr>
                                         <td>{{ $subPageType->name }}</td>
                                         <td>{{ $subPageType->description }}</td>
@@ -145,7 +145,7 @@
                                                 'field_name'   => $subPageType->id,
                                                 'value'        => empty($subpageIds) || in_array($subPageType->id, $subpageIds),
                                                 'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-                                            ])->setModel($pageType)->setPrefix('page_types') !!}
+                                            ])->setModel($contentType)->setPrefix('page_types') !!}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -158,7 +158,7 @@
 
             <div class="tab-pane" id="tab_blocks" role="tabpanel">
                 <div class="content-block">
-                    @if($pageType->id)
+                    @if($contentType->id)
                     <table class="table">
                         <thead>
                         <tr>
@@ -171,14 +171,14 @@
                         </thead>
                         <tbody>
 
-                        @foreach($pageType->blockTypes as $blockType)
+                        @foreach($contentType->blockTypes as $blockType)
                             <tr>
                                 <td>{{ $blockType->name }}</td>
                                 <td>{{ $blockType->description }}</td>
                                 <td>{{ $blockType->pivot->min_blocks }}</td>
                                 <td>{{ $blockType->pivot->max_blocks }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger" data-detach="{{ route('soda.page-types.blocks.detach', [$pageType->id, $blockType->id]) }}">Delete</button>
+                                    <button type="button" class="btn btn-danger" data-detach="{{ route('soda.page-types.blocks.detach', [$contentType->id, $blockType->id]) }}">Delete</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -198,27 +198,27 @@
                     {!! app('soda.form')->text([
                         'name'        => null,
                         'field_name'  => 'view_action',
-                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
+                    ])->setModel($contentType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
                     {!! app('soda.form')->dropdown([
                         'name'        => 'View Action',
                         'field_name'  => 'view_action_type',
-                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when viewing pages of this type.',
-                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+                    ])->setModel($contentType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
 
                     {!! app('soda.form')->text([
                         'name'        => null,
                         'field_name'  => 'edit_action',
-                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
+                    ])->setModel($contentType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
                     {!! app('soda.form')->dropdown([
                         'name'        => 'Edit Action',
                         'field_name'  => 'edit_action_type',
-                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+                        'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
                         'description'  => 'Specifies the interface supplied when editing pages of this type.',
 
-                    ])->setModel($pageType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+                    ])->setModel($contentType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
                 </div>
             </div>
         </div>
@@ -233,7 +233,7 @@
     @parent
 
 
-    @if($pageType->id)
+    @if($contentType->id)
         <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -242,7 +242,7 @@
                                     aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Select a block to add...</h4>
                     </div>
-                    <form method="POST" action="{{ route('soda.page-types.blocks.attach', $pageType->id) }}">
+                    <form method="POST" action="{{ route('soda.page-types.blocks.attach', $contentType->id) }}">
                         {!! csrf_field() !!}
                         <div class="modal-body">
                             {!! app('soda.form')->dropdown([
@@ -280,7 +280,7 @@
                                     aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Select a field to add...</h4>
                     </div>
-                    <form method="POST" action="{{ route('soda.page-types.fields.attach', $pageType->id) }}">
+                    <form method="POST" action="{{ route('soda.page-types.fields.attach', $contentType->id) }}">
                         {!! csrf_field() !!}
                         <div class="modal-body">
                             {!! app('soda.form')->dropdown([
@@ -293,7 +293,7 @@
                                 "name"        => "Show in table?",
                                 "field_name"  => "show_in_table",
                                 "value"       => 1,
-                                "description" => "Determines whether field value is shown in table view when listing pages of this type"
+                                "description" => "Determines whether field value is shown in table view when listing content of this type"
                             ])->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked')) !!}
                         </div>
                         <div class="modal-footer">

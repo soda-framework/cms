@@ -68,14 +68,14 @@ class MenuServiceProvider extends ServiceProvider
                 'url'         => route('soda.content.index'),
                 'icon'        => 'mdi mdi-file-outline',
                 'label'       => 'Pages',
-                'isCurrent'   => soda_request_is('content*'),
+                'isCurrent'   => soda_request_is('content') || soda_request_is('content/*'),
                 'permissions' => 'view-pages',
             ]);
 
             $menu->addItem('Scaffolding', [
                 'label'     => 'Scaffolding',
                 'icon'      => 'mdi mdi-layers',
-                'isCurrent' => soda_request_is('page-types*') || soda_request_is('block-types*') || soda_request_is('blocks*') || soda_request_is('fields*'),
+                'isCurrent' => soda_request_is('content-types*') || soda_request_is('block-types*') || soda_request_is('blocks*') || soda_request_is('fields*'),
             ]);
 
             $menu['Scaffolding']->addChild('Content Types', [

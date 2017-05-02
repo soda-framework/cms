@@ -66,7 +66,7 @@ class Setup extends Command
                 $dbPort = $this->ask('Database port', '3306');
                 $dbName = $this->ask('Database name', $baseName);
                 $dbUser = $this->ask('Database user', 'root');
-                $dbPass = $this->ask('Database password');
+                $dbPass = $this->ask('Database password', false);
 
                 $contents = preg_replace('/DB_HOST=(.*)/', 'DB_HOST='.$dbHost, $contents);
                 $contents = preg_replace('/DB_PORT=(.*)/', 'DB_PORT='.$dbPort, $contents);
