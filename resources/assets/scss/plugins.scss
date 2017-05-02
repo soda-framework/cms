@@ -1,9 +1,9 @@
 @import "variables";
 @import "mixins";
-
 // Plugins
-@import "../../../node_modules/bootstrap-fileinput/css/fileinput";
-
+@import "../../../node_modules/bootstrap-fileinput/sass/fileinput";
+//noinspection CssUnknownTarget
+@import "../../../node_modules/bootstrap-fileinput/themes/explorer/theme";
 //noinspection CssUnknownTarget
 @import "../../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min";
 @import "../../../node_modules/select2/src/scss/core";
@@ -18,7 +18,7 @@
   &.file-preview-frame {
     box-shadow: none;
     &:not(.file-preview-error):hover {
-      box-shadow: 3px 3px 5px -3px rgba(0,0,0,0.5);
+      box-shadow: 3px 3px 5px -3px rgba(0, 0, 0, 0.5);
     }
 
     .file-thumbnail-footer {
@@ -48,5 +48,35 @@
     border-bottom-left-radius: $s2bs-input-border-radius;
     border-bottom-right-radius: $s2bs-input-border-radius;
     border-bottom: 1px solid $s2bs-input-border-focus;
+  }
+}
+
+.file-preview {
+  border-radius: 0;
+  border: none;
+  padding: 0px;
+
+  > .fileinput-remove {
+    display: none;
+  }
+}
+
+.file-drop-zone {
+  border-radius: 0;
+  padding: 0;
+}
+
+.theme-explorer {
+  .file-preview .table {
+    border: 0;
+  }
+
+  .explorer-frame {
+    td {
+      border-top-width: 1px;
+    }
+    .kv-file-content {
+      padding: 0;
+    }
   }
 }

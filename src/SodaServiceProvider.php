@@ -125,7 +125,7 @@ class SodaServiceProvider extends ServiceProvider
     {
         $this->app->config->set('filesystems.disks.soda.public', [
             'driver'     => 'local',
-            'root'       => public_path($this->app->config->get('soda.upload.folder')),
+            'root'       => public_path(),
             'visibility' => 'public',
         ]);
     }

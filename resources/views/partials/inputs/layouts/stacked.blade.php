@@ -1,7 +1,9 @@
 @section("field.label")
+    @if($field_label !== null)
     <div class="form-group__label">
         <label for="{{ $field_id }}">{{ $field_label }}</label>
     </div>
+    @endif
 @overwrite
 
 @section("field")

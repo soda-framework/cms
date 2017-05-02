@@ -42,7 +42,7 @@ abstract class AbstractUploadableFile
      */
     public function setUploadTo($uploadTo)
     {
-        $this->uploadTo = $uploadTo;
+        $this->uploadTo = trim($uploadTo, '/').'/';
 
         return $this;
     }
@@ -54,7 +54,7 @@ abstract class AbstractUploadableFile
      */
     public function appendToUploadPath($appendedPath)
     {
-        $this->uploadTo = trim($this->uploadTo.'/'.trim($appendedPath, '/'), '/');
+        $this->uploadTo = trim($this->uploadTo, '/').'/'.trim($appendedPath, '/').'/';
 
         return $this;
     }

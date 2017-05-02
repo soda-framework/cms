@@ -1,10 +1,5 @@
 <?php
 
-$smallView = false;
-if ($content->type === null || $content->type->fields === null || !count($content->type->fields->where('pivot.show_in_table', 1))) {
-    $smallView = true;
-}
-
 $blockTypes = $content->blockTypes->keyBy('id');
 if ($content->type && $content->type->blockTypes) {
     $blockTypes = $blockTypes->merge($content->type->blockTypes->keyBy('id'));
@@ -18,21 +13,22 @@ if ($content->type && $content->type->blockTypes) {
 @stop
 
 @section('settings.basic')
-    <div class="content-block {{ $smallView ? '' : 'full' }}">
         {!! app('soda.form')->text([
             "name"        => "Name",
             "description" => "The name of this page",
             "field_name"  => 'name',
         ])->setModel($content) !!}
 
-        {!! app('soda.form')->slug([
-            'name'        => 'Slug',
-            'description' => 'The url of this page',
-            'field_name'  => 'slug',
-            'field_params' => [
-                'prefix' => ($content->parent_id !== null && $parent = $content->getParent()) ? $parent->slug : '',
-            ],
-        ])->setModel($content) !!}
+        @if(!$content->exists || $content->isSluggable())
+            {!! app('soda.form')->slug([
+                'name'        => 'Slug',
+                'description' => 'The url of this page',
+                'field_name'  => 'slug',
+                'field_params' => [
+                    'prefix' => ($content->parent_id !== null && $parent = $content->getParent()) ? $parent->slug : '',
+                ],
+            ])->setModel($content) !!}
+        @endif
 
         {!! app('soda.form')->toggle([
             'name'         => 'Published',
@@ -42,7 +38,6 @@ if ($content->type && $content->type->blockTypes) {
                 'checked-value'   => Soda\Cms\Foundation\Constants::STATUS_LIVE,
                 'unchecked-value' => Soda\Cms\Foundation\Constants::STATUS_DRAFT],
         ])->setModel($content) !!}
-    </div>
 @stop
 
 @section('tab.advanced')
@@ -50,29 +45,90 @@ if ($content->type && $content->type->blockTypes) {
         <p>Advanced page settings</p>
         <hr/>
 
-        {!! app('soda.form')->toggle([
-            'name'         => 'Is deletable',
-            'field_name'   => 'is_deletable',
-            'value'        => 1,
-            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-            'description'  => 'If disabled, this content item can not be deleted'
-        ])->setModel($content) !!}
-
-        {!! app('soda.form')->toggle([
-            'name'         => 'Is movable',
-            'field_name'   => 'is_movable',
-            'value'        => 1,
-            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-            'description'  => 'If disabled, this content item can not be moved'
-        ])->setModel($content) !!}
-
-        {!! app('soda.form')->toggle([
-            'name'         => 'Is folder',
-            'field_name'   => 'is_folder',
-            'value'        => 0,
-            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-            'description'  => 'If enabled, this content can have child content items'
-        ])->setModel($content) !!}
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <table class="table middle table-settings">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>Sluggable</label><br />
+                            <small class="text-muted">If disabled, this content item can not be reached by a slug</small>
+                        </td>
+                        <td width="62">
+                            {!! app('soda.form')->toggle([
+                                'name'         => null,
+                                'field_name'   => 'is_sluggable',
+                                'value'        => 1,
+                                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                            ])->setModel($content) !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Publishable</label><br />
+                            <small class="text-muted">If disabled, this content item can not be changed from it's current published state</small>
+                        </td>
+                        <td width="62">
+                            {!! app('soda.form')->toggle([
+                                'name'         => null,
+                                'field_name'   => 'is_publishable',
+                                'value'        => 1,
+                                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                            ])->setModel($content) !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Folder</label><br />
+                            <small class="text-muted">If enabled, this content can have child content items</small>
+                        </td>
+                        <td width="62">
+                            {!! app('soda.form')->toggle([
+                                'name'         => null,
+                                'field_name'   => 'is_folder',
+                                'value'        => 0,
+                                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                            ])->setModel($content) !!}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <table class="table middle table-settings">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>Deletable</label><br />
+                            <small class="text-muted">If disabled, this content item can not be deleted</small>
+                        </td>
+                        <td width="62">
+                            {!! app('soda.form')->toggle([
+                                'name'         => null,
+                                'field_name'   => 'is_deletable',
+                                'value'        => 1,
+                                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                            ])->setModel($content) !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Movable</label><br />
+                            <small class="text-muted">If disabled, this content item can not be moved</small>
+                        </td>
+                        <td width="62">
+                            {!! app('soda.form')->toggle([
+                                'name'         => null,
+                                'field_name'   => 'is_movable',
+                                'value'        => 1,
+                                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                            ])->setModel($content) !!}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         {!! app('soda.form')->text([
             'name'        => null,
@@ -116,7 +172,7 @@ if ($content->type && $content->type->blockTypes) {
             <input type="hidden" name="parent_id" value="{{ $content->parent_id }}"/>
         @endif
         <div class="row">
-            <div class="{{ !$smallView ? 'col-md-9' : 'col-md-12' }} col-xs-12">
+            <div class="col-xs-12">
 
                 <ul class="nav nav-pills" role="tablist">
                     <li role='presentation' aria-controls="tab_settings">
@@ -148,8 +204,9 @@ if ($content->type && $content->type->blockTypes) {
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane" id="tab_settings" role="tabpanel">
-                        @if(!$smallView)
                         <div class="content-block">
+                            @yield('settings.basic')
+
                             @if($content->type && $content->type->description)
                                 <p>{{ $content->type->description }}</p>
                                 <hr/>
@@ -160,9 +217,6 @@ if ($content->type && $content->type->blockTypes) {
                                 @endforeach
                             @endif
                         </div>
-                        @else
-                            @yield('settings.basic')
-                        @endif
                     </div>
                     @foreach($blockTypes as $blockType)
                         @if($blockType->list_action_type == 'view')
@@ -191,11 +245,6 @@ if ($content->type && $content->type->blockTypes) {
                     @endpermission
                 </div>
             </div>
-            @if(!$smallView)
-            <div class="col-md-3 col-xs-12 pull-right">
-                @yield('settings.basic')
-            </div>
-            @endif
         </div>
     </form>
 

@@ -98,6 +98,8 @@ class Uploader
             $uploadableFile->setTransformConfig($transformConfig)->transform();
         }
 
+        $uploadableFile->setUploadTo(config('soda.upload.folder'));
+
         $uploadFilePath = $uploadableFile->uploadPath();
 
         // Generate return information
@@ -106,7 +108,7 @@ class Uploader
                 return substr($this->driver()->getAdapter()->applyPathPrefix($uploadFilePath), strlen(public_path()));
             }
 
-            return $this->driver()->url($uploadFilePath);
+            return $this->driver()->url(trim($uploadFilePath, '/'));
         }
 
         return false;

@@ -54,7 +54,7 @@ class FancyUpload extends AbstractFormField
             'overwriteInitial'        => $is_multi ? false : true,
             'autoReplace'             => $is_multi ? false : true,
             'initialPreviewAsData'    => true, // identify if you are sending preview data only and not the raw markup
-            'theme'                   => 'fa', //we want to use font awesome instead of glyphicons.
+            'theme'                   => 'explorer', //we want to use font awesome instead of glyphicons.
             'allowedPreviewTypes'     => ['image', 'pdf'],
             'previewFileIcon'         => '<i class="fa fa-file"></i>',
             'validateInitialCount'    => true,

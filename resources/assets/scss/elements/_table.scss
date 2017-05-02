@@ -40,6 +40,23 @@
       vertical-align: middle;
     }
   }
+
+  &.table-settings {
+    tr {
+      > td, > th {
+        padding: 12px;
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+
   tr.middle {
     > td, > th {
       vertical-align: middle;
@@ -113,7 +130,7 @@
 }
 
 @media(max-width: $screen-sm-max) {
-  .table {
+  .table:not(.table-settings) {
     table-layout: fixed;
 
     > thead > tr > th, > tbody > tr > td {
