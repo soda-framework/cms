@@ -10,10 +10,6 @@
   ],
   "authors": [
     {
-      "name": "Simon Davies",
-      "email": "noodlewitt@gmail.com"
-    },
-    {
       "name": "Ryan Brereton-Canham",
       "email": "ryzaar@hotmail.com"
     },
@@ -22,7 +18,8 @@
       "email": "jplittleford@gmail.com"
     },
     {
-      "name": "Jacob Mackenzie"
+      "name": "Simon Davies",
+      "email": "noodlewitt@gmail.com"
     }
   ],
   "require": {
@@ -50,6 +47,7 @@
       "dev-release/0.4": "0.4.x-dev",
       "dev-release/0.5": "0.5.x-dev",
       "dev-release/0.6": "0.6.x-dev",
+      "dev-release/0.7": "0.7.x-dev",
       "dev-master": "0.6.x-dev"
     }
   }
