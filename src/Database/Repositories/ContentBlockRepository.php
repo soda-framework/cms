@@ -62,7 +62,7 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
         }
 
         foreach ($blockType->fields as $field) {
-            if ($request->input($field->field_name) !== null) {
+            if ($request->input($field->field_name) !== null || $request->file($field->field_name) !== null) {
                 $block->parseField($field, $request);
             }
         }

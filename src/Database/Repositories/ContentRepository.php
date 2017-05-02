@@ -180,7 +180,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             $content->setRelation('properties', Soda::dynamicContent($content->getRelation('type')->getAttribute('identifier'))->firstOrNew(['content_id' => $content->getKey()]));
 
             foreach ($content->type->fields as $field) {
-                if ($request->input('settings') !== null || $request->file('settings') !== null) {
+                if ($request->input("settings.$field") !== null || $request->file("settings.$field") !== null) {
                     $content->properties->parseField($field, $request, 'settings');
                 }
             }
