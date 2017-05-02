@@ -46,6 +46,7 @@
         @endforeach
     </ul>
 
+
     <form method="POST" id="settings-form" action="{{ route('soda.settings.update', $application->id) }}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         {!! method_field('PUT') !!}

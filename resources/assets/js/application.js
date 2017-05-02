@@ -17,7 +17,7 @@ window.Soda = (function () {
         },
         lime: {
             primary: "#69E815",
-            secondary: "#D685"
+            secondary: "#0BD685"
         },
         strawberry: {
             primary: "#F75F86",
