@@ -4,7 +4,6 @@ namespace Soda\Cms\Database\Models\Traits;
 
 use Exception;
 use Carbon\Carbon;
-use Soda\Cms\Support\Facades\Form;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Soda\Cms\Database\Observers\DynamicModelObserver;
@@ -85,7 +84,7 @@ trait BuildsDynamicModels
 
         if (! Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
-                Form::field($field)->addToModel($table)->nullable()->after('id');
+                app('soda.form')->field($field)->addToModel($table)->nullable()->after('id');
             });
         }
 
@@ -99,7 +98,7 @@ trait BuildsDynamicModels
 
         if (Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
-                Form::field($field)->removeFromModel($table);
+                app('soda.form')->field($field)->removeFromModel($table);
             });
         }
 

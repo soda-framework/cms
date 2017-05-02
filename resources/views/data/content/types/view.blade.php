@@ -6,7 +6,7 @@
 
 
 @section('content')
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-pills" role="tablist">
         <li role='presentation' aria-controls="tab_settings">
             <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
         </li>
@@ -65,13 +65,13 @@
                 <div class="content-block">
                     @if($contentType->id)
                         @if(count($contentType->fields))
-                            <table class="table">
+                            <table class="table table-striped middle">
                                 <thead>
                                 <tr>
                                     <th width="20"></th>
                                     <th>Field</th>
                                     <th width="120">Show in table</th>
-                                    <th width="192">Options</th>
+                                    <th width="232">Options</th>
                                 </tr>
                                 </thead>
                                 <tbody class="sortable" data-entityname="content-types.fields">

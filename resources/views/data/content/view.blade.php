@@ -1,13 +1,13 @@
 <?php
 
 $smallView = false;
-if ($page->type === null || $page->type->fields === null || !count($page->type->fields->where('pivot.show_in_table', 1))) {
+if ($content->type === null || $content->type->fields === null || !count($content->type->fields->where('pivot.show_in_table', 1))) {
     $smallView = true;
 }
 
-$blockTypes = $page->blockTypes->keyBy('id');
-if ($page->type && $page->type->blockTypes) {
-    $blockTypes = $blockTypes->merge($page->type->blockTypes->keyBy('id'));
+$blockTypes = $content->blockTypes->keyBy('id');
+if ($content->type && $content->type->blockTypes) {
+    $blockTypes = $blockTypes->merge($content->type->blockTypes->keyBy('id'));
 }
 ?>
 
@@ -23,16 +23,16 @@ if ($page->type && $page->type->blockTypes) {
             "name"        => "Name",
             "description" => "The name of this page",
             "field_name"  => 'name',
-        ])->setModel($page) !!}
+        ])->setModel($content) !!}
 
         {!! app('soda.form')->slug([
             'name'        => 'Slug',
             'description' => 'The url of this page',
             'field_name'  => 'slug',
             'field_params' => [
-                'prefix' => ($page->parent_id !== null && $parent = $page->getParent()) ? $parent->slug : '',
+                'prefix' => ($content->parent_id !== null && $parent = $content->getParent()) ? $parent->slug : '',
             ],
-        ])->setModel($page) !!}
+        ])->setModel($content) !!}
 
         {!! app('soda.form')->toggle([
             'name'         => 'Published',
@@ -41,7 +41,7 @@ if ($page->type && $page->type->blockTypes) {
             'field_params' => [
                 'checked-value'   => Soda\Cms\Foundation\Constants::STATUS_LIVE,
                 'unchecked-value' => Soda\Cms\Foundation\Constants::STATUS_DRAFT],
-        ])->setModel($page) !!}
+        ])->setModel($content) !!}
     </div>
 @stop
 
@@ -56,7 +56,7 @@ if ($page->type && $page->type->blockTypes) {
             'value'        => 1,
             'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
             'description'  => 'If disabled, this content item can not be deleted'
-        ])->setModel($page) !!}
+        ])->setModel($content) !!}
 
         {!! app('soda.form')->toggle([
             'name'         => 'Is movable',
@@ -64,7 +64,7 @@ if ($page->type && $page->type->blockTypes) {
             'value'        => 1,
             'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
             'description'  => 'If disabled, this content item can not be moved'
-        ])->setModel($page) !!}
+        ])->setModel($content) !!}
 
         {!! app('soda.form')->toggle([
             'name'         => 'Is folder',
@@ -72,48 +72,48 @@ if ($page->type && $page->type->blockTypes) {
             'value'        => 0,
             'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
             'description'  => 'If enabled, this content can have child content items'
-        ])->setModel($page) !!}
+        ])->setModel($content) !!}
 
         {!! app('soda.form')->text([
             'name'        => null,
             'field_name'  => 'view_action',
-            'value'       => $page->type && $page->type->view_action,
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
+            'value'       => $content->type && $content->type->view_action,
+        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
         {!! app('soda.form')->dropdown([
             'name'        => 'View Action',
             'field_name'  => 'view_action_type',
-            'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+            'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
             'description'  => 'Specifies the interface supplied when viewing this page.',
-            'value'        => $page->type && $page->type->view_action_type ? $page->type->view_action_type : 'view',
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+            'value'        => $content->type && $content->type->view_action_type ? $content->type->view_action_type : 'view',
+        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
 
         {!! app('soda.form')->text([
             'name'        => null,
             'field_name'  => 'edit_action',
-            'value'       => $page->type && $page->type->edit_action,
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
+            'value'       => $content->type && $content->type->edit_action,
+        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
         {!! app('soda.form')->dropdown([
             'name'        => 'Edit Action',
             'field_name'  => 'edit_action_type',
-            'field_params' => ['options' => Soda\Cms\Foundation\Constants::PAGE_ACTION_TYPES],
+            'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
             'description'  => 'Specifies the interface supplied when editing this page.',
-            'value'        => $page->type && $page->type->edit_action_type ? $page->type->edit_action_type : 'view',
-        ])->setModel($page)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+            'value'        => $content->type && $content->type->edit_action_type ? $content->type->edit_action_type : 'view',
+        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
     </div>
 @stop
 
 @section('content')
-    <form method="POST" id="page-form" action="{{ route('soda.pages.' . ($page->id ? 'update' : 'store'), $page->id) }}"
+    <form method="POST" id="page-form" action="{{ route('soda.content.' . ($content->id ? 'update' : 'store'), $content->id) }}"
           enctype="multipart/form-data">
         {!! csrf_field() !!}
-        {!! method_field($page->id ? 'PUT' : 'POST') !!}
-        @if($page->type)
-            <input type="hidden" name="page_type_id" value="{{ $page->type->id }}"/>
+        {!! method_field($content->id ? 'PUT' : 'POST') !!}
+        @if($content->type)
+            <input type="hidden" name="page_type_id" value="{{ $content->type->id }}"/>
         @endif
-        @if(!$page->id)
-            <input type="hidden" name="parent_id" value="{{ $page->parent_id }}"/>
+        @if(!$content->id)
+            <input type="hidden" name="parent_id" value="{{ $content->parent_id }}"/>
         @endif
         <div class="row">
             <div class="{{ !$smallView ? 'col-md-9' : 'col-md-12' }} col-xs-12">
@@ -138,7 +138,7 @@ if ($page->type && $page->type->blockTypes) {
                     </li>
                     @endpermission
 
-                    @if($page->id)
+                    @if($content->id)
                         @permission("attach-blocks")
                         <li role='presentation'>
                             <a role="tab" href="#tab_new-block">+</a>
@@ -150,13 +150,13 @@ if ($page->type && $page->type->blockTypes) {
                     <div class="tab-pane" id="tab_settings" role="tabpanel">
                         @if(!$smallView)
                         <div class="content-block">
-                            @if($page->type && $page->type->description)
-                                <p>{{ $page->type->description }}</p>
+                            @if($content->type && $content->type->description)
+                                <p>{{ $content->type->description }}</p>
                                 <hr/>
                             @endif
-                            @if($page->type && $page->type->fields)
-                                @foreach($page->type->fields->where('pivot.show_in_table', 1) as $field)
-                                    {!! app('soda.form')->field($field)->setModel($page->pageAttributes())->setPrefix('settings') !!}
+                            @if($content->type && $content->type->fields)
+                                @foreach($content->type->fields->where('pivot.show_in_table', 1) as $field)
+                                    {!! app('soda.form')->field($field)->setModel($content->properties)->setPrefix('settings') !!}
                                 @endforeach
                             @endif
                         </div>
@@ -170,8 +170,8 @@ if ($page->type && $page->type->blockTypes) {
                                 <div class="content-block">
                                     @include($blockType->list_action, [
                                         'blockType'  => $blockType,
-                                        'page'       => $page,
-                                        'blocks'     => $page->block($blockType)->paginate(null, ['*'], $blockType->identifier .'-page')
+                                        'page'       => $content,
+                                        'blocks'     => $content->block($blockType)->paginate(null, ['*'], $blockType->identifier .'-page')
                                     ])
                                 </div>
                             </div>
@@ -206,7 +206,7 @@ if ($page->type && $page->type->blockTypes) {
 
 @section('modals')
     @parent
-    @if($page->id)
+    @if($content->id)
         @permission("attach-blocks")
         <div class="modal fade" id="newBlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -216,7 +216,7 @@ if ($page->type && $page->type->blockTypes) {
                                     aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Select a block to add...</h4>
                     </div>
-                    <form method="POST" action="{{ route('soda.pages.blocks.attach', $page->id) }}">
+                    <form method="POST" action="{{ route('soda.content.blocks.attach', $content->id) }}">
                         {!! csrf_field() !!}
                         <div class="modal-body">
                             {!! app('soda.form')->dropdown([

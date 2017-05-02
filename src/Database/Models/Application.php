@@ -49,6 +49,7 @@ class Application extends Model implements ApplicationInterface
         $settings = $this->getSettings();
         if ($settings) {
             $setting = $settings->where('field_name', $setting)->first();
+
             if ($setting) {
                 return $setting->getFieldValue();
             }

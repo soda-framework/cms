@@ -3,11 +3,11 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Support\Facades\Soda;
-use Soda\Cms\Database\Repositories\Traits\BuildsDataGrids;
 use Soda\Cms\Database\Models\Contracts\ApplicationInterface;
 use Soda\Cms\Database\Models\Contracts\ApplicationUrlInterface;
 use Soda\Cms\Database\Repositories\Contracts\ApplicationRepositoryInterface;
+use Soda\Cms\Database\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Support\Facades\Soda;
 
 class ApplicationRepository implements ApplicationRepositoryInterface
 {
@@ -71,7 +71,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         }
 
         if ($request->input('settings') || $request->file('settings')) {
-            if (! $model->relationLoaded('settings')) {
+            if (!$model->relationLoaded('settings')) {
                 $model->load('settings');
             }
 
@@ -86,26 +86,11 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
     public function getSettingsForApplication(ApplicationInterface $application)
     {
-        if (! $application->relationLoaded('settings')) {
+        if (!$application->relationLoaded('settings')) {
             $application->load('settings');
         }
 
-        $settings = $application->getRelation('settings');
-
-        if ($settings !== null) {
-            $settings = $settings->groupBy('category');
-
-            // Move 'Settings' category to the start
-            if (isset($settings['Settings'])) {
-                $defaultCategory = $settings->pull('Settings');
-
-                return $settings->prepend($defaultCategory, 'Settings');
-            }
-
-            return $settings;
-        }
-
-        return [];
+        return $application->getRelation('settings');
     }
 
     public function getFilteredGrid($perPage)

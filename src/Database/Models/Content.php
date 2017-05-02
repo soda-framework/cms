@@ -95,7 +95,7 @@ class Content extends Entity implements ContentInterface
 
     public function blockTypes()
     {
-        return $this->belongsToMany(BlockType::class, 'page_blocks')->withPivot('min_blocks', 'max_blocks');
+        return $this->belongsToMany(BlockType::class, 'content_blocks')->withPivot('min_blocks', 'max_blocks');
     }
 
     public function getBlockType($identifier)
@@ -152,6 +152,21 @@ class Content extends Entity implements ContentInterface
     public function isMovable()
     {
         return $this->is_movable;
+    }
+
+    public function getPropertiesAttribute($value)
+    {
+        $relatedModel = $this->getRelationValue('properties');
+
+        if (!$relatedModel) {
+            $relatedModel = new DynamicContent;
+
+            if ($this->type) {
+                $relatedModel->setPrefixedTable($this->type->identifier);
+            }
+        }
+
+        return $relatedModel;
     }
 
     /**

@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-pills" role="tablist">
         <li role='presentation' aria-controls="tab_settings">
             <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
         </li>

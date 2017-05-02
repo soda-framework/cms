@@ -43,7 +43,22 @@ class SettingsController extends BaseController
     public function edit($id = null)
     {
         $application = $this->applications->getApplication($id);
-        $settingsByCategory = $this->applications->getSettingsForApplication($application);
+        $settings = $this->applications->getSettingsForApplication($application);
+
+        if ($settings !== null) {
+            $settingsByCategory = $settings->transform(function ($item) {
+                if (!$item->category) $item->category = 'Settings';
+
+                return $item;
+            })->groupBy('category');
+
+            // Move 'Settings' category to the start
+            if (isset($settingsByCategory['Settings'])) {
+                $defaultCategory = $settingsByCategory->pull('Settings');
+
+                $settingsByCategory->prepend($defaultCategory, 'Settings');
+            }
+        }
 
         return soda_cms_view('data.settings.view', compact('application', 'settingsByCategory'));
     }

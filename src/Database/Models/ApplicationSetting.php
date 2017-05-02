@@ -38,11 +38,7 @@ class ApplicationSetting extends Model implements ApplicationSettingInterface
 
     public function getFieldValue()
     {
-        $field = app('soda.form')->field($this);
-
-        $field->getFieldValue();
-
-        return $this;
+        return app('soda.form')->field($this)->getFieldValue();
     }
 
     public function parseField(Request $request)
