@@ -6,7 +6,7 @@
 
 @section('tab.settings')
     {!! app('soda.form')->text([
-        "name"        => "Name",
+        "name"        => "Application Name",
         "description" => "The name of the application",
         "field_name"  => 'name',
     ])->setModel($application) !!}
@@ -70,6 +70,7 @@
                                 <div class="content-block">
                                     @if($category == 'Settings')
                                         @yield('tab.settings')
+                                        <hr />
                                     @endif
                                     @foreach($settings as $setting)
                                         {!! app('soda.form')->field($setting, 'settings')->setModel($setting) !!}
