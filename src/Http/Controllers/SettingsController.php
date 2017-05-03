@@ -73,15 +73,16 @@ class SettingsController extends BaseController
      */
     public function update(Request $request, $id = null)
     {
+        $cookie = cookie('soda-theme', 'default');
         try {
             $application = $this->applications->save($request, $id);
             if($request->has('theme')) {
-                $request->session()->put('soda-theme', $request->input('theme'));
+                $cookie = cookie('soda-theme', $request->input('theme'));
             }
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.update', ['object' => 'application']));
         }
 
-        return redirect()->route('soda.settings.edit', $application->getKey())->with('success', trans('soda::messages.updated', ['object' => 'application']));
+        return redirect()->route('soda.settings.edit', $application->getKey())->with('success', trans('soda::messages.updated', ['object' => 'application']))->cookie($cookie);
     }
 }
