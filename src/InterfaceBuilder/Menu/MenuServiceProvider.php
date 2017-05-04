@@ -51,7 +51,7 @@ class MenuServiceProvider extends ServiceProvider
             $menu->addItem('Dashboard', [
                 'url'         => route('soda.home'),
                 'icon'        => 'mdi mdi-collage',  //mdi-view-dashboard
-                'label'       => 'Dashboard',
+                'label'       => ucwords(trans('soda::terminology.dashboard')),
                 'isCurrent'   => soda_request_is() || soda_request_is('/'),
                 'permissions' => 'access-cms',
             ]);
@@ -67,7 +67,7 @@ class MenuServiceProvider extends ServiceProvider
             $menu->addItem('Pages', [
                 'url'         => route('soda.content.index'),
                 'icon'        => 'mdi mdi-file-outline',
-                'label'       => 'Pages',
+                'label'       => ucwords(trans('soda::terminology.content')),
                 'isCurrent'   => soda_request_is('content') || soda_request_is('content/*'),
                 'permissions' => 'view-pages',
             ]);
@@ -80,21 +80,21 @@ class MenuServiceProvider extends ServiceProvider
 
             $menu['Scaffolding']->addChild('Content Types', [
                 'url'         => route('soda.content-types.index'),
-                'label'       => 'Content Types',
+                'label'       => ucwords(trans('soda::terminology.content_type_plural')),
                 'isCurrent'   => soda_request_is('content-types*'),
                 'permissions' => 'manage-content-types',
             ]);
 
             $menu['Scaffolding']->addChild('Block Types', [
                 'url'         => route('soda.block-types.index'),
-                'label'       => 'Block Types',
+                'label'       => ucwords(trans('soda::terminology.block_type_plural')),
                 'isCurrent'   => soda_request_is('block-types*'),
                 'permissions' => 'manage-block-types',
             ]);
 
             $menu['Scaffolding']->addChild('Fields', [
                 'url'         => route('soda.fields.index'),
-                'label'       => 'Fields',
+                'label'       => ucwords(trans('soda::terminology.field_plural')),
                 'isCurrent'   => soda_request_is('fields*'),
                 'permissions' => 'manage-fields',
             ]);

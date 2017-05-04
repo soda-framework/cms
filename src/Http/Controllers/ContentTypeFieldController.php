@@ -28,10 +28,10 @@ class ContentTypeFieldController extends BaseController
         try {
             $this->content->attach($contentTypeId, $request->input('fieldable_id'), $request->only('show_in_table'));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.attach', ['object' => 'field']));
+            return $this->handleException($e, trans('soda::errors.attach', ['object' => trans('soda::terminology.field')]));
         }
 
-        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'fields'])->with('success', trans('soda::messages.attached', ['object' => 'field']));
+        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'fields'])->with('success', trans('soda::messages.attached', ['object' => trans('soda::terminology.field')]));
     }
 
     /**
@@ -47,9 +47,9 @@ class ContentTypeFieldController extends BaseController
         try {
             $this->content->detach($contentTypeId, $fieldId);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.detach', ['object' => 'field']));
+            return $this->handleException($e, trans('soda::errors.detach', ['object' => trans('soda::terminology.field')]));
         }
 
-        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'fields'])->with('success', trans('soda::messages.detached', ['object' => 'field']));
+        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'fields'])->with('success', trans('soda::messages.detached', ['object' => trans('soda::terminology.field')]));
     }
 }

@@ -16,7 +16,7 @@ class UserController extends BaseController
         $this->users = $users;
 
         app('soda.interface')->setHeading('Users')->setHeadingIcon('mdi mdi-account-circle');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:view-users');
         $this->middleware('soda.permission:create-users')->only(['create', 'store']);

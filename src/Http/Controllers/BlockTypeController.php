@@ -14,8 +14,8 @@ class BlockTypeController extends BaseController
     {
         $this->blockTypes = $blockTypes;
 
-        app('soda.interface')->setHeading('Block Types')->setHeadingIcon('mdi mdi mdi-widgets');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->setHeading(ucwords(trans('soda::terminology.block_type_plural')))->setHeadingIcon('mdi mdi mdi-widgets');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:manage-block-types');
     }
@@ -27,7 +27,7 @@ class BlockTypeController extends BaseController
      */
     public function index()
     {
-        app('soda.interface')->setDescription('Different Block Types have different field types applied to them');
+        app('soda.interface')->setDescription('Different ' . ucwords(trans('soda::terminology.block_type_plural')) . ' have different field types applied to them');
 
         return soda_cms_view('data.block-types.index', $this->blockTypes->getFilteredGrid(10));
     }
@@ -41,13 +41,13 @@ class BlockTypeController extends BaseController
      */
     public function create(Request $request)
     {
-        app('soda.interface')->setHeading('New Block Type');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), 'Block Types');
+        app('soda.interface')->setHeading('New ' . ucwords(trans('soda::terminology.block_type_plural')));
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), ucwords(trans('soda::terminology.block_type_plural')));
 
         try {
             $blockType = $this->blockTypes->newInstance($request);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.block_type')]));
         }
 
         return soda_cms_view('data.block-types.view', compact('blockType'));
@@ -65,10 +65,10 @@ class BlockTypeController extends BaseController
         try {
             $blockType = $this->blockTypes->save($request);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'block type']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.block_type')]));
         }
 
-        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('success', trans('soda::messages.created', ['object' => 'block type']));
+        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('success', trans('soda::messages.created', ['object' => trans('soda::terminology.block_type')]));
     }
 
     /**
@@ -84,11 +84,11 @@ class BlockTypeController extends BaseController
         $fields = $this->blockTypes->getAvailableFields($blockType);
 
         if (! $blockType) {
-            return $this->handleError(trans('soda::errors.not-found', ['object' => 'block type']));
+            return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.block_type')]));
         }
 
         app('soda.interface')->setHeading($blockType->name);
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), 'Block Types');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), ucwords(trans('soda::terminology.block_type_plural')));
 
         return soda_cms_view('data.block-types.view', compact('blockType', 'fields'));
     }
@@ -106,10 +106,10 @@ class BlockTypeController extends BaseController
         try {
             $blockType = $this->blockTypes->save($request, $id);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.update', ['object' => 'block type']));
+            return $this->handleException($e, trans('soda::errors.update', ['object' => trans('soda::terminology.block_type')]));
         }
 
-        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('success', trans('soda::messages.updated', ['object' => 'block type']));
+        return redirect()->route('soda.block-types.edit', $blockType->getKey())->with('success', trans('soda::messages.updated', ['object' => trans('soda::terminology.block_type')]));
     }
 
     /**
@@ -124,9 +124,9 @@ class BlockTypeController extends BaseController
         try {
             $this->blockTypes->destroy($id);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block type']));
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => trans('soda::terminology.block_type')]));
         }
 
-        return redirect()->route('soda.block-types.index')->with('warning', trans('soda::messages.deleted', ['object' => 'block type']));
+        return redirect()->route('soda.block-types.index')->with('warning', trans('soda::messages.deleted', ['object' => trans('soda::terminology.block_type')]));
     }
 }

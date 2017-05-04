@@ -28,10 +28,10 @@ class ContentTypeBlockController extends BaseController
         try {
             $this->contentTypeBlocks->attach($contentTypeId, $request->input('block_id'), array_filter($request->only('min_blocks', 'max_blocks')));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.attach', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.attach', ['object' => trans('soda::terminology.block')]));
         }
 
-        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'blocks'])->with('success', trans('soda::messages.attached', ['object' => 'block']));
+        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'blocks'])->with('success', trans('soda::messages.attached', ['object' => trans('soda::terminology.block')]));
     }
 
     /**
@@ -47,9 +47,9 @@ class ContentTypeBlockController extends BaseController
         try {
             $this->contentTypeBlocks->detach($contentTypeId, $blockTypeId);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.detach', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.detach', ['object' => trans('soda::terminology.block')]));
         }
 
-        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'blocks'])->with('success', trans('soda::messages.detached', ['object' => 'block']));
+        return redirect()->route('soda.content-types.edit', [$contentTypeId, 'tab' => 'blocks'])->with('success', trans('soda::messages.detached', ['object' => trans('soda::terminology.block')]));
     }
 }

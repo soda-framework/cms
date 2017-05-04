@@ -16,7 +16,7 @@ class PermissionController extends BaseController
         $this->permissions = $permissions;
 
         app('soda.interface')->setHeading('Permissions')->setHeadingIcon('mdi mdi-key-variant');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:view-permissions');
         $this->middleware('soda.permission:create-permissions')->only(['create', 'store']);

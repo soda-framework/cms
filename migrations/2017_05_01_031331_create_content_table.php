@@ -29,8 +29,8 @@ class CreateContentTable extends Migration
             $table->string('edit_action_type')->nullable();
             $table->tinyInteger('is_sluggable')->unsigned()->nullable()->default(1);
             $table->tinyInteger('is_folder')->unsigned()->nullable()->default(0);
-            $table->tinyInteger('is_movable')->unsigned()->nullable()->default(0);
-            $table->tinyInteger('is_deletable')->unsigned()->nullable()->default(0);
+            $table->tinyInteger('is_movable')->unsigned()->nullable()->default(1);
+            $table->tinyInteger('is_deletable')->unsigned()->nullable()->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

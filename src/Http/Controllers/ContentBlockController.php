@@ -15,7 +15,7 @@ class ContentBlockController extends BaseController
     {
         $this->contentBlocks = $contentBlocks;
 
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:view-pages');
         $this->middleware('soda.permission:edit-pages')->only(['create', 'store', 'delete', 'edit', 'update']);
@@ -36,10 +36,10 @@ class ContentBlockController extends BaseController
         try {
             $this->contentBlocks->attach($contentId, $request->input('block_id'), array_filter($request->only('min_blocks', 'max_blocks')));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.attach', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.attach', ['object' => trans('soda::terminology.block')]));
         }
 
-        return redirect()->route('soda.content.edit', $contentId)->with('success', trans('soda::messages.attached', ['object' => 'block']));
+        return redirect()->route('soda.content.edit', $contentId)->with('success', trans('soda::messages.attached', ['object' => trans('soda::terminology.block')]));
     }
 
     /**
@@ -55,10 +55,10 @@ class ContentBlockController extends BaseController
         try {
             $this->contentBlocks->detach($contentId, $blockTypeId);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.detach', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.detach', ['object' => trans('soda::terminology.block')]));
         }
 
-        return redirect()->route('soda.content.edit', $contentId)->with('success', trans('soda::messages.detached', ['object' => 'block']));
+        return redirect()->route('soda.content.edit', $contentId)->with('success', trans('soda::messages.detached', ['object' => trans('soda::terminology.block')]));
     }
 
     /**
@@ -74,11 +74,11 @@ class ContentBlockController extends BaseController
         try {
             list($content, $blockType, $block) = array_values($this->contentBlocks->newInstance($contentId, $blockTypeId));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.block')]));
         }
 
         app('soda.interface')->setHeading('New '.$blockType->name);
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), 'Pages');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
         app('soda.interface')->breadcrumbs()->addLink(route('soda.content.edit', $content->id), $content->name);
         app('soda.interface')->breadcrumbs()->addLink(route('soda.content.edit', $content->id).'?tab='.strtolower($blockType->identifier), $blockType->name);
 
@@ -99,10 +99,10 @@ class ContentBlockController extends BaseController
         try {
             list($content, $blockType, $block) = array_values($this->contentBlocks->save($request, $contentId, $blockTypeId));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.block')]));
         }
 
-        return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('success', trans('soda::messages.created', ['object' => 'block']));
+        return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('success', trans('soda::messages.created', ['object' => trans('soda::terminology.block')]));
     }
 
     /**
@@ -119,11 +119,11 @@ class ContentBlockController extends BaseController
         list($content, $blockType, $block) = array_values($this->contentBlocks->findById($contentId, $blockTypeId, $blockId));
 
         if (! $block) {
-            return $this->handleError(trans('soda::errors.not-found', ['object' => 'block']));
+            return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.block')]));
         }
 
         app('soda.interface')->setHeading('Editing block');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), 'Pages');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
         app('soda.interface')->breadcrumbs()->addLink(route('soda.content.edit', $content->id), $content->name);
         app('soda.interface')->breadcrumbs()->addLink(route('soda.content.edit', $content->id).'?tab='.strtolower($blockType->identifier), $blockType->name);
 
@@ -145,10 +145,10 @@ class ContentBlockController extends BaseController
         try {
             list($content, $blockType, $block) = array_values($this->contentBlocks->save($request, $contentId, $blockTypeId, $blockId));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.update', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.update', ['object' => trans('soda::terminology.block')]));
         }
 
-        return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('success', trans('soda::messages.updated', ['object' => 'block']));
+        return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('success', trans('soda::messages.updated', ['object' => trans('soda::terminology.block')]));
     }
 
     /**
@@ -165,10 +165,10 @@ class ContentBlockController extends BaseController
         try {
             list($content, $blockType, $block) = array_values($this->contentBlocks->destroy($contentId, $blockTypeId, $blockId));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'block']));
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => trans('soda::terminology.block')]));
         }
 
-        return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('warning', trans('soda::messages.deleted', ['object' => 'block']));
+        return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('warning', trans('soda::messages.deleted', ['object' => trans('soda::terminology.block')]));
     }
 
     protected function getTab(BlockTypeInterface $blockType)

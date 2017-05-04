@@ -15,7 +15,7 @@ class SettingsController extends BaseController
         $this->applications = $applications;
 
         app('soda.interface')->setHeading('Settings')->setHeadingIcon('mdi mdi-settings');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:view-application-settings')->only(['edit']);
         $this->middleware('soda.permission:edit-application-settings')->only(['update']);
@@ -73,16 +73,15 @@ class SettingsController extends BaseController
      */
     public function update(Request $request, $id = null)
     {
-        $cookie = cookie('soda-theme', 'default');
         try {
             $application = $this->applications->save($request, $id);
             if($request->has('theme')) {
-                $cookie = cookie('soda-theme', $request->input('theme'), 157680000);
+                $request->session()->put('soda-theme', $request->input('theme'));
             }
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.update', ['object' => 'application']));
         }
 
-        return redirect()->route('soda.settings.edit', $application->getKey())->with('success', trans('soda::messages.updated', ['object' => 'application']))->cookie($cookie);
+        return redirect()->route('soda.settings.edit', $application->getKey())->with('success', trans('soda::messages.updated', ['object' => 'application']));
     }
 }

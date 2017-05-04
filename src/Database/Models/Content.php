@@ -42,6 +42,7 @@ class Content extends Entity implements ContentInterface
         'is_sluggable',
         'is_folder',
         'is_movable',
+        'is_publishable',
         'is_deletable',
     ];
 

@@ -15,8 +15,8 @@ class FieldController extends BaseController
     {
         $this->fields = $fields;
 
-        app('soda.interface')->setHeading('Fields')->setHeadingIcon('mdi mdi-paperclip');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->setHeading(ucwords(trans('soda::terminology.field_plural')))->setHeadingIcon('mdi mdi-paperclip');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:manage-fields');
     }
@@ -28,7 +28,7 @@ class FieldController extends BaseController
      */
     public function index()
     {
-        app('soda.interface')->setDescription('Fields are added onto pages.');
+        app('soda.interface')->setDescription(ucwords(trans('soda::terminology.field_plural')) . ' are added onto pages.');
 
         return soda_cms_view('data.fields.index', $this->fields->getFilteredGrid(10));
     }
@@ -42,14 +42,14 @@ class FieldController extends BaseController
      */
     public function create(Request $request)
     {
-        app('soda.interface')->setHeading('New Field');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.fields.index'), 'Fields');
+        app('soda.interface')->setHeading('New ' . ucwords(trans('soda::terminology.field')));
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.fields.index'), ucwords(trans('soda::terminology.field_plural')));
 
         try {
             $field = $this->fields->newInstance($request);
             $fieldTypes = $this->fields->getFieldTypes();
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'field']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.field')]));
         }
 
         return soda_cms_view('data.fields.view', compact('field', 'fieldTypes'));
@@ -67,10 +67,10 @@ class FieldController extends BaseController
         try {
             $field = $this->fields->save($request);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'field']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.field')]));
         }
 
-        return redirect()->route('soda.fields.edit', $field->getKey())->with('success', trans('soda::messages.created', ['object' => 'field']));
+        return redirect()->route('soda.fields.edit', $field->getKey())->with('success', trans('soda::messages.created', ['object' => trans('soda::terminology.field')]));
     }
 
     /**
@@ -86,11 +86,11 @@ class FieldController extends BaseController
         $fieldTypes = $this->fields->getFieldTypes();
 
         if (! $field) {
-            return $this->handleError(trans('soda::errors.not-found', ['object' => 'field']));
+            return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.field')]));
         }
 
         app('soda.interface')->setHeading($field->name);
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.fields.index'), 'Fields');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.fields.index'), ucwords(trans('soda::terminology.field_plural')));
 
         return soda_cms_view('data.fields.view', compact('field', 'fieldTypes'));
     }
@@ -108,10 +108,10 @@ class FieldController extends BaseController
         try {
             $field = $this->fields->save($request, $id);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.update', ['object' => 'field']));
+            return $this->handleException($e, trans('soda::errors.update', ['object' => trans('soda::terminology.field')]));
         }
 
-        return redirect()->route('soda.fields.edit', $field->getKey())->with('success', trans('soda::messages.updated', ['object' => 'field']));
+        return redirect()->route('soda.fields.edit', $field->getKey())->with('success', trans('soda::messages.updated', ['object' => trans('soda::terminology.field')]));
     }
 
     /**
@@ -126,11 +126,11 @@ class FieldController extends BaseController
         try {
             $this->fields->destroy($id);
         } catch (ModelNotFoundException $e) {
-            return $this->handleException($e, trans('soda::errors.not-found', ['object' => 'field']));
+            return $this->handleException($e, trans('soda::errors.not-found', ['object' => trans('soda::terminology.field')]));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'field']));
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => trans('soda::terminology.field')]));
         }
 
-        return redirect()->route('soda.fields.index')->with('warning', trans('soda::messages.deleted', ['object' => 'field']));
+        return redirect()->route('soda.fields.index')->with('warning', trans('soda::messages.deleted', ['object' => trans('soda::terminology.field')]));
     }
 }

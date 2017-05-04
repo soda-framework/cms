@@ -16,7 +16,7 @@ class RoleController extends BaseController
         $this->roles = $roles;
 
         app('soda.interface')->setHeading('Roles')->setHeadingIcon('mdi mdi-account-card-details');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:view-roles');
         $this->middleware('soda.permission:create-roles')->only(['create', 'store']);

@@ -14,8 +14,8 @@ class ContentTypeController extends BaseController
     {
         $this->contentTypes = $contentTypes;
 
-        app('soda.interface')->setHeading('Content Types')->setHeadingIcon('mdi mdi-file-outline');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), 'Home');
+        app('soda.interface')->setHeading(ucwords(trans('soda::terminology.content_type_plural')))->setHeadingIcon('mdi mdi-file-outline');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
 
         $this->middleware('soda.permission:manage-content-types');
     }
@@ -27,7 +27,7 @@ class ContentTypeController extends BaseController
      */
     public function index()
     {
-        app('soda.interface')->setDescription('Different Content Types have different field types applied to them');
+        app('soda.interface')->setDescription('Different ' . ucwords(trans('soda::terminology.content_type_plural')) . ' have different field types applied to them');
 
         return soda_cms_view('data.content.types.index', $this->contentTypes->getFilteredGrid(10));
     }
@@ -41,14 +41,14 @@ class ContentTypeController extends BaseController
      */
     public function create(Request $request)
     {
-        app('soda.interface')->setHeading('New Content Type');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.content-types.index'), 'Content Types');
+        app('soda.interface')->setHeading('New ' . ucwords(trans('soda::terminology.content_type')));
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.content-types.index'), ucwords(trans('soda::terminology.content_type_plural')));
 
         try {
             $contentType = $this->contentTypes->newInstance($request);
             $contentTypes = $this->contentTypes->getList();
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'content type']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.content_type')]));
         }
 
         return soda_cms_view('data.content.types.view', compact('contentType', 'contentTypes'));
@@ -66,10 +66,10 @@ class ContentTypeController extends BaseController
         try {
             $contentType = $this->contentTypes->save($request);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.create', ['object' => 'content type']));
+            return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.content_type')]));
         }
 
-        return redirect()->route('soda.content-types.edit', $contentType->getKey())->with('success', trans('soda::messages.created', ['object' => 'content type']));
+        return redirect()->route('soda.content-types.edit', $contentType->getKey())->with('success', trans('soda::messages.created', ['object' => trans('soda::terminology.content_type')]));
     }
 
     /**
@@ -87,10 +87,10 @@ class ContentTypeController extends BaseController
         $fields = $this->contentTypes->getAvailableFields($contentType);
 
         if (! $contentType) {
-            return $this->handleError(trans('soda::errors.not-found', ['object' => 'content type']));
+            return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content_type')]));
         }
 
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.content-types.index'), 'Content Types');
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.content-types.index'), ucwords(trans('soda::terminology.content_type_plural')));
         app('soda.interface')->setHeading($contentType->name);
 
         return soda_cms_view('data.content.types.view', compact('contentType', 'contentTypes', 'blockTypes', 'fields'));
@@ -109,10 +109,10 @@ class ContentTypeController extends BaseController
         try {
             $contentType = $this->contentTypes->save($request, $id);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.update', ['object' => 'content type']));
+            return $this->handleException($e, trans('soda::errors.update', ['object' => trans('soda::terminology.content_type')]));
         }
 
-        return redirect()->route('soda.content-types.edit', $contentType->getKey())->with('success', trans('soda::messages.updated', ['object' => 'content type']));
+        return redirect()->route('soda.content-types.edit', $contentType->getKey())->with('success', trans('soda::messages.updated', ['object' => trans('soda::terminology.content_type')]));
     }
 
     /**
@@ -127,9 +127,9 @@ class ContentTypeController extends BaseController
         try {
             $this->contentTypes->destroy($id);
         } catch (Exception $e) {
-            return $this->handleException($e, trans('soda::errors.delete', ['object' => 'content type']));
+            return $this->handleException($e, trans('soda::errors.delete', ['object' => trans('soda::terminology.content_type')]));
         }
 
-        return redirect()->route('soda.content-types.index')->with('warning', trans('soda::messages.deleted', ['object' => 'content type']));
+        return redirect()->route('soda.content-types.index')->with('warning', trans('soda::messages.deleted', ['object' => trans('soda::terminology.content_type')]));
     }
 }

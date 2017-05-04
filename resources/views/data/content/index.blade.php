@@ -24,6 +24,7 @@
     <Br />
     <div class="clearfix">
         <div class="pull-right">
+            {{--
             <div class="btn-group">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -39,6 +40,7 @@
                     </ul>
                 </div>
             </div>
+            --}}
 
             <div class="btn-group">
                 <div class="dropdown">
@@ -47,7 +49,7 @@
                         <i class="mdi mdi-menu-down"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">New Page</a></li>
+                        <li><a href="#">New Content Item</a></li>
                         <li><a href="#">New Folder</a></li>
                     </ul>
                 </div>
@@ -58,13 +60,15 @@
     <table class="table table-striped middle">
         <thead>
             <tr>
+                {{--
                 <th class="row-select" width="20">
                     <div class="checkbox">
                         <input type="checkbox" id="content-select-all" />
                         <label for="content-select-all"></label>
                     </div>
                 </th>
-                <th>Page Name</th>
+                --}}
+                <th colspan="2">Name</th>
                 <th>Date Edited</th>
                 <th colspan="2">Status</th>
             </tr>
@@ -72,16 +76,54 @@
         <tbody>
             @foreach($content as $contentItem)
                 <tr>
+                    {{--
                     <td class="row-select">
                         <div class="checkbox">
                             <input type="checkbox" value="{{ $contentItem->id }}" id="content-select-{{ $contentItem->id }}" name="selected_content[]" />
                             <label for="content-select-{{ $contentItem->id }}"></label>
                         </div>
                     </td>
+                    --}}
+                    <td width="20">
+                        @if($contentItem->is_movable)
+                            <i class="mdi mdi-drag-vertical"></i>
+                        @endif
+                    </td>
                     <td><i class="mdi {{ $contentItem->is_folder ? 'mdi-folder-outline' : 'mdi-file-outline' }}"></i> <span>{{ $contentItem->name }}</span></td>
                     <td>{{ $contentItem->updated_at->format('jS F Y') }}</td>
-                    <td><span class="{{ $contentItem->status == \Soda\Cms\Foundation\Constants::STATUS_DRAFT ? 'inactive' : 'active' }}-circle"></span> <span>{{ \Soda\Cms\Foundation\Constants::statuses()[$contentItem->status] }}</span></td>
+                    <td>
+                        @if($contentItem->is_publishable && !$contentItem->is_folder)
+                            <span class="{{ $contentItem->status == \Soda\Cms\Foundation\Constants::STATUS_DRAFT ? 'inactive' : 'active' }}-circle"></span> <span>{{ \Soda\Cms\Foundation\Constants::statuses()[$contentItem->status] }}</span>
+                        @elseif(!$contentItem->is_folder)
+                            <i class="mdi mdi-lock"></i> <span>Locked</span>
+                        @endif
+                    </td>
                     <td class="text-right">
+                        <div class="btn-group">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Actions
+                                    <i class="mdi mdi-menu-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    @if($contentItem->is_folder)
+                                        <li><a href="{{ route('soda.content.show', $contentItem->id) }}">Open folder</a></li>
+                                    @endif
+                                    @if($contentItem->is_sluggable)
+                                        <li><a href="{{ route('soda.content.edit', $contentItem->id) }}">Edit</a></li>
+                                        <li><a href="{{ $contentItem->slug }}" target="_blank">Preview</a></li>
+                                    @endif
+                                    @if(!$contentItem->is_folder && $contentItem->is_publishable)
+                                        <li><a href="#">Publish</a></li>
+                                    @endif
+                                    @if($contentItem->is_deletable)
+                                        <li class="warning"><a data-delete-button href="{{ route('soda.content.destroy', $contentItem->id) }}">Delete</a></li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+
+                        {{--
                         @if($contentItem->is_sluggable)
                             <a href="{{ $contentItem->slug }}" target="_blank"><i class="mdi mdi-eye"></i></a>
                             <a href="{{ route('soda.content.edit', $contentItem->id) }}"><i class="mdi mdi-pencil"></i></a>
@@ -95,6 +137,7 @@
                         @if($contentItem->is_deletable)
                             <a data-delete-button href="{{ route('soda.content.destroy', $contentItem->id) }}"><i class="mdi mdi-delete"></i></a>
                         @endif
+                        --}}
                     </td>
                 </tr>
             @endforeach
