@@ -23,7 +23,7 @@ class Uploader
      *
      * @return bool|string
      */
-    public function uploadFile(UploadedFile $file, array $transformConfig = [], $appendedPath)
+    public function uploadFile(UploadedFile $file, $transformConfig = [], $appendedPath = null)
     {
         if ($file->isValid()) {
             return $this->upload(new SymfonyFile($file), $transformConfig, $appendedPath);
@@ -43,7 +43,7 @@ class Uploader
      *
      * @return bool|string
      */
-    public function uploadBase64($fileContents, $fileName = null, array $transformConfig = [], $appendedPath)
+    public function uploadBase64($fileContents, $fileName = null, $transformConfig = [], $appendedPath = null)
     {
         return $this->upload(new Base64File($fileContents, $fileName), $transformConfig, $appendedPath);
     }
@@ -58,7 +58,7 @@ class Uploader
      *
      * @return array|\Illuminate\Http\JsonResponse
      */
-    public function fancyUpload(Request $request, array $transformConfig = [], $appendedPath)
+    public function fancyUpload(Request $request, $transformConfig = [], $appendedPath = null)
     {
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
@@ -88,7 +88,7 @@ class Uploader
      *
      * @return bool|string
      */
-    protected function upload(UploadableFile $uploadableFile, array $transformConfig = [], $appendedPath)
+    protected function upload(UploadableFile $uploadableFile, $transformConfig = [], $appendedPath = null)
     {
         if ($appendedPath) {
             $uploadableFile->appendToUploadPath($appendedPath);

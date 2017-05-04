@@ -23,6 +23,7 @@ class ApplicationSetting extends Model implements ApplicationSettingInterface
         'field_type',
         'field_params',
         'value',
+        'category',
         'application_id',
     ];
 

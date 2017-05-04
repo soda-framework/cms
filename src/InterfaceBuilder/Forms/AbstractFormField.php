@@ -342,7 +342,9 @@ abstract class AbstractFormField implements FormFieldInterface
     {
         $field_name = $this->field->getAttribute('field_name');
 
-        if (old($this->getPrefixedFieldName()) === null) {
+        $oldInput = app('session')->getOldInput($this->getPrefixedFieldName());
+
+        if ($oldInput === null) {
             if ($this->model) {
                 $value = $this->model->getAttribute($field_name);
 
@@ -354,7 +356,7 @@ abstract class AbstractFormField implements FormFieldInterface
             return $this->field->getAttribute('value');
         }
 
-        return old($this->getPrefixedFieldName());
+        return $oldInput;
     }
 
     /**
