@@ -29,7 +29,7 @@ class Tinymce extends AbstractFormField
                     'selector' => 'img',
                     'styles'   => [
                         'float'  => 'left',
-                        'margin' => '0 10px 0 10px',
+                        'margin' => '0 10px 10px 0',
                     ],
                 ],
                 [
