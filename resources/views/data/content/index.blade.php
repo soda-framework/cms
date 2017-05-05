@@ -134,7 +134,7 @@
 
                                 <template v-if="contentItem.is_deletable">
                                     @permission('delete-pages')
-                                    <li class="warning"><a v-bind:href="routeTo('{{ route('soda.content.destroy', '###ID###') }}', contentItem.id)">Delete</a></li>
+                                    <li class="warning"><a v-bind:href="routeTo('{{ route('soda.content.destroy', '###ID###') }}', contentItem.id)" v-on:click.prevent="deleteContent">Delete</a></li>
                                     @else
                                         <li class="disabled"><a href="#"><i class="mdi mdi-lock"></i> <span>Delete</span></a></li>
                                         @endpermission

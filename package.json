@@ -19,6 +19,7 @@
   "devDependencies": {
     "bootstrap-fileinput": "^4.3",
     "bootstrap-sass": "^3.3.7",
+    "bootstrap-sweetalert": "^1.0.1",
     "cross-env": "^3.2.3",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "font-awesome": "^4.5.0",

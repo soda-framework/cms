@@ -11,3 +11,4 @@ try {
 } catch (e) {}
 
 window.Vue = require('vue');
+window.sweetAlert = window.swal = require('bootstrap-sweetalert');

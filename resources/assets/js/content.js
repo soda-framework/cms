@@ -36,5 +36,8 @@ Soda.contentTable = new Vue({
             this.$set(this, 'selectedContentType', numContentTypes ? Object.keys(this.contentFolderTypes)[0] : null);
             modal.modal('show');
         },
+        deleteContent: function(event) {
+            Soda.confirmDelete($(event.target));
+        }
     }
 });

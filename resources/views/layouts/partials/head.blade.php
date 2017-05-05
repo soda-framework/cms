@@ -18,6 +18,7 @@
 @stop
 
 @section('head.css')
+    <link href="/soda/cms/css/plugins.css" rel="stylesheet" media="all">
     <link href="/soda/cms/css/bootstrap.css" rel="stylesheet" media="all">
 
     <!-- Styles -->
@@ -29,7 +30,6 @@
     @endif
 
     <link href="/soda/cms/css/fonts.css" rel="stylesheet" media="all">
-    <link href="/soda/cms/css/plugins.css" rel="stylesheet" media="all">
     <link href="/soda/cms/css/themes/{{ $currentCmsTheme }}.css" rel="stylesheet" media="all">
 @stop
 

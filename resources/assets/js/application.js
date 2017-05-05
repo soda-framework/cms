@@ -160,7 +160,7 @@ window.Soda = (function () {
             text: "This action can not be reversed!",
             type: "warning",
             showCancelButton: true,
-            confirmButtonClass: "btn-danger",
+            confirmButtonClass: "btn btn-danger",
             confirmButtonText: "Yes, delete it!",
             closeOnConfirm: false
         }, function(){

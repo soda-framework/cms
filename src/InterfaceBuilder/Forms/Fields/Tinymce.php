@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\InterfaceBuilder\Forms\Fields;
 
+use Illuminate\Database\Schema\Blueprint;
 use Soda\Cms\InterfaceBuilder\Forms\AbstractFormField;
 
 class Tinymce extends AbstractFormField
@@ -23,5 +24,17 @@ class Tinymce extends AbstractFormField
             'image_advtab' => true,
             'convert_urls' => false, //prevent "http://site.com/my/directory" becoming "/my/directory" - https://www.tinymce.com/docs/configure/url-handling/
         ];
+    }
+
+    /**
+     * Adds a column for this field to a DynamicModel.
+     *
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     *
+     * @return Blueprint
+     */
+    public function addToModel(Blueprint $table)
+    {
+        return $table->mediumText($this->getFieldName());
     }
 }
