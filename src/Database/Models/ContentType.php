@@ -27,6 +27,9 @@ class ContentType extends Model implements ContentTypeInterface
         'edit_action',
         'edit_action_type',
         'is_folder',
+        'is_publishable',
+        'is_sluggable',
+        'is_movable',
         'is_creatable',
     ];
 

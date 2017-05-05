@@ -133,6 +133,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
                     'edit_action'      => $content->getRelation('type')->getAttribute('edit_action'),
                     'edit_action_type' => $content->getRelation('type')->getAttribute('edit_action_type'),
                     'is_sluggable'     => $content->getRelation('type')->getAttribute('is_sluggable'),
+                    'is_movable'       => $content->getRelation('type')->getAttribute('is_movable'),
                     'is_folder'        => $content->getRelation('type')->getAttribute('is_folder'),
                 ]);
             }

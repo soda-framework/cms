@@ -15,10 +15,6 @@
             <a role="tab" data-toggle="tab" href="#tab_fields">Fields</a>
         </li>
 
-        <li role='presentation' aria-controls="tab_subpages">
-            <a role="tab" data-toggle="tab" href="#tab_subpages">Subpages</a>
-        </li>
-
         <li role='presentation' aria-controls="tab_blocks">
             <a role="tab" data-toggle="tab" href="#tab_blocks">Blocks</a>
         </li>
@@ -49,14 +45,6 @@
                     {!! app('soda.form')->text([
                         "name"        => "Identifier",
                         "field_name"  => 'identifier',
-                    ])->setModel($contentType) !!}
-
-                    {!! app('soda.form')->toggle([
-                        'name'         => 'Is creatable',
-                        'field_name'   => 'is_creatable',
-                        'value'        => 1,
-                        'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-                        'description'  => 'If enabled, content of this type can be created from the CMS interface'
                     ])->setModel($contentType) !!}
                 </div>
             </div>
@@ -98,61 +86,6 @@
                     @else
                         Please save the content type before managing fields.
                     @endif
-                </div>
-            </div>
-
-            <div class="tab-pane" id="tab_subpages" role="tabpanel">
-                <div class="content-block">
-                    {!! $allowedChildrenFormItem = app('soda.form')->toggle([
-                        'name'         => 'Is folder',
-                        'field_name'   => 'is_folder',
-                        'value'        => 0,
-                        'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-                        'description'  => 'If enabled, this type acts as a folder, capable of containing other content'
-                    ])->setModel($contentType) !!}
-
-                    <?php
-                    $subpageIds = $contentType->pageTypes->pluck('id')->toArray();
-                    ?>
-
-                    <div class="restricted_page_types" style="display:none">
-                        {!! $restrictePageTypesFormItem = app('soda.form')->toggle([
-                            'name'         => 'Restrict Allowed Page Types',
-                            'field_name'   => 'page_types_restricted',
-                            'value'        => !empty($subpageIds),
-                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-                            'description'  => 'If enabled, you may select what page types may be created as a child of this type'
-                        ])->setModel($contentType) !!}
-
-                        <div class="allowed_subpage_types">
-                            <label>Restricted Content Types</label>
-                            <table class="table well">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th width="80">Enabled</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach($contentTypes as $subPageType)
-                                    <tr>
-                                        <td>{{ $subPageType->name }}</td>
-                                        <td>{{ $subPageType->description }}</td>
-                                        <td>
-                                            {!! app('soda.form')->toggle([
-                                                'field_name'   => $subPageType->id,
-                                                'value'        => empty($subpageIds) || in_array($subPageType->id, $subpageIds),
-                                                'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
-                                            ])->setModel($contentType)->setPrefix('content_types') !!}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -219,6 +152,136 @@
                         'description'  => 'Specifies the interface supplied when editing content of this type.',
 
                     ])->setModel($contentType)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <table class="table middle table-settings">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <label>Creatable</label><br />
+                                        <small class="text-muted">If enabled, content of this type can be created from the CMS interface</small>
+                                    </td>
+                                    <td width="62">
+                                        {!! $creatableFormItem = app('soda.form')->toggle([
+                                            'name'         => null,
+                                            'field_name'   => 'is_creatable',
+                                            'value'        => 1,
+                                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                                        ])->setModel($contentType) !!}
+                                    </td>
+                                </tr>
+                                <tr class="if_creatable">
+                                    <td>
+                                        <label>Sluggable</label><br />
+                                        <small class="text-muted">If disabled, this content item can not be reached by a slug</small>
+                                    </td>
+                                    <td width="62">
+                                        {!! app('soda.form')->toggle([
+                                            'name'         => null,
+                                            'field_name'   => 'is_sluggable',
+                                            'value'        => 1,
+                                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                                        ])->setModel($contentType) !!}
+                                    </td>
+                                </tr>
+                                <tr class="if_creatable">
+                                    <td>
+                                        <label>Publishable</label><br />
+                                        <small class="text-muted">If disabled, this content item can not be changed from it's current published state</small>
+                                    </td>
+                                    <td width="62">
+                                        {!! app('soda.form')->toggle([
+                                            'name'         => null,
+                                            'field_name'   => 'is_publishable',
+                                            'value'        => 1,
+                                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                                        ])->setModel($contentType) !!}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <table class="table middle table-settings">
+                                <tbody>
+                                <tr class="if_creatable">
+                                    <td>
+                                        <label>Movable</label><br />
+                                        <small class="text-muted">If disabled, this content item can not be moved</small>
+                                    </td>
+                                    <td width="62">
+                                        {!! app('soda.form')->toggle([
+                                            'name'         => null,
+                                            'field_name'   => 'is_movable',
+                                            'value'        => 1,
+                                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                                        ])->setModel($contentType) !!}
+                                    </td>
+                                </tr>
+                                <tr class="if_creatable">
+                                    <td>
+                                        <label>Folder</label><br />
+                                        <small class="text-muted">If enabled, this content can have child content items</small>
+                                    </td>
+                                    <td width="62">
+                                        {!! $allowedChildrenFormItem = app('soda.form')->toggle([
+                                            'name'         => null,
+                                            'field_name'   => 'is_folder',
+                                            'value'        => 0,
+                                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                                        ])->setModel($contentType) !!}
+                                    </td>
+                                </tr>
+                                <tr class="restricted_page_types">
+                                    <td>
+                                        <label>Restrict Child Content Types</label><br />
+                                        <small class="text-muted">If enabled, you may select which content types may be created as a child of this folder</small>
+                                    </td>
+                                    <td>
+                                        {!! $restrictePageTypesFormItem = app('soda.form')->toggle([
+                                            'name'         => null,
+                                            'field_name'   => 'page_types_restricted',
+                                            'value'        => !empty($subpageIds),
+                                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                                        ])->setModel($contentType) !!}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                    <div class="allowed_subpage_types">
+                        <label>Restricted Content Types</label>
+                        <table class="table well">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th width="80">Enabled</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach($contentTypes as $subPageType)
+                                <tr>
+                                    <td>{{ $subPageType->name }}</td>
+                                    <td>{{ $subPageType->description }}</td>
+                                    <td>
+                                        {!! app('soda.form')->toggle([
+                                            'field_name'   => $subPageType->id,
+                                            'value'        => empty($subpageIds) || in_array($subPageType->id, $subpageIds),
+                                            'field_params' => ['checked-value' => 1, 'unchecked-value' => 0],
+                                        ])->setModel($contentType)->setPrefix('content_types') !!}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -311,23 +374,39 @@
     @parent
     <script>
         $(function() {
-            $('#{{ $allowedChildrenFormItem->getFieldId() }}').on('change', function() {
-                if($(this).is(":checked"))
-                {
-                    $('.restricted_page_types').fadeIn();
-                } else {
-                    $('.restricted_page_types').fadeOut();
-                }
-            }).trigger('change');
+            var creatableFormItem = $('#{{ $creatableFormItem->getFieldId() }}');
+            var isFolderFormItem = $('#{{ $allowedChildrenFormItem->getFieldId() }}');
+            var restrictedTypesFormItem = $('#{{ $restrictePageTypesFormItem->getFieldId() }}');
 
-            $('#{{ $restrictePageTypesFormItem->getFieldId() }}').on('change', function() {
-                if($(this).is(":checked"))
-                {
+            creatableFormItem.on('change', function() {
+                if($(this).is(":checked")) {
+                    $('.if_creatable').fadeIn();
+                } else {
+                    $('.if_creatable').fadeOut();
+                }
+
+                isFolderFormItem.trigger('change');
+            });
+
+            restrictedTypesFormItem.on('change', function() {
+                if(creatableFormItem.is(':checked') && isFolderFormItem.is(':checked')  && $(this).is(":checked")) {
                     $('.allowed_subpage_types').fadeIn();
                 } else {
                     $('.allowed_subpage_types').fadeOut();
                 }
-            }).trigger('change');
+            });
+
+            isFolderFormItem.on('change', function() {
+                if(creatableFormItem.is(':checked') && $(this).is(":checked")) {
+                    $('.restricted_page_types').fadeIn();
+                } else {
+                    $('.restricted_page_types').fadeOut();
+                }
+
+                restrictedTypesFormItem.trigger('change');
+            })
+
+            creatableFormItem.trigger('change');
 
             $('[data-add-block]').on('click', function(e) {
                 e.preventDefault();

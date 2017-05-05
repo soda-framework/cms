@@ -64,6 +64,7 @@ class Content extends Entity implements ContentInterface
         'view_action_type',
         'edit_action',
         'edit_action_type',
+        'is_publishable',
         'is_sluggable',
         'is_folder',
         'is_movable',
