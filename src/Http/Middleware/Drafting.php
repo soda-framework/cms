@@ -23,6 +23,7 @@ class Drafting
     public function handle($request, Closure $next)
     {
         $draftables = app('soda.drafting')->getDraftables();
+
         foreach ($draftables as $draftable) {
             $draftable::disableDrafts();
         }

@@ -153,7 +153,6 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         }
 
         if ($content->content_type_id) {
-
             $content->load('type');
 
             if ($content->relationLoaded('type')) {

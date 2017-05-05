@@ -166,7 +166,7 @@ if ($content->type && $content->type->blockTypes) {
         {!! csrf_field() !!}
         {!! method_field($content->id ? 'PUT' : 'POST') !!}
         @if($content->type)
-            <input type="hidden" name="page_type_id" value="{{ $content->type->id }}"/>
+            <input type="hidden" name="content_type_id" value="{{ $content->type->id }}"/>
         @endif
         @if(!$content->id)
             <input type="hidden" name="parent_id" value="{{ $content->parent_id }}"/>

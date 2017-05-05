@@ -1,5 +1,5 @@
 {
-  "/public/js/content.js": "/public/js/content.js",
+  "/public/js/core.js": "/public/js/core.js",
   "/mix.js": "/mix.js",
   "/public/css/application.css": "/public/css/application.css",
   "/public/css/bootstrap.css": "/public/css/bootstrap.css",
@@ -9,7 +9,7 @@
   "/public/css/themes/lime.css": "/public/css/themes/lime.css",
   "/public/css/themes/strawberry.css": "/public/css/themes/strawberry.css",
   "/public/css/themes/grape.css": "/public/css/themes/grape.css",
-  "/public/js/core.js": "/public/js/core.js",
   "/public/js/wave.js": "/public/js/wave.js",
+  "/public/js/content.js": "/public/js/content.js",
   "/public/js/application.js": "/public/js/application.js"
 }

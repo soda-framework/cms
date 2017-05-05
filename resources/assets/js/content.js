@@ -1,7 +1,3 @@
-require('./forms/sortable.js');
-
-window.Vue = require('vue');
-
 Soda.contentTable = new Vue({
     el: '#app',
     data: {

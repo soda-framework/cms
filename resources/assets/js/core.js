@@ -9,3 +9,5 @@ try {
     require('bootstrap/js/tooltip.js');
     require('bootstrap/js/transition.js');
 } catch (e) {}
+
+window.Vue = require('vue');

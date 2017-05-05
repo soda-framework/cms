@@ -249,6 +249,7 @@
             vueInstance.contentFolderTypes = {!! $contentTypes->where('is_folder', 1)->keyBy('id')->toJson() !!};
         }
     </script>
+    <script src="/soda/cms/js/forms/sortable.js"></script>
     <script src="/soda/cms/js/content.js"></script>
     <script>
         $(function() {
