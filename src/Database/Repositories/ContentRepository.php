@@ -24,37 +24,54 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         return $content ? $content->collectDescendants(true)->orderBy('parent_id', 'ASC')->orderBy('position', 'ASC')->get()->toTree() : [];
     }
 
-    public function listFolder(Request $request, $contentId = null)
+    public function getRoot()
     {
-        if (!$contentId) {
-            $contentRoot = $this->model->getRoots()->first();
+        $contentRoot = $this->model->getRoots()->first();
 
-            if (!$contentRoot) {
-                $contentRoot = $this->model->newInstance([
-                    'name'           => 'Root',
-                    'slug'           => null,
-                    'parent_id'      => null,
-                    'application_id' => Soda::getApplication()->getKey(),
-                    'position'       => 0,
-                    'real_depth'     => 0,
-                    'status'         => Constants::STATUS_LIVE,
-                    'is_sluggable'   => 0,
-                    'is_movable'     => 0,
-                    'is_folder'      => 1,
-                ])->fillDefaults();
+        if (!$contentRoot) {
+            $contentRoot = $this->model->newInstance([
+                'name'           => 'Root',
+                'slug'           => null,
+                'parent_id'      => null,
+                'application_id' => Soda::getApplication()->getKey(),
+                'position'       => 0,
+                'real_depth'     => 0,
+                'status'         => Constants::STATUS_LIVE,
+                'is_sluggable'   => 0,
+                'is_movable'     => 0,
+                'is_folder'      => 1,
+            ])->fillDefaults();
 
-                $contentRoot->save();
-            }
-
-            $contentId = $contentRoot->id;
+            $contentRoot->save();
         }
 
-        return $this->model->where('parent_id', $contentId)->orderBy($request->input('order', 'position'), $request->input('dir', 'ASC'))->paginate($request->input('show', 20))->appends($request->only('order', 'dir', 'show'));
+        return $contentRoot;
+    }
+
+    public function listFolder(Request $request, ContentInterface $contentFolder)
+    {
+        return $this->model->where('parent_id', $contentFolder->id)
+            ->orderBy($request->input('order', 'position'), $request->input('dir', 'ASC'))
+            ->paginate($request->input('show', 20))
+            ->appends($request->only('order', 'dir', 'show'));
     }
 
     public function findBySlug($slug)
     {
         return $this->model->where('slug', '/'.ltrim($slug, '/'))->first();
+    }
+
+    public function getCreatableContentTypes($contentFolderId = null)
+    {
+        $content = $contentFolderId == null ? $this->getRoot() : $this->model->find($contentFolderId);
+
+        if ($content && $content->type) {
+            $creatableTypes = $content->type->pageTypes()->where('is_creatable', true)->get();
+
+            if ($creatableTypes) return $creatableTypes;
+        }
+
+        return $this->getTypes(true);
     }
 
     public function getTypes($creatableOnly = false)

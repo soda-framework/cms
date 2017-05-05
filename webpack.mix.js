@@ -34,6 +34,7 @@ mix.sass('resources/assets/scss/application.scss', 'public/css')
     .js('resources/assets/js/application.js', 'public/js')
     .js('resources/assets/js/wave.js', 'public/js')
     .js('resources/assets/js/core.js', 'public/js')
+    .js('resources/assets/js/content.js', 'public/js')
     .copyDirectory('resources/assets/img', 'public/img');
 
 if(process.env.RELEASE == 'true') {

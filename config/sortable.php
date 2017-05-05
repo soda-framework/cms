@@ -2,9 +2,9 @@
 
 return [
     'entities' => [
-        'pages' => Soda\Cms\Database\Models\Content::class,
+        'content' => Soda\Cms\Database\Models\Content::class,
 
-        'page-types.fields' => [
+        'content-types.fields' => [
             'entity'   => Soda\Cms\Database\Models\ContentType::class,
             'relation' => 'fields',
         ],

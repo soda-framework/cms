@@ -4,7 +4,6 @@ namespace Soda\Cms\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Models\Content;
 use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
 
 class ContentController extends BaseController
@@ -31,12 +30,13 @@ class ContentController extends BaseController
      */
     public function index(Request $request)
     {
-        $content = $this->content->listFolder($request);
+        $contentFolder = $this->content->getRoot();
 
-        $content_types = $this->content->getTypes(true);
-        $content_types->load('pageTypes');
+        $content = $this->content->listFolder($request, $contentFolder);
 
-        return soda_cms_view('data.content.index', compact('content', 'content_types'));
+        $contentTypes = $this->content->getCreatableContentTypes();
+
+        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes'));
     }
 
     /**
@@ -49,20 +49,18 @@ class ContentController extends BaseController
      */
     public function show(Request $request, $contentId)
     {
-        $contentItem = $this->content->findById($contentId);
+        $contentFolder = $this->content->findById($contentId);
 
-        if (! $contentItem) {
+        if (!$contentFolder) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content')]));
-        } elseif (!$contentItem->is_folder) {
-            return redirect()->route('soda.content.edit', $contentItem->getKey())->withInput();
+        } elseif (!$contentFolder->is_folder) {
+            return redirect()->route('soda.content.edit', $contentFolder->getKey())->withInput();
         }
 
-        $content = $this->content->listFolder($request, $contentId);
+        $content = $this->content->listFolder($request, $contentFolder);
+        $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
 
-        $content_types = $this->content->getTypes(true);
-        $content_types->load('pageTypes');
-
-        return soda_cms_view('data.content.index', compact('content', 'content_types'));
+        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes'));
     }
 
     /**
@@ -74,13 +72,24 @@ class ContentController extends BaseController
      */
     public function create(Request $request)
     {
-        app('soda.interface')->setHeading('New ' . ucfirst(trans('soda::terminology.content')));
+        app('soda.interface')->setHeading('New '.ucfirst(trans('soda::terminology.content')));
         app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
 
         try {
             $parentId = $request->input('parentId');
             $contentTypeId = $request->input('contentTypeId');
             $content = $this->content->createStub($parentId, $contentTypeId);
+
+            if ($request->input('folder') == true) {
+                $content->fillDefaults()->fill([
+                    'name'           => $request->input('name'),
+                    'is_sluggable'   => false,
+                    'is_folder'      => true,
+                    'is_publishable' => false,
+                ])->save();
+
+                return redirect()->route('soda.content.index')->with('success', trans('soda::messages.created', ['object' => trans('soda::terminology.content')]));
+            }
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.content')]));
         }
@@ -117,7 +126,7 @@ class ContentController extends BaseController
     {
         $content = $this->content->findById($id);
 
-        if (! $content) {
+        if (!$content) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content')]));
         } elseif ($content->is_folder) {
             return redirect()->route('soda.content.show', $content->getKey())->withInput();

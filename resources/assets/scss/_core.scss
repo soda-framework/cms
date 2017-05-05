@@ -29,6 +29,22 @@ a {
   }
 }
 
+.sortable-handle {
+  cursor: move;
+}
+
+.cursor-move {
+  cursor: move;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-na {
+  cursor: not-allowed;
+}
+
 .soda-powered-by {
   opacity: 0;
   transition: opacity 0.25s ease-in-out;
@@ -38,11 +54,15 @@ a {
   width: 100%;
   text-align: center;
   font-size: 12px;
-  color: rgba(0,0,0,0.3);
+  color: rgba(0, 0, 0, 0.3);
 }
 
 body.loaded {
   .soda-powered-by {
     opacity: 1;
   }
+}
+
+[v-cloak] {
+  display: none;
 }
