@@ -27,7 +27,7 @@ class BlockTypeController extends BaseController
      */
     public function index()
     {
-        app('soda.interface')->setDescription('Different ' . ucwords(trans('soda::terminology.block_type_plural')) . ' have different field types applied to them');
+        app('soda.interface')->setDescription('Different '.ucwords(trans('soda::terminology.block_type_plural')).' have different field types applied to them');
 
         return soda_cms_view('data.block-types.index', $this->blockTypes->getFilteredGrid(10));
     }
@@ -41,7 +41,7 @@ class BlockTypeController extends BaseController
      */
     public function create(Request $request)
     {
-        app('soda.interface')->setHeading('New ' . ucwords(trans('soda::terminology.block_type_plural')));
+        app('soda.interface')->setHeading('New '.ucwords(trans('soda::terminology.block_type_plural')));
         app('soda.interface')->breadcrumbs()->addLink(route('soda.block-types.index'), ucwords(trans('soda::terminology.block_type_plural')));
 
         try {

@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Database\Repositories;
 
-use Soda\Cms\Database\Models\Contracts\ContentTypeInterface;
 use Soda\Cms\Database\Models\Contracts\BlockTypeInterface;
+use Soda\Cms\Database\Models\Contracts\ContentTypeInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentTypeBlockRepositoryInterface;
 
 class ContentTypeBlockRepository implements ContentTypeBlockRepositoryInterface

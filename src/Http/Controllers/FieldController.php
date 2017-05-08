@@ -28,7 +28,7 @@ class FieldController extends BaseController
      */
     public function index()
     {
-        app('soda.interface')->setDescription(ucwords(trans('soda::terminology.field_plural')) . ' are added onto pages.');
+        app('soda.interface')->setDescription(ucwords(trans('soda::terminology.field_plural')).' are added onto pages.');
 
         return soda_cms_view('data.fields.index', $this->fields->getFilteredGrid(10));
     }
@@ -42,7 +42,7 @@ class FieldController extends BaseController
      */
     public function create(Request $request)
     {
-        app('soda.interface')->setHeading('New ' . ucwords(trans('soda::terminology.field')));
+        app('soda.interface')->setHeading('New '.ucwords(trans('soda::terminology.field')));
         app('soda.interface')->breadcrumbs()->addLink(route('soda.fields.index'), ucwords(trans('soda::terminology.field_plural')));
 
         try {

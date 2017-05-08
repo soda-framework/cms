@@ -3,8 +3,8 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Models\Contracts\ContentTypeInterface;
 use Soda\Cms\Database\Repositories\Traits\BuildsDataGrids;
+use Soda\Cms\Database\Models\Contracts\ContentTypeInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentTypeRepositoryInterface;
 
 class ContentTypeRepository extends AbstractRepository implements ContentTypeRepositoryInterface

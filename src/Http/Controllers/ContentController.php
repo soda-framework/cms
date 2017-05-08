@@ -51,9 +51,9 @@ class ContentController extends BaseController
     {
         $contentFolder = $this->content->findById($contentId);
 
-        if (!$contentFolder) {
+        if (! $contentFolder) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content')]));
-        } elseif (!$contentFolder->is_folder) {
+        } elseif (! $contentFolder->is_folder) {
             return redirect()->route('soda.content.edit', $contentFolder->getKey())->withInput();
         }
 
@@ -126,7 +126,7 @@ class ContentController extends BaseController
     {
         $content = $this->content->findById($id);
 
-        if (!$content) {
+        if (! $content) {
             return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content')]));
         } elseif ($content->is_folder) {
             return redirect()->route('soda.content.show', $content->getKey())->withInput();

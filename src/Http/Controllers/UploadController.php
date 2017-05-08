@@ -4,8 +4,8 @@ namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Soda\Cms\Foundation\Uploads\Uploader;
 use Soda\Cms\Database\Models\Media;
+use Soda\Cms\Foundation\Uploads\Uploader;
 
 class UploadController extends BaseController
 {

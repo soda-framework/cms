@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Models\Contracts\BlockTypeInterface;
-use Soda\Cms\Database\Models\Contracts\ContentInterface;
-use Soda\Cms\Database\Repositories\Contracts\ContentBlockRepositoryInterface;
 use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
+use Soda\Cms\Database\Models\Contracts\BlockTypeInterface;
+use Soda\Cms\Database\Repositories\Contracts\ContentBlockRepositoryInterface;
 
 class ContentBlockRepository implements ContentBlockRepositoryInterface
 {
@@ -46,8 +46,8 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
 
         $block = Soda::dynamicBlock($blockType->identifier)->newInstance([
             'content_id'        => $content->getKey(),
-            'block_type_id'  => $blockType->getKey(),
-            'is_shared'      => $blockType->is_shared,
+            'block_type_id'     => $blockType->getKey(),
+            'is_shared'         => $blockType->is_shared,
         ]);
 
         return compact('content', 'blockType', 'block');

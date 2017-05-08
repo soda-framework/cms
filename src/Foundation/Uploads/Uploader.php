@@ -98,13 +98,13 @@ class Uploader
             $uploadableFile->setTransformConfig($transformConfig)->transform();
         }
 
-        $uploadableFile->setUploadTo(config('soda.upload.folder'));
+        //$uploadableFile->setUploadTo(config('soda.upload.folder'));
 
         $uploadFilePath = $uploadableFile->uploadPath();
 
         // Generate return information
         if ($this->driver()->put($uploadFilePath, $uploadableFile->fileContents(), 'public')) {
-            if (config('filesystems.disks.'.config('soda.upload.driver').'.driver') == 'local') {
+            if (config('filesystems.disks.'.config('soda.upload.default').'.driver') == 'local') {
                 return substr($this->driver()->getAdapter()->applyPathPrefix($uploadFilePath), strlen(public_path()));
             }
 
@@ -121,7 +121,7 @@ class Uploader
      */
     protected function driver()
     {
-        $driver = config('soda.upload.driver');
+        $driver = config('soda.upload.default');
 
         return Storage::disk($driver);
     }

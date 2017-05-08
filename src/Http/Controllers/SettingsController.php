@@ -47,7 +47,9 @@ class SettingsController extends BaseController
 
         if ($settings !== null) {
             $settingsByCategory = $settings->transform(function ($item) {
-                if (!$item->category) $item->category = 'Settings';
+                if (! $item->category) {
+                    $item->category = 'Settings';
+                }
 
                 return $item;
             })->groupBy('category');
@@ -75,7 +77,7 @@ class SettingsController extends BaseController
     {
         try {
             $application = $this->applications->save($request, $id);
-            if($request->has('theme')) {
+            if ($request->has('theme')) {
                 $request->session()->put('soda-theme', $request->input('theme'));
             }
         } catch (Exception $e) {

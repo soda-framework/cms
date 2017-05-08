@@ -8,7 +8,6 @@ use Soda\Cms\Database\Models\ApplicationUrl;
 use Soda\Cms\Database\Repositories\ApplicationRepository;
 use Soda\Cms\Foundation\Providers\Traits\RegistersBindingsAndDependencies;
 use Soda\Cms\Database\Repositories\Contracts\ApplicationRepositoryInterface;
-use Soda\Cms\Database\Repositories\Contracts\CachedApplicationRepositoryInterface;
 
 class ApplicationServiceProvider extends ServiceProvider
 {

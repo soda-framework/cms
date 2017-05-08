@@ -123,11 +123,8 @@ class SodaServiceProvider extends ServiceProvider
 
     protected function configure()
     {
-        $this->app->config->set('filesystems.disks.soda.public', [
-            'driver'     => 'local',
-            'root'       => public_path(),
-            'visibility' => 'public',
-        ]);
+        $this->app->config->set('filesystems.disks.soda.local', $this->app->config->get('soda.upload.disks.local'));
+        $this->app->config->set('filesystems.disks.soda.s3', $this->app->config->get('soda.upload.disks.s3'));
     }
 
     protected function extendBlade()

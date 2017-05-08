@@ -2,15 +2,15 @@
 
 namespace Soda\Cms\Database\Models\Traits;
 
+use RuntimeException;
+use Illuminate\Support\Str;
+use UnexpectedValueException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\UserResolver;
 use OwenIt\Auditing\Models\Audit as AuditModel;
-use RuntimeException;
 use Soda\Cms\Database\Observers\AuditableObserver;
-use UnexpectedValueException;
 
 trait Auditable
 {
@@ -70,7 +70,7 @@ trait Auditable
             }
         }
 
-        if (!$this->getAuditTimestamps()) {
+        if (! $this->getAuditTimestamps()) {
             array_push($this->auditableExclusions, static::CREATED_AT, static::UPDATED_AT);
 
             $this->auditableExclusions[] = defined('static::DELETED_AT') ? static::DELETED_AT : 'deleted_at';
@@ -80,7 +80,7 @@ trait Auditable
 
         foreach ($attributes as $attribute => $value) {
             // Apart from null, non scalar values will be excluded
-            if (is_object($value) && !method_exists($value, '__toString') || is_array($value)) {
+            if (is_object($value) && ! method_exists($value, '__toString') || is_array($value)) {
                 $this->auditableExclusions[] = $attribute;
             }
         }
@@ -166,13 +166,13 @@ trait Auditable
      */
     public function toAudit()
     {
-        if (!$this->readyForAuditing()) {
+        if (! $this->readyForAuditing()) {
             throw new RuntimeException('A valid audit event has not been set');
         }
 
         $method = 'audit'.Str::studly($this->auditEvent).'Attributes';
 
-        if (!method_exists($this, $method)) {
+        if (! method_exists($this, $method)) {
             throw new RuntimeException(sprintf(
                 'Unable to handle "%s" event, %s() method missing',
                 $this->auditEvent,

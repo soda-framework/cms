@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Models\Contracts\ContentInterface;
-use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
 use Soda\Cms\Foundation\Constants;
 use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
+use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
 
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
@@ -28,7 +28,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $contentRoot = $this->model->getRoots()->first();
 
-        if (!$contentRoot) {
+        if (! $contentRoot) {
             $contentRoot = $this->model->newInstance([
                 'name'           => 'Root',
                 'slug'           => null,
@@ -68,7 +68,9 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         if ($content && $content->type) {
             $creatableTypes = $content->type->pageTypes()->where('is_creatable', true)->get();
 
-            if ($creatableTypes) return $creatableTypes;
+            if ($creatableTypes) {
+                return $creatableTypes;
+            }
         }
 
         return $this->getTypes(true);
@@ -92,7 +94,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function getAvailableBlockTypes(ContentInterface $content)
     {
-        if (!$content->relationLoaded('blockTypes')) {
+        if (! $content->relationLoaded('blockTypes')) {
             $content->load('blockTypes');
         }
 
@@ -103,13 +105,13 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
-        if (!$parent->isFolder()) {
+        if (! $parent->isFolder()) {
             throw new \Exception('You cannot create that content here.');
         }
 
         if ($parent->type) {
             $allowedContentTypes = $parent->type->pageTypes ? $parent->type->pageTypes->pluck('id')->toArray() : [];
-            if (count($allowedContentTypes) && !in_array($contentTypeId, $allowedContentTypes)) {
+            if (count($allowedContentTypes) && ! in_array($contentTypeId, $allowedContentTypes)) {
                 throw new \Exception('You cannot create that content here.');
             }
         }
@@ -175,7 +177,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         $slug = $content->generateSlug($request->input('slug'));
 
-        if ($parentContent && !starts_with($slug, $parentContent->getAttribute('slug'))) {
+        if ($parentContent && ! starts_with($slug, $parentContent->getAttribute('slug'))) {
             $slug = $parentContent->generateSlug($request->input('slug'));
         }
 

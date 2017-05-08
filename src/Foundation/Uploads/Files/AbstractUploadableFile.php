@@ -5,7 +5,7 @@ namespace Soda\Cms\Foundation\Uploads\Files;
 abstract class AbstractUploadableFile
 {
     protected $transformConfig;
-    protected $uploadTo = '/';
+    protected $uploadTo = '';
 
     /**
      * @return string

@@ -30,8 +30,8 @@ class ContentController extends ApiController
 
         if (! $contentFolder) {
             return $this->respondNotFound(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content')]));
-        } elseif (!$contentFolder->is_folder) {
-            return $this->respondNotAllowed(ucwords(trans('soda::terminology.content')) . ' is not a folder');
+        } elseif (! $contentFolder->is_folder) {
+            return $this->respondNotAllowed(ucwords(trans('soda::terminology.content')).' is not a folder');
         }
 
         $content = $this->content->listFolder($request, $contentFolder);
@@ -44,7 +44,7 @@ class ContentController extends ApiController
     {
         $contentItem = $this->content->findById($contentId);
 
-        if (!$contentItem) {
+        if (! $contentItem) {
             return $this->respondNotFound(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content')]));
         }
 

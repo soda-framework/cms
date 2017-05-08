@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class SymfonyFile extends AbstractUploadableFile implements UploadableFile
 {
     protected $file;
-    protected $transformConfig;
-    protected $uploadTo = '/';
 
     public function __construct(UploadedFile $file)
     {
@@ -25,7 +23,7 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
      */
     public function uploadPath()
     {
-        return '/'.trim($this->getUploadTo(), '/').'/'.$this->generateFileName();
+        return '/'.trim(trim($this->getUploadTo(), '/').'/'.$this->generateFileName(), '/');
     }
 
     /**

@@ -7,8 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Soda\Cms\Database\Models\Traits\Identifiable;
 use Soda\Cms\Database\Models\Traits\MorphToSortedMany;
 use Soda\Cms\Database\Models\Traits\BuildsDynamicModels;
-use Soda\Cms\Database\Models\Contracts\ContentTypeInterface;
 use Soda\Cms\Database\Models\Traits\HasDefaultAttributes;
+use Soda\Cms\Database\Models\Contracts\ContentTypeInterface;
 use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class ContentType extends Model implements ContentTypeInterface

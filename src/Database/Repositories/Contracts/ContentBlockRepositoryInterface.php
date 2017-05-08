@@ -10,7 +10,6 @@ interface ContentBlockRepositoryInterface
      * @param       $contentId
      * @param       $blockId
      * @param array $contentBlockParams
-     *
      */
     public function attach($contentId, $blockId, $contentBlockParams = []);
 

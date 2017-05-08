@@ -8,8 +8,6 @@ class Base64File extends AbstractUploadableFile implements UploadableFile
 {
     protected $fileName;
     protected $fileContents;
-    protected $transformConfig;
-    protected $uploadTo = '/';
 
     public function __construct($fileContents, $fileName = null)
     {
@@ -27,7 +25,7 @@ class Base64File extends AbstractUploadableFile implements UploadableFile
      */
     public function uploadPath()
     {
-        return '/'.trim($this->getUploadTo(), '/').'/'.$this->fileName;
+        return '/'.trim(trim($this->getUploadTo(), '/').'/'.$this->fileName, '/');
     }
 
     /**

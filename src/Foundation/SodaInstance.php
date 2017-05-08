@@ -4,8 +4,9 @@ namespace Soda\Cms\Foundation;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Soda\Cms\Database\Models\DynamicContent;
+use Illuminate\Support\Traits\Macroable;
 use Soda\Cms\Database\Models\DynamicBlock;
+use Soda\Cms\Database\Models\DynamicContent;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Illuminate\Contracts\Foundation\Application as Laravel;
 use Soda\Cms\Database\Models\Contracts\ApplicationInterface;
@@ -13,6 +14,8 @@ use Soda\Cms\Database\Models\Contracts\ApplicationUrlInterface;
 
 class SodaInstance
 {
+    use Macroable;
+
     protected $laravel;
     protected $requestMatcher;
     protected $application;
