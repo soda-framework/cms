@@ -90,6 +90,12 @@ trait BuildsDynamicModels
         $table = $this->getDynamicTableName();
         $field_name = $field->getAttribute('field_name');
 
+        if (! Schema::hasTable($table)) {
+            Schema::create($table, function (Blueprint $table) {
+                $this->buildDynamicTable($table);
+            });
+        }
+
         if (! Schema::hasColumn($table, $field_name)) {
             Schema::table($table, function ($table) use ($field) {
                 app('soda.form')->field($field)->addToModel($table)->nullable()->after('id');
