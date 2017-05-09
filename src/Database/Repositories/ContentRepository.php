@@ -111,7 +111,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         $creatableTypes = $content->type ? $content->type->pageTypes()->where('is_creatable', true)->pluck('id') : [];
 
         $shortcutsQuery = ContentShortcut::where(function ($sq) use ($content) {
-            $sq->whereNull('parent_id')->orWhere('parent_id', $content->id);
+            $sq->whereNull('parent_id')->orWhere('parent_id', $content->content_type_id);
         });
 
         if (count($creatableTypes)) {
