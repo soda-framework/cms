@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Database\Models;
 
-use Franzose\ClosureTable\Models\ClosureTable;
+use Soda\ClosureTable\Models\ClosureTable;
 
 class ContentClosure extends ClosureTable
 {

@@ -2,7 +2,6 @@
 
 namespace Soda\Cms\Database\Observers;
 
-use Illuminate\Support\Facades\Schema;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
 
 class ContentObserver
@@ -19,7 +18,7 @@ class ContentObserver
      */
     public function saved(ContentInterface $content)
     {
-        if($content->shouldDynamicTableExist() && !$content->dynamicTableExists()) {
+        if ($content->shouldDynamicTableExist() && ! $content->dynamicTableExists()) {
             $content->getRelation('type')->createTable();
         }
     }

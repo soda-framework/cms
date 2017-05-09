@@ -50,7 +50,7 @@ trait BuildsDynamicModels
             $this->load('fields');
         }
 
-        if($fields = $this->getRelation('fields')) {
+        if ($fields = $this->getRelation('fields')) {
             $this->addFields($fields);
         }
 

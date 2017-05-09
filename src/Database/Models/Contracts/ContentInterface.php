@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Database\Models\Contracts;
 
-use Franzose\ClosureTable\Contracts\EntityInterface;
+use Soda\ClosureTable\Contracts\EntityInterface;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 interface ContentInterface extends EntityInterface, CanBeSorted, AuditableContract

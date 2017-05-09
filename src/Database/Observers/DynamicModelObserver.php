@@ -49,7 +49,7 @@ class DynamicModelObserver
 
         $fields = $type->getRelation('fields');
 
-        if($fields && count($fields)) {
+        if ($fields && count($fields)) {
             $type->createTable();
         }
     }

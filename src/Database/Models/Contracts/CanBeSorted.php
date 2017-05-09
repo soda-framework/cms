@@ -15,7 +15,7 @@ interface CanBeSorted
     public function moveBefore($entity);
 
     /**
-     * @return \Franzose\ClosureTable\Models\Entity
+     * @return \Soda\ClosureTable\Models\Entity
      */
     public function moveInto($entity);
 }

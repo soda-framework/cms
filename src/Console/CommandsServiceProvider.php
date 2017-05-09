@@ -2,13 +2,11 @@
 
 namespace Soda\Cms\Console;
 
-use Soda\Cms\Console\Commands\Seed;
 use Soda\Cms\Console\Commands\Setup;
-use Soda\Cms\Console\Commands\Theme;
 use Soda\Cms\Console\Commands\Assets;
 use Soda\Cms\Console\Commands\Config;
 use Soda\Cms\Console\Commands\Update;
-use Soda\Cms\Console\Commands\Migrate;
+use Soda\Cms\Console\Commands\Install;
 use Illuminate\Support\ServiceProvider;
 
 class CommandsServiceProvider extends ServiceProvider
@@ -26,11 +24,9 @@ class CommandsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        'Update'  => 'soda.command.update',
-        'Assets'  => 'soda.command.assets',
-        'Migrate' => 'soda.command.migrate',
-        'Seed'    => 'soda.command.seed',
-        'Config'  => 'soda.command.config',
+        'Update' => 'soda.command.update',
+        'Assets' => 'soda.command.assets',
+        'Config' => 'soda.command.config',
     ];
 
     /**
@@ -39,7 +35,8 @@ class CommandsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $devCommands = [
-        'Setup' => 'soda.command.setup',
+        'Install' => 'soda.command.install',
+        'Setup'   => 'soda.command.setup',
     ];
 
     /**
@@ -110,22 +107,10 @@ class CommandsServiceProvider extends ServiceProvider
      *
      * @param $binding
      */
-    protected function registerMigrateCommand($binding)
+    protected function registerInstallCommand($binding)
     {
         $this->app->singleton($binding, function ($app) {
-            return new Migrate();
-        });
-    }
-
-    /**
-     * Register the command.
-     *
-     * @param $binding
-     */
-    protected function registerSeedCommand($binding)
-    {
-        $this->app->singleton($binding, function ($app) {
-            return new Seed();
+            return new Install();
         });
     }
 
@@ -150,18 +135,6 @@ class CommandsServiceProvider extends ServiceProvider
     {
         $this->app->singleton($binding, function ($app) {
             return new Setup($app['config'], $app['db']);
-        });
-    }
-
-    /**
-     * Register the command.
-     *
-     * @param $binding
-     */
-    protected function registerThemeCommand($binding)
-    {
-        $this->app->singleton($binding, function ($app) {
-            return new Theme();
         });
     }
 

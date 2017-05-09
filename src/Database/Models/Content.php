@@ -3,21 +3,21 @@
 namespace Soda\Cms\Database\Models;
 
 use Exception;
-use Franzose\ClosureTable\Models\Entity;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Soda\ClosureTable\Models\Entity;
 use Illuminate\Support\Facades\Schema;
-use Soda\Cms\Database\Models\Contracts\BlockTypeInterface;
-use Soda\Cms\Database\Models\Contracts\ContentInterface;
-use Soda\Cms\Database\Models\Traits\AdditionalClosureScopes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Cms\Database\Models\Traits\Auditable;
 use Soda\Cms\Database\Models\Traits\Draftable;
-use Soda\Cms\Database\Models\Traits\HasDefaultAttributes;
-use Soda\Cms\Database\Models\Traits\HasDynamicType;
-use Soda\Cms\Database\Models\Traits\Identifiable;
-use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 use Soda\Cms\Database\Models\Traits\Sluggable;
-use Soda\Cms\Database\Models\Traits\SortableClosure;
 use Soda\Cms\Database\Observers\ContentObserver;
+use Soda\Cms\Database\Models\Traits\Identifiable;
+use Soda\Cms\Database\Models\Traits\HasDynamicType;
+use Soda\Cms\Database\Models\Traits\SortableClosure;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
+use Soda\Cms\Database\Models\Traits\HasDefaultAttributes;
+use Soda\Cms\Database\Models\Contracts\BlockTypeInterface;
+use Soda\Cms\Database\Models\Traits\AdditionalClosureScopes;
+use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class Content extends Entity implements ContentInterface
 {
@@ -107,7 +107,7 @@ class Content extends Entity implements ContentInterface
             return $item->identifier == $identifier;
         })->first();
 
-        if (!$block && $this->type && $this->type->blockTypes) {
+        if (! $block && $this->type && $this->type->blockTypes) {
             $block = $this->type->blockTypes->filter(function ($item) use ($identifier) {
                 return $item->identifier == $identifier;
             })->first();
@@ -161,7 +161,7 @@ class Content extends Entity implements ContentInterface
     {
         $relatedModel = $this->getRelationValue('properties');
 
-        if (!$relatedModel) {
+        if (! $relatedModel) {
             $relatedModel = new DynamicContent;
 
             if ($this->type) {
@@ -175,12 +175,12 @@ class Content extends Entity implements ContentInterface
     public function shouldDynamicTableExist()
     {
         if ($this->getAttribute('content_type_id') !== null) {
-            if (!$this->relationLoaded('type')) {
+            if (! $this->relationLoaded('type')) {
                 $this->load('type');
             }
 
             if ($contentType = $this->getRelation('type')) {
-                if (!$contentType->relationLoaded('fields')) {
+                if (! $contentType->relationLoaded('fields')) {
                     $contentType->load('fields');
                 }
 
@@ -197,7 +197,7 @@ class Content extends Entity implements ContentInterface
 
     public function dynamicTableExists()
     {
-        if($contentType = $this->getRelation('type')) {
+        if ($contentType = $this->getRelation('type')) {
             $contentTypeTable = $contentType->getDynamicModelTablePrefix().$contentType->getAttribute('identifier');
             if (Schema::hasTable($contentTypeTable)) {
                 return true;
@@ -239,7 +239,7 @@ class Content extends Entity implements ContentInterface
 
         if ($this->shouldDynamicTableExist()) {
             foreach ($this->properties->getAttributes() as $attribute => $value) {
-                if (!in_array($attribute, $this->auditableExclusions)) {
+                if (! in_array($attribute, $this->auditableExclusions)) {
                     $new[$this->type->identifier][$attribute] = $value;
                 }
             }
@@ -265,7 +265,7 @@ class Content extends Entity implements ContentInterface
 
         if ($this->shouldDynamicTableExist()) {
             foreach ($this->properties->getDirty() as $attribute => $value) {
-                if (!in_array($attribute, $this->auditableExclusions)) {
+                if (! in_array($attribute, $this->auditableExclusions)) {
                     $old[$this->type->identifier][$attribute] = array_get($this->properties->getOriginal(), $attribute);
                     $new[$this->type->identifier][$attribute] = array_get($this->properties->getAttributes(), $attribute);
                 }
@@ -291,7 +291,7 @@ class Content extends Entity implements ContentInterface
 
         if ($this->shouldDynamicTableExist()) {
             foreach ($this->properties->getAttributes() as $attribute => $value) {
-                if (!in_array($attribute, $this->auditableExclusions)) {
+                if (! in_array($attribute, $this->auditableExclusions)) {
                     $old[$this->type->identifier][$attribute] = $value;
                 }
             }

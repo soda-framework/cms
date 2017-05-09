@@ -36,7 +36,7 @@ trait SortableClosure
      *
      * @param Model $entity
      *
-     * @return \Franzose\ClosureTable\Models\Entity
+     * @return \Soda\ClosureTable\Models\Entity
      * @throws \Exception
      */
     public function moveInto($entity)

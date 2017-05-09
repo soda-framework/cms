@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 class Assets extends Command
 {
-    protected $signature = 'soda:assets {--l|lol=test}';
+    protected $signature = 'soda:assets';
     protected $description = 'Update assets for the Soda Framework';
 
     /**

@@ -7,7 +7,7 @@ trait AdditionalClosureScopes
     /**
      * Retrieves query builder for root (with no ancestors) models.
      *
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \Soda\ClosureTable\Extensions\Collection
      */
     public static function collectRoots()
     {
@@ -22,7 +22,7 @@ trait AdditionalClosureScopes
     /**
      * Retrieves query builder for all descendants of a model.
      *
-     * @return \Franzose\ClosureTable\Extensions\QueryBuilder
+     * @return \Soda\ClosureTable\Extensions\QueryBuilder
      */
     public function collectDescendants($withSelf = false)
     {
@@ -42,7 +42,7 @@ trait AdditionalClosureScopes
     /**
      * Retrieves query builder for all children of a model.
      *
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \Soda\ClosureTable\Extensions\Collection
      */
     public function collectChildren()
     {
@@ -71,7 +71,7 @@ trait AdditionalClosureScopes
     /**
      * Retrieves query builder for neighbours of a model.
      *
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \Soda\ClosureTable\Extensions\Collection
      */
     public function collectNeighbors()
     {
@@ -81,7 +81,7 @@ trait AdditionalClosureScopes
     /**
      * Retrives query builder for all siblings of a model.
      *
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \Soda\ClosureTable\Extensions\Collection
      */
     public function collectSiblings()
     {
@@ -91,7 +91,7 @@ trait AdditionalClosureScopes
     /**
      * Retrieves query builder for previous siblings of a model.
      *
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \Soda\ClosureTable\Extensions\Collection
      */
     public function collectPrevSiblings()
     {
@@ -101,7 +101,7 @@ trait AdditionalClosureScopes
     /**
      * Retrieves query builder for next siblings of a model.
      *
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \Soda\ClosureTable\Extensions\Collection
      */
     public function collectNextSiblings()
     {
