@@ -123,7 +123,7 @@ class SodaServiceProvider extends ServiceProvider
 
     protected function configure()
     {
-        foreach($this->app->config->get('soda.upload.disks') as $disk => $configuration) {
+        foreach ($this->app->config->get('soda.upload.disks') as $disk => $configuration) {
             $this->app->config->set("filesystems.disks.$disk", $configuration);
         }
     }

@@ -36,6 +36,10 @@ class DashboardServiceProvider extends ServiceProvider
                 return soda_cms_view('partials.dashboard.default-block');
             });
 
+            $dashboardBuilder->addBlockToRow(1, 'quicklinks', function () {
+                return soda_cms_view('partials.dashboard.quicklinks');
+            });
+
             return $dashboardBuilder;
         });
     }

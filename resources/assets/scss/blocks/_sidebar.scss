@@ -31,6 +31,14 @@
     }
   }
 
+  svg.splash {
+    fill: $white;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    display: block;
+  }
+
   .soda-logo-block {
     display: block;
     position: relative;
@@ -47,11 +55,19 @@
   }
 
   .sidebar__top {
+    position: relative;
     background-color: #F0F0F0;
     > svg {
-      width: 100%;
-      display: block;
+      &.wave {
+        width: 100%;
+        display: block;
+      }
+      &.splash {
+        right: 65px;
+        top: 95px;
+      }
     }
+
     @media(max-width: $screen-sm-max) {
       display: none;
     }
@@ -69,24 +85,35 @@
     width: 100%;
     bottom: 0;
 
-    > svg {
+    > svg.wave {
       width: 100%;
       display: block;
       position: absolute;
+
+      &.wave-top {
+        bottom: 100%;
+      }
+
+      &.wave-bottom {
+        bottom: 0;
+      }
     }
 
-    > svg:first-child {
-      bottom: 100%;
-    }
-
-    > svg:last-child {
-      bottom: 0;
+    > svg.splash {
+      &.splash-top {
+        top: -45px;
+        left: 20px;
+      }
+      &.splash-bottom {
+        bottom: 10px;
+        right: 60px;
+      }
     }
 
     @media(max-width: $screen-sm-max) {
       top: 0;
 
-      > svg:first-child {
+      > svg.wave.wave-top {
         display: none;
       }
     }
@@ -161,7 +188,6 @@
 
   .nav-sidebar {
     margin-top: 10px;
-
 
     @media(max-width: $screen-sm-max) {
       margin-top: 0px;

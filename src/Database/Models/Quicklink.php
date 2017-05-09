@@ -29,6 +29,6 @@ class Quicklink extends Model
         $baseUrl = route($this->route_name, $this->route_params);
         $query = http_build_query($this->getAttribute('request_params'));
 
-        return $baseUrl . ($query ? "?$query" : '');
+        return $baseUrl.($query ? "?$query" : '');
     }
 }

@@ -20,7 +20,7 @@ Soda.contentTable = new Vue({
             var modal = $('#contentItemTypeModal');
             var form = modal.find('form');
 
-            if(contentTypeId !== null) {
+            if(contentTypeId !== null && contentTypeId !== '') {
                 this.$set(this, 'selectedContentType', contentTypeId);
                 this.$nextTick(function() {
                     form.submit();
@@ -42,7 +42,7 @@ Soda.contentTable = new Vue({
             var modal = $('#contentFolderTypeModal');
             var form = modal.find('form');
 
-            if(contentTypeId !== null) {
+            if(contentTypeId !== null && contentTypeId !== '') {
                 this.$set(this, 'selectedContentType', contentTypeId);
                 modal.modal('show');
             } else {

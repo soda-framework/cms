@@ -55,10 +55,10 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             @foreach($shortcuts->where('is_folder', false) as $shortcut)
-                                <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentItem({{ $shortcut->content_type_id }})">{{ $shortcut->text }}</a></li>
+                                <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentItem('{{ $shortcut->content_type_id }}')">{{ $shortcut->text }}</a></li>
                             @endforeach
                             @foreach($shortcuts->where('is_folder', true) as $shortcut)
-                                <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentFolder({{ $shortcut->content_type_id }})">{{ $shortcut->text }}</a></li>
+                                <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentFolder('{{ $shortcut->content_type_id }}')">{{ $shortcut->text }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -200,7 +200,8 @@
                     <div class="modal-body">
                         <fieldset class="form-group field_content_type dropdown-field">
                             <label for="field_page_type">Content Type</label>
-                            <select name="contentTypeId" class="form-control" v-model="selectedContentType">
+                            <input type="hidden" name="contentTypeId" v-bind:value="selectedContentType" />
+                            <select class="form-control" v-bind:value="selectedContentType" v-on:input="selectedContentType = $event.target.value">
                                 <option v-for="option in contentItemTypes" v-bind:value="option.id" v-text="option.name"></option>
                             </select>
                         </fieldset>
@@ -233,7 +234,8 @@
                         </fieldset>
                         <fieldset class="form-group field_content_type dropdown-field" v-if="Object.keys(this.contentFolderTypes).length">
                             <label>Folder Type</label>
-                            <select name="contentTypeId" class="form-control" v-model="selectedContentType">
+                            <input type="hidden" name="contentTypeId" v-bind:value="selectedContentType" />
+                            <select class="form-control" v-bind:value="selectedContentType" v-on:input="selectedContentType = $event.target.value">
                                 <option v-for="option in contentFolderTypes" v-bind:value="option.id" v-text="option.name"></option>
                             </select>
                         </fieldset>

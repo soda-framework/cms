@@ -84,7 +84,6 @@ class ContentController extends BaseController
             if ($request->input('folder') == true) {
                 $content->fillDefaults()->fill([
                     'name'           => $request->input('name'),
-                    'parent_id'      => $parentId,
                     'is_sluggable'   => false,
                     'is_folder'      => true,
                     'is_publishable' => false,
@@ -104,7 +103,12 @@ class ContentController extends BaseController
             $contentFolder = $this->content->findById($parentId);
             $this->buildBreadcrumbTree($contentFolder, true);
         }
-        app('soda.interface')->setHeading('New '.ucfirst(trans('soda::terminology.content')));
+
+        if($content->type) {
+            app('soda.interface')->setHeading('New '.$content->type->name);
+        } else {
+            app('soda.interface')->setHeading('New '.ucfirst(trans('soda::terminology.content')));
+        }
 
         return view($content->edit_action, compact('content'));
     }
@@ -118,6 +122,8 @@ class ContentController extends BaseController
      */
     public function store(Request $request)
     {
+        $this->validate($request, ['name' => 'required']);
+
         try {
             $content = $this->content->save($request);
         } catch (Exception $e) {
@@ -161,6 +167,8 @@ class ContentController extends BaseController
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, ['name' => 'required']);
+
         try {
             $content = $this->content->save($request, $id);
         } catch (Exception $e) {

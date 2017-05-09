@@ -1,0 +1,27 @@
+.tag {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  background-color: $gray-lighter;
+  transition: background-color 0.25s ease-in, color 0.25s ease-in;
+  color: $gray-dark;
+
+  .tag-delete {
+    font-weight: bold;
+    margin-left: 8px;
+    transition: color 0.25s ease-in;
+    font-size: 14px;
+  }
+
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+    background-color: $gray-dark;
+    color: $gray-lighter;
+    outline: none;
+
+    .tag-delete {
+      color: $gray-lighter;
+    }
+  }
+}

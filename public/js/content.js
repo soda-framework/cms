@@ -1,1 +1,143 @@
-!function(e){function t(o){if(n[o])return n[o].exports;var s=n[o]={i:o,l:!1,exports:{}};return e[o].call(s.exports,s,s.exports,t),s.l=!0,s.exports}var n={};t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=26)}({1:function(e,t){Soda.contentTable=new Vue({el:"#app",data:{content:{},contentItemTypes:{},contentFolderTypes:{},selectedContentType:null},mounted:function(){window.initVue(this)},methods:{getFormattedDate:function(e){return moment(e,"YYYY-MM-DD hh:mm:ss").format("Do MMMM YYYY")},routeTo:function(e,t){return e.replace(new RegExp("###ID###","g"),t)},newContentItem:function(e){var t=$("#contentItemTypeModal"),n=t.find("form");if(null!==e)this.$set(this,"selectedContentType",e),this.$nextTick(function(){n.submit()});else{var o=Object.keys(this.contentItemTypes).length;this.$set(this,"selectedContentType",o?Object.keys(this.contentItemTypes)[0]:null),o>1?t.modal("show"):this.$nextTick(function(){n.submit()})}},newContentFolder:function(e){var t=$("#contentFolderTypeModal");t.find("form");if(null!==e)this.$set(this,"selectedContentType",e),t.modal("show");else{var n=Object.keys(this.contentFolderTypes).length;this.$set(this,"selectedContentType",n?Object.keys(this.contentFolderTypes)[0]:null),t.modal("show")}},deleteContent:function(e){Soda.confirmDelete($(e.target))}}})},26:function(e,t,n){e.exports=n(1)}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+/******/
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 1:
+/***/ (function(module, exports) {
+
+Soda.contentTable = new Vue({
+    el: '#app',
+    data: {
+        content: {},
+        contentItemTypes: {},
+        contentFolderTypes: {},
+        selectedContentType: null
+    },
+    mounted: function mounted() {
+        window.initVue(this);
+    },
+    methods: {
+        getFormattedDate: function getFormattedDate(date) {
+            return moment(date, 'YYYY-MM-DD hh:mm:ss').format('Do MMMM YYYY');
+        },
+        routeTo: function routeTo(route, contentId) {
+            return route.replace(new RegExp('###ID###', 'g'), contentId);
+        },
+        newContentItem: function newContentItem(contentTypeId) {
+            var modal = $('#contentItemTypeModal');
+            var form = modal.find('form');
+
+            if (contentTypeId !== null && contentTypeId !== '') {
+                this.$set(this, 'selectedContentType', contentTypeId);
+                this.$nextTick(function () {
+                    form.submit();
+                });
+            } else {
+                var numContentTypes = Object.keys(this.contentItemTypes).length;
+                this.$set(this, 'selectedContentType', numContentTypes ? Object.keys(this.contentItemTypes)[0] : null);
+
+                if (numContentTypes > 1) {
+                    modal.modal('show');
+                } else {
+                    this.$nextTick(function () {
+                        form.submit();
+                    });
+                }
+            }
+        },
+        newContentFolder: function newContentFolder(contentTypeId) {
+            var modal = $('#contentFolderTypeModal');
+            var form = modal.find('form');
+
+            if (contentTypeId !== null && contentTypeId !== '') {
+                this.$set(this, 'selectedContentType', contentTypeId);
+                modal.modal('show');
+            } else {
+                var numContentTypes = Object.keys(this.contentFolderTypes).length;
+                this.$set(this, 'selectedContentType', numContentTypes ? Object.keys(this.contentFolderTypes)[0] : null);
+                modal.modal('show');
+            }
+        },
+        deleteContent: function deleteContent(event) {
+            Soda.confirmDelete($(event.target));
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(1);
+
+
+/***/ })
+
+/******/ });
