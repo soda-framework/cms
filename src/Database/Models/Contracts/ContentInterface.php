@@ -41,4 +41,7 @@ interface ContentInterface extends EntityInterface, CanBeSorted, AuditableContra
      * @return bool
      */
     public function isMovable();
+
+    public function dynamicTableExists();
+    public function shouldDynamicTableExist();
 }

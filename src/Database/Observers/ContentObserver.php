@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Database\Observers;
 
-use Soda\Cms\Database\Models\DynamicContent;
+use Illuminate\Support\Facades\Schema;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
 
 class ContentObserver
@@ -17,14 +17,10 @@ class ContentObserver
      *
      * @param ContentInterface $content
      */
-    public function created(ContentInterface $content)
+    public function saved(ContentInterface $content)
     {
-        if ($content->getAttribute('content_type_id') !== null) {
-            if (! $content->relationLoaded('type')) {
-                $content->load('type');
-            }
-
-            DynamicContent::fromTable($content->getRelation('type')->getAttribute('identifier'))->fill(['content_id' => $content->getKey()])->save();
+        if($content->shouldDynamicTableExist() && !$content->dynamicTableExists()) {
+            $content->getRelation('type')->createTable();
         }
     }
 }

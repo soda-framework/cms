@@ -1,3 +1,7 @@
+<?php
+    $isMovable = $content->where('is_movable', true)->count() ? true : false;
+?>
+
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('content')
@@ -41,21 +45,26 @@
                 </div>
             </div>
             --}}
-
-            @permission('create-pages')
-            <div class="btn-group">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Create
-                        <i class="mdi mdi-menu-down"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentItem">New Content Item</a></li>
-                        <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentFolder">New Folder</a></li>
-                    </ul>
+            @if(count($shortcuts))
+                @permission('create-pages')
+                <div class="btn-group">
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Create
+                            <i class="mdi mdi-menu-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            @foreach($shortcuts->where('is_folder', false) as $shortcut)
+                                <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentItem({{ $shortcut->content_type_id }})">{{ $shortcut->text }}</a></li>
+                            @endforeach
+                            @foreach($shortcuts->where('is_folder', true) as $shortcut)
+                                <li><a href="{{ route('soda.content.create') }}" v-on:click.prevent="newContentFolder({{ $shortcut->content_type_id }})">{{ $shortcut->text }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            @endpermission
+                @endpermission
+            @endif
         </div>
     </div>
     <br />
@@ -70,7 +79,7 @@
                     </div>
                 </th>
                 --}}
-                <th colspan="2">Name</th>
+                <th colspan="{{ $isMovable ? 2 : 1 }}">Name</th>
                 <th>Date Edited</th>
                 <th colspan="2">Status</th>
             </tr>
@@ -85,18 +94,20 @@
                     </div>
                 </td>
                 --}}
+                @if($isMovable)
                 <td class="text-center" width="20">
                     <span class="sortable-handle" v-if="contentItem.is_movable">
                         <i class="mdi mdi-drag-vertical"></i>
                     </span>
                 </td>
+                @endif
                 <td>
                     <i class="mdi mdi-folder-outline" v-if="contentItem.is_folder"></i>
                     <i class="mdi mdi-file-outline" v-else-if="contentItem.is_sluggable"></i>
                     <i class="mdi mdi-vector-arrange-above" v-else></i>
                     <span v-text="contentItem.name"></span>
                 </td>
-                <td v-text="contentItem.updated_at"></td> {{-- $contentItem->updated_at->format('jS F Y') --}}
+                <td v-text="getFormattedDate(contentItem.updated_at)"></td> {{-- $contentItem->updated_at->format('jS F Y') --}}
                 <td>
                     <template v-if="contentItem.is_publishable && contentItem.is_folder">
                         <span v-bind:class="{ 'active-circle': contentItem.status == {{ Soda\Cms\Foundation\Constants::STATUS_LIVE }}, 'inactive-circle': contentItem.status == {{ Soda\Cms\Foundation\Constants::STATUS_DRAFT }} }"></span>
@@ -116,13 +127,11 @@
                                     <li><a v-bind:href="routeTo('{{ route('soda.content.show', '###ID###') }}', contentItem.id)">Open folder</a></li>
                                 </template>
 
-                                <template v-else>
-                                    @permission('edit-pages')
+                                @permission('edit-pages')
                                     <li><a v-bind:href="routeTo('{{ route('soda.content.edit', '###ID###') }}', contentItem.id)">Edit</a></li>
-                                    @else
-                                        <li class="disabled"><a href="#"><i class="mdi mdi-lock"></i> <span>Edit</span></a></li>
-                                        @endpermission
-                                </template>
+                                @else
+                                    <li class="disabled"><a href="#"><i class="mdi mdi-lock"></i> <span>Edit</span></a></li>
+                                @endpermission
 
                                 <template v-if="contentItem.is_sluggable">
                                     <li><a v-bind:href="contentItem.slug" target="_blank">Preview</a></li>
@@ -225,9 +234,10 @@
                         <fieldset class="form-group field_content_type dropdown-field" v-if="Object.keys(this.contentFolderTypes).length">
                             <label>Folder Type</label>
                             <select name="contentTypeId" class="form-control" v-model="selectedContentType">
-                                <option v-for="option in contentItemTypes" v-bind:value="option.id" v-text="option.name"></option>
+                                <option v-for="option in contentFolderTypes" v-bind:value="option.id" v-text="option.name"></option>
                             </select>
                         </fieldset>
+                        <input type="hidden" name="contentTypeId" v-else-if="selectedContentType !== null" v-model="selectedContentType" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

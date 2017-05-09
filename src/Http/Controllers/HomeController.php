@@ -17,7 +17,7 @@ class HomeController extends BaseController
         return soda_cms_view('dashboard');
     }
 
-    public function getToggleDraft()
+    public function toggleDraft()
     {
         $draftMode = Session::get('soda.draft_mode') == true ? false : true;
 
@@ -36,5 +36,12 @@ class HomeController extends BaseController
         $request->user()->save();
 
         return redirect()->back()->with('success', 'Password reset successfully');
+    }
+
+    public function addQuicklink(Request $request)
+    {
+        Quicklink::firstOrCreate($request->only(['route_name', 'route_params', 'request_params']));
+
+        redirect()->back()->with('success', 'Quicklink added.');
     }
 }

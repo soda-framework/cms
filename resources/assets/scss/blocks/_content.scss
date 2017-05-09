@@ -18,9 +18,17 @@ body.unloading {
   }
 }
 
+body.loaded {
+  .main-content {
+    @extend .fadeInDown;
+    opacity: 1;
+  }
+}
+
 .main-content {
+  opacity: 0;
   transform: translateX(0px);
-  transition: transform 0.25s ease-in-out;
+  transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
   padding: 20px 20px 50px;
 
   @media(max-width: $screen-sm-max) {

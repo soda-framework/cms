@@ -38,12 +38,20 @@ trait BuildsDynamicModels
     {
         $table = $this->getDynamicTableName();
 
-        if (! Schema::hasTable($table)) {
-            Schema::create($table, function (Blueprint $table) {
-                $this->buildDynamicTable($table);
-            });
-        } else {
+        if (Schema::hasTable($table)) {
             throw new Exception('Table '.$table.' already exists');
+        }
+
+        Schema::create($table, function (Blueprint $table) {
+            $this->buildDynamicTable($table);
+        });
+
+        if (! $this->relationLoaded('fields')) {
+            $this->load('fields');
+        }
+
+        if($fields = $this->getRelation('fields')) {
+            $this->addFields($fields);
         }
 
         return $this;

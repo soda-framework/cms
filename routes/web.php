@@ -13,7 +13,8 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
         Route::post('reset-password', 'HomeController@resetWeakPassword')->name('soda.reset-weak-password');
         Route::get('/', 'HomeController@getIndex')->name('soda.home')->middleware('soda.permission:access-cms');
         Route::post('sort', 'Api\SortController@sort')->name('soda.sort')->middleware('soda.permission:access-cms');
-        Route::get('toggle-draft', 'HomeController@getToggleDraft')->name('soda.toggle-draft')->middleware('soda.permission:view-drafts');
+        Route::get('toggle-draft', 'HomeController@toggleDraft')->name('soda.toggle-draft')->middleware('soda.permission:view-drafts');
+        Route::post('add-quicklink', 'HomeController@addQuicklink')->name('soda.add-quicklink');
 
         Route::get('settings', 'SettingsController@index')->name('soda.settings.index')->middleware('soda.permission:view-applications');
         Route::group(['prefix' => 'settings'], function () {

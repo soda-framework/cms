@@ -14,11 +14,7 @@ class DynamicModelObserver
      */
     public function creating(CanBuildDynamicModels $type)
     {
-        if (! $type->relationLoaded('fields')) {
-            $type->load('fields');
-        }
-
-        $type->createTable()->addFields($type->getRelation('fields'));
+        $this->buildTable($type);
     }
 
     /**
@@ -39,7 +35,22 @@ class DynamicModelObserver
 
             if (Schema::hasTable($old_table)) {
                 Schema::rename($old_table, $new_table);
+            } else {
+                $this->buildTable($type);
             }
+        }
+    }
+
+    protected function buildTable(CanBuildDynamicModels $type)
+    {
+        if (! $type->relationLoaded('fields')) {
+            $type->load('fields');
+        }
+
+        $fields = $type->getRelation('fields');
+
+        if($fields && count($fields)) {
+            $type->createTable();
         }
     }
 }

@@ -24,7 +24,7 @@
   background-clip: padding-box;
   overflow: hidden;
   > li, > div {
-    a {
+    a, .btn-link {
       transition: background-color 0.15s linear, color 0.15s linear;
       display: block;
       padding: 8px 25px;
@@ -32,10 +32,14 @@
       font-weight: 400;
       color: #333;
       white-space: nowrap;
+      width: 100%;
+      text-align: left;
+      border: 0;
     }
-    > a:hover {
+    > a:hover, .btn-link:hover {
       background: #fff;
       text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+      text-decoration: none;
     }
     &.warning a:hover {
       background: #e75650;

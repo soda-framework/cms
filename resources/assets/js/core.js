@@ -12,3 +12,4 @@ try {
 
 window.Vue = require('vue');
 window.sweetAlert = window.swal = require('bootstrap-sweetalert');
+window.moment = require('moment/moment');

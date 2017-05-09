@@ -15,21 +15,33 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class='dropdown-item' href="/" target="_blank">
-                                <i class="fa fa-eye"></i>
+                                <i class="mdi mdi-eye"></i>
                                 <span>View Site</span>
                             </a>
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('soda.add-quicklink') }}">
+                                {!! csrf_field() !!}
+                                <input type="hidden" name="route_name" value="{{ Route::getCurrentRoute()->action['as'] }}" />
+                                <input type="hidden" name="route_params" value="{{ json_encode(Route::getCurrentRoute()->parameters) }}" />
+                                <input type="hidden" name="request_params" value="{{ json_encode(Request::input(), true) }}" />
+                                <button class='btn-link dropdown-item'>
+                                    <i class="mdi mdi-share"></i>
+                                    <span>Quick link</span>
+                                </button>
+                            </form>
                         </li>
                         @permission('view-drafts')
                         <li>
                             <a class='dropdown-item' href="{{ route('soda.toggle-draft') }}">
-                                <i class="fa fa-btn fa-pencil"></i>
+                                <i class="mdi fa-btn mdi-pencil"></i>
                                 <span>{{ Session::get("soda.draft_mode") == true ? "Live" : "Draft" }} Mode</span>
                             </a>
                         </li>
                         @endpermission
                         <li>
                             <a class='dropdown-item' href="{{ route('soda.logout') }}">
-                                <i class="fa fa-btn fa-sign-out"></i>
+                                <i class="mdi fa-btn mdi-logout"></i>
                                 <span>Logout</span>
                             </a>
                         </li>

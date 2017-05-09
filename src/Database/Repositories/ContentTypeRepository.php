@@ -58,6 +58,14 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
             $model->content()->update(['is_sluggable' => $this->model->is_sluggable]);
         }
 
+        if ($model->id && $model->isDirty('is_publishable')) {
+            $model->content()->update(['is_publishable' => $this->model->is_publishable]);
+        }
+
+        if ($model->id && $model->isDirty('is_movable')) {
+            $model->content()->update(['is_movable' => $this->model->is_movable]);
+        }
+
         $model->save();
 
         $allPageTypes = $request->input('page_types') ? array_keys($request->input('page_types')) : [];

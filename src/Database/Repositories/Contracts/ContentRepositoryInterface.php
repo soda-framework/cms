@@ -19,6 +19,8 @@ interface ContentRepositoryInterface extends BaseRepositoryInterface
 
     public function getTypes($creatableOnly = false);
 
+    public function getShortcuts(ContentInterface $content);
+
     public function getCreatableContentTypes($contentFolderId);
 
     public function createStub($parentId = null, $contentTypeId = null);

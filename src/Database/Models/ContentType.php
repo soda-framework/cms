@@ -62,7 +62,7 @@ class ContentType extends Model implements ContentTypeInterface
 
     public function getDynamicModelTablePrefix()
     {
-        return '_page_';
+        return '_content_';
     }
 
     public function buildDynamicTable(Blueprint $table)

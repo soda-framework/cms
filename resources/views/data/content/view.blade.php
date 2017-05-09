@@ -15,14 +15,14 @@ if ($content->type && $content->type->blockTypes) {
 @section('settings.basic')
         {!! app('soda.form')->text([
             "name"        => "Name",
-            "description" => "The name of this page",
+            "description" => "The name of this content item",
             "field_name"  => 'name',
         ])->setModel($content) !!}
 
         @if(!$content->exists || $content->isSluggable())
             {!! app('soda.form')->slug([
                 'name'        => 'Slug',
-                'description' => 'The url of this page',
+                'description' => 'The url of this content item',
                 'field_name'  => 'slug',
                 'field_params' => [
                     'prefix' => ($content->parent_id !== null && $parent = $content->getParent()) ? $parent->slug : '',
@@ -30,6 +30,7 @@ if ($content->type && $content->type->blockTypes) {
             ])->setModel($content) !!}
         @endif
 
+        <div class="if-publishable" {!! $content->is_publishable ? '' : 'style="display:none"' !!}>
         {!! app('soda.form')->toggle([
             'name'         => 'Published',
             'field_name'   => 'status',
@@ -38,6 +39,7 @@ if ($content->type && $content->type->blockTypes) {
                 'checked-value'   => Soda\Cms\Foundation\Constants::STATUS_LIVE,
                 'unchecked-value' => Soda\Cms\Foundation\Constants::STATUS_DRAFT],
         ])->setModel($content) !!}
+        </div>
 @stop
 
 @section('tab.advanced')
@@ -55,7 +57,7 @@ if ($content->type && $content->type->blockTypes) {
                             <small class="text-muted">If disabled, this content item can not be reached by a slug</small>
                         </td>
                         <td width="62">
-                            {!! app('soda.form')->toggle([
+                            {!! $isSluggableFormItem = app('soda.form')->toggle([
                                 'name'         => null,
                                 'field_name'   => 'is_sluggable',
                                 'value'        => 1,
@@ -69,7 +71,7 @@ if ($content->type && $content->type->blockTypes) {
                             <small class="text-muted">If disabled, this content item can not be changed from it's current published state</small>
                         </td>
                         <td width="62">
-                            {!! app('soda.form')->toggle([
+                            {!! $isPublishableFormItem = app('soda.form')->toggle([
                                 'name'         => null,
                                 'field_name'   => 'is_publishable',
                                 'value'        => 1,
@@ -130,33 +132,35 @@ if ($content->type && $content->type->blockTypes) {
             </div>
         </div>
 
-        {!! app('soda.form')->text([
-            'name'        => null,
-            'field_name'  => 'view_action',
-            'value'       => $content->type && $content->type->view_action,
-        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
+        <div class="if-sluggable">
+            {!! app('soda.form')->text([
+                'name'        => null,
+                'field_name'  => 'view_action',
+                'value'       => $content->type && $content->type->view_action,
+            ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
-        {!! app('soda.form')->dropdown([
-            'name'        => 'View Action',
-            'field_name'  => 'view_action_type',
-            'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
-            'description'  => 'Specifies the interface supplied when viewing this page.',
-            'value'        => $content->type && $content->type->view_action_type ? $content->type->view_action_type : 'view',
-        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+            {!! app('soda.form')->dropdown([
+                'name'        => 'View Action',
+                'field_name'  => 'view_action_type',
+                'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
+                'description'  => 'Specifies the interface supplied when viewing this page.',
+                'value'        => $content->type && $content->type->view_action_type ? $content->type->view_action_type : 'view',
+            ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
 
-        {!! app('soda.form')->text([
-            'name'        => null,
-            'field_name'  => 'edit_action',
-            'value'       => $content->type && $content->type->edit_action,
-        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
+            {!! app('soda.form')->text([
+                'name'        => null,
+                'field_name'  => 'edit_action',
+                'value'       => $content->type && $content->type->edit_action,
+            ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group-addon')) !!}
 
-        {!! app('soda.form')->dropdown([
-            'name'        => 'Edit Action',
-            'field_name'  => 'edit_action_type',
-            'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
-            'description'  => 'Specifies the interface supplied when editing this page.',
-            'value'        => $content->type && $content->type->edit_action_type ? $content->type->edit_action_type : 'view',
-        ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+            {!! app('soda.form')->dropdown([
+                'name'        => 'Edit Action',
+                'field_name'  => 'edit_action_type',
+                'field_params' => ['options' => Soda\Cms\Foundation\Constants::CONTENT_ACTION_TYPES],
+                'description'  => 'Specifies the interface supplied when editing this page.',
+                'value'        => $content->type && $content->type->edit_action_type ? $content->type->edit_action_type : 'view',
+            ])->setModel($content)->setLayout(soda_cms_view_path('partials.inputs.layouts.stacked-group')) !!}
+        </div>
     </div>
 @stop
 
@@ -194,7 +198,7 @@ if ($content->type && $content->type->blockTypes) {
                     </li>
                     @endpermission
 
-                    @if($content->id)
+                    @if($content->id && count($blockTypes))
                         @permission("attach-blocks")
                         <li role='presentation'>
                             <a role="tab" href="#tab_new-block">+</a>
@@ -304,6 +308,25 @@ if ($content->type && $content->type->blockTypes) {
     @parent
     <script>
         $(function () {
+            var isSluggableFormItem = $('#{{ $isSluggableFormItem->getFieldId() }}');
+            var isPublishableFormItem = $('#{{ $isPublishableFormItem->getFieldId() }}');
+
+            isSluggableFormItem.on('change', function() {
+                if($(this).is(":checked")) {
+                    $('.if-sluggable').fadeIn();
+                } else {
+                    $('.if-sluggable').fadeOut();
+                }
+            }).trigger('change');
+
+            isPublishableFormItem.on('change', function() {
+                if($(this).is(":checked")) {
+                    $('.if-publishable').fadeIn();
+                } else {
+                    $('.if-publishable').fadeOut();
+                }
+            }).trigger('change');
+
             $('a[href="#tab_new-block"]').on('click', function (e) {
                 e.preventDefault();
                 $('#newBlockModal').modal('show')

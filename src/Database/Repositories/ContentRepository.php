@@ -3,10 +3,11 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Constants;
-use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Models\ContentShortcut;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
+use Soda\Cms\Foundation\Constants;
+use Soda\Cms\Support\Facades\Soda;
 
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
@@ -28,7 +29,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $contentRoot = $this->model->getRoots()->first();
 
-        if (! $contentRoot) {
+        if (!$contentRoot) {
             $contentRoot = $this->model->newInstance([
                 'name'           => 'Root',
                 'slug'           => null,
@@ -68,9 +69,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         if ($content && $content->type) {
             $creatableTypes = $content->type->pageTypes()->where('is_creatable', true)->get();
 
-            if ($creatableTypes) {
-                return $creatableTypes;
-            }
+            if ($creatableTypes) return $creatableTypes;
         }
 
         return $this->getTypes(true);
@@ -94,24 +93,57 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function getAvailableBlockTypes(ContentInterface $content)
     {
-        if (! $content->relationLoaded('blockTypes')) {
+        if (!$content->relationLoaded('blockTypes')) {
             $content->load('blockTypes');
         }
 
         return $this->getBlockTypes()->diff($content->getRelation('blockTypes'));
     }
 
+    public function getShortcuts(ContentInterface $content)
+    {
+        $creatableTypes = $content->type ? $content->type->pageTypes()->where('is_creatable', true)->pluck('id') : [];
+
+        $shortcutsQuery = ContentShortcut::where(function ($sq) use ($content) {
+            $sq->whereNull('parent_id')->orWhere('parent_id', $content->id);
+        });
+
+        if (count($creatableTypes)) {
+            $shortcutsQuery->whereIn('content_type_id', $creatableTypes);
+        }
+
+        $shortcuts = $shortcutsQuery->get();
+
+        if (!count($creatableTypes)) {
+            if (!$shortcuts->where('is_folder', true)->where('override_default', true)->count()) {
+                $shortcuts->push(new ContentShortcut([
+                    'text'             => 'New Content Folder',
+                    'is_folder'        => 1,
+                ]));
+            }
+
+            if (!$shortcuts->where('is_folder', false)->where('override_default', true)->count()) {
+                $shortcuts->push(new ContentShortcut([
+                    'text'             => 'New Content Item',
+                    'is_folder'        => 0,
+                ]));
+            }
+        }
+
+        return $shortcuts;
+    }
+
     public function createStub($parentId = null, $contentTypeId = null)
     {
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
-        if (! $parent->isFolder()) {
+        if (!$parent->isFolder()) {
             throw new \Exception('You cannot create that content here.');
         }
 
         if ($parent->type) {
             $allowedContentTypes = $parent->type->pageTypes ? $parent->type->pageTypes->pluck('id')->toArray() : [];
-            if (count($allowedContentTypes) && ! in_array($contentTypeId, $allowedContentTypes)) {
+            if (count($allowedContentTypes) && !in_array($contentTypeId, $allowedContentTypes)) {
                 throw new \Exception('You cannot create that content here.');
             }
         }
@@ -154,16 +186,12 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             $content = $this->initializeContent($request);
         }
 
-        if ($content->content_type_id) {
-            $content->load('type');
-
-            if ($content->relationLoaded('type')) {
-                $this->saveSettings($content, $request);
-            }
+        if ($content->shouldDynamicTableExist()) {
+            $this->saveSettings($content, $request);
         }
 
         $content->save();
-        if ($content->properties) {
+        if ($content->shouldDynamicTableExist() && $content->dynamicTableExists() && count($content->properties->toArray())) {
             $content->properties->save();
         } // Save last so attributes are available in saving event above
 
@@ -177,7 +205,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         $slug = $content->generateSlug($request->input('slug'));
 
-        if ($parentContent && ! starts_with($slug, $parentContent->getAttribute('slug'))) {
+        if ($parentContent && !starts_with($slug, $parentContent->getAttribute('slug'))) {
             $slug = $parentContent->generateSlug($request->input('slug'));
         }
 
@@ -196,7 +224,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     protected function saveSettings(ContentInterface $content, Request $request)
     {
-        if ($content->type !== null) {
+        if ($content->type !== null && count($content->type->fields)) {
             $content->setRelation('properties', Soda::dynamicContent($content->getRelation('type')->getAttribute('identifier'))->firstOrNew(['content_id' => $content->getKey()]));
 
             foreach ($content->type->fields as $field) {
