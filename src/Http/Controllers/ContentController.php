@@ -4,6 +4,7 @@ namespace Soda\Cms\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
 
 class ContentController extends BaseController
@@ -60,6 +61,9 @@ class ContentController extends BaseController
         $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
         $shortcuts = $this->content->getShortcuts($contentFolder);
 
+        $this->buildBreadcrumbTree($contentFolder);
+        app('soda.interface')->setHeading($contentFolder->name);
+
         return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts'));
     }
 
@@ -72,9 +76,6 @@ class ContentController extends BaseController
      */
     public function create(Request $request)
     {
-        app('soda.interface')->setHeading('New '.ucfirst(trans('soda::terminology.content')));
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
-
         try {
             $parentId = $request->input('parentId');
             $contentTypeId = $request->input('contentTypeId');
@@ -98,6 +99,12 @@ class ContentController extends BaseController
         } catch (Exception $e) {
             return $this->handleException($e, trans('soda::errors.create', ['object' => trans('soda::terminology.content')]));
         }
+
+        if($parentId) {
+            $contentFolder = $this->content->findById($parentId);
+            $this->buildBreadcrumbTree($contentFolder, true);
+        }
+        app('soda.interface')->setHeading('New '.ucfirst(trans('soda::terminology.content')));
 
         return view($content->edit_action, compact('content'));
     }
@@ -135,11 +142,11 @@ class ContentController extends BaseController
             return $this->handleError(trans('soda::errors.not-found', ['object' => trans('soda::terminology.content')]));
         }
 
-        app('soda.interface')->setHeading($content->name);
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
-
         $content->load('blockTypes.fields', 'type.blockTypes.fields', 'type.fields');
         $blockTypes = $this->content->getAvailableBlockTypes($content);
+
+        $this->buildBreadcrumbTree($content);
+        app('soda.interface')->setHeading($content->name);
 
         return view($content->edit_action, compact('content', 'blockTypes'));
     }
@@ -178,6 +185,28 @@ class ContentController extends BaseController
             return $this->handleException($e, trans('soda::errors.delete', ['object' => trans('soda::terminology.content')]));
         }
 
-        return redirect()->route('soda.content.index')->with('warning', trans('soda::messages.deleted', ['object' => trans('soda::terminology.content')]));
+        return redirect()->back()->with('info', trans('soda::messages.deleted', ['object' => trans('soda::terminology.content')]));
+    }
+
+    protected function buildBreadcrumbTree(ContentInterface $contentItem, $includeItem = false) {
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
+
+        if($parentFolder = $contentItem->getAncestorsTree()->first()) {
+            do {
+                if($parentFolder->real_depth > 0) {
+                    app('soda.interface')->breadcrumbs()->addLink(route('soda.content.show', $parentFolder->id), $parentFolder->name);
+                }
+
+                if($parentFolder->relationLoaded('children') && isset($parentFolder->getRelation('children')[0])) {
+                    $parentFolder = $parentFolder->getRelation('children')[0];
+                } else {
+                    $parentFolder = false;
+                }
+            } while($parentFolder);
+        }
+
+        if($includeItem) {
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.content.show', $contentItem->id), $contentItem->name);
+        }
     }
 }

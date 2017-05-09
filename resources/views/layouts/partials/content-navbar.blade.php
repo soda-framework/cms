@@ -20,16 +20,10 @@
                             </a>
                         </li>
                         <li>
-                            <form method="POST" action="{{ route('soda.add-quicklink') }}">
-                                {!! csrf_field() !!}
-                                <input type="hidden" name="route_name" value="{{ Route::getCurrentRoute()->action['as'] }}" />
-                                <input type="hidden" name="route_params" value="{{ json_encode(Route::getCurrentRoute()->parameters) }}" />
-                                <input type="hidden" name="request_params" value="{{ json_encode(Request::input(), true) }}" />
-                                <button class='btn-link dropdown-item'>
-                                    <i class="mdi mdi-share"></i>
-                                    <span>Quick link</span>
-                                </button>
-                            </form>
+                            <a class='dropdown-item' href="#" data-toggle="modal" data-target="#newQuicklinkModal">
+                                <i class="mdi mdi-share"></i>
+                                <span>Quick link</span>
+                            </a>
                         </li>
                         @permission('view-drafts')
                         <li>

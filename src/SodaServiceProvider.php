@@ -98,7 +98,7 @@ class SodaServiceProvider extends ServiceProvider
             SortableServiceProvider::class,
             LaratrustServiceProvider::class,
             ImageServiceProvider::class,
-            AuditingServiceProvider::class,
+            //AuditingServiceProvider::class,
 
             // Deferred Model Providers
             ApplicationServiceProvider::class,
@@ -123,8 +123,9 @@ class SodaServiceProvider extends ServiceProvider
 
     protected function configure()
     {
-        $this->app->config->set('filesystems.disks.soda.local', $this->app->config->get('soda.upload.disks.local'));
-        $this->app->config->set('filesystems.disks.soda.s3', $this->app->config->get('soda.upload.disks.s3'));
+        foreach($this->app->config->get('soda.upload.disks') as $disk => $configuration) {
+            $this->app->config->set("filesystems.disks.$disk", $configuration);
+        }
     }
 
     protected function extendBlade()

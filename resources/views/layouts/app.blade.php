@@ -8,6 +8,7 @@
         <div class="soda-wrapper container-fluid">
             @yield('main-content')
         </div>
+        @include(soda_cms_view_path('partials.modals.quicklink'))
         @yield("modals")
     </div>
     @yield("footer.js")

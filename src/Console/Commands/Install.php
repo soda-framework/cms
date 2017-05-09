@@ -19,7 +19,7 @@ class Install extends Command
         ]);
 
         $this->call('db:seed', [
-            '--class' => 'Soda\\Cms\\Database\\Models\\Seeders\\'.$this->option('class'),
+            '--class' => 'Soda\\Cms\\Database\\Models\\Seeders\\SeedAll',
         ]);
 
         $this->call('soda:assets');

@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'default' => 'local',
+    'default' => 'soda-local',
 
     'disks' => [
-        'local' => [
+        'soda-local' => [
             'driver' => 'local',
             'root'   => public_path('uploads'),
         ],
 
-        's3' => [
+        'soda-s3' => [
             'driver'     => 's3',
             'root'       => 'uploads',
             'key'        => env('AWS_KEY'),

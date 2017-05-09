@@ -4,6 +4,7 @@ namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Soda\Cms\Database\Models\Quicklink;
 
 class HomeController extends BaseController
 {
@@ -40,8 +41,21 @@ class HomeController extends BaseController
 
     public function addQuicklink(Request $request)
     {
-        Quicklink::firstOrCreate($request->only(['route_name', 'route_params', 'request_params']));
+        $this->validate($request, ['route_name' => 'required', 'text' => 'required']);
 
-        redirect()->back()->with('success', 'Quicklink added.');
+        $quicklink = Quicklink::firstOrNew([
+            'user_id'        => $request->user()->id,
+            'text'           => $request->input('text'),
+            'route_name'     => $request->input('route_name'),
+            'route_params'   => $request->input('route_params'),
+            'request_params' => $request->input('request_params'),
+        ])->fill([
+            'route_params'   => json_decode($request->input('route_params')),
+            'request_params' => json_decode($request->input('request_params')),
+        ]);
+
+        $quicklink->save();
+
+        return redirect()->to($quicklink->getUrl())->with('success', 'Quicklink added.');
     }
 }

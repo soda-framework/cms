@@ -36,7 +36,7 @@ trait Auditable
     public static function bootAuditable()
     {
         if (static::isAuditingEnabled()) {
-            static::observe(new AuditableObserver());
+            //static::observe(new AuditableObserver());
         }
     }
 

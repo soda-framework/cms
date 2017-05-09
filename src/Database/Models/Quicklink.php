@@ -7,7 +7,7 @@ use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class Quicklink extends Model
 {
-    use OptionallyBoundToApplication;
+    //use OptionallyBoundToApplication;
 
     protected $table = 'quicklinks';
 
@@ -19,8 +19,16 @@ class Quicklink extends Model
         'user_id',
     ];
 
-    public $casts = [
+    protected $casts = [
         'route_params'   => 'array',
         'request_params' => 'array',
     ];
+
+    public function getUrl()
+    {
+        $baseUrl = route($this->route_name, $this->route_params);
+        $query = http_build_query($this->getAttribute('request_params'));
+
+        return $baseUrl . ($query ? "?$query" : '');
+    }
 }
