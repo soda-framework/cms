@@ -25,7 +25,7 @@
   "require": {
     "php": ">=5.5.9",
     "laravel/framework": "5.4.*",
-    "soda-framework/eloquent-closure": "^0.1",
+    "soda-framework/eloquent-closure": "^0.2",
     "league/flysystem-aws-s3-v3": "^1.0",
     "zofe/rapyd": "2.2.*",
     "owen-it/laravel-auditing": "^4.0",
