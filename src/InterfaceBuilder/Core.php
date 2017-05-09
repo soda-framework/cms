@@ -2,6 +2,8 @@
 
 namespace Soda\Cms\InterfaceBuilder;
 
+use Illuminate\Support\Facades\Auth;
+use Soda\Cms\Database\Models\Quicklink;
 use Soda\Cms\InterfaceBuilder\Menu\Menu;
 use Soda\Cms\InterfaceBuilder\Menu\MenuBuilder;
 use Soda\Cms\InterfaceBuilder\Dashboard\DashboardBuilder;
@@ -127,5 +129,12 @@ class Core
     public function form()
     {
         return $this->form;
+    }
+
+    public function quicklinks()
+    {
+        return Quicklink::where(function($sq) {
+            $sq->whereNull('user_id')->orWhere('user_id', '')->orWhere('user_id', Auth::guard('soda')->user()->id);
+        })->get();
     }
 }
