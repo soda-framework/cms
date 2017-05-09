@@ -51,7 +51,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function listFolder(Request $request, ContentInterface $contentFolder)
     {
-        return $this->model->where('parent_id', $contentFolder->id)
+        return $this->model->withoutGlobalScope('position')->where('parent_id', $contentFolder->id)
             ->orderBy($request->input('order', 'position'), $request->input('dir', 'ASC'))
             ->paginate($request->input('show', 20))
             ->appends($request->only('order', 'dir', 'show'));
@@ -66,7 +66,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $content = $contentFolderId == null ? $this->getRoot() : $this->model->find($contentFolderId);
 
-        if ($content && $content->type) {
+        if ($content && $content->content_type_id !== null) {
             $creatableTypes = $content->type->pageTypes()->where('is_creatable', true)->get();
 
             if ($creatableTypes) {
@@ -79,13 +79,17 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function getTypes($creatableOnly = false)
     {
-        $query = $this->model->type()->getRelated();
+        if($this->model->content_type_id) {
+            $query = $this->model->type()->getRelated();
 
-        if ($creatableOnly) {
-            $query->where('is_creatable', 1);
+            if ($creatableOnly) {
+                $query->where('is_creatable', 1);
+            }
+
+            return $query->get();
         }
 
-        return $query->get();
+        return collect();
     }
 
     public function getBlockTypes()

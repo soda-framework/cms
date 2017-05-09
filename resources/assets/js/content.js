@@ -5,6 +5,8 @@ Soda.contentTable = new Vue({
         contentItemTypes: {},
         contentFolderTypes: {},
         selectedContentType: null,
+        sortBy: 'position',
+        sortDir: 'ASC',
     },
     mounted: function() {
         window.initVue(this);

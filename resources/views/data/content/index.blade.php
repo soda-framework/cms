@@ -256,9 +256,9 @@
     @parent
     <script>
         window.initVue = function(vueInstance) {
-            vueInstance.content = {!! $content->getCollection()->keyBy('id')->toJson() !!};
-            vueInstance.contentItemTypes = {!! $contentTypes->where('is_folder', 0)->keyBy('id')->toJson() !!};
-            vueInstance.contentFolderTypes = {!! $contentTypes->where('is_folder', 1)->keyBy('id')->toJson() !!};
+            vueInstance.content = {!! $content->getCollection()->toJson() !!};
+            vueInstance.contentItemTypes = {!! $contentTypes->where('is_folder', 0)->toJson() !!};
+            vueInstance.contentFolderTypes = {!! $contentTypes->where('is_folder', 1)->toJson() !!};
         }
     </script>
     <script src="/soda/cms/js/forms/sortable.js"></script>

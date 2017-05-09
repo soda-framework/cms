@@ -77,7 +77,9 @@ Soda.contentTable = new Vue({
         content: {},
         contentItemTypes: {},
         contentFolderTypes: {},
-        selectedContentType: null
+        selectedContentType: null,
+        sortBy: 'position',
+        sortDir: 'ASC'
     },
     mounted: function mounted() {
         window.initVue(this);

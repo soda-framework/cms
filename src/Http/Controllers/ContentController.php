@@ -33,7 +33,7 @@ class ContentController extends BaseController
     {
         $contentFolder = $this->content->getRoot();
         $content = $this->content->listFolder($request, $contentFolder);
-        $contentTypes = $this->content->getCreatableContentTypes();
+        $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
         $shortcuts = $this->content->getShortcuts($contentFolder);
 
         return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts'));
