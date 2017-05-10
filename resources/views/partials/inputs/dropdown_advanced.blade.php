@@ -1,7 +1,7 @@
 <?php $values = []; ?>
 
 @section("field")
-    <div name="{{ $prefixed_field_name }}{{ $field_parameters['multiple'] ? '[]' : '' }}" {{ $field_parameters['multiple'] ? 'multiple' : '' }} class="form-control" id="{{ $field_id }}" class="field_{{ $field_name }}">
+    <select name="{{ $prefixed_field_name }}{{ $field_parameters['multiple'] ? '[]' : '' }}" {{ $field_parameters['multiple'] ? 'multiple' : '' }} class="form-control" id="{{ $field_id }}" class="field_{{ $field_name }}">
         @foreach($field_parameters['options'] as $optGroup => $options)
             @if(is_array($options))
                 <optgroup label="{{ $optGroup }}">
@@ -20,7 +20,7 @@
                 <option value="{{ $value }}" selected>{{ $value }}</option>
             @endif
         @endforeach
-    </div>
+    </select>
 @overwrite
 
 @section('footer.js')
