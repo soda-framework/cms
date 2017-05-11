@@ -79,7 +79,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function getTypes($creatableOnly = false)
     {
-        if($this->model->content_type_id) {
+        if ($this->model->content_type_id) {
             $query = $this->model->type()->getRelated();
 
             if ($creatableOnly) {

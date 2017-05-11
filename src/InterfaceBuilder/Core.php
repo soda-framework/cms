@@ -133,7 +133,7 @@ class Core
 
     public function quicklinks()
     {
-        return Quicklink::where(function($sq) {
+        return Quicklink::where(function ($sq) {
             $sq->whereNull('user_id')->orWhere('user_id', '')->orWhere('user_id', Auth::guard('soda')->user()->id);
         })->get();
     }
