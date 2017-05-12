@@ -33,9 +33,9 @@ class BlockType extends Model implements BlockTypeInterface
     ];
 
     protected $defaults = [
-        'edit_action'      => 'soda::data.pages.blocks.view',
+        'edit_action'      => 'soda::data.content.blocks.view',
         'edit_action_type' => 'view',
-        'list_action'      => 'soda::data.pages.blocks.index',
+        'list_action'      => 'soda::data.content.blocks.index',
         'list_action_type' => 'view',
     ];
 
