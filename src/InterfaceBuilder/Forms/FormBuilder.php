@@ -95,7 +95,7 @@ class FormBuilder
         foreach ($parameters as $key => &$value) {
             if (is_string($value)) {
                 // Look for values starting with 'function('
-                if (strpos($value, 'function(') === 0) {
+                if (strpos($value, 'function(') === 0 || strpos($value, 'function (') === 0) {
                     // Store function string.
                     $valueArr[] = $value;
                     // Replace function string in $foo with a ‘unique’ special key.

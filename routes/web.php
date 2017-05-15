@@ -71,6 +71,7 @@ Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], fun
 
         Route::group(['prefix' => 'upload'], function () {
             Route::post('/', 'UploadController@upload')->name('soda.upload');
+            Route::post('/mce', 'UploadController@mceUpload')->name('soda.mce-upload');
             Route::post('delete', 'UploadController@delete')->name('soda.upload.delete');
         });
     });

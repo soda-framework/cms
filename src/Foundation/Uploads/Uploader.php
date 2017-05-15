@@ -4,11 +4,13 @@ namespace Soda\Cms\Foundation\Uploads;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Soda\Cms\Database\Models\Media;
 use Illuminate\Support\Facades\Storage;
+use Soda\Cms\Database\Models\Media;
 use Soda\Cms\Foundation\Uploads\Files\Base64File;
 use Soda\Cms\Foundation\Uploads\Files\SymfonyFile;
 use Soda\Cms\Foundation\Uploads\Files\UploadableFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader
@@ -61,6 +63,7 @@ class Uploader
     public function fancyUpload(Request $request, $transformConfig = [], $appendedPath = null)
     {
         if ($request->hasFile('file')) {
+
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
                     $uploadedFile = $this->uploadFile($file, $transformConfig, $appendedPath);
@@ -69,13 +72,13 @@ class Uploader
                     if ($uploadedFile) {
                         return $this->generateFancyUploadResponse($request, $uploadedFile);
                     }
+                } else {
+                    throw new UploadException("File not valid.");
                 }
             }
-
-            return response()->json(['error' => 'File not valid.']);
         }
 
-        return response()->json(['error' => 'No valid files to upload.']);
+        throw new UploadException("No valid files to upload");
     }
 
     /**
@@ -200,7 +203,7 @@ class Uploader
     {
         static $extensionToMimeTypeMap;
 
-        if (! $extensionToMimeTypeMap) {
+        if (!$extensionToMimeTypeMap) {
             $extensionToMimeTypeMap = static::getExtensionToMimeTypeMap();
         }
 

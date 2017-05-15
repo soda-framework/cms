@@ -15,7 +15,19 @@ class UploadController extends BaseController
         $interventionConfig = json_decode($request->input('intervention'), true);
         $appendedPath = $request->input('uploadSubDir');
 
-        return (new Uploader)->fancyUpload($request, $interventionConfig ?: [], $appendedPath);
+        $uploadResponse = (new Uploader)->fancyUpload($request, $interventionConfig ?: [], $appendedPath);
+
+        return response()->json($uploadResponse);
+    }
+
+    public function mceUpload(Request $request)
+    {
+        $interventionConfig = json_decode($request->input('intervention'), true);
+        $appendedPath = $request->input('uploadSubDir');
+
+        $uploadResponse = (new Uploader)->uploadFile($request->file('file'), $interventionConfig ?: [], $appendedPath);
+
+        return response()->json($uploadResponse);
     }
 
     public function delete(Request $request)
