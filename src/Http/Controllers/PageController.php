@@ -2,11 +2,11 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Soda;
-use Soda\Cms\Models\Page;
 use Illuminate\Http\Request;
-use Soda\Cms\Models\PageType;
+use Soda;
 use Soda\Cms\Http\Controllers\Traits\TreeableTrait;
+use Soda\Cms\Models\Page;
+use Soda\Cms\Models\PageType;
 
 class PageController extends BaseController
 {
@@ -48,7 +48,7 @@ class PageController extends BaseController
     public function getIndex()
     {
         $root = $this->model->getRoots()->first();    //todo: from application.
-        if (! $root) {
+        if (!$root) {
             $root = Page::createRoot();
         }
 
@@ -118,12 +118,12 @@ class PageController extends BaseController
 
         if ($parent->type) {
             $allowedPageTypes = $parent->type->subpageTypes->pluck('id')->toArray();
-            if (! $parent->type->can_create || count($allowedPageTypes) && ! in_array($request->input('page_type_id'), $allowedPageTypes)) {
+            if (count($allowedPageTypes) && !in_array($request->input('page_type_id'), $allowedPageTypes)) {
                 return redirect()->back()->with('danger', 'You cannot create a page of this type here');
             }
         }
 
-        if (! $parent->allowed_children) {
+        if (!$parent->allowed_children) {
             return redirect()->back()->with('danger', 'You cannot create a subpage here');
         }
 
@@ -158,7 +158,7 @@ class PageController extends BaseController
         $pageType = PageType::with('fields')->find($request->input('page_type_id'));
 
         $slug = $this->model->generateSlug($request->input('slug'));
-        if ($parentPage && ! starts_with($slug, $parentPage->getAttribute('slug'))) {
+        if ($parentPage && !starts_with($slug, $parentPage->getAttribute('slug'))) {
             $slug = $parentPage->generateSlug($request->input('slug'));
         }
 
