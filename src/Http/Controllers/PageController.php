@@ -52,7 +52,7 @@ class PageController extends BaseController
             $root = Page::createRoot();
         }
 
-        $page_types = PageType::with('subpageTypes')->where('can_create', 1)->get(['id', 'name']);
+        $page_types = PageType::with('subpageTypes')->get(['id', 'name']);
 
         $pages = $root ? $root->collectDescendants()->orderBy('position')->get()->toTree() : [];
 
