@@ -4,7 +4,6 @@ namespace Soda\Cms\Database\Models;
 
 use Exception;
 use Soda\ClosureTable\Models\Entity;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Soda\Cms\Database\Models\Traits\Auditable;
 use Soda\Cms\Database\Models\Traits\Draftable;
@@ -170,41 +169,6 @@ class Content extends Entity implements ContentInterface
         }
 
         return $relatedModel;
-    }
-
-    public function shouldDynamicTableExist()
-    {
-        if ($this->getAttribute('content_type_id') !== null) {
-            if (! $this->relationLoaded('type')) {
-                $this->load('type');
-            }
-
-            if ($contentType = $this->getRelation('type')) {
-                if (! $contentType->relationLoaded('fields')) {
-                    $contentType->load('fields');
-                }
-
-                $fields = $contentType->getRelation('fields');
-
-                if ($fields && count($fields)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public function dynamicTableExists()
-    {
-        if ($contentType = $this->getRelation('type')) {
-            $contentTypeTable = $contentType->getDynamicModelTablePrefix().$contentType->getAttribute('identifier');
-            if (Schema::hasTable($contentTypeTable)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

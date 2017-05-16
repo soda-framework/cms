@@ -102,4 +102,9 @@ class BlockType extends Model implements BlockTypeInterface
     {
         return new DynamicBlock;
     }
+
+    public function shouldDynamicTableExist()
+    {
+        return true;
+    }
 }

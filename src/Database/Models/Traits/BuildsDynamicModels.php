@@ -123,4 +123,29 @@ trait BuildsDynamicModels
     {
         // todo
     }
+
+    public function shouldDynamicTableExist()
+    {
+        if (! $this->relationLoaded('fields')) {
+            $this->load('fields');
+        }
+
+        $fields = $this->getRelation('fields');
+
+        if ($fields && count($fields)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function dynamicTableExists()
+    {
+        $contentTypeTable = $this->getDynamicModelTablePrefix().$this->getAttribute('identifier');
+        if (Schema::hasTable($contentTypeTable)) {
+            return true;
+        }
+
+        return false;
+    }
 }

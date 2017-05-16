@@ -18,8 +18,16 @@ class ContentObserver
      */
     public function saved(ContentInterface $content)
     {
-        if ($content->shouldDynamicTableExist() && ! $content->dynamicTableExists()) {
-            $content->getRelation('type')->createTable();
+        if ($content->content_type_id !== null) {
+            if (! $content->relationLoaded('type')) {
+                $content->load('type');
+            }
+
+            $contentType = $content->getRelation('type');
+
+            if ($contentType && $contentType->shouldDynamicTableExist() && ! $contentType->dynamicTableExists()) {
+                $contentType->createTable();
+            }
         }
     }
 }

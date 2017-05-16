@@ -173,7 +173,7 @@
                 </td>
             </tr>
 
-            <tr v-if="!Object.keys(content).length">
+            <tr v-if="content.length < 1">
                 <td colspan="5">No content to display</td>
             </tr>
         </tbody>
@@ -232,7 +232,7 @@
                             <label>Name</label>
                             <input name="name" type="text" class="form-control" />
                         </fieldset>
-                        <fieldset class="form-group field_content_type dropdown-field" v-if="Object.keys(this.contentFolderTypes).length">
+                        <fieldset class="form-group field_content_type dropdown-field" v-if="contentFolderTypes.length">
                             <label>Folder Type</label>
                             <input type="hidden" name="contentTypeId" v-bind:value="selectedContentType" />
                             <select class="form-control" v-bind:value="selectedContentType" v-on:input="selectedContentType = $event.target.value">

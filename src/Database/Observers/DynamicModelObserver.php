@@ -43,13 +43,7 @@ class DynamicModelObserver
 
     protected function buildTable(CanBuildDynamicModels $type)
     {
-        if (! $type->relationLoaded('fields')) {
-            $type->load('fields');
-        }
-
-        $fields = $type->getRelation('fields');
-
-        if ($fields && count($fields)) {
+        if ($type->shouldDynamicTableExist() && ! $type->dynamicTableExists()) {
             $type->createTable();
         }
     }

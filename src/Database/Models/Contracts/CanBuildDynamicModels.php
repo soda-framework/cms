@@ -30,4 +30,8 @@ interface CanBuildDynamicModels
      * @return void
      */
     public function buildDynamicTable(Blueprint $table);
+
+    public function shouldDynamicTableExist();
+
+    public function dynamicTableExists();
 }

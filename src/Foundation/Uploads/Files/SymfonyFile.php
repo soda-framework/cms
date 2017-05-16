@@ -50,7 +50,7 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
         $resultFilePath = $pathInfo['filename'].'__'.$sha1Hash;
         if (isset($pathInfo['extension']) && $pathInfo['extension']) {
             $resultFilePath .= '.'.$pathInfo['extension'];
-        } elseif($guessedExtenstion = $this->file->guessExtension()) {
+        } elseif ($guessedExtenstion = $this->file->guessExtension()) {
             $resultFilePath .= '.'.$guessedExtenstion;
         }
 

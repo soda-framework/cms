@@ -17,5 +17,13 @@ class BlockTypeObserver
         if ($blockType->isDirty('is_shared')) {
             DynamicBlock::fromTable($blockType->getAttribute('identifier'))->where('block_id', $blockType->getKey())->update(['is_shared' => $blockType->getAttribute('is_shared')]);
         }
+
+        if ($blockType->isDirty('identifier')) {
+            DynamicBlock::fromTable($blockType->getAttribute('identifier'))->where('block_id', $blockType->getKey())->update(['is_shared' => $blockType->getAttribute('is_shared')]);
+        }
+
+        if (! $blockType->dynamicTableExists()) {
+            $blockType->getRelation('type')->createTable();
+        }
     }
 }

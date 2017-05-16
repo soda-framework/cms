@@ -28,8 +28,8 @@ Soda.contentTable = new Vue({
                     form.submit();
                 });
             } else {
-                var numContentTypes = Object.keys(this.contentItemTypes).length;
-                this.$set(this, 'selectedContentType', numContentTypes ? Object.keys(this.contentItemTypes)[0] : null);
+                var numContentTypes = this.contentItemTypes.length;
+                this.$set(this, 'selectedContentType', numContentTypes ? this.contentItemTypes[0]['id'] : null);
 
                 if(numContentTypes > 1) {
                     modal.modal('show');
@@ -48,8 +48,8 @@ Soda.contentTable = new Vue({
                 this.$set(this, 'selectedContentType', contentTypeId);
                 modal.modal('show');
             } else {
-                var numContentTypes = Object.keys(this.contentFolderTypes).length;
-                this.$set(this, 'selectedContentType', numContentTypes ? Object.keys(this.contentFolderTypes)[0] : null);
+                var numContentTypes = this.contentFolderTypes.length;
+                this.$set(this, 'selectedContentType', numContentTypes ? this.contentFolderTypes[0]['id'] : null);
                 modal.modal('show');
             }
         },
