@@ -275,6 +275,7 @@ class PermissionSeeder extends Seeder
         if ($super_admin) {
             $super_admin->attachPermissions([
                 $permission_access_cms,
+                $permission_view_drafts,
                 $permission_view_application_settings,
                 $permission_edit_application_settings,
                 $permission_view_users,
@@ -292,6 +293,7 @@ class PermissionSeeder extends Seeder
         if ($admin) {
             $admin->attachPermissions([
                 $permission_access_cms,
+                $permission_view_drafts,
                 $permission_view_application_settings,
                 $permission_edit_application_settings,
                 $permission_view_users,

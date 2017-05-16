@@ -24,7 +24,7 @@ class HomeController extends BaseController
 
         Session::put('soda.draft_mode', $draftMode);
 
-        return redirect()->back()->with('info', ($draftMode ? 'Draft' : 'Live').' mode active. <a href="/" target="_blank">View site</a>');
+        return redirect()->back()->with('info', ($draftMode ? 'Draft' : 'Live').' mode active.');
     }
 
     public function resetWeakPassword(Request $request)
