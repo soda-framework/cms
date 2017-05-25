@@ -372,6 +372,7 @@
 
 @section('footer.js')
     @parent
+    <script src="/soda/cms/js/forms/sortable.js"></script>
     <script>
         $(function() {
             var creatableFormItem = $('#{{ $creatableFormItem->getFieldId() }}');
