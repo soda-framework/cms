@@ -108,14 +108,14 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function getShortcuts(ContentInterface $content)
     {
-        $creatableTypes = $content->type ? $content->type->pageTypes()->where('is_creatable', true)->pluck('id') : [];
+        $creatableTypes = $content->type ? $content->type->pageTypes()->get() : [];
 
         $shortcutsQuery = ContentShortcut::where(function ($sq) use ($content) {
             $sq->whereNull('parent_id')->orWhere('parent_id', $content->content_type_id);
         });
 
         if (count($creatableTypes)) {
-            $shortcutsQuery->whereIn('content_type_id', $creatableTypes);
+            $shortcutsQuery->whereIn('content_type_id', $creatableTypes->where('is_creatable', true)->pluck('id')->toArray());
         }
 
         $shortcuts = $shortcutsQuery->get();
@@ -192,12 +192,10 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             $content = $this->initializeContent($request);
         }
 
-        if ($content->shouldDynamicTableExist()) {
-            $this->saveSettings($content, $request);
-        }
+        $this->saveSettings($content, $request);
 
         $content->save();
-        if ($content->shouldDynamicTableExist() && $content->dynamicTableExists() && count($content->properties->toArray())) {
+        if ($content->type !== null && $content->type->shouldDynamicTableExist() && count($content->properties->toArray())) {
             $content->properties->save();
         } // Save last so attributes are available in saving event above
 
@@ -230,7 +228,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     protected function saveSettings(ContentInterface $content, Request $request)
     {
-        if ($content->type !== null && count($content->type->fields)) {
+        if ($content->type !== null && $content->type->shouldDynamicTableExist()) {
             $content->setRelation('properties', Soda::dynamicContent($content->getRelation('type')->getAttribute('identifier'))->firstOrNew(['content_id' => $content->getKey()]));
 
             foreach ($content->type->fields as $field) {

@@ -46,7 +46,6 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
 
         $block = Soda::dynamicBlock($blockType->identifier)->newInstance([
             'content_id'        => $content->getKey(),
-            'block_type_id'     => $blockType->getKey(),
             'is_shared'         => $blockType->is_shared,
         ]);
 

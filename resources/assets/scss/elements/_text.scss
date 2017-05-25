@@ -1,3 +1,9 @@
 .text-monospaced {
   font-family: $font-family-monospace;
 }
+
+.link-unstyled {
+  &, &:active, &:focus, &:link, &:hover {
+    color: inherit;
+  }
+}

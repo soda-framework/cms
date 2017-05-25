@@ -55,7 +55,7 @@
                                     <th width="20"></th>
                                     <th>Field</th>
                                     <th width="120">Show in table</th>
-                                    <th width="192">Options</th>
+                                    <th width="226">Options</th>
                                 </tr>
                                 </thead>
                                 <tbody class="sortable" data-entityname="block-types.fields">

@@ -42,7 +42,7 @@ trait Sluggable
      */
     protected function getExistingSlug($slug, $excludeSelf = false)
     {
-        $existing = static::where('slug', "$slug");
+        $existing = static::where('slug', "$slug")->where('is_sluggable', true);
 
         if ($excludeSelf) {
             $existing->where('id', '!=', $this->id);

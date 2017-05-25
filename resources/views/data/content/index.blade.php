@@ -105,11 +105,12 @@
                     <i class="mdi mdi-folder-outline" v-if="contentItem.is_folder"></i>
                     <i class="mdi mdi-file-outline" v-else-if="contentItem.is_sluggable"></i>
                     <i class="mdi mdi-vector-arrange-above" v-else></i>
-                    <span v-text="contentItem.name"></span>
+                    <a class="link-unstyled" v-text="contentItem.name" v-bind:href="routeTo('{{ route('soda.content.show', '###ID###') }}', contentItem.id)" v-if="contentItem.is_folder == 1"></a>
+                    <a class="link-unstyled" v-text="contentItem.name" v-bind:href="routeTo('{{ route('soda.content.edit', '###ID###') }}', contentItem.id)" v-if="contentItem.is_folder != 1"></a>
                 </td>
                 <td v-text="getFormattedDate(contentItem.updated_at)"></td> {{-- $contentItem->updated_at->format('jS F Y') --}}
                 <td>
-                    <template v-if="contentItem.is_publishable && contentItem.is_folder">
+                    <template v-if="contentItem.is_publishable">
                         <span v-bind:class="{ 'active-circle': contentItem.status == {{ Soda\Cms\Foundation\Constants::STATUS_LIVE }}, 'inactive-circle': contentItem.status == {{ Soda\Cms\Foundation\Constants::STATUS_DRAFT }} }"></span>
                         <span v-if="contentItem.status == {{ Soda\Cms\Foundation\Constants::STATUS_LIVE }}">{{ Soda\Cms\Foundation\Constants::statuses()[Soda\Cms\Foundation\Constants::STATUS_LIVE] }}</span>
                         <span v-if="contentItem.status == {{ Soda\Cms\Foundation\Constants::STATUS_DRAFT }}">{{ Soda\Cms\Foundation\Constants::statuses()[Soda\Cms\Foundation\Constants::STATUS_DRAFT] }}</span>

@@ -211,14 +211,13 @@ if ($content->type && $content->type->blockTypes) {
                         <div class="content-block">
                             @yield('settings.basic')
 
-                            @if($content->type && $content->type->description)
-                                <p>{{ $content->type->description }}</p>
+                            @if($content->type)
                                 <hr/>
-                            @endif
-                            @if($content->type && $content->type->fields)
-                                @foreach($content->type->fields->where('pivot.show_in_table', 1) as $field)
-                                    {!! app('soda.form')->field($field)->setModel($content->properties)->setPrefix('settings') !!}
-                                @endforeach
+                                @if($content->type->fields)
+                                    @foreach($content->type->fields->where('pivot.show_in_table', 1) as $field)
+                                        {!! app('soda.form')->field($field)->setModel($content->properties)->setPrefix('settings') !!}
+                                    @endforeach
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -229,7 +228,7 @@ if ($content->type && $content->type->blockTypes) {
                                     @include($blockType->list_action, [
                                         'blockType'  => $blockType,
                                         'page'       => $content,
-                                        'blocks'     => $content->block($blockType)->paginate(null, ['*'], $blockType->identifier .'-page')
+                                        'blocks'     => $content->block($blockType)->paginate(null, ['*'], $blockType->identifier .'-page')->appends(['tab' => $blockType->identifier])
                                     ])
                                 </div>
                             </div>

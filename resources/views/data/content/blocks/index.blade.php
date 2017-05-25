@@ -12,7 +12,7 @@
                     <th>{{ $field->name }}</th>
                 @endif
             @endforeach
-            <th width="192">Options</th>
+            <th width="233">Options</th>
         </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
                     @endif
                 @endforeach
                 <td>
-                    <a href="{{ route('soda.content.block-types.block.edit', [$content->id, $blockType->id, $block->id]) }}" class="btn btn-success">Edit</a>
+                    <a href="{{ route('soda.content.block-types.block.edit', [$content->id, $blockType->id, $block->id]) }}" class="btn btn-warning">Edit</a>
                     @if($blockType->pivot->min_blocks === null || count($blocks) > $blockType->pivot->min_blocks)
                         <a data-delete-button href="{{ route('soda.content.block-types.block.destroy', [$content->id, $blockType->id, $block->id]) }}" class="btn btn-danger">Delete</a>
                     @endif
