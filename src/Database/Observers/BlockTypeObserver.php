@@ -23,7 +23,7 @@ class BlockTypeObserver
         }
 
         if (! $blockType->dynamicTableExists()) {
-            $blockType->getRelation('type')->createTable();
+            $blockType->createTable();
         }
     }
 }

@@ -214,8 +214,12 @@ if ($content->type && $content->type->blockTypes) {
                             @if($content->type)
                                 <hr/>
                                 @if($content->type->fields)
-                                    @foreach($content->type->fields->where('pivot.show_in_table', 1) as $field)
-                                        {!! app('soda.form')->field($field)->setModel($content->properties)->setPrefix('settings') !!}
+                                    @foreach($content->type->fields as $field)
+                                        @if($field->pivot->show_in_table == 1)
+                                            {!! app('soda.form')->field($field)->setModel($content->properties)->setPrefix('settings') !!}
+                                        @elseif($field->pivot->show_in_table == 2)
+                                            {!! app('soda.form')->staticText()->setField($field)->setModel($content->properties)->setPrefix('settings') !!}
+                                        @endif
                                     @endforeach
                                 @endif
                             @endif

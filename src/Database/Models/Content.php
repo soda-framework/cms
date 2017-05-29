@@ -29,6 +29,7 @@ class Content extends Entity implements ContentInterface
 
     public $fillable = [
         'name',
+        'identifier',
         'slug',
         'parent_id',
         'position',

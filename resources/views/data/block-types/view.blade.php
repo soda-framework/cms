@@ -170,6 +170,7 @@
 
 @section('footer.js')
     @parent
+    <script src="/soda/cms/js/forms/sortable.js"></script>
     <script>
         $(function () {
             $('[data-add-field]').on('click', function (e) {

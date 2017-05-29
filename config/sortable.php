@@ -10,7 +10,7 @@ return [
         ],
 
         'block-types.fields' => [
-            'entity'   => Soda\Cms\Database\Models\ContentType::class,
+            'entity'   => Soda\Cms\Database\Models\BlockType::class,
             'relation' => 'fields',
         ],
     ],
