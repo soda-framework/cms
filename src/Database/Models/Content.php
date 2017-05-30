@@ -20,7 +20,7 @@ use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class Content extends Entity implements ContentInterface
 {
-    use Auditable, SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure, HasOneDynamic;
+    use Auditable, SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure, HasOneDynamic;
 
     protected $table = 'content';
     protected static $sortableGroupField = ['application_id', 'parent_id'];
