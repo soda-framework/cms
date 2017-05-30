@@ -98,7 +98,7 @@ class Content extends Entity implements ContentInterface
 
     public function blockTypes()
     {
-        return $this->belongsToMany(BlockType::class, 'content_block_types')->withPivot('min_blocks', 'max_blocks', 'is_orderable');
+        return $this->belongsToMany(BlockType::class, 'content_blocks')->withPivot('min_blocks', 'max_blocks', 'is_orderable');
     }
 
     public function getBlockType($identifier)
