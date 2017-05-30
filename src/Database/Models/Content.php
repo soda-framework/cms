@@ -10,7 +10,7 @@ use Soda\Cms\Database\Models\Traits\Draftable;
 use Soda\Cms\Database\Models\Traits\Sluggable;
 use Soda\Cms\Database\Observers\ContentObserver;
 use Soda\Cms\Database\Models\Traits\Identifiable;
-use Soda\Cms\Database\Models\Traits\HasDynamicType;
+use Soda\Cms\Database\Models\Traits\HasOneDynamic;
 use Soda\Cms\Database\Models\Traits\SortableClosure;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Soda\Cms\Database\Models\Traits\HasDefaultAttributes;
@@ -20,7 +20,7 @@ use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class Content extends Entity implements ContentInterface
 {
-    use Auditable, SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure, HasDynamicType;
+    use Auditable, SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, Identifiable, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure, HasOneDynamic;
 
     protected $table = 'content';
     protected static $sortableGroupField = ['application_id', 'parent_id'];
