@@ -15,7 +15,7 @@
             $('#{{ $field_id }}').select2({
                 tags: true,
                 multiple: true,
-                dropdownCssClass: 'hide',
+                //dropdownCssClass: 'hide',
                 {!! app('soda.form')->buildJsParams($field_parameters['settings']) !!}
             });
         });
