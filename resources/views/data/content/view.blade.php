@@ -10,6 +10,12 @@ if ($content->type && $content->type->blockTypes) {
 
 @section('content-heading-button')
     @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-form'])
+
+    @if($content->is_sluggable && (!$content->is_publishable || $content->isPublished() || Session::get("soda.draft_mode") == true))
+        <a class="btn btn-info btn-lg" href="{{ URL::to($content->slug) }}" target="_blank">
+            <span>View Content</span>
+        </a>
+    @endif
 @stop
 
 @section('settings.basic')
@@ -257,6 +263,12 @@ if ($content->type && $content->type->blockTypes) {
 
     <div class="content-bottom">
         @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-form'])
+
+        @if($content->is_sluggable && (!$content->is_publishable || $content->isPublished() || Session::get("soda.draft_mode") == true))
+            <a class="btn btn-info btn-lg" href="{{ URL::to($content->slug) }}" target="_blank">
+                <span>View Content</span>
+            </a>
+        @endif
     </div>
 @stop
 

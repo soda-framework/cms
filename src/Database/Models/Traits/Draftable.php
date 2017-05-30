@@ -12,6 +12,17 @@ trait Draftable
 {
     protected static $drafts = true;
 
+    public function isPublished()
+    {
+        $isLive = $this->status == Constants::STATUS_LIVE;
+
+        if($isLive && isset(static::$publishDateField)) {
+            $isLive = Carbon::now() >= $this->published_at;
+        }
+
+        return $isLive;
+    }
+
     /**
      * Automatically filters model to only show live items.
      */

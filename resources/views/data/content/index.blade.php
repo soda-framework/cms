@@ -45,6 +45,15 @@
                 </div>
             </div>
             --}}
+
+            @if($contentFolder->is_folder)
+                @permission('edit-pages')
+                    <a href="{{ route('soda.content.edit', $contentFolder->id) }}" class="btn btn-warning">
+                        Edit Folder
+                    </a>
+                @endpermission
+            @endif
+
             @if(count($shortcuts))
                 @permission('create-pages')
                 <div class="btn-group">
