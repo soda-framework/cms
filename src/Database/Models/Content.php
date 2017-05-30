@@ -132,6 +132,11 @@ class Content extends Entity implements ContentInterface
         return $this->block($identifier)->get();
     }
 
+    public function newBlock($identifier)
+    {
+        return DynamicBlock::fromTable($identifier, ['page_id' => $this->id]);
+    }
+
     public function getDynamicModel()
     {
         return new DynamicContent;
