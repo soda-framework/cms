@@ -36,8 +36,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Soda\\Cms\\": "src/",
-      "Soda\\Updater\\Cms": "updates/"
+      "Soda\\Cms\\": "src/"
     }
   },
   "extra": {
