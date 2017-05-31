@@ -4,6 +4,8 @@ namespace Soda\Cms\Database\Models\Traits;
 
 trait Sluggable
 {
+    protected $isSlugToggled = false;
+
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = $value === null ? $value : $this->fixSlug($value);
@@ -42,7 +44,11 @@ trait Sluggable
      */
     protected function getExistingSlug($slug, $excludeSelf = false)
     {
-        $existing = static::where('slug', "$slug")->where('is_sluggable', true);
+        $existing = static::where('slug', "$slug");
+
+        if ($this->isSlugToggled) {
+            $existing->where('is_sluggable', true);
+        }
 
         if ($excludeSelf) {
             $existing->where('id', '!=', $this->id);

@@ -23,6 +23,7 @@ class Content extends Entity implements ContentInterface
     use Auditable, SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure, HasOneDynamic;
 
     protected $table = 'content';
+    protected $isSlugToggled = true;
     protected static $sortableGroupField = ['application_id', 'parent_id'];
 
     public $timestamps = true;
