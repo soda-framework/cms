@@ -23,6 +23,10 @@ class Update extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if(method_exists($this, 'preUpdate')) {
+            $this->preUpdate();
+        }
+
         $namespace = "Soda\\Updater\\Cms\\";
         $updateFiles = new \RecursiveDirectoryIterator(base_path('vendor/soda-framework/cms/' . trim($this->updatesDir, '/')));
         $updateFiles = new \RecursiveCallbackFilterIterator(

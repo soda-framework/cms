@@ -30,7 +30,9 @@ class Update_0_8_0
                     $table->integer('position')->unsigned()->nullable()->default('1')->after('content_id');
                 });
 
-                DB::unprepared("SET @current_group = NULL;SET @current_count = NULL; UPDATE $tableName SET position = CASE WHEN @current_group = content_id THEN @current_count := @current_count + 1 WHEN @current_group := content_id THEN @current_count := 1 END ORDER BY content_id, created_at DESC, updated_at DESC;");
+                DB::unprepared("SET @current_group := NULL;");
+                DB::unprepared("SET @current_count := NULL;");
+                DB::unprepared("UPDATE `$tableName` SET `position` = CASE WHEN @current_group = `content_id` THEN @current_count := @current_count + 1 WHEN @current_group := `content_id` THEN @current_count := 1 END ORDER BY `content_id`, `created_at` DESC, `updated_at` DESC;");
             }
         }
     }

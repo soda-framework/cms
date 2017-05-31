@@ -26,13 +26,15 @@ class SortController extends ApiController
         list($entityClass, $relation) = $this->getEntityInfo($sortableEntities, (string) $request->input('entityName'));
         $method = $request->input('type');
 
+        $model = $this->getModel($entityClass, $request);
+
         if (! $relation) {
             /** @var SortableTrait $entity */
-            $entity = app($entityClass)->find($request->input('id'));
-            $postionEntity = app($entityClass)->find($request->input('positionEntityId'));
+            $entity = $model->find($request->input('id'));
+            $postionEntity = $model->find($request->input('positionEntityId'));
             $entity->$method($postionEntity);
         } else {
-            $parentEntity = app($entityClass)->find($request->input('parentId'));
+            $parentEntity = $model->find($request->input('parentId'));
             $entity = $parentEntity->$relation()->find($request->input('id'));
             $postionEntity = $parentEntity->$relation()->find($request->input('positionEntityId'));
             $parentEntity->$relation()->$method($entity, $postionEntity);
@@ -47,7 +49,7 @@ class SortController extends ApiController
      *
      * @return \Illuminate\Validation\Validator
      */
-    protected function getValidator($sortableEntities, $request)
+    protected function getValidator($sortableEntities, Request $request)
     {
         /** @var \Illuminate\Validation\Factory $validator */
         $validator = app('validator');
@@ -67,15 +69,17 @@ class SortController extends ApiController
             return $validator->make($request->all(), $rules);
         }
 
-        $tableName = app($entityClass)->getTable();
-        $primaryKey = app($entityClass)->getKeyName();
+        $model = $this->getModel($entityClass, $request);
+
+        $tableName = $model->getTable();
+        $primaryKey = $model->getKeyName();
 
         if (! $relation) {
             $rules['id'] .= '|exists:'.$tableName.','.$primaryKey;
             $rules['positionEntityId'] .= '|exists:'.$tableName.','.$primaryKey;
         } else {
             /** @var BelongsToSortedMany $relationObject */
-            $relationObject = app($entityClass)->$relation();
+            $relationObject = $model->$relation();
             $pivotTable = $relationObject->getTable();
 
             $rules['parentId'] = 'required|exists:'.$tableName.','.$primaryKey;
@@ -106,5 +110,15 @@ class SortController extends ApiController
         }
 
         return [$entityClass, $relation];
+    }
+
+    protected function getModel($entityClass, $request) {
+        $model = app($entityClass);
+
+        if($request->has('entityIdentifier')) {
+            $model->setPrefixedTable($request->input('entityIdentifier'));
+        }
+
+        return $model;
     }
 }

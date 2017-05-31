@@ -2,11 +2,15 @@
     <p>{{ $blockType->description }}</p>
     <hr />
 @endif
+
 @if(count($blocks))
 <div class="table-responsive">
     <table class="table">
         <thead>
         <tr>
+            @if($blockType->pivot->is_orderable && count($blocks) > 1)
+                <th width="20"></th>
+            @endif
             @foreach($blockType->fields as $field)
                 @if($field->pivot->show_in_table)
                     <th>{{ $field->name }}</th>
@@ -15,9 +19,12 @@
             <th width="233">Options</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="sortable" data-entityname="dynamic-block" data-entityidentifier="{{ $blockType->identifier }}">
         @foreach($blocks as $block)
-            <tr>
+            <tr data-itemId="{{ $block->id }}" data-parentId="{{ $block->content_id }}">
+                @if($blockType->pivot->is_orderable && count($blocks) > 1)
+                    <td class="sortable-handle"><img src="/soda/cms/img/drag-dots.gif" /></td>
+                @endif
                 @foreach($blockType->fields as $field)
                     @if($field->pivot->show_in_table)
                         <td>
@@ -50,3 +57,44 @@
         <span>Detach</span>
     </a>
 @endpermission
+
+<script src="/soda/cms/js/forms/sortable.js"></script>
+<script>
+    $(function() {
+        $('.sortable').sortable({
+            handle: '.sortable-handle',
+            axis: 'y',
+            update: function(a, b){
+
+                var $sorted = b.item;
+
+                var $previous = $sorted.prev();
+                var $next = $sorted.next();
+
+                var data = {
+                    id: $sorted.data('itemid'),
+                    parentId: $sorted.data('parentid'),
+                    entityName: $(this).data('entityname'),
+                    entityIdentifier: $(this).data('entityidentifier'),
+                };
+
+                if ($previous.length > 0) {
+                    data.type = 'moveAfter';
+                    data.positionEntityId = $previous.data('itemid');
+
+                    console.log(data);
+                    Soda.changePosition(data);
+                } else if ($next.length > 0) {
+                    data.type = 'moveBefore';
+                    data.positionEntityId = $next.data('itemid');
+
+                    console.log(data);
+                    Soda.changePosition(data);
+                } else {
+                    console.error('Something wrong!');
+                }
+            },
+            cursor: "move"
+        });
+    })
+</script>

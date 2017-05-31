@@ -9,7 +9,6 @@ use Soda\Cms\Database\Models\Traits\Auditable;
 use Soda\Cms\Database\Models\Traits\Draftable;
 use Soda\Cms\Database\Models\Traits\Sluggable;
 use Soda\Cms\Database\Observers\ContentObserver;
-use Soda\Cms\Database\Models\Traits\Identifiable;
 use Soda\Cms\Database\Models\Traits\HasOneDynamic;
 use Soda\Cms\Database\Models\Traits\SortableClosure;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
