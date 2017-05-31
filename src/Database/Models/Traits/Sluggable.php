@@ -4,8 +4,6 @@ namespace Soda\Cms\Database\Models\Traits;
 
 trait Sluggable
 {
-    protected $isSlugToggled = false;
-
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = $value === null ? $value : $this->fixSlug($value);
@@ -26,7 +24,7 @@ trait Sluggable
         $slug = $useParent ? $this->fixSlug($this->fixSlug($this->getAttribute('slug')).$this->fixSlug($title)) : $this->fixSlug($title);
 
         // Make sure it doesn't already exist. Exclude own record if we're not using parent to generate slug
-        if ($this->getExistingSlug($slug, ! $useParent)) {
+        if ($this->getExistingSlug($slug, !$useParent)) {
             // It already exists, increment it
             $slug = $this->incrementLatestSlug($slug);
         }
@@ -46,7 +44,7 @@ trait Sluggable
     {
         $existing = static::where('slug', "$slug");
 
-        if ($this->isSlugToggled) {
+        if (isset($this->isSlugToggled) && $this->isSlugToggled == true) {
             $existing->where('is_sluggable', true);
         }
 
