@@ -1,12 +1,12 @@
 <?php
 
-namespace Soda\Cms\Database\Models\Seeders;
+namespace Soda\Cms\Foundation\Setup;
 
 use Illuminate\Database\Seeder;
 use Soda\Cms\Database\Models\Application;
 use Soda\Cms\Database\Models\ApplicationUrl;
 
-class ApplicationSeeder extends Seeder
+class SetupApplication extends Seeder
 {
     /**
      * Auto generated seed file.
@@ -20,11 +20,11 @@ class ApplicationSeeder extends Seeder
             $baseName = str_slug(basename(dirname(base_path())), '-');
         }
 
-        $application = Application::firstOrCreate([
+        $application = Application::withoutGlobalScopes()->firstOrCreate([
             'name' => ucwords(str_replace('-', '', $baseName)),
         ]);
 
-        ApplicationUrl::firstOrCreate([
+        ApplicationUrl::withoutGlobalScopes()->firstOrCreate([
             'domain'         => $baseName.'.dev',
             'application_id' => $application->getKey(),
         ]);

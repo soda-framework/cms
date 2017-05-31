@@ -14,13 +14,12 @@ class Install extends Command
      */
     public function handle()
     {
-        $this->call('migrate', [
-            '--path' => '/vendor/soda-framework/cms/migrations',
-        ]);
+        $this->call('migrate', ['--path' => '/vendor/soda-framework/cms/migrations']);
 
-        $this->call('db:seed', [
-            '--class' => 'Soda\\Cms\\Database\\Models\\Seeders\\SeedAll',
-        ]);
+        $this->call('db:seed', ['--class' => 'Soda\\Cms\\Foundation\\Setup\\SetupApplication']);
+        $this->call('db:seed', ['--class' => 'Soda\\Cms\\Foundation\\Setup\\SetupRoles']);
+        $this->call('db:seed', ['--class' => 'Soda\\Cms\\Foundation\\Setup\\SetupUsers']);
+        $this->call('db:seed', ['--class' => 'Soda\\Cms\\Foundation\\Setup\\SetupPermissions']);
 
         $this->call('soda:assets');
     }

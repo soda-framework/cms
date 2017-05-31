@@ -31,7 +31,7 @@ trait BuildsDynamicModels
 
     public function getDynamicTableName()
     {
-        return $this->getDynamicModelTablePrefix().str_slug($this->getAttribute('identifier'), '-');
+        return $this->getDynamicModelTablePrefix().$this->getAttribute('identifier');
     }
 
     public function createTable()
