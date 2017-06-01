@@ -3,24 +3,32 @@
 namespace Soda\Cms\Database\Models\Traits;
 
 use Carbon\Carbon;
-use Soda\Cms\Foundation\Constants;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Builder;
+use Soda\Cms\Foundation\Constants;
 
 trait Draftable
 {
     protected static $drafts = true;
 
-    protected static function getConvertedNow() {
+    protected static function getConvertedNow()
+    {
         return Carbon::now(config('soda.cms.publish_timezone', 'UTC'))->setTimezone('UTC');
+    }
+
+    public function getPublishDate()
+    {
+        $field = isset(static::$publishDateField) ? static::$publishDateField : 'created_at';
+
+        return Carbon::parse($this->$field)->setTimezone(config('soda.cms.publish_timezone', 'UTC'));
     }
 
     public function isPublished()
     {
         $isLive = $this->status == Constants::STATUS_LIVE;
 
-        if($isLive && isset(static::$publishDateField)) {
+        if ($isLive && isset(static::$publishDateField)) {
             $isLive = static::getConvertedNow() >= $this->published_at;
         }
 
