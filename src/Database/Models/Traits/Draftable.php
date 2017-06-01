@@ -12,12 +12,16 @@ trait Draftable
 {
     protected static $drafts = true;
 
+    protected static function getConvertedNow() {
+        return Carbon::now(config('soda.cms.publish_timezone', 'UTC'))->setTimezone('UTC');
+    }
+
     public function isPublished()
     {
         $isLive = $this->status == Constants::STATUS_LIVE;
 
         if($isLive && isset(static::$publishDateField)) {
-            $isLive = Carbon::now() >= $this->published_at;
+            $isLive = static::getConvertedNow() >= $this->published_at;
         }
 
         return $isLive;
@@ -34,7 +38,7 @@ trait Draftable
 
                 if (isset(static::$publishDateField)) {
                     $builder->where(function ($subQuery) {
-                        $subQuery->where(static::$publishDateField, '<', Carbon::now(config('soda.cms.publish_timezone', 'UTC'))->setTimezone('UTC'))->orWhereNull(static::$publishDateField);
+                        $subQuery->where(static::$publishDateField, '<', static::getConvertedNow())->orWhereNull(static::$publishDateField);
                     });
                 }
             }
