@@ -52,7 +52,7 @@ class ContentType extends Model implements ContentTypeInterface
 
     public function blockTypes()
     {
-        return $this->belongsToMany(BlockType::class, 'content_type_block_types')->withPivot('min_blocks', 'max_blocks', 'is_orderable');
+        return $this->belongsToMany(BlockType::class, 'content_type_block_types')->withPivot('min_blocks', 'max_blocks');
     }
 
     public function pageTypes()
