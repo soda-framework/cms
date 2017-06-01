@@ -34,7 +34,7 @@ trait Draftable
 
                 if (isset(static::$publishDateField)) {
                     $builder->where(function ($subQuery) {
-                        $subQuery->where(static::$publishDateField, '<', Carbon::now())->orWhereNull(static::$publishDateField);
+                        $subQuery->where(static::$publishDateField, '<', Carbon::now(config('soda.cms.publish_timezone', 'UTC'))->setTimezone('UTC'))->orWhereNull(static::$publishDateField);
                     });
                 }
             }
