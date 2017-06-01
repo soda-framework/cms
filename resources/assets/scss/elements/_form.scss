@@ -21,6 +21,85 @@ select.form-control {
   }
 }
 
+.form-control.form-control-alt, .input-group-addon.input-group-addon-alt {
+  background-color: $gray-lighter;
+  border-color: transparent;
+}
+
+.form-control.form-control-alt {
+  border-radius: 20px;
+}
+
+.input-group {
+  .input-group-addon-alt:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    &:after {
+
+    }
+  }
+}
+
+.input-group {
+  .form-control {
+    &.has-floating-addon {
+      padding-left: $padding-base-horizontal * 2;
+    }
+  }
+}
+
+.input-group-floating-addon {
+  position: absolute;
+  left: 0;
+  z-index: 5;
+  height: $input-height-base;
+  padding: $padding-base-vertical $padding-base-horizontal;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
+.input-group-lg {
+  .input-group-floating-addon {
+    height: $input-height-large;
+    padding: $padding-large-vertical $padding-large-horizontal;
+    font-size: $font-size-large;
+    line-height: $line-height-large;
+  }
+
+  .form-control {
+    &.has-floating-addon {
+      padding-left: $padding-large-horizontal * 2;
+    }
+  }
+}
+
+.input-group-lg {
+  .input-group-addon-alt:first-child {
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+  }
+
+  > .form-control-alt {
+    border-radius: 40px;
+  }
+
+   > .input-group-btn {
+     >.btn {
+       border-radius: 40px;
+     }
+     &:last-child {
+       >.btn {
+         border-bottom-left-radius: 0;
+         border-top-left-radius: 0;
+       }
+     }
+   }
+}
+
 .file-input {
   .file-preview {
     .file-preview-thumbnails {

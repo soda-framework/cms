@@ -63,22 +63,32 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             ->appends($request->only('order', 'dir', 'show', 'search'));
 
         if($request->has('search')) {
+            $ancestorDepth = $content->getCollection()->max('real_depth');
+            $content->getCollection()->load(implode('.', array_fill(0, $ancestorDepth, 'parent')));
+
             $content->getCollection()->transform(function($item) {
-                $ancestors =  $item->collectAncestors(['name', 'real_depth'])->where('real_depth', '>', 0)->pluck('name', 'real_depth')->toArray();
+                $item->breadcrumb = $this->contentToBreadcrumb($item->parent);
 
-                asort($ancestors);
-
-                dd($ancestors);
-
-                $item->ancestors = implode(' / ', $ancestors);
+                unset($item->parent);
 
                 return $item;
             });
-
-            dd($content);
         }
 
         return $content;
+    }
+
+    protected function contentToBreadcrumb(ContentInterface $content) {
+        if($content->real_depth < 1) {
+            return;
+        }
+
+        $hasParent = $content->relationLoaded('parent') && count($content->getRelation('parent'));
+        if($hasParent) {
+            $parentBreadcrumb = $this->contentToBreadcrumb($content->parent);
+        }
+
+        return (isset($parentBreadcrumb) && $parentBreadcrumb ? $parentBreadcrumb .  ' / ' : '') . $content->name;
     }
 
     public function findBySlug($slug)

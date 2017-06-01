@@ -2,24 +2,37 @@
 
 @section('content')
 
-    <div class="clearfix">
-        <div class="pull-right">
-            <form class="form-inline">
-                @foreach(['page', 'order', 'dir'] as $input)
-                    @if(Request::has($input))
-                        <input type="hidden" name="{{ $input }}" value="{{ Request::input($input) }}" />
-                    @endif
-                @endforeach
-                <div class="form-group">
-                    <label>View</label>
-                    <select class="form-control" name="show">
-                        <option value="20" {!! Request::input('show', 20) == 20 ? 'selected="selected"' : '' !!}>20</option>
-                        <option value="50" {!! Request::input('show') == 50 ? 'selected="selected"' : '' !!}>50</option>
-                        <option value="100" {!! Request::input('show') == 100 ? 'selected="selected"' : '' !!}>100</option>
-                    </select>
+    <div class="row">
+        <form class="form-inline">
+            @foreach(['page', 'order', 'dir'] as $input)
+                @if(Request::has($input))
+                    <input type="hidden" name="{{ $input }}" value="{{ Request::input($input) }}" />
+                @endif
+            @endforeach
+            <div class="col-xs-12 col-sm-10">
+                <div class="form-group" style="width:100%">
+                    <div class="input-group input-group-lg" style="width:100%">
+                        <input type="text" name="search" class="form-control form-control-alt has-floating-addon" value="{{ Request::input('search') }}" placeholder="Search content by name..." />
+                        <div class="input-group-floating-addon"><i class="mdi mdi-magnify"></i></div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default">Search</button>
+                        </span>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <div class="pull-right">
+                    <div class="form-group">
+                        <label>View</label>
+                        <select class="form-control" name="show">
+                            <option value="20" {!! Request::input('show', 20) == 20 ? 'selected="selected"' : '' !!}>20</option>
+                            <option value="50" {!! Request::input('show') == 50 ? 'selected="selected"' : '' !!}>50</option>
+                            <option value="100" {!! Request::input('show') == 100 ? 'selected="selected"' : '' !!}>100</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
     <Br />
     <div class="clearfix">
@@ -42,7 +55,7 @@
             </div>
             --}}
 
-            @if($contentFolder->is_folder)
+            @if($contentFolder->is_folder && !Request::has('search'))
                 @permission('edit-pages')
                     <a href="{{ route('soda.content.edit', $contentFolder->id) }}" class="btn btn-warning">
                         Edit Folder
@@ -112,6 +125,7 @@
                     <i class="mdi mdi-vector-arrange-above" v-else></i>
                     <a class="link-unstyled" v-text="contentItem.name" v-bind:href="routeTo('{{ route('soda.content.show', '###ID###') }}', contentItem.id)" v-if="contentItem.is_folder == 1"></a>
                     <a class="link-unstyled" v-text="contentItem.name" v-bind:href="routeTo('{{ route('soda.content.edit', '###ID###') }}', contentItem.id)" v-if="contentItem.is_folder != 1"></a>
+                    <div v-if="contentItem.breadcrumb" v-text="contentItem.breadcrumb" class="small text-muted"></div>
                 </td>
                 <td v-text="getFormattedDate(contentItem.updated_at)"></td> {{-- $contentItem->updated_at->format('jS F Y') --}}
                 <td>
