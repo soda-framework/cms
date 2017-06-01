@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Soda\Cms\Database\Models\Role;
 use Soda\Cms\Database\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class SetupUsers extends Seeder
 {
