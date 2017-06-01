@@ -1,7 +1,3 @@
-<?php
-    $isMovable = $content->where('is_movable', true)->count() ? true : false;
-?>
-
 @extends(soda_cms_view_path('layouts.inner'))
 
 @section('content')
@@ -54,7 +50,7 @@
                 @endpermission
             @endif
 
-            @if(count($shortcuts))
+            @if(isset($shortcuts) && count($shortcuts))
                 @permission('create-pages')
                 <div class="btn-group">
                     <div class="dropdown">
@@ -88,7 +84,7 @@
                     </div>
                 </th>
                 --}}
-                <th colspan="{{ $isMovable ? 2 : 1 }}">Name</th>
+                <th colspan="{{ isset($isMovable) && $isMovable ? 2 : 1 }}">Name</th>
                 <th>Date Edited</th>
                 <th colspan="2">Status</th>
             </tr>
@@ -103,7 +99,7 @@
                     </div>
                 </td>
                 --}}
-                @if($isMovable)
+                @if(isset($isMovable) && $isMovable)
                 <td class="text-center" width="20">
                     <span class="sortable-handle" v-if="contentItem.is_movable">
                         <i class="mdi mdi-drag-vertical"></i>
@@ -267,8 +263,8 @@
     <script>
         window.initVue = function(vueInstance) {
             vueInstance.content = {!! $content->getCollection()->toJson() !!};
-            vueInstance.contentItemTypes = {!! $contentTypes->where('is_folder', 0)->toJson() !!};
-            vueInstance.contentFolderTypes = {!! $contentTypes->where('is_folder', 1)->toJson() !!};
+            vueInstance.contentItemTypes = {!! isset($contentTypes) ? $contentTypes->where('is_folder', 0)->toJson() : "[]" !!};
+            vueInstance.contentFolderTypes = {!! isset($contentTypes) ? $contentTypes->where('is_folder', 1)->toJson() : "[]" !!};
         }
     </script>
     <script src="/soda/cms/js/forms/sortable.js"></script>

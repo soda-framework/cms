@@ -32,11 +32,19 @@ class ContentController extends BaseController
     public function index(Request $request)
     {
         $contentFolder = $this->content->getRoot();
-        $content = $this->content->listFolder($request, $contentFolder);
-        $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
-        $shortcuts = $this->content->getShortcuts($contentFolder);
 
-        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts'));
+        $content = $this->content->listFolder($request, $contentFolder);
+
+        if(!$request->has('search')) {
+            $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
+            $shortcuts = $this->content->getShortcuts($contentFolder);
+            $isMovable = $content->where('is_movable', true)->count() ? true : false;
+        } else {
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
+            app('soda.interface')->setHeading("Search");
+        }
+
+        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts','isMovable'));
     }
 
     /**
@@ -58,13 +66,20 @@ class ContentController extends BaseController
         }
 
         $content = $this->content->listFolder($request, $contentFolder);
-        $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
-        $shortcuts = $this->content->getShortcuts($contentFolder);
 
-        $this->buildBreadcrumbTree($contentFolder);
-        app('soda.interface')->setHeading($contentFolder->name);
+        if(!$request->has('search')) {
+            $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
+            $shortcuts = $this->content->getShortcuts($contentFolder);
+            $isMovable = $content->where('is_movable', true)->count() ? true : false;
 
-        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts'));
+            $this->buildBreadcrumbTree($contentFolder);
+            app('soda.interface')->setHeading($contentFolder->name);
+        } else {
+            $this->buildBreadcrumbTree($contentFolder, true);
+            app('soda.interface')->setHeading("Search");
+        }
+
+        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts', 'isMovable'));
     }
 
     /**

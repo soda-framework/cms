@@ -51,10 +51,34 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function listFolder(Request $request, ContentInterface $contentFolder)
     {
-        return $this->model->withoutGlobalScope('position')->where('parent_id', $contentFolder->id)
+        if($request->has('search')) {
+            $query = $contentFolder->collectDescendants()->where('name', 'LIKE', '%' . $request->input('search') . '%');
+        } else {
+            $query = $contentFolder->collectChildren();
+        }
+
+        $content = $query
             ->orderBy($request->input('order', 'position'), $request->input('dir', 'ASC'))
             ->paginate($request->input('show', 20))
-            ->appends($request->only('order', 'dir', 'show'));
+            ->appends($request->only('order', 'dir', 'show', 'search'));
+
+        if($request->has('search')) {
+            $content->getCollection()->transform(function($item) {
+                $ancestors =  $item->collectAncestors(['name', 'real_depth'])->where('real_depth', '>', 0)->pluck('name', 'real_depth')->toArray();
+
+                asort($ancestors);
+
+                dd($ancestors);
+
+                $item->ancestors = implode(' / ', $ancestors);
+
+                return $item;
+            });
+
+            dd($content);
+        }
+
+        return $content;
     }
 
     public function findBySlug($slug)
