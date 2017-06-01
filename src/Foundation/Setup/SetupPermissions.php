@@ -17,28 +17,28 @@ class SetupPermissions extends Seeder
     {
         $permissionAccessCms = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'access-cms',
-            'displayName' => 'Access CMS',
+            'display_name' => 'Access CMS',
             'description'  => 'Allow login/access to CMS.',
             'category'     => 'Application',
         ]);
 
         $permissionViewDrafts = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'view-drafts',
-            'displayName' => 'View Drafts',
+            'display_name' => 'View Drafts',
             'description'  => 'View content in draft mode on the live site.',
             'category'     => 'Application',
         ]);
 
         $permissionViewApplicationSettings = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'view-application-settings',
-            'displayName' => 'View Application Settings',
+            'display_name' => 'View Application Settings',
             'description'  => 'View settings used for configuring the application.',
             'category'     => 'Application',
         ]);
 
         $permissionEditApplicationSettings = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'edit-application-settings',
-            'displayName' => 'Edit Application Settings',
+            'display_name' => 'Edit Application Settings',
             'description'  => 'Edit settings used for configuring the application.',
             'category'     => 'Application',
         ]);
@@ -47,14 +47,14 @@ class SetupPermissions extends Seeder
 
         $permissionCreateApplicationSettings = Permission::create([
             'name'         => 'create-application-settings',
-            'displayName' => 'Create Application Settings',
+            'display_name' => 'Create Application Settings',
             'description'  => 'Create settings used for configuring the application.',
             'category'     => 'Application',
         ]);
 
         $permissionDeleteApplicationSettings = Permission::create([
             'name'         => 'delete-application-settings',
-            'displayName' => 'Delete Application Settings',
+            'display_name' => 'Delete Application Settings',
             'description'  => 'Delete settings used for configuring the application.',
             'category'     => 'Application',
         ]);
@@ -63,182 +63,182 @@ class SetupPermissions extends Seeder
 
         $permissionManageApplicationUrls = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'manage-application-urls',
-            'displayName' => 'Manage Application Urls',
+            'display_name' => 'Manage Application Urls',
             'description'  => 'Manage urls assoicated with the application.',
             'category'     => 'Application',
         ]);
 
         $permissionViewUsers = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'view-users',
-            'displayName' => 'View Users',
+            'display_name' => 'View Users',
             'description'  => 'View list of users and their details.',
             'category'     => 'Users',
         ]);
 
         $permissionEditUsers = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'edit-users',
-            'displayName' => 'Edit Users',
+            'display_name' => 'Edit Users',
             'description'  => 'Edit user profile information.',
             'category'     => 'Users',
         ]);
 
         $permissionCreateUsers = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'create-users',
-            'displayName' => 'Create Users',
+            'display_name' => 'Create Users',
             'description'  => 'Create new user accounts.',
             'category'     => 'Users',
         ]);
 
         $permissionDeleteUsers = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'delete-users',
-            'displayName' => 'Delete Users',
+            'display_name' => 'Delete Users',
             'description'  => 'Delete existing user accounts.',
             'category'     => 'Users',
         ]);
 
         $permissionAssignUserRoles = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'assign-user-roles',
-            'displayName' => 'Assign User-roles',
+            'display_name' => 'Assign User-roles',
             'description'  => 'Assign roles to users.',
             'category'     => 'Users',
         ]);
 
         $permissionViewRoles = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'view-roles',
-            'displayName' => 'View Roles',
+            'display_name' => 'View Roles',
             'description'  => 'View list of roles and their details.',
             'category'     => 'Roles',
         ]);
 
         $permissionEditRoles = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'edit-roles',
-            'displayName' => 'Edit Roles',
+            'display_name' => 'Edit Roles',
             'description'  => 'Edit role information.',
             'category'     => 'Roles',
         ]);
 
         $permissionCreateRoles = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'create-roles',
-            'displayName' => 'Create Roles',
+            'display_name' => 'Create Roles',
             'description'  => 'Create new roles.',
             'category'     => 'Roles',
         ]);
 
         $permissionDeleteRoles = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'delete-roles',
-            'displayName' => 'Delete Roles',
+            'display_name' => 'Delete Roles',
             'description'  => 'Delete existing roles.',
             'category'     => 'Roles',
         ]);
 
         $permissionViewPermissions = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'view-permissions',
-            'displayName' => 'View Permissions',
+            'display_name' => 'View Permissions',
             'description'  => 'View list of permissions and their details.',
             'category'     => 'Permissions',
         ]);
 
         $permissionEditPermissions = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'edit-permissions',
-            'displayName' => 'Edit Permissions',
+            'display_name' => 'Edit Permissions',
             'description'  => 'Edit permission information.',
             'category'     => 'Permissions',
         ]);
 
         $permissionCreatePermissions = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'create-permission',
-            'displayName' => 'Create Permissions',
+            'display_name' => 'Create Permissions',
             'description'  => 'Create new permission.',
             'category'     => 'Permissions',
         ]);
 
         $permissionDeletePermissions = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'delete-permission',
-            'displayName' => 'Delete Permissions',
+            'display_name' => 'Delete Permissions',
             'description'  => 'Delete existing permissions.',
             'category'     => 'Permissions',
         ]);
 
         $permissionAssignRolePermissions = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'assign-role-permissions',
-            'displayName' => 'Assign Role-permissions',
+            'display_name' => 'Assign Role-permissions',
             'description'  => 'Assign permissions to roles.',
             'category'     => 'Permissions',
         ]);
 
         $permissionManageOwnRolePermissions = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'manage-own-permissions',
-            'displayName' => 'Manage Own Permissions',
+            'display_name' => 'Manage Own Permissions',
             'description'  => 'Manage roles and permissions for own account.',
             'category'     => 'Roles',
         ]);
 
         $permissionViewPages = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'view-pages',
-            'displayName' => 'View Pages',
+            'display_name' => 'View Pages',
             'description'  => 'View list of pages and their contents.',
             'category'     => 'Pages',
         ]);
 
         $permissionEditPages = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'edit-pages',
-            'displayName' => 'Edit Pages',
+            'display_name' => 'Edit Pages',
             'description'  => 'Edit page content.',
             'category'     => 'Pages',
         ]);
 
         $permissionCreatePages = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'create-pages',
-            'displayName' => 'Create Pages',
+            'display_name' => 'Create Pages',
             'description'  => 'Create new pages.',
             'category'     => 'Pages',
         ]);
 
         $permissionDeletePages = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'delete-pages',
-            'displayName' => 'Delete Pages',
+            'display_name' => 'Delete Pages',
             'description'  => 'Delete existing pages.',
             'category'     => 'Pages',
         ]);
 
         $permissionManageContentTypes = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'manage-content-types',
-            'displayName' => 'Manage Content Types',
+            'display_name' => 'Manage Content Types',
             'description'  => 'Manage types to build content from.',
             'category'     => 'Pages',
         ]);
 
         $permissionAdvancedPages = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'advanced-pages',
-            'displayName' => 'Pages (advanced options)',
+            'display_name' => 'Pages (advanced options)',
             'description'  => 'Access advanced page options.',
             'category'     => 'Pages',
         ]);
 
         $permissionAttachBlocks = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'attach-blocks',
-            'displayName' => 'Attach Blocks',
+            'display_name' => 'Attach Blocks',
             'description'  => 'Attach new block types to pages.',
             'category'     => 'Blocks',
         ]);
 
         $permissionDetachBlocks = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'detach-blocks',
-            'displayName' => 'Detach Blocks',
+            'display_name' => 'Detach Blocks',
             'description'  => 'Detach existing block types from pages.',
             'category'     => 'Blocks',
         ]);
 
         $permissionManageBlockTypes = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'manage-block-types',
-            'displayName' => 'Manage Block Types',
+            'display_name' => 'Manage Block Types',
             'description'  => 'Manage types to build blocks from.',
             'category'     => 'Blocks',
         ]);
 
         $permissionManageFields = Permission::withoutGlobalScopes()->firstOrCreate([
             'name'         => 'manage-fields',
-            'displayName' => 'Manage Fields',
+            'display_name' => 'Manage Fields',
             'description'  => 'Manage fields association with page/block content.',
             'category'     => 'Fields',
         ]);

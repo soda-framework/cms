@@ -3,6 +3,7 @@
 namespace Soda\Cms\Foundation\Setup;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Soda\Cms\Database\Models\Role;
 use Soda\Cms\Database\Models\User;
 
