@@ -38,7 +38,7 @@ trait Draftable
 
                 if (isset(static::$publishDateField)) {
                     $builder->where(function ($subQuery) {
-                        $subQuery->where(static::$publishDateField, '<', static::getConvertedNow())->orWhereNull(static::$publishDateField);
+                        $subQuery->whereNull(static::$publishDateField)->orWhere(static::$publishDateField, '<', static::getConvertedNow());
                     });
                 }
             }
