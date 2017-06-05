@@ -4,13 +4,13 @@ namespace Soda\Cms\Foundation\Uploads;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Soda\Cms\Database\Models\Media;
 use Illuminate\Support\Facades\Storage;
+use Soda\Cms\Database\Models\Media;
 use Soda\Cms\Foundation\Uploads\Files\Base64File;
 use Soda\Cms\Foundation\Uploads\Files\SymfonyFile;
 use Soda\Cms\Foundation\Uploads\Files\UploadableFile;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Uploader
 {
@@ -102,9 +102,13 @@ class Uploader
         //$uploadableFile->setUploadTo(config('soda.upload.folder'));
 
         $uploadFilePath = $uploadableFile->uploadPath();
+        $uploadConfig = [
+            'visibility'   => 'public',
+            'CacheControl' => 'max-age=86400',
+        ];
 
         // Generate return information
-        if ($this->driver()->put($uploadFilePath, $uploadableFile->fileContents(), 'public')) {
+        if ($this->driver()->put($uploadFilePath, $uploadableFile->fileContents(), $uploadConfig)) {
             if (config('filesystems.disks.'.config('soda.upload.default').'.driver') == 'local') {
                 return substr($this->driver()->getAdapter()->applyPathPrefix($uploadFilePath), strlen(public_path()));
             }
@@ -201,7 +205,7 @@ class Uploader
     {
         static $extensionToMimeTypeMap;
 
-        if (! $extensionToMimeTypeMap) {
+        if (!$extensionToMimeTypeMap) {
             $extensionToMimeTypeMap = static::getExtensionToMimeTypeMap();
         }
 
