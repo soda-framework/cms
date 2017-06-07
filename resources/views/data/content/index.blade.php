@@ -55,7 +55,7 @@
             </div>
             --}}
 
-            @if($contentFolder->is_folder && !Request::has('search'))
+            @if($contentFolder->is_folder && !Request::has('search') && $contentFolder->real_depth > 0)
                 @permission('edit-pages')
                     <a href="{{ route('soda.content.edit', $contentFolder->id) }}" class="btn btn-warning">
                         Edit Folder
@@ -277,8 +277,8 @@
     <script>
         window.initVue = function(vueInstance) {
             vueInstance.content = {!! $content->getCollection()->toJson() !!};
-            vueInstance.contentItemTypes = {!! isset($contentTypes) ? $contentTypes->where('is_folder', 0)->toJson() : "[]" !!};
-            vueInstance.contentFolderTypes = {!! isset($contentTypes) ? $contentTypes->where('is_folder', 1)->toJson() : "[]" !!};
+            vueInstance.contentItemTypes = {!! isset($contentTypes) ? $contentTypes->where('is_folder', 0)->values()->toJson() : "[]" !!};
+            vueInstance.contentFolderTypes = {!! isset($contentTypes) ? $contentTypes->where('is_folder', 1)->values()->toJson() : "[]" !!};
         }
     </script>
     <script src="/soda/cms/js/forms/sortable.js"></script>

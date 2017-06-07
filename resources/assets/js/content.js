@@ -23,12 +23,15 @@ Soda.contentTable = new Vue({
             var form = modal.find('form');
 
             if(contentTypeId !== null && contentTypeId !== '') {
+                console.log(contentTypeId);
                 this.$set(this, 'selectedContentType', contentTypeId);
                 this.$nextTick(function() {
                     form.submit();
                 });
             } else {
+                console.log('choices, pls');
                 var numContentTypes = this.contentItemTypes.length;
+                console.log(numContentTypes);
                 this.$set(this, 'selectedContentType', numContentTypes ? this.contentItemTypes[0]['id'] : null);
 
                 if(numContentTypes > 1) {

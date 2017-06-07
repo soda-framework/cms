@@ -72,8 +72,10 @@ class ContentController extends BaseController
             $shortcuts = $this->content->getShortcuts($contentFolder);
             $isMovable = $content->where('is_movable', true)->count() ? true : false;
 
-            $this->buildBreadcrumbTree($contentFolder);
-            app('soda.interface')->setHeading($contentFolder->name);
+            if($contentFolder->real_depth > 0) {
+                $this->buildBreadcrumbTree($contentFolder);
+                app('soda.interface')->setHeading($contentFolder->name);
+            }
         } else {
             $this->buildBreadcrumbTree($contentFolder, true);
             app('soda.interface')->setHeading("Search");
@@ -116,7 +118,7 @@ class ContentController extends BaseController
 
         if ($parentId) {
             $contentFolder = $this->content->findById($parentId);
-            $this->buildBreadcrumbTree($contentFolder, true);
+            $this->buildBreadcrumbTree($contentFolder, $contentFolder->real_depth > 0);
         }
 
         if ($content->type) {

@@ -3,11 +3,12 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Constants;
-use Soda\Cms\Support\Facades\Soda;
 use Soda\Cms\Database\Models\ContentShortcut;
+use Soda\Cms\Database\Models\ContentType;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
+use Soda\Cms\Foundation\Constants;
+use Soda\Cms\Support\Facades\Soda;
 
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
@@ -29,7 +30,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $contentRoot = $this->model->getRoots()->first();
 
-        if (! $contentRoot) {
+        if (!$contentRoot) {
             $contentRoot = $this->model->newInstance([
                 'name'           => 'Root',
                 'slug'           => null,
@@ -51,8 +52,8 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function listFolder(Request $request, ContentInterface $contentFolder)
     {
-        if($request->has('search')) {
-            $query = $contentFolder->collectDescendants()->where('name', 'LIKE', '%' . $request->input('search') . '%');
+        if ($request->has('search')) {
+            $query = $contentFolder->collectDescendants()->where('name', 'LIKE', '%'.$request->input('search').'%');
         } else {
             $query = $contentFolder->collectChildren();
         }
@@ -62,11 +63,11 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             ->paginate($request->input('show', 20))
             ->appends($request->only('order', 'dir', 'show', 'search'));
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $ancestorDepth = $content->getCollection()->max('real_depth');
             $content->getCollection()->load(implode('.', array_fill(0, $ancestorDepth, 'parent')));
 
-            $content->getCollection()->transform(function($item) {
+            $content->getCollection()->transform(function ($item) {
                 $item->breadcrumb = $this->contentToBreadcrumb($item->parent);
 
                 unset($item->parent);
@@ -78,17 +79,18 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         return $content;
     }
 
-    protected function contentToBreadcrumb(ContentInterface $content) {
-        if($content->real_depth < 1) {
+    protected function contentToBreadcrumb(ContentInterface $content)
+    {
+        if ($content->real_depth < 1) {
             return;
         }
 
         $hasParent = $content->relationLoaded('parent') && count($content->getRelation('parent'));
-        if($hasParent) {
+        if ($hasParent) {
             $parentBreadcrumb = $this->contentToBreadcrumb($content->parent);
         }
 
-        return (isset($parentBreadcrumb) && $parentBreadcrumb ? $parentBreadcrumb .  ' / ' : '') . $content->name;
+        return (isset($parentBreadcrumb) && $parentBreadcrumb ? $parentBreadcrumb.' / ' : '').$content->name;
     }
 
     public function findBySlug($slug)
@@ -113,17 +115,13 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function getTypes($creatableOnly = false)
     {
-        if ($this->model->content_type_id) {
-            $query = $this->model->type()->getRelated();
+        $query = $this->model->type()->getRelated();
 
-            if ($creatableOnly) {
-                $query->where('is_creatable', 1);
-            }
-
-            return $query->get();
+        if ($creatableOnly) {
+            $query->where('is_creatable', 1);
         }
 
-        return collect();
+        return $query->get();
     }
 
     public function getBlockTypes()
@@ -133,7 +131,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function getAvailableBlockTypes(ContentInterface $content)
     {
-        if (! $content->relationLoaded('blockTypes')) {
+        if (!$content->relationLoaded('blockTypes')) {
             $content->load('blockTypes');
         }
 
@@ -154,20 +152,18 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         $shortcuts = $shortcutsQuery->get();
 
-        if (! count($creatableTypes)) {
-            if (! $shortcuts->where('is_folder', true)->where('override_default', true)->count()) {
-                $shortcuts->push(new ContentShortcut([
-                    'text'             => 'New Content Folder',
-                    'is_folder'        => 1,
-                ]));
-            }
+        if (!count($creatableTypes) || ($creatableTypes->where('is_folder', true)->count() && !$shortcuts->where('is_folder', true)->where('override_default', true)->count())) {
+            $shortcuts->push(new ContentShortcut([
+                'text'      => 'New Content Folder',
+                'is_folder' => 1,
+            ]));
+        }
 
-            if (! $shortcuts->where('is_folder', false)->where('override_default', true)->count()) {
-                $shortcuts->push(new ContentShortcut([
-                    'text'             => 'New Content Item',
-                    'is_folder'        => 0,
-                ]));
-            }
+        if (!count($creatableTypes) || ($creatableTypes->where('is_folder', false)->count() && !$shortcuts->where('is_folder', false)->where('override_default', true)->count())) {
+            $shortcuts->push(new ContentShortcut([
+                'text'      => 'New Content Item',
+                'is_folder' => 0,
+            ]));
         }
 
         return $shortcuts;
@@ -177,13 +173,13 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
-        if (! $parent->isFolder()) {
+        if (!$parent->isFolder()) {
             throw new \Exception('You cannot create that content here.');
         }
 
         if ($parent->type) {
             $allowedContentTypes = $parent->type->pageTypes ? $parent->type->pageTypes->pluck('id')->toArray() : [];
-            if (count($allowedContentTypes) && ! in_array($contentTypeId, $allowedContentTypes)) {
+            if (count($allowedContentTypes) && !in_array($contentTypeId, $allowedContentTypes)) {
                 throw new \Exception('You cannot create that content here.');
             }
         }
@@ -243,7 +239,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         $slug = $content->generateSlug($request->input('slug'));
 
-        if ($parentContent && ! starts_with($slug, $parentContent->getAttribute('slug'))) {
+        if ($parentContent && !starts_with($slug, $parentContent->getAttribute('slug'))) {
             $slug = $parentContent->generateSlug($request->input('slug'));
         }
 
