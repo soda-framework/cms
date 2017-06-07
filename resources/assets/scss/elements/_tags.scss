@@ -3,9 +3,7 @@
   margin-right: 10px;
   padding: 6px 14px;
   border-radius: 50px;
-  background-color: $gray-lighter;
   transition: background-color 0.25s ease-in, color 0.25s ease-in;
-  color: $gray-dark;
 
   .tag-delete {
     font-weight: bold;
@@ -24,4 +22,11 @@
       color: $gray-lighter;
     }
   }
+}
+
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+  border: none;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin: 5px 0 0 8px;
 }

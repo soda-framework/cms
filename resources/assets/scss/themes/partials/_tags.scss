@@ -1,5 +1,15 @@
 .tag {
+  background: $tag-bg;
+  color: $tag-color;
   .tag-delete {
-    color: $secondary;
+    color: $tag-close-color;
+  }
+}
+
+.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+  background: $tag-inverse-bg;
+  color: $tag-inverse-color;
+  .select2-selection__choice__remove {
+    color: $tag-inverse-close-color;
   }
 }

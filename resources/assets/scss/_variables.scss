@@ -72,6 +72,27 @@ $modal-title-padding:         15px 25px;
 $modal-content-bg:            transparent;
 $modal-backdrop-opacity:      .75;
 
+
+/* ALERTS
+   ============================= */
+
+$alert-success-bg: $brand-success;
+$alert-success-border: $brand-success;
+$alert-success-text: $white;
+
+$alert-info-bg: $brand-info;
+$alert-info-border: $brand-info;
+$alert-info-text: $white;
+
+$alert-warning-bg: $brand-warning;
+$alert-warning-border: $brand-warning;
+$alert-warning-text: $white;
+
+$alert-danger-bg: $brand-danger;
+$alert-danger-border: $brand-danger;
+$alert-danger-text: $white;
+
+
 /* OTHER
    ============================= */
 

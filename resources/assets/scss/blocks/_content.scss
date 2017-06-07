@@ -82,7 +82,7 @@ body.loaded {
   }
 }
 
-.content-top, .content-header {
+.content-top /*, .content-header*/ {
   margin-bottom: 30px;
 }
 
@@ -91,7 +91,7 @@ body.loaded {
 }
 
 .content-header {
-  border-bottom: 1px solid #ddd;
+  //border-bottom: 1px solid #ddd;
   h1 {
     font-weight: 800;
     margin: 0;

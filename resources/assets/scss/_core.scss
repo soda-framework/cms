@@ -63,6 +63,11 @@ body.loaded {
   }
 }
 
+.close {
+  text-shadow: none;
+  opacity: 0.75;
+}
+
 [v-cloak] {
   display: none;
 }

@@ -78,6 +78,7 @@ class SettingsController extends BaseController
         try {
             $application = $this->applications->save($request, $id);
             if ($request->has('theme')) {
+                \Cookie::queue('soda-theme', $request->input('theme'));
                 $request->session()->put('soda-theme', $request->input('theme'));
             }
         } catch (Exception $e) {

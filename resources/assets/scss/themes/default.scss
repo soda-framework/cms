@@ -1,64 +1,21 @@
 @import '../color-palette';
-@import '../variables';
 
 $primary: $slate-040;
 $secondary: $slate-030;
 
-$logo-color: $secondary;
-$mobile-logo-color: $white;
-$content-background: $white;
-
-$page-tree-item-bg: $gray-lighter;
-$page-tree-item-hover-bg: $gray-light;
-
-$table-highlighted-bg: #B5F3DC;
-$table-highlighted-color: inherit;
-
-$dropdown-button-color: $white;
-$dropdown-button-bg: $secondary;
-$dropdown-link-color: $secondary;
-
-/* Breadcrumb
-   ============================= */
-
-$breadcrumb-bg: transparent;
-$breadcrumb-color: $text-muted;
-$breadcrumb-active-color: $secondary;
-
 /* Nav Pills
    ============================= */
 
-$nav-pills-bg: $gray-lighter;
-$nav-pills-border-radius: 5px;
 $nav-pills-active-bg: $primary;
-$nav-pills-active-color: $white;
 
 /* SIDEBAR
    ============================= */
 
-$sidebar-from-bg: $primary;
-$sidebar-to-bg: $secondary;
-
-$sidebar-link: transparent;
 $sidebar-link-text: $slate-100;
 
-$sidebar-link-hover: rgba(255, 255, 255, 0.1);
-$sidebar-link-hover-text: $white;
-
-$sidebar-link-active: $white;
-$sidebar-link-active-text: $secondary;
-
-$sidebar-link-active-sub: $white;
-$sidebar-link-active-sub-text: $secondary;
-
 $sidebar-group-bg: rgba(255, 255, 255, 0.1);
-$sidebar-group-link: transparent;
 $sidebar-group-link-text: $slate-100;
 
 $sidebar-group-link-hover: rgba(255, 255, 255, 0.1);
-$sidebar-group-link-hover-text: $white;
-
-$sidebar-group-link-active: $white;
-$sidebar-group-link-active-text: $secondary;
 
 @import 'theme';
