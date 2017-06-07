@@ -1,0 +1,23 @@
+.modal-content {
+  box-shadow: none !important;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.modal-header {
+  background-color: $brand-primary;
+  color: #fff;
+  .close {
+    color: #fff;
+    text-shadow: 0px 1px 0 #000;
+    opacity: .4;
+  }
+}
+
+.modal-body {
+  background-color: #fff;
+}
+
+.modal-footer {
+  background-color: #fff;
+}
