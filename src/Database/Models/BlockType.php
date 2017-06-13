@@ -70,6 +70,7 @@ class BlockType extends Model implements BlockTypeInterface
 
         $table->increments('id');
         $table->integer($contentReferenceColumn)->unsigned()->nullable();
+        $table->integer('position')->unsigned()->nullable()->default('1');
         $table->tinyInteger('is_shared')->unsigned()->nullable();
         $table->foreign($contentReferenceColumn, $contentIndex)->references('id')->on($contentTable)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->timestamps();
