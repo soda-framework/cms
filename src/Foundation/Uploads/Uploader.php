@@ -104,7 +104,7 @@ class Uploader
         $uploadFilePath = $uploadableFile->uploadPath();
         $uploadConfig = [
             'visibility'   => 'public',
-            'CacheControl' => 'max-age=86400',
+            'CacheControl' => 'public, max-age=86400',
         ];
 
         // Generate return information
