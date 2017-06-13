@@ -32,9 +32,13 @@ class Uploader
         }
 
         $uploadFilePath = $this->urlPrefix().'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
+        $uploadConfig = [
+            'visibility'   => 'public',
+            'CacheControl' => 'public, max-age=86400',
+        ];
 
         // Upload the file
-        $uploaded = $this->driver()->put($uploadFilePath, $fileContents, 'public');
+        $uploaded = $this->driver()->getDriver()->put($uploadFilePath, $fileContents, $uploadConfig);
 
         // Generate return information
         if ($uploaded) {
@@ -58,9 +62,13 @@ class Uploader
             }
 
             $uploadFilePath = $this->urlPrefix().'/'.$this->generateFileName($filePath, $file->getClientOriginalName(), $fileExtension);
+            $uploadConfig = [
+                'visibility'   => 'public',
+                'CacheControl' => 'public, max-age=86400',
+            ];
 
             // Upload the file
-            $uploaded = $this->driver()->put($uploadFilePath, file_get_contents($filePath), 'public');
+            $uploaded = $this->driver()->getDriver()->put($uploadFilePath, file_get_contents($filePath), $uploadConfig);
 
             // Generate return information
             if ($uploaded) {
