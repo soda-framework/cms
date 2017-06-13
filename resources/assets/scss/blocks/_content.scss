@@ -21,7 +21,6 @@ body.unloading {
 body.loaded {
   .main-content {
     @extend .fadeInDown;
-    opacity: 1;
   }
 }
 

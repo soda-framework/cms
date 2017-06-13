@@ -26,6 +26,8 @@
     z-index: 10;
     img, svg {
       max-height: 55px;
+      display: block;
+      margin: 0 auto;
     }
   }
 

@@ -41,8 +41,8 @@
             <div class="btn-group">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Actions
                         <i class="mdi mdi-menu-down"></i>
+                        Actions
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="#">Pin</a></li>
@@ -68,8 +68,8 @@
                 <div class="btn-group">
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Create
                             <i class="mdi mdi-menu-down"></i>
+                            Create
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             @foreach($shortcuts->where('is_folder', false) as $shortcut)
@@ -139,8 +139,8 @@
                     <div class="btn-group">
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Actions
                                 <i class="mdi mdi-menu-down"></i>
+                                Actions
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <template v-if="contentItem.is_folder == 1">
