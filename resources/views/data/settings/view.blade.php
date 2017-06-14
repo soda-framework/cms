@@ -21,7 +21,7 @@
             'strawberry' => 'Strawberry pink',
             'grape'      => 'Grape purple',
         ]],
-        "value"       => Request::cookie('soda-theme', Request::session('soda-theme', 'default'))
+        "value"       => Request::cookie('soda-theme', Request::session()->get('soda-theme', 'default'))
     ]) !!}
 
     @permission('manage-application-urls')
