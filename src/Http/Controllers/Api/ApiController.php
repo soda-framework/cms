@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use Soda\Cms\Http\Controllers\BaseController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -53,68 +54,73 @@ abstract class ApiController extends BaseController
         return $this;
     }
 
-    public function respondSuccess($message = 'Success', $extraData = null)
+    public function respondSuccess($data = null, $statusMessage = 'Success')
     {
-        return $this->setStatusCode(Response::HTTP_OK)->setStatusMessage($message)->respond($extraData);
+        return $this->setStatusCode(Response::HTTP_OK)->setStatusMessage($statusMessage)->respond($data);
     }
 
-    public function respondCreated($message = 'Created', $extraData = null)
+    public function respondCreated($data = null, $statusMessage = 'Created')
     {
-        return $this->setStatusCode(Response::HTTP_CREATED)->setStatusMessage($message)->respond($extraData);
+        return $this->setStatusCode(Response::HTTP_CREATED)->setStatusMessage($statusMessage)->respond($data);
     }
 
-    public function respondNotFound($message = 'Not Found', $extraData = null)
+    public function respondNotFound($data = null, $statusMessage = 'Not found')
     {
-        return $this->respondWithError(Response::HTTP_NOT_FOUND, $message, $extraData);
+        return $this->respondWithError(Response::HTTP_NOT_FOUND, $statusMessage, $data);
     }
 
-    public function respondUnauthorized($message = 'Unauthorized', $extraData = null)
+    public function respondUnauthorized($data = null, $statusMessage = 'Unauthorized')
     {
-        return $this->respondWithError(Response::HTTP_UNAUTHORIZED, $message, $extraData);
+        return $this->respondWithError(Response::HTTP_UNAUTHORIZED, $statusMessage, $data);
     }
 
-    public function respondRateLimited($message = 'Rate Limited', $extraData = null)
+    public function respondRateLimited($data = null, $statusMessage = 'Too many requests')
     {
-        return $this->respondWithError(Response::HTTP_TOO_MANY_REQUESTS, $message, $extraData);
+        return $this->respondWithError(Response::HTTP_TOO_MANY_REQUESTS, $statusMessage, $data);
     }
 
-    public function respondNotAllowed($message = 'Not Allowed', $extraData = null)
+    public function respondNotAllowed($data = null, $statusMessage = 'Not allowed')
     {
-        return $this->respondWithError(Response::HTTP_FORBIDDEN, $message, $extraData);
+        return $this->respondForbidden($data, $statusMessage);
     }
 
-    public function respondInvalid($message = 'Invalid Input', $extraData = null)
+    public function respondForbidden($data = null, $statusMessage = 'Forbidden')
     {
-        return $this->respondWithError(Response::HTTP_UNPROCESSABLE_ENTITY, $message, $extraData);
+        return $this->respondWithError(Response::HTTP_FORBIDDEN, $statusMessage, $data);
     }
 
-    public function respond($data = [])
+    public function respondInvalid($data = null, $statusMessage = 'Invalid input')
+    {
+        return $this->respondWithError(Response::HTTP_UNPROCESSABLE_ENTITY, $statusMessage, $data);
+    }
+
+    public function respond($data = null)
     {
         return $this->setStatusCode(Response::HTTP_OK)->buildResponse(static::STATUS_SUCCESS, $data);
     }
 
-    protected function respondWithError($code, $message, $extraData = null)
+    public function respondWithError($statusCode, $statusMessage, $data = null)
     {
-        return $this->setStatusCode($code)->setStatusMessage($message)->buildResponse(static::STATUS_ERROR, $extraData);
+        return $this->setStatusCode($statusCode)->setStatusMessage($statusMessage)->buildResponse(static::STATUS_ERROR, $data);
     }
 
-    protected function buildResponse($statusType, array $extraData = [])
+    protected function buildResponse($statusType, $data = null)
     {
         $response = [
-            'status' => $this->buildStatus($statusType),
+            'meta' => $this->buildStatus($statusType),
         ];
 
-        if (count($extraData)) {
-            $response = array_merge($response, $extraData);
+        if ($data && count($data)) {
+            $response['data'] = $data;
         }
 
-        return response()->json(compact('response'), $this->getStatusCode());
+        return response()->json($response, $this->getStatusCode());
     }
 
     protected function buildStatus($statusType)
     {
         $status = [
-            'type' => $statusType,
+            'status' => $statusType,
             'code' => $this->getStatusCode(),
         ];
 
@@ -123,5 +129,22 @@ abstract class ApiController extends BaseController
         }
 
         return $status;
+    }
+
+    /**
+     * Create the response for when a request fails validation.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  array                    $errors
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function buildFailedValidationResponse(Request $request, array $errors)
+    {
+        if ($request->expectsJson()) {
+            return $this->respondInvalid($errors);
+        }
+
+        return parent::buildFailedValidationResponse($request, $errors);
     }
 }
