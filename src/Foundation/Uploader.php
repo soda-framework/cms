@@ -34,7 +34,7 @@ class Uploader
         $uploadFilePath = $this->urlPrefix().'/'.$fileName.($fileExtension ? '.'.$fileExtension : '');
         $uploadConfig = [
             'visibility'   => 'public',
-            'CacheControl' => 'public, max-age=86400',
+            'CacheControl' => 'public, max-age=2592000', // 30 days
         ];
 
         // Upload the file
