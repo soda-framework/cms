@@ -110,7 +110,7 @@ abstract class ApiController extends BaseController
             'meta' => $this->buildStatus($statusType),
         ];
 
-        if ($data && count($data)) {
+        if ($data) {
             $response['data'] = $data;
         }
 
