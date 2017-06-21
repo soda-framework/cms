@@ -13,7 +13,3 @@ try {
 window.Vue = require('vue');
 window.sweetAlert = window.swal = require('bootstrap-sweetalert');
 window.moment = require('moment/moment');
-
-setTimeout(function(){
-    document.body.className = document.body.className + ' loaded';
-}, 5000);
