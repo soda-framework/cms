@@ -50,6 +50,10 @@ $currentCmsTheme = in_array($currentCmsTheme, ['default', 'lime', 'strawberry', 
             Soda.theme = '{{ $currentCmsTheme }}';
             return Soda;
         })(Soda || {});
+
+        setTimeout(function(){ // Force load body after 5 seconds
+            if((' ' + document.body.className + ' ').indexOf(' loaded ') == -1) document.body.className = document.body.className + ' loaded';
+        }, 5000);
     </script>
 @stop
 
