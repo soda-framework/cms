@@ -13,6 +13,7 @@ class Tinymce extends AbstractFormField
     {
         return [
             'selector'     => '#field_'.$this->getFieldName(),
+            'browser_spellcheck' => true,
             'height'       => 500,
             'plugins'      => [
                 'advlist autolink lists link image charmap print hr anchor pagebreak',

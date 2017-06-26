@@ -2,6 +2,7 @@
 
 $currentCmsTheme = Request::input('theme', Request::cookie('soda-theme', Request::session('soda-theme', 'default')));
 $currentCmsTheme = in_array($currentCmsTheme, ['default', 'lime', 'strawberry', 'grape']) ? $currentCmsTheme : 'default';
+$version = Soda::getVersion();
 
 ?>
 @section('head.main')
@@ -23,24 +24,24 @@ $currentCmsTheme = in_array($currentCmsTheme, ['default', 'lime', 'strawberry', 
 @stop
 
 @section('head.css')
-    <link href="/soda/cms/css/plugins.css" rel="stylesheet" media="all">
-    <link href="/soda/cms/css/bootstrap.css" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/plugins.css?v={{ $version }}" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/bootstrap.css?v={{ $version }}" rel="stylesheet" media="all">
 
     <!-- Styles -->
     @if(!Soda::getApplication()->css_url || Soda::getApplication()->append_css)
-        <link href="/soda/cms/css/application.css" rel="stylesheet" media="all">
+        <link href="/soda/cms/css/application.css?v={{ $version }}" rel="stylesheet" media="all">
     @endif
     @if($cssUrl = Soda::getApplication()->css_url)
-        <link href="{{ $cssUrl }}" rel="stylesheet" media="all">
+        <link href="{{ $cssUrl }}?v={{ $version }}" rel="stylesheet" media="all">
     @endif
 
-    <link href="/soda/cms/css/fonts.css" rel="stylesheet" media="all">
-    <link href="/soda/cms/css/themes/{{ $currentCmsTheme }}.css" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/fonts.css?v={{ $version }}" rel="stylesheet" media="all">
+    <link href="/soda/cms/css/themes/{{ $currentCmsTheme }}.css?v={{ $version }}" rel="stylesheet" media="all">
 @stop
 
 @section('head.js')
-    <script src="/soda/cms/js/core.js"></script>
-    <script src="/soda/cms/js/application.js"></script>
+    <script src="/soda/cms/js/core.js?v={{ $version }}"></script>
+    <script src="/soda/cms/js/application.js?v={{ $version }}"></script>
     <script>
         (function (Soda) {
             Soda.queryString = {!! json_encode(Request::query(), JSON_HEX_TAG) !!}
@@ -61,12 +62,12 @@ $currentCmsTheme = in_array($currentCmsTheme, ['default', 'lime', 'strawberry', 
 @stop
 
 @section('footer.js')
-    <script src="/soda/cms/js/forms/slugs.js"></script>
-    <script src="/soda/cms/js/forms/dates.js"></script>
-    <script src="/soda/cms/js/forms/tinymce.js"></script>
-    <script src="/soda/cms/js/forms/upload.js"></script>
-    <script src="/soda/cms/js/forms/json.js"></script>
-    <script src="/soda/cms/js/forms/multiselect.js"></script>
+    <script src="/soda/cms/js/forms/slugs.js?v={{ $version }}"></script>
+    <script src="/soda/cms/js/forms/dates.js?v={{ $version }}"></script>
+    <script src="/soda/cms/js/forms/tinymce.js?v={{ $version }}"></script>
+    <script src="/soda/cms/js/forms/upload.js?v={{ $version }}"></script>
+    <script src="/soda/cms/js/forms/json.js?v={{ $version }}"></script>
+    <script src="/soda/cms/js/forms/multiselect.js?v={{ $version }}"></script>
 @stop
 
 @section('head')

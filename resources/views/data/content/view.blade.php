@@ -235,11 +235,15 @@ if ($content->type && $content->type->blockTypes) {
                         @if($blockType->list_action_type == 'view')
                             <div class="tab-pane" id="tab_{{ strtolower($blockType->identifier) }}" role="tabpanel">
                                 <div class="content-block">
-                                    @include($blockType->list_action, [
-                                        'blockType'  => $blockType,
-                                        'page'       => $content,
-                                        'blocks'     => $content->block($blockType)->paginate(null, ['*'], $blockType->identifier .'-page')->appends(['tab' => $blockType->identifier])
-                                    ])
+                                    @if($content->id)
+                                        @include($blockType->list_action, [
+                                            'blockType'  => $blockType,
+                                            'page'       => $content,
+                                            'blocks'     => $content->block($blockType)->paginate(null, ['*'], $blockType->identifier .'-page')->appends(['tab' => $blockType->identifier])
+                                        ])
+                                    @else
+                                        <p>Content must be saved before creating blocks.</p>
+                                    @endif
                                 </div>
                             </div>
                         @endif
@@ -264,7 +268,7 @@ if ($content->type && $content->type->blockTypes) {
     <div class="content-bottom">
         @include(soda_cms_view_path('partials.buttons.save'), ['submits' => '#page-form'])
 
-        @if($content->is_sluggable && (!$content->is_publishable || $content->isPublished() || Session::get("soda.draft_mode") == true))
+        @if($content->id && $content->is_sluggable && (!$content->is_publishable || $content->isPublished() || Session::get("soda.draft_mode") == true))
             <a class="btn btn-info btn-lg" href="{{ URL::to($content->slug) }}" target="_blank">
                 <span>View Content</span>
             </a>

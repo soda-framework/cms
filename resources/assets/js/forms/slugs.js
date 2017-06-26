@@ -12,9 +12,7 @@
                 .replace(/\s+/g, '-')                  // Replace spaces with -
                 .replace(/[^\w\-\/\%\+\?\[\]]+/g, '')  // Remove all non-word chars
                 .replace(/\-\-+/g, '-')                // Replace multiple - with single -
-                .replace(/\/\/+/g, '/')                // Replace multiple / with single /
-                .replace(/^-+/, '')                    // Trim - from start of text
-                .replace(/-+$/, '');                   // Trim - from end of text
+                .replace(/\/\/+/g, '/');                   // Trim - from end of text
 
             if(text.substring(0,1) != '/') {
                 text = '/' + text;

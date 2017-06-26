@@ -4,6 +4,7 @@ namespace Soda\Cms\Routing;
 
 use ReflectionClass;
 use Illuminate\Support\Facades\Route;
+use Soda\Cms\Http\Middleware\DraftAlert;
 use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\Drafting;
 use Soda\Cms\Http\Middleware\ForceHttps;
@@ -34,9 +35,21 @@ class RouteServiceProvider extends ServiceProvider
     {
         $router = $this->app['router'];
 
-        $router->middlewareGroup('soda.web', [
-            Drafting::class,
-        ]);
+        $router->middlewareGroup('soda.web', [Drafting::class]);
+        $router->middlewareGroup('soda.api', [Drafting::class]);
+
+        $router->pushMiddlewareToGroup('web', DraftAlert::class);
+        if (config('soda.cms.https')) {
+            $router->pushMiddlewareToGroup('soda.web', ForceHttps::class);
+        }
+
+        $router->aliasMiddleware('soda.auth', Authenticate::class);
+        $router->aliasMiddleware('soda.guest', RedirectIfAuthenticated::class);
+
+        $router->aliasMiddleware('soda.role', HasRole::class);
+        $router->aliasMiddleware('soda.permission', HasPermission::class);
+        $router->aliasMiddleware('soda.ability', HasAbility::class);
+
 
         $middlewareGroups = $router->getMiddlewareGroups();
 
@@ -48,21 +61,6 @@ class RouteServiceProvider extends ServiceProvider
 
             $router->middlewareGroup('soda.sluggable-web', $middlewareGroups['web']);
         }
-
-        $router->middlewareGroup('soda.api', [
-            Drafting::class,
-        ]);
-
-        if (config('soda.cms.https')) {
-            $router->pushMiddlewareToGroup('soda.web', ForceHttps::class);
-        }
-
-        $router->aliasMiddleware('soda.auth', Authenticate::class);
-        $router->aliasMiddleware('soda.guest', RedirectIfAuthenticated::class);
-
-        $router->aliasMiddleware('soda.role', HasRole::class);
-        $router->aliasMiddleware('soda.permission', HasPermission::class);
-        $router->aliasMiddleware('soda.ability', HasAbility::class);
 
         parent::boot();
     }
