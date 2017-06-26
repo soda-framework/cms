@@ -160,7 +160,7 @@ class SodaInstance
     {
         return Cache::remember('soda.version', 60, function () {
             try {
-                $composerLock = file_get_contents(base_path('composer2.lock'));
+                $composerLock = file_get_contents(base_path('composer.lock'));
                 preg_match('/\"name\":\s*\"soda-framework\/cms\",\n\s*\"version\":\s*\"(.*)\"/', $composerLock, $matches);
 
                 if (isset($matches[1])) {
