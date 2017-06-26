@@ -10,6 +10,7 @@
   "/public/css/themes/strawberry.css": "/public/css/themes/strawberry.css",
   "/public/css/themes/grape.css": "/public/css/themes/grape.css",
   "/public/js/wave.js": "/public/js/wave.js",
+  "/public/js/forms/slugs.js": "/public/js/forms/slugs.js",
   "/public/js/content.js": "/public/js/content.js",
   "/public/js/application.js": "/public/js/application.js"
 }

@@ -35,6 +35,7 @@ mix.sass('resources/assets/scss/application.scss', 'public/css')
     .js('resources/assets/js/wave.js', 'public/js')
     .js('resources/assets/js/core.js', 'public/js')
     .js('resources/assets/js/content.js', 'public/js')
+    .js('resources/assets/js/forms/slugs.js', 'public/js/forms')
     .copyDirectory('resources/assets/img', 'public/img');
 
 if(process.env.RELEASE == 'true') {
@@ -44,7 +45,6 @@ if(process.env.RELEASE == 'true') {
        .js('resources/assets/js/forms/upload.js', 'public/js/forms')
        .js('resources/assets/js/forms/multiselect.js', 'public/js/forms')
        .js('resources/assets/js/forms/json.js', 'public/js/forms')
-       .js('resources/assets/js/forms/slugs.js', 'public/js/forms')
        .copyDirectory('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
        .copyDirectory('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
        .copyDirectory('node_modules/mdi/fonts', 'public/fonts/mdi')
