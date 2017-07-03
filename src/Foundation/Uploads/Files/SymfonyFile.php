@@ -18,6 +18,10 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
 
     public function fileContents()
     {
+        if ($this->file instanceof Image) {
+            return $this->file->encoded;
+        }
+
         return file_get_contents($this->file->getRealPath());
     }
 
