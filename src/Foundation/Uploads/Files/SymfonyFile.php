@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Foundation\Uploads\Files;
 
+use Intervention\Image\Image;
 use Soda\Cms\Foundation\Uploads\UploadedFileTransformer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -45,7 +46,7 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
      */
     protected function generateFileName()
     {
-        $sha1Hash = sha1_file($this->file->getRealPath());
+        $sha1Hash = $this->generateHash();
         $pathInfo = pathinfo($this->file->getClientOriginalName());
 
         $resultFilePath = $pathInfo['filename'].'__'.$sha1Hash;
@@ -56,5 +57,14 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
         }
 
         return trim($resultFilePath, '/');
+    }
+
+    protected function generateHash()
+    {
+        if($this->file instanceof Image) {
+            return sha1($this->file->encoded);
+        }
+        
+        return sha1_file($this->file->getRealPath());
     }
 }
