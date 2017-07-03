@@ -48,7 +48,7 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
     protected function generateFileName()
     {
         $sha1Hash = $this->generateHash();
-        $pathInfo = pathinfo($this->file->getClientOriginalName());
+        $pathInfo = $this->generatePathInfo();
 
         $resultFilePath = $pathInfo['filename'].'__'.$sha1Hash;
         if (isset($pathInfo['extension']) && $pathInfo['extension']) {
