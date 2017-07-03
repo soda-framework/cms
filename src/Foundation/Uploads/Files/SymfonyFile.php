@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Foundation\Uploads\Files;
 
+use Soda\Cms\Foundation\Uploads\UploadedFileTransformer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SymfonyFile extends AbstractUploadableFile implements UploadableFile

@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Foundation\Uploads\Files;
 
+use Soda\Cms\Foundation\Uploads\UploadedFileTransformer;
 use Soda\Cms\Foundation\Uploads\Uploader;
 
 class Base64File extends AbstractUploadableFile implements UploadableFile
