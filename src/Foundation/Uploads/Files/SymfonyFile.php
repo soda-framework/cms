@@ -87,7 +87,7 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
 
     protected function guessExtension()
     {
-        $type = $this->file instanceof Image ? $this->file->mime : $this->getMimeType();
+        $type = $this->file instanceof Image ? $this->file->mime : $this->file->getMimeType();
         $guesser = ExtensionGuesser::getInstance();
 
         return $guesser->guess($type);
