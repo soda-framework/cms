@@ -8,6 +8,13 @@
   }
 }
 
+@media(max-width: $screen-md){
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 body.sidebar-transitioning {
   overflow-x: hidden;
 }
@@ -119,4 +126,9 @@ body.loaded {
 
 .dashboard-header {
   margin-top: 0;
+}
+
+.row, .row > [class^="col-"], .row > [class*=" col-"], [class^="col-"], [class*=" col-"] {
+  margin: 0 !important;
+  padding: 0;
 }
