@@ -107,6 +107,14 @@ body.loaded {
       vertical-align: middle;
     }
   }
+
+  .content-heading-button {
+    @media(max-width: $screen-md){
+      float: none !important;
+      clear: both;
+      margin: 15px 0;
+    }
+  }
 }
 
 .dashboard-header {
