@@ -33,6 +33,11 @@
     }
   }
   li.nav-item, li.nav-item-group {
+    .badge {
+      color: $sidebar-link;
+      background: $sidebar-link-text;
+    }
+
     > span.nav-link, > a.nav-link {
       background: $sidebar-link;
       color: $sidebar-link-text;

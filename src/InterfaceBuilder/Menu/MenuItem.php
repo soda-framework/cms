@@ -21,6 +21,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     protected $children;
     protected $children_attributes = [];
 
+    protected $badge;
+    protected $badge_attributes = [];
+
     protected $isCurrent;
     protected $isHidden;
     protected $permissions;
@@ -357,6 +360,63 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     public function setIconAttribute($attribute, $value)
     {
         $this->icon_attributes[$attribute] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        return $this->badge;
+    }
+
+    /**
+     * @param mixed $badge
+     *
+     * @return $this
+     */
+    public function setBadge($badge)
+    {
+        $this->badge = $badge;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBadgeAttributes()
+    {
+        return $this->badge_attributes;
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function setBadgeAttributes($attributes)
+    {
+        if (! is_array($attributes)) {
+            $attributes = [$attributes];
+        }
+
+        $this->badge_attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * @param string $attribute
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setBadgeAttribute($attribute, $value)
+    {
+        $this->badge_attributes[$attribute] = $value;
 
         return $this;
     }
