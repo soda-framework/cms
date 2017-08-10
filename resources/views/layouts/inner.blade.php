@@ -37,7 +37,7 @@
                                     @yield('breadcrumb')
                                 </div>
 
-                                <div class="pull-right">
+                                <div class="pull-right content-heading-button">
                                     @yield('content-heading-button')
                                 </div>
                             </div>

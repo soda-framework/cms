@@ -39,11 +39,16 @@
     left: 0;
     right: 0;
     top: 0;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .navbar-left, .navbar-right {
     margin-top: 0;
     margin-bottom: 0;
+    position: absolute;
+    top: 0;
     > li > a {
       padding-top: ($navbar-height - $line-height-computed) / 2;
       padding-bottom: ($navbar-height - $line-height-computed) / 2;
@@ -52,16 +57,13 @@
 
   .navbar-left {
     float: left !important;
-    margin-left: -$navbar-padding-horizontal;
+    margin-left: 0;
+    left: 0;
   }
 
   .navbar-right {
-    float: right !important;
-    margin-right: -$navbar-padding-horizontal;
-
-    ~ .navbar-right {
-      margin-right: 0;
-    }
+    margin-right: 0;
+    right: 0;
   }
 
   @media(max-width: $screen-sm-max) {
