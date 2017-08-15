@@ -5,12 +5,18 @@
   "/public/css/bootstrap.css": "/public/css/bootstrap.css",
   "/public/css/fonts.css": "/public/css/fonts.css",
   "/public/css/plugins.css": "/public/css/plugins.css",
+  "/public/js/wave.js": "/public/js/wave.js",
+  "/public/js/forms/slugs.js": "/public/js/forms/slugs.js",
+  "/public/js/content.js": "/public/js/content.js",
+  "/public/js/application.js": "/public/js/application.js",
   "/public/css/themes/default.css": "/public/css/themes/default.css",
   "/public/css/themes/lime.css": "/public/css/themes/lime.css",
   "/public/css/themes/strawberry.css": "/public/css/themes/strawberry.css",
   "/public/css/themes/grape.css": "/public/css/themes/grape.css",
-  "/public/js/wave.js": "/public/js/wave.js",
-  "/public/js/forms/slugs.js": "/public/js/forms/slugs.js",
-  "/public/js/content.js": "/public/js/content.js",
-  "/public/js/application.js": "/public/js/application.js"
+  "/public/js/forms/json.js": "/public/js/forms/json.js",
+  "/public/js/forms/sortable.js": "/public/js/forms/sortable.js",
+  "/public/js/forms/tinymce.js": "/public/js/forms/tinymce.js",
+  "/public/js/forms/upload.js": "/public/js/forms/upload.js",
+  "/public/js/forms/dates.js": "/public/js/forms/dates.js",
+  "/public/js/forms/multiselect.js": "/public/js/forms/multiselect.js"
 }
