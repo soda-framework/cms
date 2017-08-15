@@ -28,7 +28,7 @@
                 There were problems validating your input:
                 <ul>
                     @foreach($errors->all() as $error)
-                        <li>{{ $alert }}</li>
+                        <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
