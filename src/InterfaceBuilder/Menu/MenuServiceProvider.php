@@ -59,7 +59,7 @@ class MenuServiceProvider extends ServiceProvider
             $menu->addItem('Settings', [
                 'url'         => route('soda.settings.edit'),
                 'icon'        => 'mdi mdi-settings', //mdi-lock-pattern mdi-buffer
-                'label'       => 'Settings',
+                'label'       => ucwords(trans('soda::terminology.settings')),
                 'isCurrent'   => soda_request_is('settings*'),
                 'permissions' => 'view-application-settings',
             ]);
@@ -100,7 +100,7 @@ class MenuServiceProvider extends ServiceProvider
             ]);
 
             $menu->addItem('User Management', [
-                'label'       => 'Users',
+                'label'       => ucwords(trans('soda::terminology.user_plural')),
                 'icon'        => 'mdi mdi-contacts',
                 'isCurrent'   => soda_request_is('users*') || soda_request_is('roles*') || soda_request_is('permissions*'),
                 'permissions' => 'view-users',
@@ -108,21 +108,21 @@ class MenuServiceProvider extends ServiceProvider
 
             $menu['User Management']->addChild('Users', [
                 'url'         => route('soda.users.index'),
-                'label'       => 'Users',
+                'label'       => ucwords(trans('soda::terminology.user_plural')),
                 'isCurrent'   => soda_request_is('users*'),
                 'permissions' => 'view-users',
             ]);
 
             $menu['User Management']->addChild('Roles', [
                 'url'         => route('soda.roles.index'),
-                'label'       => 'Roles',
+                'label'       => ucwords(trans('soda::terminology.role_plural')),
                 'isCurrent'   => soda_request_is('roles*'),
                 'permissions' => 'view-roles',
             ]);
 
             $menu['User Management']->addChild('Permissions', [
                 'url'         => route('soda.permissions.index'),
-                'label'       => 'Permissions',
+                'label'       => ucwords(trans('soda::terminology.permission_plural')),
                 'isCurrent'   => soda_request_is('permissions*'),
                 'permissions' => 'view-permissions',
             ]);

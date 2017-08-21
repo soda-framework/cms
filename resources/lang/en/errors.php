@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'error'     => 'Error',
+
     'attach'    => 'An error occured whilst attaching new :object',
     'detach'    => 'An error occured whilst detaching new :object',
     'create'    => 'An error occured whilst creating new :object',

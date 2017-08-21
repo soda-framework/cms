@@ -14,4 +14,11 @@ return [
     'field'               => 'field',
     'field_plural'        => 'fields',
     'scaffolding'         => 'scaffolding',
+    'settings'            => 'settings',
+    'user'                => 'user',
+    'user_plural'         => 'users',
+    'role'                => 'role',
+    'role_plural'         => 'roles',
+    'permission'          => 'permission',
+    'permission_plural'   => 'permissions',
 ];

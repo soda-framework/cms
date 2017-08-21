@@ -46,7 +46,7 @@
     <ul class="nav nav-pills" role="tablist">
         @if(!isset($settingsByCategory['Settings']))
         <li role='presentation' aria-controls="tab_settings">
-            <a role="tab" data-toggle="tab" href="#tab_settings">Settings</a>
+            <a role="tab" data-toggle="tab" href="#tab_settings">{{ ucwords(trans('soda::terminology.settings')) }}</a>
         </li>
         @endif
 

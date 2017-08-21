@@ -16,27 +16,27 @@
                         <li>
                             <a class='dropdown-item' href="/" target="_blank">
                                 <i class="mdi mdi-eye"></i>
-                                <span>View Site</span>
+                                <span>@lang('soda::misc.view_site')</span>
                             </a>
                         </li>
                         <li>
                             <a class='dropdown-item' href="#" data-toggle="modal" data-target="#newQuicklinkModal">
                                 <i class="mdi mdi-share"></i>
-                                <span>Quick link</span>
+                                <span>@lang('soda::misc.quicklink_this_page')</span>
                             </a>
                         </li>
                         @permission('view-drafts')
                         <li>
                             <a class='dropdown-item' href="{{ route('soda.toggle-draft') }}">
                                 <i class="mdi fa-btn mdi-pencil"></i>
-                                <span>{{ Session::get("soda.draft_mode") == true ? "Live" : "Draft" }} Mode</span>
+                                <span>{{ Session::get("soda.draft_mode") == true ? trans('soda::misc.live_mode') : trans('soda::misc.draft_mode') }}</span>
                             </a>
                         </li>
                         @endpermission
                         <li>
                             <a class='dropdown-item' href="{{ route('soda.logout') }}">
                                 <i class="mdi fa-btn mdi-logout"></i>
-                                <span>Logout</span>
+                                <span>@lang('soda::misc.logout')</span>
                             </a>
                         </li>
                     </ul>

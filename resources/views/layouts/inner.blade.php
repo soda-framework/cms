@@ -56,6 +56,6 @@
         </div>
 
         <?php $version = Soda::getVersion(); ?>
-        <div class="soda-powered-by">Powered by Soda Framework{{ $version ? " (version $version)" : "" }}</div>
+        <div class="soda-powered-by">@lang('soda::misc.powered_by', ['version' => $version ? " (version $version)" : ""])</div>
     </div>
 @endsection

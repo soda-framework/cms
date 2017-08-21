@@ -1,7 +1,7 @@
 @extends(soda_cms_view_path('layouts.bare'), ['body_class'=>'full-height soda-login', 'html_class'=>'full-height'])
 
 @section('head.title')
-    <title>Login :: Soda CMS</title>
+    <title>@lang('soda::misc.login') :: Soda CMS</title>
 @endsection
 
 @section('main-content')
@@ -23,20 +23,20 @@
                 </div>
 
                 <div class="soda-login__input">
-                    <label for="email" class="sr-only">Email</label>
-                    <input id="email" type="text" name="email" placeholder="Email Address" value="{{ old('email') }}">
+                    <label for="email" class="sr-only">@lang('soda::forms.email')</label>
+                    <input id="email" type="text" name="email" placeholder="@lang('soda::forms.email')" value="{{ old('email') }}">
                 </div>
 
                 <div class="soda-login__input">
-                    <label for="password" class="sr-only">Password</label>
-                    <input id="password" type="password" name="password" placeholder="Password">
+                    <label for="password" class="sr-only">@lang('soda::forms.password')</label>
+                    <input id="password" type="password" name="password" placeholder="@lang('soda::forms.password')">
                 </div>
             </div>
             <div class="soda-login__pass-forgot">
-                <a href="#">Forgot password?</a>
+                <a href="#">@lang('soda::forms.forgot_password')</a>
             </div>
             <div class="soda-login__button-container">
-                <button><span>Login</span></button>
+                <button><span>@lang('soda::misc.login')</span></button>
             </div>
         </div>
     </form>
