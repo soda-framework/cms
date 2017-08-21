@@ -4,6 +4,9 @@ composer.lock
 
 stubs/theme/resources/components/
 
+resources/lang/*
+!resources/lang/en/*
+
 .idea
 .idea/**
 
