@@ -1,3 +1,3 @@
 <button class="btn btn-success btn-lg" {!! isset($submits) ? 'data-submits="' . $submits . '"' : '' !!}>
-    <span>Save</span>
+    <span>@lang('soda::actions.save')</span>
 </button>

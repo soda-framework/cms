@@ -1,6 +1,8 @@
 <?php
 
 Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], function () {
+    Route::post('set-language', 'HomeController@setLanguage')->name('soda.language');
+
     Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
         // Authentication routes
         Route::get('login', 'LoginController@showLoginForm')->name('soda.login');

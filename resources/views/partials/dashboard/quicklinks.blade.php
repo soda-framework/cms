@@ -1,5 +1,5 @@
 <div class="col-xs-12">
-    <h2>@lang('soda::misc.quicklinks')</h2>
+    <h2>@lang('soda::terminology.quicklink_plural')</h2>
     @foreach(app('soda.interface')->quicklinks() as $quicklink)
         <a href="{{ $quicklink->getUrl() }}" class="tag">
           <span>{{ $quicklink->text }}</span>

@@ -9,7 +9,6 @@ return [
     'view_site' => 'View site',
 
     'quicklink_this_page'  => 'Quick Link',
-    'quick_links' => 'Quick Links',
 
     'live_mode'  => 'Live mode',
     'draft_mode' => 'Draft mode',

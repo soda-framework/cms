@@ -1,13 +1,35 @@
 <nav class="navbar navbar-default content-navbar">
     <div class="container-fluid">
-        @if(Soda::auth()->check())
             <ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+                @if(Soda::auth()->check())
                 <li>
                     <a href="#">
                         <i class="mdi mdi-account-circle"></i>
                         <span>{{ Soda::auth()->user()->username }}</span>
                     </a>
                 </li>
+                @endif
+                @if(count(Soda::getLocales()) > 1)
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-earth"></i>
+                            <span>{{ Soda::getLocale() }}</span>
+                        </a>
+
+                        <form method="POST" action="{{ route('soda.language') }}">
+                            {!! csrf_field() !!}
+                            <ul class="dropdown-menu">
+                                @foreach(Soda::getLocales() as $locale => $localeName)
+                                    <li>
+                                        <button class="btn-link dropdown-item" href="/" target="_blank" name="language" value="{{ $locale }}">
+                                            <span>{{ $localeName }}</span>
+                                        </button>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </form>
+                    </li>
+                @endif
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="mdi mdi-settings"></i>
@@ -42,6 +64,5 @@
                     </ul>
                 </li>
             </ul>
-        @endif
     </div>
 </nav>

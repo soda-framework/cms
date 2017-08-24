@@ -21,4 +21,6 @@ return [
     'role_plural'         => 'roles',
     'permission'          => 'permission',
     'permission_plural'   => 'permissions',
+    'quicklink'           => 'Quick Link',
+    'quicklink_plural'    => 'Quick Links',
 ];

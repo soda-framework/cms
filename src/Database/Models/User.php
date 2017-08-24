@@ -3,13 +3,14 @@
 namespace Soda\Cms\Database\Models;
 
 use Carbon\Carbon;
+use Soda\Cms\Database\Models\Contracts\HasLocale;
 use Soda\Cms\Database\Models\Traits\Auditable;
 use Soda\Cms\Database\Models\Traits\UserHasRoles;
 use Soda\Cms\Database\Models\Contracts\UserInterface;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
-class User extends Authenticatable implements UserInterface
+class User extends Authenticatable implements UserInterface, HasLocale
 {
     use Auditable, OptionallyBoundToApplication, UserHasRoles;
     protected $table = 'users';
@@ -23,6 +24,7 @@ class User extends Authenticatable implements UserInterface
         'username',
         'email',
         'password',
+        'locale',
         'last_loggedin_at',
     ];
 

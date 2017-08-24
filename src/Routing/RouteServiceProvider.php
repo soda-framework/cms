@@ -14,6 +14,7 @@ use Soda\Cms\Http\Middleware\HasPermission;
 use Soda\Cms\Http\Middleware\SluggableSession;
 use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Soda\Cms\Http\Middleware\ToggleLocale;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->middlewareGroup('soda.api', [Drafting::class]);
 
         $router->pushMiddlewareToGroup('web', DraftAlert::class);
+        $router->pushMiddlewareToGroup('web', ToggleLocale::class);
         if (config('soda.cms.https')) {
             $router->pushMiddlewareToGroup('soda.web', ForceHttps::class);
         }

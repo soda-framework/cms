@@ -27,7 +27,7 @@ class ContentTypeController extends BaseController
      */
     public function index()
     {
-        app('soda.interface')->setDescription('Different '.ucwords(trans('soda::terminology.content_type_plural')).' have different field types applied to them');
+        app('soda.interface')->setDescription('Different '.ucwords(trans('soda::terminology.content_type_plural')).' have different field types applied to them'); // TODO: translate
 
         return soda_cms_view('data.content.types.index', $this->contentTypes->getFilteredGrid(10));
     }

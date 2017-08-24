@@ -4,6 +4,7 @@ namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Soda\Cms\Database\Models\Contracts\HasLocale;
 use Soda\Cms\Database\Models\Quicklink;
 
 class HomeController extends BaseController
@@ -24,7 +25,7 @@ class HomeController extends BaseController
 
         Session::put('soda.draft_mode', $draftMode);
 
-        return redirect()->back()->with('info', ($draftMode ? 'Draft' : 'Live').' mode active.');
+        return redirect()->back()->with('info', trans('soda::phrases.mode_active', ['mode' => $draftMode ? trans('soda::misc.draft_mode') : trans('soda::misc.live_mode')]));
     }
 
     public function resetWeakPassword(Request $request)
@@ -36,7 +37,7 @@ class HomeController extends BaseController
         $request->user()->password = \Hash::make($request->input('password'));
         $request->user()->save();
 
-        return redirect()->back()->with('success', 'Password reset successfully');
+        return redirect()->back()->with('success', trans('soda::phrases.password_reset'));
     }
 
     public function addQuicklink(Request $request)
@@ -56,6 +57,21 @@ class HomeController extends BaseController
 
         $quicklink->save();
 
-        return redirect()->to($quicklink->getUrl())->with('success', 'Quicklink added.');
+        return redirect()->to($quicklink->getUrl())->with('success', trans('soda::messages.created', ['object' => trans('soda::terminology.quicklink')]));
+    }
+
+    public function setLanguage(Request $request)
+    {
+        $user = app('soda')->auth()->user();
+        $locale = $request->input('language');
+
+        if ($user && $user instanceof HasLocale) {
+            $user->locale = $locale;
+            $user->save();
+        } else {
+            cookie()->queue(cookie()->forever('soda_locale', $locale));
+        }
+
+        return redirect()->back()->with('success', trans('soda::phrases.language_updated', [], $locale));
     }
 }

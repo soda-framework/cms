@@ -2,15 +2,15 @@
 
 namespace Soda\Cms\Foundation;
 
+use Illuminate\Contracts\Foundation\Application as Laravel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Traits\Macroable;
-use Soda\Cms\Database\Models\DynamicBlock;
-use Soda\Cms\Database\Models\DynamicContent;
-use Soda\Cms\Database\Models\Contracts\ContentInterface;
-use Illuminate\Contracts\Foundation\Application as Laravel;
 use Soda\Cms\Database\Models\Contracts\ApplicationInterface;
 use Soda\Cms\Database\Models\Contracts\ApplicationUrlInterface;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
+use Soda\Cms\Database\Models\DynamicBlock;
+use Soda\Cms\Database\Models\DynamicContent;
 
 class SodaInstance
 {
@@ -22,12 +22,15 @@ class SodaInstance
     protected $applicationUrl;
     protected $blocks = [];
     protected $currentPage;
+    protected $locales = [
+        'en' => 'English',
+    ];
 
     public function __construct(Laravel $laravel)
     {
         $this->laravel = $laravel;
 
-        if (! $this->laravel->runningInConsole()) {
+        if (!$this->laravel->runningInConsole()) {
             $application = $this->requestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
             if (isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
@@ -127,6 +130,25 @@ class SodaInstance
     public function dynamicContent($table)
     {
         return (new DynamicContent)->fromTable($table);
+    }
+
+    public function getLocales()
+    {
+        return $this->locales;
+    }
+
+    public function getLocale($locale = null)
+    {
+        $locale = $locale ?: $this->laravel->getLocale();
+
+        return isset($this->locales[$locale]) ? $this->locales[$locale] : $locale;
+    }
+
+    public function registerLocale($locale, $localeName)
+    {
+        $this->locales[$locale] = $localeName;
+
+        return $this;
     }
 
     /**
