@@ -14,8 +14,12 @@ class BlockTypeController extends BaseController
     {
         $this->blockTypes = $blockTypes;
 
-        app('soda.interface')->setHeading(ucwords(trans('soda::terminology.block_type_plural')))->setHeadingIcon('mdi mdi mdi-widgets');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->setHeading(ucwords(trans('soda::terminology.block_type_plural')))->setHeadingIcon('mdi mdi mdi-widgets');
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
 
         $this->middleware('soda.permission:manage-block-types');
     }

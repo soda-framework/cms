@@ -15,8 +15,12 @@ class FieldController extends BaseController
     {
         $this->fields = $fields;
 
-        app('soda.interface')->setHeading(ucwords(trans('soda::terminology.field_plural')))->setHeadingIcon('mdi mdi-paperclip');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->setHeading(ucwords(trans('soda::terminology.field_plural')))->setHeadingIcon('mdi mdi-paperclip');
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
 
         $this->middleware('soda.permission:manage-fields');
     }

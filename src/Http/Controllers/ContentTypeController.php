@@ -14,8 +14,12 @@ class ContentTypeController extends BaseController
     {
         $this->contentTypes = $contentTypes;
 
-        app('soda.interface')->setHeading(ucwords(trans('soda::terminology.content_type_plural')))->setHeadingIcon('mdi mdi-file-outline');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->setHeading(ucwords(trans('soda::terminology.content_type_plural')))->setHeadingIcon('mdi mdi-file-outline');
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
 
         $this->middleware('soda.permission:manage-content-types');
     }

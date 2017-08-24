@@ -15,8 +15,12 @@ class ContentController extends BaseController
     {
         $this->content = $content;
 
-        app('soda.interface')->setHeading(ucfirst(trans('soda::terminology.content_plural')))->setHeadingIcon('mdi mdi-file-outline');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->setHeading(ucfirst(trans('soda::terminology.content_plural')))->setHeadingIcon('mdi mdi-file-outline');
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
 
         $this->middleware('soda.permission:view-pages');
         $this->middleware('soda.permission:create-pages')->only(['create', 'store']);

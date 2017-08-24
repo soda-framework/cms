@@ -15,7 +15,11 @@ class ContentBlockController extends BaseController
     {
         $this->contentBlocks = $contentBlocks;
 
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
 
         $this->middleware('soda.permission:view-pages');
         $this->middleware('soda.permission:edit-pages')->only(['create', 'store', 'delete', 'edit', 'update']);

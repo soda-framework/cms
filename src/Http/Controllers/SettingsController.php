@@ -14,8 +14,12 @@ class SettingsController extends BaseController
     {
         $this->applications = $applications;
 
-        app('soda.interface')->setHeading(ucwords(trans('soda::terminology.settings')))->setHeadingIcon('mdi mdi-settings');
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+        $this->middleware(function ($request, $next) {
+            app('soda.interface')->setHeading(ucwords(trans('soda::terminology.settings')))->setHeadingIcon('mdi mdi-settings');
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.home'), ucfirst(trans('soda::terminology.home')));
+
+            return $next($request);
+        });
 
         $this->middleware('soda.permission:view-application-settings')->only(['edit']);
         $this->middleware('soda.permission:edit-application-settings')->only(['update']);
