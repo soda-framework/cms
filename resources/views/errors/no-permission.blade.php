@@ -10,7 +10,7 @@
             <div class="dialog-box-inner">
                 <div class="permission-alert text-center">
                     <h1><i style="color:#FFC946" class="glyphicon glyphicon-alert"></i></h1>
-                    <h4>@lang('soda::phrases.no_permission')</h4>
+                    <h4>@lang('soda::errors.no_permission')</h4>
                 </div>
                 <br/>
                 <div class="row">

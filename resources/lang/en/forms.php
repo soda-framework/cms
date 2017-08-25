@@ -1,5 +1,16 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Forms
+|--------------------------------------------------------------------------
+|
+| The following language lines are for phrases commonly found on forms,
+| particularly login pages. The lines may appear on form labels and/or
+| placeholders
+|
+*/
+
 return [
     'email'                => 'Email Address',
     'password'             => 'Password',

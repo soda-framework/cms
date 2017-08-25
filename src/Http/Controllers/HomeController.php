@@ -25,7 +25,7 @@ class HomeController extends BaseController
 
         Session::put('soda.draft_mode', $draftMode);
 
-        return redirect()->back()->with('info', trans('soda::phrases.mode_active', ['mode' => $draftMode ? trans('soda::misc.draft_mode') : trans('soda::misc.live_mode')]));
+        return redirect()->back()->with('info', trans('soda::messages.mode_active', ['mode' => $draftMode ? trans('soda::misc.draft_mode') : trans('soda::misc.live_mode')]));
     }
 
     public function resetWeakPassword(Request $request)
@@ -37,7 +37,7 @@ class HomeController extends BaseController
         $request->user()->password = \Hash::make($request->input('password'));
         $request->user()->save();
 
-        return redirect()->back()->with('success', trans('soda::phrases.password_reset'));
+        return redirect()->back()->with('success', trans('soda::messages.password_reset'));
     }
 
     public function addQuicklink(Request $request)
@@ -72,6 +72,6 @@ class HomeController extends BaseController
             cookie()->queue(cookie()->forever('soda_locale', $locale));
         }
 
-        return redirect()->back()->with('success', trans('soda::phrases.language_updated', [], $locale));
+        return redirect()->back()->with('success', trans('soda::messages.language_updated', [], $locale));
     }
 }

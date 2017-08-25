@@ -1,15 +1,19 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Phrases
+|--------------------------------------------------------------------------
+|
+| The following language lines are for phrases/sentences displayed to explain
+| areas and features across the CMS
+|
+*/
+
 return [
-    'no_permission' => 'You do not have permission to access this feature.',
 
-    'reset_your_password'     => 'Reset your password',
-    'reset_your_password_ext' => 'Before you can continue, you must reset your password.',
-    'password_reset'          => 'Password reset successfully',
+    'reset_your_password'     => 'Reset your password', // Reset password form heading
+    'reset_your_password_ext' => 'Before you can continue, you must reset your password.', // Reset password dialog text - prompting user to change their password before continuing
 
-    'welcome' => 'Welcome, :name',
-
-    'language_updated' => 'Language updated successfully',
-
-    'mode_active' => ':mode active',
+    'welcome' => 'Welcome, :name', // Welcome message
 ];

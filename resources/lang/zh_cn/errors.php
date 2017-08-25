@@ -2,6 +2,7 @@
 
 return [
     'error'     => '错误',
+    'no_permission' => '您没有权限访问此功能.',
 
     'attach'    => '链接新的fggdf时发生错误',
     'detach'    => '解离新的:object时发生错误',
