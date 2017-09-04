@@ -18,5 +18,6 @@ return [
     'delete'  => 'Delete',  // Delete an existing database record
     'create'  => 'Create',  // Create a new database record
     'import'  => 'Import',  // Import a file to create database record(s)
+    'view'    => 'View',    // View an existing database record,
     'save'    => 'Save',    // Save a form to an existing database record
 ];

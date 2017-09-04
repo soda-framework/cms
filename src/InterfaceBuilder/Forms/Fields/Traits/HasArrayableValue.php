@@ -78,4 +78,15 @@ trait HasArrayableValue
 
         return substr($parameters['array-save'], 8);
     }
+
+    public function renderForTable()
+    {
+        $fieldValue = $this->getFieldValue();
+
+        if(is_array($fieldValue)) {
+            $fieldValue = implode(',', $fieldValue);
+        }
+
+        return truncate_words(strip_tags($fieldValue), 10);
+    }
 }

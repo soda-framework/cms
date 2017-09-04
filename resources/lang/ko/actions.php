@@ -18,5 +18,6 @@ return [
     'delete'  => '지우다',  // Delete an existing database record
     'create'  => '몹시 떠들어 대다',  // Create a new database record
     'import'  => '수입',  // Import a file to create database record(s)
+    'view'    => '전망',
     'save'    => '구하다',    // Save a form to an existing database record
 ];
