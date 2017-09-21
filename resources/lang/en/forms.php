@@ -11,6 +11,8 @@
 |
 */
 
+// TODO this file is now in fields.php and auth.php
+
 return [
     'email'                => 'Email Address',
     'password'             => 'Password',
