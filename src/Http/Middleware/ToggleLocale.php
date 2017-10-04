@@ -9,7 +9,10 @@ class ToggleLocale
 {
     public function handle($request, Closure $next)
     {
-        if ($user = app('soda')->auth()->user()) {
+        if($locale = $request->input('locale')) {
+            app()->setLocale($locale);
+            $this->rememberLocale($locale ?: '');
+        } else if ($user = app('soda')->auth()->user()) {
             if ($user instanceof HasLocale) {
                 if($user->locale) app()->setLocale($user->locale);
 
