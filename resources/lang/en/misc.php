@@ -7,6 +7,9 @@
 */
 
 return [
+    'none' => 'None',
+    'all' => 'all',
+
     'view_site' => 'View site',             // Used on buttons to forward the user to the website they have created
     'quicklink_this_page'  => 'Quick Link', // Used on buttons to shortcut/favourite certain pages of the CMS
 

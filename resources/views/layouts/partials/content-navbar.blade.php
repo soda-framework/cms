@@ -38,13 +38,13 @@
                         <li>
                             <a class='dropdown-item' href="/" target="_blank">
                                 <i class="mdi mdi-eye"></i>
-                                <span>@langtest('soda::misc.view_site')</span>
+                                <span>@lang('soda::misc.view_site')</span>
                             </a>
                         </li>
                         <li>
                             <a class='dropdown-item' href="#" data-toggle="modal" data-target="#newQuicklinkModal">
                                 <i class="mdi mdi-share"></i>
-                                <span>@langtest('soda::misc.quicklink_this_page')</span>
+                                <span>@lang('soda::misc.quicklink_this_page')</span>
                             </a>
                         </li>
                         @permission('view-drafts')
@@ -58,7 +58,7 @@
                         <li>
                             <a class='dropdown-item' href="{{ route('soda.logout') }}">
                                 <i class="mdi fa-btn mdi-logout"></i>
-                                <span>@langtest('soda::actions.logout')</span>
+                                <span>@lang('soda::actions.logout')</span>
                             </a>
                         </li>
                     </ul>

@@ -13,12 +13,12 @@ class Multiselect extends AbstractFormField
     public function getDefaultParameters()
     {
         return [
-            'multiple'             => true,
-            'combo'                => false,
-            'array-save'           => 'json',
-            'options'              => [],
-            'settings'             => [
-                'placeholder'             => 'Please select...',
+            'multiple'   => true,
+            'combo'      => false,
+            'array-save' => 'json',
+            'options'    => [],
+            'settings'   => [
+                'placeholder'             => trans('soda::fields.please_select'),
                 'minimumResultsForSearch' => 'infinity',
                 'theme'                   => 'bootstrap',
             ],

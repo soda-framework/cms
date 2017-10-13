@@ -156,12 +156,13 @@ window.Soda = (function () {
         var postData = $.extend({}, {_token: _getCsrf(), _method: 'DELETE'}, attributes);
 
         swal({
-            title: "Are you sure?",
-            text: "This action can not be reversed!",
+            title: Soda.lang.swal.title,
+            text: Soda.lang.swal.text,
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn btn-danger",
-            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: Soda.lang.swal.cancel,
+            confirmButtonText: Soda.lang.swal.confirm,
             closeOnConfirm: false
         }, function(){
             if(url) {

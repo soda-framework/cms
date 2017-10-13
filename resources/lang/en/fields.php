@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'please_select' => 'Please select...',
+
     'email' => [
         'label' => 'Email Address',
     ],

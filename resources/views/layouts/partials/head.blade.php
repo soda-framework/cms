@@ -48,6 +48,14 @@ $version = Soda::getVersion();
             Soda.urls = {
                 sort: '{{ route('soda.sort') }}',
             };
+            Soda.lang = {!! json_encode([
+                'swal' => [
+                    'title' => trans('soda::phrases.are_you_sure'),
+                    'text'  => trans('soda::phrases.cannot_reverse'),
+                    'confirm' => trans('soda::phrases.yes_delete'),
+                    'cancel' => trans('soda::actions.cancel'),
+                ]
+            ]) !!}
             Soda.theme = '{{ $currentCmsTheme }}';
             return Soda;
         })(Soda || {});

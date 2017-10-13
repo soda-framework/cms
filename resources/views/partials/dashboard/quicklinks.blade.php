@@ -4,7 +4,7 @@ $quicklinks = app('soda.interface')->quicklinks();
 
 @if(count($quicklinks))
     <div class="col-xs-12">
-        <h2>@langtest('soda::terminology.quicklink_plural')</h2>
+        <h2>@lang('soda::terminology.quicklink_plural')</h2>
         @foreach($quicklinks as $quicklink)
             <a href="{{ $quicklink->getUrl() }}" class="tag">
                 <span>{{ $quicklink->text }}</span>
