@@ -4,8 +4,8 @@ namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Soda\Cms\Database\Models\Quicklink;
 use Soda\Cms\Database\Models\Contracts\HasLocale;
+use Soda\Cms\Database\Models\Quicklink;
 
 class HomeController extends BaseController
 {
@@ -73,5 +73,33 @@ class HomeController extends BaseController
         }
 
         return redirect()->back()->with('success', trans('soda::messages.language_updated', [], $locale));
+    }
+
+    public function switchApplication(Request $request)
+    {
+        $parsedUrl = parse_url($request->input('redirect'));
+        $queryString = [];
+
+        $validationToken = md5(uniqid(rand(), true));
+
+        if (isset($parsedUrl['query'])) {
+            parse_str($parsedUrl['query'], $queryString);
+        }
+
+        if (! isset($parsedUrl['scheme'])) {
+            $parsedUrl['scheme'] = 'http';
+        }
+
+        if (! isset($parsedUrl['path'])) {
+            $parsedUrl['path'] = '/';
+        }
+
+        $queryString['sid'] = $request->session()->getId();
+        $queryString['validate'] = $validationToken;
+        $parsedUrl['query'] = http_build_query($queryString);
+
+        $request->session()->flash('redirect-validate', $validationToken);
+
+        return redirect()->away($parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $parsedUrl['path'] . '?' . $parsedUrl['query']);
     }
 }

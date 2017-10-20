@@ -16,15 +16,18 @@
                                 <span>{{ Soda::getApplication()->name }}</span>
                             </a>
 
-                            <ul class="dropdown-menu">
-                                @foreach($applications as $application)
-                                    <li>
-                                        <a class="dropdown-item" href="{{ str_replace(Soda::getApplicationUrl()->domain, $application->urls->first()->domain, url()->current()) }}">
-                                            <span>{{ $application->name }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                            <form method="POST" action="{{ route('soda.switch-application') }}">
+                                {!! csrf_field() !!}
+                                <ul class="dropdown-menu">
+                                    @foreach($applications as $application)
+                                        <li>
+                                            <button class="btn-link dropdown-item" type="submit" name="redirect" value="{{ str_replace(Soda::getApplicationUrl()->domain, $application->urls->first()->domain, url()->current()) }}">
+                                                <span>{{ $application->name }}</span>
+                                            </button>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </form>
                         </li>
                     @endif
                 @endif
