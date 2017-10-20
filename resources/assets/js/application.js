@@ -30,22 +30,22 @@ window.Soda = (function () {
     }
 
     var _log = function (message) {
-        if(_debug === true) {
+        if (_debug === true) {
             console.log(message);
         }
     }
 
-    var _getCsrf = function(){
+    var _getCsrf = function () {
         return $('meta[name="csrf-token"]').attr('content');
     }
 
-    var _post = function(url, parameters) {
+    var _post = function (url, parameters) {
         var form = $('<form></form>');
 
         form.attr("method", "POST");
         form.attr("action", url);
 
-        $.each(parameters, function(key, value) {
+        $.each(parameters, function (key, value) {
             var field = $('<input></input>');
 
             field.attr("type", "hidden");
@@ -61,16 +61,16 @@ window.Soda = (function () {
         form.submit();
     }
 
-    var _registerEvents = function() {
-        $(elements.deleteButtons).on('click', function(e) {
+    var _registerEvents = function () {
+        $(elements.deleteButtons).on('click', function (e) {
             e.preventDefault();
             confirmDelete($(this));
         });
 
-        $(elements.formSubmitters).on('click', function() {
+        $(elements.formSubmitters).on('click', function () {
             var form = $(this).data('submits');
 
-            if($(this).data('publishes') != null) {
+            if ($(this).data('publishes') != null) {
                 $(form).find('input[name="status"]').val(1);
             }
 
@@ -86,13 +86,13 @@ window.Soda = (function () {
             $(this).siblings('a.nav-link').find('.nav-dropdown-indicator').removeClass('active');
         });
 
-        $('.nav-item > a.nav-link', elements.sidebar).on('click', function() {
+        $('.nav-item > a.nav-link', elements.sidebar).on('click', function () {
             var navItem = $(this).closest('.nav-item');
             var navGroup = navItem.closest('.nav-item-group');
 
             $('.nav-item, .nav-item-group', elements.sidebar).removeClass('active');
 
-            if(navGroup.length == 0) {
+            if (navGroup.length == 0) {
                 $('.collapse', elements.sidebar).collapse('hide');
             }
 
@@ -104,37 +104,37 @@ window.Soda = (function () {
             history.pushState(null, null, $(this).attr('href'));
         });
 
-        $(window).on('popstate', function(){
+        $(window).on('popstate', function () {
             _selectActiveTab();
         });
 
-        $(window).on('beforeunload', function(){
+        $(window).on('beforeunload', function () {
             $('body').addClass('unloading');
         });
     }
 
-    var _selectActiveTab = function() {
+    var _selectActiveTab = function () {
         var activeTab = $('a[href="' + window.location.hash + '"]');
 
         if (activeTab.length) {
             activeTab.tab('show');
-        } else if(Soda.queryString.tab) {
+        } else if (Soda.queryString.tab) {
             $('a[href="#tab_' + Soda.queryString.tab + '"]').tab('show');
         } else {
             var navTabs = $('.nav-tabs');
 
-            if(!navTabs.length) {
+            if (!navTabs.length) {
                 navTabs = $('.nav-pills');
             }
 
-            if(navTabs.length) {
+            if (navTabs.length) {
                 $('a:first', navTabs).tab('show');
             }
         }
     }
 
-    var initialize = function() {
-        if(_initialized === false) {
+    var initialize = function () {
+        if (_initialized === false) {
             _initialized = true;
 
             $.ajaxSetup({
@@ -151,7 +151,7 @@ window.Soda = (function () {
         }
     }
 
-    var confirmDelete = function(element, attributes) {
+    var confirmDelete = function (element, attributes) {
         var url = element.attr('href');
         var postData = $.extend({}, {_token: _getCsrf(), _method: 'DELETE'}, attributes);
 
@@ -164,8 +164,8 @@ window.Soda = (function () {
             cancelButtonText: Soda.lang.swal.cancel,
             confirmButtonText: Soda.lang.swal.confirm,
             closeOnConfirm: false
-        }, function(){
-            if(url) {
+        }, function () {
+            if (url) {
                 _post(url, postData);
             } else {
                 element.closest('form').submit();
@@ -173,23 +173,23 @@ window.Soda = (function () {
         });
     }
 
-    var changePosition = function(requestData){
+    var changePosition = function (requestData) {
         $.ajax({
-            'url':  Soda.urls.sort,
+            'url': Soda.urls.sort,
             'type': 'POST',
             'data': requestData,
-            'success': function(data) {
+            'success': function (data) {
                 if (data.errors) {
                     _log(data.errors);
                 }
             },
-            'error': function(){
+            'error': function () {
                 _log('Something went wrong!');
             }
         });
     }
 
-    var toggleSidebar = function(e) {
+    var toggleSidebar = function (e) {
         e.preventDefault();
 
         var isExpanded = $(elements.sidebar).hasClass('in');
@@ -198,7 +198,7 @@ window.Soda = (function () {
         $(elements.sidebar).toggleClass('in');
         $('body').toggleClass('sidebar-in').addClass('sidebar-transitioning');
 
-        setTimeout(function() {
+        setTimeout(function () {
             $('body').removeClass('sidebar-transitioning');
         }, 250);
     }

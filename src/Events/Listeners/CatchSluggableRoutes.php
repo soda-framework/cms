@@ -16,8 +16,8 @@ class CatchSluggableRoutes
     /**
      * Create a new session middleware.
      *
-     * @param  \Illuminate\Session\SessionManager $sessionManager
-     * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
+     * @param  \Illuminate\Session\SessionManager         $sessionManager
+     * @param  \Illuminate\Contracts\Encryption\Encrypter $encrypter
      */
     public function __construct(SessionManager $sessionManager, Encrypter $encrypter)
     {
@@ -46,7 +46,8 @@ class CatchSluggableRoutes
     /**
      * Start the session for the given request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Contracts\Session\Session
      */
     protected function startSession(Request $request)
@@ -61,7 +62,8 @@ class CatchSluggableRoutes
     /**
      * Get the session implementation from the manager.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Contracts\Session\Session
      */
     public function getSession(Request $request)

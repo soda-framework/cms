@@ -18,7 +18,7 @@ return [
     'welcome'        => 'Welcome, :name', // Welcome message
 
     // Sweet alert "Are you sure you want to delete" dialog
-    'are_you_sure'   => "Are you sure?",
-    'cannot_reverse' => "This action can not be reversed!",
-    'yes_delete'     => "Yes, delete it!",
+    'are_you_sure'   => 'Are you sure?',
+    'cannot_reverse' => 'This action can not be reversed!',
+    'yes_delete'     => 'Yes, delete it!',
 ];

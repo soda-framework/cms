@@ -2,19 +2,18 @@
 // #F0F0F0 Sidebar
 // #F5F5F5 Secondary sidebar
 
-$gray-base:              #000 !default;
-$gray-darker:            lighten($gray-base, 13.5); // #222
-$gray-dark:              #3d3d3d;  // #333
-$gray:                   #9c9c9c; // #555
-$gray-light:             #ddd; // #777
-$gray-lighter:           #F0F0F0; // #eee
+$gray-base: #000000 !default;
+$gray-darker: lighten($gray-base, 13.5); // #222
+$gray-dark: #3D3D3D; // #333
+$gray: #9C9C9C; // #555
+$gray-light: #DDDDDD; // #777
+$gray-lighter: #F0F0F0; // #eee
 
-
-$slate-010: #21242c;
+$slate-010: #21242C;
 $slate-020: #252932;
 $slate-030: #242932;
-$slate-040: #2f343f;
-$slate-050: #3d4352;
+$slate-040: #2F343F;
+$slate-050: #3D4352;
 $slate-060: #90A4AE;
 $slate-070: #B9C6CC;
 $slate-080: #CFD8DC;

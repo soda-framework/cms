@@ -12,7 +12,7 @@
                     <h1><i style="color:#FFC946" class="glyphicon glyphicon-alert"></i></h1>
                     <h4>@lang('soda::errors.no_permission')</h4>
                 </div>
-                <br/>
+                <br />
                 <div class="row">
                     <div class="col-sm-6">
                         <a class="btn btn-dialog btn-block" href="{{ URL::previous() }}">@lang('soda::actions.go_back')</a>
@@ -21,7 +21,7 @@
                         <a class="btn btn-dialog btn-block" href="{{ route('soda.logout') }}">@lang('soda::actions.logout')</a>
                     </div>
                 </div>
-                <br/>
+                <br />
             </div>
         </div>
     </div>

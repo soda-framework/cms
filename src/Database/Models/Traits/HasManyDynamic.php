@@ -2,7 +2,6 @@
 
 namespace Soda\Cms\Database\Models\Traits;
 
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Soda\Cms\Database\Models\Contracts\DynamicModelInterface;
 

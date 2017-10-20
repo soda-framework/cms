@@ -4,17 +4,17 @@ namespace Soda\Cms\Routing;
 
 use ReflectionClass;
 use Illuminate\Support\Facades\Route;
-use Soda\Cms\Http\Middleware\DraftAlert;
 use Soda\Cms\Http\Middleware\HasRole;
 use Soda\Cms\Http\Middleware\Drafting;
+use Soda\Cms\Http\Middleware\DraftAlert;
 use Soda\Cms\Http\Middleware\ForceHttps;
 use Soda\Cms\Http\Middleware\HasAbility;
 use Soda\Cms\Http\Middleware\Authenticate;
+use Soda\Cms\Http\Middleware\ToggleLocale;
 use Soda\Cms\Http\Middleware\HasPermission;
 use Soda\Cms\Http\Middleware\SluggableSession;
 use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Soda\Cms\Http\Middleware\ToggleLocale;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -51,7 +51,6 @@ class RouteServiceProvider extends ServiceProvider
         $router->aliasMiddleware('soda.role', HasRole::class);
         $router->aliasMiddleware('soda.permission', HasPermission::class);
         $router->aliasMiddleware('soda.ability', HasAbility::class);
-
 
         $middlewareGroups = $router->getMiddlewareGroups();
 
@@ -92,6 +91,24 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::group([
+            'middleware' => ['api'],
+            'namespace'  => $this->namespace,
+            'prefix'     => config('soda.cms.path').'/api',
+        ], function ($router) {
+            require __DIR__.'/../../routes/api.php';
+        });
+    }
+
+    /**
      * Define the "web" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
@@ -110,24 +127,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->app['router']->getRoutes()->refreshNameLookups();
 
         $this->app['events']->fire('soda.routing', $this->app->router);
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::group([
-            'middleware' => ['api'],
-            'namespace'  => $this->namespace,
-            'prefix'     => config('soda.cms.path').'/api',
-        ], function ($router) {
-            require __DIR__.'/../../routes/api.php';
-        });
     }
 
     protected function overrideRouter()

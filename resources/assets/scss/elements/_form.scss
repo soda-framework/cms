@@ -13,11 +13,11 @@ select.form-control {
   padding-right: 18px;
 
   &:hover {
-    background-color: #fcfdfe;
+    background-color: #FCFDFE;
   }
 
   &:focus {
-    background-color: #fbfcfd;
+    background-color: #FBFCFD;
   }
 }
 
@@ -39,7 +39,6 @@ select.form-control {
   .form-control:focus {
     box-shadow: none;
     &:after {
-
     }
   }
 }
@@ -87,17 +86,17 @@ select.form-control {
     border-radius: 40px;
   }
 
-   > .input-group-btn {
-     >.btn {
-       border-radius: 40px;
-     }
-     &:last-child {
-       >.btn {
-         border-bottom-left-radius: 0;
-         border-top-left-radius: 0;
-       }
-     }
-   }
+  > .input-group-btn {
+    > .btn {
+      border-radius: 40px;
+    }
+    &:last-child {
+      > .btn {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+      }
+    }
+  }
 }
 
 .file-input {
@@ -141,7 +140,7 @@ select.form-control {
   // Display as table-cell
   // -------------------------
   .input-group-addon,
-  .input-group .form-control  {
+  .input-group .form-control {
     &:not(:first-child):not(:last-child) {
       border-radius: $border-radius-base;
     }
@@ -226,7 +225,7 @@ select.form-control {
       padding: 2px;
       width: 50px;
       height: 25px;
-      background-color: #dddddd;
+      background-color: #DDDDDD;
       border-radius: 25px;
       &:before, &:after {
         display: block;
@@ -238,15 +237,14 @@ select.form-control {
       }
       &:before {
         right: 1px;
-        background-color: #f1f1f1;
+        background-color: #F1F1F1;
         border-radius: 25px;
         transition: background 0.4s;
       }
 
       &:after {
-
         width: 23px;
-        background-color: #fff;
+        background-color: #FFFFFF;
         border-radius: 100%;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         transition: margin 0.4s;
@@ -264,8 +262,6 @@ select.form-control {
   }
 }
 
-
-
 .form-group--inline, .form-group--inline-group {
   .form-group__label {
     label {
@@ -278,8 +274,6 @@ select.form-control {
     width: 100%;
   }
 }
-
-
 
 @media(min-width: $screen-md-min) {
   display: block;

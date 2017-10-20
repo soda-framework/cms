@@ -2,15 +2,15 @@
 
 namespace Soda\Cms\Foundation;
 
-use Illuminate\Contracts\Foundation\Application as Laravel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Traits\Macroable;
-use Soda\Cms\Database\Models\Contracts\ApplicationInterface;
-use Soda\Cms\Database\Models\Contracts\ApplicationUrlInterface;
-use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Soda\Cms\Database\Models\DynamicBlock;
 use Soda\Cms\Database\Models\DynamicContent;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
+use Illuminate\Contracts\Foundation\Application as Laravel;
+use Soda\Cms\Database\Models\Contracts\ApplicationInterface;
+use Soda\Cms\Database\Models\Contracts\ApplicationUrlInterface;
 
 class SodaInstance
 {
@@ -30,7 +30,7 @@ class SodaInstance
     {
         $this->laravel = $laravel;
 
-        if (!$this->laravel->runningInConsole()) {
+        if (! $this->laravel->runningInConsole()) {
             $application = $this->requestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
             if (isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
@@ -40,6 +40,16 @@ class SodaInstance
                 $this->requestMatcher()->handleApplicationNotFound();
             }
         }
+    }
+
+    /**
+     * Return instance of MenuBuilder.
+     *
+     * @return \Soda\Cms\Http\RequestMatcher\RequestMatcher
+     */
+    public function requestMatcher()
+    {
+        return $this->laravel['soda.request-matcher'];
     }
 
     /**
@@ -108,16 +118,6 @@ class SodaInstance
     public function setCurrentPage(ContentInterface $content)
     {
         $this->currentPage = $content;
-    }
-
-    /**
-     * Return instance of MenuBuilder.
-     *
-     * @return \Soda\Cms\Http\RequestMatcher\RequestMatcher
-     */
-    public function requestMatcher()
-    {
-        return $this->laravel['soda.request-matcher'];
     }
 
     /**

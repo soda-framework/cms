@@ -73,12 +73,9 @@ class ThemeExceptionHandler extends Handler
         return parent::render($request, $e);
     }
 
-    /**
-     * @param string $theme
-     */
-    public function setTheme($theme)
+    protected function isTokenMismatchException(Exception $e)
     {
-        $this->theme = $theme;
+        return $e instanceof TokenMismatchException;
     }
 
     /**
@@ -101,6 +98,11 @@ class ThemeExceptionHandler extends Handler
         return $this->convertExceptionToResponse($e);
     }
 
+    protected function getViewPath($view)
+    {
+        return ($this->theme ? $this->theme.'::' : '').$view;
+    }
+
     /**
      * Render the given TokenMismatchException.
      *
@@ -117,13 +119,11 @@ class ThemeExceptionHandler extends Handler
         return $this->convertExceptionToResponse($e);
     }
 
-    protected function isTokenMismatchException(Exception $e)
+    /**
+     * @param string $theme
+     */
+    public function setTheme($theme)
     {
-        return $e instanceof TokenMismatchException;
-    }
-
-    protected function getViewPath($view)
-    {
-        return ($this->theme ? $this->theme.'::' : '').$view;
+        $this->theme = $theme;
     }
 }

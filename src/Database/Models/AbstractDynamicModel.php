@@ -31,11 +31,6 @@ abstract class AbstractDynamicModel extends Model
         return $model->setPrefixedTable($table);
     }
 
-    public function getTable()
-    {
-        return $this->table;
-    }
-
     public function setPrefixedTable($table)
     {
         $prefix = $this->getDynamicModelTablePrefix();
@@ -43,13 +38,7 @@ abstract class AbstractDynamicModel extends Model
         return $this->setTable($prefix.$table);
     }
 
-    public function setTable($table)
-    {
-        $this->table = $table;
-        static::$lastTable = $table;
-
-        return $this;
-    }
+    abstract public function getDynamicModelTablePrefix();
 
     public function parseField(FieldInterface $field, Request $request, $prefix = null)
     {
@@ -106,7 +95,18 @@ abstract class AbstractDynamicModel extends Model
         return $builder;
     }
 
-    abstract public function getDynamicModelTablePrefix();
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    public function setTable($table)
+    {
+        $this->table = $table;
+        static::$lastTable = $table;
+
+        return $this;
+    }
 
     /*
      * TODO:

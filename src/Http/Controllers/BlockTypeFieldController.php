@@ -37,8 +37,8 @@ class BlockTypeFieldController extends BaseController
     /**
      * Detaches an existing resource.
      *
-     * @param  int    $blockTypeId
-     * @param  int    $fieldId
+     * @param  int $blockTypeId
+     * @param  int $fieldId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

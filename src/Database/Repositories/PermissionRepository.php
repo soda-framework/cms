@@ -36,6 +36,16 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
         return $model;
     }
 
+    public function getFilteredGrid($perPage)
+    {
+        $filter = $this->buildFilter($this->model);
+        $grid = $this->buildGrid($filter);
+        $grid = $this->addButtonsToGrid($grid, 'soda.permissions.edit', 'soda.permissions.destroy');
+        $grid->paginate($perPage)->getGrid($this->getGridView());
+
+        return compact('filter', 'grid');
+    }
+
     /**
      * @param PermissionInterface $model
      */
@@ -69,15 +79,5 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
         $grid->attr('class', 'table table-striped middle');
 
         return $grid;
-    }
-
-    public function getFilteredGrid($perPage)
-    {
-        $filter = $this->buildFilter($this->model);
-        $grid = $this->buildGrid($filter);
-        $grid = $this->addButtonsToGrid($grid, 'soda.permissions.edit', 'soda.permissions.destroy');
-        $grid->paginate($perPage)->getGrid($this->getGridView());
-
-        return compact('filter', 'grid');
     }
 }

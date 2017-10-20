@@ -17,6 +17,13 @@ class DynamicModelObserver
         $this->buildTable($type);
     }
 
+    protected function buildTable(CanBuildDynamicModels $type)
+    {
+        if ($type->shouldDynamicTableExist() && ! $type->dynamicTableExists()) {
+            $type->createTable();
+        }
+    }
+
     /**
      * Listen to the dynamic deleting event.
      *
@@ -38,13 +45,6 @@ class DynamicModelObserver
             } else {
                 $this->buildTable($type);
             }
-        }
-    }
-
-    protected function buildTable(CanBuildDynamicModels $type)
-    {
-        if ($type->shouldDynamicTableExist() && ! $type->dynamicTableExists()) {
-            $type->createTable();
         }
     }
 }

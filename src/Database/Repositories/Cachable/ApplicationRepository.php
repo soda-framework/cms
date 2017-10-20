@@ -27,6 +27,11 @@ class ApplicationRepository extends AbstractCacheRepository implements Applicati
         return $application;
     }
 
+    protected function getApplicationUrlCacheKey($url)
+    {
+        return 'soda.application:'.$url;
+    }
+
     public function getSettingsForApplication(ApplicationInterface $application)
     {
         return $this->cache($this->getApplicationSettingsCacheKey($application->getKey()), config('soda.cache.application'), function () use ($application) {
@@ -42,11 +47,6 @@ class ApplicationRepository extends AbstractCacheRepository implements Applicati
 
             return [];
         });
-    }
-
-    protected function getApplicationUrlCacheKey($url)
-    {
-        return 'soda.application:'.$url;
     }
 
     protected function getApplicationSettingsCacheKey($appId)

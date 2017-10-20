@@ -12,7 +12,7 @@
 
 return [
 
-    'options'  => 'Options', // Usually a column header, containing edit/delete buttons
+    'options' => 'Options', // Usually a column header, containing edit/delete buttons
 
     'go_back'  => 'Go back',  // Used on buttons offering the user the ability to go back to the previous page
     'login'    => 'Login',    // Used on buttons to take the user to the login page

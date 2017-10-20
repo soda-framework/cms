@@ -126,6 +126,7 @@ trait AdditionalClosureScopes
      *
      * @param bool $withSelf
      * @param bool $forceDelete
+     *
      * @return void
      */
     public function deleteSubtree($withSelf = false, $forceDelete = false)

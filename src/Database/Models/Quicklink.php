@@ -3,13 +3,10 @@
 namespace Soda\Cms\Database\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 
 class Quicklink extends Model
 {
     //use OptionallyBoundToApplication;
-
-    protected $table = 'quicklinks';
 
     public $fillable = [
         'text',
@@ -18,7 +15,7 @@ class Quicklink extends Model
         'request_params',
         'user_id',
     ];
-
+    protected $table = 'quicklinks';
     protected $casts = [
         'route_params'   => 'array',
         'request_params' => 'array',

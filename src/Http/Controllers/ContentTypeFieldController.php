@@ -37,8 +37,8 @@ class ContentTypeFieldController extends BaseController
     /**
      * Detaches an existing resource.
      *
-     * @param  int    $contentTypeId
-     * @param  int    $fieldId
+     * @param  int $contentTypeId
+     * @param  int $fieldId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

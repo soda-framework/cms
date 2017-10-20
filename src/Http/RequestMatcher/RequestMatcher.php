@@ -21,6 +21,18 @@ class RequestMatcher
     }
 
     /**
+     * Registers an array of new matchers.
+     *
+     * @param $matchers
+     */
+    public function registerMatchers($matchers)
+    {
+        foreach ($matchers as $matcher) {
+            $this->registerMatcher($matcher);
+        }
+    }
+
+    /**
      * Registers a new matcher.
      *
      * @param      $matcher
@@ -34,18 +46,6 @@ class RequestMatcher
         }
 
         return $this;
-    }
-
-    /**
-     * Registers an array of new matchers.
-     *
-     * @param $matchers
-     */
-    public function registerMatchers($matchers)
-    {
-        foreach ($matchers as $matcher) {
-            $this->registerMatcher($matcher);
-        }
     }
 
     /**
@@ -90,16 +90,16 @@ class RequestMatcher
     /**
      * Handles not found errors.
      */
-    public function handleApplicationNotFound()
+    public function handlePageNotFound()
     {
-        abort(404, 'No Application Found at URL');
+        abort(404, '404 Page not found');
     }
 
     /**
      * Handles not found errors.
      */
-    public function handlePageNotFound()
+    public function handleApplicationNotFound()
     {
-        abort(404, '404 Page not found');
+        abort(404, 'No Application Found at URL');
     }
 }

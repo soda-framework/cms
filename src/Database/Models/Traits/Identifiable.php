@@ -13,13 +13,13 @@ trait Identifiable
         return $identifier;
     }
 
-    public function getIdentifierAttribute($value)
-    {
-        return $this->formatIdentifier($value);
-    }
-
     public function formatIdentifier($value)
     {
         return str_slug($value, '-');
+    }
+
+    public function getIdentifierAttribute($value)
+    {
+        return $this->formatIdentifier($value);
     }
 }

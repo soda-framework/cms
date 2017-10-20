@@ -20,7 +20,7 @@ class ApplicationServiceProvider extends ServiceProvider
     protected $defer = true;
 
     protected $aliases = [
-        'soda.application.repository'        => [ApplicationRepositoryInterface::class, ApplicationRepository::class],
+        'soda.application.repository' => [ApplicationRepositoryInterface::class, ApplicationRepository::class],
     ];
 
     /**

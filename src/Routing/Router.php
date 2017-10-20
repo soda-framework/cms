@@ -2,63 +2,24 @@
 
 namespace Soda\Cms\Routing;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as IlluminateRouter;
 
 class Router extends IlluminateRouter
 {
     /**
-     * The event dispatcher instance.
-     *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var string
      */
-    protected $events;
-
+    const DEFAULT_PRIORITY = 50;
     /**
-     * The IoC container instance.
-     *
-     * @var \Illuminate\Container\Container
-     */
-    protected $container;
-
-    /**
-     * The route collection instance.
-     *
-     * @var RouteCollection
-     */
-    protected $routes;
-
-    /**
-     * The currently dispatched route instance.
-     *
-     * @var Route
-     */
-    protected $current;
-
-    /**
-     * The request currently being dispatched.
-     *
-     * @var \Illuminate\Http\Request
-     */
-    protected $currentRequest;
-
-    /**
-     * All of the short-hand keys for middlewares.
+     * All of the verbs supported by the router.
      *
      * @var array
      */
-    protected $middleware = [];
-
-    /**
-     * All of the middleware groups.
-     *
-     * @var array
-     */
-    protected $middlewareGroups = [];
-
+    public static $verbs = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
     /**
      * The priority-sorted list of middleware.
      *
@@ -67,38 +28,66 @@ class Router extends IlluminateRouter
      * @var array
      */
     public $middlewarePriority = [];
-
+    /**
+     * The event dispatcher instance.
+     *
+     * @var \Illuminate\Contracts\Events\Dispatcher
+     */
+    protected $events;
+    /**
+     * The IoC container instance.
+     *
+     * @var \Illuminate\Container\Container
+     */
+    protected $container;
+    /**
+     * The route collection instance.
+     *
+     * @var RouteCollection
+     */
+    protected $routes;
+    /**
+     * The currently dispatched route instance.
+     *
+     * @var Route
+     */
+    protected $current;
+    /**
+     * The request currently being dispatched.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    protected $currentRequest;
+    /**
+     * All of the short-hand keys for middlewares.
+     *
+     * @var array
+     */
+    protected $middleware = [];
+    /**
+     * All of the middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [];
     /**
      * The registered route value binders.buildRoutesOrder.
      *
      * @var array
      */
     protected $binders = [];
-
     /**
      * The globally available parameter patterns.
      *
      * @var array
      */
     protected $patterns = [];
-
     /**
      * The route group attribute stack.
      *
      * @var array
      */
     protected $groupStack = [];
-
-    /**
-     * All of the verbs supported by the router.
-     *
-     * @var array
-     */
-    public static $verbs = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
-    /**
-     * @var string
-     */
-    const DEFAULT_PRIORITY = 50;
 
     /**
      * Create a new Router instance.
@@ -115,6 +104,30 @@ class Router extends IlluminateRouter
         $this->bind('_missing', function ($v) {
             return explode('/', $v);
         });
+    }
+
+    /**
+     * Dispatch the request to the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dispatch(Request $request)
+    {
+        $this->getRoutes();
+
+        return parent::dispatch($request);
+    }
+
+    /**
+     * Get the underlying route collection.
+     *
+     * @return RouteCollection
+     */
+    public function getRoutes()
+    {
+        return parent::getRoutes()->buildRoutesOrder();
     }
 
     /**
@@ -167,29 +180,5 @@ class Router extends IlluminateRouter
         }
 
         return $route;
-    }
-
-    /**
-     * Dispatch the request to the application.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function dispatch(Request $request)
-    {
-        $this->getRoutes();
-
-        return parent::dispatch($request);
-    }
-
-    /**
-     * Get the underlying route collection.
-     *
-     * @return RouteCollection
-     */
-    public function getRoutes()
-    {
-        return parent::getRoutes()->buildRoutesOrder();
     }
 }

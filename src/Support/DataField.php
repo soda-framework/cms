@@ -96,7 +96,7 @@ abstract class DataField extends Widget
     {
         parent::__construct();
 
-        $this->attributes = config('rapyd.fields.attributes', ['class'=>'form-control']);
+        $this->attributes = config('rapyd.fields.attributes', ['class' => 'form-control']);
         $this->model = $model;
         $this->model_relations = $model_relations;
 
@@ -106,6 +106,7 @@ abstract class DataField extends Widget
 
     /**
      * check for relation notation and split relation-name and fiel-dname.
+     *
      * @param $name
      */
     protected function setName($name)
@@ -159,23 +160,6 @@ abstract class DataField extends Widget
     }
 
     /**
-     * add rules for field es.:  required|min:5 ...
-     * @param string $rule
-     * @return $this
-     */
-    public function rule($rule)
-    {
-        $this->rule = is_string($this->rule) ? explode('|', $this->rule) : $this->rule;
-        $rule = is_string($rule) ? explode('|', $rule) : $rule;
-        $this->rule = array_unique(array_merge($this->rule, $rule));
-        if (in_array('required', $this->rule) && ! isset($this->no_star)) {
-            $this->required = true;
-        }
-
-        return $this;
-    }
-
-    /**
      * Laravel Validation unique.
      *
      * Auto except current model
@@ -199,6 +183,25 @@ abstract class DataField extends Widget
         }
 
         $this->rule(implode(',', $parts));
+
+        return $this;
+    }
+
+    /**
+     * add rules for field es.:  required|min:5 ...
+     *
+     * @param string $rule
+     *
+     * @return $this
+     */
+    public function rule($rule)
+    {
+        $this->rule = is_string($this->rule) ? explode('|', $this->rule) : $this->rule;
+        $rule = is_string($rule) ? explode('|', $rule) : $rule;
+        $this->rule = array_unique(array_merge($this->rule, $rule));
+        if (in_array('required', $this->rule) && ! isset($this->no_star)) {
+            $this->required = true;
+        }
 
         return $this;
     }
@@ -283,6 +286,73 @@ abstract class DataField extends Widget
         $this->attributes['placeholder'] = $placeholder;
 
         return $this;
+    }
+
+    public function options($options)
+    {
+        if (is_array($options)) {
+            $this->options += $options;
+        } else {
+            $this->options += $options->all();
+        }
+
+        return $this;
+    }
+
+    public function option($value = '', $description = '')
+    {
+        $this->options[$value] = $description;
+
+        return $this;
+    }
+
+    public function optionGroup($value = '', $description = '', $group_id = '', $group_label = '')
+    {
+        $this->option_groups[$group_id]['label'] = $group_label;
+        $this->option_groups[$group_id]['options'][$value] = $description;
+
+        return $this;
+    }
+
+    public function autoUpdate($save = false)
+    {
+        $this->getValue();
+        $this->getNewValue();
+        if (! $this->editable()) {
+            return true;
+        }
+
+        if (is_object($this->model) && isset($this->db_name)) {
+            if (
+                ! (Schema::connection($this->model->getConnectionName())->hasColumn($this->model->getTable(), $this->db_name)
+                    || $this->model->hasSetMutator($this->db_name))
+                || is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\Relation') //Relation
+            ) {
+                //belongsTo relation
+                if (is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\BelongsTo')) {
+                    $this->model->setAttribute($this->db_name, $this->new_value);
+
+                    return true;
+                }
+                //other kind of relations are postponed
+                $self = $this;
+                $this->model->saved(function () use ($self) {
+                    $self->updateRelations();
+                });
+
+                //check for relation then exit
+                return true;
+            }
+            if (! is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\Relation')) {
+                $this->model->setAttribute($this->db_name, $this->new_value);
+            }
+
+            if ($save) {
+                return $this->model->save();
+            }
+        }
+
+        return true;
     }
 
     public function getValue()
@@ -374,51 +444,6 @@ abstract class DataField extends Widget
         $this->getMode();
     }
 
-    public function getNewValue()
-    {
-        $process = (Input::get('search') || Input::get('save')) ? true : false;
-
-        if ($process && Input::exists($this->name)) {
-            if ($this->status == 'create') {
-                $this->action = 'insert';
-            } elseif ($this->status == 'modify') {
-                $this->action = 'update';
-            }
-
-            if ($this->multiple) {
-                $this->value = '';
-                if (Input::get($this->name)) {
-                    $values = Input::get($this->name);
-                    if (! is_array($values)) {
-                        $this->new_value = $values;
-                    } else {
-                        $this->new_value = implode($this->serialization_sep, $values);
-                    }
-                }
-            } else {
-                if ($this->with_xss_filter) {
-                    $this->new_value = HTML::xssfilter(Input::get($this->name));
-                } else {
-                    $this->new_value = Input::get($this->name);
-                }
-            }
-        } elseif (($this->action == 'insert') && ($this->insert_value != null)) {
-            $this->edited = true;
-            $this->new_value = $this->insert_value;
-        } elseif (($this->action == 'update') && ($this->update_value != null)) {
-            $this->edited = true;
-            $this->new_value = $this->update_value;
-        } elseif ($this->type == 'auto') {
-            //if is auto and no default is matched, keep the old value
-            $this->new_value = $this->value;
-        } else {
-            $this->action = 'idle';
-        }
-        if ($this->new_value == '') {
-            $this->new_value = null;
-        }
-    }
-
     public function getMode()
     {
         switch ($this->mode) {
@@ -470,78 +495,55 @@ abstract class DataField extends Widget
         }
     }
 
-    public function options($options)
+    public function getNewValue()
     {
-        if (is_array($options)) {
-            $this->options += $options;
+        $process = (Input::get('search') || Input::get('save')) ? true : false;
+
+        if ($process && Input::exists($this->name)) {
+            if ($this->status == 'create') {
+                $this->action = 'insert';
+            } elseif ($this->status == 'modify') {
+                $this->action = 'update';
+            }
+
+            if ($this->multiple) {
+                $this->value = '';
+                if (Input::get($this->name)) {
+                    $values = Input::get($this->name);
+                    if (! is_array($values)) {
+                        $this->new_value = $values;
+                    } else {
+                        $this->new_value = implode($this->serialization_sep, $values);
+                    }
+                }
+            } else {
+                if ($this->with_xss_filter) {
+                    $this->new_value = HTML::xssfilter(Input::get($this->name));
+                } else {
+                    $this->new_value = Input::get($this->name);
+                }
+            }
+        } elseif (($this->action == 'insert') && ($this->insert_value != null)) {
+            $this->edited = true;
+            $this->new_value = $this->insert_value;
+        } elseif (($this->action == 'update') && ($this->update_value != null)) {
+            $this->edited = true;
+            $this->new_value = $this->update_value;
+        } elseif ($this->type == 'auto') {
+            //if is auto and no default is matched, keep the old value
+            $this->new_value = $this->value;
         } else {
-            $this->options += $options->all();
+            $this->action = 'idle';
         }
-
-        return $this;
-    }
-
-    public function option($value = '', $description = '')
-    {
-        $this->options[$value] = $description;
-
-        return $this;
-    }
-
-    public function optionGroup($value = '', $description = '', $group_id = '', $group_label = '')
-    {
-        $this->option_groups[$group_id]['label'] = $group_label;
-        $this->option_groups[$group_id]['options'][$value] = $description;
-
-        return $this;
+        if ($this->new_value == '') {
+            $this->new_value = null;
+        }
     }
 
     public function editable()
     {
         if ($this->mode == 'readonly') {
             return $this->edited;
-        }
-
-        return true;
-    }
-
-    public function autoUpdate($save = false)
-    {
-        $this->getValue();
-        $this->getNewValue();
-        if (! $this->editable()) {
-            return true;
-        }
-
-        if (is_object($this->model) && isset($this->db_name)) {
-            if (
-                ! (Schema::connection($this->model->getConnectionName())->hasColumn($this->model->getTable(), $this->db_name)
-                    || $this->model->hasSetMutator($this->db_name))
-                || is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\Relation') //Relation
-            ) {
-
-                //belongsTo relation
-                if (is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\BelongsTo')) {
-                    $this->model->setAttribute($this->db_name, $this->new_value);
-
-                    return true;
-                }
-                //other kind of relations are postponed
-                $self = $this;
-                $this->model->saved(function () use ($self) {
-                    $self->updateRelations();
-                });
-
-                //check for relation then exit
-                return true;
-            }
-            if (! is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\Relation')) {
-                $this->model->setAttribute($this->db_name, $this->new_value);
-            }
-
-            if ($save) {
-                return $this->model->save();
-            }
         }
 
         return true;
@@ -607,34 +609,6 @@ abstract class DataField extends Widget
     public function extraOutput()
     {
         return '<span class="extra">'.$this->extra_output.'</span>';
-    }
-
-    /**
-     * parse blade syntax string using current model.
-     * @param $string
-     * @param bool $is_view
-     * @return string
-     */
-    protected function parseString($string, $is_view = false)
-    {
-        if (is_object($this->model) && (strpos($string, '{{') !== false || strpos($string, '{!!') !== false || $is_view)) {
-            $fields = $this->model->getAttributes();
-            $relations = $this->model->getRelations();
-            $array = array_merge($fields, $relations, ['model'=>$this->model]);
-            $string = ($is_view) ? view($string, $array) : $this->parser->compileString($string, $array);
-        }
-
-        return $string;
-    }
-
-    /**
-     * parse blade view passing current model.
-     * @param $view
-     * @return string
-     */
-    protected function parseView($view)
-    {
-        return $this->parseString($view, true);
     }
 
     public function build()
@@ -709,6 +683,7 @@ abstract class DataField extends Widget
      * Set auto apply xss filter or not.
      *
      * @param bool|true $trueOrFalse
+     *
      * @return $this
      */
     public function withXssFilter($trueOrFalse = true)
@@ -716,5 +691,37 @@ abstract class DataField extends Widget
         $this->with_xss_filter = (bool) $trueOrFalse;
 
         return $this;
+    }
+
+    /**
+     * parse blade view passing current model.
+     *
+     * @param $view
+     *
+     * @return string
+     */
+    protected function parseView($view)
+    {
+        return $this->parseString($view, true);
+    }
+
+    /**
+     * parse blade syntax string using current model.
+     *
+     * @param      $string
+     * @param bool $is_view
+     *
+     * @return string
+     */
+    protected function parseString($string, $is_view = false)
+    {
+        if (is_object($this->model) && (strpos($string, '{{') !== false || strpos($string, '{!!') !== false || $is_view)) {
+            $fields = $this->model->getAttributes();
+            $relations = $this->model->getRelations();
+            $array = array_merge($fields, $relations, ['model' => $this->model]);
+            $string = ($is_view) ? view($string, $array) : $this->parser->compileString($string, $array);
+        }
+
+        return $string;
     }
 }

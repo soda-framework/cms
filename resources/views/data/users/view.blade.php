@@ -51,18 +51,18 @@
             @endif
 
             @if($user->getLevel() < \Auth::user()->getLevel() || $user->id == Auth::user()->id)
-            <hr />
-            <br />
+                <hr />
+                <br />
 
-            {!! app('soda.form')->password([
-                "name"        => "Password",
-                "field_name"  => 'password',
-            ]) !!}
+                {!! app('soda.form')->password([
+                    "name"        => "Password",
+                    "field_name"  => 'password',
+                ]) !!}
 
-            {!! app('soda.form')->password([
-                "name"        => "Password Confirmation",
-                "field_name"  => 'password_confirmation',
-            ]) !!}
+                {!! app('soda.form')->password([
+                    "name"        => "Password Confirmation",
+                    "field_name"  => 'password_confirmation',
+                ]) !!}
 
             @endif
         </form>

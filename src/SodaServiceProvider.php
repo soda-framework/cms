@@ -15,7 +15,6 @@ use Soda\Cms\Routing\RouteServiceProvider;
 use Soda\Cms\Database\BlockServiceProvider;
 use Soda\Cms\Database\FieldServiceProvider;
 use Intervention\Image\ImageServiceProvider;
-use OwenIt\Auditing\AuditingServiceProvider;
 use Soda\Cms\Console\CommandsServiceProvider;
 use Soda\Cms\Database\ContentServiceProvider;
 use Rutorika\Sortable\SortableServiceProvider;
@@ -61,6 +60,35 @@ class SodaServiceProvider extends ServiceProvider
         $this->registerDependencies([
             RouteServiceProvider::class,
         ]);
+    }
+
+    protected function configure()
+    {
+        foreach ($this->app->config->get('soda.upload.disks') as $disk => $configuration) {
+            $this->app->config->set("filesystems.disks.$disk", $configuration);
+        }
+    }
+
+    protected function extendBlade()
+    {
+        Blade::extend(function ($value, $compiler) {
+            $value = preg_replace('/(?<=\s)@switch\((.*)\)(\s*)@case\((.*)\)(?=\s)/', '<?php switch($1):$2case $3: ?>', $value);
+            $value = preg_replace('/(?<=\s)@endswitch(?=\s)/', '<?php endswitch; ?>', $value);
+            $value = preg_replace('/(?<=\s)@case\((.*)\)(?=\s)/', '<?php case $1: ?>', $value);
+            $value = preg_replace('/(?<=\s)@default(?=\s)/', '<?php default: ?>', $value);
+            $value = preg_replace('/(?<=\s)@break(?=\s)/', '<?php break; ?>', $value);
+
+            return $value;
+        });
+
+        Blade::directive('attr', function ($expression = null) {
+            return '<?php if(isset('.$expression.')) {
+                                foreach('.$expression.' as $key => $attribute) {
+                                    echo " $key=\"$attribute\"";
+                                }
+                          }
+            ?>';
+        });
     }
 
     /**
@@ -109,7 +137,7 @@ class SodaServiceProvider extends ServiceProvider
         ]);
 
         $this->registerFacades([
-            'Soda'          => Soda::class,
+            'Soda' => Soda::class,
         ]);
 
         $this->app->singleton('soda', function ($app) {
@@ -118,35 +146,6 @@ class SodaServiceProvider extends ServiceProvider
 
         $this->app->singleton('soda.drafting', function ($app) {
             return new DraftingHandler();
-        });
-    }
-
-    protected function configure()
-    {
-        foreach ($this->app->config->get('soda.upload.disks') as $disk => $configuration) {
-            $this->app->config->set("filesystems.disks.$disk", $configuration);
-        }
-    }
-
-    protected function extendBlade()
-    {
-        Blade::extend(function ($value, $compiler) {
-            $value = preg_replace('/(?<=\s)@switch\((.*)\)(\s*)@case\((.*)\)(?=\s)/', '<?php switch($1):$2case $3: ?>', $value);
-            $value = preg_replace('/(?<=\s)@endswitch(?=\s)/', '<?php endswitch; ?>', $value);
-            $value = preg_replace('/(?<=\s)@case\((.*)\)(?=\s)/', '<?php case $1: ?>', $value);
-            $value = preg_replace('/(?<=\s)@default(?=\s)/', '<?php default: ?>', $value);
-            $value = preg_replace('/(?<=\s)@break(?=\s)/', '<?php break; ?>', $value);
-
-            return $value;
-        });
-
-        Blade::directive('attr', function ($expression = null) {
-            return '<?php if(isset('.$expression.')) {
-                                foreach('.$expression.' as $key => $attribute) {
-                                    echo " $key=\"$attribute\"";
-                                }
-                          }
-            ?>';
         });
     }
 }

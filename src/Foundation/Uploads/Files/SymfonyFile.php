@@ -3,9 +3,9 @@
 namespace Soda\Cms\Foundation\Uploads\Files;
 
 use Intervention\Image\Image;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Soda\Cms\Foundation\Uploads\UploadedFileTransformer;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SymfonyFile extends AbstractUploadableFile implements UploadableFile
 {
@@ -31,19 +31,6 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
     public function uploadPath()
     {
         return '/'.trim(trim($this->getUploadTo(), '/').'/'.$this->generateFileName(), '/');
-    }
-
-    /**
-     * @return $this
-     */
-    public function transform()
-    {
-        if ($this->transformConfig) {
-            $transformer = new UploadedFileTransformer($this->transformConfig);
-            $this->file = $transformer->transform($this->file);
-        }
-
-        return $this;
     }
 
     /**
@@ -91,5 +78,18 @@ class SymfonyFile extends AbstractUploadableFile implements UploadableFile
         $guesser = ExtensionGuesser::getInstance();
 
         return $guesser->guess($type);
+    }
+
+    /**
+     * @return $this
+     */
+    public function transform()
+    {
+        if ($this->transformConfig) {
+            $transformer = new UploadedFileTransformer($this->transformConfig);
+            $this->file = $transformer->transform($this->file);
+        }
+
+        return $this;
     }
 }

@@ -19,9 +19,14 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         $this->model = $model;
     }
 
-    public function getFieldTypes()
+    public function getFilteredGrid($perPage)
     {
-        return app('soda.form')->getFieldTypes();
+        $filter = $this->buildFilter($this->model);
+        $grid = $this->buildGrid($filter);
+        $grid = $this->addButtonsToGrid($grid, 'soda.fields.edit', 'soda.fields.destroy');
+        $grid->paginate($perPage)->getGrid($this->getGridView());
+
+        return compact('filter', 'grid');
     }
 
     /**
@@ -41,6 +46,11 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         return $filter;
     }
 
+    public function getFieldTypes()
+    {
+        return app('soda.form')->getFieldTypes();
+    }
+
     public function buildGrid(DataFilter $filter)
     {
         $grid = (new DataGrid)->source($filter);
@@ -58,15 +68,5 @@ class FieldRepository extends AbstractRepository implements FieldRepositoryInter
         $grid->attr('class', 'table table-striped middle');
 
         return $grid;
-    }
-
-    public function getFilteredGrid($perPage)
-    {
-        $filter = $this->buildFilter($this->model);
-        $grid = $this->buildGrid($filter);
-        $grid = $this->addButtonsToGrid($grid, 'soda.fields.edit', 'soda.fields.destroy');
-        $grid->paginate($perPage)->getGrid($this->getGridView());
-
-        return compact('filter', 'grid');
     }
 }

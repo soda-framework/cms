@@ -66,6 +66,7 @@ class SortController extends ApiController
 
         if (! class_exists($entityClass)) {
             $rules['entityClass'] = 'required'; // fake rule for not exist field
+
             return $validator->make($request->all(), $rules);
         }
 
@@ -112,10 +113,11 @@ class SortController extends ApiController
         return [$entityClass, $relation];
     }
 
-    protected function getModel($entityClass, $request) {
+    protected function getModel($entityClass, $request)
+    {
         $model = app($entityClass);
 
-        if($request->has('entityIdentifier')) {
+        if ($request->has('entityIdentifier')) {
             $model->setPrefixedTable($request->input('entityIdentifier'));
         }
 

@@ -17,15 +17,6 @@ trait ConvertsPercentageDimensions
         return [$width, $height];
     }
 
-    public function convertHeight(Image $image, $height)
-    {
-        if ($this->isPercent($height)) {
-            $height = $image->height() * $this->percentToDecimal($height);
-        }
-
-        return $height;
-    }
-
     public function convertWidth(Image $image, $width)
     {
         if ($this->isPercent($width)) {
@@ -33,6 +24,15 @@ trait ConvertsPercentageDimensions
         }
 
         return $width;
+    }
+
+    public function convertHeight(Image $image, $height)
+    {
+        if ($this->isPercent($height)) {
+            $height = $image->height() * $this->percentToDecimal($height);
+        }
+
+        return $height;
     }
 
     protected function isPercent($number)

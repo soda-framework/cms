@@ -11,12 +11,12 @@
 @section('footer.js')
     @parent
     <script>
-        $(function(){
+        $(function () {
             $('#{{ $field_id }}').select2({
                 tags: true,
                 multiple: true,
                 selectOnClose: true,
-                matcher: function(searchParams, data) {
+                matcher: function (searchParams, data) {
                     // This bit taken from Select2's default matcher
                     var match = $.extend(true, {}, data);
 
@@ -30,7 +30,7 @@
                 {!! app('soda.form')->buildJsParams($field_parameters['settings']) !!}
             });
 
-            $('#{{ $field_id }}').on('select2:unselect', function(e){
+            $('#{{ $field_id }}').on('select2:unselect', function (e) {
                 $(e.params.data.element).remove();
             });
         });

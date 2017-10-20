@@ -20,27 +20,28 @@
                 </a>
                 <div class="dropdown-menu">
                     @if($page->isAllowedChildren())
-                    @permission('create-pages')
-                    <div>
-                        <a data-page-id="{{ $page->id }}" data-page-type-id="{{ $page->page_type_id }}" data-toggle="modal" data-target="#pageTypeModal">Create Sub-page</a>
-                    </div>
-                    @endpermission
+                        @permission('create-pages')
+                        <div>
+                            <a data-page-id="{{ $page->id }}" data-page-type-id="{{ $page->page_type_id }}" data-toggle="modal" data-target="#pageTypeModal">Create
+                                                                                                                                                             Sub-page</a>
+                        </div>
+                        @endpermission
                     @endif
-                    @permission('edit-pages')
+                        @permission('edit-pages')
                     <div>
                         <a href="{{ route('soda.pages.edit', $page->id) }}">Edit Page</a>
                     </div>
-                    @endpermission
+                        @endpermission
                     <div>
                         <a href="{{ $page->slug }}" target="_blank" data-tree-link>View page</a>
                     </div>
                     @if($page->canDelete())
-                    @permission('delete-pages')
-                    <div class="divider"></div>
-                    <div class="warning">
-                        <a data-delete-button href="{{ route('soda.pages.destroy', $page->id) }}">Delete</a>
-                    </div>
-                    @endpermission
+                        @permission('delete-pages')
+                            <div class="divider"></div>
+                            <div class="warning">
+                                <a data-delete-button href="{{ route('soda.pages.destroy', $page->id) }}">Delete</a>
+                            </div>
+                        @endpermission
                     @endif
                 </div>
             </div>
@@ -48,10 +49,10 @@
     </div>
 
     @if ($page->hasChildrenRelation() && count($page->children) > 0)
-    <ul>
-        @foreach($page->getRelation('children') as $child)
-            @include(soda_cms_view_path('partials.page-tree.branch'), ['page' => $child])
-        @endforeach
-    </ul>
+        <ul>
+            @foreach($page->getRelation('children') as $child)
+                @include(soda_cms_view_path('partials.page-tree.branch'), ['page' => $child])
+            @endforeach
+        </ul>
     @endif
 </li>

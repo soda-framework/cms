@@ -2,8 +2,8 @@
 
 namespace Soda\Cms\Foundation\Uploads\Files;
 
-use Soda\Cms\Foundation\Uploads\UploadedFileTransformer;
 use Soda\Cms\Foundation\Uploads\Uploader;
+use Soda\Cms\Foundation\Uploads\UploadedFileTransformer;
 
 class Base64File extends AbstractUploadableFile implements UploadableFile
 {
@@ -14,32 +14,6 @@ class Base64File extends AbstractUploadableFile implements UploadableFile
     {
         $this->fileContents = $fileContents;
         $this->fileName = $this->generateFileName($fileName);
-    }
-
-    public function fileContents()
-    {
-        return $this->fileContents;
-    }
-
-    /**
-     * @return string
-     */
-    public function uploadPath()
-    {
-        return '/'.trim(trim($this->getUploadTo(), '/').'/'.$this->fileName, '/');
-    }
-
-    /**
-     * @return $this
-     */
-    public function transform()
-    {
-        if ($this->transformConfig) {
-            $transformer = new UploadedFileTransformer($this->transformConfig);
-            $this->fileContents = $transformer->transform($this->fileContents);
-        }
-
-        return $this;
     }
 
     /**
@@ -70,5 +44,31 @@ class Base64File extends AbstractUploadableFile implements UploadableFile
 
         // Guess the extension for the image, based off the mimetype
         return Uploader::guessFileExtensionByMimeType($mimeType);
+    }
+
+    public function fileContents()
+    {
+        return $this->fileContents;
+    }
+
+    /**
+     * @return string
+     */
+    public function uploadPath()
+    {
+        return '/'.trim(trim($this->getUploadTo(), '/').'/'.$this->fileName, '/');
+    }
+
+    /**
+     * @return $this
+     */
+    public function transform()
+    {
+        if ($this->transformConfig) {
+            $transformer = new UploadedFileTransformer($this->transformConfig);
+            $this->fileContents = $transformer->transform($this->fileContents);
+        }
+
+        return $this;
     }
 }

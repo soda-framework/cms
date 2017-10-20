@@ -74,6 +74,10 @@ abstract class AbstractFormField implements FormFieldInterface
         $this->boot();
     }
 
+    protected function boot()
+    {
+    }
+
     /**
      * Get the Field model that our FormField is built off of.
      */
@@ -121,78 +125,6 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the layout used to display the field.
-     *
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Set the layout used to display the field.
-     *
-     * @param $layout
-     *
-     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
-     */
-    public function setLayout($layout)
-    {
-        $this->layout = $layout;
-
-        return $this;
-    }
-
-    /**
-     * Get the view used to display the field.
-     *
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * Set the view used to display the field.
-     *
-     * @param $view
-     *
-     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
-     * Get the view used to display the field.
-     *
-     * @return string
-     */
-    public function getViewPath()
-    {
-        return $this->view_path;
-    }
-
-    /**
-     * Set the view used to display the field.
-     *
-     * @param $view_path
-     *
-     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
-     */
-    public function setViewPath($view_path)
-    {
-        $this->view_path = $view_path;
-
-        return $this;
-    }
-
-    /**
      * Get the model used to prefill the field.
      *
      * @return string
@@ -217,40 +149,6 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the class used to style the field.
-     *
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Set the class used to style the field.
-     *
-     * @param $class
-     *
-     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-
-        return $this;
-    }
-
-    /**
-     * Get the unqiue id for the field.
-     *
-     * @return string
-     */
-    public function getFieldId()
-    {
-        return $this->id ?: 'field_'.str_replace('.', '_', $this->getPrefixedFieldName());
-    }
-
-    /**
      * Set the id used by the field.
      *
      * @param $id
@@ -265,13 +163,20 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field label.
+     * Determines how the field is saved to a model.
      *
-     * @return string
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Http\Request            $request
+     *
+     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
      */
-    public function getFieldLabel()
+    public function saveToModel(Model $model, Request $request)
     {
-        return $this->field->getAttribute('name');
+        $this->setModel($model);
+
+        $model->setAttribute($this->getFieldName(), $this->getSaveValue($request));
+
+        return $this;
     }
 
     /**
@@ -285,25 +190,17 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Build the field name with prefix applied.
+     * Manipulate the field input before returning the value that should be saved.
      *
-     * @return string
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array|string
      */
-    public function buildPrefixedFieldName()
+    public function getSaveValue(Request $request)
     {
-        $field_name = $this->field->getAttribute('field_name');
+        $value = $request->input($this->getPrefixedFieldName());
 
-        if ($this->prefix) {
-            $adjustedPrefix = str_replace('.', '[', $this->prefix);
-
-            if (str_contains($adjustedPrefix, '[')) {
-                $adjustedPrefix = $adjustedPrefix.']';
-            }
-
-            return $adjustedPrefix.'['.$field_name.']';
-        }
-
-        return $field_name;
+        return $value;
     }
 
     /**
@@ -323,13 +220,13 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Get the field description.
+     * Renders the field for a cell in a table-view.
      *
      * @return string
      */
-    public function getFieldDescription()
+    public function renderForTable()
     {
-        return $this->field->getAttribute('description');
+        return truncate_words(strip_tags($this->getFieldValue()), 10);
     }
 
     /**
@@ -357,80 +254,6 @@ abstract class AbstractFormField implements FormFieldInterface
         }
 
         return $oldInput;
-    }
-
-    /**
-     * Manipulate the field input before returning the value that should be saved.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return array|string
-     */
-    public function getSaveValue(Request $request)
-    {
-        $value = $request->input($this->getPrefixedFieldName());
-
-        return $value;
-    }
-
-    /**
-     * Determines how the field is saved to a model.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param \Illuminate\Http\Request            $request
-     *
-     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
-     */
-    public function saveToModel(Model $model, Request $request)
-    {
-        $this->setModel($model);
-
-        $model->setAttribute($this->getFieldName(), $this->getSaveValue($request));
-
-        return $this;
-    }
-
-    /**
-     * Get the field parameters.
-     *
-     * @return string
-     */
-    public function getFieldParameters()
-    {
-        return $this->field->getAttribute('field_params');
-    }
-
-    /**
-     * Get the field default parameters (merged with field parameters).
-     *
-     * @return string
-     */
-    public function getDefaultParameters()
-    {
-        return [];
-    }
-
-    /**
-     * Merges default field parameters and additional field parameters.
-     *
-     * @return array
-     */
-    public function parseFieldParameters()
-    {
-        $parameters = $this->getFieldParameters();
-        $default_params = $this->getDefaultParameters();
-
-        return is_array($parameters) ? array_replace_recursive($default_params, $parameters) : $default_params;
-    }
-
-    /**
-     * Renders the field for a cell in a table-view.
-     *
-     * @return string
-     */
-    public function renderForTable()
-    {
-        return truncate_words(strip_tags($this->getFieldValue()), 10);
     }
 
     /**
@@ -464,6 +287,16 @@ abstract class AbstractFormField implements FormFieldInterface
      *
      * @return string
      */
+    public function __toString()
+    {
+        return $this->render();
+    }
+
+    /**
+     * Render the view for the field.
+     *
+     * @return string
+     */
     public function render()
     {
         try {
@@ -478,17 +311,37 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
-     * Render the view for the field.
+     * Get the layout used to display the field.
      *
      * @return string
      */
-    public function __toString()
+    public function getLayout()
     {
-        return $this->render();
+        return $this->layout;
     }
 
-    protected function boot()
+    /**
+     * Set the layout used to display the field.
+     *
+     * @param $layout
+     *
+     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
+     */
+    public function setLayout($layout)
     {
+        $this->layout = $layout;
+
+        return $this;
+    }
+
+    /**
+     * Merges default view parameters and additional view parameters.
+     *
+     * @return array
+     */
+    protected function parseViewParameters()
+    {
+        return array_merge($this->getDefaultViewParameters(), $this->getViewParameters());
     }
 
     /**
@@ -513,6 +366,163 @@ abstract class AbstractFormField implements FormFieldInterface
     }
 
     /**
+     * Get the view used to display the field.
+     *
+     * @return string
+     */
+    public function getViewPath()
+    {
+        return $this->view_path;
+    }
+
+    /**
+     * Set the view used to display the field.
+     *
+     * @param $view_path
+     *
+     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
+     */
+    public function setViewPath($view_path)
+    {
+        $this->view_path = $view_path;
+
+        return $this;
+    }
+
+    /**
+     * Get the view used to display the field.
+     *
+     * @return string
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
+     * Set the view used to display the field.
+     *
+     * @param $view
+     *
+     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Build the field name with prefix applied.
+     *
+     * @return string
+     */
+    public function buildPrefixedFieldName()
+    {
+        $field_name = $this->field->getAttribute('field_name');
+
+        if ($this->prefix) {
+            $adjustedPrefix = str_replace('.', '[', $this->prefix);
+
+            if (str_contains($adjustedPrefix, '[')) {
+                $adjustedPrefix = $adjustedPrefix.']';
+            }
+
+            return $adjustedPrefix.'['.$field_name.']';
+        }
+
+        return $field_name;
+    }
+
+    /**
+     * Get the unqiue id for the field.
+     *
+     * @return string
+     */
+    public function getFieldId()
+    {
+        return $this->id ?: 'field_'.str_replace('.', '_', $this->getPrefixedFieldName());
+    }
+
+    /**
+     * Get the field label.
+     *
+     * @return string
+     */
+    public function getFieldLabel()
+    {
+        return $this->field->getAttribute('name');
+    }
+
+    /**
+     * Get the field description.
+     *
+     * @return string
+     */
+    public function getFieldDescription()
+    {
+        return $this->field->getAttribute('description');
+    }
+
+    /**
+     * Get the class used to style the field.
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Set the class used to style the field.
+     *
+     * @param $class
+     *
+     * @return \Soda\Cms\InterfaceBuilder\Forms\Fields\FormFieldInterface
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
+
+    /**
+     * Merges default field parameters and additional field parameters.
+     *
+     * @return array
+     */
+    public function parseFieldParameters()
+    {
+        $parameters = $this->getFieldParameters();
+        $default_params = $this->getDefaultParameters();
+
+        return is_array($parameters) ? array_replace_recursive($default_params, $parameters) : $default_params;
+    }
+
+    /**
+     * Get the field parameters.
+     *
+     * @return string
+     */
+    public function getFieldParameters()
+    {
+        return $this->field->getAttribute('field_params');
+    }
+
+    /**
+     * Get the field default parameters (merged with field parameters).
+     *
+     * @return string
+     */
+    public function getDefaultParameters()
+    {
+        return [];
+    }
+
+    /**
      * Get additional view parameters to be sent to the field view.
      *
      * @return string
@@ -520,15 +530,5 @@ abstract class AbstractFormField implements FormFieldInterface
     protected function getViewParameters()
     {
         return [];
-    }
-
-    /**
-     * Merges default view parameters and additional view parameters.
-     *
-     * @return array
-     */
-    protected function parseViewParameters()
-    {
-        return array_merge($this->getDefaultViewParameters(), $this->getViewParameters());
     }
 }

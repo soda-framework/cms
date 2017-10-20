@@ -21,12 +21,8 @@ class Content extends Entity implements ContentInterface
 {
     use Auditable, SoftDeletes, Sluggable, Draftable, OptionallyBoundToApplication, HasDefaultAttributes, AdditionalClosureScopes, SortableClosure, HasOneDynamic;
 
-    protected $table = 'content';
-    protected $isSlugToggled = true;
     protected static $sortableGroupField = ['application_id', 'parent_id'];
-
     public $timestamps = true;
-
     public $fillable = [
         'name',
         'identifier',
@@ -46,7 +42,8 @@ class Content extends Entity implements ContentInterface
         'is_publishable',
         'is_deletable',
     ];
-
+    protected $table = 'content';
+    protected $isSlugToggled = true;
     protected $defaults = [
         'view_action'      => '',
         'view_action_type' => 'view',
@@ -91,6 +88,11 @@ class Content extends Entity implements ContentInterface
         return $this->hasOneDynamic($this->getDynamicModel());
     }
 
+    public function getDynamicModel()
+    {
+        return new DynamicContent;
+    }
+
     public function type()
     {
         return $this->belongsTo(ContentType::class, 'content_type_id');
@@ -104,6 +106,22 @@ class Content extends Entity implements ContentInterface
     public function blockTypes()
     {
         return $this->belongsToMany(BlockType::class, 'content_block_types')->withPivot('min_blocks', 'max_blocks', 'is_orderable');
+    }
+
+    public function getBlock($identifier)
+    {
+        return $this->block($identifier)->get();
+    }
+
+    public function block($identifier)
+    {
+        $block = $identifier instanceof BlockTypeInterface ? $identifier : $this->getBlockType($identifier);
+
+        if ($block) {
+            return $block->blockQuery($this->getKey());
+        }
+
+        throw new Exception('Page does not have block: \''.$identifier.'\'.');
     }
 
     public function getBlockType($identifier)
@@ -121,30 +139,9 @@ class Content extends Entity implements ContentInterface
         return $block;
     }
 
-    public function block($identifier)
-    {
-        $block = $identifier instanceof BlockTypeInterface ? $identifier : $this->getBlockType($identifier);
-
-        if ($block) {
-            return $block->blockQuery($this->getKey());
-        }
-
-        throw new Exception('Page does not have block: \''.$identifier.'\'.');
-    }
-
-    public function getBlock($identifier)
-    {
-        return $this->block($identifier)->get();
-    }
-
     public function newBlock($identifier)
     {
         return DynamicBlock::fromTable($identifier, ['page_id' => $this->id]);
-    }
-
-    public function getDynamicModel()
-    {
-        return new DynamicContent;
     }
 
     public function isSluggable()

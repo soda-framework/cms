@@ -59,16 +59,6 @@ class LoginController extends BaseController
     }
 
     /**
-     * Get the post register / login redirect path.
-     *
-     * @return string
-     */
-    public function redirectPath()
-    {
-        return route('soda.home');
-    }
-
-    /**
      * Get the guard to be used during authentication.
      *
      * @return \Illuminate\Contracts\Auth\StatefulGuard
@@ -76,5 +66,15 @@ class LoginController extends BaseController
     protected function guard()
     {
         return Auth::guard('soda');
+    }
+
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        return route('soda.home');
     }
 }

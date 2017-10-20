@@ -63,25 +63,27 @@
                                 </tr>
                                 </thead>
                                 <tbody class="sortable" data-entityname="content-types.fields">
-                                    @foreach($contentType->fields as $field)
-                                        <tr data-itemId="{{ $field->id }}" data-parentId="{{ $contentType->id }}">
-                                            <td class="sortable-handle"><img src="/soda/cms/img/drag-dots.gif" /></td>
-                                            <td>{{ $field->name }}</td>
-                                            <td>{{ $field->pivot->show_in_table ? 'Yes' : 'No' }}</td>
-                                            <td>
-                                                <a href='{{ route('soda.fields.edit', $field->id) }}' class='btn btn-warning' target="_blank"><span>Edit</span></a>
-                                                <button type="button" class="btn btn-danger" data-detach="{{ route('soda.content-types.fields.detach', [$contentType->id, $field->id]) }}">Delete</button>
+                                @foreach($contentType->fields as $field)
+                                    <tr data-itemId="{{ $field->id }}" data-parentId="{{ $contentType->id }}">
+                                        <td class="sortable-handle"><img src="/soda/cms/img/drag-dots.gif" /></td>
+                                        <td>{{ $field->name }}</td>
+                                        <td>{{ $field->pivot->show_in_table ? 'Yes' : 'No' }}</td>
+                                        <td>
+                                            <a href='{{ route('soda.fields.edit', $field->id) }}' class='btn btn-warning' target="_blank"><span>Edit</span></a>
+                                            <button type="button" class="btn btn-danger" data-detach="{{ route('soda.content-types.fields.detach', [$contentType->id, $field->id]) }}">
+                                                Delete
+                                            </button>
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         @else
                             <p>No fields to show</p>
                         @endif
                         @if(count($fields))
-                        <a class="btn btn-lg btn-success" href="#" data-add-field>Add Field</a>
+                            <a class="btn btn-lg btn-success" href="#" data-add-field>Add Field</a>
                         @endif
                     @else
                         Please save the content type before managing fields.
@@ -92,31 +94,33 @@
             <div class="tab-pane" id="tab_blocks" role="tabpanel">
                 <div class="content-block">
                     @if($contentType->id)
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Min Blocks</th>
-                            <th>Max Blocks</th>
-                            <th width="80">Options</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        @foreach($contentType->blockTypes as $blockType)
+                        <table class="table">
+                            <thead>
                             <tr>
-                                <td>{{ $blockType->name }}</td>
-                                <td>{{ $blockType->description }}</td>
-                                <td>{{ $blockType->pivot->min_blocks }}</td>
-                                <td>{{ $blockType->pivot->max_blocks }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-danger" data-detach="{{ route('soda.content-types.blocks.detach', [$contentType->id, $blockType->id]) }}">Delete</button>
-                                </td>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Min Blocks</th>
+                                <th>Max Blocks</th>
+                                <th width="80">Options</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                            @foreach($contentType->blockTypes as $blockType)
+                                <tr>
+                                    <td>{{ $blockType->name }}</td>
+                                    <td>{{ $blockType->description }}</td>
+                                    <td>{{ $blockType->pivot->min_blocks }}</td>
+                                    <td>{{ $blockType->pivot->max_blocks }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-detach="{{ route('soda.content-types.blocks.detach', [$contentType->id, $blockType->id]) }}">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                         @if(count($blockTypes))
                             <a class="btn btn-lg btn-success" href="#" data-add-block>Add Block</a>
                         @endif
@@ -160,7 +164,9 @@
                                 <tr>
                                     <td>
                                         <label>Creatable</label><br />
-                                        <small class="text-muted">If enabled, content of this type can be created from the CMS interface</small>
+                                        <small class="text-muted">If enabled, content of this type can be created from
+                                                                  the CMS interface
+                                        </small>
                                     </td>
                                     <td width="62">
                                         {!! $creatableFormItem = app('soda.form')->toggle([
@@ -174,7 +180,9 @@
                                 <tr class="if_creatable">
                                     <td>
                                         <label>Sluggable</label><br />
-                                        <small class="text-muted">If disabled, this content item can not be reached by a slug</small>
+                                        <small class="text-muted">If disabled, this content item can not be reached by a
+                                                                  slug
+                                        </small>
                                     </td>
                                     <td width="62">
                                         {!! app('soda.form')->toggle([
@@ -188,7 +196,9 @@
                                 <tr class="if_creatable">
                                     <td>
                                         <label>Publishable</label><br />
-                                        <small class="text-muted">If disabled, this content item can not be changed from it's current published state</small>
+                                        <small class="text-muted">If disabled, this content item can not be changed from
+                                                                  it's current published state
+                                        </small>
                                     </td>
                                     <td width="62">
                                         {!! app('soda.form')->toggle([
@@ -208,7 +218,8 @@
                                 <tr class="if_creatable">
                                     <td>
                                         <label>Movable</label><br />
-                                        <small class="text-muted">If disabled, this content item can not be moved</small>
+                                        <small class="text-muted">If disabled, this content item can not be moved
+                                        </small>
                                     </td>
                                     <td width="62">
                                         {!! app('soda.form')->toggle([
@@ -222,7 +233,9 @@
                                 <tr class="if_creatable">
                                     <td>
                                         <label>Folder</label><br />
-                                        <small class="text-muted">If enabled, this content can have child content items</small>
+                                        <small class="text-muted">If enabled, this content can have child content
+                                                                  items
+                                        </small>
                                     </td>
                                     <td width="62">
                                         {!! $allowedChildrenFormItem = app('soda.form')->toggle([
@@ -236,7 +249,9 @@
                                 <tr class="restricted_page_types">
                                     <td>
                                         <label>Restrict Child Content Types</label><br />
-                                        <small class="text-muted">If enabled, you may select which content types may be created as a child of this folder</small>
+                                        <small class="text-muted">If enabled, you may select which content types may be
+                                                                  created as a child of this folder
+                                        </small>
                                     </td>
                                     <td>
                                         {!! $restrictePageTypesFormItem = app('soda.form')->toggle([
@@ -251,7 +266,6 @@
                             </table>
                         </div>
                     </div>
-
 
 
                     <div class="allowed_subpage_types">
@@ -328,7 +342,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button  class="btn btn-primary">Add Block</button>
+                            <button class="btn btn-primary">Add Block</button>
                         </div>
                     </form>
                 </div>
@@ -361,7 +375,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button  class="btn btn-primary">Add Field</button>
+                            <button class="btn btn-primary">Add Field</button>
                         </div>
                     </form>
                 </div>
@@ -374,13 +388,13 @@
     @parent
     <script src="/soda/cms/js/forms/sortable.js"></script>
     <script>
-        $(function() {
+        $(function () {
             var creatableFormItem = $('#{{ $creatableFormItem->getFieldId() }}');
             var isFolderFormItem = $('#{{ $allowedChildrenFormItem->getFieldId() }}');
             var restrictedTypesFormItem = $('#{{ $restrictePageTypesFormItem->getFieldId() }}');
 
-            creatableFormItem.on('change', function() {
-                if($(this).is(":checked")) {
+            creatableFormItem.on('change', function () {
+                if ($(this).is(":checked")) {
                     $('.if_creatable').fadeIn();
                 } else {
                     $('.if_creatable').fadeOut();
@@ -389,16 +403,16 @@
                 isFolderFormItem.trigger('change');
             });
 
-            restrictedTypesFormItem.on('change', function() {
-                if(creatableFormItem.is(':checked') && isFolderFormItem.is(':checked')  && $(this).is(":checked")) {
+            restrictedTypesFormItem.on('change', function () {
+                if (creatableFormItem.is(':checked') && isFolderFormItem.is(':checked') && $(this).is(":checked")) {
                     $('.allowed_subpage_types').fadeIn();
                 } else {
                     $('.allowed_subpage_types').fadeOut();
                 }
             });
 
-            isFolderFormItem.on('change', function() {
-                if(creatableFormItem.is(':checked') && $(this).is(":checked")) {
+            isFolderFormItem.on('change', function () {
+                if (creatableFormItem.is(':checked') && $(this).is(":checked")) {
                     $('.restricted_page_types').fadeIn();
                 } else {
                     $('.restricted_page_types').fadeOut();
@@ -409,17 +423,17 @@
 
             creatableFormItem.trigger('change');
 
-            $('[data-add-block]').on('click', function(e) {
+            $('[data-add-block]').on('click', function (e) {
                 e.preventDefault();
                 $('#newBlockModal').modal('show')
             })
 
-            $('[data-add-field]').on('click', function(e) {
+            $('[data-add-field]').on('click', function (e) {
                 e.preventDefault();
                 $('#newFieldModal').modal('show')
             })
 
-            $('[data-detach]').on('click', function(e) {
+            $('[data-detach]').on('click', function (e) {
                 e.preventDefault();
                 var form = $('<form></form>');
                 var parameters = {
@@ -430,7 +444,7 @@
                 form.attr("method", "POST");
                 form.attr("action", $(this).data('detach'));
 
-                $.each(parameters, function(key, value) {
+                $.each(parameters, function (key, value) {
                     var field = $('<input></input>');
 
                     field.attr("type", "hidden");
@@ -449,7 +463,7 @@
             $('.sortable').sortable({
                 handle: '.sortable-handle',
                 axis: 'y',
-                update: function(a, b){
+                update: function (a, b) {
 
                     var $sorted = b.item;
 

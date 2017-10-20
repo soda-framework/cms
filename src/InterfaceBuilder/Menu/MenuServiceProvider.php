@@ -23,22 +23,6 @@ class MenuServiceProvider extends ServiceProvider
         $this->buildCmsSidebar();
     }
 
-    /**
-     * Register bindings in the container.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->app->singleton('soda.menu.registrar', function ($app) {
-            return new MenuRegistrar;
-        });
-
-        $this->app->singleton('soda.menu', function ($app) {
-            return new MenuBuilder($app['soda.menu.registrar']);
-        });
-    }
-
     protected function buildCmsSidebar()
     {
         $this->app['soda.menu']->menu('sidebar', function ($menu) {
@@ -128,6 +112,22 @@ class MenuServiceProvider extends ServiceProvider
             ]);
 
             return $menu;
+        });
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton('soda.menu.registrar', function ($app) {
+            return new MenuRegistrar;
+        });
+
+        $this->app->singleton('soda.menu', function ($app) {
+            return new MenuBuilder($app['soda.menu.registrar']);
         });
     }
 

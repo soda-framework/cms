@@ -58,30 +58,6 @@ trait UserHasRoles
     }
 
     //Big block of caching functionality.
-    public function cachedRoles()
-    {
-        if ($ttl = config('soda.cache.permissions')) {
-            $cache = app('cache');
-
-            if ($cache->getStore() instanceof TaggableStore) {
-                $cache = $cache->tags(Config::get('laratrust.role_user_table'));
-            }
-
-            return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
-                if (! $this->relationLoaded('roles')) {
-                    $this->load('roles');
-                }
-
-                return $this->getRelation('roles');
-            });
-        }
-
-        if (! $this->relationLoaded('roles')) {
-            $this->load('roles');
-        }
-
-        return $this->getRelation('roles');
-    }
 
     /**
      * Flush the user's cache.
@@ -105,5 +81,30 @@ trait UserHasRoles
     public function listRoles()
     {
         return $this->cachedRoles()->pluck('name', 'id');
+    }
+
+    public function cachedRoles()
+    {
+        if ($ttl = config('soda.cache.permissions')) {
+            $cache = app('cache');
+
+            if ($cache->getStore() instanceof TaggableStore) {
+                $cache = $cache->tags(Config::get('laratrust.role_user_table'));
+            }
+
+            return $cache->remember($this->getCacheKey(), is_int($ttl) ? $ttl : config('soda.cache.default-ttl'), function () {
+                if (! $this->relationLoaded('roles')) {
+                    $this->load('roles');
+                }
+
+                return $this->getRelation('roles');
+            });
+        }
+
+        if (! $this->relationLoaded('roles')) {
+            $this->load('roles');
+        }
+
+        return $this->getRelation('roles');
     }
 }

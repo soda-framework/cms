@@ -49,19 +49,6 @@ class DashboardBuilder implements Renderable
         return $this;
     }
 
-    public function removeBlockFromRow($rowId, $blockName)
-    {
-        if (isset($this->rows[$rowId])) {
-            $blockKey = array_search($blockName, $this->rows[$rowId]);
-
-            if ($blockKey !== false) {
-                unset($this->rows[$rowId][$blockKey]);
-            }
-        }
-
-        return $this;
-    }
-
     public function addBlock($blockName, callable $callback)
     {
         $this->blocks[$blockName] = $callback;
@@ -76,6 +63,19 @@ class DashboardBuilder implements Renderable
 
             foreach ($this->rows as $rowId => $row) {
                 $this->removeBlockFromRow($rowId, $blockName);
+            }
+        }
+
+        return $this;
+    }
+
+    public function removeBlockFromRow($rowId, $blockName)
+    {
+        if (isset($this->rows[$rowId])) {
+            $blockKey = array_search($blockName, $this->rows[$rowId]);
+
+            if ($blockKey !== false) {
+                unset($this->rows[$rowId][$blockKey]);
             }
         }
 
@@ -110,24 +110,6 @@ class DashboardBuilder implements Renderable
         }
     }
 
-    protected function beforeRenderRow($rowId)
-    {
-        if (isset($this->renderingEvents['row'][$rowId])) {
-            foreach ($this->renderingEvents['row'][$rowId] as $event) {
-                $event($this, $this->rows[$rowId]);
-            }
-        }
-    }
-
-    protected function beforeRenderBlock($blockName)
-    {
-        if (isset($this->renderingEvents['block'][$blockName])) {
-            foreach ($this->renderingEvents['block'][$blockName] as $event) {
-                $event($this, $this->blocks[$blockName]);
-            }
-        }
-    }
-
     protected function renderRow($rowId)
     {
         $this->beforeRenderRow($rowId);
@@ -148,6 +130,15 @@ class DashboardBuilder implements Renderable
         return;
     }
 
+    protected function beforeRenderRow($rowId)
+    {
+        if (isset($this->renderingEvents['row'][$rowId])) {
+            foreach ($this->renderingEvents['row'][$rowId] as $event) {
+                $event($this, $this->rows[$rowId]);
+            }
+        }
+    }
+
     protected function renderBlock($blockName)
     {
         $this->beforeRenderBlock($blockName);
@@ -163,5 +154,14 @@ class DashboardBuilder implements Renderable
         }
 
         return;
+    }
+
+    protected function beforeRenderBlock($blockName)
+    {
+        if (isset($this->renderingEvents['block'][$blockName])) {
+            foreach ($this->renderingEvents['block'][$blockName] as $event) {
+                $event($this, $this->blocks[$blockName]);
+            }
+        }
     }
 }

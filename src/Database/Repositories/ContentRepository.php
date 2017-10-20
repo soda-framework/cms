@@ -3,12 +3,11 @@
 namespace Soda\Cms\Database\Repositories;
 
 use Illuminate\Http\Request;
-use Soda\Cms\Database\Models\ContentShortcut;
-use Soda\Cms\Database\Models\ContentType;
-use Soda\Cms\Database\Models\Contracts\ContentInterface;
-use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
 use Soda\Cms\Foundation\Constants;
 use Soda\Cms\Support\Facades\Soda;
+use Soda\Cms\Database\Models\ContentShortcut;
+use Soda\Cms\Database\Models\Contracts\ContentInterface;
+use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
 
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
@@ -30,7 +29,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $contentRoot = $this->model->getRoots()->first();
 
-        if (!$contentRoot) {
+        if (! $contentRoot) {
             $contentRoot = $this->model->newInstance([
                 'name'           => 'Root',
                 'slug'           => null,
@@ -124,18 +123,18 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
         return $query->get();
     }
 
-    public function getBlockTypes()
-    {
-        return app('soda.block-type.repository')->getAll();
-    }
-
     public function getAvailableBlockTypes(ContentInterface $content)
     {
-        if (!$content->relationLoaded('blockTypes')) {
+        if (! $content->relationLoaded('blockTypes')) {
             $content->load('blockTypes');
         }
 
         return $this->getBlockTypes()->diff($content->getRelation('blockTypes'));
+    }
+
+    public function getBlockTypes()
+    {
+        return app('soda.block-type.repository')->getAll();
     }
 
     public function getShortcuts(ContentInterface $content)
@@ -152,14 +151,14 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         $shortcuts = $shortcutsQuery->get();
 
-        if (!count($creatableTypes) || ($creatableTypes->where('is_folder', true)->count() && !$shortcuts->where('is_folder', true)->where('override_default', true)->count())) {
+        if (! count($creatableTypes) || ($creatableTypes->where('is_folder', true)->count() && ! $shortcuts->where('is_folder', true)->where('override_default', true)->count())) {
             $shortcuts->push(new ContentShortcut([
                 'text'      => 'New Content Folder',
                 'is_folder' => 1,
             ]));
         }
 
-        if (!count($creatableTypes) || ($creatableTypes->where('is_folder', false)->count() && !$shortcuts->where('is_folder', false)->where('override_default', true)->count())) {
+        if (! count($creatableTypes) || ($creatableTypes->where('is_folder', false)->count() && ! $shortcuts->where('is_folder', false)->where('override_default', true)->count())) {
             $shortcuts->push(new ContentShortcut([
                 'text'      => 'New Content Item',
                 'is_folder' => 0,
@@ -173,13 +172,13 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         $parent = $parentId ? $this->findById($parentId) : $this->getRoot();
 
-        if (!$parent->isFolder()) {
+        if (! $parent->isFolder()) {
             throw new \Exception('You cannot create that content here.');
         }
 
         if ($parent->type) {
             $allowedContentTypes = $parent->type->pageTypes ? $parent->type->pageTypes->pluck('id')->toArray() : [];
-            if (count($allowedContentTypes) && !in_array($contentTypeId, $allowedContentTypes)) {
+            if (count($allowedContentTypes) && ! in_array($contentTypeId, $allowedContentTypes)) {
                 throw new \Exception('You cannot create that content here.');
             }
         }
@@ -239,7 +238,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
         $slug = $content->generateSlug($request->input('slug'));
 
-        if ($parentContent && !starts_with($slug, $parentContent->getAttribute('slug'))) {
+        if ($parentContent && ! starts_with($slug, $parentContent->getAttribute('slug'))) {
             $slug = $parentContent->generateSlug($request->input('slug'));
         }
 

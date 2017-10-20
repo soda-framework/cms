@@ -31,6 +31,11 @@ class ContentRepository extends AbstractCacheRepository implements ContentReposi
         });
     }
 
+    protected function getSluggableContentCacheKey($slug)
+    {
+        return 'soda.'.Soda::getApplication()->id.'.content-slug:'.$slug;
+    }
+
     public function getAttributesForContent(ContentInterface $content)
     {
         return $this->cache($this->getContentAttributesCacheKey($content->getKey()), config('soda.cache.content-data'), function () use ($content) {
@@ -48,11 +53,6 @@ class ContentRepository extends AbstractCacheRepository implements ContentReposi
 
             return $model;
         });
-    }
-
-    protected function getSluggableContentCacheKey($slug)
-    {
-        return 'soda.'.Soda::getApplication()->id.'.content-slug:'.$slug;
     }
 
     protected function getContentAttributesCacheKey($contentId)

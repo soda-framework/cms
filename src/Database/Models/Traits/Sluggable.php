@@ -12,6 +12,26 @@ trait Sluggable
     }
 
     /**
+     * Fixes slashes used in slug.
+     *
+     * @param $slug
+     *
+     * @return string
+     */
+    protected function fixSlug($slug)
+    {
+        $parts = explode('/', $slug);
+        $slug = '';
+        foreach ($parts as $part) {
+            if ($part) {
+                $slug .= '/'.str_slug($part);
+            }
+        }
+
+        return strtolower('/'.ltrim($slug, '/'));
+    }
+
+    /**
      * Takes a parent tree item and generates a slug based off it.
      *
      * @param $title
@@ -24,7 +44,7 @@ trait Sluggable
         $slug = $useParent ? $this->fixSlug($this->fixSlug($this->getAttribute('slug')).$this->fixSlug($title)) : $this->fixSlug($title);
 
         // Make sure it doesn't already exist. Exclude own record if we're not using parent to generate slug
-        if ($this->getExistingSlug($slug, !$useParent)) {
+        if ($this->getExistingSlug($slug, ! $useParent)) {
             // It already exists, increment it
             $slug = $this->incrementLatestSlug($slug);
         }
@@ -36,7 +56,7 @@ trait Sluggable
      * Checks where slug is currently being used.
      *
      * @param string $slug
-     * @param $excludeSelf
+     * @param        $excludeSelf
      *
      * @return bool
      */
@@ -73,25 +93,5 @@ trait Sluggable
         }
 
         return $slug.'-'.$num;
-    }
-
-    /**
-     * Fixes slashes used in slug.
-     *
-     * @param $slug
-     *
-     * @return string
-     */
-    protected function fixSlug($slug)
-    {
-        $parts = explode('/', $slug);
-        $slug = '';
-        foreach ($parts as $part) {
-            if ($part) {
-                $slug .= '/'.str_slug($part);
-            }
-        }
-
-        return strtolower('/'.ltrim($slug, '/'));
     }
 }

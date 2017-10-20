@@ -4,8 +4,8 @@ namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Soda\Cms\Database\Models\Contracts\HasLocale;
 use Soda\Cms\Database\Models\Quicklink;
+use Soda\Cms\Database\Models\Contracts\HasLocale;
 
 class HomeController extends BaseController
 {

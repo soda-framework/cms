@@ -2,7 +2,7 @@
   transition: background-color 0.25s ease;
   border: 0;
   border-radius: 20px;
-  @media(max-width: $screen-md){
+  @media(max-width: $screen-md) {
     padding: 10px 20px;
   }
 }
@@ -18,7 +18,7 @@
   .mdi-menu-down {
     float: right;
   }
-  @media(max-width: $screen-md){
+  @media(max-width: $screen-md) {
     min-width: 100px;
   }
 }

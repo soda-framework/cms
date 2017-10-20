@@ -40,11 +40,6 @@ class Application extends Model implements ApplicationInterface
         return $this->hasMany(ApplicationUrl::class);
     }
 
-    public function getSettings()
-    {
-        return app('soda.application.repository')->getSettingsForApplication($this);
-    }
-
     public function getSetting($setting)
     {
         $settings = $this->getSettings();
@@ -55,5 +50,10 @@ class Application extends Model implements ApplicationInterface
                 return $setting->getFieldValue();
             }
         }
+    }
+
+    public function getSettings()
+    {
+        return app('soda.application.repository')->getSettingsForApplication($this);
     }
 }

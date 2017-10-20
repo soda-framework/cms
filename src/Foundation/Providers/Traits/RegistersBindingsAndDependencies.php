@@ -7,28 +7,6 @@ use Illuminate\Foundation\AliasLoader;
 trait RegistersBindingsAndDependencies
 {
     /**
-     * Register facades.
-     *
-     * @param array $facades
-     */
-    protected function registerFacades(array $facades)
-    {
-        AliasLoader::getInstance($facades);
-    }
-
-    /**
-     * Register dependencies.
-     *
-     * @param array $services
-     */
-    protected function registerDependencies(array $services)
-    {
-        foreach ($services as $service) {
-            $this->app->register($service);
-        }
-    }
-
-    /**
      * Register bindings.
      *
      * @param array $bindings
@@ -75,6 +53,28 @@ trait RegistersBindingsAndDependencies
             foreach ($aliases as $alias) {
                 $this->app->alias($key, $alias);
             }
+        }
+    }
+
+    /**
+     * Register facades.
+     *
+     * @param array $facades
+     */
+    protected function registerFacades(array $facades)
+    {
+        AliasLoader::getInstance($facades);
+    }
+
+    /**
+     * Register dependencies.
+     *
+     * @param array $services
+     */
+    protected function registerDependencies(array $services)
+    {
+        foreach ($services as $service) {
+            $this->app->register($service);
         }
     }
 }

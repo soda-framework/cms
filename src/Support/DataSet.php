@@ -51,23 +51,12 @@ class DataSet extends Widget
         //inherit cid from datafilter
         if ($ins->source instanceof \Zofe\Rapyd\DataFilter\DataFilter) {
             $ins->cid = $ins->source->cid;
-        }
-        //generate new component id
+        } //generate new component id
         else {
             $ins->cid = $ins->getIdentifier();
         }
 
         return $ins;
-    }
-
-    /**
-     * @param string $table
-     */
-    protected function table($table)
-    {
-        $this->query = DB::table($table);
-
-        return $this->query;
     }
 
     /**
@@ -81,16 +70,6 @@ class DataSet extends Widget
         $url = ($dir == 'asc') ? $this->orderby_uri_asc : $this->orderby_uri_desc;
 
         return str_replace('-field-', $field, $url);
-    }
-
-    /**
-     * @param string $field
-     */
-    public function orderBy($field, $direction = 'asc')
-    {
-        $this->orderby = [$field, $direction];
-
-        return $this;
     }
 
     public function onOrderby($field, $direction = '')
@@ -124,6 +103,16 @@ class DataSet extends Widget
         return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function getSet()
+    {
+        $this->build();
+
+        return $this;
+    }
+
     public function build()
     {
         if (is_string($this->source) && strpos(' ', $this->source) === false) {
@@ -150,8 +139,7 @@ class DataSet extends Widget
             } elseif (is_a($this->query, "\Illuminate\Database\Eloquent\Builder")) {
                 $this->key = $this->query->getModel()->getKeyName();
             }
-        }
-        //array
+        } //array
         elseif (is_array($this->source)) {
             $this->type = 'array';
         } else {
@@ -196,8 +184,9 @@ class DataSet extends Widget
                 $this->data = array_slice($this->source, $offset, $limit);
                 $this->total_rows = count($this->source);
                 $this->paginator = new LengthAwarePaginator($this->data, $this->total_rows, $limit, $current_page,
-                    ['path'    => Paginator::resolveCurrentPath(),
-                    'pageName' => 'page'.$this->cid,
+                    [
+                        'path'     => Paginator::resolveCurrentPath(),
+                        'pageName' => 'page'.$this->cid,
                     ]);
                 break;
 
@@ -224,11 +213,29 @@ class DataSet extends Widget
     }
 
     /**
-     * @return $this
+     * @param string $table
      */
-    public function getSet()
+    protected function table($table)
     {
-        $this->build();
+        $this->query = DB::table($table);
+
+        return $this->query;
+    }
+
+    /**
+     * @param string $fieldname
+     */
+    protected function canOrderby($fieldname)
+    {
+        return ! $this->orderby_check || in_array($fieldname, $this->orderby_fields);
+    }
+
+    /**
+     * @param string $field
+     */
+    public function orderBy($field, $direction = 'asc')
+    {
+        $this->orderby = [$field, $direction];
 
         return $this;
     }
@@ -290,13 +297,5 @@ class DataSet extends Widget
         $this->orderby_fields = array_merge($this->orderby_fields, (array) $fieldname);
 
         return $this;
-    }
-
-    /**
-     * @param string $fieldname
-     */
-    protected function canOrderby($fieldname)
-    {
-        return ! $this->orderby_check || in_array($fieldname, $this->orderby_fields);
     }
 }

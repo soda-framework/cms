@@ -127,15 +127,6 @@ class FancyUpload extends AbstractFormField
         return parent::getView();
     }
 
-    public function getFieldValue()
-    {
-        if ($this->model === null || $this->model->id === null) {
-            return 'Please save before uploading a file.';
-        }
-
-        return parent::getFieldValue();
-    }
-
     public function renderForTable()
     {
         $parameters = $this->parseFieldParameters();
@@ -167,6 +158,15 @@ class FancyUpload extends AbstractFormField
         }
 
         return 'Multiple files';
+    }
+
+    public function getFieldValue()
+    {
+        if ($this->model === null || $this->model->id === null) {
+            return 'Please save before uploading a file.';
+        }
+
+        return parent::getFieldValue();
     }
 
     /**

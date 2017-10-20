@@ -87,7 +87,7 @@ class Relationship extends Dropdown
     /**
      * Pulls array from query, using field parameters specified.
      *
-     * @param $query
+     * @param        $query
      * @param string $field_parameters
      *
      * @return array

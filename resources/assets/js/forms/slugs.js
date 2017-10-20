@@ -5,7 +5,7 @@
         generateExternalButton: '[data-slug-external]',
     };
 
-    var generate = function(text, allowExternal) {
+    var generate = function (text, allowExternal) {
         if (!allowExternal || (text.substr(0, 4) !== 'http' && text.indexOf('://') == -1)) {
             text = text.toString().toLowerCase()
                 .replace(/<(?:.|\n)*?>/gm, '')         // remove html tags
@@ -14,7 +14,7 @@
                 .replace(/\-\-+/g, '-')                // Replace multiple - with single -
                 .replace(/\/\/+/g, '/');                   // Trim - from end of text
 
-            if(text.substring(0,1) != '/') {
+            if (text.substring(0, 1) != '/') {
                 text = '/' + text;
             }
         }
@@ -32,7 +32,7 @@
     };
 
     var external = function () {
-        var link  = prompt("Enter external URL", "http://");
+        var link = prompt("Enter external URL", "http://");
         return (link.indexOf('://') == -1) ? 'http://' + link : link;
     };
 
@@ -43,7 +43,7 @@
 
             var filteredText = Soda.slugs.generate(text, allowExternal);
 
-            if(filteredText !== text) {
+            if (filteredText !== text) {
                 $(this).val(filteredText);
             }
         });
@@ -65,7 +65,7 @@
         });
     };
 
-    $(function(){
+    $(function () {
         _registerEvents();
     })
 

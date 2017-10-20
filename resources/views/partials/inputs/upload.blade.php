@@ -12,7 +12,7 @@
 @section("footer.js")
     @parent
     <script>
-        $("#{{ $field_id }}").on('change', function(){
+        $("#{{ $field_id }}").on('change', function () {
 
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
@@ -30,7 +30,7 @@
             }
         });
 
-        $("#{{ $field_id }}_clear").on('click', function() {
+        $("#{{ $field_id }}_clear").on('click', function () {
             $('#{{ $field_id }}_preview').attr('src', $('#{{ $field_id }}_preview').data('original-src'));
             $('#{{ $field_id }}').val('');
         });

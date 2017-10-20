@@ -27,14 +27,14 @@ class ApplicationSetting extends Model implements ApplicationSettingInterface
         'application_id',
     ];
 
-    public function application()
-    {
-        return $this->belongsTo(Application::class);
-    }
-
     public static function getFieldTypes()
     {
         return app('soda.form')->getFieldTypes();
+    }
+
+    public function application()
+    {
+        return $this->belongsTo(Application::class);
     }
 
     public function getFieldValue()

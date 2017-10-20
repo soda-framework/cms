@@ -45,13 +45,13 @@ class UploadedFileTransformer
         return $image->save(null, isset($this->config['quality']) ? $this->config['quality'] : 100);
     }
 
-    public function setConfig($config)
-    {
-        $this->config = $config;
-    }
-
     public function getConfig()
     {
         return $this->config;
+    }
+
+    public function setConfig($config)
+    {
+        $this->config = $config;
     }
 }

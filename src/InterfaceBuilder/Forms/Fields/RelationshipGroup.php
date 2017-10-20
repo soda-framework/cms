@@ -12,15 +12,15 @@ class RelationshipGroup extends Relationship
     public function getDefaultParameters()
     {
         return [
-            'options'              => [],
-            'key_column'           => 'id',
-            'value_column'         => 'id',
-            'group_column'         => null,
+            'options'      => [],
+            'key_column'   => 'id',
+            'value_column' => 'id',
+            'group_column' => null,
 
-            'multiple'             => true,
-            'combo'                => false,
-            'array-save'           => 'json',
-            'settings'             => [
+            'multiple'   => true,
+            'combo'      => false,
+            'array-save' => 'json',
+            'settings'   => [
                 'placeholder'             => 'Please select...',
                 'minimumResultsForSearch' => 'infinity',
                 'theme'                   => 'bootstrap',

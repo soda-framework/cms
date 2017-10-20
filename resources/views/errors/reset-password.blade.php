@@ -30,7 +30,8 @@
                         <div class="form-group">
                             <label>@lang('soda::forms.confirm_password')</label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="@lang('soda::forms.confirm_new_password')">
-                        </div>                    </div>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <a href="{{ route('soda.logout') }}" class="btn btn-default">@lang('soda::actions.logout')</a>
                         <button class="btn btn-primary">@lang('soda::actions.continue')</button>

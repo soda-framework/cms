@@ -79,6 +79,20 @@ class CommandsServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        if ($this->app->environment('production')) {
+            return array_values($this->commands);
+        } else {
+            return array_merge(array_values($this->commands), array_values($this->devCommands));
+        }
+    }
+
+    /**
      * Register the command.
      *
      * @param $binding
@@ -136,19 +150,5 @@ class CommandsServiceProvider extends ServiceProvider
         $this->app->singleton($binding, function ($app) {
             return new Setup($app['config'], $app['db']);
         });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        if ($this->app->environment('production')) {
-            return array_values($this->commands);
-        } else {
-            return array_merge(array_values($this->commands), array_values($this->devCommands));
-        }
     }
 }

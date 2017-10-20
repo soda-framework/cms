@@ -14,8 +14,7 @@ var primary = Soda.colours[Soda.theme].primary;
 var secondary = Soda.colours[Soda.theme].secondary;
 
 var Wave = {
-    create: function(waveColor, waveQuality, offsetA, amplitudeA, frequencyA, speedA, offsetB, amplitudeB, frequencyB, speedB, offsetY)
-    {
+    create: function (waveColor, waveQuality, offsetA, amplitudeA, frequencyA, speedA, offsetB, amplitudeB, frequencyB, speedB, offsetY) {
         var obj = Object.create(this);
 
         obj.waveColor = waveColor;
@@ -33,8 +32,7 @@ var Wave = {
         return obj;
     },
 
-    update: function()
-    {
+    update: function () {
         var i = 0;
         var angleA = 0;
         var angleB = 0;
@@ -45,8 +43,7 @@ var Wave = {
         context.fillStyle = this.waveColor;
         context.beginPath();
 
-        for(i; i < this.waveQuality; ++i)
-        {
+        for (i; i < this.waveQuality; ++i) {
             norm = (i / this.waveQuality);
             angleA = norm * this.frequencyA;
             angleB = norm * this.frequencyB;
@@ -55,7 +52,7 @@ var Wave = {
             x = 0;
             y = (Math.sin(angleA + this.offsetA * this.speedA) * this.amplitudeA) + (Math.sin(angleB + this.offsetB * this.speedB) * this.amplitudeB) + c;
 
-            if(i === 0) {
+            if (i === 0) {
                 context.moveTo(x, y);
             } else {
                 x = norm * plotWidth;
@@ -75,13 +72,11 @@ var Wave = {
     }
 };
 
-window.onload = function()
-{
+window.onload = function () {
     canvas = document.getElementById('wave');
     context = canvas.getContext('2d');
 
-    window.onresize = function()
-    {
+    window.onresize = function () {
         screenWidth = window.innerWidth;
         screenHeight = window.innerHeight;
 
@@ -99,8 +94,7 @@ window.onload = function()
     loop();
 };
 
-function loop()
-{
+function loop() {
     requestAnimationFrame(loop);
 
     context.fillStyle = '#f0f0f0';
@@ -108,8 +102,7 @@ function loop()
 
     var i = waves.length - 1;
 
-    for(i; i > -1; --i)
-    {
+    for (i; i > -1; --i) {
         var wave = waves[i];
         wave.update();
     }

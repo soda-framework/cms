@@ -16,7 +16,7 @@
     background: -moz-linear-gradient(top, $sidebar-from-bg 0%, $sidebar-to-bg 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(top, $sidebar-from-bg 0%, $sidebar-to-bg 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, $sidebar-from-bg 0%, $sidebar-to-bg 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$sidebar-from-bg}', endColorstr='#{$sidebar-to-bg}',GradientType=0 ); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$sidebar-from-bg}', endColorstr='#{$sidebar-to-bg}', GradientType=0); /* IE6-9 */
 
     > svg.wave {
       fill: $sidebar-from-bg;

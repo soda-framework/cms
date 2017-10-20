@@ -1,6 +1,5 @@
 @media(max-width: $screen-sm-max) {
   body.sidebar-in {
-
     overflow-x: hidden;
     .sidebar-offset {
       transform: translateX(300px);
@@ -8,7 +7,7 @@
   }
 }
 
-@media(max-width: $screen-md){
+@media(max-width: $screen-md) {
   .container-fluid {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -88,7 +87,8 @@ body.loaded {
   }
 }
 
-.content-top /*, .content-header*/ {
+.content-top /*, .content-header*/
+{
   margin-bottom: 30px;
 }
 
@@ -116,7 +116,7 @@ body.loaded {
   }
 
   .content-heading-button {
-    @media(max-width: $screen-md){
+    @media(max-width: $screen-md) {
       float: none !important;
       clear: both;
       margin: 15px 0;

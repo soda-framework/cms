@@ -9,14 +9,16 @@ class ToggleLocale
 {
     public function handle($request, Closure $next)
     {
-        if($locale = $request->input('locale')) {
+        if ($locale = $request->input('locale')) {
             app()->setLocale($locale);
             $this->rememberLocale($locale ?: '');
-        } else if ($user = app('soda')->auth()->user()) {
+        } elseif ($user = app('soda')->auth()->user()) {
             if ($user instanceof HasLocale) {
-                if($user->locale) app()->setLocale($user->locale);
+                if ($user->locale) {
+                    app()->setLocale($user->locale);
+                }
 
-                if (!$this->hasLocaleCookie($request) || $this->getLocaleCookie($request) != $user->locale) {
+                if (! $this->hasLocaleCookie($request) || $this->getLocaleCookie($request) != $user->locale) {
                     $this->rememberLocale($user->locale ?: '');
                 }
             } elseif ($this->hasLocaleCookie($request)) {
@@ -40,16 +42,9 @@ class ToggleLocale
         );
     }
 
-    public function forgetLocale()
+    public function cookieKey()
     {
-        return cookie()->queue(
-            cookie()->forget($this->cookieKey())
-        );
-    }
-
-    public function getLocaleCookie($request)
-    {
-        return $request->cookie($this->cookieKey());
+        return 'soda_locale';
     }
 
     public function hasLocaleCookie($request)
@@ -57,12 +52,18 @@ class ToggleLocale
         return $request->hasCookie($this->cookieKey());
     }
 
-    public function cookieKey()
+    public function getLocaleCookie($request)
     {
-        return 'soda_locale';
+        return $request->cookie($this->cookieKey());
+    }
+
+    public function forgetLocale()
+    {
+        return cookie()->queue(
+            cookie()->forget($this->cookieKey())
+        );
     }
 }
-
 
 /*
 

@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix');
+const {mix} = require('laravel-mix');
 let webpack = require('webpack');
 
 mix.options({processCssUrls: false}); //prevents copying of fonts/images, which we currently do manually
@@ -38,20 +38,20 @@ mix.sass('resources/assets/scss/application.scss', 'public/css')
     .js('resources/assets/js/forms/slugs.js', 'public/js/forms')
     .copyDirectory('resources/assets/img', 'public/img');
 
-if(process.env.RELEASE == 'true') {
+if (process.env.RELEASE == 'true') {
     mix.js('resources/assets/js/forms/sortable.js', 'public/js/forms')
-       .js('resources/assets/js/forms/dates.js', 'public/js/forms')
-       .js('resources/assets/js/forms/tinymce.js', 'public/js/forms')
-       .js('resources/assets/js/forms/upload.js', 'public/js/forms')
-       .js('resources/assets/js/forms/multiselect.js', 'public/js/forms')
-       .js('resources/assets/js/forms/json.js', 'public/js/forms')
-       .copyDirectory('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
-       .copyDirectory('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
-       .copyDirectory('node_modules/mdi/fonts', 'public/fonts/mdi')
-       .copyDirectory('node_modules/bootstrap-fileinput/img', 'public/components/bootstrap-fileinput/img')
-       .copyDirectory('node_modules/jsoneditor/dist/img', 'public/components/jsoneditor/img')
-       .copyDirectory('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
-       .copyDirectory('node_modules/tinymce/skins', 'public/components/tinymce/skins')
-       .copyDirectory('node_modules/tinymce/themes', 'public/components/tinymce/themes');
+        .js('resources/assets/js/forms/dates.js', 'public/js/forms')
+        .js('resources/assets/js/forms/tinymce.js', 'public/js/forms')
+        .js('resources/assets/js/forms/upload.js', 'public/js/forms')
+        .js('resources/assets/js/forms/multiselect.js', 'public/js/forms')
+        .js('resources/assets/js/forms/json.js', 'public/js/forms')
+        .copyDirectory('node_modules/bootstrap/fonts', 'public/fonts/bootstrap')
+        .copyDirectory('node_modules/font-awesome/fonts', 'public/fonts/font-awesome')
+        .copyDirectory('node_modules/mdi/fonts', 'public/fonts/mdi')
+        .copyDirectory('node_modules/bootstrap-fileinput/img', 'public/components/bootstrap-fileinput/img')
+        .copyDirectory('node_modules/jsoneditor/dist/img', 'public/components/jsoneditor/img')
+        .copyDirectory('node_modules/tinymce/plugins', 'public/components/tinymce/plugins')
+        .copyDirectory('node_modules/tinymce/skins', 'public/components/tinymce/skins')
+        .copyDirectory('node_modules/tinymce/themes', 'public/components/tinymce/themes');
 }
 

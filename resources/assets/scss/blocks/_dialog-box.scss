@@ -30,7 +30,7 @@
 
   .input-group-addon {
     background-color: $theme-2;
-    border-color: rgba(0,0,0,0.1);
+    border-color: rgba(0, 0, 0, 0.1);
     border-bottom-width: 3px;
     color: $white;
     padding: 10px 15px;
@@ -46,14 +46,14 @@
     background-color: rgba(0, 0, 0, 0.3);
     outline: none !important;
     color: $slate-060;
-    border-bottom: 3px solid rgba(0,0,0,0.2);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.2);
     transition: background-color 0.25s ease, color 0.25s ease;
     &, &:hover, &:active, &:focus {
       outline: none !important;
       box-shadow: none !important;
     }
     &:focus {
-      background-color: rgba(0,0,0,0.5);
+      background-color: rgba(0, 0, 0, 0.5);
       color: $slate-080;
     }
     &::-webkit-input-placeholder {
@@ -74,7 +74,7 @@
     background-color: $login-box;
     color: $login-box-text;
     border-radius: 10px;
-    border-bottom: 5px solid rgba(0,0,0,0.5);
+    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
     &:before, &:after {
       z-index: -1;
       position: absolute;
@@ -84,8 +84,8 @@
       width: 50%;
       top: 80%;
       max-width: 300px;
-      background: #777;
-      box-shadow: 0 15px 10px #777;
+      background: #777777;
+      box-shadow: 0 15px 10px #777777;
       transform: rotate(-3deg);
     }
     &:after {

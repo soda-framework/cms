@@ -49,8 +49,8 @@ class ContentBlockController extends BaseController
     /**
      * Detaches an existing resource.
      *
-     * @param  int    $contentId
-     * @param  int    $blockTypeId
+     * @param  int $contentId
+     * @param  int $blockTypeId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -107,6 +107,11 @@ class ContentBlockController extends BaseController
         }
 
         return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('success', trans('soda::messages.created', ['object' => trans('soda::terminology.block')]));
+    }
+
+    protected function getTab(BlockTypeInterface $blockType)
+    {
+        return strtolower($blockType->identifier);
     }
 
     /**
@@ -173,10 +178,5 @@ class ContentBlockController extends BaseController
         }
 
         return redirect()->route('soda.content.edit', [$contentId, 'tab' => $this->getTab($blockType)])->with('warning', trans('soda::messages.deleted', ['object' => trans('soda::terminology.block')]));
-    }
-
-    protected function getTab(BlockTypeInterface $blockType)
-    {
-        return strtolower($blockType->identifier);
     }
 }

@@ -20,17 +20,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $this->model = $model;
     }
 
-    public function getRoles($filterLevel = true)
-    {
-        $query = $this->model->roles()->getRelated();
-
-        if ($filterLevel) {
-            $query->where('level', '<', \Auth::user()->getLevel());
-        }
-
-        return $query->pluck('display_name', 'id')->toArray();
-    }
-
     public function save(Request $request, $id = null)
     {
         $model = $id ? $this->model->findOrFail($id) : $this->newInstance();
@@ -49,6 +38,16 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         return $model;
     }
 
+    public function getFilteredGrid($perPage)
+    {
+        $filter = $this->buildFilter($this->model);
+        $grid = $this->buildGrid($filter);
+        $grid = $this->addButtonsToGrid($grid, 'soda.users.edit', 'soda.users.destroy');
+        $grid->paginate($perPage)->getGrid($this->getGridView());
+
+        return compact('filter', 'grid');
+    }
+
     /**
      * @param UserInterface $model
      */
@@ -65,6 +64,17 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $filter->build();
 
         return $filter;
+    }
+
+    public function getRoles($filterLevel = true)
+    {
+        $query = $this->model->roles()->getRelated();
+
+        if ($filterLevel) {
+            $query->where('level', '<', \Auth::user()->getLevel());
+        }
+
+        return $query->pluck('display_name', 'id')->toArray();
     }
 
     public function buildGrid(DataFilter $filter)
@@ -86,16 +96,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $grid->attr('class', 'table table-striped middle');
 
         return $grid;
-    }
-
-    public function getFilteredGrid($perPage)
-    {
-        $filter = $this->buildFilter($this->model);
-        $grid = $this->buildGrid($filter);
-        $grid = $this->addButtonsToGrid($grid, 'soda.users.edit', 'soda.users.destroy');
-        $grid->paginate($perPage)->getGrid($this->getGridView());
-
-        return compact('filter', 'grid');
     }
 
     /**

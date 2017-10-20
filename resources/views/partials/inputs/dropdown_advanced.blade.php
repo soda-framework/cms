@@ -26,7 +26,7 @@
 @section('footer.js')
     @parent
     <script>
-        $(function(){
+        $(function () {
             $('#{{ $field_id }}').select2({
                 tags: {{ $field_parameters['combo'] == true ? 'true' : 'false' }},
                 multiple: {{ $field_parameters['multiple'] == true ? 'true' : 'false' }},

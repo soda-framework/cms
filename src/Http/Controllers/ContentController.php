@@ -39,16 +39,16 @@ class ContentController extends BaseController
 
         $content = $this->content->listFolder($request, $contentFolder);
 
-        if(!$request->has('search')) {
+        if (! $request->has('search')) {
             $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
             $shortcuts = $this->content->getShortcuts($contentFolder);
             $isMovable = $content->where('is_movable', true)->count() ? true : false;
         } else {
             app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
-            app('soda.interface')->setHeading("Search");
+            app('soda.interface')->setHeading('Search');
         }
 
-        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts','isMovable'));
+        return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts', 'isMovable'));
     }
 
     /**
@@ -71,21 +71,44 @@ class ContentController extends BaseController
 
         $content = $this->content->listFolder($request, $contentFolder);
 
-        if(!$request->has('search')) {
+        if (! $request->has('search')) {
             $contentTypes = $this->content->getCreatableContentTypes($contentFolder->id);
             $shortcuts = $this->content->getShortcuts($contentFolder);
             $isMovable = $content->where('is_movable', true)->count() ? true : false;
 
-            if($contentFolder->real_depth > 0) {
+            if ($contentFolder->real_depth > 0) {
                 $this->buildBreadcrumbTree($contentFolder);
                 app('soda.interface')->setHeading($contentFolder->name);
             }
         } else {
             $this->buildBreadcrumbTree($contentFolder, true);
-            app('soda.interface')->setHeading("Search");
+            app('soda.interface')->setHeading('Search');
         }
 
         return soda_cms_view('data.content.index', compact('contentFolder', 'content', 'contentTypes', 'shortcuts', 'isMovable'));
+    }
+
+    protected function buildBreadcrumbTree(ContentInterface $contentItem, $includeItem = false)
+    {
+        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
+
+        if ($parentFolder = $contentItem->getAncestorsTree()->first()) {
+            do {
+                if ($parentFolder->real_depth > 0) {
+                    app('soda.interface')->breadcrumbs()->addLink(route('soda.content.show', $parentFolder->id), $parentFolder->name);
+                }
+
+                if ($parentFolder->relationLoaded('children') && isset($parentFolder->getRelation('children')[0])) {
+                    $parentFolder = $parentFolder->getRelation('children')[0];
+                } else {
+                    $parentFolder = false;
+                }
+            } while ($parentFolder);
+        }
+
+        if ($includeItem) {
+            app('soda.interface')->breadcrumbs()->addLink(route('soda.content.show', $contentItem->id), $contentItem->name);
+        }
     }
 
     /**
@@ -215,28 +238,5 @@ class ContentController extends BaseController
         }
 
         return redirect()->back()->with('info', trans('soda::messages.deleted', ['object' => trans('soda::terminology.content')]));
-    }
-
-    protected function buildBreadcrumbTree(ContentInterface $contentItem, $includeItem = false)
-    {
-        app('soda.interface')->breadcrumbs()->addLink(route('soda.content.index'), ucfirst(trans('soda::terminology.content_plural')));
-
-        if ($parentFolder = $contentItem->getAncestorsTree()->first()) {
-            do {
-                if ($parentFolder->real_depth > 0) {
-                    app('soda.interface')->breadcrumbs()->addLink(route('soda.content.show', $parentFolder->id), $parentFolder->name);
-                }
-
-                if ($parentFolder->relationLoaded('children') && isset($parentFolder->getRelation('children')[0])) {
-                    $parentFolder = $parentFolder->getRelation('children')[0];
-                } else {
-                    $parentFolder = false;
-                }
-            } while ($parentFolder);
-        }
-
-        if ($includeItem) {
-            app('soda.interface')->breadcrumbs()->addLink(route('soda.content.show', $contentItem->id), $contentItem->name);
-        }
     }
 }

@@ -11,28 +11,16 @@ use Soda\Cms\Database\Models\Contracts\FieldInterface;
 
 trait BuildsDynamicModels
 {
-    abstract public function getTable();
-
-    abstract public function getDynamicModelTablePrefix();
-
-    abstract public function buildDynamicTable(Blueprint $table);
-
     public static function bootBuildsDynamicModels()
     {
         static::observe(DynamicModelObserver::class);
     }
 
-    public function getDynamicType()
-    {
-        $table = $this->getTable();
+    abstract public function getTable();
 
-        return preg_replace('/_types$/', '', $table);
-    }
+    abstract public function getDynamicModelTablePrefix();
 
-    public function getDynamicTableName()
-    {
-        return $this->getDynamicModelTablePrefix().$this->getAttribute('identifier');
-    }
+    abstract public function buildDynamicTable(Blueprint $table);
 
     public function createTable()
     {
@@ -57,23 +45,9 @@ trait BuildsDynamicModels
         return $this;
     }
 
-    public function deleteTable()
+    public function getDynamicTableName()
     {
-        $table = $this->getDynamicTableName();
-
-        if (Schema::hasTable($table)) {
-            $reference_column = $this->getDynamicType().'_id';
-            $reference_table = $this->getDynamicType().'s';
-            $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
-
-            Schema::table($table, function (Blueprint $table) use ($reference_index) {
-                $table->dropForeign($reference_index);
-            });
-
-            Schema::rename($table, $table.'_deleted_'.Carbon::now()->timestamp);
-        }
-
-        return $this;
+        return $this->getDynamicModelTablePrefix().$this->getAttribute('identifier');
     }
 
     public function addFields($fields)
@@ -103,6 +77,32 @@ trait BuildsDynamicModels
         }
 
         return $this;
+    }
+
+    public function deleteTable()
+    {
+        $table = $this->getDynamicTableName();
+
+        if (Schema::hasTable($table)) {
+            $reference_column = $this->getDynamicType().'_id';
+            $reference_table = $this->getDynamicType().'s';
+            $reference_index = 'FK_'.$this->getDynamicTableName().'_'.$reference_column.'_'.$reference_table;
+
+            Schema::table($table, function (Blueprint $table) use ($reference_index) {
+                $table->dropForeign($reference_index);
+            });
+
+            Schema::rename($table, $table.'_deleted_'.Carbon::now()->timestamp);
+        }
+
+        return $this;
+    }
+
+    public function getDynamicType()
+    {
+        $table = $this->getTable();
+
+        return preg_replace('/_types$/', '', $table);
     }
 
     public function removeField(FieldInterface $field)

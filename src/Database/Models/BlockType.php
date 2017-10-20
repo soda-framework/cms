@@ -51,6 +51,11 @@ class BlockType extends Model implements BlockTypeInterface
         return $this->hasManyDynamic($this->getDynamicModel());
     }
 
+    public function getDynamicModel()
+    {
+        return new DynamicBlock;
+    }
+
     public function fields()
     {
         return $this->morphToSortedMany(Field::class, 'fieldable')->withPivot('show_in_table');
@@ -76,16 +81,6 @@ class BlockType extends Model implements BlockTypeInterface
         $table->timestamps();
     }
 
-    public function blockQuery($contentId = null)
-    {
-        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where(function ($q) use ($contentId) {
-            $q->where('is_shared', 1);
-            if ($contentId) {
-                $q->orWhere('content_id', $contentId);
-            }
-        });
-    }
-
     public function block($contentId = null)
     {
         $query = $this->blockQuery($contentId);
@@ -99,9 +94,14 @@ class BlockType extends Model implements BlockTypeInterface
         return $model;
     }
 
-    public function getDynamicModel()
+    public function blockQuery($contentId = null)
     {
-        return new DynamicBlock;
+        return $this->getDynamicModel()->fromTable($this->getAttribute('identifier'))->where(function ($q) use ($contentId) {
+            $q->where('is_shared', 1);
+            if ($contentId) {
+                $q->orWhere('content_id', $contentId);
+            }
+        });
     }
 
     public function shouldDynamicTableExist()

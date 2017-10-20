@@ -3,8 +3,8 @@
 namespace Soda\Cms\Database\Models;
 
 use Carbon\Carbon;
-use Soda\Cms\Database\Models\Contracts\HasLocale;
 use Soda\Cms\Database\Models\Traits\Auditable;
+use Soda\Cms\Database\Models\Contracts\HasLocale;
 use Soda\Cms\Database\Models\Traits\UserHasRoles;
 use Soda\Cms\Database\Models\Contracts\UserInterface;
 use Illuminate\Foundation\Auth\User as Authenticatable;

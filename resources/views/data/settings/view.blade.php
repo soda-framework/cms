@@ -45,9 +45,9 @@
 @section('content')
     <ul class="nav nav-pills" role="tablist">
         @if(!isset($settingsByCategory['Settings']))
-        <li role='presentation' aria-controls="tab_settings">
-            <a role="tab" data-toggle="tab" href="#tab_settings">{{ ucwords(trans('soda::terminology.settings')) }}</a>
-        </li>
+            <li role='presentation' aria-controls="tab_settings">
+                <a role="tab" data-toggle="tab" href="#tab_settings">{{ ucwords(trans('soda::terminology.settings')) }}</a>
+            </li>
         @endif
 
         @foreach($settingsByCategory as $category => $settings)
@@ -66,15 +66,15 @@
 
         <div class="tab-content">
             @if(!isset($settingsByCategory['Settings']))
-            <div class="tab-pane" id="tab_settings" role="tabpanel">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="content-block">
-                            @yield('tab.settings')
+                <div class="tab-pane" id="tab_settings" role="tabpanel">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="content-block">
+                                @yield('tab.settings')
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
             @foreach($settingsByCategory as $category => $settings)
                 @if(count($settings))

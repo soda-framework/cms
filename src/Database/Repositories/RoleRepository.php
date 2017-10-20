@@ -38,6 +38,16 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
         return $model;
     }
 
+    public function getFilteredGrid($perPage)
+    {
+        $filter = $this->buildFilter($this->model);
+        $grid = $this->buildGrid($filter);
+        $grid = $this->addButtonsToGrid($grid, 'soda.roles.edit', 'soda.roles.destroy');
+        $grid->paginate($perPage)->getGrid($this->getGridView());
+
+        return compact('filter', 'grid');
+    }
+
     /**
      * @param RoleInterface $model
      */
@@ -66,16 +76,6 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
         $grid->attr('class', 'table table-striped middle');
 
         return $grid;
-    }
-
-    public function getFilteredGrid($perPage)
-    {
-        $filter = $this->buildFilter($this->model);
-        $grid = $this->buildGrid($filter);
-        $grid = $this->addButtonsToGrid($grid, 'soda.roles.edit', 'soda.roles.destroy');
-        $grid->paginate($perPage)->getGrid($this->getGridView());
-
-        return compact('filter', 'grid');
     }
 
     /**

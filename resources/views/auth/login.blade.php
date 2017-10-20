@@ -41,7 +41,7 @@
         </div>
     </form>
     <div class="wave-container">
-       <canvas id="wave"></canvas>
+        <canvas id="wave"></canvas>
     </div>
 @endsection
 @section('footer.js')

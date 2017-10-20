@@ -37,8 +37,8 @@ class ContentTypeBlockController extends BaseController
     /**
      * Detaches an existing resource.
      *
-     * @param  int    $contentTypeId
-     * @param  int    $blockTypeId
+     * @param  int $contentTypeId
+     * @param  int $blockTypeId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

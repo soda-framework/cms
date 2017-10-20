@@ -77,7 +77,7 @@ a.jsoneditor-value.jsoneditor-url {
   padding: 2px;
   margin: 2px;
   &:hover, &:focus {
-    color: #ee422e;
+    color: #EE422E;
   }
 }
 
@@ -107,23 +107,23 @@ div {
     border-radius: 2px;
   }
   &.jsoneditor-field.jsoneditor-highlight-active {
-    background-color: #ffee00;
-    border: 1px solid #ffc700;
+    background-color: #FFEE00;
+    border: 1px solid #FFC700;
     border-radius: 2px;
     &:focus, &:hover {
-      background-color: #ffee00;
-      border: 1px solid #ffc700;
+      background-color: #FFEE00;
+      border: 1px solid #FFC700;
       border-radius: 2px;
     }
   }
   &.jsoneditor-value {
     &.jsoneditor-highlight-active {
-      background-color: #ffee00;
-      border: 1px solid #ffc700;
+      background-color: #FFEE00;
+      border: 1px solid #FFC700;
       border-radius: 2px;
       &:focus, &:hover {
-        background-color: #ffee00;
-        border: 1px solid #ffc700;
+        background-color: #FFEE00;
+        border: 1px solid #FFC700;
         border-radius: 2px;
       }
     }
@@ -135,10 +135,10 @@ div {
       color: #808080;
     }
     &.jsoneditor-number {
-      color: #ee422e;
+      color: #EE422E;
     }
     &.jsoneditor-boolean {
-      color: #ff8c00;
+      color: #FF8C00;
     }
     &.jsoneditor-null {
       color: #004ED0;
@@ -190,8 +190,8 @@ div {
         outline: #97B0F8 solid 2px;
         box-shadow: 0 0 8px #97B0F8;
         */
-        background-color: #f5f5f5;
-        outline: #e5e5e5 solid 1px;
+        background-color: #F5F5F5;
+        outline: #E5E5E5 solid 1px;
       }
       &.jsoneditor-invisible {
         visibility: hidden;
@@ -201,7 +201,7 @@ div {
   }
   &.jsoneditor {
     color: #1A1A1A;
-    border: 1px solid #3883fa;
+    border: 1px solid #3883FA;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -255,10 +255,10 @@ textarea.jsoneditor-text {
 
 tr {
   &.jsoneditor-highlight {
-    background-color: #e6e6e6;
+    background-color: #E6E6E6;
   }
   &.jsoneditor-selected {
-    background-color: #e6e6e6;
+    background-color: #E6E6E6;
     button {
       &.jsoneditor-dragarea, &.jsoneditor-contextmenu {
         visibility: hidden;
@@ -339,10 +339,10 @@ div.jsoneditor-tree .jsoneditor-schema-error {
 
 .jsoneditor-schema-error {
   .jsoneditor-popover {
-    background-color: #4c4c4c;
+    background-color: #4C4C4C;
     border-radius: 3px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-    color: #fff;
+    color: #FFFFFF;
     display: none;
     padding: 7px 10px;
     position: absolute;
@@ -374,15 +374,15 @@ div.jsoneditor-tree .jsoneditor-schema-error {
       position: absolute;
     }
     &.jsoneditor-above:before {
-      border-top: 7px solid #4c4c4c;
+      border-top: 7px solid #4C4C4C;
       bottom: -7px;
     }
     &.jsoneditor-below:before {
-      border-bottom: 7px solid #4c4c4c;
+      border-bottom: 7px solid #4C4C4C;
       top: -7px;
     }
     &.jsoneditor-left:before {
-      border-left: 7px solid #4c4c4c;
+      border-left: 7px solid #4C4C4C;
       border-top: 7px solid transparent;
       border-bottom: 7px solid transparent;
       content: '';
@@ -394,7 +394,7 @@ div.jsoneditor-tree .jsoneditor-schema-error {
       position: absolute;
     }
     &.jsoneditor-right:before {
-      border-right: 7px solid #4c4c4c;
+      border-right: 7px solid #4C4C4C;
       border-top: 7px solid transparent;
       border-bottom: 7px solid transparent;
       content: '';
@@ -423,7 +423,6 @@ div.jsoneditor-tree .jsoneditor-schema-error {
   }
 }
 
-
 @-moz-keyframes fade-in {
   from {
     opacity: 0;
@@ -434,7 +433,6 @@ div.jsoneditor-tree .jsoneditor-schema-error {
   }
 }
 
-
 @-ms-keyframes fade-in {
   from {
     opacity: 0;
@@ -444,7 +442,6 @@ div.jsoneditor-tree .jsoneditor-schema-error {
     opacity: 1;
   }
 }
-
 
 /*@-webkit-keyframes move-up {*/
 
@@ -475,8 +472,8 @@ div.jsoneditor-tree .jsoneditor-schema-error {
 .jsoneditor .jsoneditor-text-errors {
   width: 100%;
   border-collapse: collapse;
-  background-color: #ffef8b;
-  border-top: 1px solid #ffd700;
+  background-color: #FFEF8B;
+  border-top: 1px solid #FFD700;
   td {
     padding: 3px 6px;
     vertical-align: middle;
@@ -513,7 +510,7 @@ div {
       top: 0;
       width: 124px;
       background: white;
-      border: 1px solid #d3d3d3;
+      border: 1px solid #D3D3D3;
       box-shadow: 2px 2px 12px rgba(128, 128, 128, 0.3);
       list-style: none;
       margin: 0;
@@ -525,7 +522,7 @@ div {
         height: 24px;
         border: none;
         cursor: pointer;
-        color: #4d4d4d;
+        color: #4D4D4D;
         background: transparent;
         font-size: 10pt;
         font-family: arial, sans-serif;
@@ -537,8 +534,8 @@ div {
           border: 0;
         }
         &:hover, &:focus {
-          color: #1a1a1a;
-          background-color: #f5f5f5;
+          color: #1A1A1A;
+          background-color: #F5F5F5;
           outline: none;
         }
         &.jsoneditor-default {
@@ -548,7 +545,7 @@ div {
           float: right;
           width: 32px;
           height: 24px;
-          border-left: 1px solid #e5e5e5;
+          border-left: 1px solid #E5E5E5;
         }
       }
     }
@@ -587,7 +584,7 @@ div {
     }
     div.jsoneditor-separator {
       height: 0;
-      border-top: 1px solid #e5e5e5;
+      border-top: 1px solid #E5E5E5;
       padding-top: 5px;
       margin-top: 5px;
     }
@@ -644,10 +641,10 @@ div {
     ul li {
       button.jsoneditor-selected {
         color: white;
-        background-color: #ee422e;
+        background-color: #EE422E;
         &:hover, &:focus {
           color: white;
-          background-color: #ee422e;
+          background-color: #EE422E;
         }
       }
       overflow: hidden;
@@ -668,7 +665,7 @@ div {
           padding-left: 24px;
           animation: all ease-in-out 1s;
           &:hover, &:focus {
-            background-color: #f5f5f5;
+            background-color: #F5F5F5;
           }
         }
       }
@@ -721,8 +718,8 @@ div {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: white;
-    background-color: #3883fa;
-    border-bottom: 1px solid #3883fa;
+    background-color: #3883FA;
+    border-bottom: 1px solid #3883FA;
     > {
       button, div.jsoneditor-modes > button {
         width: 26px;

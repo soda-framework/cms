@@ -15,8 +15,6 @@ class ContentType extends Model implements ContentTypeInterface
 {
     use OptionallyBoundToApplication, Identifiable, BuildsDynamicModels, HasDefaultAttributes, MorphToSortedMany;
 
-    protected $table = 'content_types';
-
     public $fillable = [
         'name',
         'identifier',
@@ -32,7 +30,7 @@ class ContentType extends Model implements ContentTypeInterface
         'is_movable',
         'is_creatable',
     ];
-
+    protected $table = 'content_types';
     protected $defaults = [
         'view_action'      => '',
         'view_action_type' => 'view',
@@ -43,11 +41,6 @@ class ContentType extends Model implements ContentTypeInterface
     public function fields()
     {
         return $this->morphToSortedMany(Field::class, 'fieldable')->withPivot('show_in_table');
-    }
-
-    public function content()
-    {
-        return $this->hasMany(Content::class, 'content_type_id');
     }
 
     public function blockTypes()
@@ -76,5 +69,10 @@ class ContentType extends Model implements ContentTypeInterface
         $table->integer($reference_column)->unsigned()->nullable();
         $table->foreign($reference_column, $reference_index)->references('id')->on($reference_table)->onUpdate('CASCADE')->onDelete('SET NULL');
         $table->timestamps();
+    }
+
+    public function content()
+    {
+        return $this->hasMany(Content::class, 'content_type_id');
     }
 }

@@ -12,17 +12,21 @@
                 padding: 10px 20px;
                 overflow: hidden;
             }
+
             .alert__message {
                 display: block;
                 padding: 4px 0;
             }
+
             .alert__message a, .alert__message a:hover, .alert__message a:active, .alert__message a:visited, .alert__message a:focus {
                 color: #FFF;
                 text-decoration: none;
             }
+
             .alert__message a:hover, .alert__message a:active, .alert__message a:focus {
                 text-decoration: underline;
             }
+
             .alert__dismiss {
                 display: block;
                 position: absolute;
@@ -40,7 +44,8 @@
         <span class="alert__message">
             Viewing site in draft mode
             @if($currentPage = Soda::getCurrentPage())
-                | This page is currently: {{ $currentPage->status == \Soda\Cms\Foundation\Constants::STATUS_LIVE ? 'Live' : 'Draft' }}
+            | This page is
+            currently: {{ $currentPage->status == \Soda\Cms\Foundation\Constants::STATUS_LIVE ? 'Live' : 'Draft' }}
             @endif
         </span>
         <span class="alert__dismiss" onclick="closeAlert();">&times;</span>

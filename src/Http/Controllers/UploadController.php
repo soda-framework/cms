@@ -53,6 +53,11 @@ class UploadController extends BaseController
         return $this->errorDeleting();
     }
 
+    protected function errorDeleting()
+    {
+        return json_encode(['error' => 'Unable to delete image, please refresh and try again']); // todo: not always an image
+    }
+
     protected function deleteByTableRow($table, $field, $id)
     {
         if ($table && $field && $id) {
@@ -64,10 +69,5 @@ class UploadController extends BaseController
         }
 
         return $this->errorDeleting();
-    }
-
-    protected function errorDeleting()
-    {
-        return json_encode(['error' => 'Unable to delete image, please refresh and try again']); // todo: not always an image
     }
 }

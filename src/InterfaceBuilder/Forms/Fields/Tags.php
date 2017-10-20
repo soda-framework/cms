@@ -14,9 +14,9 @@ class Tags extends AbstractFormField
     public function getDefaultParameters()
     {
         return [
-            'array-save'           => 'json',
-            'settings'             => [
-                'theme'                   => 'bootstrap',
+            'array-save' => 'json',
+            'settings'   => [
+                'theme' => 'bootstrap',
             ],
         ];
     }

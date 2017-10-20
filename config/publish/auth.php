@@ -5,7 +5,7 @@ return [
         'driver' => 'eloquent',
         'model'  => Soda\Cms\Database\Models\User::class,
     ],
-    'guard' => [
+    'guard'    => [
         'driver'   => 'session',
         'provider' => 'soda',
     ],

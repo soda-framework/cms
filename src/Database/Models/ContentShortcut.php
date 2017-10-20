@@ -9,8 +9,6 @@ class ContentShortcut extends Model
 {
     use OptionallyBoundToApplication;
 
-    protected $table = 'content_shortcuts';
-
     public $fillable = [
         'text',
         'is_folder',
@@ -19,6 +17,7 @@ class ContentShortcut extends Model
         'application_id',
         'content_type_id',
     ];
+    protected $table = 'content_shortcuts';
 
     public function parent()
     {

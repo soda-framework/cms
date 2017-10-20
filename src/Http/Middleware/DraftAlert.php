@@ -19,7 +19,7 @@ class DraftAlert
     {
         $response = $next($request);
 
-        if ($request->session()->get('soda.draft_mode') == true && !$request->is(config('soda.cms.path') . '*')) {
+        if ($request->session()->get('soda.draft_mode') == true && ! $request->is(config('soda.cms.path').'*')) {
             $sodaUser = \Auth::guard('soda')->user();
             if ($sodaUser && $sodaUser->can('view-drafts')) {
                 $this->injectAlert($response);
@@ -29,13 +29,12 @@ class DraftAlert
         return $response;
     }
 
-
-
     /**
      * Injects the alertbar into the given Response.
      *
      * @param Response $response A Response instance
-     * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
+     *                           Based on
+     *                           https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
      */
     protected function injectAlert(Response $response)
     {
@@ -45,7 +44,7 @@ class DraftAlert
         if (false !== $pos) {
             $renderedContent = soda_cms_view('partials.draft-alert')->render();
 
-            $content = substr($content, 0, $pos) . $renderedContent . substr($content, $pos);
+            $content = substr($content, 0, $pos).$renderedContent.substr($content, $pos);
 
             // Update the new content and reset the content length
             $response->setContent($content);

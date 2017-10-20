@@ -8,7 +8,8 @@ try {
     require('bootstrap/js/tab.js');
     require('bootstrap/js/tooltip.js');
     require('bootstrap/js/transition.js');
-} catch (e) {}
+} catch (e) {
+}
 
 window.Vue = require('vue');
 window.sweetAlert = window.swal = require('bootstrap-sweetalert');

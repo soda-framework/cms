@@ -1,5 +1,5 @@
 @section("field")
-    <input id="{{ $field_id }}" type="file" name='file[]' value="{{ $field_value }}" class="form-control field_{{ $field_name }}" multiple/>
+    <input id="{{ $field_id }}" type="file" name='file[]' value="{{ $field_value }}" class="form-control field_{{ $field_name }}" multiple />
 @overwrite
 
 @section("footer.js")
@@ -10,7 +10,7 @@
         });
 
 
-        $("#{{ $field_id }}").on('filesorted', function(event, params) {
+        $("#{{ $field_id }}").on('filesorted', function (event, params) {
             console.log('File sorted ', params.previewId, params.oldIndex, params.newIndex, params.stack);
         });
     </script>

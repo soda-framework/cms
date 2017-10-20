@@ -12,7 +12,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Illuminate\Auth\Events\Login' => [
+        'Illuminate\Auth\Events\Login'           => [
             'Soda\Cms\Events\Listeners\RecordLastLoginTimestamp',
         ],
         'Illuminate\Routing\Events\RouteMatched' => [

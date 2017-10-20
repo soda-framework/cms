@@ -31,27 +31,6 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
         $content->blockTypes()->detach($blockTypeId);
     }
 
-    public function findById($contentId, $blockTypeId, $blockId)
-    {
-        list($content, $blockType) = array_values($this->getParents($contentId, $blockTypeId));
-
-        $block = $blockType->blockQuery($content->id)->where('id', $blockId)->first();
-
-        return compact('content', 'blockType', 'block');
-    }
-
-    public function newInstance($contentId, $blockTypeId)
-    {
-        list($content, $blockType) = array_values($this->getParents($contentId, $blockTypeId));
-
-        $block = Soda::dynamicBlock($blockType->identifier)->newInstance([
-            'content_id'        => $content->getKey(),
-            'is_shared'         => $blockType->is_shared,
-        ]);
-
-        return compact('content', 'blockType', 'block');
-    }
-
     public function save(Request $request, $contentId, $blockTypeId, $blockId = null)
     {
         list($content, $blockType, $block) = array_values($blockId === null ? $this->newInstance($contentId, $blockTypeId) : $this->findById($contentId, $blockTypeId, $blockId));
@@ -71,11 +50,14 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
         return compact('content', 'blockType', 'block');
     }
 
-    public function destroy($contentId, $blockTypeId, $blockId)
+    public function newInstance($contentId, $blockTypeId)
     {
-        list($content, $blockType, $block) = array_values($this->findById($contentId, $blockTypeId, $blockId));
+        list($content, $blockType) = array_values($this->getParents($contentId, $blockTypeId));
 
-        $block->delete();
+        $block = Soda::dynamicBlock($blockType->identifier)->newInstance([
+            'content_id' => $content->getKey(),
+            'is_shared'  => $blockType->is_shared,
+        ]);
 
         return compact('content', 'blockType', 'block');
     }
@@ -92,5 +74,23 @@ class ContentBlockRepository implements ContentBlockRepositoryInterface
         $blockType = $this->blockTypes->findOrFail($blockTypeId);
 
         return compact('content', 'blockType');
+    }
+
+    public function findById($contentId, $blockTypeId, $blockId)
+    {
+        list($content, $blockType) = array_values($this->getParents($contentId, $blockTypeId));
+
+        $block = $blockType->blockQuery($content->id)->where('id', $blockId)->first();
+
+        return compact('content', 'blockType', 'block');
+    }
+
+    public function destroy($contentId, $blockTypeId, $blockId)
+    {
+        list($content, $blockType, $block) = array_values($this->findById($contentId, $blockTypeId, $blockId));
+
+        $block->delete();
+
+        return compact('content', 'blockType', 'block');
     }
 }

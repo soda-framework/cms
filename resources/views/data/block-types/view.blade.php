@@ -61,7 +61,7 @@
                                 <tbody class="sortable" data-entityname="block-types.fields">
                                 @foreach($blockType->fields as $field)
                                     <tr data-itemId="{{ $field->id }}" data-parentId="{{ $blockType->id }}">
-                                        <td class="sortable-handle"><img src="/soda/cms/img/drag-dots.gif"/></td>
+                                        <td class="sortable-handle"><img src="/soda/cms/img/drag-dots.gif" /></td>
                                         <td>{{ $field->name }}</td>
                                         <td>{{ $field->pivot->show_in_table ? 'Yes' : 'No' }}</td>
                                         <td>

@@ -16,11 +16,6 @@ class BlockTypeRepository extends AbstractRepository implements BlockTypeReposit
         $this->model = $model;
     }
 
-    public function getFields()
-    {
-        return app('soda.field.repository')->getAll();
-    }
-
     public function getAvailableFields(BlockTypeInterface $blockType)
     {
         if (! $blockType->relationLoaded('fields')) {
@@ -28,6 +23,11 @@ class BlockTypeRepository extends AbstractRepository implements BlockTypeReposit
         }
 
         return $this->getFields()->diff($blockType->getRelation('fields'));
+    }
+
+    public function getFields()
+    {
+        return app('soda.field.repository')->getAll();
     }
 
     public function getFilteredGrid($perPage)

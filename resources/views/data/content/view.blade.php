@@ -19,24 +19,24 @@ if ($content->type && $content->type->blockTypes) {
 @stop
 
 @section('settings.basic')
-        {!! app('soda.form')->text([
-            "name"        => "Name",
-            "description" => "The name of this content item",
-            "field_name"  => 'name',
+    {!! app('soda.form')->text([
+        "name"        => "Name",
+        "description" => "The name of this content item",
+        "field_name"  => 'name',
+    ])->setModel($content) !!}
+
+    @if(!$content->exists || $content->isSluggable())
+        {!! app('soda.form')->slug([
+            'name'        => 'Slug',
+            'description' => 'The url of this content item',
+            'field_name'  => 'slug',
+            'field_params' => [
+                'prefix' => ($content->parent_id !== null && $parent = $content->getParent()) ? $parent->slug : '',
+            ],
         ])->setModel($content) !!}
+    @endif
 
-        @if(!$content->exists || $content->isSluggable())
-            {!! app('soda.form')->slug([
-                'name'        => 'Slug',
-                'description' => 'The url of this content item',
-                'field_name'  => 'slug',
-                'field_params' => [
-                    'prefix' => ($content->parent_id !== null && $parent = $content->getParent()) ? $parent->slug : '',
-                ],
-            ])->setModel($content) !!}
-        @endif
-
-        <div class="if-publishable" {!! $content->is_publishable ? '' : 'style="display:none"' !!}>
+    <div class="if-publishable" {!! $content->is_publishable ? '' : 'style="display:none"' !!}>
         {!! app('soda.form')->toggle([
             'name'         => 'Published',
             'field_name'   => 'status',
@@ -45,13 +45,13 @@ if ($content->type && $content->type->blockTypes) {
                 'checked-value'   => Soda\Cms\Foundation\Constants::STATUS_LIVE,
                 'unchecked-value' => Soda\Cms\Foundation\Constants::STATUS_DRAFT],
         ])->setModel($content) !!}
-        </div>
+    </div>
 @stop
 
 @section('tab.advanced')
     <div class="content-block">
         <p>Advanced page settings</p>
-        <hr/>
+        <hr />
 
         <div class="row">
             <div class="col-md-6 col-xs-12">
@@ -60,7 +60,8 @@ if ($content->type && $content->type->blockTypes) {
                     <tr>
                         <td>
                             <label>Sluggable</label><br />
-                            <small class="text-muted">If disabled, this content item can not be reached by a slug</small>
+                            <small class="text-muted">If disabled, this content item can not be reached by a slug
+                            </small>
                         </td>
                         <td width="62">
                             {!! $isSluggableFormItem = app('soda.form')->toggle([
@@ -74,7 +75,9 @@ if ($content->type && $content->type->blockTypes) {
                     <tr>
                         <td>
                             <label>Publishable</label><br />
-                            <small class="text-muted">If disabled, this content item can not be changed from it's current published state</small>
+                            <small class="text-muted">If disabled, this content item can not be changed from it's
+                                                      current published state
+                            </small>
                         </td>
                         <td width="62">
                             {!! $isPublishableFormItem = app('soda.form')->toggle([
@@ -176,10 +179,10 @@ if ($content->type && $content->type->blockTypes) {
         {!! csrf_field() !!}
         {!! method_field($content->id ? 'PUT' : 'POST') !!}
         @if($content->type)
-            <input type="hidden" name="content_type_id" value="{{ $content->type->id }}"/>
+            <input type="hidden" name="content_type_id" value="{{ $content->type->id }}" />
         @endif
         @if(!$content->id)
-            <input type="hidden" name="parent_id" value="{{ $content->parent_id }}"/>
+            <input type="hidden" name="parent_id" value="{{ $content->parent_id }}" />
         @endif
         <div class="row">
             <div class="col-xs-12">
@@ -205,11 +208,11 @@ if ($content->type && $content->type->blockTypes) {
                     @endpermission
 
                     @if($content->id && count($blockTypes))
-                        @permission("attach-blocks")
+                    @permission("attach-blocks")
                         <li role='presentation'>
                             <a role="tab" href="#tab_new-block">+</a>
                         </li>
-                        @endpermission
+                    @endpermission
                     @endif
                 </ul>
                 <div class="tab-content">
@@ -218,7 +221,7 @@ if ($content->type && $content->type->blockTypes) {
                             @yield('settings.basic')
 
                             @if($content->type)
-                                <hr/>
+                                <hr />
                                 @if($content->type->fields)
                                     @foreach($content->type->fields as $field)
                                         @if($field->pivot->show_in_table == 1)
@@ -330,16 +333,16 @@ if ($content->type && $content->type->blockTypes) {
             var isSluggableFormItem = $('#{{ $isSluggableFormItem->getFieldId() }}');
             var isPublishableFormItem = $('#{{ $isPublishableFormItem->getFieldId() }}');
 
-            isSluggableFormItem.on('change', function() {
-                if($(this).is(":checked")) {
+            isSluggableFormItem.on('change', function () {
+                if ($(this).is(":checked")) {
                     $('.if-sluggable').fadeIn();
                 } else {
                     $('.if-sluggable').fadeOut();
                 }
             }).trigger('change');
 
-            isPublishableFormItem.on('change', function() {
-                if($(this).is(":checked")) {
+            isPublishableFormItem.on('change', function () {
+                if ($(this).is(":checked")) {
                     $('.if-publishable').fadeIn();
                 } else {
                     $('.if-publishable').fadeOut();

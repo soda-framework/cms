@@ -13,11 +13,11 @@ class Combobox extends AbstractFormField
     public function getDefaultParameters()
     {
         return [
-            'multiple'             => false,
-            'combo'                => true,
-            'array-save'           => 'json',
-            'options'              => [],
-            'settings'             => [
+            'multiple'   => false,
+            'combo'      => true,
+            'array-save' => 'json',
+            'options'    => [],
+            'settings'   => [
                 'placeholder'             => 'Please select...',
                 'minimumResultsForSearch' => 'infinity',
                 'theme'                   => 'bootstrap',

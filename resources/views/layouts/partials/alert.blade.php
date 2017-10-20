@@ -1,14 +1,14 @@
 <?php
 
-    $alertTypes = [
-        'message' => 'info',
-        'info'    => 'info',
-        'error'   => 'danger',
-        'danger'  => 'danger',
-        'success' => 'success',
-        'alert'   => 'warning',
-        'warning' => 'warning',
-    ];
+$alertTypes = [
+    'message' => 'info',
+    'info'    => 'info',
+    'error'   => 'danger',
+    'danger'  => 'danger',
+    'success' => 'success',
+    'alert'   => 'warning',
+    'warning' => 'warning',
+];
 
 ?>
 

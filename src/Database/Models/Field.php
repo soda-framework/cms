@@ -20,6 +20,11 @@ class Field extends Model implements FieldInterface
     ];
     protected $table = 'fields';
 
+    public static function getFieldTypes()
+    {
+        return app('soda.form')->getFieldTypes();
+    }
+
     public function blockTypes()
     {
         return $this->morphedByMany(BlockType::class, 'fieldable');
@@ -28,11 +33,6 @@ class Field extends Model implements FieldInterface
     public function contentTypes()
     {
         return $this->morphedByMany(ContentType::class, 'fieldable');
-    }
-
-    public static function getFieldTypes()
-    {
-        return app('soda.form')->getFieldTypes();
     }
 
     public function setFieldNameAttribute($value)

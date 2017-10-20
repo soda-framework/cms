@@ -3,9 +3,9 @@
 namespace Soda\Cms\InterfaceBuilder\Forms;
 
 use Exception;
+use Soda\Cms\Database\Models\Field;
 use Illuminate\Support\Facades\Config;
 use Soda\Cms\Database\Models\Contracts\FieldInterface;
-use Soda\Cms\Database\Models\Field;
 
 class FormBuilder
 {
@@ -14,11 +14,6 @@ class FormBuilder
     public function __construct(FormFieldRegistrar $registrar)
     {
         $this->registrar = $registrar;
-    }
-
-    public function getRegistrar()
-    {
-        return $this->registrar;
     }
 
     /**
@@ -34,6 +29,11 @@ class FormBuilder
 
             return ucfirst(strtolower(preg_replace('/\B([A-Z])/', ' $1', $class_name)));
         }, $this->getRegistrar()->getRegisteredFields());
+    }
+
+    public function getRegistrar()
+    {
+        return $this->registrar;
     }
 
     /**
@@ -52,7 +52,7 @@ class FormBuilder
             $field = new Field($field);
         }
 
-        if (!$field instanceof FieldInterface) {
+        if (! $field instanceof FieldInterface) {
             throw new Exception('Field must implement interface '.FieldInterface::class.' or be an array.');
         }
 
@@ -74,7 +74,7 @@ class FormBuilder
      */
     public function buildJsParams($parameters)
     {
-        if (!$parameters) {
+        if (! $parameters) {
             return '';
         }
 
@@ -120,7 +120,7 @@ class FormBuilder
         if ($this->getRegistrar()->isRegistered($name)) {
             $field = $arguments[0];
 
-            if (!$field instanceof Field) {
+            if (! $field instanceof Field) {
                 $field = new Field($field);
                 $field->setAttribute('field_type', $name);
             }

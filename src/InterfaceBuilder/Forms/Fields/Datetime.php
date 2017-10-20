@@ -13,9 +13,9 @@ class Datetime extends AbstractFormField
     public function getDefaultParameters()
     {
         return [
-            'options' => [
-                'format'        => 'DD/MM/Y h:mm A',
-                'icons'         => [
+            'options'       => [
+                'format' => 'DD/MM/Y h:mm A',
+                'icons'  => [
                     'time'     => 'fa fa-clock-o',
                     'date'     => 'fa fa-calendar',
                     'up'       => 'fa fa-caret-up',

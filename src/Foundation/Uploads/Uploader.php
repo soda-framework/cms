@@ -4,33 +4,29 @@ namespace Soda\Cms\Foundation\Uploads;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Soda\Cms\Database\Models\Media;
+use Illuminate\Support\Facades\Storage;
 use Soda\Cms\Foundation\Uploads\Files\Base64File;
 use Soda\Cms\Foundation\Uploads\Files\SymfonyFile;
 use Soda\Cms\Foundation\Uploads\Files\UploadableFile;
-use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 
 class Uploader
 {
-    /**
-     * Uploads a single file and returns the filepath if successful.
-     * Returns false on failure.
-     *
-     * @param UploadedFile $file
-     * @param array        $transformConfig
-     * @param              $appendedPath
-     *
-     * @return bool|string
-     */
-    public function uploadFile(UploadedFile $file, $transformConfig = [], $appendedPath = null)
+    public static function guessFileExtensionByMimeType($mimeType)
     {
-        if ($file->isValid()) {
-            return $this->upload(new SymfonyFile($file), $transformConfig, $appendedPath);
+        static $mimeTypes = null;
+
+        if ($mimeTypes === null) {
+            foreach (static::getExtensionToMimeTypeMap() as $extension => $extensionMimeType) {
+                $mimeTypes[$extensionMimeType][] = $extension;
+            }
         }
 
-        return false;
+        if (isset($mimeTypes[$mimeType])) {
+            return $mimeTypes[$mimeType][0];
+        }
     }
 
     /**
@@ -47,36 +43,6 @@ class Uploader
     public function uploadBase64($fileContents, $fileName = null, $transformConfig = [], $appendedPath = null)
     {
         return $this->upload(new Base64File($fileContents, $fileName), $transformConfig, $appendedPath);
-    }
-
-    /**
-     * Uploads a file and returns a response to be consumed by
-     * bootstrap-fileinput jQuery plugin.
-     *
-     * @param Request $request
-     * @param array   $transformConfig
-     * @param         $appendedPath
-     *
-     * @return array|\Illuminate\Http\JsonResponse
-     */
-    public function fancyUpload(Request $request, $transformConfig = [], $appendedPath = null)
-    {
-        if ($request->hasFile('file')) {
-            foreach ($request->file('file') as $file) {
-                if ($file->isValid()) {
-                    $uploadedFile = $this->uploadFile($file, $transformConfig, $appendedPath);
-
-                    // Generate return information
-                    if ($uploadedFile) {
-                        return $this->generateFancyUploadResponse($request, $uploadedFile);
-                    }
-                } else {
-                    throw new UploadException('File not valid.');
-                }
-            }
-        }
-
-        throw new UploadException('No valid files to upload');
     }
 
     /**
@@ -129,6 +95,55 @@ class Uploader
         $driver = config('soda.upload.default');
 
         return Storage::disk($driver);
+    }
+
+    /**
+     * Uploads a file and returns a response to be consumed by
+     * bootstrap-fileinput jQuery plugin.
+     *
+     * @param Request $request
+     * @param array   $transformConfig
+     * @param         $appendedPath
+     *
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function fancyUpload(Request $request, $transformConfig = [], $appendedPath = null)
+    {
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file) {
+                if ($file->isValid()) {
+                    $uploadedFile = $this->uploadFile($file, $transformConfig, $appendedPath);
+
+                    // Generate return information
+                    if ($uploadedFile) {
+                        return $this->generateFancyUploadResponse($request, $uploadedFile);
+                    }
+                } else {
+                    throw new UploadException('File not valid.');
+                }
+            }
+        }
+
+        throw new UploadException('No valid files to upload');
+    }
+
+    /**
+     * Uploads a single file and returns the filepath if successful.
+     * Returns false on failure.
+     *
+     * @param UploadedFile $file
+     * @param array        $transformConfig
+     * @param              $appendedPath
+     *
+     * @return bool|string
+     */
+    public function uploadFile(UploadedFile $file, $transformConfig = [], $appendedPath = null)
+    {
+        if ($file->isValid()) {
+            return $this->upload(new SymfonyFile($file), $transformConfig, $appendedPath);
+        }
+
+        return false;
     }
 
     /**
@@ -195,28 +210,6 @@ class Uploader
     }
 
     /**
-     * Detects MIME Type based on file extension.
-     *
-     * @param string $extension
-     *
-     * @return string|null MIME Type or NULL if no extension detected
-     */
-    public static function detectByFileExtension($extension)
-    {
-        static $extensionToMimeTypeMap;
-
-        if (!$extensionToMimeTypeMap) {
-            $extensionToMimeTypeMap = static::getExtensionToMimeTypeMap();
-        }
-
-        if (isset($extensionToMimeTypeMap[$extension])) {
-            return $extensionToMimeTypeMap[$extension];
-        }
-
-        return 'text/plain';
-    }
-
-    /**
      * @param string $filename
      *
      * @return string
@@ -228,78 +221,26 @@ class Uploader
         return empty($extension) ? 'text/plain' : static::detectByFileExtension($extension);
     }
 
-    public static function guessFileExtensionByMimeType($mimeType)
-    {
-        static $mimeTypes = null;
-
-        if ($mimeTypes === null) {
-            foreach (static::getExtensionToMimeTypeMap() as $extension => $extensionMimeType) {
-                $mimeTypes[$extensionMimeType][] = $extension;
-            }
-        }
-
-        if (isset($mimeTypes[$mimeType])) {
-            return $mimeTypes[$mimeType][0];
-        }
-    }
-
     /**
-     * @param string $mimeType
+     * Detects MIME Type based on file extension.
      *
-     * @return string
+     * @param string $extension
+     *
+     * @return string|null MIME Type or NULL if no extension detected
      */
-    public static function guessFileTypeByMimeType($mimeType)
+    public static function detectByFileExtension($extension)
     {
-        switch ($mimeType) {
-            case 'text/html':
-                return 'html';
-            case 'text/css':
-            case 'text/plain':
-            case 'text/richtext':
-            case 'text/rtf':
-            case 'text/x-comma-separated-values':
-            case 'application/xml':
-            case 'application/json':
-                return 'text';
-            case 'application/pdf':
-                return 'pdf';
-            case 'audio/midi':
-            case 'audio/mpeg':
-            case 'audio/x-aiff':
-            case 'audio/x-pn-realaudio':
-            case 'audio/x-pn-realaudio-plugin':
-            case 'audio/x-realaudio':
-            case 'audio/x-wav':
-            case 'audio/x-m4a':
-            case 'audio/x-acc':
-                return 'audio';
-            case 'image/jpeg':
-            case 'image/png':
-            case 'image/gif':
-            case 'image/bmp':
-            case 'image/tiff':
-            case 'image/svg+xml':
-            case 'audio/x-au':
-            case 'audio/ac3':
-            case 'audio/x-flac':
-            case 'audio/ogg':
-            case 'audio/x-ms-wma':
-                return 'image';
-            case 'video/mpeg':
-            case 'video/quicktime':
-            case 'video/x-msvideo':
-            case 'video/x-sgi-movie':
-            case 'video/vnd.rn-realvideo':
-            case 'video/3gpp2':
-            case 'video/3gp':
-            case 'video/mp4':
-            case 'video/webm':
-            case 'application/vnd.mpegurl':
-            case 'video/x-ms-wmv':
-                return 'video';
+        static $extensionToMimeTypeMap;
+
+        if (! $extensionToMimeTypeMap) {
+            $extensionToMimeTypeMap = static::getExtensionToMimeTypeMap();
         }
 
-        return 'other';
+        if (isset($extensionToMimeTypeMap[$extension])) {
+            return $extensionToMimeTypeMap[$extension];
+        }
+
+        return 'text/plain';
     }
 
     /**
@@ -449,5 +390,64 @@ class Uploader
             'wma'   => 'audio/x-ms-wma',
             'jar'   => 'application/java-archive',
         ];
+    }
+
+    /**
+     * @param string $mimeType
+     *
+     * @return string
+     */
+    public static function guessFileTypeByMimeType($mimeType)
+    {
+        switch ($mimeType) {
+            case 'text/html':
+                return 'html';
+            case 'text/css':
+            case 'text/plain':
+            case 'text/richtext':
+            case 'text/rtf':
+            case 'text/x-comma-separated-values':
+            case 'application/xml':
+            case 'application/json':
+                return 'text';
+            case 'application/pdf':
+                return 'pdf';
+            case 'audio/midi':
+            case 'audio/mpeg':
+            case 'audio/x-aiff':
+            case 'audio/x-pn-realaudio':
+            case 'audio/x-pn-realaudio-plugin':
+            case 'audio/x-realaudio':
+            case 'audio/x-wav':
+            case 'audio/x-m4a':
+            case 'audio/x-acc':
+                return 'audio';
+            case 'image/jpeg':
+            case 'image/png':
+            case 'image/gif':
+            case 'image/bmp':
+            case 'image/tiff':
+            case 'image/svg+xml':
+            case 'audio/x-au':
+            case 'audio/ac3':
+            case 'audio/x-flac':
+            case 'audio/ogg':
+            case 'audio/x-ms-wma':
+                return 'image';
+            case 'video/mpeg':
+            case 'video/quicktime':
+            case 'video/x-msvideo':
+            case 'video/x-sgi-movie':
+            case 'video/vnd.rn-realvideo':
+            case 'video/3gpp2':
+            case 'video/3gp':
+            case 'video/mp4':
+            case 'video/webm':
+            case 'application/vnd.mpegurl':
+            case 'video/x-ms-wmv':
+                return 'video';
+        }
+
+        return 'other';
     }
 }

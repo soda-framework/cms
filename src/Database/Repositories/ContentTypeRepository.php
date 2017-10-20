@@ -17,16 +17,6 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
         $this->model = $model;
     }
 
-    public function getBlockTypes()
-    {
-        return app('soda.block-type.repository')->getAll();
-    }
-
-    public function getFields()
-    {
-        return app('soda.field.repository')->getAll();
-    }
-
     public function getAvailableBlockTypes(ContentTypeInterface $contentType)
     {
         if (! $contentType->relationLoaded('blockTypes')) {
@@ -36,6 +26,11 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
         return $this->getBlockTypes()->diff($contentType->getRelation('blockTypes'));
     }
 
+    public function getBlockTypes()
+    {
+        return app('soda.block-type.repository')->getAll();
+    }
+
     public function getAvailableFields(ContentTypeInterface $contentType)
     {
         if (! $contentType->relationLoaded('fields')) {
@@ -43,6 +38,11 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
         }
 
         return $this->getFields()->diff($contentType->getRelation('fields'));
+    }
+
+    public function getFields()
+    {
+        return app('soda.field.repository')->getAll();
     }
 
     public function save(Request $request, $id = null)

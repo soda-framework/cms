@@ -8,11 +8,47 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class ApiController extends BaseController
 {
+    const STATUS_ERROR = 'error';
+    const STATUS_SUCCESS = 'success';
     protected $statusCode = 200;
     protected $statusMessage;
 
-    const STATUS_ERROR = 'error';
-    const STATUS_SUCCESS = 'success';
+    public function respondSuccess($data = null, $statusMessage = 'Success')
+    {
+        return $this->setStatusCode(Response::HTTP_OK)->setStatusMessage($statusMessage)->respond($data);
+    }
+
+    public function respond($data = null)
+    {
+        return $this->setStatusCode(Response::HTTP_OK)->buildResponse(static::STATUS_SUCCESS, $data);
+    }
+
+    protected function buildResponse($statusType, $data = null)
+    {
+        $response = [
+            'meta' => $this->buildStatus($statusType),
+        ];
+
+        if ($data) {
+            $response['data'] = $data;
+        }
+
+        return response()->json($response, $this->getStatusCode());
+    }
+
+    protected function buildStatus($statusType)
+    {
+        $status = [
+            'status' => $statusType,
+            'code'   => $this->getStatusCode(),
+        ];
+
+        if ($message = $this->getStatusMessage()) {
+            $status['message'] = $message;
+        }
+
+        return $status;
+    }
 
     /**
      * @return int
@@ -54,11 +90,6 @@ abstract class ApiController extends BaseController
         return $this;
     }
 
-    public function respondSuccess($data = null, $statusMessage = 'Success')
-    {
-        return $this->setStatusCode(Response::HTTP_OK)->setStatusMessage($statusMessage)->respond($data);
-    }
-
     public function respondCreated($data = null, $statusMessage = 'Created')
     {
         return $this->setStatusCode(Response::HTTP_CREATED)->setStatusMessage($statusMessage)->respond($data);
@@ -67,6 +98,11 @@ abstract class ApiController extends BaseController
     public function respondNotFound($data = null, $statusMessage = 'Not found')
     {
         return $this->respondWithError(Response::HTTP_NOT_FOUND, $statusMessage, $data);
+    }
+
+    public function respondWithError($statusCode, $statusMessage, $data = null)
+    {
+        return $this->setStatusCode($statusCode)->setStatusMessage($statusMessage)->buildResponse(static::STATUS_ERROR, $data);
     }
 
     public function respondUnauthorized($data = null, $statusMessage = 'Unauthorized')
@@ -89,48 +125,6 @@ abstract class ApiController extends BaseController
         return $this->respondWithError(Response::HTTP_FORBIDDEN, $statusMessage, $data);
     }
 
-    public function respondInvalid($data = null, $statusMessage = 'Invalid input')
-    {
-        return $this->respondWithError(Response::HTTP_UNPROCESSABLE_ENTITY, $statusMessage, $data);
-    }
-
-    public function respond($data = null)
-    {
-        return $this->setStatusCode(Response::HTTP_OK)->buildResponse(static::STATUS_SUCCESS, $data);
-    }
-
-    public function respondWithError($statusCode, $statusMessage, $data = null)
-    {
-        return $this->setStatusCode($statusCode)->setStatusMessage($statusMessage)->buildResponse(static::STATUS_ERROR, $data);
-    }
-
-    protected function buildResponse($statusType, $data = null)
-    {
-        $response = [
-            'meta' => $this->buildStatus($statusType),
-        ];
-
-        if ($data) {
-            $response['data'] = $data;
-        }
-
-        return response()->json($response, $this->getStatusCode());
-    }
-
-    protected function buildStatus($statusType)
-    {
-        $status = [
-            'status' => $statusType,
-            'code' => $this->getStatusCode(),
-        ];
-
-        if ($message = $this->getStatusMessage()) {
-            $status['message'] = $message;
-        }
-
-        return $status;
-    }
-
     /**
      * Create the response for when a request fails validation.
      *
@@ -146,5 +140,10 @@ abstract class ApiController extends BaseController
         }
 
         return parent::buildFailedValidationResponse($request, $errors);
+    }
+
+    public function respondInvalid($data = null, $statusMessage = 'Invalid input')
+    {
+        return $this->respondWithError(Response::HTTP_UNPROCESSABLE_ENTITY, $statusMessage, $data);
     }
 }

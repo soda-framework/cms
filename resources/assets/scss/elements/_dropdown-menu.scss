@@ -30,20 +30,20 @@
       padding: 8px 25px;
       clear: both;
       font-weight: 400;
-      color: #333;
+      color: #333333;
       white-space: nowrap;
       width: 100%;
       text-align: left;
       border: 0;
     }
     > a:hover, .btn-link:hover {
-      background: #fff;
+      background: #FFFFFF;
       text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
       text-decoration: none;
     }
     &.warning a:hover {
-      background: #e75650;
-      color: #fff;
+      background: #E75650;
+      color: #FFFFFF;
     }
   }
 }

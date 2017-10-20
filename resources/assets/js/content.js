@@ -8,24 +8,24 @@ Soda.contentTable = new Vue({
         sortBy: 'position',
         sortDir: 'ASC',
     },
-    mounted: function() {
+    mounted: function () {
         window.initVue(this);
     },
     methods: {
-        getFormattedDate: function(date) {
+        getFormattedDate: function (date) {
             return moment(date, 'YYYY-MM-DD hh:mm:ss').format('Do MMMM YYYY');
         },
-        routeTo: function(route, contentId) {
+        routeTo: function (route, contentId) {
             return route.replace(new RegExp('###ID###', 'g'), contentId);
         },
-        newContentItem: function(contentTypeId) {
+        newContentItem: function (contentTypeId) {
             var modal = $('#contentItemTypeModal');
             var form = modal.find('form');
 
-            if(contentTypeId !== null && contentTypeId !== '') {
+            if (contentTypeId !== null && contentTypeId !== '') {
                 console.log(contentTypeId);
                 this.$set(this, 'selectedContentType', contentTypeId);
-                this.$nextTick(function() {
+                this.$nextTick(function () {
                     form.submit();
                 });
             } else {
@@ -34,20 +34,20 @@ Soda.contentTable = new Vue({
                 console.log(numContentTypes);
                 this.$set(this, 'selectedContentType', numContentTypes ? this.contentItemTypes[0]['id'] : null);
 
-                if(numContentTypes > 1) {
+                if (numContentTypes > 1) {
                     modal.modal('show');
                 } else {
-                    this.$nextTick(function() {
+                    this.$nextTick(function () {
                         form.submit();
                     });
                 }
             }
         },
-        newContentFolder: function(contentTypeId) {
+        newContentFolder: function (contentTypeId) {
             var modal = $('#contentFolderTypeModal');
             var form = modal.find('form');
 
-            if(contentTypeId !== null && contentTypeId !== '') {
+            if (contentTypeId !== null && contentTypeId !== '') {
                 this.$set(this, 'selectedContentType', contentTypeId);
                 modal.modal('show');
             } else {
@@ -56,7 +56,7 @@ Soda.contentTable = new Vue({
                 modal.modal('show');
             }
         },
-        deleteContent: function(event) {
+        deleteContent: function (event) {
             Soda.confirmDelete($(event.target));
         }
     }

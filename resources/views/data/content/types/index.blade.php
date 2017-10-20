@@ -2,7 +2,7 @@
 
 @section('content-heading-button')
     @permission('manage-content-types')
-        @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.content-types.create')])
+    @include(soda_cms_view_path('partials.buttons.create'), ['url' => route('soda.content-types.create')])
     @endpermission
 @stop
 

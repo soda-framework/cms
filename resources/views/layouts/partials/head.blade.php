@@ -45,7 +45,7 @@ $version = Soda::getVersion();
     <script>
         (function (Soda) {
             Soda.queryString = {!! json_encode(Request::query(), JSON_HEX_TAG) !!}
-            Soda.urls = {
+                Soda.urls = {
                 sort: '{{ route('soda.sort') }}',
             };
             Soda.lang = {!! json_encode([
@@ -56,12 +56,12 @@ $version = Soda::getVersion();
                     'cancel' => trans('soda::actions.cancel'),
                 ]
             ]) !!}
-            Soda.theme = '{{ $currentCmsTheme }}';
+                Soda.theme = '{{ $currentCmsTheme }}';
             return Soda;
         })(Soda || {});
 
-        setTimeout(function(){ // Force load body after 5 seconds
-            if((' ' + document.body.className + ' ').indexOf(' loaded ') == -1) document.body.className = document.body.className + ' loaded';
+        setTimeout(function () { // Force load body after 5 seconds
+            if ((' ' + document.body.className + ' ').indexOf(' loaded ') == -1) document.body.className = document.body.className + ' loaded';
         }, 5000);
     </script>
 @stop

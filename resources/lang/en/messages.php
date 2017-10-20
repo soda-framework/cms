@@ -21,7 +21,7 @@ return [
 
     'language_updated' => 'Language updated successfully', // Returned when the user successfully switches their language
 
-    'password_reset'   => 'Password reset successfully', // Returned when the user successfully resets their password
+    'password_reset' => 'Password reset successfully', // Returned when the user successfully resets their password
 
     'mode_active' => ':mode active', // Returned when switching the application mode. See misc.draft_mode and misc.live_mode
 ];

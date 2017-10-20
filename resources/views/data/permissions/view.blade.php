@@ -26,20 +26,20 @@
             ])->setModel($permission) !!}
 
             @permission('assign-role-permissions')
-                {!! app('soda.form')->multiselect([
-                    "name"         => "Roles",
-                    "field_name"   => 'role_id',
-                    "value"        => $permission->roles->where('level', '<', Auth::user()->getLevel())->pluck('id')->toArray(),
-                    "field_params" => [
-                        "placeholder" => "Select roles(s)",
-                        'array-save'  => 'array',
-                        "options"     => $roleIds
-                    ]
-                ])->setModel($permission) !!}
+            {!! app('soda.form')->multiselect([
+                "name"         => "Roles",
+                "field_name"   => 'role_id',
+                "value"        => $permission->roles->where('level', '<', Auth::user()->getLevel())->pluck('id')->toArray(),
+                "field_params" => [
+                    "placeholder" => "Select roles(s)",
+                    'array-save'  => 'array',
+                    "options"     => $roleIds
+                ]
+            ])->setModel($permission) !!}
 
-                @foreach($permission->roles->where('level', '>=', Auth::user()->getLevel())->pluck('id') as $hiddenRoleInput)
-                    <input type="hidden" name="role_id[]" value="{{ $hiddenRoleInput }}" />
-                @endforeach
+            @foreach($permission->roles->where('level', '>=', Auth::user()->getLevel())->pluck('id') as $hiddenRoleInput)
+                <input type="hidden" name="role_id[]" value="{{ $hiddenRoleInput }}" />
+            @endforeach
             @else
                 {!! app('soda.form')->static_text([
                     "name"         => "Roles",

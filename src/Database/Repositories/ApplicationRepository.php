@@ -22,23 +22,6 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         $this->urlModel = $urlModel;
     }
 
-    public function findById($id)
-    {
-        return $this->appModel->find($id);
-    }
-
-    /**
-     * @return ApplicationInterface
-     */
-    public function getApplication($id = null)
-    {
-        if ($id !== null) {
-            return $this->findById($id);
-        } else {
-            return Soda::getApplication();
-        }
-    }
-
     public function findByUrl($url)
     {
         $domain = str_replace('www.', '', $url);
@@ -58,6 +41,11 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         }
 
         return $application;
+    }
+
+    public function findById($id)
+    {
+        return $this->appModel->find($id);
     }
 
     public function save(Request $request, $id = null)
@@ -84,23 +72,16 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         return $model;
     }
 
-    public function getSettingsForApplication(ApplicationInterface $application)
+    /**
+     * @return ApplicationInterface
+     */
+    public function getApplication($id = null)
     {
-        if (! $application->relationLoaded('settings')) {
-            $application->load('settings');
+        if ($id !== null) {
+            return $this->findById($id);
+        } else {
+            return Soda::getApplication();
         }
-
-        return $application->getRelation('settings');
-    }
-
-    public function getFilteredGrid($perPage)
-    {
-        $filter = $this->buildFilter($this->appModel);
-        $grid = $this->buildGrid($filter);
-        $grid = $this->addButtonsToGrid($grid, 'soda.application.edit', 'soda.application.destroy');
-        $grid->paginate($perPage)->getGrid($this->getGridView());
-
-        return compact('filter', 'grid');
     }
 
     protected function syncUrlsToApplication(ApplicationInterface $application, $urls = [])
@@ -124,5 +105,24 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         }
 
         return $application;
+    }
+
+    public function getSettingsForApplication(ApplicationInterface $application)
+    {
+        if (! $application->relationLoaded('settings')) {
+            $application->load('settings');
+        }
+
+        return $application->getRelation('settings');
+    }
+
+    public function getFilteredGrid($perPage)
+    {
+        $filter = $this->buildFilter($this->appModel);
+        $grid = $this->buildGrid($filter);
+        $grid = $this->addButtonsToGrid($grid, 'soda.application.edit', 'soda.application.destroy');
+        $grid->paginate($perPage)->getGrid($this->getGridView());
+
+        return compact('filter', 'grid');
     }
 }
