@@ -82,15 +82,15 @@
 
         .dropdown-menu {
           position: absolute;
-          background-color: #fff;
+          background-color: #FFFFFF;
           border: 1px solid rgba(0, 0, 0, 0.1);
           box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 14px 0 rgba(0, 0, 0, 0.2);
 
           > li > a {
-            color: #333;
+            color: #333333;
             &:hover,
             &:focus {
-              color: #fff;
+              color: #FFFFFF;
               background-color: $brand-info;
             }
           }
@@ -98,7 +98,7 @@
             &,
             &:hover,
             &:focus {
-              color: #fff;
+              color: #FFFFFF;
               background-color: $brand-info;
             }
           }
@@ -120,7 +120,7 @@
   margin-left: -15px;
   margin-right: -15px;
   border-width: 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #F0F0F0;
   border-radius: 0 !important;
   transform: translateX(0px);
   transition: transform 0.25s ease-in-out;
@@ -150,6 +150,17 @@
         }
       }
     }
+
+    > li > a {
+      .avatar-image {
+        height: $navbar-height - (($navbar-height - $line-height-computed) / 1.5);
+        width: $navbar-height - (($navbar-height - $line-height-computed) / 1.5);
+        margin: -(($navbar-height - $line-height-computed) / 4) 0;
+        margin-right: 10px;
+        border-radius: 100%;
+      }
+    }
+
     &.navbar-breadcrumb {
       margin-left: 15px;
       color: rgba(0, 0, 0, 0.7);
@@ -160,7 +171,7 @@
 
       > li {
         float: left;
-        background-color: #fff;
+        background-color: #FFFFFF;
         border-radius: 5px;
         padding: 8px 14px;
         margin: 11px 10px 12px 0;

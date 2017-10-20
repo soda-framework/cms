@@ -23,17 +23,17 @@
                 </div>
 
                 <div class="soda-login__input">
-                    <label for="email" class="sr-only">@lang('soda::forms.email')</label>
-                    <input id="email" type="text" name="email" placeholder="@lang('soda::forms.email')" value="{{ old('email') }}">
+                    <label for="email" class="sr-only">@lang('soda::fields.email.label')</label>
+                    <input id="email" type="text" name="email" placeholder="@lang('soda::fields.email.label')" value="{{ old('email') }}">
                 </div>
 
                 <div class="soda-login__input">
-                    <label for="password" class="sr-only">@lang('soda::forms.password')</label>
-                    <input id="password" type="password" name="password" placeholder="@lang('soda::forms.password')">
+                    <label for="password" class="sr-only">@lang('soda::fields.password.label')</label>
+                    <input id="password" type="password" name="password" placeholder="@lang('soda::fields.password.label')">
                 </div>
             </div>
             <div class="soda-login__pass-forgot">
-                <a href="#">@lang('soda::forms.forgot_password')</a>
+                <a href="#">@lang('soda::auth.forgot_password')</a>
             </div>
             <div class="soda-login__button-container">
                 <button><span>@lang('soda::actions.login')</span></button>
