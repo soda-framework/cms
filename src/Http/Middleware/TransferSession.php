@@ -8,10 +8,11 @@ class TransferSession
 {
     public function handle($request, Closure $next)
     {
-        if ($request->has('sid') && $request->has('validate')) {
+        if ($request->has('sid') && $request->has('vtoken')) {
             $sessionId = $request->input('sid');
+            $validationToken = $request->input('vtoken');
 
-            if ($this->validateSession($request, $sessionId, $request->input('validate'))) {
+            if ($this->validateSession($request, $sessionId, $validationToken)) {
                 $this->switchSession($request, $sessionId);
 
                 return redirect()->to($this->removeSessionQueryParameters($request));
@@ -25,7 +26,7 @@ class TransferSession
     {
         $sessionData = $this->parseSessionById($request, $sessionId);
 
-        if (is_array($sessionData) && isset($sessionData['redirect-validate']) && $sessionData['redirect-validate'] == $validationToken) {
+        if (is_array($sessionData) && isset($sessionData['vtoken']) && $sessionData['vtoken'] == $validationToken) {
             return true;
         }
 
@@ -39,7 +40,7 @@ class TransferSession
 
     protected function switchSession($request, $sessionId)
     {
-        $request->session()->setId($request->input('sid'));
+        $request->session()->setId($sessionId);
         $request->session()->start();
     }
 
@@ -48,7 +49,7 @@ class TransferSession
         $currentQuery = parse_url($request->fullUrl(), PHP_URL_QUERY);
         parse_str($currentQuery, $currentQueryArray);
 
-        unset($currentQueryArray['sid'], $currentQueryArray['validate']);
+        unset($currentQueryArray['sid'], $currentQueryArray['vtoken']);
 
         $currentQuery = http_build_query($currentQueryArray);
 

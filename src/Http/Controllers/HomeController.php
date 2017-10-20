@@ -95,10 +95,10 @@ class HomeController extends BaseController
         }
 
         $queryString['sid'] = $request->session()->getId();
-        $queryString['validate'] = $validationToken;
+        $queryString['vtoken'] = $validationToken;
         $parsedUrl['query'] = http_build_query($queryString);
 
-        $request->session()->flash('redirect-validate', $validationToken);
+        $request->session()->flash('vtoken', $validationToken);
 
         return redirect()->away($parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $parsedUrl['path'] . '?' . $parsedUrl['query']);
     }
