@@ -26,12 +26,15 @@
 
                                     @section('breadcrumb')
                                         <ul class="breadcrumb">
-                                            @foreach(app('soda.interface')->breadcrumbs()->getLinks() as $breadcrumbLink)
+                                            <?php $breadcrumbLinks = app('soda.interface')->breadcrumbs()->getLinks(); ?>
+                                            @foreach($breadcrumbLinks as $breadcrumbLink)
                                                 <li>
                                                     <a href="{{ $breadcrumbLink['url'] }}">{{ $breadcrumbLink['title'] }}</a>
                                                 </li>
                                             @endforeach
-                                            <li class="active">{{ app('soda.interface')->getTitle() }}</li>
+                                            @if(count($breadcrumbLinks) || app('soda.interface')->getTitle() != app('soda.interface')->getHeading())
+                                                <li class="active">{{ app('soda.interface')->getTitle() }}</li>
+                                            @endif
                                         </ul>
                                     @stop
                                     @yield('breadcrumb')
