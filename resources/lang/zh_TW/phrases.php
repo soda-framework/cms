@@ -6,7 +6,7 @@ return [
     'welcome'                 => '歡迎，:name',
 
     // Sweet alert "Are you sure you want to delete" dialog
-    'are_you_sure'            => '你確定？',
-    'cannot_reverse'          => '這個動作無法扭轉！',
-    'yes_delete'              => '是的，刪除它！',
+    'are_you_sure'            => '你确定？',
+    'cannot_reverse'          => '这个动作无法扭转！',
+    'yes_delete'              => '是的，删除它！',
 ];
