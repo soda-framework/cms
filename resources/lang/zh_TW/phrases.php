@@ -7,6 +7,6 @@ return [
 
     // Sweet alert "Are you sure you want to delete" dialog
     'are_you_sure'            => '你确定？',
-    'cannot_reverse'          => '这个动作无法扭转！',
-    'yes_delete'              => '是的，删除它！',
+    'cannot_reverse'          => '此動作無法回復!',
+    'yes_delete'              => '請刪除!',
 ];
