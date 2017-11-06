@@ -23,13 +23,13 @@
                             <p class="text-danger error">{{ $errors->first('password_confirmation') }}</p>
                         @endif
                         <div class="form-group">
-                            <label>@lang('soda::fields.new_password')</label>
-                            <input type="password" name="password" class="form-control" placeholder="@lang('soda::fields.new_password')">
+                            <label>@lang('soda::fields.new_password.label')</label>
+                            <input type="password" name="password" class="form-control" placeholder="@lang('soda::fields.new_password.label')">
                         </div>
 
                         <div class="form-group">
-                            <label>@lang('soda::fields.confirm_new_password')</label>
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="@lang('soda::fields.confirm_new_password')">
+                            <label>@lang('soda::fields.confirm_new_password.label')</label>
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="@lang('soda::fields.confirm_new_password.label')">
                         </div>
                     </div>
                     <div class="modal-footer">
