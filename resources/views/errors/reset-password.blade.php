@@ -28,8 +28,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>@lang('soda::fields.confirm_new_password.label')</label>
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="@lang('soda::fields.confirm_new_password.label')">
+                            <label>@lang('soda::fields.new_password_confirmation.label')</label>
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="@lang('soda::fields.new_password_confirmation.label')">
                         </div>
                     </div>
                     <div class="modal-footer">
