@@ -1,7 +1,7 @@
 @extends(soda_cms_view_path('layouts.bare'), ['body_class'=>'full-height login-screen', 'html_class'=>'full-height'])
 
 @section('head.title')
-    <title>@lang('soda::forms.reset_password') :: Soda CMS</title>
+    <title>@lang('soda::phrases.reset_your_password') :: Soda CMS</title>
 @endsection
 
 @section('main-content')
