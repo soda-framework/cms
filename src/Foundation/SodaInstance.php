@@ -30,7 +30,7 @@ class SodaInstance
     {
         $this->laravel = $laravel;
 
-        if (! $this->laravel->runningInConsole()) {
+        if (! $this->laravel->runningInConsole() && isset($_SERVER['HTTP_HOST'])) {
             $application = $this->requestMatcher()->matchApplication($_SERVER['HTTP_HOST']);
 
             if (isset($application['url']) && $application['url'] && isset($application['application']) && $application['application']) {
