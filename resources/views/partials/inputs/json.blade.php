@@ -5,25 +5,25 @@
 
 @section("footer.js")
     @parent
-    <script>
-        // create the editor
-        var container = $("#json_{{ $field_id }}");
-        var json_field = $("#{{ $field_id }}");
-        var json = json_field.val();
-        var editor = new JSONEditor(container[0], {
-            {!! app('soda.form')->buildJsParams($field_parameters) !!}
-        });
-        editor.setText(json);
+	<script>
+		// create the editor
+		var container_{{ $field_id }} = $("#json_{{ $field_id }}");
+		var json_field_{{ $field_id }} = $("#{{ $field_id }}");
+		var json_{{ $field_id }} = json_field_{{ $field_id }}.val();
+		var editor_{{ $field_id }} = new JSONEditor(container_{{ $field_id }}[0], {
+			{!! app('soda.form')->buildJsParams($field_parameters) !!}
+		});
+		editor_{{ $field_id }}.setText(json_{{ $field_id }});
 
-        json_field.closest('form').on('submit', function (e) {
-            json_field.val(editor.getText());
-        })
+		json_field_{{ $field_id }}.closest('form').on('submit', function(e) {
+			json_field_{{ $field_id }}.val(editor_{{ $field_id }}.getText());
+		})
 
-        $("#json_{{ $field_name }}").on("keydown", ".jsoneditor-field, .jsoneditor-value", function () {
-            if (event.keyCode == 13 || event.keyCode == 9) { // enter or tab
-                event.preventDefault();
-                return false;
-            }
-        })
-    </script>
+		$("#json_{{ $field_name }}").on("keydown", ".jsoneditor-field, .jsoneditor-value", function() {
+			if(event.keyCode == 13 || event.keyCode == 9) { // enter or tab
+				event.preventDefault();
+				return false;
+			}
+		})
+	</script>
 @stop
