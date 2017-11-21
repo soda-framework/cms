@@ -13,6 +13,7 @@ class Tinymce extends AbstractFormField
     {
         return [
             'selector'           => '#field_'.$this->getFieldName(),
+            'extended_valid_elements' => 'script[language|type|src|async|defer|charset]',
             'browser_spellcheck' => true,
             'height'             => 500,
             'plugins'            => [
