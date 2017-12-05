@@ -17,7 +17,7 @@ class CreateContentTypesTable extends Migration
             $table->string('name');
             $table->text('description', 65535)->nullable();
             $table->string('identifier', 50);
-            $table->integer('application_id')->unsigned()->nullable()->index('fk_content_types_applications1_idx');
+            $table->integer('application_id')->unsigned()->nullable();
             $table->string('view_action')->nullable();
             $table->string('view_action_type')->nullable();
             $table->string('edit_action')->nullable();

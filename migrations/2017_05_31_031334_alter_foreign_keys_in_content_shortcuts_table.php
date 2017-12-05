@@ -13,7 +13,7 @@ class AlterForeignKeysInContentShortcutsTable extends Migration
     public function up()
     {
         Schema::table('content_shortcuts', function (Blueprint $table) {
-            $table->foreign('parent_content_type_id', 'FK_content_shortcuts_content_type_parent')->references('id')->on('content_types')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('parent_content_type_id')->references('id')->on('content_types')->onUpdate('cascade')->onDelete('set null');
         });
     }
 
@@ -25,7 +25,7 @@ class AlterForeignKeysInContentShortcutsTable extends Migration
     public function down()
     {
         Schema::table('content_shortcuts', function (Blueprint $table) {
-            $table->foreign('parent_id', 'FK_content_shortcuts_content')->references('id')->on('content')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->foreign('parent_id')->references('id')->on('content')->onUpdate('cascade')->onDelete('set null');
         });
     }
 }

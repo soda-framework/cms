@@ -13,8 +13,8 @@ class CreateContentBlocksTable extends Migration
     public function up()
     {
         Schema::create('content_blocks', function (Blueprint $table) {
-            $table->integer('content_id')->unsigned()->index('FK_content_blocks_content');
-            $table->integer('block_type_id')->unsigned()->index('FK_content_blocks_block_types');
+            $table->integer('content_id')->unsigned();
+            $table->integer('block_type_id')->unsigned();
             $table->integer('min_blocks')->unsigned()->nullable();
             $table->integer('max_blocks')->unsigned()->nullable();
         });

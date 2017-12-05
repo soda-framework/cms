@@ -14,7 +14,7 @@ class CreatePermissionRoleTable extends Migration
     {
         Schema::create('permission_role', function (Blueprint $table) {
             $table->integer('permission_id')->unsigned();
-            $table->integer('role_id')->unsigned()->index('permission_role_role_id_foreign');
+            $table->integer('role_id')->unsigned();
             $table->primary(['permission_id', 'role_id']);
         });
     }

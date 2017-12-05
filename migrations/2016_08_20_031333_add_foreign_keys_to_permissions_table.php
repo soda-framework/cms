@@ -13,7 +13,7 @@ class AddForeignKeysToPermissionsTable extends Migration
     public function up()
     {
         Schema::table('permissions', function (Blueprint $table) {
-            $table->foreign('application_id', 'FK_permissions_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('application_id')->references('id')->on('applications')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -25,7 +25,7 @@ class AddForeignKeysToPermissionsTable extends Migration
     public function down()
     {
         Schema::table('permissions', function (Blueprint $table) {
-            $table->dropForeign('FK_permissions_applications');
+            $table->dropForeign(['application_id']);
         });
     }
 }

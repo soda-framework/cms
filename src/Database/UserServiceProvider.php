@@ -42,8 +42,9 @@ class UserServiceProvider extends ServiceProvider
             'SodaUser' => User::class,
         ]);
 
-        $this->app->config->set('laratrust.role', Role::class);
-        $this->app->config->set('laratrust.permission', Permission::class);
+        $this->app->config->set('laratrust.user_models.user', User::class);
+        $this->app->config->set('laratrust.models.role', Role::class);
+        $this->app->config->set('laratrust.models.permission', Permission::class);
     }
 
     /**

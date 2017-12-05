@@ -17,9 +17,9 @@ class CreateContentShortcutsTable extends Migration
             $table->string('text');
             $table->tinyInteger('is_folder')->unsigned()->nullable()->default(0);
             $table->tinyInteger('override_default')->unsigned()->nullable()->default(0);
-            $table->integer('parent_id')->unsigned()->nullable()->index('content_shortcuts_parent_id_foreign');
-            $table->integer('application_id')->unsigned()->nullable()->index('FK_content_shortcuts_applications');
-            $table->integer('content_type_id')->unsigned()->nullable()->index('FK_content_shortcuts_content_types');
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->integer('application_id')->unsigned()->nullable();
+            $table->integer('content_type_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -3,9 +3,8 @@
 namespace Soda\Cms\Database\Models\Contracts;
 
 use Laratrust\Contracts\LaratrustUserInterface;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-interface UserInterface extends LaratrustUserInterface, AuditableContract
+interface UserInterface extends LaratrustUserInterface
 {
     /**
      * @return void

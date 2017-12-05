@@ -3,16 +3,20 @@
 namespace Soda\Cms\Database\Models;
 
 use Carbon\Carbon;
-use Soda\Cms\Database\Models\Traits\Auditable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Model;
 use Soda\Cms\Database\Models\Contracts\HasLocale;
-use Soda\Cms\Database\Models\Traits\UserHasRoles;
 use Soda\Cms\Database\Models\Contracts\UserInterface;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Soda\Cms\Database\Models\Traits\Auditable;
 use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
+use Soda\Cms\Database\Models\Traits\UserHasRoles;
 
-class User extends Authenticatable implements UserInterface, HasLocale
+class User extends Model implements UserInterface, HasLocale, AuthenticatableContract, CanResetPasswordContract
 {
-    use Auditable, OptionallyBoundToApplication, UserHasRoles;
+    use Auditable, OptionallyBoundToApplication, UserHasRoles, Authenticatable, CanResetPassword;
     protected $table = 'users';
 
     /**

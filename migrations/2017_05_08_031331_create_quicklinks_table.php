@@ -18,7 +18,7 @@ class CreateQuicklinksTable extends Migration
             $table->string('route_name');
             $table->text('route_params');
             $table->text('request_params');
-            $table->integer('user_id')->unsigned()->nullable()->index('FK_quicklinks_users');
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

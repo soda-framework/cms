@@ -18,7 +18,7 @@ class CreateBlockTypesTable extends Migration
             $table->text('description', 65535)->nullable();
             $table->string('identifier', 50);
             $table->tinyInteger('is_shared')->unsigned()->nullable()->default(0);
-            $table->integer('application_id')->unsigned()->nullable()->index('fk_page_types_applications1_idx');
+            $table->integer('application_id')->unsigned()->nullable();
             $table->string('list_action')->nullable();
             $table->string('list_action_type')->nullable();
             $table->string('edit_action')->nullable();

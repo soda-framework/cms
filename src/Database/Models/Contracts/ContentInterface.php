@@ -3,9 +3,8 @@
 namespace Soda\Cms\Database\Models\Contracts;
 
 use Soda\ClosureTable\Contracts\EntityInterface;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-interface ContentInterface extends EntityInterface, CanBeSorted, AuditableContract
+interface ContentInterface extends EntityInterface, CanBeSorted
 {
     public function getDynamicModel();
 

@@ -13,7 +13,7 @@ class AddForeignKeysToFieldablesTable extends Migration
     public function up()
     {
         Schema::table('fieldables', function (Blueprint $table) {
-            $table->foreign('field_id', 'FK_fieldables_fields')->references('id')->on('fields')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('field_id')->references('id')->on('fields')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -25,7 +25,7 @@ class AddForeignKeysToFieldablesTable extends Migration
     public function down()
     {
         Schema::table('fieldables', function (Blueprint $table) {
-            $table->dropForeign('FK_fieldables_fields');
+            $table->dropForeign(['field_id']);
         });
     }
 }

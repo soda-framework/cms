@@ -13,8 +13,8 @@ class CreateContentFolderPageTypesTable extends Migration
     public function up()
     {
         Schema::create('content_folder_page_types', function (Blueprint $table) {
-            $table->integer('folder_type_id')->unsigned()->index('FK_folder_type_content_folder_page_types')->nullable();
-            $table->integer('page_type_id')->unsigned()->index('FK_page_type_content_folder_page_types')->nullable();
+            $table->integer('folder_type_id')->unsigned()->nullable();
+            $table->integer('page_type_id')->unsigned()->nullable();
         });
     }
 

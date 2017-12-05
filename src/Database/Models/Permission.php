@@ -2,7 +2,7 @@
 
 namespace Soda\Cms\Database\Models;
 
-use Laratrust\LaratrustPermission;
+use Laratrust\Models\LaratrustPermission;
 use Soda\Cms\Database\Models\Traits\Auditable;
 use Soda\Cms\Database\Models\Contracts\PermissionInterface;
 use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;

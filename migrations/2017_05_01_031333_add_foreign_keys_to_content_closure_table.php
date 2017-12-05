@@ -13,8 +13,8 @@ class AddForeignKeysToContentClosureTable extends Migration
     public function up()
     {
         Schema::table('content_closure', function (Blueprint $table) {
-            $table->foreign('ancestor', 'FK_content_closure_content')->references('id')->on('content')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreign('descendant', 'FK_content_closure_content_2')->references('id')->on('content')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('ancestor')->references('id')->on('content')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('descendant')->references('id')->on('content')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -26,8 +26,8 @@ class AddForeignKeysToContentClosureTable extends Migration
     public function down()
     {
         Schema::table('content_closure', function (Blueprint $table) {
-            $table->dropForeign('FK_content_closure_content');
-            $table->dropForeign('FK_content_closure_content_2');
+            $table->dropForeign(['ancestor']);
+            $table->dropForeign(['descendant']);
         });
     }
 }

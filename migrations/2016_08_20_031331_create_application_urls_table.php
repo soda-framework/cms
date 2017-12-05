@@ -15,7 +15,7 @@ class CreateApplicationUrlsTable extends Migration
         Schema::create('application_urls', function (Blueprint $table) {
             $table->increments('id');
             $table->string('domain');
-            $table->integer('application_id')->unsigned()->index('fk_application_url_applications1_idx');
+            $table->integer('application_id')->unsigned();
             $table->timestamps();
         });
     }

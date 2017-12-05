@@ -18,7 +18,7 @@ class CreatePermissionsTable extends Migration
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
             $table->string('category')->nullable();
-            $table->integer('application_id')->unsigned()->nullable()->index('FK_permissions_applications');
+            $table->integer('application_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

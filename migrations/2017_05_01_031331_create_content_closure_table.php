@@ -14,8 +14,8 @@ class CreateContentClosureTable extends Migration
     {
         Schema::create('content_closure', function (Blueprint $table) {
             $table->increments('closure_id');
-            $table->integer('ancestor')->unsigned()->index('content_closure_ancestor_foreign');
-            $table->integer('descendant')->unsigned()->index('content_closure_descendant_foreign');
+            $table->integer('ancestor')->unsigned();
+            $table->integer('descendant')->unsigned();
             $table->integer('depth')->unsigned();
         });
     }

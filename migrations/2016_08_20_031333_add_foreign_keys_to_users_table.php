@@ -13,7 +13,7 @@ class AddForeignKeysToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('application_id', 'FK_users_applications')->references('id')->on('applications')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('application_id')->references('id')->on('applications')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -25,7 +25,7 @@ class AddForeignKeysToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('FK_users_applications');
+            $table->dropForeign(['application_id']);
         });
     }
 }

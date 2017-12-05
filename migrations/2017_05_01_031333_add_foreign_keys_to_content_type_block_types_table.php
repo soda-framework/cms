@@ -13,8 +13,8 @@ class AddForeignKeysToContentTypeBlockTypesTable extends Migration
     public function up()
     {
         Schema::table('content_type_block_types', function (Blueprint $table) {
-            $table->foreign('block_type_id', 'FK_content_type_blocks_block_types')->references('id')->on('block_types')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreign('content_type_id', 'FK_content_type_blocks_content_types')->references('id')->on('content_types')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('block_type_id')->references('id')->on('block_types')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('content_type_id')->references('id')->on('content_types')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -26,8 +26,8 @@ class AddForeignKeysToContentTypeBlockTypesTable extends Migration
     public function down()
     {
         Schema::table('content_type_block_types', function (Blueprint $table) {
-            $table->dropForeign('FK_content_type_blocks_block_types');
-            $table->dropForeign('FK_content_type_blocks_content_types');
+            $table->dropForeign(['block_type_id']);
+            $table->dropForeign(['content_type_id']);
         });
     }
 }

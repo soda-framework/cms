@@ -13,7 +13,7 @@ class AddForeignKeysToQuicklinksTable extends Migration
     public function up()
     {
         Schema::table('quicklinks', function (Blueprint $table) {
-            $table->foreign('user_id', 'FK_quicklinks_users')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -25,7 +25,7 @@ class AddForeignKeysToQuicklinksTable extends Migration
     public function down()
     {
         Schema::table('quicklinks', function (Blueprint $table) {
-            $table->dropForeign('FK_quicklinks_users');
+            $table->dropForeign(['user_id']);
         });
     }
 }

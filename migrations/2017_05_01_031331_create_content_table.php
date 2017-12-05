@@ -18,11 +18,11 @@ class CreateContentTable extends Migration
             $table->string('slug')->nullable();
             $table->string('identifier', 50)->nullable();
             $table->tinyInteger('status')->unsigned()->nullable()->default(0);
-            $table->integer('parent_id')->unsigned()->nullable()->index('content_parent_id_foreign');
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('position')->unsigned()->nullable()->default('0');
             $table->integer('real_depth')->unsigned();
-            $table->integer('application_id')->unsigned()->nullable()->index('FK_content_applications');
-            $table->integer('content_type_id')->unsigned()->nullable()->index('FK_content_content_types');
+            $table->integer('application_id')->unsigned()->nullable();
+            $table->integer('content_type_id')->unsigned()->nullable();
             $table->string('view_action')->nullable();
             $table->string('view_action_type');
             $table->string('edit_action')->nullable();

@@ -18,7 +18,7 @@ class CreateRolesTable extends Migration
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
             $table->integer('level')->default(0)->unsigned();
-            $table->integer('application_id')->unsigned()->nullable()->index('FK_roles_applications');
+            $table->integer('application_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
