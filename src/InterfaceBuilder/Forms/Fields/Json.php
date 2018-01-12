@@ -12,8 +12,10 @@ class Json extends AbstractFormField
     {
         $value = parent::getFieldValue();
 
-        $json = json_encode($value);
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
 
-        return ($json && $json != 'null' && $json != '[]') ? $json : '{}';
+        return ($value && $value != 'null' && $value != '[]') ? $value : '{}';
     }
 }
