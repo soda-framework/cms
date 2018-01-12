@@ -21,11 +21,11 @@ class SetupApplication extends Seeder
         }
 
         $application = Application::withoutGlobalScopes()->firstOrCreate([
-            'name' => ucwords(str_replace('-', '', $baseName)),
+            'name' => ucwords(str_replace('-', ' ', $baseName)),
         ]);
 
         ApplicationUrl::withoutGlobalScopes()->firstOrCreate([
-            'domain'         => $baseName.'.dev',
+            'domain'         => $baseName.'.test',
             'application_id' => $application->getKey(),
         ]);
     }
