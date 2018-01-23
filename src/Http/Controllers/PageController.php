@@ -81,8 +81,8 @@ class PageController extends BaseController
             $page_table = null;
         }
         
-        if( isset($model->edit_action) ){
-            if( isset($model->package) ) {
+        if( isset($model->edit_action) && $model->edit_action ){
+            if( isset($model->package) && $model->package ) {
                 return view($model->package . '::' . $model->edit_action, ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
             }
             return view($model->edit_action, ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
