@@ -80,6 +80,13 @@ class PageController extends BaseController
         } else {
             $page_table = null;
         }
+        
+        if( isset($model->edit_action) ){
+            if( isset($model->package) ) {
+                return view($model->package . '::' . $model->edit_action, ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
+            }
+            return view($model->edit_action, ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
+        }
 
         return soda_cms_view('page.view', ['hint' => $this->hint, 'model' => $model, 'page_table' => $page_table]);
     }
