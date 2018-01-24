@@ -138,7 +138,7 @@ abstract class DataField extends Widget
             }
 
             if (is_a($this->relation, 'Illuminate\Database\Eloquent\Relations\BelongsToMany')) {
-                $this->rel_other_key = $this->relation->getQualifiedRelatedKeyName();
+                $this->rel_other_key = $this->relation->getQualifiedRelatedPivotKeyName();
             }
 
             return;

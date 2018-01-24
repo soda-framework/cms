@@ -84,8 +84,8 @@ class SortController extends ApiController
             $pivotTable = $relationObject->getTable();
 
             $rules['parentId'] = 'required|exists:'.$tableName.','.$primaryKey;
-            $rules['id'] .= '|exists:'.$pivotTable.','.$relationObject->getQualifiedRelatedKeyName().','.$relationObject->getQualifiedForeignKeyName().','.$request->input('parentId');
-            $rules['positionEntityId'] .= '|exists:'.$pivotTable.','.$relationObject->getQualifiedRelatedKeyName().','.$relationObject->getQualifiedForeignKeyName().','.$request->input('parentId');
+            $rules['id'] .= '|exists:'.$pivotTable.','.$relationObject->getQualifiedRelatedPivotKeyName().','.$relationObject->getQualifiedForeignPivotKeyName().','.$request->input('parentId');
+            $rules['positionEntityId'] .= '|exists:'.$pivotTable.','.$relationObject->getQualifiedRelatedPivotKeyName().','.$relationObject->getQualifiedForeignPivotKeyName().','.$request->input('parentId');
         }
 
         return $validator->make($request->all(), $rules);
