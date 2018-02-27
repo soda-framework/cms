@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 trait Draftable
 {
     protected static $drafts = true;
+    public static $publishDateField = null;
 
     /**
      * Automatically filters model to only show live items.
@@ -75,5 +76,14 @@ trait Draftable
     protected static function getConvertedNow()
     {
         return Carbon::now(config('soda.cms.publish_timezone', 'UTC'))->setTimezone('UTC');
+    }
+
+//    public function getPublishedAtAttribute($date) {
+//        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('F j, Y @ g:i A');
+//    }
+
+    public function getPublishedAt($date) {
+        dd($date);
+        return Carbon::parse($date)->diffForHumans();
     }
 }

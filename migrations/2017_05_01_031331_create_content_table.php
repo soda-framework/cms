@@ -31,6 +31,7 @@ class CreateContentTable extends Migration
             $table->tinyInteger('is_sluggable')->unsigned()->nullable()->default(1);
             $table->tinyInteger('is_movable')->unsigned()->nullable()->default(1);
             $table->tinyInteger('is_deletable')->unsigned()->nullable()->default(1);
+            $table->timestamp('published_at', 0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

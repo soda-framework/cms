@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Database\Repositories;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Soda\Cms\Foundation\Constants;
 use Soda\Cms\Support\Facades\Soda;
@@ -213,9 +214,19 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
 
     public function save(Request $request, $id = null)
     {
+//        dd($request, config('soda.cms.enable_publish_date') ? Carbon::parse($request->input('published_at'), config('soda.cms.publish_timezone')) : null);
+
         if ($id !== null) {
             $content = $this->model->findOrFail($id);
-            $content->fill($request->all())->fillDefaults();
+            $inputs = $request->all();
+
+            // format published_at
+            $inputs['published_at'] = config('soda.cms.enable_publish_date') ? Carbon::parse($inputs['published_at'], config('soda.cms.publish_timezone')) : null;
+            if ( config('soda.cms.enable_publish_date') && ! $inputs['published_at'] && $inputs['published_at'] == 1 ) {
+                $inputs['published_at'] = Carbon::now();
+            }
+
+            $content->fill($inputs)->fillDefaults();
             $content->slug = $content->generateSlug($request->input('slug'), false);
         } else {
             $content = $this->initializeContent($request);
