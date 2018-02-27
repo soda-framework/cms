@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Models\Traits;
 
 use Carbon\Carbon;
-use Soda\Cms\Foundation\Constants;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Builder;
+use Soda\Cms\Foundation\Constants;
 
 trait Draftable
 {
@@ -78,12 +78,8 @@ trait Draftable
         return Carbon::now(config('soda.cms.publish_timezone', 'UTC'))->setTimezone('UTC');
     }
 
-//    public function getPublishedAtAttribute($date) {
-//        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('F j, Y @ g:i A');
-//    }
-
-    public function getPublishedAt($date) {
-        dd($date);
-        return Carbon::parse($date)->diffForHumans();
+    public function getPublishedAtDiff()
+    {
+        return $this->getPublishDate()->diffForHumans();
     }
 }
