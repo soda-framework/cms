@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Database\Models;
 
+use Carbon\Carbon;
 use Exception;
 use Soda\ClosureTable\Models\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,7 +42,9 @@ class Content extends Entity implements ContentInterface
         'is_movable',
         'is_publishable',
         'is_deletable',
+        'published_at',
     ];
+    protected $dates = ['created_at', 'updated_at', 'published_at', 'deleted_at'];
     protected $table = 'content';
     protected $isSlugToggled = true;
     protected $defaults = [

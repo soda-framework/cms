@@ -2,6 +2,7 @@
 
 namespace Soda\Cms\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
@@ -211,7 +212,9 @@ class ContentController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['name' => 'required']);
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
 
         try {
             $content = $this->content->save($request, $id);

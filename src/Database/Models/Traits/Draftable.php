@@ -3,14 +3,15 @@
 namespace Soda\Cms\Database\Models\Traits;
 
 use Carbon\Carbon;
-use Soda\Cms\Foundation\Constants;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Builder;
+use Soda\Cms\Foundation\Constants;
 
 trait Draftable
 {
     protected static $drafts = true;
+    public static $publishDateField = null;
 
     /**
      * Automatically filters model to only show live items.
@@ -75,5 +76,10 @@ trait Draftable
     protected static function getConvertedNow()
     {
         return Carbon::now(config('soda.cms.publish_timezone', 'UTC'))->setTimezone('UTC');
+    }
+
+    public function getPublishedAtDiff()
+    {
+        return $this->getPublishDate()->diffForHumans();
     }
 }

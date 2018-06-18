@@ -1,9 +1,11 @@
 <?php
+    $blockTypes = $content->blockTypes->keyBy('id');
+    if ($content->type && $content->type->blockTypes) {
+        $blockTypes = $blockTypes->merge($content->type->blockTypes->keyBy('id'));
+    }
 
-$blockTypes = $content->blockTypes->keyBy('id');
-if ($content->type && $content->type->blockTypes) {
-    $blockTypes = $blockTypes->merge($content->type->blockTypes->keyBy('id'));
-}
+    $publishedAtDateTime = new DateTime();
+    $publishedAtDateTime->setTimeZone(new DateTimeZone(config('soda.cms.publish_timezone')));
 ?>
 
 @extends(soda_cms_view_path('layouts.inner'))
@@ -46,6 +48,14 @@ if ($content->type && $content->type->blockTypes) {
                 'unchecked-value' => Soda\Cms\Foundation\Constants::STATUS_DRAFT],
         ])->setModel($content) !!}
     </div>
+
+    @if ( config('soda.cms.enable_publish_date') )
+        {!! app('soda.form')->datetime([
+            'name'        => 'Publish Date',
+            'description' => 'The publish date of this content item in ' . $publishedAtDateTime->format('T'),
+            'field_name'  => 'published_at',
+        ])->setModel($content) !!}
+    @endif
 @stop
 
 @section('tab.advanced')

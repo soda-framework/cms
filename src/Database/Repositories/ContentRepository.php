@@ -2,12 +2,13 @@
 
 namespace Soda\Cms\Database\Repositories;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Soda\Cms\Foundation\Constants;
-use Soda\Cms\Support\Facades\Soda;
 use Soda\Cms\Database\Models\ContentShortcut;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
 use Soda\Cms\Database\Repositories\Contracts\ContentRepositoryInterface;
+use Soda\Cms\Foundation\Constants;
+use Soda\Cms\Support\Facades\Soda;
 
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
@@ -52,7 +53,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     public function listFolder(Request $request, ContentInterface $contentFolder)
     {
         if ($request->has('search')) {
-            $query = $contentFolder->collectDescendants()->where('name', 'LIKE', '%'.$request->input('search').'%');
+            $query = $contentFolder->collectDescendants()->where('name', 'LIKE', '%' . $request->input('search') . '%');
         } else {
             $query = $contentFolder->collectChildren();
         }
@@ -89,12 +90,12 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             $parentBreadcrumb = $this->contentToBreadcrumb($content->parent);
         }
 
-        return (isset($parentBreadcrumb) && $parentBreadcrumb ? $parentBreadcrumb.' / ' : '').$content->name;
+        return (isset($parentBreadcrumb) && $parentBreadcrumb ? $parentBreadcrumb . ' / ' : '') . $content->name;
     }
 
     public function findBySlug($slug)
     {
-        return $this->model->where('slug', '/'.ltrim($slug, '/'))->first();
+        return $this->model->where('slug', '/' . ltrim($slug, '/'))->first();
     }
 
     public function getCreatableContentTypes($contentFolderId = null)
@@ -215,7 +216,15 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     {
         if ($id !== null) {
             $content = $this->model->findOrFail($id);
-            $content->fill($request->all())->fillDefaults();
+            $inputs = $request->all();
+
+            // format published_at
+            $inputs['published_at'] = config('soda.cms.enable_publish_date') ? Carbon::parse($inputs['published_at'], config('soda.cms.publish_timezone')) : null;
+            if (config('soda.cms.enable_publish_date') && ! $inputs['published_at'] && $inputs['published_at'] == 1) {
+                $inputs['published_at'] = Carbon::now();
+            }
+
+            $content->fill($inputs)->fillDefaults();
             $content->slug = $content->generateSlug($request->input('slug'), false);
         } else {
             $content = $this->initializeContent($request);
