@@ -219,9 +219,8 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             $inputs = $request->all();
 
             // format published_at
-            $inputs['published_at'] = config('soda.cms.enable_publish_date') ? Carbon::parse($inputs['published_at'], config('soda.cms.publish_timezone')) : null;
-            if (config('soda.cms.enable_publish_date') && ! $inputs['published_at'] && $inputs['published_at'] == 1) {
-                $inputs['published_at'] = Carbon::now();
+            if(config('soda.cms.enable_publish_date')) {
+                $inputs['published_at'] = Carbon::parse($inputs['published_at'], config('soda.cms.publish_timezone')) ?: Carbon::now();
             }
 
             $content->fill($inputs)->fillDefaults();
