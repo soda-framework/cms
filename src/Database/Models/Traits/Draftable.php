@@ -11,20 +11,22 @@ use Soda\Cms\Foundation\Constants;
 trait Draftable
 {
     protected static $drafts = true;
-    protected static $publishDateField = "";
+    protected static $_publishDateField = null;
 
     /**
      * Automatically filters model to only show live items.
      */
     public static function bootDraftable()
     {
+        if(isset(static::$publishDateField)) static::setPublishDateField(static::$publishDateField);
+        
         static::addGlobalScope('published', function (Builder $builder) {
             if (static::isDraftsEnabled()) {
                 $builder->where('status', '=', Constants::STATUS_LIVE);
 
                 if (static::publishDateFieldEnabled()) {
                     $builder->where(function ($subQuery) {
-                        $subQuery->whereNull(static::$publishDateField)->orWhere(static::$publishDateField, '<', static::getConvertedNow());
+                        $subQuery->whereNull(static::$_publishDateField)->orWhere(static::$_publishDateField, '<', static::getConvertedNow());
                     });
                 }
             }
@@ -57,17 +59,17 @@ trait Draftable
     
     public static function publishDateFieldEnabled()
     {
-        return static::$publishDateField !== null && static::$publishDateField !== "";
+        return static::$_publishDateField !== null && static::$_publishDateField !== "";
     }
     
     public static function setPublishDateField($field = null)
     {
-        static::$publishDateField = $field;
+        static::$_publishDateField = $field;
     }
 
     public function getPublishDate()
     {
-        $field = static::publishDateFieldEnabled() ? static::$publishDateField : 'created_at';
+        $field = static::publishDateFieldEnabled() ? static::$_publishDateField : 'created_at';
 
         return Carbon::parse($this->getAttribute($field))->setTimezone(config('soda.cms.publish_timezone', 'UTC'));
     }
