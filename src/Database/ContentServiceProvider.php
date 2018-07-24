@@ -94,7 +94,7 @@ class ContentServiceProvider extends ServiceProvider
         $this->registerAliases($this->aliases);
 
         if ( config('soda.cms.enable_publish_date') ) {
-            Content::$publishDateField = 'published_at';
+            Content::setPublishDateField('published_at');
         }
     }
 
