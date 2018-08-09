@@ -43,5 +43,3 @@ or, manually set up database in your `.env` file.
 `php artisan optimize`
 
 `php artisan soda:install`
-
-`php artisan soda:seed`
