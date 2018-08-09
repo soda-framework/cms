@@ -2,7 +2,7 @@
 A sweet PHP CMS solution built on Laravel!
 
 ## Installation
-Install easily using the[Soda Installer](https://github.com/soda-framework/installer)or manually by following these steps:
+Install easily using the [Soda Installer](https://github.com/soda-framework/installer) or manually by following these steps:
 
 #### 1. Create new Laravel Project
 
@@ -24,7 +24,7 @@ Add package to providers in `/config/app.php`
 
 ```
 'providers' => [
-    Soda\Providers\SodaServiceProvider::class,
+    Soda\Cms\SodaServiceProvider::class,
 ]
 ```
 
@@ -42,6 +42,6 @@ or, manually set up database in your `.env` file.
 
 `php artisan optimize`
 
-`php artisan soda:migrate`
+`php artisan soda:install`
 
 `php artisan soda:seed`
