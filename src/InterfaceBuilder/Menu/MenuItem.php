@@ -52,7 +52,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this->parent;
     }
 
-    public function setParent(MenuItem $item)
+    public function setParent(self $item)
     {
         $this->parent = $item;
 

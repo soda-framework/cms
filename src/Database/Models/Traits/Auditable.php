@@ -69,7 +69,7 @@ trait Auditable
      */
     public function readyForAuditing()
     {
-        return ($this->isEventAuditable($this->auditEvent) && $this->isDirty());
+        return $this->isEventAuditable($this->auditEvent) && $this->isDirty();
     }
 
     /**
