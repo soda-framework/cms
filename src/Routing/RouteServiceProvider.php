@@ -12,10 +12,10 @@ use Soda\Cms\Http\Middleware\HasAbility;
 use Soda\Cms\Http\Middleware\Authenticate;
 use Soda\Cms\Http\Middleware\ToggleLocale;
 use Soda\Cms\Http\Middleware\HasPermission;
+use Soda\Cms\Http\Middleware\TransferSession;
 use Soda\Cms\Http\Middleware\SluggableSession;
 use Soda\Cms\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Soda\Cms\Http\Middleware\TransferSession;
 
 class RouteServiceProvider extends ServiceProvider
 {

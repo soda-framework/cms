@@ -53,6 +53,6 @@ class TransferSession
 
         $currentQuery = http_build_query($currentQueryArray);
 
-        return $request->url() . (count($currentQueryArray) ? "?$currentQuery" : '');
+        return $request->url().(count($currentQueryArray) ? "?$currentQuery" : '');
     }
 }
