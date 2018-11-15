@@ -190,8 +190,6 @@ class SodaInstance
                 }
             } catch (\Exception $e) {
             }
-
-            return;
         });
     }
 }

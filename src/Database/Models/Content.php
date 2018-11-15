@@ -2,7 +2,6 @@
 
 namespace Soda\Cms\Database\Models;
 
-use Carbon\Carbon;
 use Exception;
 use Soda\ClosureTable\Models\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;

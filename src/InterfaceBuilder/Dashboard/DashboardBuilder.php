@@ -126,8 +126,6 @@ class DashboardBuilder implements Renderable
         if (count($blocks)) {
             return soda_cms_view('partials.dashboard.row', compact('blocks'))->render();
         }
-
-        return;
     }
 
     protected function beforeRenderRow($rowId)
@@ -152,8 +150,6 @@ class DashboardBuilder implements Renderable
                 return $content->render();
             }
         }
-
-        return;
     }
 
     protected function beforeRenderBlock($blockName)

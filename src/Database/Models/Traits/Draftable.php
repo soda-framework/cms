@@ -3,10 +3,10 @@
 namespace Soda\Cms\Database\Models\Traits;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
+use Soda\Cms\Foundation\Constants;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Soda\Cms\Foundation\Constants;
+use Illuminate\Database\Eloquent\Builder;
 
 trait Draftable
 {
@@ -18,8 +18,10 @@ trait Draftable
      */
     public static function bootDraftable()
     {
-        if(isset(static::$publishDateField)) static::setPublishDateField(static::$publishDateField);
-        
+        if (isset(static::$publishDateField)) {
+            static::setPublishDateField(static::$publishDateField);
+        }
+
         static::addGlobalScope('published', function (Builder $builder) {
             if (static::isDraftsEnabled()) {
                 $builder->where('status', '=', Constants::STATUS_LIVE);
@@ -56,12 +58,12 @@ trait Draftable
     {
         static::$drafts = false;
     }
-    
+
     public static function publishDateFieldEnabled()
     {
-        return static::$_publishDateField !== null && static::$_publishDateField !== "";
+        return static::$_publishDateField !== null && static::$_publishDateField !== '';
     }
-    
+
     public static function setPublishDateField($field = null)
     {
         static::$_publishDateField = $field;

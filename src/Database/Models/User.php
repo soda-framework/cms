@@ -4,15 +4,15 @@ namespace Soda\Cms\Database\Models;
 
 use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Soda\Cms\Database\Models\Traits\Auditable;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Soda\Cms\Database\Models\Contracts\HasLocale;
+use Soda\Cms\Database\Models\Traits\UserHasRoles;
+use Soda\Cms\Database\Models\Contracts\UserInterface;
+use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\Model;
-use Soda\Cms\Database\Models\Contracts\HasLocale;
-use Soda\Cms\Database\Models\Contracts\UserInterface;
-use Soda\Cms\Database\Models\Traits\Auditable;
-use Soda\Cms\Database\Models\Traits\OptionallyBoundToApplication;
-use Soda\Cms\Database\Models\Traits\UserHasRoles;
 
 class User extends Model implements UserInterface, HasLocale, AuthenticatableContract, CanResetPasswordContract
 {
