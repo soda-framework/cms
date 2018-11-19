@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 Route::group(['prefix' => config('soda.cms.path'), 'middleware' => ['web']], function () {
     Route::post('switch-application', 'HomeController@switchApplication')->name('soda.switch-application');

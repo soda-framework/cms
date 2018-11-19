@@ -2,7 +2,6 @@
 
 namespace Soda\Cms\Http\Controllers;
 
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Soda\Cms\Database\Models\Contracts\ContentInterface;
