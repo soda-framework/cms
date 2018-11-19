@@ -7,6 +7,7 @@ use Illuminate\Routing\RouteAction;
 use Illuminate\Session\SessionManager;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Contracts\Encryption\Encrypter;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 
 class CatchSluggableRoutes
 {
@@ -69,9 +70,10 @@ class CatchSluggableRoutes
     public function getSession(Request $request)
     {
         return tap($this->sessionManager->driver(), function ($session) use ($request) {
-            if ($encryptedSessionId = $request->cookies->get($session->getName())) {
-                $sessionId = $this->encrypter->decrypt($encryptedSessionId);
+            $isSerialized = EncryptCookies::serialized($session->getName());
 
+            if ($encryptedSessionId = $request->cookies->get($session->getName())) {
+                $sessionId = $this->encrypter->decrypt($encryptedSessionId, $isSerialized);
                 $session->setId($sessionId);
             }
         });
