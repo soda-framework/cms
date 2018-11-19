@@ -4,8 +4,8 @@ namespace Soda\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Soda\Cms\Database\Models\Contracts\HasLocale;
 use Soda\Cms\Database\Models\Quicklink;
+use Soda\Cms\Database\Models\Contracts\HasLocale;
 
 class HomeController extends BaseController
 {
@@ -100,6 +100,6 @@ class HomeController extends BaseController
 
         $request->session()->flash('vtoken', $validationToken);
 
-        return redirect()->away($parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $parsedUrl['path'] . '?' . $parsedUrl['query']);
+        return redirect()->away($parsedUrl['scheme'].'://'.$parsedUrl['host'].$parsedUrl['path'].'?'.$parsedUrl['query']);
     }
 }
