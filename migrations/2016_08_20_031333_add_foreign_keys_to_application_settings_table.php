@@ -13,7 +13,6 @@ class AddForeignKeysToApplicationSettingsTable extends Migration
     public function up()
     {
         Schema::table('application_settings', function (Blueprint $table) {
-
             $table->foreign('application_id')->references('id')->on('applications')->onUpdate('cascade')->onDelete('cascade');
         });
     }

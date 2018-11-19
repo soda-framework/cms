@@ -22,6 +22,6 @@ trait RoleHasPermissions
 
     public function getCacheKey()
     {
-        return 'soda.permissions.' . $this->getTable() . '.' . $this->getKey();
+        return 'soda.permissions.'.$this->getTable().'.'.$this->getKey();
     }
 }
